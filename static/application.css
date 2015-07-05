@@ -1,0 +1,23 @@
+.editor {
+  border-right: 2px solid gray;
+  border-bottom: 2px solid gray;
+  width: 50%;
+  height: 33%%;
+}
+
+.editor:last-child {
+  border-bottom: 0;
+}
+
+#preview {
+  float: right;
+  width: 49%; /*FIXME*/
+  height: 100%;
+  position: relative;
+}
+
+#preview-frame {
+  border: 0;
+  width: 100%;
+  height: 100%;
+}
