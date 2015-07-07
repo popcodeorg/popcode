@@ -16,6 +16,7 @@
     "watchify": "^3.2.3"
   },
   "scripts": {
+    "start": "static ./static",
     "build": "browserify src/application.js -o static/compiled/bundle.js",
     "watch": "watchify src/application.js -o static/compiled/bundle.js --debug --verbose"
   },
