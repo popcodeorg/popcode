@@ -2,7 +2,7 @@
 
 var React = require('react');
 var ACE = require('brace');
-//FIXME why can't I require these in setupEditor?
+var Validations = require('./validations');
 require('brace/mode/html');
 require('brace/mode/css');
 require('brace/mode/javascript');
@@ -24,10 +24,17 @@ var Editor = React.createClass({
   setupEditor: function(containerElement) {
     this.editor = ACE.edit(this.getDOMNode());
     var language = this.props.language;
-    this.editor.getSession().setMode('ace/mode/' + language);
+    var session = this.editor.getSession();
+    session.setMode('ace/mode/' + language);
+    session.setUseWorker(false);
+    var validate = Validations[language];
     this.editor.on('change', function() {
       var content = this.editor.getValue();
-      this.props.onChange(this.props.language, content);
+      var errors = validate(content);
+      session.setAnnotations(errors);
+      if (errors.length === 0) {
+        this.props.onChange(this.props.language, content);
+      }
     }.bind(this));
   },
 
