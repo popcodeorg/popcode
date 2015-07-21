@@ -20,7 +20,8 @@
   "scripts": {
     "start": "static ./static",
     "build": "browserify src/application.js -o static/compiled/bundle.js",
-    "watch": "watchify src/application.js -o static/compiled/bundle.js --debug --verbose"
+    "watch": "watchify src/application.js -o static/compiled/bundle.js --debug --verbose",
+    "postinstall": "npm run build"
   },
   "browserify": {
     "transform": [
