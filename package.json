@@ -14,6 +14,9 @@
     "reactify": "^1.1.1",
     "watchify": "^3.2.3"
   },
+  "engines": {
+    "node": "0.12.x"
+  },
   "scripts": {
     "start": "static ./static",
     "build": "browserify src/application.js -o static/compiled/bundle.js",
