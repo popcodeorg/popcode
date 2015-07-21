@@ -18,7 +18,7 @@
     "node": "0.12.x"
   },
   "scripts": {
-    "start": "./node_modules/.bin/static ./static -p ${PORT:-8080}",
+    "start": "./node_modules/.bin/static ./static -a 0.0.0.0 -p ${PORT:-8080}",
     "build": "./node_modules/.bin/browserify src/application.js -o static/compiled/bundle.js",
     "watch": "./node_modules/.bin/watchify src/application.js -o static/compiled/bundle.js --debug --verbose",
     "postinstall": "npm run build"
