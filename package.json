@@ -5,11 +5,12 @@
   "dependencies": {
     "brace": "^0.5.1",
     "browserify": "^10.2.4",
-    "csslint": "^0.10.0",
+    "css": "^2.2.1",
     "htmllint": "^0.2.4",
     "jscs": "1.13.1",
     "jshint": "^2.8.0",
     "node-static": "^0.7.6",
+    "PrettyCSS": "^0.3.10",
     "react": "^0.13.3",
     "reactify": "^1.1.1",
     "watchify": "^3.2.3"
