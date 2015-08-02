@@ -31,6 +31,10 @@ var Editor = React.createClass({
     this.editor.on('change', function() {
       var content = this.editor.getValue();
       validate(content).then(function(errors) {
+        if (content !== this.editor.getValue()) {
+          return;
+        }
+
         session.setAnnotations(errors);
         if (errors.length === 0) {
           this.props.onChange(language, content);
