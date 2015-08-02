@@ -14,6 +14,8 @@ progress.
 You can try out Learnpad at
 [`http://learnpad.herokuapp.com`](http://learnpad.herokuapp.com).
 
+Try doing something wrong. The main emphasis of this project is giving feedback on code problems that novice users can understand.
+
 ## Features ##
 
 * Edit HTML, CSS, and JavaScript in the browser; in-browser preview updates as
