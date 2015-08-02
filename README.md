@@ -9,6 +9,11 @@ novice users.
 Learnpad is currently somewhere between a proof of concept and a work in
 progress.
 
+### Try it out ###
+
+You can try out Learnpad at
+[`http://learnpad.herokuapp.com`](http://learnpad.herokuapp.com).
+
 ## Features ##
 
 * Edit HTML, CSS, and JavaScript in the browser; in-browser preview updates as
