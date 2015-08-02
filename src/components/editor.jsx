@@ -17,8 +17,16 @@ var Editor = React.createClass({
     this.setupEditor(containerElement);
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.source !== this.editor.getValue()) {
+      return;
+    }
+
+    this.editor.getSession().setAnnotations(nextProps.errors);
+  },
+
   shouldComponentUpdate: function(nextProps) {
-    return nextProps.source !== this.editor.getValue();
+    return false;
   },
 
   setupEditor: function(containerElement) {
@@ -31,14 +39,10 @@ var Editor = React.createClass({
     this.editor.on('change', function() {
       var content = this.editor.getValue();
       validate(content).then(function(errors) {
-        if (content !== this.editor.getValue()) {
-          return;
-        }
-
-        session.setAnnotations(errors);
-        if (errors.length === 0) {
-          this.props.onChange(language, {source: content});
-        }
+        this.props.onChange(language, {
+          source: content,
+          errors: errors
+        });
       }.bind(this));
     }.bind(this));
   },
