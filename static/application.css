@@ -51,4 +51,5 @@ body {
   margin: 0.5rem 0;
   padding: 0.5rem;
   background-color: #ffe6e6;
+  cursor: pointer;
 }

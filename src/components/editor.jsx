@@ -28,6 +28,11 @@ var Editor = React.createClass({
     return false;
   },
 
+  jumpToLine: function(line, column) {
+    this.editor.moveCursorTo(line, column);
+    this.editor.focus();
+  },
+
   setupEditor: function(containerElement) {
     this.editor = ACE.edit(this.getDOMNode());
     var language = this.props.language;

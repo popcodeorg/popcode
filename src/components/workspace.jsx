@@ -23,14 +23,19 @@ var Workspace = React.createClass({
     }.bind(this));
   },
 
+  onErrorClicked: function(language, line, column) {
+    var editor = this.refs[language + 'Editor'];
+    editor.jumpToLine(line, column);
+  },
+
   render: function() {
     return (
       <div id="workspace">
-        <Output {...this.state} />
+        <Output code={this.state} onErrorClicked={this.onErrorClicked} />
 
-        <Editor language="html" {...this.state.html} onChange={this.handleUpdate} />
-        <Editor language="css" {...this.state.css} onChange={this.handleUpdate} />
-        <Editor language="javascript" {...this.state.javascript} onChange={this.handleUpdate} />
+        <Editor ref="htmlEditor" language="html" {...this.state.html} onChange={this.handleUpdate} />
+        <Editor ref="cssEditor" language="css" {...this.state.css} onChange={this.handleUpdate} />
+        <Editor ref="javascriptEditor" language="javascript" {...this.state.javascript} onChange={this.handleUpdate} />
       </div>
     )
   }
