@@ -20,6 +20,8 @@ You can try out Learnpad at
   you type.
 * Get immediate, comprehensive, easy-to-understand feedback about problems in
   your code.
+* Errors can't be ignored. If there are any errors in the code, the live
+  preview is replaced by an error list.
 * That's it, so far.
 
 ### About validation ###
