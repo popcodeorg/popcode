@@ -2,8 +2,8 @@
 
 var React = require('react');
 var Editor = require('./editor.jsx');
-var Preview = require('./preview.jsx');
-var config = require('./config.js');
+var Output = require('./output.jsx');
+var config = require('../config.js');
 
 var Workspace = React.createClass({
   getInitialState: function() {
@@ -19,14 +19,11 @@ var Workspace = React.createClass({
   render: function() {
     return (
       <div id="workspace">
-        <Preview ref="preview"
-          html={this.state.html}
-          css={this.state.css}
-          javascript={this.state.javascript} />
+        <Output {...this.state} />
 
-        <Editor language="html" value={this.state.html} onChange={this.handleUpdate} />
-        <Editor language="css" value={this.state.css} onChange={this.handleUpdate} />
-        <Editor language="javascript" value={this.state.javascript} onChange={this.handleUpdate} />
+        <Editor language="html" {...this.state.html} onChange={this.handleUpdate} />
+        <Editor language="css" {...this.state.css} onChange={this.handleUpdate} />
+        <Editor language="javascript" {...this.state.javascript} onChange={this.handleUpdate} />
       </div>
     )
   }

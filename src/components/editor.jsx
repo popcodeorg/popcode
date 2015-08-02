@@ -2,7 +2,7 @@
 
 var React = require('react');
 var ACE = require('brace');
-var Validations = require('./validations');
+var Validations = require('../validations');
 require('brace/mode/html');
 require('brace/mode/css');
 require('brace/mode/javascript');
@@ -18,7 +18,7 @@ var Editor = React.createClass({
   },
 
   shouldComponentUpdate: function(nextProps) {
-    return nextProps.value !== this.editor.getValue();
+    return nextProps.source !== this.editor.getValue();
   },
 
   setupEditor: function(containerElement) {
@@ -37,7 +37,7 @@ var Editor = React.createClass({
 
         session.setAnnotations(errors);
         if (errors.length === 0) {
-          this.props.onChange(language, content);
+          this.props.onChange(language, {source: content});
         }
       }.bind(this));
     }.bind(this));
@@ -46,7 +46,7 @@ var Editor = React.createClass({
   render: function() {
     return (
       <div className="editor">
-        {this.props.value}
+        {this.props.source}
       </div>
     )
   }
