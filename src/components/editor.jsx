@@ -2,7 +2,6 @@
 
 var React = require('react');
 var ACE = require('brace');
-var Validations = require('./validations');
 require('brace/mode/html');
 require('brace/mode/css');
 require('brace/mode/javascript');
@@ -17,8 +16,21 @@ var Editor = React.createClass({
     this.setupEditor(containerElement);
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.source !== this.editor.getValue()) {
+      return;
+    }
+
+    this.editor.getSession().setAnnotations(nextProps.errors);
+  },
+
   shouldComponentUpdate: function(nextProps) {
-    return nextProps.value !== this.editor.getValue();
+    return false;
+  },
+
+  jumpToLine: function(line, column) {
+    this.editor.moveCursorTo(line, column);
+    this.editor.focus();
   },
 
   setupEditor: function(containerElement) {
@@ -27,26 +39,15 @@ var Editor = React.createClass({
     var session = this.editor.getSession();
     session.setMode('ace/mode/' + language);
     session.setUseWorker(false);
-    var validate = Validations[language];
     this.editor.on('change', function() {
-      var content = this.editor.getValue();
-      validate(content).then(function(errors) {
-        if (content !== this.editor.getValue()) {
-          return;
-        }
-
-        session.setAnnotations(errors);
-        if (errors.length === 0) {
-          this.props.onChange(language, content);
-        }
-      }.bind(this));
+      this.props.onChange(this.props.language, this.editor.getValue());
     }.bind(this));
   },
 
   render: function() {
     return (
       <div className="editor">
-        {this.props.value}
+        {this.props.source}
       </div>
     )
   }

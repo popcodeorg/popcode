@@ -40,7 +40,7 @@ function convertErrorToAnnotation(error) {
   if (error.token !== null && humanErrors.hasOwnProperty(normalized_code)) {
     var message = humanErrors[normalized_code](error);
     return {
-      row: error.token.line - 1, column: error.charNum - 1,
+      row: error.token.line - 1, column: error.token.charNum - 1,
       raw: message,
       text: message,
       type: "error"
