@@ -53,10 +53,20 @@ var humanErrors = {
 
   "E016": function(error) {
     switch (error.data.tag.toLowerCase()) {
-      case 'i':
-        return "You shouldn't use the <i> tag. Use the <em> tag instead.";
       case 'b':
-        return "You shouldn't use the <b> tag. Use the <strong> tag instead.";
+        return "You shouldn't use the <b> tag. Use the <strong> tag instead";
+      case 'big':
+        return "You shouldn't use the <big> tag. Use the CSS font-size property instead";
+      case 'center':
+        return "You shouldn't use the <center> tag. Use the CSS property margin: auto instead";
+      case 'font':
+        return "You shouldn't use the <font> tag. Use the CSS font-face property instead.";
+      case 'i':
+        return "You shouldn't use the <i> tag. Use the <em> tag instead";
+      case 'strike':
+        return "You shouldn't use the <strike> tag. Use the CSS property text-decoration: line-through instead";
+      case 'tt':
+        return "You shouldn't use the <tt> tag. Use the <code> tag instead.";
     }
   },
 
@@ -108,7 +118,12 @@ var htmlLintOptions = {
   'line-end-style': false,
   'tag-bans': [
     'b',
-    'i'
+    'big',
+    'center',
+    'font',
+    'i',
+    'tt',
+    'strike'
   ],
   'tag-name-match': true,
   'tag-name-lowercase': true,
