@@ -30,17 +30,31 @@ enforced style decisions are arbitrary, under the philosophy that giving
 students one right way to do it eliminates ambiguity and aids the learning
 process.
 
+#### A weird thing about HTML validation ####
+
+One strange fact about the universe is that, as far as I can tell, no
+JavaScript package exists that will tell you whether an HTML string is
+well-formed or not. So, while the editor will give plenty of feedback on
+various things about your HTML, one thing the student won’t get feedback on is
+if the HTML is totally broken. This is a problem, especially because totally
+broken HTML will probably yield some confusing second-order error.
+
+The best thing I can think of at the moment is to use the [Nu HTML
+Validator](https://github.com/validator/validator) on the server-side to do
+basic syntax checking and validation. However I would also really like to avoid
+having to go to the server (what server?) for anything, ever. In general, this
+topic merits further investigation.
+
 ### Feature roadmap ###
 
 Here are some things that will need to be built before Learnpad is anywhere
 near an MVP:
 
-- [ ] Finish JavaScript validations, including integration of `jscs` for code style
-      enforcement
-- [ ] Write HTML and CSS validations.
 - [ ] If there are any validation errors, the preview should be replaced by an
       error list. Clicking an error should highlight that line in the code.
 - [ ] Should be able to easily drop in popular CSS and JavaScript libraries.
+- [ ] Make the validations better, more robust, clearer. They’re off to a good
+      start but there are still plenty of holes.
 - [ ] `console.log` in JavaScript should probably do something useful.
 - [ ] Ability to save your work, switch between saved projects (local storage
       at the very least, realistically some sort of server-side persistence)
@@ -60,8 +74,8 @@ Some more stuff that would be good:
 Learnpad uses **React** to manage view state, **Ace** as the code editor, and
 **Browserify** to package the client-side application.
 
-Right now, it includes **htmllint**, **csslint**, **jshint**, and **jscs** for
-style checking, although as of now it only actually uses jshint.
+Right now, it includes **htmllint**, **css**, **PrettyCSS", **jshint**, and **jscs** for
+style checking, although as of now jscs is unused.
 
 The Ace editor has a built-in system for error checking, but it's really hard
 to extend, so I've disabled it. Right now the editor just synchronously runs
