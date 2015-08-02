@@ -1,4 +1,5 @@
 var JSHINT = require('jshint').JSHINT;
+var Promise = require('es6-promise').Promise;
 
 var jshintrc = {
   browser: true,
@@ -124,5 +125,5 @@ module.exports = function(source) {
     });
   }
 
-  return annotations;
+  return Promise.resolve(annotations);
 };

@@ -1,4 +1,5 @@
 var prettyCSS = require('PrettyCSS');
+var Promise = require('es6-promise').Promise;
 
 var humanErrors = {
   "block-expected": function(error) {
@@ -58,5 +59,5 @@ module.exports = function(source) {
       annotations.push(annotation);
     }
   });
-  return annotations;
+  return Promise.resolve(annotations);
 };

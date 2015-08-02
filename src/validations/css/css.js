@@ -1,4 +1,5 @@
 var css = require('css');
+var Promise = require('es6-promise').Promise;
 
 var humanErrors = {
   "missing '}'": function() {
@@ -37,5 +38,5 @@ module.exports = function(source) {
       annotations.push(annotation);
     }
   });
-  return annotations;
+  return Promise.resolve(annotations);
 };

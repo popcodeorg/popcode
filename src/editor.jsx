@@ -30,11 +30,12 @@ var Editor = React.createClass({
     var validate = Validations[language];
     this.editor.on('change', function() {
       var content = this.editor.getValue();
-      var errors = validate(content);
-      session.setAnnotations(errors);
-      if (errors.length === 0) {
-        this.props.onChange(this.props.language, content);
-      }
+      validate(content).then(function(errors) {
+        session.setAnnotations(errors);
+        if (errors.length === 0) {
+          this.props.onChange(language, content);
+        }
+      }.bind(this));
     }.bind(this));
   },
 
