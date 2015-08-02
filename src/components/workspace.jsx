@@ -3,6 +3,7 @@
 var React = require('react');
 var Editor = require('./editor.jsx');
 var Output = require('./output.jsx');
+var Validations = require('../validations');
 var config = require('../config.js');
 
 var Workspace = React.createClass({
@@ -10,10 +11,16 @@ var Workspace = React.createClass({
     return config.defaults;
   },
 
-  handleUpdate: function(language, data) {
-    var newState = {};
-    newState[language] = data;
-    this.setState(newState);
+  handleUpdate: function(language, source) {
+    var validate = Validations[language];
+    validate(source).then(function(errors) {
+      var newState = {};
+      newState[language] = {
+        source: source,
+        errors: errors
+      };
+      this.setState(newState);
+    }.bind(this));
   },
 
   render: function() {

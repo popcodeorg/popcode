@@ -2,7 +2,6 @@
 
 var React = require('react');
 var ACE = require('brace');
-var Validations = require('../validations');
 require('brace/mode/html');
 require('brace/mode/css');
 require('brace/mode/javascript');
@@ -35,15 +34,8 @@ var Editor = React.createClass({
     var session = this.editor.getSession();
     session.setMode('ace/mode/' + language);
     session.setUseWorker(false);
-    var validate = Validations[language];
     this.editor.on('change', function() {
-      var content = this.editor.getValue();
-      validate(content).then(function(errors) {
-        this.props.onChange(language, {
-          source: content,
-          errors: errors
-        });
-      }.bind(this));
+      this.props.onChange(this.props.language, this.editor.getValue());
     }.bind(this));
   },
 
