@@ -50,14 +50,12 @@ topic merits further investigation.
 Here are some things that will need to be built before Learnpad is anywhere
 near an MVP:
 
-- [ ] If there are any validation errors, the preview should be replaced by an
-      error list. Clicking an error should highlight that line in the code.
 - [ ] Should be able to easily drop in popular CSS and JavaScript libraries.
+- [ ] Ability to save your work, switch between saved projects (local storage
+      at the very least, realistically some sort of server-side persistence)
 - [ ] Make the validations better, more robust, clearer. They’re off to a good
       start but there are still plenty of holes.
 - [ ] `console.log` in JavaScript should probably do something useful.
-- [ ] Ability to save your work, switch between saved projects (local storage
-      at the very least, realistically some sort of server-side persistence)
 - [ ] Clearly indicate what each of the three editors is for.
 
 Some more stuff that would be good:
