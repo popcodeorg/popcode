@@ -1,0 +1,70 @@
+{
+  "css": {
+    "missing-curly": "You have a starting { but no ending } to go with it.",
+    "property-missing-colon": "Put a colon (:) between the property and the value.\nTry: color: red",
+    "selector-missing": "Start every block of CSS with a selector, such as an element name or class name.\nTry: p {\n  color: red;\n}"
+  },
+  "prettycss": {
+    "block-expected": "Start a block using { after your selector.\nTry: __error__ {",
+    "extra-tokens-after-value": "Looks like you're missing a semicolon on the line before this one.",
+    "illegal-token-after-combinator": "After a + or > in a selector, you need to specify the name of another element, class, or ID",
+    "invalid-token": "This line doesn't look like valid CSS.",
+    "invalid-value": "__error__ isn't a meaningful value for this property. Double-check what values you can use here.",
+    "require-value": "Put a value for __error__ after the colon.",
+    "selector-expected": "Use a comma to separate multiple tag names, classes, or IDs.",
+    "unknown-property": "__error__ isn't a property that CSS understands. Double-check the name of the property that you want to use."
+  },
+  "html": {
+    "align": "Don't use the \"align\" attribute. Instead, use the CSS text-align property",
+    "background": "Don't use the \"background\" attribute. Instead, use the CSS background property",
+    "bgcolor": "Don't use the \"bgcolor\" attribute. Instead, use the CSS background-color property",
+    "border": "",
+    "frameborder": "Don't use the \"__attribute__\" attribute. Instead, use the CSS border property",
+    "marginwidth": "Don't use the \"marginwidth\" attribute. Instead, use the CSS margin-left and margin-right properties",
+    "marginheight": "Don't use the \"marginheight\" attribute. Instead, use the CSS margin-top and margin-bottom properties",
+    "scrolling": "Don't use the \"scrolling\" attribute. Instead, use the CSS overflow property",
+    "width": "Don't use the \"width\" attribute. Instead, use the CSS width property",
+    "E002": "Use lower case for attribute names",
+    "E005": "You need to put the value of the __attribute__ attribute in quotation marks\nTry: __attribute__=\"myvalue\"",
+    "E006": "Every attribute needs a value.\nTry: myattribute=\"myvalue\"",
+    "E007": "The first line of your HTML should always be:\n<!DOCTYPE html>",
+    "E008": "The first line of your HTML should always be:\n<!DOCTYPE html>",
+    "E012": "You can't use the id \"__id__\" more than once in your HTML",
+    "E014": "<img> tags need a src attribute, with the URL of the image you want to display.\nTry: <img src=\"http://coolimages.com/image.jpg\">",
+    "E016": {
+      "b": "You shouldn't use the <b> tag. Use the <strong> tag instead",
+      "big": "You shouldn't use the <big> tag. Use the CSS font-size property instead",
+      "center": "You shouldn't use the <center> tag. Use the CSS property margin: auto instead",
+      "font": "You shouldn't use the <font> tag. Use the CSS font-face property instead.",
+      "i": "You shouldn't use the <i> tag. Use the <em> tag instead",
+      "strike": "You shouldn't use the <strike> tag. Use the CSS property text-decoration: line-through instead",
+      "tt": "You shouldn't use the <tt> tag. Use the <code> tag instead."
+    },
+    "E017": "Use lower case for tag names",
+    "E027": "Put a <title> tag inside your <head> tag",
+    "E028": "You have more than one <title> tag in your document; you should only have one",
+    "E030": "You have an opening tag somewhere in the HTML that doesn't have a closing tag to match it.",
+    "E036": "Lines should be indented with four spaces.\nUse the 'tab' key to increase indentation and the 'delete' key to decrease indentation."
+  },
+  "javascript": {
+    "E019": "There is a __error_a__ on this line that needs a closing __error_a_match__",
+    "E020": "There is a __error_b__ on this line that needs a closing __error_a__",
+    "E030": "There's something missing from this line. Did you forget something?",
+    "W003": "You can't use the variable __error_a__ before declaring it.",
+    "W030": "It looks like there's something on this line that doesn't belong there",
+    "W031": "If you are making a new object, be sure to use it or store it in a variable",
+    "W032": "You don't need a semicolon ; on this line",
+    "W033": "You need a semicolon ; at the end of this line",
+    "W058": "There should be parentheses here.\nTry: new __error_a__()",
+    "W084": "Use === to check if two things are equal",
+    "W098": "You don't use the variable __error_a__ anywhere",
+    "W112": "The string on this line needs to end with another quotation mark",
+    "W116": {
+      "case-1": "You should use === instead of ==",
+      "case-2": "You should use !== instead of !=",
+      "case-3": "There should be a __error_a__ where you wrote __error_b__"
+    },
+    "W117": "You haven't declared __error_a__.\nTry: var __error_a__;",
+    "W123": "You already declared __error_a__ somewhere else."
+  }
+}
