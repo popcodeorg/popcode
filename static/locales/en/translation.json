@@ -15,15 +15,17 @@
     "unknown-property": "__error__ isn't a property that CSS understands. Double-check the name of the property that you want to use."
   },
   "html": {
-    "align": "Don't use the \"align\" attribute. Instead, use the CSS text-align property",
-    "background": "Don't use the \"background\" attribute. Instead, use the CSS background property",
-    "bgcolor": "Don't use the \"bgcolor\" attribute. Instead, use the CSS background-color property",
-    "border": "",
-    "frameborder": "Don't use the \"__attribute__\" attribute. Instead, use the CSS border property",
-    "marginwidth": "Don't use the \"marginwidth\" attribute. Instead, use the CSS margin-left and margin-right properties",
-    "marginheight": "Don't use the \"marginheight\" attribute. Instead, use the CSS margin-top and margin-bottom properties",
-    "scrolling": "Don't use the \"scrolling\" attribute. Instead, use the CSS overflow property",
-    "width": "Don't use the \"width\" attribute. Instead, use the CSS width property",
+    "banned-attributes": {
+      "align": "Don't use the \"align\" attribute. Instead, use the CSS text-align property",
+      "background": "Don't use the \"background\" attribute. Instead, use the CSS background property",
+      "bgcolor": "Don't use the \"bgcolor\" attribute. Instead, use the CSS background-color property",
+      "border": "",
+      "frameborder": "Don't use the \"__attribute__\" attribute. Instead, use the CSS border property",
+      "marginwidth": "Don't use the \"marginwidth\" attribute. Instead, use the CSS margin-left and margin-right properties",
+      "marginheight": "Don't use the \"marginheight\" attribute. Instead, use the CSS margin-top and margin-bottom properties",
+      "scrolling": "Don't use the \"scrolling\" attribute. Instead, use the CSS overflow property",
+      "width": "Don't use the \"width\" attribute. Instead, use the CSS width property"
+    },
     "E002": "Use lower case for attribute names",
     "E005": "You need to put the value of the __attribute__ attribute in quotation marks\nTry: __attribute__=\"myvalue\"",
     "E006": "Every attribute needs a value.\nTry: myattribute=\"myvalue\"",

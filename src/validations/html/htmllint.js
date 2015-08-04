@@ -5,22 +5,22 @@ var humanErrors = {
   "E001": function(error) {
     switch(error.data.attribute.toLowerCase()) {
       case 'align':
-        return i18n.t('html.align');
+        return i18n.t('html.banned-attributes.align');
       case 'background':
-        return i18n.t('html.background');
+        return i18n.t('html.banned-attributes.background');
       case 'bgcolor':
-        return i18n.t('html.bgcolor');
+        return i18n.t('html.banned-attributes.bgcolor');
       case 'border':
       case 'frameborder':
-        return i18n.t('html.frameborder', { attribute: error.data.attribute });
+        return i18n.t('html.banned-attributes.frameborder', { attribute: error.data.attribute });
       case 'marginwidth':
-        return i18n.t('html.marginwidth');
+        return i18n.t('html.banned-attributes.marginwidth');
       case 'marginheight':
-        return i18n.t('html.marginheight');
+        return i18n.t('html.banned-attributes.marginheight');
       case 'scrolling':
-        return i18n.t('html.scrolling');
+        return i18n.t('html.banned-attributes.scrolling');
       case 'width':
-        return i18n.t('html.width');
+        return i18n.t('html.banned-attributes.width');
     }
   },
 
