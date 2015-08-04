@@ -25,70 +25,70 @@ var humanErrors = {
   },
 
   "E002": function() {
-    return i18n.t("html.E002");
+    return i18n.t("html.lower-case");
   },
 
   "E005": function(error) {
-    return i18n.t("html.E005", { attribute: error.data.attribute });
+    return i18n.t("html.attribute-quotes", { attribute: error.data.attribute });
   },
 
   "E006": function(error) {
-    return i18n.t("html.E006");
+    return i18n.t("html.attribute-value");
   },
 
   "E007": function() {
-    return i18n.t("html.E007");
+    return i18n.t("html.doctype");
   },
 
   "E008": function() {
-    return i18n.t("html.E008");
+    return i18n.t("html.doctype");
   },
 
   "E012": function(error) {
-    return i18n.t("html.E012", { id: error.data.id });
+    return i18n.t("html.duplicated-id", { id: error.data.id });
   },
 
   "E014": function() {
-    return i18n.t("html.E014");
+    return i18n.t("html.img-src");
   },
 
   "E016": function(error) {
     switch (error.data.tag.toLowerCase()) {
       case 'b':
-        return i18n.t('html.b');
+        return i18n.t('html.deprecated-tag.b');
       case 'big':
-        return i18n.t('html.big');
+        return i18n.t('html.deprecated-tag.big');
       case 'center':
-        return i18n.t('html.center');
+        return i18n.t('html.deprecated-tag.center');
       case 'font':
-        return i18n.t('html.font');
+        return i18n.t('html.deprecated-tag.font');
       case 'i':
-        return i18n.t('html.i');
+        return i18n.t('html.deprecated-tag.i');
       case 'strike':
-        return i18n.t('html.strike');
+        return i18n.t('html.deprecated-tag.strike');
       case 'tt':
-        return i18n.t('html.tt');
+        return i18n.t('html.deprecated-tag.tt');
     }
   },
 
   "E017": function() {
-    return i18n.t("html.E017")
+    return i18n.t("html.lower-case-tag-name")
   },
 
   "E027": function() {
-    return i18n.t("html.E027")
+    return i18n.t("html.missing-title")
   },
 
   "E028": function() {
-    return i18n.t("html.E028")
+    return i18n.t("html.duplicated-title")
   },
 
   "E030": function() {
-    return i18n.t("html.E030")
+    return i18n.t("html.opened-tag")
   },
 
   "E036": function() {
-    return i18n.t("html.E036")
+    return i18n.t("html.indentation")
   }
 };
 
