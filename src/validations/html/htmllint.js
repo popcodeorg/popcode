@@ -5,90 +5,90 @@ var humanErrors = {
   "E001": function(error) {
     switch(error.data.attribute.toLowerCase()) {
       case 'align':
-        return i18n.t('html.banned-attributes.align');
+        return i18n.t('errors.html.banned-attributes.align');
       case 'background':
-        return i18n.t('html.banned-attributes.background');
+        return i18n.t('errors.html.banned-attributes.background');
       case 'bgcolor':
-        return i18n.t('html.banned-attributes.bgcolor');
+        return i18n.t('errors.html.banned-attributes.bgcolor');
       case 'border':
       case 'frameborder':
-        return i18n.t('html.banned-attributes.frameborder', { attribute: error.data.attribute });
+        return i18n.t('errors.html.banned-attributes.frameborder', { attribute: error.data.attribute });
       case 'marginwidth':
-        return i18n.t('html.banned-attributes.marginwidth');
+        return i18n.t('errors.html.banned-attributes.marginwidth');
       case 'marginheight':
-        return i18n.t('html.banned-attributes.marginheight');
+        return i18n.t('errors.html.banned-attributes.marginheight');
       case 'scrolling':
-        return i18n.t('html.banned-attributes.scrolling');
+        return i18n.t('errors.html.banned-attributes.scrolling');
       case 'width':
-        return i18n.t('html.banned-attributes.width');
+        return i18n.t('errors.html.banned-attributes.width');
     }
   },
 
   "E002": function() {
-    return i18n.t("html.lower-case");
+    return i18n.t("errors.html.lower-case");
   },
 
   "E005": function(error) {
-    return i18n.t("html.attribute-quotes", { attribute: error.data.attribute });
+    return i18n.t("errors.html.attribute-quotes", { attribute: error.data.attribute });
   },
 
   "E006": function(error) {
-    return i18n.t("html.attribute-value");
+    return i18n.t("errors.html.attribute-value");
   },
 
   "E007": function() {
-    return i18n.t("html.doctype");
+    return i18n.t("errors.html.doctype");
   },
 
   "E008": function() {
-    return i18n.t("html.doctype");
+    return i18n.t("errors.html.doctype");
   },
 
   "E012": function(error) {
-    return i18n.t("html.duplicated-id", { id: error.data.id });
+    return i18n.t("errors.html.duplicated-id", { id: error.data.id });
   },
 
   "E014": function() {
-    return i18n.t("html.img-src");
+    return i18n.t("errors.html.img-src");
   },
 
   "E016": function(error) {
     switch (error.data.tag.toLowerCase()) {
       case 'b':
-        return i18n.t('html.deprecated-tag.b');
+        return i18n.t('errors.html.deprecated-tag.b');
       case 'big':
-        return i18n.t('html.deprecated-tag.big');
+        return i18n.t('errors.html.deprecated-tag.big');
       case 'center':
-        return i18n.t('html.deprecated-tag.center');
+        return i18n.t('errors.html.deprecated-tag.center');
       case 'font':
-        return i18n.t('html.deprecated-tag.font');
+        return i18n.t('errors.html.deprecated-tag.font');
       case 'i':
-        return i18n.t('html.deprecated-tag.i');
+        return i18n.t('errors.html.deprecated-tag.i');
       case 'strike':
-        return i18n.t('html.deprecated-tag.strike');
+        return i18n.t('errors.html.deprecated-tag.strike');
       case 'tt':
-        return i18n.t('html.deprecated-tag.tt');
+        return i18n.t('errors.html.deprecated-tag.tt');
     }
   },
 
   "E017": function() {
-    return i18n.t("html.lower-case-tag-name")
+    return i18n.t("errors.html.lower-case-tag-name")
   },
 
   "E027": function() {
-    return i18n.t("html.missing-title")
+    return i18n.t("errors.html.missing-title")
   },
 
   "E028": function() {
-    return i18n.t("html.duplicated-title")
+    return i18n.t("errors.html.duplicated-title")
   },
 
   "E030": function() {
-    return i18n.t("html.opened-tag")
+    return i18n.t("errors.html.opened-tag")
   },
 
   "E036": function() {
-    return i18n.t("html.indentation")
+    return i18n.t("errors.html.indentation")
   }
 };
 

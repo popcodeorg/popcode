@@ -24,69 +24,69 @@ var match = {
 
 var humanErrors = {
   "E019": function(error) {
-    return i18n.t("javascript.unmatched", { opening_symbol: error.a, closing_symbol: match[error.a] });
+    return i18n.t("errors.javascript.unmatched", { opening_symbol: error.a, closing_symbol: match[error.a] });
   },
 
   "E020": function(error) {
-    return i18n.t("javascript.closing-match", { opening_symbol: error.b, closing_symbol: error.a });
+    return i18n.t("errors.javascript.closing-match", { opening_symbol: error.b, closing_symbol: error.a });
   },
 
   "E030": function() {
-    return i18n.t("javascript.expected-identifier");
+    return i18n.t("errors.javascript.expected-identifier");
   },
 
   "W003": function(error) {
-    return i18n.t("javascript.undefined-variable", { variable: error.a });
+    return i18n.t("errors.javascript.undefined-variable", { variable: error.a });
   },
 
   "W030": function() {
-    return i18n.t("javascript.unexpected-expression");
+    return i18n.t("errors.javascript.unexpected-expression");
   },
 
   "W031": function() {
-    return i18n.t("javascript.use-new-object");
+    return i18n.t("errors.javascript.use-new-object");
   },
 
   "W032": function() {
-    return i18n.t("javascript.unnecessary-semicolon");
+    return i18n.t("errors.javascript.unnecessary-semicolon");
   },
 
   "W033": function() {
-    return i18n.t("javascript.missing-semicolon");
+    return i18n.t("errors.javascript.missing-semicolon");
   },
 
   "W058": function(error) {
-    return i18n.t("javascript.missing-parentheses", { object: error.a } );
+    return i18n.t("errors.javascript.missing-parentheses", { object: error.a } );
   },
 
   "W084": function() {
-    return i18n.t("javascript.strict-comparison-operator");
+    return i18n.t("errors.javascript.strict-comparison-operator");
   },
 
   "W098": function(error) {
-    return i18n.t("javascript.unused-variable", { variable: error.a });
+    return i18n.t("errors.javascript.unused-variable", { variable: error.a });
   },
 
   "W112": function() {
-    return i18n.t("javascript.unclosed-string");
+    return i18n.t("errors.javascript.unclosed-string");
   },
 
   "W116": function(error) {
     if (error.a === "===" && error.b === "==") {
-      return i18n.t("javascript.strict-operators.equal");
+      return i18n.t("errors.javascript.strict-operators.equal");
     } else if (error.a === "!==" && error.b === "!=") {
-      return i18n.t("javascript.strict-operators.different");
+      return i18n.t("errors.javascript.strict-operators.different");
     } else {
-      return i18n.t("javascript.strict-operators.custom-case", { good_operator: error.a, bad_operator: error.b });
+      return i18n.t("errors.javascript.strict-operators.custom-case", { good_operator: error.a, bad_operator: error.b });
     }
   },
 
   "W117": function(error) {
-    i18n.t("javascript.declare-variable", { variable: error.a });
+    i18n.t("errors.javascript.declare-variable", { variable: error.a });
   },
 
   "W123": function(error) {
-    i18n.t("javascript.duplicated-declaration", { variable: error.a });
+    i18n.t("errors.javascript.duplicated-declaration", { variable: error.a });
   }
 };
 

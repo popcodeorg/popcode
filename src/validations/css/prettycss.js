@@ -4,35 +4,35 @@ var Promise = require('es6-promise').Promise;
 
 var humanErrors = {
   "block-expected": function(error) {
-    return i18n.t("prettycss.block-expected", { error: error.token.content });
+    return i18n.t("errors.prettycss.block-expected", { error: error.token.content });
   },
 
   "extra-tokens-after-value": function() {
-    return i18n.t("prettycss.extra-tokens-after-value");
+    return i18n.t("errors.prettycss.extra-tokens-after-value");
   },
 
   "illegal-token-after-combinator": function() {
-    return i18n.t("prettycss.illegal-token-after-combinator");
+    return i18n.t("errors.prettycss.illegal-token-after-combinator");
   },
 
   "invalid-token": function() {
-    return i18n.t("prettycss.invalid-token");
+    return i18n.t("errors.prettycss.invalid-token");
   },
 
   "invalid-value": function(error) {
-    return i18n.t("prettycss.invalid-value", { error: error.token.content });
+    return i18n.t("errors.prettycss.invalid-value", { error: error.token.content });
   },
 
   "require-value": function(error) {
-    return i18n.t("prettycss.require-value", { error: error.token.content });
+    return i18n.t("errors.prettycss.require-value", { error: error.token.content });
   },
 
   "selector-expected": function() {
-    return i18n.t("prettycss.selector-expected");
+    return i18n.t("errors.prettycss.selector-expected");
   },
 
   "unknown-property": function(error) {
-    return i18n.t("prettycss.unknown-property", { error: error.token.content });
+    return i18n.t("errors.prettycss.unknown-property", { error: error.token.content });
   }
 };
 
