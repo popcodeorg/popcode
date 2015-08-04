@@ -1,3 +1,4 @@
+var i18n = require('i18next-client');
 var htmllint = require('htmllint');
 
 var humanErrors = {

@@ -1,3 +1,4 @@
+var i18n = require('i18next-client');
 var css = require('css');
 var Promise = require('es6-promise').Promise;
 

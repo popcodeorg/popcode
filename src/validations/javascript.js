@@ -1,3 +1,4 @@
+var i18n = require('i18next-client');
 var JSHINT = require('jshint').JSHINT;
 var Promise = require('es6-promise').Promise;
 
