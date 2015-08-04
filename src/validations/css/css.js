@@ -4,15 +4,15 @@ var Promise = require('es6-promise').Promise;
 
 var humanErrors = {
   "missing '}'": function() {
-    i18n.t("css.missing-curly")
+    return i18n.t("css.missing-curly");
   },
 
   "property missing ':'": function() {
-    i18n.t("css.property-missing-colon")
+    return i18n.t("css.property-missing-colon");
   },
 
   "selector missing": function() {
-    i18n.t("css.selector-missing")
+    return i18n.t("css.selector-missing");
   }
 };
 
