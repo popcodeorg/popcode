@@ -1,5 +1,6 @@
 var React = require('react');
 var _ = require('lodash');
+var i18n = require('i18next-client');
 
 var ErrorItem = React.createClass({
   render: function() {
@@ -21,11 +22,12 @@ var ErrorSublist = React.createClass({
     var errors = _.map(this.props.errors, function(error) {
       return <ErrorItem {...error} onClick={_.partial(this.props.onErrorClicked, this.props.language)} />
     }.bind(this));
+    var error_message = i18n.t("errors.notice", { amount: this.props.errors.length, language: this.props.language });
 
     return (
       <div className="errorList-errorSublist">
         <h2 className="errorList-errorSublist-header">
-          You have {this.props.errors.length} errors in your {this.props.language}!
+          {error_message}
         </h2>
         <ul className="errorList-errorSublist-list">
           {errors}
