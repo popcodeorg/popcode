@@ -9,6 +9,7 @@
     "css": "^2.2.1",
     "es6-promise": "^2.3.0",
     "htmllint": "^0.2.4",
+    "i18next-client": "1.10.2",
     "jscs": "1.13.1",
     "jshint": "^2.8.0",
     "lodash": "^3.10.0",
@@ -16,8 +17,7 @@
     "PrettyCSS": "^0.3.10",
     "react": "^0.13.3",
     "reactify": "^1.1.1",
-    "watchify": "^3.2.3",
-    "i18next-client": "1.10.2"
+    "watchify": "^3.2.3"
   },
   "engines": {
     "node": "0.12.x"
