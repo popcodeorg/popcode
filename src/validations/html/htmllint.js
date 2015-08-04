@@ -4,90 +4,90 @@ var humanErrors = {
   "E001": function(error) {
     switch(error.data.attribute.toLowerCase()) {
       case 'align':
-        return "Don't use the \"align\" attribute. Instead, use the CSS text-align property";
+        return i18n.t('html.align');
       case 'background':
-        return "Don't use the \"background\" attribute. Instead, use the CSS background property";
+        return i18n.t('html.background');
       case 'bgcolor':
-        return "Don't use the \"bgcolor\" attribute. Instead, use the CSS background-color property";
+        return i18n.t('html.bgcolor');
       case 'border':
       case 'frameborder':
-        return "Don't use the \"" + error.data.attribute + "\" attribute. Instead, use the CSS border property";
+        return i18n.t('html.frameborder', { attribute: error.data.attribute });
       case 'marginwidth':
-        return "Don't use the \"marginwidth\" attribute. Instead, use the CSS margin-left and margin-right properties";
+        return i18n.t('html.marginwidth');
       case 'marginheight':
-        return "Don't use the \"marginheight\" attribute. Instead, use the CSS margin-top and margin-bottom properties";
+        return i18n.t('html.marginheight');
       case 'scrolling':
-        return "Don't use the \"scrolling\" attribute. Instead, use the CSS overflow property";
+        return i18n.t('html.scrolling');
       case 'width':
-        return "Don't use the \"width\" attribute. Instead, use the CSS width property";
+        return i18n.t('html.width');
     }
   },
 
   "E002": function() {
-    return "Use lower case for attribute names";
+    return i18n.t("html.E002");
   },
 
   "E005": function(error) {
-    return "You need to put the value of the " + error.data.attribute + " attribute in quotation marks\nTry: " + error.data.attribute + "=\"myvalue\"";
+    return i18n.t("html.E005", { attribute: error.data.attribute });
   },
 
   "E006": function(error) {
-    return "Every attribute needs a value.\nTry: myattribute=\"myvalue\"";
+    return i18n.t("html.E006");
   },
 
   "E007": function() {
-    return "The first line of your HTML should always be:\n<!DOCTYPE html>";
+    return i18n.t("html.E007");
   },
 
   "E008": function() {
-    return "The first line of your HTML should always be:\n<!DOCTYPE html>";
+    return i18n.t("html.E008");
   },
 
   "E012": function(error) {
-    return "You can't use the id \"" + error.data.id + "\" more than once in your HTML";
+    return i18n.t("html.E012", { id: error.data.id });
   },
 
   "E014": function() {
-    return "<img> tags need a src attribute, with the URL of the image you want to display.\nTry: <img src=\"http://coolimages.com/image.jpg\">";
+    return i18n.t("html.E014");
   },
 
   "E016": function(error) {
     switch (error.data.tag.toLowerCase()) {
       case 'b':
-        return "You shouldn't use the <b> tag. Use the <strong> tag instead";
+        return i18n.t('html.b');
       case 'big':
-        return "You shouldn't use the <big> tag. Use the CSS font-size property instead";
+        return i18n.t('html.big');
       case 'center':
-        return "You shouldn't use the <center> tag. Use the CSS property margin: auto instead";
+        return i18n.t('html.center');
       case 'font':
-        return "You shouldn't use the <font> tag. Use the CSS font-face property instead.";
+        return i18n.t('html.font');
       case 'i':
-        return "You shouldn't use the <i> tag. Use the <em> tag instead";
+        return i18n.t('html.i');
       case 'strike':
-        return "You shouldn't use the <strike> tag. Use the CSS property text-decoration: line-through instead";
+        return i18n.t('html.strike');
       case 'tt':
-        return "You shouldn't use the <tt> tag. Use the <code> tag instead.";
+        return i18n.t('html.tt');
     }
   },
 
   "E017": function() {
-    return "Use lower case for tag names";
+    return i18n.t("html.E017")
   },
 
   "E027": function() {
-    return "Put a <title> tag inside your <head> tag";
+    return i18n.t("html.E027")
   },
 
   "E028": function() {
-    return "You have more than one <title> tag in your document; you should only have one";
+    return i18n.t("html.E028")
   },
 
   "E030": function() {
-    return "You have an opening tag somewhere in the HTML that doesn't have a closing tag to match it.";
+    return i18n.t("html.E030")
   },
 
   "E036": function() {
-    return "Lines should be indented with four spaces.\nUse the 'tab' key to increase indentation and the 'delete' key to decrease indentation.";
+    return i18n.t("html.E036")
   }
 };
 

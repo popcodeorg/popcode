@@ -3,35 +3,35 @@ var Promise = require('es6-promise').Promise;
 
 var humanErrors = {
   "block-expected": function(error) {
-    return "Start a block using { after your selector.\nTry: " + error.token.content + " {";
+    return i18n.t("prettycss.block-expected", { error: error.token.content });
   },
 
   "extra-tokens-after-value": function() {
-    return "Looks like you're missing a semicolon on the line before this one.";
+    return i18n.t("prettycss.extra-tokens-after-value");
   },
 
   "illegal-token-after-combinator": function() {
-    return "After a + or > in a selector, you need to specify the name of another element, class, or ID";
+    return i18n.t("prettycss.illegal-token-after-combinator");
   },
 
   "invalid-token": function() {
-    return "This line doesn't look like valid CSS.";
+    return i18n.t("prettycss.invalid-token");
   },
 
   "invalid-value": function(error) {
-    return error.token.content + " isn't a meaningful value for this property. Double-check what values you can use here.";
+    return i18n.t("prettycss.invalid-value", { error: error.token.content });
   },
 
   "require-value": function(error) {
-    return "Put a value for " + error.token.content + " after the colon.";
+    return i18n.t("prettycss.require-value", { error: error.token.content });
   },
 
   "selector-expected": function() {
-    return "Use a comma to separate multiple tag names, classes, or IDs.";
+    return i18n.t("prettycss.selector-expected");
   },
 
   "unknown-property": function(error) {
-    return error.token.content + " isn't a property that CSS understands. Double-check the name of the property that you want to use.";
+    return i18n.t("prettycss.unknown-property", { error: error.token.content });
   }
 };
 

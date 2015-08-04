@@ -23,69 +23,69 @@ var match = {
 
 var humanErrors = {
   "E019": function(error) {
-    return "There is a " + error.a + " on this line that needs a closing " + match[error.a];
+    return i18n.t("javascript.E019", { error_a: error.a, error_a_match: match[error.a] });
   },
 
   "E020": function(error) {
-    return "There is a " + error.b + " on this line that needs a closing " + error.a;
+    return i18n.t("javascript.E019", { error_a: error.a, error_b: error.b });
   },
 
   "E030": function() {
-    return "There's something missing from this line. Did you forget something?";
+    return i18n.t("javascript.E030");
   },
 
   "W003": function(error) {
-    return "You can't use the variable "  + error.a + " before declaring it.";
+    return i18n.t("javascript.E030", { error_a: error.a });
   },
 
   "W030": function() {
-    return "It looks like there's something on this line that doesn't belong there";
+    return i18n.t("javascript.W030");
   },
 
   "W031": function() {
-    return "If you are making a new object, be sure to use it or store it in a variable";
+    return i18n.t("javascript.W031");
   },
 
   "W032": function() {
-    return "You don't need a semicolon ; on this line";
+    return i18n.t("javascript.W032");
   },
 
   "W033": function() {
-    return "You need a semicolon ; at the end of this line";
+    return i18n.t("javascript.W033");
   },
 
   "W058": function(error) {
-    return "There should be parentheses here.\nTry: new " + error.a + "()";
+    return i18n.t("javascript.W058", { error_a: error.a } );
   },
 
   "W084": function() {
-    return "Use === to check if two things are equal";
+    return i18n.t("javascript.W084");
   },
 
   "W098": function(error) {
-    return "You don't use the variable " + error.a + " anywhere";
+    return i18n.t("javascript.W098", { error_a: error.a });
   },
 
   "W112": function() {
-    return "The string on this line needs to end with another quotation mark";
+    return i18n.t("javascript.W112");
   },
 
   "W116": function(error) {
     if (error.a === "===" && error.b === "==") {
-      return "You should use === instead of ==";
+      return i18n.t("javascript.W116.case-1");
     } else if (error.a === "!==" && error.b === "!=") {
-      return "You should use !== instead of !=";
+      return i18n.t("javascript.W116.case-2");
     } else {
-      return "There should be a " + error.a + " where you wrote " + error.b;
+      return i18n.t("javascript.W116.case-3", { error_a: error.a, error_b: error.b });
     }
   },
 
   "W117": function(error) {
-    return "You haven't declared " + error.a + ".\nTry: var " + error.a + ";";
+    i18n.t("javascript.W117", { error_a: error.a });
   },
 
   "W123": function(error) {
-    return "You already declared " + error.a + " somewhere else.";
+    i18n.t("javascript.W123", { error_a: error.a });
   }
 };
 

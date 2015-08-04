@@ -3,15 +3,15 @@ var Promise = require('es6-promise').Promise;
 
 var humanErrors = {
   "missing '}'": function() {
-    return "You have a starting { but no ending } to go with it.";
+    i18n.t("css.missing-curly")
   },
 
   "property missing ':'": function() {
-    return "Put a colon (:) between the property and the value.\nTry: color: red";
+    i18n.t("css.property-missing-colon")
   },
 
   "selector missing": function() {
-    return "Start every block of CSS with a selector, such as an element name or class name.\nTry: p {\n  color: red;\n}";
+    i18n.t("css.selector-missing")
   }
 };
 
