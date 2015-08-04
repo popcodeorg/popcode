@@ -26,7 +26,7 @@ function convertErrorToAnnotation(error) {
       type: "error"
     };
   } else {
-    console.warn("Couldn't find a human description for", error);
+    console.warn(i18n.t('errors.undefined-description'), error);
   }
 };
 
