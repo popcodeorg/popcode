@@ -24,11 +24,11 @@ var match = {
 
 var humanErrors = {
   "E019": function(error) {
-    return i18n.t("javascript.unmatched", { error_a: error.a, error_a_match: match[error.a] });
+    return i18n.t("javascript.unmatched", { opening_symbol: error.a, closing_symbol: match[error.a] });
   },
 
   "E020": function(error) {
-    return i18n.t("javascript.closing-match", { error_a: error.a, error_b: error.b });
+    return i18n.t("javascript.closing-match", { opening_symbol: error.b, closing_symbol: error.a });
   },
 
   "E030": function() {
@@ -36,7 +36,7 @@ var humanErrors = {
   },
 
   "W003": function(error) {
-    return i18n.t("javascript.undefined-variable", { error_a: error.a });
+    return i18n.t("javascript.undefined-variable", { variable: error.a });
   },
 
   "W030": function() {
@@ -56,7 +56,7 @@ var humanErrors = {
   },
 
   "W058": function(error) {
-    return i18n.t("javascript.missing-parentheses", { error_a: error.a } );
+    return i18n.t("javascript.missing-parentheses", { object: error.a } );
   },
 
   "W084": function() {
@@ -64,7 +64,7 @@ var humanErrors = {
   },
 
   "W098": function(error) {
-    return i18n.t("javascript.unused-variable", { error_a: error.a });
+    return i18n.t("javascript.unused-variable", { variable: error.a });
   },
 
   "W112": function() {
@@ -77,16 +77,16 @@ var humanErrors = {
     } else if (error.a === "!==" && error.b === "!=") {
       return i18n.t("javascript.strict-operators.different");
     } else {
-      return i18n.t("javascript.strict-operators.custom-case", { error_a: error.a, error_b: error.b });
+      return i18n.t("javascript.strict-operators.custom-case", { good_operator: error.a, bad_operator: error.b });
     }
   },
 
   "W117": function(error) {
-    i18n.t("javascript.declare-variable", { error_a: error.a });
+    i18n.t("javascript.declare-variable", { variable: error.a });
   },
 
   "W123": function(error) {
-    i18n.t("javascript.duplicated-declaration", { error_a: error.a });
+    i18n.t("javascript.duplicated-declaration", { variable: error.a });
   }
 };
 

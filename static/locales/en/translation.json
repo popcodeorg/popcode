@@ -48,24 +48,24 @@
     "indentation": "Lines should be indented with four spaces.\nUse the 'tab' key to increase indentation and the 'delete' key to decrease indentation."
   },
   "javascript": {
-    "unmatched": "There is a __error_a__ on this line that needs a closing __error_a_match__",
-    "closing-match": "There is a __error_b__ on this line that needs a closing __error_a__",
+    "unmatched": "There is a __opening_symbol__ on this line that needs a closing __closing_symbol__",
+    "closing-match": "There is a __opening_symbol__ on this line that needs a closing __closing_symbol__",
     "expected-identifier": "There's something missing from this line. Did you forget something?",
-    "undefined-variable": "You can't use the variable __error_a__ before declaring it.",
+    "undefined-variable": "You can't use the variable __variable__ before declaring it.",
     "unexpected-expression": "It looks like there's something on this line that doesn't belong there",
     "use-new-object": "If you are making a new object, be sure to use it or store it in a variable",
     "unnecessary-semicolon": "You don't need a semicolon ; on this line",
     "missing-semicolon": "You need a semicolon ; at the end of this line",
-    "missing-parentheses": "There should be parentheses here.\nTry: new __error_a__()",
+    "missing-parentheses": "There should be parentheses here.\nTry: new __object__()",
     "strict-comparison-operator": "Use === to check if two things are equal",
-    "unused-variable": "You don't use the variable __error_a__ anywhere",
+    "unused-variable": "You don't use the variable __variable__ anywhere",
     "unclosed-string": "The string on this line needs to end with another quotation mark",
     "strict-operators": {
       "equal": "You should use === instead of ==",
       "different": "You should use !== instead of !=",
-      "custom-case": "There should be a __error_a__ where you wrote __error_b__"
+      "custom-case": "There should be a __good_operator__ where you wrote __bad_operator__"
     },
-    "declare-variable": "You haven't declared __error_a__.\nTry: var __error_a__;",
-    "duplicated-declaration": "You already declared __error_a__ somewhere else."
+    "declare-variable": "You haven't declared __variable__.\nTry: var __variable__;",
+    "duplicated-declaration": "You already declared __variable__ somewhere else."
   }
 }
