@@ -2,6 +2,7 @@
   "errors": {
     "undefined-description": "Couldn't find a human description for",
     "notice": "You have __amount__ errors in your __language__!",
+    "line-number": "Line __number__:",
     "css": {
       "missing-curly": "You have a starting { but no ending } to go with it.",
       "property-missing-colon": "Put a colon (:) between the property and the value.\nTry: color: red",
