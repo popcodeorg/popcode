@@ -1,6 +1,6 @@
 var i18n = require('i18next-client');
 i18n.init({
-  lng: 'en',
+  fallbackLng: 'en',
   debug: true
 });
 
