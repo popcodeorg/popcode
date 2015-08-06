@@ -2,6 +2,16 @@
   "name": "learnpad",
   "version": "0.0.1",
   "description": "Web-based HTML/CSS/JS editor for beginners",
+  "contributors": [
+    {
+      "name": "Mat Brown",
+      "email": "mat.a.brown@gmail.com",
+      "url": "https://github.com/outoftime"
+    }, {
+      "name": "Alejandro AR",
+      "url": "https://github.com/kinduff"
+    }
+  ],
   "dependencies": {
     "brace": "^0.5.1",
     "browserify": "^10.2.4",

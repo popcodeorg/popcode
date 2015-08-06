@@ -126,6 +126,11 @@ second command will live-update your JavaScript bundle as you edit it.
 Learnpad is distributed under the MIT license. See the attached LICENSE file
 for all the sordid details.
 
+## Contributors ##
+
+* [Mat Brown](https://github.com/outoftime) (maintainer)
+* [Alejandro AR](https://github.com/kinduff)
+
 ## Contact ##
 
 Feel free to email me at mat.a.brown@gmail.com if you have any questions.
