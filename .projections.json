@@ -1,0 +1,5 @@
+{
+  "src/components/*.jsx": {"type": "component"},
+  "src/validations/*.js": {"type": "validation"},
+  "src/static/*": {"type": "static"}
+}
