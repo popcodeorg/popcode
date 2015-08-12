@@ -1,6 +1,7 @@
 "use strict";
 
-var React = require('react');
+var React = require('react/addons');
+var update = React.addons.update;
 var Editor = require('./editor.jsx');
 var Output = require('./output.jsx');
 var Validations = require('../validations');
@@ -11,15 +12,26 @@ var Workspace = React.createClass({
     return config.defaults;
   },
 
-  handleUpdate: function(language, source) {
+  updateLanguageState: function(language, languageUpdates) {
+    var stateUpdatesForLanguage = {inputs: {}};
+    stateUpdatesForLanguage.inputs[language] = languageUpdates;
+
+    this.setState(function(oldState) {
+      return update(oldState, stateUpdatesForLanguage);
+    });
+  },
+
+  handleInputUpdate: function(language, source) {
+    this.updateLanguageState(language, {
+      $merge: {source: source, errors: []}
+    });
+    this.validateInput(language, source);
+  },
+
+  validateInput: function(language, source) {
     var validate = Validations[language];
     validate(source).then(function(errors) {
-      var newState = {};
-      newState[language] = {
-        source: source,
-        errors: errors
-      };
-      this.setState(newState);
+      this.updateLanguageState(language, {errors: {$set: errors}});
     }.bind(this));
   },
 
@@ -31,11 +43,11 @@ var Workspace = React.createClass({
   render: function() {
     return (
       <div id="workspace">
-        <Output code={this.state} onErrorClicked={this.onErrorClicked} />
+        <Output inputs={this.state.inputs} onErrorClicked={this.onErrorClicked} />
 
-        <Editor ref="htmlEditor" language="html" {...this.state.html} onChange={this.handleUpdate} />
-        <Editor ref="cssEditor" language="css" {...this.state.css} onChange={this.handleUpdate} />
-        <Editor ref="javascriptEditor" language="javascript" {...this.state.javascript} onChange={this.handleUpdate} />
+        <Editor ref="htmlEditor" language="html" {...this.state.inputs.html} onChange={this.handleInputUpdate} />
+        <Editor ref="cssEditor" language="css" {...this.state.inputs.css} onChange={this.handleInputUpdate} />
+        <Editor ref="javascriptEditor" language="javascript" {...this.state.inputs.javascript} onChange={this.handleInputUpdate} />
       </div>
     )
   }
