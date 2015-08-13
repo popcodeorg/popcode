@@ -7,12 +7,14 @@
       "name": "Mat Brown",
       "email": "mat.a.brown@gmail.com",
       "url": "https://github.com/outoftime"
-    }, {
+    },
+    {
       "name": "Alejandro AR",
       "url": "https://github.com/kinduff"
     }
   ],
   "dependencies": {
+    "PrettyCSS": "^0.3.10",
     "brace": "^0.5.1",
     "browserify": "^10.2.4",
     "bulkify": "^1.1.1",
@@ -22,9 +24,9 @@
     "i18next-client": "^1.10.2",
     "jscs": "1.13.1",
     "jshint": "^2.8.0",
+    "localforage": "^1.2.7",
     "lodash": "^3.10.0",
     "node-static": "^0.7.6",
-    "PrettyCSS": "^0.3.10",
     "react": "^0.13.3",
     "reactify": "^1.1.1",
     "watchify": "^3.2.3"

@@ -5,22 +5,17 @@ var ErrorList = require('./errorList.jsx');
 
 var Output = React.createClass({
   render: function() {
-    var allValid = _.every(this.props.inputs, function(languageProps) {
-      return languageProps.errors.length === 0;
+    var allValid = _.every(this.props.errors, function(errors) {
+      return errors.length === 0;
     });
 
     if (allValid) {
       return (
-        <Preview html={this.props.inputs.html.source}
-          css={this.props.inputs.css.source}
-          javascript={this.props.inputs.javascript.source} />
+        <Preview {...this.props.sources} />
       );
     } else {
       return (
-        <ErrorList html={this.props.inputs.html.errors}
-          css={this.props.inputs.css.errors}
-          javascript={this.props.inputs.javascript.errors}
-          onErrorClicked={this.props.onErrorClicked} />
+        <ErrorList {...this.props.errors} onErrorClicked={this.props.onErrorClicked} />
       );
     }
   }

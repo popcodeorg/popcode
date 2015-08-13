@@ -18,7 +18,8 @@ var Editor = React.createClass({
 
   componentWillReceiveProps: function(nextProps) {
     if (nextProps.source !== this.editor.getValue()) {
-      return;
+      this.editor.setValue(nextProps.source);
+      this.editor.moveCursorTo(0, 0);
     }
 
     this.editor.getSession().setAnnotations(nextProps.errors);
