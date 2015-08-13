@@ -23,6 +23,7 @@ var ErrorSublist = React.createClass({
     var errors = _.map(this.props.errors, function(error) {
       return <ErrorItem {...error} onClick={_.partial(this.props.onErrorClicked, this.props.language)} />
     }.bind(this));
+
     var error_message = i18n.t("errors.notice", { amount: this.props.errors.length, language: this.props.language });
 
     return (
