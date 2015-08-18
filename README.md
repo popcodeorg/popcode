@@ -81,7 +81,7 @@ Some more stuff that would be good:
 Learnpad uses **React** to manage view state, **Ace** as the code editor, and
 **Browserify** to package the client-side application.
 
-Right now, it includes **htmllint**, **css**, **PrettyCSS", **jshint**, and **jscs** for
+Right now, it includes **htmllint**, **css**, **PrettyCSS**, **jshint**, and **jscs** for
 style checking, although as of now jscs is unused.
 
 The Ace editor has a built-in system for error checking, but it's really hard
