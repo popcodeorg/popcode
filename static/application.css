@@ -53,3 +53,12 @@ body {
   background-color: #ffe6e6;
   cursor: pointer;
 }
+
+.toolbar-items--closed {
+  display: none;
+}
+
+.toolbar-items--open {
+  display: block;
+  min-height: 50%;
+}

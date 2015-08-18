@@ -6,6 +6,7 @@ var _ = require('lodash');
 
 var Editor = require('./editor.jsx');
 var Output = require('./output.jsx');
+var Toolbar = require('./toolbar.jsx');
 var Validations = require('../validations');
 var Storage = require('../services/storage');
 var config = require('../config.js');
@@ -76,6 +77,7 @@ var Workspace = React.createClass({
   render: function() {
     return (
       <div id="workspace">
+        <Toolbar />
         <Output sources={this.state.sources} errors={this.state.errors} onErrorClicked={this.onErrorClicked} />
 
         <Editor ref="htmlEditor" language="html" source={this.state.sources.html} errors={this.state.errors.html} onChange={this.setSource} />
