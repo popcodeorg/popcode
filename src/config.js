@@ -22,6 +22,16 @@ module.exports = {
       validations: {javascript: {jquery: {$set: true}}}
     },
     {
+      name: "lodash",
+      javascript: "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js",
+      validations: {javascript: {predef: {$push: ['_']}}}
+    },
+    {
+      name: "Underscore.js",
+      javascript: "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js",
+      validations: {javascript: {predef: {$push: ['_']}}}
+    },
+    {
       name: "AngularJS",
       javascript: "https://code.angularjs.org/1.4.4/angular.js",
       validations: {javascript: {predef: {$push: ['angular']}}}
