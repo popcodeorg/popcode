@@ -1,6 +1,7 @@
 var i18n = require('i18next-client');
 var JSHINT = require('jshint').JSHINT;
 var Promise = require('es6-promise').Promise;
+var update = require('react/addons').addons.update;
 
 var jshintrc = {
   browser: true,
@@ -9,6 +10,7 @@ var jshintrc = {
   eqeqeq: true,
   latedef: true,
   nonew: true,
+  predef: [],
   shadow: "outer",
   undef: true,
   unused: true
@@ -103,8 +105,16 @@ function convertErrorToAnnotation(error) {
   }
 }
 
-module.exports = function(source) {
-  JSHINT(source, jshintrc);
+module.exports = function(source, libraries) {
+  var config = jshintrc;
+  libraries.forEach(function(library) {
+    if (library.validations !== undefined &&
+        library.validations.javascript !== undefined) {
+      config = update(config, library.validations.javascript);
+    }
+  });
+
+  JSHINT(source, config);
   var data = JSHINT.data();
   var annotations = [];
   var annotatedLines = [];

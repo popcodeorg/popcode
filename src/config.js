@@ -18,19 +18,23 @@ module.exports = {
   libraries: [
     {
       name: "jQuery",
-      javascript: "https://code.jquery.com/jquery-2.1.4.js"
+      javascript: "https://code.jquery.com/jquery-2.1.4.js",
+      validations: {javascript: {jquery: {$set: true}}}
     },
     {
       name: "AngularJS",
-      javascript: "https://code.angularjs.org/1.4.4/angular.js"
+      javascript: "https://code.angularjs.org/1.4.4/angular.js",
+      validations: {javascript: {predef: {$push: ['angular']}}}
     },
     {
       name: "React",
-      javascript: "https://fb.me/react-0.13.3.js"
+      javascript: "https://fb.me/react-0.13.3.js",
+      validations: {javascript: {predef: {$push: ['React']}}}
     },
     {
       name: "Ember.js",
-      javascript: "http://builds.emberjs.com/release/ember.js"
+      javascript: "http://builds.emberjs.com/release/ember.js",
+      validations: {javascript: {predef: {$push: ['Ember']}}}
     },
     {
       name: "Bootstrap",

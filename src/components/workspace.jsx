@@ -55,7 +55,7 @@ var Workspace = React.createClass({
 
   validateInput: function(language, source) {
     var validate = Validations[language];
-    validate(source).then(function(errors) {
+    validate(source, this.state.enabledLibraries).then(function(errors) {
       var updateCommand = {errors: {}};
       updateCommand.errors[language] = {$set: errors};
       this.setState(function(oldState) {
