@@ -84,11 +84,11 @@ var humanErrors = {
   },
 
   "W117": function(error) {
-    i18n.t("errors.javascript.declare-variable", { variable: error.a });
+    return i18n.t("errors.javascript.declare-variable", { variable: error.a });
   },
 
   "W123": function(error) {
-    i18n.t("errors.javascript.duplicated-declaration", { variable: error.a });
+    return i18n.t("errors.javascript.duplicated-declaration", { variable: error.a });
   }
 };
 
