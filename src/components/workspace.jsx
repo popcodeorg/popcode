@@ -77,14 +77,48 @@ var Workspace = React.createClass({
   render: function() {
     return (
       <div id="workspace">
-        <Toolbar />
-        <Output sources={this.state.sources} errors={this.state.errors} onErrorClicked={this.onErrorClicked} />
+        <Toolbar
+          enabledLibraries={this.state.enabledLibraries}
+          onLibraryToggled={this._onLibraryToggled} />
 
-        <Editor ref="htmlEditor" language="html" source={this.state.sources.html} errors={this.state.errors.html} onChange={this.setSource} />
-        <Editor ref="cssEditor" language="css" source={this.state.sources.css} errors={this.state.errors.css} onChange={this.setSource} />
-        <Editor ref="javascriptEditor" language="javascript" source={this.state.sources.javascript} errors={this.state.errors.javascript} onChange={this.setSource} />
+        <Output
+          sources={this.state.sources}
+          errors={this.state.errors}
+          enabledLibraries={this.state.enabledLibraries}
+          onErrorClicked={this.onErrorClicked} />
+
+        <Editor
+          language="html"
+          source={this.state.sources.html}
+          errors={this.state.errors.html}
+          onChange={this.setSource} />
+
+        <Editor
+          language="css"
+          source={this.state.sources.css}
+          errors={this.state.errors.css}
+          onChange={this.setSource} />
+
+        <Editor
+          language="javascript"
+          source={this.state.sources.javascript}
+          errors={this.state.errors.javascript}
+          onChange={this.setSource} />
       </div>
     )
+  },
+
+  _onLibraryToggled: function(library) {
+    this.setState(function(oldState) {
+      var libraryIndex = oldState.enabledLibraries.indexOf(library);
+      if (libraryIndex !== -1) {
+        return update(oldState, {
+          enabledLibraries: {$splice: [[libraryIndex, 1]]}
+        });
+      } else {
+        return update(oldState, {enabledLibraries: {$push: [library]}});
+      }
+    });
   }
 });
 

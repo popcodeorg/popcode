@@ -60,5 +60,8 @@ body {
 
 .toolbar-items--open {
   display: block;
-  min-height: 50%;
+}
+
+.toolbar-libraryPicker-library--enabled {
+  font-weight: bold;
 }

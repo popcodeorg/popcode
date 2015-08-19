@@ -16,18 +16,35 @@ var Preview = React.createClass({
     var iframeDocument = iframeElement.contentWindow.document;
     var iframeHead = iframeDocument.head;
     var iframeBody = iframeDocument.body;
+
+    this.props.enabledLibraries.forEach(function(library) {
+      var css = library.css;
+      var javascript = library.javascript;
+      if (css !== undefined) {
+        var linkTag = iframeDocument.createElement('link');
+        linkTag.rel = 'stylesheet';
+        linkTag.href = css;
+        iframeHead.appendChild(linkTag);
+      }
+      if (javascript !== undefined) {
+        var scriptTag = iframeDocument.createElement('script');
+        scriptTag.src = javascript;
+        iframeBody.appendChild(scriptTag);
+      }
+    });
+
     var styleTag = iframeDocument.createElement('style');
-    styleTag.innerText = this.props.css;
+    styleTag.innerText = this.props.sources.css;
     iframeHead.appendChild(styleTag);
     var scriptTag = iframeDocument.createElement('script');
-    scriptTag.innerText = this.props.javascript;
+    scriptTag.innerText = this.props.sources.javascript;
     iframeBody.appendChild(scriptTag);
   },
 
   render: function() {
     return (
       <div id="preview">
-        <iframe id="preview-frame" srcDoc={this.props.html} ref="frame" />
+        <iframe id="preview-frame" srcDoc={this.props.sources.html} ref="frame" />
       </div>
     );
   }
