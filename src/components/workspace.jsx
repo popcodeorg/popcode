@@ -14,7 +14,7 @@ var config = require('../config.js');
 var Workspace = React.createClass({
   getInitialState: function() {
     return _.assign(config.defaults, {
-      storageKey: this.generateStorageKey()
+      storageKey: this._generateStorageKey()
     });
   },
 
@@ -35,7 +35,7 @@ var Workspace = React.createClass({
 
     for (var language in nextState.sources) {
       if (this.state.sources[language] !== nextState.sources[language]) {
-        this.validateInput(
+        this._validateInput(
           language,
           nextState.sources[language],
           nextState.enabledLibraries);
@@ -58,36 +58,6 @@ var Workspace = React.createClass({
     }
   },
 
-  setSource: function(language, source) {
-    var updateCommand = {sources: {}};
-    updateCommand.sources[language] = {$set: source};
-
-    this.setState(function(oldState) {
-      return update(oldState, updateCommand);
-    });
-  },
-
-  validateInput: function(language, source, enabledLibraries) {
-    var validate = Validations[language];
-    validate(source, enabledLibraries).then(function(errors) {
-      var updateCommand = {errors: {}};
-      updateCommand.errors[language] = {$set: errors};
-      this.setState(function(oldState) {
-        return update(oldState, updateCommand);
-      });
-    }.bind(this));
-  },
-
-  onErrorClicked: function(language, line, column) {
-    var editor = this.refs[language + 'Editor'];
-    editor.jumpToLine(line, column);
-  },
-
-  generateStorageKey: function() {
-    var date = new Date();
-    return (date.getTime() * 1000 + date.getMilliseconds()).toString();
-  },
-
   render: function() {
     return (
       <div id="workspace">
@@ -99,27 +69,60 @@ var Workspace = React.createClass({
           sources={this.state.sources}
           errors={this.state.errors}
           enabledLibraries={this.state.enabledLibraries}
-          onErrorClicked={this.onErrorClicked} />
+          onErrorClicked={this._onErrorClicked} />
 
         <Editor
+          ref="htmlEditor"
           language="html"
           source={this.state.sources.html}
           errors={this.state.errors.html}
-          onChange={this.setSource} />
+          onChange={this._setSource} />
 
         <Editor
+          ref="cssEditor"
           language="css"
           source={this.state.sources.css}
           errors={this.state.errors.css}
-          onChange={this.setSource} />
+          onChange={this._setSource} />
 
         <Editor
+          ref="javascriptEditor"
           language="javascript"
           source={this.state.sources.javascript}
           errors={this.state.errors.javascript}
-          onChange={this.setSource} />
+          onChange={this._setSource} />
       </div>
     )
+  },
+
+  _setSource: function(language, source) {
+    var updateCommand = {sources: {}};
+    updateCommand.sources[language] = {$set: source};
+
+    this.setState(function(oldState) {
+      return update(oldState, updateCommand);
+    });
+  },
+
+  _validateInput: function(language, source, enabledLibraries) {
+    var validate = Validations[language];
+    validate(source, enabledLibraries).then(function(errors) {
+      var updateCommand = {errors: {}};
+      updateCommand.errors[language] = {$set: errors};
+      this.setState(function(oldState) {
+        return update(oldState, updateCommand);
+      });
+    }.bind(this));
+  },
+
+  _onErrorClicked: function(language, line, column) {
+    var editor = this.refs[language + 'Editor'];
+    editor._jumpToLine(line, column);
+  },
+
+  _generateStorageKey: function() {
+    var date = new Date();
+    return (date.getTime() * 1000 + date.getMilliseconds()).toString();
   },
 
   _onLibraryToggled: function(libraryKey) {
