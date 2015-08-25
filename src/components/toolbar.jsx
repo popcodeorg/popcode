@@ -67,14 +67,14 @@ var Toolbar = React.createClass({
 
 var LibraryPicker = React.createClass({
   render: function() {
-    var libraries = _.map(config.libraries, function(library) {
+    var libraries = _.map(config.libraries, function(library, key) {
       var classNames = ['toolbar-libraryPicker-library'];
-      if (this.props.enabledLibraries.indexOf(library) !== -1) {
+      if (this.props.enabledLibraries.indexOf(key) !== -1) {
         classNames.push('toolbar-libraryPicker-library--enabled');
       }
       return <li
         className={classNames.join(' ')}
-        onClick={this._onLibraryClicked.bind(this, library)}>
+        onClick={this._onLibraryClicked.bind(this, key)}>
 
         {library.name}
       </li>;
@@ -82,8 +82,8 @@ var LibraryPicker = React.createClass({
     return <ul className="toolbar-libraryPicker">{libraries}</ul>;
   },
 
-  _onLibraryClicked: function(library) {
-    this.props.onLibraryToggled(library);
+  _onLibraryClicked: function(libraryKey) {
+    this.props.onLibraryToggled(libraryKey);
   }
 });
 

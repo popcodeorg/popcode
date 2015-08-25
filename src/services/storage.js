@@ -1,18 +1,18 @@
 var localforage = require('localforage');
 
-var storageVersion = 1;
+var storageVersion = 2;
 
 var fullKeyFor = function(key) {
-  return storageVersion + '/workspaces/' + key;
+  return 'workspaces/' + key;
 };
 
 var Storage = {
   load: function() {
     return localforage.getItem('lastKey').then(function(key) {
       if (key !== null) {
-        return localforage.getItem(fullKeyFor(key)).then(function(data) {
-          if (data !== null) {
-            return {key: key, data: data};
+        return localforage.getItem(fullKeyFor(key)).then(function(payload) {
+          if (payload !== null) {
+            return payload;
           }
         });
       }
@@ -20,8 +20,16 @@ var Storage = {
   },
 
   save: function(key, data) {
-    localforage.setItem('lastKey', key)
-    localforage.setItem(fullKeyFor(key), data)
+    localforage.setItem('lastKey', key);
+    localforage.setItem(
+      fullKeyFor(key),
+      {
+        key: key,
+        storageVersion: storageVersion,
+        data: data
+      }
+    );
+
     return data;
   }
 };

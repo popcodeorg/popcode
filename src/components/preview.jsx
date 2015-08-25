@@ -1,6 +1,7 @@
 "use strict";
 
 var React = require('react');
+var libraries = require('../config').libraries;
 
 var Preview = React.createClass({
   componentDidMount: function() {
@@ -17,7 +18,8 @@ var Preview = React.createClass({
     var iframeHead = iframeDocument.head;
     var iframeBody = iframeDocument.body;
 
-    this.props.enabledLibraries.forEach(function(library) {
+    this.props.enabledLibraries.forEach(function(libraryKey) {
+      var library = libraries[libraryKey];
       var css = library.css;
       var javascript = library.javascript;
       if (css !== undefined) {

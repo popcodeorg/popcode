@@ -2,6 +2,7 @@ var i18n = require('i18next-client');
 var JSHINT = require('jshint').JSHINT;
 var Promise = require('es6-promise').Promise;
 var update = require('react/addons').addons.update;
+var libraries = require('../config').libraries;
 
 var jshintrc = {
   browser: true,
@@ -105,9 +106,11 @@ function convertErrorToAnnotation(error) {
   }
 }
 
-module.exports = function(source, libraries) {
+module.exports = function(source, enabledLibraries) {
   var config = jshintrc;
-  libraries.forEach(function(library) {
+  enabledLibraries.forEach(function(libraryKey) {
+    var library = libraries[libraryKey];
+
     if (library.validations !== undefined &&
         library.validations.javascript !== undefined) {
       config = update(config, library.validations.javascript);

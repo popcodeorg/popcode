@@ -23,7 +23,8 @@ var Workspace = React.createClass({
       if (payload !== undefined) {
         this.setState({
           storageKey: payload.key,
-          sources: payload.data
+          sources: payload.data.sources,
+          enabledLibraries: payload.data.enabledLibraries
         });
       }
     }.bind(this));
@@ -34,13 +35,26 @@ var Workspace = React.createClass({
 
     for (var language in nextState.sources) {
       if (this.state.sources[language] !== nextState.sources[language]) {
-        this.validateInput(language, nextState.sources[language]);
+        this.validateInput(
+          language,
+          nextState.sources[language],
+          nextState.enabledLibraries);
+
         anyChanged = true;
       }
     }
 
-    if (anyChanged) {
-      Storage.save(nextState.storageKey, nextState.sources);
+    if (anyChanged ||
+        this.state.enabledLibraries < nextState.enabledLibraries ||
+        this.state.enabledLibraries > nextState.enabledLibraries) {
+
+      Storage.save(
+        nextState.storageKey,
+        {
+          sources: nextState.sources,
+          enabledLibraries: nextState.enabledLibraries
+        }
+      );
     }
   },
 
@@ -53,9 +67,9 @@ var Workspace = React.createClass({
     });
   },
 
-  validateInput: function(language, source) {
+  validateInput: function(language, source, enabledLibraries) {
     var validate = Validations[language];
-    validate(source, this.state.enabledLibraries).then(function(errors) {
+    validate(source, enabledLibraries).then(function(errors) {
       var updateCommand = {errors: {}};
       updateCommand.errors[language] = {$set: errors};
       this.setState(function(oldState) {
@@ -108,15 +122,15 @@ var Workspace = React.createClass({
     )
   },
 
-  _onLibraryToggled: function(library) {
+  _onLibraryToggled: function(libraryKey) {
     this.setState(function(oldState) {
-      var libraryIndex = oldState.enabledLibraries.indexOf(library);
+      var libraryIndex = oldState.enabledLibraries.indexOf(libraryKey);
       if (libraryIndex !== -1) {
         return update(oldState, {
           enabledLibraries: {$splice: [[libraryIndex, 1]]}
         });
       } else {
-        return update(oldState, {enabledLibraries: {$push: [library]}});
+        return update(oldState, {enabledLibraries: {$push: [libraryKey]}});
       }
     });
   }
