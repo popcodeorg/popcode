@@ -1,54 +1,52 @@
 "use strict";
 
 var React = require('react');
+var DOMParser = window.DOMParser;
+var parser = new DOMParser();
+
 var libraries = require('../config').libraries;
 
 var Preview = React.createClass({
-  componentDidMount: function() {
-    this.addCssAndJavascript();
+  render: function() {
+    return (
+      <div id="preview">
+        <iframe id="preview-frame" srcDoc={this._generateDocument()} ref="frame" />
+      </div>
+    );
   },
 
-  componentDidUpdate: function() {
-    this.addCssAndJavascript();
-  },
+  _generateDocument: function() {
+    var previewDocument = parser.parseFromString(
+      this.props.sources.html, 'text/html');
 
-  addCssAndJavascript: function() {
-    var iframeElement = React.findDOMNode(this.refs.frame);
-    var iframeDocument = iframeElement.contentWindow.document;
-    var iframeHead = iframeDocument.head;
-    var iframeBody = iframeDocument.body;
+    var previewHead = previewDocument.head;
+    var previewBody = previewDocument.body;
 
     this.props.enabledLibraries.forEach(function(libraryKey) {
       var library = libraries[libraryKey];
       var css = library.css;
       var javascript = library.javascript;
       if (css !== undefined) {
-        var linkTag = iframeDocument.createElement('link');
+        var linkTag = previewDocument.createElement('link');
         linkTag.rel = 'stylesheet';
         linkTag.href = css;
-        iframeHead.appendChild(linkTag);
+        previewHead.appendChild(linkTag);
       }
       if (javascript !== undefined) {
-        var scriptTag = iframeDocument.createElement('script');
+        var scriptTag = previewDocument.createElement('script');
         scriptTag.src = javascript;
-        iframeBody.appendChild(scriptTag);
+        previewBody.appendChild(scriptTag);
       }
     });
 
-    var styleTag = iframeDocument.createElement('style');
-    styleTag.innerText = this.props.sources.css;
-    iframeHead.appendChild(styleTag);
-    var scriptTag = iframeDocument.createElement('script');
-    scriptTag.innerText = this.props.sources.javascript;
-    iframeBody.appendChild(scriptTag);
-  },
+    var styleTag = previewDocument.createElement('style');
+    styleTag.innerHTML = this.props.sources.css;
+    previewHead.appendChild(styleTag);
+    var scriptTag = previewDocument.createElement('script');
+    scriptTag.innerHTML = this.props.sources.javascript;
+    previewBody.appendChild(scriptTag);
 
-  render: function() {
-    return (
-      <div id="preview">
-        <iframe id="preview-frame" srcDoc={this.props.sources.html} ref="frame" />
-      </div>
-    );
+    return previewDocument.documentElement.outerHTML;
   }
 });
 
