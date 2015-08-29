@@ -3,6 +3,7 @@ body {
 }
 
 .editor {
+  box-sizing: border-box;
   border-right: 2px solid gray;
   border-bottom: 2px solid gray;
   width: 50%;
@@ -15,7 +16,7 @@ body {
 
 #preview {
   float: right;
-  width: 49%; /*FIXME*/
+  width: 50%;
   height: 100%;
   position: relative;
 }
@@ -28,7 +29,7 @@ body {
 
 .errorList {
   float: right;
-  width: 49%; /*FIXME*/
+  width: 50%;
   height: 100%;
   position: relative;
   overflow: scroll;
