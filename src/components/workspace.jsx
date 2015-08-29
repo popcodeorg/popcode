@@ -65,32 +65,34 @@ var Workspace = React.createClass({
           enabledLibraries={this.state.enabledLibraries}
           onLibraryToggled={this._onLibraryToggled} />
 
-        <Output
-          sources={this.state.sources}
-          errors={this.state.errors}
-          enabledLibraries={this.state.enabledLibraries}
-          onErrorClicked={this._onErrorClicked} />
+        <div className="environment">
+          <Output
+            sources={this.state.sources}
+            errors={this.state.errors}
+            enabledLibraries={this.state.enabledLibraries}
+            onErrorClicked={this._onErrorClicked} />
 
-        <Editor
-          ref="htmlEditor"
-          language="html"
-          source={this.state.sources.html}
-          errors={this.state.errors.html}
-          onChange={this._setSource} />
+          <Editor
+            ref="htmlEditor"
+            language="html"
+            source={this.state.sources.html}
+            errors={this.state.errors.html}
+            onChange={this._setSource} />
 
-        <Editor
-          ref="cssEditor"
-          language="css"
-          source={this.state.sources.css}
-          errors={this.state.errors.css}
-          onChange={this._setSource} />
+          <Editor
+            ref="cssEditor"
+            language="css"
+            source={this.state.sources.css}
+            errors={this.state.errors.css}
+            onChange={this._setSource} />
 
-        <Editor
-          ref="javascriptEditor"
-          language="javascript"
-          source={this.state.sources.javascript}
-          errors={this.state.errors.javascript}
-          onChange={this._setSource} />
+          <Editor
+            ref="javascriptEditor"
+            language="javascript"
+            source={this.state.sources.javascript}
+            errors={this.state.errors.javascript}
+            onChange={this._setSource} />
+        </div>
       </div>
     )
   },
