@@ -2,6 +2,15 @@ body {
   font-family: Verdana;
 }
 
+.toolbar-showHide {
+  height: 1rem;
+  padding: 0.5rem 0;
+  background-color: rgb(220, 220, 220);
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
 .editor {
   box-sizing: border-box;
   border-right: 2px solid gray;
