@@ -12,11 +12,11 @@ var Toolbar = React.createClass({
   },
 
   render: function() {
-    var toolbarItemsClasses = ['toolbar-items'];
+    var toolbarItemsClasses = ['toolbar-menu'];
     if (this.state.open) {
-      toolbarItemsClasses.push('toolbar-items--open');
+      toolbarItemsClasses.push('toolbar-menu--open');
     } else {
-      toolbarItemsClasses.push('toolbar-items--closed');
+      toolbarItemsClasses.push('toolbar-menu--closed');
     }
 
     return (
@@ -28,8 +28,10 @@ var Toolbar = React.createClass({
           {this._showHideLabel()}
         </div>
         <ul className={toolbarItemsClasses.join(' ')}>
-          <li className='toolbar-items-item'
-            onClick={this._showLibraryPicker}>
+          <li onClick={this._toggleLibraryPicker}
+            className={this.state.submenu === 'libraries' ?
+              'toolbar-menu-item toolbar-menu-item--active' :
+              'toolbar-menu-item'}>
 
             Libraries
           </li>
@@ -47,8 +49,14 @@ var Toolbar = React.createClass({
     }
   },
 
-  _showLibraryPicker: function() {
-    return this.setState({submenu: 'libraries'});
+  _toggleLibraryPicker: function() {
+    return this.setState(function(oldState) {
+      if (oldState.submenu === 'libraries') {
+        return {submenu: null};
+      } else {
+        return {submenu: 'libraries'};
+      }
+    });
   },
 
   _getSubmenu: function() {
@@ -61,16 +69,22 @@ var Toolbar = React.createClass({
   },
 
   _toggleShowHideState: function() {
-    this.setState({open: !this.state.open});
+    this.setState(function(oldState) {
+      if (oldState.open) {
+        return {open: false, submenu: null};
+      } else {
+        return {open: true};
+      }
+    });
   }
 });
 
 var LibraryPicker = React.createClass({
   render: function() {
     var libraries = _.map(config.libraries, function(library, key) {
-      var classNames = ['toolbar-libraryPicker-library'];
+      var classNames = ['toolbar-menu-item'];
       if (this.props.enabledLibraries.indexOf(key) !== -1) {
-        classNames.push('toolbar-libraryPicker-library--enabled');
+        classNames.push('toolbar-menu-item--active');
       }
       return <li
         className={classNames.join(' ')}
@@ -79,7 +93,7 @@ var LibraryPicker = React.createClass({
         {library.name}
       </li>;
     }.bind(this));
-    return <ul className="toolbar-libraryPicker">{libraries}</ul>;
+    return <ul className="toolbar-menu">{libraries}</ul>;
   },
 
   _onLibraryClicked: function(libraryKey) {

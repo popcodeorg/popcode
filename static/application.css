@@ -16,7 +16,7 @@ body {
   cursor: pointer;
 }
 
-.toolbar-items {
+.toolbar-menu {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -24,29 +24,28 @@ body {
   float: left;
 }
 
-.toolbar-items-item {
+.toolbar-menu-item {
   cursor: pointer;
   border-radius: 3px;
   border: 1px solid gray;
   padding: 0.5em;
   margin: 1em;
-  font-weight: bold;
 }
 
-.toolbar-items-item:hover, .toolbar-items-item--active {
+.toolbar-menu-item:hover, .toolbar-menu-item--active {
   background-color: lightblue;
 }
 
-.toolbar-items--closed {
+.toolbar-menu-item--active {
+  font-weight: bold;
+}
+
+.toolbar-menu--closed {
   display: none;
 }
 
-.toolbar-items--open {
+.toolbar-menu--open {
   display: block;
-}
-
-.toolbar-libraryPicker-library--enabled {
-  font-weight: bold;
 }
 
 .environment {
