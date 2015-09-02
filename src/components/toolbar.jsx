@@ -28,17 +28,24 @@ var Toolbar = React.createClass({
           {this._showHideLabel()}
         </div>
         <ul className={toolbarItemsClasses.join(' ')}>
+          <li onClick={this._newProject}
+            className='toolbar-menu-item'>{i18n.t('toolbar.new-project')}</li>
           <li onClick={this._toggleLibraryPicker}
             className={this.state.submenu === 'libraries' ?
               'toolbar-menu-item toolbar-menu-item--active' :
               'toolbar-menu-item'}>
 
-            Libraries
+              {i18n.t('toolbar.libraries')}
           </li>
         </ul>
         {this._getSubmenu()}
       </div>
     );
+  },
+
+  _newProject: function() {
+    this.setState({open: false});
+    this.props.onNewProject();
   },
 
   _showHideLabel: function() {

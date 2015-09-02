@@ -13,9 +13,7 @@ var config = require('../config.js');
 
 var Workspace = React.createClass({
   getInitialState: function() {
-    return _.assign(config.defaults, {
-      storageKey: this._generateStorageKey()
-    });
+    return this._cleanProjectState();
   },
 
   componentDidMount: function() {
@@ -63,6 +61,7 @@ var Workspace = React.createClass({
       <div id="workspace">
         <Toolbar
           enabledLibraries={this.state.enabledLibraries}
+          onNewProject={this._onNewProject}
           onLibraryToggled={this._onLibraryToggled} />
 
         <div className="environment">
@@ -97,6 +96,12 @@ var Workspace = React.createClass({
     )
   },
 
+  _cleanProjectState: function() {
+    return _.assign(config.defaults, {
+      storageKey: this._generateStorageKey()
+    });
+  },
+
   _setSource: function(language, source) {
     var updateCommand = {sources: {}};
     updateCommand.sources[language] = {$set: source};
@@ -125,6 +130,10 @@ var Workspace = React.createClass({
   _generateStorageKey: function() {
     var date = new Date();
     return (date.getTime() * 1000 + date.getMilliseconds()).toString();
+  },
+
+  _onNewProject: function() {
+    this.setState(this._cleanProjectState());
   },
 
   _onLibraryToggled: function(libraryKey) {
