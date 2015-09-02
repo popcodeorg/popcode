@@ -1,4 +1,8 @@
 {
+  "toolbar": {
+    "show": "Show Tools",
+    "hide": "Hide Tools"
+  },
   "errors": {
     "undefined-description": "Couldn't find a human description for",
     "notice": "You have __amount__ errors in your __language__!",

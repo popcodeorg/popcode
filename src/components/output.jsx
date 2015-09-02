@@ -11,11 +11,15 @@ var Output = React.createClass({
 
     if (allValid) {
       return (
-        <Preview {...this.props.sources} />
+        <Preview
+          sources={this.props.sources}
+          enabledLibraries={this.props.enabledLibraries} />
       );
     } else {
       return (
-        <ErrorList {...this.props.errors} onErrorClicked={this.props.onErrorClicked} />
+        <ErrorList
+          {...this.props.errors}
+          onErrorClicked={this.props.onErrorClicked} />
       );
     }
   }

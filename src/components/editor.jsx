@@ -9,7 +9,7 @@ require('brace/theme/monokai');
 
 var Editor = React.createClass({
   componentDidMount: function(containerElement) {
-    this.setupEditor(containerElement);
+    this._setupEditor(containerElement);
   },
 
   componentDidUpdate: function(_prevProps, _prevState, _prevContext, containerElement) {
@@ -29,12 +29,20 @@ var Editor = React.createClass({
     return false;
   },
 
-  jumpToLine: function(line, column) {
+  render: function() {
+    return (
+      <div className="editor">
+        {this.props.source}
+      </div>
+    )
+  },
+
+  _jumpToLine: function(line, column) {
     this.editor.moveCursorTo(line, column);
     this.editor.focus();
   },
 
-  setupEditor: function(containerElement) {
+  _setupEditor: function(containerElement) {
     this.editor = ACE.edit(this.getDOMNode());
     var language = this.props.language;
     var session = this.editor.getSession();
@@ -43,14 +51,6 @@ var Editor = React.createClass({
     this.editor.on('change', function() {
       this.props.onChange(this.props.language, this.editor.getValue());
     }.bind(this));
-  },
-
-  render: function() {
-    return (
-      <div className="editor">
-        {this.props.source}
-      </div>
-    )
   }
 });
 
