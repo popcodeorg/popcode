@@ -2,6 +2,11 @@ body {
   font-family: Verdana;
 }
 
+.toolbar {
+  border-bottom: 1px solid darkgray;
+  overflow: hidden;
+}
+
 .toolbar-showHide {
   height: 1rem;
   padding: 0.5rem 0;
@@ -9,6 +14,43 @@ body {
   font-weight: bold;
   text-align: center;
   cursor: pointer;
+}
+
+.toolbar-items {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 50%;
+  float: left;
+}
+
+.toolbar-items-item {
+  cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid gray;
+  padding: 0.5em;
+  margin: 1em;
+  font-weight: bold;
+}
+
+.toolbar-items-item:hover, .toolbar-items-item--active {
+  background-color: lightblue;
+}
+
+.toolbar-items--closed {
+  display: none;
+}
+
+.toolbar-items--open {
+  display: block;
+}
+
+.toolbar-libraryPicker-library--enabled {
+  font-weight: bold;
+}
+
+.environment {
+  clear: left;
 }
 
 .editor {
@@ -62,16 +104,4 @@ body {
   padding: 0.5rem;
   background-color: #ffe6e6;
   cursor: pointer;
-}
-
-.toolbar-items--closed {
-  display: none;
-}
-
-.toolbar-items--open {
-  display: block;
-}
-
-.toolbar-libraryPicker-library--enabled {
-  font-weight: bold;
 }
