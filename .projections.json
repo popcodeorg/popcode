@@ -11,6 +11,11 @@
     "type": "constants",
     "template": "var keyMirror = require('keymirror');\n\nmodule.exports = keyMirror({open}\n{close});"
   },
+  "src/constants/*Store.js": {
+    "type": "store",
+    "template": "var _ = require('lodash');\nvar AppDispatcher = require('../dispatcher/AppDispatcher');\nvar EventEmitter = require('events').EventEmitter;\nvar {camelcase|capitalize}Constants = require('../constants/{camelcase|capitalize}Constants');\n\nvar {camelcase|capitalize}Store = _.assign({open}{close}, EventEmitter.prototype, {open}\n{close});\n\nAppDispatcher.register(function(action) {open}\n  switch(action.actionType) {open}\n  {close}\n{close});\n\nmodule.exports = {camelcase|capitalize}Store;\n"
+  },
+  "src/dispatcher/AppDispatcher.js": {"type": "dispatcher"},
   "src/validations/*.js": {"type": "validation"},
   "src/static/*": {"type": "static"}
 }
