@@ -20,7 +20,7 @@ var Workspace = React.createClass({
     Storage.load().then(function(payload) {
       if (payload !== undefined) {
         this.setState({
-          storageKey: payload.key,
+          projectKey: payload.key,
           sources: payload.data.sources,
           enabledLibraries: payload.data.enabledLibraries
         });
@@ -47,7 +47,7 @@ var Workspace = React.createClass({
         this.state.enabledLibraries > nextState.enabledLibraries) {
 
       Storage.save(
-        nextState.storageKey,
+        nextState.projectKey,
         {
           sources: nextState.sources,
           enabledLibraries: nextState.enabledLibraries
@@ -99,7 +99,7 @@ var Workspace = React.createClass({
 
   _cleanProjectState: function() {
     return _.assign(config.defaults, {
-      storageKey: this._generateStorageKey()
+      projectKey: this._generateProjectKey()
     });
   },
 
@@ -128,7 +128,8 @@ var Workspace = React.createClass({
     editor._jumpToLine(line, column);
   },
 
-  _generateStorageKey: function() {
+  _generateProjectKey: function() {
+    //FIXME handle in Store
     var date = new Date();
     return (date.getTime() * 1000 + date.getMilliseconds()).toString();
   },
@@ -140,7 +141,7 @@ var Workspace = React.createClass({
   _onProjectSelected: function(project) {
     this.setState(function(oldState) {
       return _.assign({}, this._cleanProjectState(), project.data, {
-        storageKey: project.key
+        projectKey: project.key
       })
     });
   },
