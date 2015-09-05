@@ -3,6 +3,14 @@
     "type": "component",
     "template": "var React = require('react');\n\nvar {camelcase|capitalize} = React.createClass({open}\n  render: function() {open}\n  {close}\n{close});\n\nmodule.exports = {camelcase|capitalize};"
   },
+  "src/actions/*Actions.js": {
+    "type": "actions",
+    "template": "var AppDispatcher = require('../dispatcher/AppDispatcher');\nvar {camelcase|capitalize}Constants = require('../constants/{camelcase|capitalize}Constants');\n\nvar {camelcase|capitalize}Actions = {open}\n{close};\n\nmodule.exports = {camelcase|capitalize}Actions;"
+  },
+  "src/constants/*Constants.js": {
+    "type": "constants",
+    "template": "var keyMirror = require('keymirror');\n\nmodule.exports = keyMirror({open}\n{close});"
+  },
   "src/validations/*.js": {"type": "validation"},
   "src/static/*": {"type": "static"}
 }
