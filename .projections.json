@@ -1,5 +1,8 @@
 {
-  "src/components/*.jsx": {"type": "component"},
+  "src/components/*.jsx": {
+    "type": "component",
+    "template": "var React = require('react');\n\nvar {camelcase|capitalize} = React.createClass({open}\n  render: function() {open}\n  {close}\n{close});\n\nmodule.exports = {camelcase|capitalize};"
+  },
   "src/validations/*.js": {"type": "validation"},
   "src/static/*": {"type": "static"}
 }
