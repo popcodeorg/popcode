@@ -3,8 +3,10 @@
 var React = require('react');
 var i18n = require('i18next-client');
 var _ = require('lodash');
+var moment = require('moment');
 
 var config = require('../config');
+var Storage = require('../services/storage');
 
 var Toolbar = React.createClass({
   getInitialState: function() {
@@ -30,12 +32,17 @@ var Toolbar = React.createClass({
         <ul className={toolbarItemsClasses.join(' ')}>
           <li onClick={this._newProject}
             className='toolbar-menu-item'>{i18n.t('toolbar.new-project')}</li>
+          <li onClick={this._loadProject}
+            className={this.state.submenu === 'loadProject' ?
+              'toolbar-menu-item toolbar-menu-item--active' :
+              'toolbar-menu-item'}>
+            {i18n.t('toolbar.load-project')}
+          </li>
           <li onClick={this._toggleLibraryPicker}
             className={this.state.submenu === 'libraries' ?
               'toolbar-menu-item toolbar-menu-item--active' :
               'toolbar-menu-item'}>
-
-              {i18n.t('toolbar.libraries')}
+            {i18n.t('toolbar.libraries')}
           </li>
         </ul>
         {this._getSubmenu()}
@@ -43,9 +50,17 @@ var Toolbar = React.createClass({
     );
   },
 
+  _close: function() {
+    this.setState({open: false, submenu: null});
+  },
+
   _newProject: function() {
-    this.setState({open: false});
+    this._close();
     this.props.onNewProject();
+  },
+
+  _loadProject: function() {
+    this.setState({submenu: 'loadProject'});
   },
 
   _showHideLabel: function() {
@@ -72,6 +87,8 @@ var Toolbar = React.createClass({
         return <LibraryPicker
           enabledLibraries={this.props.enabledLibraries}
           onLibraryToggled={this.props.onLibraryToggled} />;
+      case 'loadProject':
+        return <ProjectList onProjectSelected={this._onProjectSelected} />;
     }
   },
 
@@ -83,6 +100,11 @@ var Toolbar = React.createClass({
         return {open: true};
       }
     });
+  },
+
+  _onProjectSelected: function(project) {
+    this._close();
+    this.props.onProjectSelected(project);
   }
 });
 
@@ -105,6 +127,36 @@ var LibraryPicker = React.createClass({
 
   _onLibraryClicked: function(libraryKey) {
     this.props.onLibraryToggled(libraryKey);
+  }
+});
+
+var ProjectList = React.createClass({
+  getInitialState: function() {
+    return {projects: []};
+  },
+
+  componentDidMount: function() {
+    Storage.all().then(function(projects) {
+      this.setState({projects: projects});
+    }.bind(this));
+  },
+
+  render: function() {
+    var projects = this.state.projects.map(function(project) {
+      return (
+        <li className='toolbar-menu-item'
+          onClick={this.props.onProjectSelected.bind(this, project)}>
+          <div>{moment(project.updatedAt).fromNow()}</div>
+          <div><code>{project.data.sources.html.slice(0, 50)}</code></div>
+          <div><code>{project.data.sources.css.slice(0, 50)}</code></div>
+          <div>
+            <code>{project.data.sources.javascript.slice(0, 50)}</code>
+          </div>
+        </li>
+      );
+    }.bind(this));
+
+    return <ul className="toolbar-menu">{projects}</ul>;
   }
 });
 

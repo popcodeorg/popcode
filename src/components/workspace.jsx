@@ -62,6 +62,7 @@ var Workspace = React.createClass({
         <Toolbar
           enabledLibraries={this.state.enabledLibraries}
           onNewProject={this._onNewProject}
+          onProjectSelected={this._onProjectSelected}
           onLibraryToggled={this._onLibraryToggled} />
 
         <div className="environment">
@@ -134,6 +135,14 @@ var Workspace = React.createClass({
 
   _onNewProject: function() {
     this.setState(this._cleanProjectState());
+  },
+
+  _onProjectSelected: function(project) {
+    this.setState(function(oldState) {
+      return _.assign({}, this._cleanProjectState(), project.data, {
+        storageKey: project.key
+      })
+    });
   },
 
   _onLibraryToggled: function(libraryKey) {

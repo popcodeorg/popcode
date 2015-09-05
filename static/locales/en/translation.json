@@ -3,6 +3,7 @@
     "show": "Show Tools",
     "hide": "Hide Tools",
     "new-project": "New Project",
+    "load-project": "Load Project",
     "libraries": "Libraries"
   },
   "errors": {

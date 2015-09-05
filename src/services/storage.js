@@ -35,7 +35,7 @@ var Storage = {
     localforage.getItem('allKeys').then(function(oldKeys) {
       if (oldKeys === null || oldKeys[oldKeys.length - 1] !== key) {
         var keys = _.without(oldKeys || [], key);
-        keys.push(key);
+        keys.unshift(key);
         localforage.setItem('allKeys', keys);
       }
     });
