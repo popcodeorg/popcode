@@ -1,7 +1,10 @@
 {
   "toolbar": {
     "show": "Show Tools",
-    "hide": "Hide Tools"
+    "hide": "Hide Tools",
+    "new-project": "New Project",
+    "load-project": "Load Project",
+    "libraries": "Libraries"
   },
   "errors": {
     "undefined-description": "Couldn't find a human description for",

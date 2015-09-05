@@ -7,8 +7,8 @@ var ErrorItem = React.createClass({
     var line_number = i18n.t('errors.line-number', { number: this.props.row + 1 });
     return (
       <li className="errorList-error" onClick={_.partial(this.props.onClick, this.props.row, this.props.column)}>
-        <span class="errorList-error-line">{line_number}</span>
-        <span class="errorList-error-message">{this.props.text}</span>
+        <span className="errorList-error-line">{line_number}</span>
+        <span className="errorList-error-message">{this.props.text}</span>
       </li>
     );
   }
