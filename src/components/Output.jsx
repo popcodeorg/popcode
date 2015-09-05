@@ -1,7 +1,7 @@
 var React = require('react');
 var _ = require('lodash');
-var Preview = require('./preview.jsx');
-var ErrorList = require('./errorList.jsx');
+var Preview = require('./Preview.jsx');
+var ErrorList = require('./ErrorList.jsx');
 
 var Output = React.createClass({
   render: function() {

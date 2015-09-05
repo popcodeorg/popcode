@@ -6,7 +6,7 @@ var _ = require('lodash');
 var moment = require('moment');
 
 var config = require('../config');
-var Storage = require('../services/storage');
+var Storage = require('../services/Storage');
 
 var Toolbar = React.createClass({
   getInitialState: function() {

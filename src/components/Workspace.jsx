@@ -4,12 +4,12 @@ var React = require('react/addons');
 var update = React.addons.update;
 var _ = require('lodash');
 
-var Editor = require('./editor.jsx');
-var Output = require('./output.jsx');
-var Toolbar = require('./toolbar.jsx');
+var Editor = require('./Editor.jsx');
+var Output = require('./Output.jsx');
+var Toolbar = require('./Toolbar.jsx');
 var Validations = require('../validations');
-var Storage = require('../services/storage');
-var config = require('../config.js');
+var Storage = require('../services/Storage');
+var config = require('../config');
 
 var Workspace = React.createClass({
   getInitialState: function() {

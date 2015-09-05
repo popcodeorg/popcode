@@ -1,7 +1,7 @@
 "use strict";
 var React = require('react');
 var i18n = require('i18next-client');
-var Workspace = require('./components/workspace.jsx');
+var Workspace = require('./components/Workspace.jsx');
 
 var i18n_options = {
   fallbackLng: 'en',
