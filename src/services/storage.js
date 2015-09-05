@@ -7,16 +7,26 @@ var fullKeyFor = function(key) {
   return 'workspaces/' + key;
 };
 
+var find = function(key) {
+  return localforage.getItem(fullKeyFor(key)).then(function(payload) {
+    if (payload !== null) {
+      return payload;
+    }
+  });
+};
+
 var Storage = {
   load: function() {
     return localforage.getItem('lastKey').then(function(key) {
       if (key !== null) {
-        return localforage.getItem(fullKeyFor(key)).then(function(payload) {
-          if (payload !== null) {
-            return payload;
-          }
-        });
+        return find(key);
       }
+    });
+  },
+
+  all: function() {
+    return localforage.getItem('allKeys').then(function(keys) {
+      return Promise.all(keys.map(find));
     });
   },
 
