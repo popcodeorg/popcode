@@ -2,27 +2,54 @@
 
 var React = require('react');
 var DOMParser = window.DOMParser;
-var parser = new DOMParser();
 
+var ProjectStore = require('../stores/ProjectStore');
+var parser = new DOMParser();
 var libraries = require('../config').libraries;
 
 var Preview = React.createClass({
+  getInitialState: function() {
+    return {previewDocument: this._generateDocument()};
+  },
+
+  componentDidMount: function() {
+    ProjectStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    ProjectStore.removeChangeListener(this._onChange);
+  },
+
   render: function() {
     return (
       <div id="preview">
-        <iframe id="preview-frame" srcDoc={this._generateDocument()} ref="frame" />
+        <iframe id="preview-frame" srcDoc={this.state.previewDocument} />
       </div>
     );
   },
 
+  _onChange: function() {
+    this.setState({previewDocument: this._generateDocument()});
+  },
+
+  _getProject: function() {
+    return ProjectStore.get(this.props.projectKey);
+  },
+
   _generateDocument: function() {
+    var project = this._getProject();
+
+    if (project === undefined) {
+      return '';
+    }
+
     var previewDocument = parser.parseFromString(
-      this.props.sources.html, 'text/html');
+      project.sources.html, 'text/html');
 
     var previewHead = previewDocument.head;
     var previewBody = previewDocument.body;
 
-    this.props.enabledLibraries.forEach(function(libraryKey) {
+    project.enabledLibraries.forEach(function(libraryKey) {
       var library = libraries[libraryKey];
       var css = library.css;
       var javascript = library.javascript;
@@ -40,10 +67,10 @@ var Preview = React.createClass({
     });
 
     var styleTag = previewDocument.createElement('style');
-    styleTag.innerHTML = this.props.sources.css;
+    styleTag.innerHTML = project.sources.css;
     previewHead.appendChild(styleTag);
     var scriptTag = previewDocument.createElement('script');
-    scriptTag.innerHTML = this.props.sources.javascript;
+    scriptTag.innerHTML = project.sources.javascript;
     previewBody.appendChild(scriptTag);
 
     return previewDocument.documentElement.outerHTML;

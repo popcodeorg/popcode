@@ -7,6 +7,8 @@ require('brace/mode/css');
 require('brace/mode/javascript');
 require('brace/theme/monokai');
 
+var ProjectActions = require('../actions/ProjectActions');
+
 var Editor = React.createClass({
   componentDidMount: function(containerElement) {
     this._setupEditor(containerElement);
@@ -49,7 +51,12 @@ var Editor = React.createClass({
     session.setMode('ace/mode/' + language);
     session.setUseWorker(false);
     this.editor.on('change', function() {
-      this.props.onChange(this.props.language, this.editor.getValue());
+      ProjectActions.updateSource(
+        this.props.projectKey,
+        this.props.language,
+        this.editor.getValue()
+      );
+      this.props.onChange(this.props.language, this.editor.getValue()); //FIXME remove
     }.bind(this));
   }
 });

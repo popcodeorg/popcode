@@ -12,6 +12,7 @@ var Output = React.createClass({
     if (allValid) {
       return (
         <Preview
+          projectKey={this.props.projectKey}
           sources={this.props.sources}
           enabledLibraries={this.props.enabledLibraries} />
       );

@@ -13,23 +13,29 @@ var config = require('../config');
 
 var Workspace = React.createClass({
   getInitialState: function() {
-    return this._cleanProjectState();
+    return {};
   },
 
   componentDidMount: function() {
     Storage.load().then(function(payload) {
-      if (payload !== undefined) {
-        this.setState({
+      if (payload === undefined) {
+        this.setState(this._cleanProjectState());
+      } else {
+        this.setState(_.assign({}, this._cleanProjectState(), {
           projectKey: payload.key,
           sources: payload.data.sources,
           enabledLibraries: payload.data.enabledLibraries
-        });
+        }));
       }
     }.bind(this));
   },
 
   componentWillUpdate: function(_nextProps, nextState) {
     var anyChanged = false;
+
+    if (this.state.projectKey === undefined) {
+      return;
+    }
 
     for (var language in nextState.sources) {
       if (this.state.sources[language] !== nextState.sources[language]) {
@@ -57,16 +63,12 @@ var Workspace = React.createClass({
   },
 
   render: function() {
-    return (
-      <div id="workspace">
-        <Toolbar
-          enabledLibraries={this.state.enabledLibraries}
-          onNewProject={this._onNewProject}
-          onProjectSelected={this._onProjectSelected}
-          onLibraryToggled={this._onLibraryToggled} />
-
+    var environment;
+    if (this.state.projectKey !== undefined) {
+      environment = (
         <div className="environment">
           <Output
+            projectKey={this.state.projectKey}
             sources={this.state.sources}
             errors={this.state.errors}
             enabledLibraries={this.state.enabledLibraries}
@@ -74,6 +76,7 @@ var Workspace = React.createClass({
 
           <Editor
             ref="htmlEditor"
+            projectKey={this.state.projectKey}
             language="html"
             source={this.state.sources.html}
             errors={this.state.errors.html}
@@ -81,6 +84,7 @@ var Workspace = React.createClass({
 
           <Editor
             ref="cssEditor"
+            projectKey={this.state.projectKey}
             language="css"
             source={this.state.sources.css}
             errors={this.state.errors.css}
@@ -88,11 +92,23 @@ var Workspace = React.createClass({
 
           <Editor
             ref="javascriptEditor"
+            projectKey={this.state.projectKey}
             language="javascript"
             source={this.state.sources.javascript}
             errors={this.state.errors.javascript}
             onChange={this._setSource} />
         </div>
+      );
+    }
+
+    return (
+      <div id="workspace">
+        <Toolbar
+          enabledLibraries={this.state.enabledLibraries}
+          onNewProject={this._onNewProject}
+          onProjectSelected={this._onProjectSelected}
+          onLibraryToggled={this._onLibraryToggled} />
+        {environment}
       </div>
     )
   },
