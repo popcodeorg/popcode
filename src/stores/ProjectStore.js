@@ -33,7 +33,7 @@ var ProjectStore = _.assign({}, EventEmitter.prototype, {
   }
 });
 
-AppDispatcher.register(function(action) {
+ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case ProjectConstants.PROJECT_SOURCE_UPDATED:
       var project = ProjectStore.get(action.projectKey);

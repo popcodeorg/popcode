@@ -7,7 +7,6 @@ var _ = require('lodash');
 var Editor = require('./Editor.jsx');
 var Output = require('./Output.jsx');
 var Toolbar = require('./Toolbar.jsx');
-var Validations = require('../validations');
 var Storage = require('../services/Storage');
 var config = require('../config');
 
@@ -39,11 +38,6 @@ var Workspace = React.createClass({
 
     for (var language in nextState.sources) {
       if (this.state.sources[language] !== nextState.sources[language]) {
-        this._validateInput(
-          language,
-          nextState.sources[language],
-          nextState.enabledLibraries);
-
         anyChanged = true;
       }
     }
@@ -70,7 +64,6 @@ var Workspace = React.createClass({
           <Output
             projectKey={this.state.projectKey}
             sources={this.state.sources}
-            errors={this.state.errors}
             enabledLibraries={this.state.enabledLibraries}
             onErrorClicked={this._onErrorClicked} />
 
@@ -126,17 +119,6 @@ var Workspace = React.createClass({
     this.setState(function(oldState) {
       return update(oldState, updateCommand);
     });
-  },
-
-  _validateInput: function(language, source, enabledLibraries) {
-    var validate = Validations[language];
-    validate(source, enabledLibraries).then(function(errors) {
-      var updateCommand = {errors: {}};
-      updateCommand.errors[language] = {$set: errors};
-      this.setState(function(oldState) {
-        return update(oldState, updateCommand);
-      });
-    }.bind(this));
   },
 
   _onErrorClicked: function(language, line, column) {
