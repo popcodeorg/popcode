@@ -72,7 +72,6 @@ var Workspace = React.createClass({
             projectKey={this.state.projectKey}
             language="html"
             source={this.state.sources.html}
-            errors={this.state.errors.html}
             onChange={this._setSource} />
 
           <Editor
@@ -80,7 +79,6 @@ var Workspace = React.createClass({
             projectKey={this.state.projectKey}
             language="css"
             source={this.state.sources.css}
-            errors={this.state.errors.css}
             onChange={this._setSource} />
 
           <Editor
@@ -88,7 +86,6 @@ var Workspace = React.createClass({
             projectKey={this.state.projectKey}
             language="javascript"
             source={this.state.sources.javascript}
-            errors={this.state.errors.javascript}
             onChange={this._setSource} />
         </div>
       );

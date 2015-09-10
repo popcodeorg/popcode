@@ -8,14 +8,17 @@ require('brace/mode/javascript');
 require('brace/theme/monokai');
 
 var ProjectActions = require('../actions/ProjectActions');
+var ErrorStore = require('../stores/ErrorStore');
 
 var Editor = React.createClass({
   componentDidMount: function(containerElement) {
     this._setupEditor(containerElement);
+    ErrorStore.addChangeListener(this._onChange);
   },
 
-  componentDidUpdate: function(_prevProps, _prevState, _prevContext, containerElement) {
-    this.setupEditor(containerElement);
+  componentDidUnmount: function() {
+    this.editor.destroy();
+    ErrorStore.removeChangeListener(this._onChange);
   },
 
   componentWillReceiveProps: function(nextProps) {
@@ -23,8 +26,6 @@ var Editor = React.createClass({
       this.editor.setValue(nextProps.source);
       this.editor.moveCursorTo(0, 0);
     }
-
-    this.editor.getSession().setAnnotations(nextProps.errors);
   },
 
   shouldComponentUpdate: function(nextProps) {
@@ -58,6 +59,11 @@ var Editor = React.createClass({
       );
       this.props.onChange(this.props.language, this.editor.getValue()); //FIXME remove
     }.bind(this));
+  },
+
+  _onChange: function() {
+    var errors = ErrorStore.getErrors(this.props.projectKey)
+    this.editor.getSession().setAnnotations(errors[this.props.language]);
   }
 });
 
