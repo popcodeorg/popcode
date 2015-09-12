@@ -16,6 +16,10 @@ var find = function(key) {
 };
 
 var Storage = {
+  getCurrentProjectKey: function() {
+    return localforage.getItem('currentProjectKey');
+  },
+
   load: function() {
     return localforage.getItem('lastKey').then(function(key) {
       if (key !== null) {

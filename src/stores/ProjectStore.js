@@ -42,7 +42,7 @@ ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ProjectConstants.PROJECT_ADDED:
-      var project = action.project;
+    case ProjectConstants.PROJECT_CREATED:
       _projects[action.projectKey] = action.project;
       ProjectStore.emitChange();
       break;

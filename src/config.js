@@ -7,11 +7,6 @@ module.exports = {
       css: "",
       javascript: ""
     },
-    errors: {
-      html: [],
-      css: [],
-      javascript: []
-    },
     enabledLibraries: []
   },
 

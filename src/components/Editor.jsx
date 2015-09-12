@@ -8,22 +8,25 @@ require('brace/mode/javascript');
 require('brace/theme/monokai');
 
 var ProjectActions = require('../actions/ProjectActions');
+var ProjectStore = require('../stores/ProjectStore');
 var ErrorStore = require('../stores/ErrorStore');
 
 var Editor = React.createClass({
   componentDidMount: function(containerElement) {
     this._setupEditor(containerElement);
+    ProjectStore.addChangeListener(this._onChange);
     ErrorStore.addChangeListener(this._onChange);
   },
 
   componentDidUnmount: function() {
     this.editor.destroy();
+    ProjectStore.removeChangeListener(this._onChange);
     ErrorStore.removeChangeListener(this._onChange);
   },
 
   componentWillReceiveProps: function(nextProps) {
-    if (nextProps.source !== this.editor.getValue()) {
-      this.editor.setValue(nextProps.source);
+    if (nextProps.projectKey !== this.props.projectKey) {
+      this._startNewSession(this._getSource());
       this.editor.moveCursorTo(0, 0);
     }
   },
@@ -35,7 +38,7 @@ var Editor = React.createClass({
   render: function() {
     return (
       <div className="editor">
-        {this.props.source}
+        {this._getSource()}
       </div>
     )
   },
@@ -47,23 +50,42 @@ var Editor = React.createClass({
 
   _setupEditor: function(containerElement) {
     this.editor = ACE.edit(this.getDOMNode());
+    this._configureSession(this.editor.getSession());
+  },
+
+  _onChange: function() {
+    var source = this._getSource();
+    if (source && source !== this.editor.getValue()) {
+      this._startNewSession(source);
+    }
+    var errors = ErrorStore.getErrors(this.props.projectKey)
+    this.editor.getSession().setAnnotations(errors[this.props.language]);
+  },
+
+  _startNewSession: function(source) {
+    var session = new ACE.EditSession(source);
+    this._configureSession(session);
+    this.editor.setSession(session);
+  },
+
+  _configureSession: function(session) {
     var language = this.props.language;
-    var session = this.editor.getSession();
     session.setMode('ace/mode/' + language);
     session.setUseWorker(false);
-    this.editor.on('change', function() {
+    session.on('change', function(e) {
       ProjectActions.updateSource(
         this.props.projectKey,
         this.props.language,
         this.editor.getValue()
       );
-      this.props.onChange(this.props.language, this.editor.getValue()); //FIXME remove
     }.bind(this));
   },
 
-  _onChange: function() {
-    var errors = ErrorStore.getErrors(this.props.projectKey)
-    this.editor.getSession().setAnnotations(errors[this.props.language]);
+  _getSource: function() {
+    var project = ProjectStore.get(this.props.projectKey);
+    if (project) {
+      return project.sources[this.props.language];
+    }
   }
 });
 
