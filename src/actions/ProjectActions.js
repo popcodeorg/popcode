@@ -26,7 +26,7 @@ var ProjectActions = {
 
   updateSource: function(projectKey, language, source) {
     AppDispatcher.dispatch({
-      actionType: ProjectConstants.PROJECT_SOURCE_UPDATED,
+      actionType: ProjectConstants.PROJECT_SOURCE_EDITED,
       projectKey: projectKey,
       language: language,
       source: source
