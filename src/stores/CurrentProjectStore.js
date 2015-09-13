@@ -45,7 +45,7 @@ CurrentProjectStore.dispatchToken = AppDispatcher.register(function(action) {
       _currentProjectKey = action.projectKey;
       CurrentProjectStore.emit(CHANGE_EVENT);
       break;
-    case ProjectConstants.PROJECT_ADDED:
+    case ProjectConstants.PROJECT_LOADED_FROM_STORAGE:
       if (action.projectKey === _currentProjectKey) {
         CurrentProjectStore.emit(CHANGE_EVENT);
       }

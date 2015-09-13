@@ -11,7 +11,7 @@ var _projects = {};
 
 Storage.all().then(function(results) {
   results.forEach(function(result) {
-    ProjectActions.add(result.key, result.data);
+    ProjectActions.loadFromStorage(result.key, result.data);
   });
 });
 
@@ -41,8 +41,8 @@ ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
       ProjectStore.emitChange();
       break;
 
-    case ProjectConstants.PROJECT_ADDED:
     case ProjectConstants.PROJECT_CREATED:
+    case ProjectConstants.PROJECT_LOADED_FROM_STORAGE:
       _projects[action.projectKey] = action.project;
       ProjectStore.emitChange();
       break;

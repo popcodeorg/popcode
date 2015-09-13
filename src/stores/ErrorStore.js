@@ -71,7 +71,7 @@ ErrorStore.dispatchToken = AppDispatcher.register(function(action) {
       var language = action.language;
       validateSource(projectKey, language);
       break;
-    case ProjectConstants.PROJECT_ADDED:
+    case ProjectConstants.PROJECT_LOADED_FROM_STORAGE:
       AppDispatcher.waitFor([ProjectStore.dispatchToken]);
       var projectKey = action.projectKey;
       validateSource(projectKey, 'html');

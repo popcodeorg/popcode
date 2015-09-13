@@ -8,14 +8,6 @@ function generateProjectKey() {
 }
 
 var ProjectActions = {
-  add: function(projectKey, project) {
-    AppDispatcher.dispatch({
-      actionType: ProjectConstants.PROJECT_ADDED,
-      projectKey: projectKey,
-      project: project
-    });
-  },
-
   create: function() {
     AppDispatcher.dispatch({
       actionType: ProjectConstants.PROJECT_CREATED,
@@ -30,6 +22,14 @@ var ProjectActions = {
       projectKey: projectKey,
       language: language,
       source: source
+    });
+  },
+
+  loadFromStorage: function(projectKey, project) {
+    AppDispatcher.dispatch({
+      actionType: ProjectConstants.PROJECT_LOADED_FROM_STORAGE,
+      projectKey: projectKey,
+      project: project
     });
   }
 };
