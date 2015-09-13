@@ -38,10 +38,16 @@ ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
     case ProjectConstants.PROJECT_SOURCE_EDITED:
       var project = ProjectStore.get(action.projectKey);
       project.sources[action.language] = action.source;
+      Storage.save(action.projectKey, project);
       ProjectStore.emitChange();
       break;
 
     case ProjectConstants.PROJECT_CREATED:
+      _projects[action.projectKey] = action.project;
+      Storage.save(action.projectKey, action.project);
+      ProjectStore.emitChange();
+      break;
+
     case ProjectConstants.PROJECT_LOADED_FROM_STORAGE:
       _projects[action.projectKey] = action.project;
       ProjectStore.emitChange();

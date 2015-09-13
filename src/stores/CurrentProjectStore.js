@@ -41,14 +41,14 @@ var CurrentProjectStore = _.assign({}, EventEmitter.prototype, {
 CurrentProjectStore.dispatchToken = AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case CurrentProjectConstants.CURRENT_PROJECT_KEY_LOADED:
-    case ProjectConstants.PROJECT_CREATED:
       _currentProjectKey = action.projectKey;
       CurrentProjectStore.emit(CHANGE_EVENT);
       break;
-    case ProjectConstants.PROJECT_LOADED_FROM_STORAGE:
-      if (action.projectKey === _currentProjectKey) {
-        CurrentProjectStore.emit(CHANGE_EVENT);
-      }
+
+    case ProjectConstants.PROJECT_CREATED:
+      _currentProjectKey = action.projectKey;
+      Storage.setCurrentProjectKey(action.projectKey);
+      CurrentProjectStore.emit(CHANGE_EVENT);
       break;
   }
 });

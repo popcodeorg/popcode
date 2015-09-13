@@ -7,35 +7,30 @@ var fullKeyFor = function(key) {
   return 'workspaces/' + key;
 };
 
-var find = function(key) {
-  return localforage.getItem(fullKeyFor(key)).then(function(payload) {
-    if (payload !== null) {
-      return payload;
-    }
-  });
-};
-
 var Storage = {
   getCurrentProjectKey: function() {
     return localforage.getItem('currentProjectKey');
   },
 
-  load: function() {
-    return localforage.getItem('lastKey').then(function(key) {
-      if (key !== null) {
-        return find(key);
-      }
-    });
+  setCurrentProjectKey: function(projectKey) {
+    localforage.setItem('currentProjectKey', projectKey);
   },
 
   all: function() {
     return localforage.getItem('allKeys').then(function(keys) {
-      return Promise.all(keys.map(find));
+      return Promise.all(keys.map(this.load));
+    }.bind(this));
+  },
+
+  load: function(projectKey) {
+    return localforage.getItem(fullKeyFor(projectKey)).then(function(payload) {
+      if (payload !== null) {
+        return payload;
+      }
     });
   },
 
   save: function(key, data) {
-    localforage.setItem('lastKey', key);
     localforage.getItem('allKeys').then(function(oldKeys) {
       if (oldKeys === null || oldKeys[oldKeys.length - 1] !== key) {
         var keys = _.without(oldKeys || [], key);
