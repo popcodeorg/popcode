@@ -54,11 +54,7 @@ var Workspace = React.createClass({
 
     return (
       <div id="workspace">
-        <Toolbar
-          enabledLibraries={this.state.enabledLibraries}
-          onNewProject={this._onNewProject}
-          onProjectSelected={this._onProjectSelected}
-          onLibraryToggled={this._onLibraryToggled} />
+        <Toolbar projectKey={this.state.projectKey} />
         {environment}
       </div>
     )
@@ -67,18 +63,6 @@ var Workspace = React.createClass({
   _onErrorClicked: function(language, line, column) {
     var editor = this.refs[language + 'Editor'];
     editor._jumpToLine(line, column);
-  },
-
-  _onNewProject: function() {
-    this.setState(this._cleanProjectState());
-  },
-
-  _onProjectSelected: function(project) {
-    this.setState(function(oldState) {
-      return _.assign({}, this._cleanProjectState(), project.data, {
-        projectKey: project.key
-      })
-    });
   },
 
   _onLibraryToggled: function(libraryKey) {

@@ -11,13 +11,17 @@ var _projects = {};
 
 Storage.all().then(function(results) {
   results.forEach(function(result) {
-    ProjectActions.loadFromStorage(result.key, result.data);
+    ProjectActions.loadFromStorage(result.key, result);
   });
 });
 
 var ProjectStore = _.assign({}, EventEmitter.prototype, {
   get: function(projectKey) {
     return _projects[projectKey];
+  },
+
+  all: function() {
+    return _.values(_projects);
   },
 
   emitChange: function() {
@@ -50,6 +54,19 @@ ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ProjectConstants.PROJECT_LOADED_FROM_STORAGE:
       _projects[action.projectKey] = action.project;
+      ProjectStore.emitChange();
+      break;
+
+    case ProjectConstants.PROJECT_LIBRARY_TOGGLED:
+      var project = ProjectStore.get(action.projectKey);
+      var libraries = project.enabledLibraries;
+      var libraryKey = action.libraryKey;
+      if (libraries.indexOf(libraryKey) === -1) {
+        libraries.push(libraryKey);
+      } else {
+        _.pull(libraries, libraryKey);
+      }
+      Storage.save(action.projectKey, project);
       ProjectStore.emitChange();
       break;
   }

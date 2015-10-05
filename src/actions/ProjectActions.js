@@ -25,6 +25,14 @@ var ProjectActions = {
     });
   },
 
+  toggleLibrary: function(projectKey, libraryKey) {
+    AppDispatcher.dispatch({
+      actionType: ProjectConstants.PROJECT_LIBRARY_TOGGLED,
+      projectKey: projectKey,
+      libraryKey: libraryKey
+    });
+  },
+
   loadFromStorage: function(projectKey, project) {
     AppDispatcher.dispatch({
       actionType: ProjectConstants.PROJECT_LOADED_FROM_STORAGE,

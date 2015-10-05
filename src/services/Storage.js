@@ -1,10 +1,10 @@
 var localforage = require('localforage');
 var _ = require('lodash');
 
-var storageVersion = 2;
+var storageVersion = 3;
 
 var fullKeyFor = function(key) {
-  return 'workspaces/' + key;
+  return 'workspaces/' + storageVersion + '/' + key;
 };
 
 var Storage = {
@@ -41,12 +41,11 @@ var Storage = {
 
     localforage.setItem(
       fullKeyFor(key),
-      {
+      _.extend({
         key: key,
         storageVersion: storageVersion,
-        updatedAt: new Date(),
-        data: data
-      }
+        updatedAt: new Date()
+      }, data)
     );
 
     return data;

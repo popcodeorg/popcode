@@ -1,12 +1,15 @@
 "use strict";
 
 var React = require('react');
+var cx = React.addons.classSet;
 var i18n = require('i18next-client');
 var _ = require('lodash');
 var moment = require('moment');
 
 var config = require('../config');
-var Storage = require('../services/Storage');
+var ProjectStore = require('../stores/ProjectStore');
+var ProjectActions = require('../actions/ProjectActions');
+var CurrentProjectActions = require('../actions/CurrentProjectActions');
 
 var Toolbar = React.createClass({
   getInitialState: function() {
@@ -56,7 +59,7 @@ var Toolbar = React.createClass({
 
   _newProject: function() {
     this._close();
-    this.props.onNewProject();
+    ProjectActions.create();
   },
 
   _loadProject: function() {
@@ -84,11 +87,9 @@ var Toolbar = React.createClass({
   _getSubmenu: function() {
     switch(this.state.submenu) {
       case 'libraries':
-        return <LibraryPicker
-          enabledLibraries={this.props.enabledLibraries}
-          onLibraryToggled={this.props.onLibraryToggled} />;
+        return <LibraryPicker projectKey={this.props.projectKey} />;
       case 'loadProject':
-        return <ProjectList onProjectSelected={this._onProjectSelected} />;
+        return <ProjectList onProjectSelected={this._close} />;
     }
   },
 
@@ -100,63 +101,118 @@ var Toolbar = React.createClass({
         return {open: true};
       }
     });
-  },
-
-  _onProjectSelected: function(project) {
-    this._close();
-    this.props.onProjectSelected(project);
   }
 });
 
 var LibraryPicker = React.createClass({
+  getInitialState: function() {
+    return this._calculateState();
+  },
+
+  componentDidMount: function() {
+    ProjectStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    ProjectStore.removeChangeListener(this._onChange);
+  },
+
   render: function() {
     var libraries = _.map(config.libraries, function(library, key) {
-      var classNames = ['toolbar-menu-item'];
-      if (this.props.enabledLibraries.indexOf(key) !== -1) {
-        classNames.push('toolbar-menu-item--active');
-      }
-      return <li
-        className={classNames.join(' ')}
-        onClick={this._onLibraryClicked.bind(this, key)}>
-
-        {library.name}
-      </li>;
+      return (
+        <LibraryPickerItem
+          projectKey={this.props.projectKey}
+          libraryKey={key}
+          enabled={this._isLibraryEnabled(key)} />
+      );
     }.bind(this));
+
     return <ul className="toolbar-menu">{libraries}</ul>;
   },
 
-  _onLibraryClicked: function(libraryKey) {
-    this.props.onLibraryToggled(libraryKey);
+  _onChange: function() {
+    this.setState(this._calculateState());
+  },
+
+  _calculateState: function() {
+    var enabledLibraries = [];
+    if (this.props.projectKey) {
+      enabledLibraries =
+        ProjectStore.get(this.props.projectKey).enabledLibraries;
+    }
+    return {enabledLibraries: enabledLibraries};
+  },
+
+  _isLibraryEnabled: function(libraryKey) {
+    return this.state.enabledLibraries.indexOf(libraryKey) !== -1;
+  }
+});
+
+var LibraryPickerItem = React.createClass({
+  render: function() {
+    var library = this._getLibrary();
+    return (
+      <li className={cx({
+        'toolbar-menu-item': true,
+        'toolbar-menu-item--active': this.props.enabled
+      })} onClick={this._onClicked}>
+
+        {library.name}
+      </li>
+    );
+  },
+
+  _getLibrary: function() {
+    return config.libraries[this.props.libraryKey];
+  },
+
+  _onClicked: function() {
+    ProjectActions.toggleLibrary(this.props.projectKey, this.props.libraryKey);
   }
 });
 
 var ProjectList = React.createClass({
   getInitialState: function() {
-    return {projects: []};
+    return this._calculateState();
   },
 
   componentDidMount: function() {
-    Storage.all().then(function(projects) {
-      this.setState({projects: projects});
-    }.bind(this));
+    ProjectStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    ProjectStore.removeChangeListener(this._onChange);
   },
 
   render: function() {
     var projects = this.state.projects.map(function(project) {
       return (
         <li className='toolbar-menu-item'
-          onClick={this.props.onProjectSelected.bind(this, project)}>
+          onClick={this._onProjectClicked.bind(this, project)}>
           <div>{moment(project.updatedAt).fromNow()}</div>
-          <div><code>{project.data.sources.html.slice(0, 50)}</code></div>
-          <div><code>{project.data.sources.css.slice(0, 50)}</code></div>
+          <div><code>{project.sources.html.slice(0, 50)}</code></div>
+          <div><code>{project.sources.css.slice(0, 50)}</code></div>
           <div>
-            <code>{project.data.sources.javascript.slice(0, 50)}</code>
+            <code>{project.sources.javascript.slice(0, 50)}</code>
           </div>
         </li>
       );
     }.bind(this));
 
     return <ul className="toolbar-menu">{projects}</ul>;
+  },
+
+  _onChange: function() {
+    this.setState(this._calculateState());
+  },
+
+  _calculateState: function() {
+    return {projects: ProjectStore.all()};
+  },
+
+  _onProjectClicked: function(project) {
+    CurrentProjectActions.select(project.key);
+    this.props.onProjectSelected();
   }
 });
 
