@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ProjectConstants = require('../constants/ProjectConstants');
 var defaults = require('../config').defaults;
@@ -6,7 +8,7 @@ var ProjectActions = {
   create: function() {
     AppDispatcher.dispatch({
       actionType: ProjectConstants.PROJECT_CREATED,
-      project: defaults
+      project: _.cloneDeep(defaults)
     });
   },
 
