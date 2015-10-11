@@ -26,8 +26,7 @@ var Editor = React.createClass({
 
   componentWillReceiveProps: function(nextProps) {
     if (nextProps.projectKey !== this.props.projectKey) {
-      this._startNewSession(this._getSource());
-      this.editor.moveCursorTo(0, 0);
+      this._startNewSession(this._getSource(nextProps.projectKey));
     }
   },
 
@@ -66,6 +65,7 @@ var Editor = React.createClass({
     var session = new ACE.EditSession(source);
     this._configureSession(session);
     this.editor.setSession(session);
+    this.editor.moveCursorTo(0, 0);
   },
 
   _configureSession: function(session) {
@@ -81,8 +81,9 @@ var Editor = React.createClass({
     }.bind(this));
   },
 
-  _getSource: function() {
-    var project = ProjectStore.get(this.props.projectKey);
+  _getSource: function(projectKey) {
+    projectKey = projectKey || this.props.projectKey;
+    var project = ProjectStore.get(projectKey);
     if (project) {
       return project.sources[this.props.language];
     }
