@@ -33,10 +33,10 @@ var ProjectActions = {
     });
   },
 
-  loadFromStorage: function(projectKey, project) {
+  loadFromStorage: function(project) {
     AppDispatcher.dispatch({
       actionType: ProjectConstants.PROJECT_LOADED_FROM_STORAGE,
-      projectKey: projectKey,
+      projectKey: project.projectKey,
       project: project
     });
   }

@@ -65,19 +65,6 @@ var Workspace = React.createClass({
     editor._jumpToLine(line, column);
   },
 
-  _onLibraryToggled: function(libraryKey) {
-    this.setState(function(oldState) {
-      var libraryIndex = oldState.enabledLibraries.indexOf(libraryKey);
-      if (libraryIndex !== -1) {
-        return update(oldState, {
-          enabledLibraries: {$splice: [[libraryIndex, 1]]}
-        });
-      } else {
-        return update(oldState, {enabledLibraries: {$push: [libraryKey]}});
-      }
-    });
-  },
-
   _onChange: function() {
     this.setState(this._calculateState());
   },

@@ -30,7 +30,9 @@ var Storage = {
     });
   },
 
-  save: function(key, data) {
+  save: function(data) {
+    var key = data.projectKey;
+
     localforage.getItem('allKeys').then(function(oldKeys) {
       if (oldKeys === null || oldKeys[oldKeys.length - 1] !== key) {
         var keys = _.without(oldKeys || [], key);
@@ -42,7 +44,6 @@ var Storage = {
     localforage.setItem(
       fullKeyFor(key),
       _.extend({
-        key: key,
         storageVersion: storageVersion,
         updatedAt: new Date()
       }, data)

@@ -211,7 +211,7 @@ var ProjectList = React.createClass({
   },
 
   _onProjectClicked: function(project) {
-    CurrentProjectActions.select(project.key);
+    CurrentProjectActions.select(project.projectKey);
     this.props.onProjectSelected();
   }
 });
