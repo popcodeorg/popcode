@@ -2,16 +2,10 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ProjectConstants = require('../constants/ProjectConstants');
 var defaults = require('../config').defaults;
 
-function generateProjectKey() {
-  var date = new Date();
-  return (date.getTime() * 1000 + date.getMilliseconds()).toString();
-}
-
 var ProjectActions = {
   create: function() {
     AppDispatcher.dispatch({
       actionType: ProjectConstants.PROJECT_CREATED,
-      projectKey: generateProjectKey(),
       project: defaults
     });
   },

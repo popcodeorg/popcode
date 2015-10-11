@@ -9,6 +9,11 @@ var CHANGE_EVENT = 'change';
 
 var _projects = {};
 
+function generateProjectKey() {
+  var date = new Date();
+  return (date.getTime() * 1000 + date.getMilliseconds()).toString();
+}
+
 Storage.all().then(function(results) {
   results.forEach(function(result) {
     ProjectActions.loadFromStorage(result);
@@ -48,7 +53,7 @@ ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ProjectConstants.PROJECT_CREATED:
       var project = action.project;
-      project.projectKey = action.projectKey;
+      project.projectKey = generateProjectKey();
       _projects[project.projectKey] = project;
       Storage.save(project);
       ProjectStore.emitChange();

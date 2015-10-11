@@ -2,10 +2,11 @@ var _ = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 
-var CurrentProjectConstants = require('../constants/CurrentProjectConstants');
 var CurrentProjectActions = require('../actions/CurrentProjectActions');
-var ProjectConstants = require('../constants/ProjectConstants');
+var CurrentProjectConstants = require('../constants/CurrentProjectConstants');
 var ProjectActions = require('../actions/ProjectActions');
+var ProjectConstants = require('../constants/ProjectConstants');
+var ProjectStore = require('../stores/ProjectStore');
 var Storage = require ('../services/Storage');
 
 var CHANGE_EVENT = 'change';
@@ -47,8 +48,9 @@ CurrentProjectStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ProjectConstants.PROJECT_CREATED:
-      _currentProjectKey = action.projectKey;
-      Storage.setCurrentProjectKey(action.projectKey);
+      AppDispatcher.waitFor([ProjectStore.dispatchToken]);
+      _currentProjectKey = action.project.projectKey;
+      Storage.setCurrentProjectKey(_currentProjectKey);
       CurrentProjectStore.emit(CHANGE_EVENT);
       break;
   }
