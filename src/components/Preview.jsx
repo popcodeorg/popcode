@@ -8,36 +8,16 @@ var parser = new DOMParser();
 var libraries = require('../config').libraries;
 
 var Preview = React.createClass({
-  getInitialState: function() {
-    return {previewDocument: this._generateDocument()};
-  },
-
-  componentDidMount: function() {
-    ProjectStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    ProjectStore.removeChangeListener(this._onChange);
-  },
-
   render: function() {
     return (
       <div id="preview">
-        <iframe id="preview-frame" srcDoc={this.state.previewDocument} />
+        <iframe id="preview-frame" srcDoc={this._generateDocument()} />
       </div>
     );
   },
 
-  _onChange: function() {
-    this.setState({previewDocument: this._generateDocument()});
-  },
-
-  _getProject: function() {
-    return ProjectStore.get(this.props.projectKey);
-  },
-
   _generateDocument: function() {
-    var project = this._getProject();
+    var project = this.props.project;
 
     if (project === undefined) {
       return '';
