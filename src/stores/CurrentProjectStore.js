@@ -46,8 +46,13 @@ var CurrentProjectStore = _.assign({}, EventEmitter.prototype, {
 CurrentProjectStore.dispatchToken = AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case CurrentProjectConstants.CURRENT_PROJECT_KEY_LOADED:
+      _currentProjectKey = action.projectKey;
+      CurrentProjectStore.emit(CHANGE_EVENT);
+      break;
+
     case CurrentProjectConstants.CURRENT_PROJECT_KEY_CHANGED:
       _currentProjectKey = action.projectKey;
+      Storage.setCurrentProjectKey(_currentProjectKey);
       CurrentProjectStore.emit(CHANGE_EVENT);
       break;
 
