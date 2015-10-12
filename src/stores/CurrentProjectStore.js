@@ -26,6 +26,10 @@ var CurrentProjectStore = _.assign({}, EventEmitter.prototype, {
     return _currentProjectKey;
   },
 
+  isCurrentProject: function(project) {
+    return !!_currentProjectKey && project.projectKey === _currentProjectKey;
+  },
+
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },

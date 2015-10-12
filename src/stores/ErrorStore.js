@@ -2,6 +2,8 @@ var _ = require('lodash');
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
+var CurrentProjectConstants = require('../constants/CurrentProjectConstants');
+var CurrentProjectStore = require('../stores/CurrentProjectStore');
 var ProjectConstants = require('../constants/ProjectConstants');
 var ProjectStore = require('../stores/ProjectStore');
 var validations = require('../validations');
@@ -22,9 +24,19 @@ function setErrors(projectKey, language, errors) {
   _errors[projectKey][language] = errors;
 }
 
+function validateAllSources(projectKey) {
+  validateSource(projectKey, 'html');
+  validateSource(projectKey, 'css');
+  validateSource(projectKey, 'javascript');
+}
+
 function validateSource(projectKey, language) {
   var validate = validations[language];
   var project = ProjectStore.get(projectKey);
+
+  if (!project) {
+    return;
+  }
 
   validate(
     project.sources[language],
@@ -71,12 +83,23 @@ ErrorStore.dispatchToken = AppDispatcher.register(function(action) {
       var language = action.language;
       validateSource(projectKey, language);
       break;
-    case ProjectConstants.PROJECT_LOADED_FROM_STORAGE:
+    case ProjectConstants.PROJECT_LIBRARY_TOGGLED:
       AppDispatcher.waitFor([ProjectStore.dispatchToken]);
-      var projectKey = action.projectKey;
-      validateSource(projectKey, 'html');
-      validateSource(projectKey, 'css');
-      validateSource(projectKey, 'javascript');
+      validateAllSources(action.projectKey);
+      break;
+    case ProjectConstants.PROJECT_LOADED_FROM_STORAGE:
+      AppDispatcher.waitFor([
+        ProjectStore.dispatchToken,
+        CurrentProjectStore.dispatchToken
+      ]);
+      if (CurrentProjectStore.isCurrentProject(action.project)) {
+        validateAllSources(action.project.projectKey);
+      }
+      break;
+    case CurrentProjectConstants.CURRENT_PROJECT_KEY_LOADED:
+    case CurrentProjectConstants.CURRENT_PROJECT_KEY_CHANGED:
+      AppDispatcher.waitFor([ProjectStore.dispatchToken]);
+      validateAllSources(action.projectKey);
       break;
   }
 });
