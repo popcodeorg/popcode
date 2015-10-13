@@ -14,6 +14,18 @@ function generateProjectKey() {
   return (date.getTime() * 1000 + date.getMilliseconds()).toString();
 }
 
+function createNewProject() {
+  return {
+    projectKey: generateProjectKey(),
+    sources: {
+      html: "<!DOCTYPE html>\n<html>\n    <head>\n        <title>Page Title</title>\n    </head>\n    <body>\n        <!-- Put your page markup here -->\n    </body>\n</html>",
+      css: "",
+      javascript: ""
+    },
+    enabledLibraries: []
+  };
+}
+
 Storage.all().then(function(results) {
   results.forEach(function(result) {
     ProjectActions.loadFromStorage(result);
@@ -52,8 +64,7 @@ ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ProjectConstants.PROJECT_CREATED:
-      var project = action.project;
-      project.projectKey = generateProjectKey();
+      var project = action.project = createNewProject();
       _projects[project.projectKey] = project;
       Storage.save(project);
       ProjectStore.emitChange();
