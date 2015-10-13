@@ -32,7 +32,6 @@ var ProjectActions = {
   loadFromStorage: function(project) {
     AppDispatcher.dispatch({
       actionType: ProjectConstants.PROJECT_LOADED_FROM_STORAGE,
-      projectKey: project.projectKey,
       project: project
     });
   }
