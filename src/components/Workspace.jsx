@@ -30,7 +30,6 @@ var Workspace = React.createClass({
       environment = (
         <div className="environment">
           <Output
-            projectKey={this.state.projectKey}
             enabledLibraries={this.state.enabledLibraries}
             onErrorClicked={this._onErrorClicked} />
 
