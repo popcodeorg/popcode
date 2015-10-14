@@ -11,7 +11,7 @@ function calculateState() {
   var projectKey = CurrentProjectStore.getKey();
 
   return {
-    projectKey: projectKey,
+    project: ProjectStore.get(projectKey),
     hasErrors: ErrorStore.anyErrors(projectKey),
     errors: ErrorStore.getErrors(projectKey)
   };
@@ -25,11 +25,13 @@ var Output = React.createClass({
   componentDidMount: function() {
     CurrentProjectStore.addChangeListener(this._onChange);
     ErrorStore.addChangeListener(this._onChange);
+    ProjectStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
     CurrentProjectStore.removeChangeListener(this._onChange);
     ErrorStore.removeChangeListener(this._onChange);
+    ProjectStore.removeChangeListener(this._onChange);
   },
 
   render: function() {
@@ -39,20 +41,16 @@ var Output = React.createClass({
           {...this.state.errors}
           onErrorClicked={this.props.onErrorClicked} />
       );
-    } else {
+    } else if (this.state.project) {
       return (
-        <Preview project={this._getProject()} />
+        <Preview project={this.state.project} />
       );
     }
   },
 
   _onChange: function() {
     this.setState(calculateState());
-  },
-
-  _getProject: function() {
-    return ProjectStore.get(this.state.projectKey);
-  },
+  }
 });
 
 module.exports = Output;
