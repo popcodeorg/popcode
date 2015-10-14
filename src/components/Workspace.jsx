@@ -8,8 +8,6 @@ var CurrentProjectStore = require('../stores/CurrentProjectStore');
 var Editor = require('./Editor.jsx');
 var Output = require('./Output.jsx');
 var Toolbar = require('./Toolbar.jsx');
-var Storage = require('../services/Storage');
-var config = require('../config');
 
 function calculateState() {
   return {projectKey: CurrentProjectStore.getKey()};
