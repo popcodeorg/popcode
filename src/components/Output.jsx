@@ -45,6 +45,8 @@ var Output = React.createClass({
       return (
         <Preview project={this.state.project} />
       );
+    } else {
+      return null;
     }
   },
 
