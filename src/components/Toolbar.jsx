@@ -90,7 +90,7 @@ var Toolbar = React.createClass({
   _getSubmenu: function() {
     switch(this.state.submenu) {
       case 'libraries':
-        return <LibraryPicker projectKey={this.props.projectKey} />;
+        return <LibraryPicker />;
       case 'loadProject':
         return <ProjectList onProjectSelected={this._close} />;
     }

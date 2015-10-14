@@ -55,7 +55,7 @@ var Workspace = React.createClass({
 
     return (
       <div id="workspace">
-        <Toolbar projectKey={this.state.projectKey} />
+        <Toolbar />
         {environment}
       </div>
     )
