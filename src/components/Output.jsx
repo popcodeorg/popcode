@@ -25,13 +25,11 @@ var Output = React.createClass({
   componentDidMount: function() {
     CurrentProjectStore.addChangeListener(this._onChange);
     ErrorStore.addChangeListener(this._onChange);
-    ProjectStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
     CurrentProjectStore.removeChangeListener(this._onChange);
     ErrorStore.removeChangeListener(this._onChange);
-    ProjectStore.removeChangeListener(this._onChange);
   },
 
   render: function() {
