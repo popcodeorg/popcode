@@ -28,9 +28,7 @@ function createNewProject() {
 }
 
 Storage.all().then(function(results) {
-  results.forEach(function(result) {
-    ProjectActions.loadFromStorage(result);
-  });
+  results.forEach(ProjectActions.loadFromStorage)
 });
 
 var ProjectStore = _.assign({}, EventEmitter.prototype, {
