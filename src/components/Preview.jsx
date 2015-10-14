@@ -3,7 +3,6 @@
 var React = require('react');
 var DOMParser = window.DOMParser;
 
-var ProjectStore = require('../stores/ProjectStore');
 var parser = new DOMParser();
 var libraries = require('../config').libraries;
 
