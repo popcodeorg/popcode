@@ -58,7 +58,7 @@ CurrentProjectStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ProjectConstants.PROJECT_CREATED:
       AppDispatcher.waitFor([ProjectStore.dispatchToken]);
-      _currentProjectKey = action.project.projectKey;
+      _currentProjectKey = ProjectStore.getLastCreated().projectKey;
       Storage.setCurrentProjectKey(_currentProjectKey);
       CurrentProjectStore.emit(CHANGE_EVENT);
       break;

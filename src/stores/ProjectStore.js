@@ -8,6 +8,7 @@ var Storage = require('../services/Storage');
 var CHANGE_EVENT = 'change';
 
 var _projects = {};
+var _lastCreatedProject;
 
 function generateProjectKey() {
   var date = new Date();
@@ -37,6 +38,10 @@ var ProjectStore = _.assign({}, EventEmitter.prototype, {
     return _projects[projectKey];
   },
 
+  getLastCreated: function() {
+    return this.get(_lastCreatedProjectKey);
+  },
+
   all: function() {
     return _.values(_projects);
   },
@@ -64,7 +69,8 @@ ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ProjectConstants.PROJECT_CREATED:
-      var project = action.project = createNewProject();
+      var project = createNewProject();
+      _lastCreatedProjectKey = project.projectKey;
       _projects[project.projectKey] = project;
       Storage.save(project);
       ProjectStore.emitChange();
