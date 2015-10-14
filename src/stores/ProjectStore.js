@@ -59,17 +59,17 @@ var ProjectStore = _.assign({}, EventEmitter.prototype, {
 
 ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
   switch(action.actionType) {
-    case ProjectConstants.PROJECT_SOURCE_EDITED:
-      var project = ProjectStore.get(action.projectKey);
-      project.sources[action.language] = action.source;
-      Storage.save(project);
-      ProjectStore.emitChange();
-      break;
-
     case ProjectConstants.PROJECT_CREATED:
       var project = createNewProject();
       _lastCreatedProjectKey = project.projectKey;
       _projects[project.projectKey] = project;
+      Storage.save(project);
+      ProjectStore.emitChange();
+      break;
+
+    case ProjectConstants.PROJECT_SOURCE_EDITED:
+      var project = ProjectStore.get(action.projectKey);
+      project.sources[action.language] = action.source;
       Storage.save(project);
       ProjectStore.emitChange();
       break;
