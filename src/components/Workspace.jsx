@@ -11,9 +11,13 @@ var Toolbar = require('./Toolbar.jsx');
 var Storage = require('../services/Storage');
 var config = require('../config');
 
+function calculateState() {
+  return {projectKey: CurrentProjectStore.getKey()};
+}
+
 var Workspace = React.createClass({
   getInitialState: function() {
-    return this._calculateState();
+    return calculateState();
   },
 
   componentDidMount: function() {
@@ -65,12 +69,8 @@ var Workspace = React.createClass({
   },
 
   _onChange: function() {
-    this.setState(this._calculateState());
+    this.setState(calculateState());
   },
-
-  _calculateState: function() {
-    return {projectKey: CurrentProjectStore.getKey()};
-  }
 });
 
 module.exports = Workspace;
