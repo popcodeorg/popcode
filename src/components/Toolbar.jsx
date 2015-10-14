@@ -1,6 +1,7 @@
 "use strict";
 
 var React = require('react');
+var classnames = require('classnames');
 var i18n = require('i18next-client');
 
 var LibraryPicker = require('./LibraryPicker.jsx');
@@ -28,7 +29,13 @@ var Toolbar = React.createClass({
 
           {this._showHideLabel()}
         </div>
-        <ul className={toolbarItemsClasses.join(' ')}>
+        <ul className={classnames(
+          'toolbar-menu',
+          {
+            'toolbar-menu--open': this.state.open,
+            'toolbar-menu--closed': !this.state.open
+          }
+        )}>
           <li onClick={this._newProject}
             className='toolbar-menu-item'>{i18n.t('toolbar.new-project')}</li>
           <li onClick={this._loadProject}

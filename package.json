@@ -18,6 +18,7 @@
     "brace": "^0.5.1",
     "browserify": "^10.2.6",
     "bulkify": "^1.1.1",
+    "classnames": "^2.1.5",
     "css": "^2.2.1",
     "es6-promise": "^2.3.0",
     "flux": "^2.0.3",

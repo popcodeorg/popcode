@@ -1,5 +1,5 @@
 var React = require('react');
-var cx = React.addons.classSet;
+var classnames = require('classnames');
 
 var ProjectActions = require('../actions/ProjectActions');
 var config = require('../config');
@@ -8,10 +8,10 @@ var LibraryPickerItem = React.createClass({
   render: function() {
     var library = this._getLibrary();
     return (
-      <li className={cx({
-        'toolbar-menu-item': true,
-        'toolbar-menu-item--active': this.props.enabled
-      })} onClick={this._onClicked}>
+      <li className={classnames(
+        'toolbar-menu-item',
+        {'toolbar-menu-item--active': this.props.enabled}
+      )} onClick={this._onClicked}>
 
         {library.name}
       </li>
