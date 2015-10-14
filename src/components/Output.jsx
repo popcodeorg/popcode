@@ -7,7 +7,6 @@ var ErrorStore = require('../stores/ErrorStore');
 var ProjectStore = require('../stores/ProjectStore');
 var Preview = require('./Preview.jsx');
 
-
 function calculateState() {
   var projectKey = CurrentProjectStore.getKey();
 
