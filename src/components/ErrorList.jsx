@@ -1,5 +1,5 @@
 var React = require('react');
-var _ = require('lodash');
+var lodash = require('lodash');
 var i18n = require('i18next-client');
 
 var ErrorItem = React.createClass({

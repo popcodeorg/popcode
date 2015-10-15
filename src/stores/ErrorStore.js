@@ -1,4 +1,4 @@
-var _ = require('lodash');
+var lodash = require('lodash');
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
@@ -10,7 +10,7 @@ var validations = require('../validations');
 
 var CHANGE_EVENT = 'change';
 
-_errors = {};
+var _errors = {};
 
 function emptyErrors() {
   return {html: [], css: [], javascript: []};
@@ -47,7 +47,7 @@ function validateSource(projectKey, language) {
   }.bind(this));
 }
 
-var ErrorStore = _.assign({}, EventEmitter.prototype, {
+var ErrorStore = lodash.assign({}, EventEmitter.prototype, {
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
@@ -69,7 +69,7 @@ var ErrorStore = _.assign({}, EventEmitter.prototype, {
   },
 
   anyErrors: function(projectKey) {
-    return _.some(this.getErrors(projectKey), function(errors) {
+    return lodash.some(this.getErrors(projectKey), function(errors) {
       return errors.length > 0;
     });
   }

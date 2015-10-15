@@ -3,36 +3,36 @@ var prettyCSS = require('PrettyCSS');
 var Promise = require('es6-promise').Promise;
 
 var humanErrors = {
-  "block-expected": function(error) {
-    return i18n.t("errors.prettycss.block-expected", { error: error.token.content });
+  'block-expected': function(error) {
+    return i18n.t('errors.prettycss.block-expected', { error: error.token.content });
   },
 
-  "extra-tokens-after-value": function() {
-    return i18n.t("errors.prettycss.extra-tokens-after-value");
+  'extra-tokens-after-value': function() {
+    return i18n.t('errors.prettycss.extra-tokens-after-value');
   },
 
-  "illegal-token-after-combinator": function() {
-    return i18n.t("errors.prettycss.illegal-token-after-combinator");
+  'illegal-token-after-combinator': function() {
+    return i18n.t('errors.prettycss.illegal-token-after-combinator');
   },
 
-  "invalid-token": function() {
-    return i18n.t("errors.prettycss.invalid-token");
+  'invalid-token': function() {
+    return i18n.t('errors.prettycss.invalid-token');
   },
 
-  "invalid-value": function(error) {
-    return i18n.t("errors.prettycss.invalid-value", { error: error.token.content });
+  'invalid-value': function(error) {
+    return i18n.t('errors.prettycss.invalid-value', { error: error.token.content });
   },
 
-  "require-value": function(error) {
-    return i18n.t("errors.prettycss.require-value", { error: error.token.content });
+  'require-value': function(error) {
+    return i18n.t('errors.prettycss.require-value', { error: error.token.content });
   },
 
-  "selector-expected": function() {
-    return i18n.t("errors.prettycss.selector-expected");
+  'selector-expected': function() {
+    return i18n.t('errors.prettycss.selector-expected');
   },
 
-  "unknown-property": function(error) {
-    return i18n.t("errors.prettycss.unknown-property", { error: error.token.content });
+  'unknown-property': function(error) {
+    return i18n.t('errors.prettycss.unknown-property', { error: error.token.content });
   }
 };
 
@@ -44,12 +44,10 @@ function convertErrorToAnnotation(error) {
       row: error.token.line - 1, column: error.token.charNum - 1,
       raw: message,
       text: message,
-      type: "error"
+      type: 'error'
     };
-  } else {
-    console.warn("Couldn't find a human description for", error);
   }
-};
+}
 
 module.exports = function(source) {
   var result = prettyCSS.parse(source);

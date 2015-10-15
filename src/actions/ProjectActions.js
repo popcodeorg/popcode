@@ -1,5 +1,3 @@
-var _ = require('lodash');
-
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ProjectConstants = require('../constants/ProjectConstants');
 

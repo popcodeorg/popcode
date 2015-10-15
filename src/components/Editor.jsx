@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var React = require('react');
 var ACE = require('brace');
@@ -30,7 +30,7 @@ var Editor = React.createClass({
     }
   },
 
-  shouldComponentUpdate: function(nextProps) {
+  shouldComponentUpdate: function() {
     return false;
   },
 
@@ -39,7 +39,7 @@ var Editor = React.createClass({
       <div className="editor">
         {this._getSource()}
       </div>
-    )
+    );
   },
 
   _jumpToLine: function(line, column) {
@@ -47,7 +47,7 @@ var Editor = React.createClass({
     this.editor.focus();
   },
 
-  _setupEditor: function(containerElement) {
+  _setupEditor: function() {
     this.editor = ACE.edit(this.getDOMNode());
     this._configureSession(this.editor.getSession());
   },
@@ -57,7 +57,7 @@ var Editor = React.createClass({
     if (source && source !== this.editor.getValue()) {
       this._startNewSession(source);
     }
-    var errors = ErrorStore.getErrors(this.props.projectKey)
+    var errors = ErrorStore.getErrors(this.props.projectKey);
     this.editor.getSession().setAnnotations(errors[this.props.language]);
   },
 
@@ -72,7 +72,7 @@ var Editor = React.createClass({
     var language = this.props.language;
     session.setMode('ace/mode/' + language);
     session.setUseWorker(false);
-    session.on('change', function(e) {
+    session.on('change', function() {
       ProjectActions.updateSource(
         this.props.projectKey,
         this.props.language,
