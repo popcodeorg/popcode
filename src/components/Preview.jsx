@@ -2,27 +2,33 @@
 
 var React = require('react');
 var DOMParser = window.DOMParser;
-var parser = new DOMParser();
 
+var parser = new DOMParser();
 var libraries = require('../config').libraries;
 
 var Preview = React.createClass({
   render: function() {
     return (
       <div id="preview">
-        <iframe id="preview-frame" srcDoc={this._generateDocument()} ref="frame" />
+        <iframe id="preview-frame" srcDoc={this._generateDocument()} />
       </div>
     );
   },
 
   _generateDocument: function() {
+    var project = this.props.project;
+
+    if (project === undefined) {
+      return '';
+    }
+
     var previewDocument = parser.parseFromString(
-      this.props.sources.html, 'text/html');
+      project.sources.html, 'text/html');
 
     var previewHead = previewDocument.head;
     var previewBody = previewDocument.body;
 
-    this.props.enabledLibraries.forEach(function(libraryKey) {
+    project.enabledLibraries.forEach(function(libraryKey) {
       var library = libraries[libraryKey];
       var css = library.css;
       var javascript = library.javascript;
@@ -40,10 +46,10 @@ var Preview = React.createClass({
     });
 
     var styleTag = previewDocument.createElement('style');
-    styleTag.innerHTML = this.props.sources.css;
+    styleTag.innerHTML = project.sources.css;
     previewHead.appendChild(styleTag);
     var scriptTag = previewDocument.createElement('script');
-    scriptTag.innerHTML = this.props.sources.javascript;
+    scriptTag.innerHTML = project.sources.javascript;
     previewBody.appendChild(scriptTag);
 
     return previewDocument.documentElement.outerHTML;
