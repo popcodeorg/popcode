@@ -1,5 +1,3 @@
-"use strict";
-
 var React = require('react');
 var DOMParser = window.DOMParser;
 
@@ -53,7 +51,7 @@ var Preview = React.createClass({
     previewBody.appendChild(scriptTag);
 
     return previewDocument.documentElement.outerHTML;
-  }
+  },
 });
 
 module.exports = Preview;

@@ -46,7 +46,7 @@ var ProjectList = React.createClass({
   _onProjectClicked: function(project) {
     CurrentProjectActions.select(project.projectKey);
     this.props.onProjectSelected();
-  }
+  },
 });
 
 module.exports = ProjectList;

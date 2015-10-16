@@ -1,5 +1,3 @@
-"use strict";
-
 var React = require('react');
 var classnames = require('classnames');
 var i18n = require('i18next-client');
@@ -33,7 +31,7 @@ var Toolbar = React.createClass({
           'toolbar-menu',
           {
             'toolbar-menu--open': this.state.open,
-            'toolbar-menu--closed': !this.state.open
+            'toolbar-menu--closed': !this.state.open,
           }
         )}>
           <li onClick={this._newProject}
@@ -71,9 +69,9 @@ var Toolbar = React.createClass({
 
   _showHideLabel: function() {
     if (this.state.open) {
-      return i18n.t("toolbar.hide");
+      return i18n.t('toolbar.hide');
     } else {
-      return i18n.t("toolbar.show");
+      return i18n.t('toolbar.show');
     }
   },
 
@@ -104,7 +102,7 @@ var Toolbar = React.createClass({
         return {open: true};
       }
     });
-  }
+  },
 });
 
 module.exports = Toolbar;

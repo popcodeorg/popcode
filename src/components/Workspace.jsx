@@ -1,8 +1,4 @@
-"use strict";
-
 var React = require('react/addons');
-var update = React.addons.update;
-var lodash = require('lodash');
 
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
 var Editor = require('./Editor.jsx');
@@ -58,7 +54,7 @@ var Workspace = React.createClass({
         <Toolbar />
         {environment}
       </div>
-    )
+    );
   },
 
   _onErrorClicked: function(language, line, column) {

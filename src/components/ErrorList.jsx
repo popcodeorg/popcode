@@ -1,17 +1,26 @@
 var React = require('react');
-var lodash = require('lodash');
 var i18n = require('i18next-client');
+var lodash = require('lodash');
 
 var ErrorItem = React.createClass({
   render: function() {
-    var line_number = i18n.t('errors.line-number', { number: this.props.row + 1 });
+    var line_number =
+      i18n.t('errors.line-number', { number: this.props.row + 1 });
+
     return (
-      <li className="errorList-error" onClick={_.partial(this.props.onClick, this.props.row, this.props.column)}>
+      <li
+        className="errorList-error"
+        onClick={lodash.partial(
+          this.props.onClick,
+          this.props.row,
+          this.props.column
+        )}
+      >
         <span className="errorList-error-line">{line_number}</span>
         <span className="errorList-error-message">{this.props.text}</span>
       </li>
     );
-  }
+  },
 });
 
 var ErrorSublist = React.createClass({
@@ -20,11 +29,21 @@ var ErrorSublist = React.createClass({
       return false;
     }
 
-    var errors = _.map(this.props.errors, function(error) {
-      return <ErrorItem {...error} onClick={_.partial(this.props.onErrorClicked, this.props.language)} />
+    var errors = lodash.map(this.props.errors, function(error) {
+      return (
+        <ErrorItem {...error}
+          onClick={lodash.partial(
+            this.props.onErrorClicked,
+            this.props.language
+          )}
+        />
+      );
     }.bind(this));
 
-    var error_message = i18n.t("errors.notice", { amount: this.props.errors.length, language: this.props.language });
+    var error_message = i18n.t(
+      'errors.notice',
+      { amount: this.props.errors.length, language: this.props.language }
+    );
 
     return (
       <div className="errorList-errorSublist">
@@ -35,20 +54,32 @@ var ErrorSublist = React.createClass({
           {errors}
         </ul>
       </div>
-    )
-  }
+    );
+  },
 });
 
 var ErrorList = React.createClass({
   render: function() {
     return (
       <div className="errorList">
-        <ErrorSublist language="html" errors={this.props.html} onErrorClicked={this.props.onErrorClicked} />
-        <ErrorSublist language="css" errors={this.props.css} onErrorClicked={this.props.onErrorClicked} />
-        <ErrorSublist language="javascript" errors={this.props.javascript} onErrorClicked={this.props.onErrorClicked} />
+        <ErrorSublist
+          language="html"
+          errors={this.props.html}
+          onErrorClicked={this.props.onErrorClicked}
+        />
+        <ErrorSublist
+          language="css"
+          errors={this.props.css}
+          onErrorClicked={this.props.onErrorClicked}
+        />
+        <ErrorSublist
+          language="javascript"
+          errors={this.props.javascript}
+          onErrorClicked={this.props.onErrorClicked}
+        />
       </div>
     );
-  }
+  },
 });
 
 module.exports = ErrorList;

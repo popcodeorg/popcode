@@ -17,7 +17,7 @@ function calculateState() {
 
   return {
     projectKey: projectKey,
-    enabledLibraries: enabledLibraries
+    enabledLibraries: enabledLibraries,
   };
 }
 
@@ -37,7 +37,7 @@ var LibraryPicker = React.createClass({
   },
 
   render: function() {
-    var libraries = _.map(config.libraries, function(library, key) {
+    var libraries = lodash.map(config.libraries, function(library, key) {
       return (
         <LibraryPickerItem
           projectKey={this.state.projectKey}
@@ -55,7 +55,7 @@ var LibraryPicker = React.createClass({
 
   _isLibraryEnabled: function(libraryKey) {
     return this.state.enabledLibraries.indexOf(libraryKey) !== -1;
-  }
+  },
 });
 
 module.exports = LibraryPicker;

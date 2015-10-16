@@ -1,5 +1,4 @@
 var React = require('react');
-var lodash = require('lodash');
 
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
 var ErrorList = require('./ErrorList.jsx');
@@ -13,7 +12,7 @@ function calculateState() {
   return {
     project: ProjectStore.get(projectKey),
     hasErrors: ErrorStore.anyErrors(projectKey),
-    errors: ErrorStore.getErrors(projectKey)
+    errors: ErrorStore.getErrors(projectKey),
   };
 }
 
@@ -52,7 +51,7 @@ var Output = React.createClass({
 
   _onChange: function() {
     this.setState(calculateState());
-  }
+  },
 });
 
 module.exports = Output;

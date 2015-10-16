@@ -24,7 +24,7 @@ var LibraryPickerItem = React.createClass({
 
   _onClicked: function() {
     ProjectActions.toggleLibrary(this.props.projectKey, this.props.libraryKey);
-  }
+  },
 });
 
 module.exports = LibraryPickerItem;

@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react');
 var ACE = require('brace');
 require('brace/mode/html');
@@ -87,7 +85,7 @@ var Editor = React.createClass({
     if (project) {
       return project.sources[this.props.language];
     }
-  }
+  },
 });
 
 module.exports = Editor;
