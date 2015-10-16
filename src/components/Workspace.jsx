@@ -2,7 +2,7 @@
 
 var React = require('react/addons');
 var update = React.addons.update;
-var _ = require('lodash');
+var lodash = require('lodash');
 
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
 var Editor = require('./Editor.jsx');

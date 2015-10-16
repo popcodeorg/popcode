@@ -2,7 +2,7 @@ var i18n = require('i18next-client');
 var htmllint = require('htmllint');
 
 var humanErrors = {
-  "E001": function(error) {
+  'E001': function(error) {
     switch(error.data.attribute.toLowerCase()) {
       case 'align':
         return i18n.t('errors.html.banned-attributes.align');
@@ -24,35 +24,35 @@ var humanErrors = {
     }
   },
 
-  "E002": function() {
-    return i18n.t("errors.html.lower-case");
+  'E002': function() {
+    return i18n.t('errors.html.lower-case');
   },
 
-  "E005": function(error) {
-    return i18n.t("errors.html.attribute-quotes", { attribute: error.data.attribute });
+  'E005': function(error) {
+    return i18n.t('errors.html.attribute-quotes', { attribute: error.data.attribute });
   },
 
-  "E006": function(error) {
-    return i18n.t("errors.html.attribute-value");
+  'E006': function() {
+    return i18n.t('errors.html.attribute-value');
   },
 
-  "E007": function() {
-    return i18n.t("errors.html.doctype");
+  'E007': function() {
+    return i18n.t('errors.html.doctype');
   },
 
-  "E008": function() {
-    return i18n.t("errors.html.doctype");
+  'E008': function() {
+    return i18n.t('errors.html.doctype');
   },
 
-  "E012": function(error) {
-    return i18n.t("errors.html.duplicated-id", { id: error.data.id });
+  'E012': function(error) {
+    return i18n.t('errors.html.duplicated-id', { id: error.data.id });
   },
 
-  "E014": function() {
-    return i18n.t("errors.html.img-src");
+  'E014': function() {
+    return i18n.t('errors.html.img-src');
   },
 
-  "E016": function(error) {
+  'E016': function(error) {
     switch (error.data.tag.toLowerCase()) {
       case 'b':
         return i18n.t('errors.html.deprecated-tag.b');
@@ -71,24 +71,24 @@ var humanErrors = {
     }
   },
 
-  "E017": function() {
-    return i18n.t("errors.html.lower-case-tag-name")
+  'E017': function() {
+    return i18n.t('errors.html.lower-case-tag-name');
   },
 
-  "E027": function() {
-    return i18n.t("errors.html.missing-title")
+  'E027': function() {
+    return i18n.t('errors.html.missing-title');
   },
 
-  "E028": function() {
-    return i18n.t("errors.html.duplicated-title")
+  'E028': function() {
+    return i18n.t('errors.html.duplicated-title');
   },
 
-  "E030": function() {
-    return i18n.t("errors.html.opened-tag")
+  'E030': function() {
+    return i18n.t('errors.html.opened-tag');
   },
 
-  "E036": function() {
-    return i18n.t("errors.html.indentation")
+  'E036': function() {
+    return i18n.t('errors.html.indentation');
   }
 };
 
@@ -130,7 +130,7 @@ var htmlLintOptions = {
   'tag-name-lowercase': true,
   'title-max-length': 0,
   'title-no-dup': true
-}
+};
 
 function convertErrorToAnnotation(error) {
   if (humanErrors.hasOwnProperty(error.code)) {
@@ -139,12 +139,10 @@ function convertErrorToAnnotation(error) {
       row: error.line - 1, column: error.column - 1,
       raw: message,
       text: message,
-      type: "error"
+      type: 'error'
     };
-  } else {
-    console.warn("Couldn't find a human description for", error, htmllint.messages.renderIssue(error));
   }
-};
+}
 
 module.exports = function(source) {
   return htmllint(source, htmlLintOptions).then(function(errors) {
@@ -156,7 +154,5 @@ module.exports = function(source) {
       }
     });
     return annotations;
-  }, function(error) {
-    console.error('htmllint error', error)
   });
 };

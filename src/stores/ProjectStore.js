@@ -1,4 +1,4 @@
-var _ = require('lodash');
+var lodash = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var ProjectActions = require('../actions/ProjectActions');
@@ -8,7 +8,7 @@ var Storage = require('../services/Storage');
 var CHANGE_EVENT = 'change';
 
 var _projects = {};
-var _lastCreatedProject;
+var _lastCreatedProjectKey;
 
 function generateProjectKey() {
   var date = new Date();
@@ -19,19 +19,19 @@ function createNewProject() {
   return {
     projectKey: generateProjectKey(),
     sources: {
-      html: "<!DOCTYPE html>\n<html>\n    <head>\n        <title>Page Title</title>\n    </head>\n    <body>\n        <!-- Put your page markup here -->\n    </body>\n</html>",
-      css: "",
-      javascript: ""
+      html: '<!DOCTYPE html>\n<html>\n    <head>\n        <title>Page Title</title>\n    </head>\n    <body>\n        <!-- Put your page markup here -->\n    </body>\n</html>',
+      css: '',
+      javascript: ''
     },
     enabledLibraries: []
   };
 }
 
 Storage.all().then(function(results) {
-  results.forEach(ProjectActions.loadFromStorage)
+  results.forEach(ProjectActions.loadFromStorage);
 });
 
-var ProjectStore = _.assign({}, EventEmitter.prototype, {
+var ProjectStore = lodash.assign({}, EventEmitter.prototype, {
   get: function(projectKey) {
     return _projects[projectKey];
   },
@@ -41,7 +41,7 @@ var ProjectStore = _.assign({}, EventEmitter.prototype, {
   },
 
   all: function() {
-    return _.values(_projects);
+    return lodash.values(_projects);
   },
 
   emitChange: function() {
@@ -58,9 +58,11 @@ var ProjectStore = _.assign({}, EventEmitter.prototype, {
 });
 
 ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
+  var project;
+
   switch(action.actionType) {
     case ProjectConstants.PROJECT_CREATED:
-      var project = createNewProject();
+      project = createNewProject();
       _lastCreatedProjectKey = project.projectKey;
       _projects[project.projectKey] = project;
       Storage.save(project);
@@ -68,7 +70,7 @@ ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ProjectConstants.PROJECT_SOURCE_EDITED:
-      var project = ProjectStore.get(action.projectKey);
+      project = ProjectStore.get(action.projectKey);
       project.sources[action.language] = action.source;
       Storage.save(project);
       ProjectStore.emitChange();
@@ -80,13 +82,13 @@ ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ProjectConstants.PROJECT_LIBRARY_TOGGLED:
-      var project = ProjectStore.get(action.projectKey);
+      project = ProjectStore.get(action.projectKey);
       var libraries = project.enabledLibraries;
       var libraryKey = action.libraryKey;
       if (libraries.indexOf(libraryKey) === -1) {
         libraries.push(libraryKey);
       } else {
-        _.pull(libraries, libraryKey);
+        lodash.pull(libraries, libraryKey);
       }
       Storage.save(action.projectKey, project);
       ProjectStore.emitChange();

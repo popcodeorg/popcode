@@ -1,5 +1,5 @@
 var localforage = require('localforage');
-var _ = require('lodash');
+var lodash = require('lodash');
 
 var storageVersion = 3;
 
@@ -35,7 +35,7 @@ var Storage = {
 
     localforage.getItem('allKeys').then(function(oldKeys) {
       if (oldKeys === null || oldKeys[oldKeys.length - 1] !== key) {
-        var keys = _.without(oldKeys || [], key);
+        var keys = lodash.without(oldKeys || [], key);
         keys.unshift(key);
         localforage.setItem('allKeys', keys);
       }
@@ -43,7 +43,7 @@ var Storage = {
 
     localforage.setItem(
       fullKeyFor(key),
-      _.extend({
+      lodash.extend({
         storageVersion: storageVersion,
         updatedAt: new Date()
       }, data)

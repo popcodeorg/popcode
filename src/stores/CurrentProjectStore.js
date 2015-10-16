@@ -1,4 +1,4 @@
-var _ = require('lodash');
+var lodash = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 
@@ -21,7 +21,7 @@ Storage.getCurrentProjectKey().then(function(projectKey) {
 
 var _currentProjectKey;
 
-var CurrentProjectStore = _.assign({}, EventEmitter.prototype, {
+var CurrentProjectStore = lodash.assign({}, EventEmitter.prototype, {
   getKey: function() {
     return _currentProjectKey;
   },

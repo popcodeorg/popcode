@@ -3,16 +3,16 @@ var css = require('css');
 var Promise = require('es6-promise').Promise;
 
 var humanErrors = {
-  "missing '}'": function() {
-    return i18n.t("errors.css.missing-curly");
+  'missing \'}\'': function() {
+    return i18n.t('errors.css.missing-curly');
   },
 
-  "property missing ':'": function() {
-    return i18n.t("errors.css.property-missing-colon");
+  'property missing \':\'': function() {
+    return i18n.t('errors.css.property-missing-colon');
   },
 
-  "selector missing": function() {
-    return i18n.t("errors.css.selector-missing");
+  'selector missing': function() {
+    return i18n.t('errors.css.selector-missing');
   }
 };
 
@@ -23,12 +23,10 @@ function convertErrorToAnnotation(error) {
       row: error.line - 1, column: error.column - 1,
       raw: message,
       text: message,
-      type: "error"
+      type: 'error'
     };
-  } else {
-    console.warn(i18n.t('errors.undefined-description'), error);
   }
-};
+}
 
 module.exports = function(source) {
   var result = css.parse(source, {silent: true}).stylesheet;

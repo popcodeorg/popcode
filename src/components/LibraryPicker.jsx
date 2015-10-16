@@ -1,5 +1,5 @@
 var React = require('react');
-var _ = require('lodash');
+var lodash = require('lodash');
 
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
 var LibraryPickerItem = require('./LibraryPickerItem.jsx');
