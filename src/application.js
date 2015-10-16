@@ -4,7 +4,7 @@ var Workspace = require('./components/Workspace.jsx');
 
 var i18n_options = {
   fallbackLng: 'en',
-  debug: true
+  debug: true,
 };
 i18n.init(i18n_options);
 

@@ -24,9 +24,9 @@ function createNewProject() {
       /*global __dirname*/
       html: fs.readFileSync(__dirname + '/../../templates/new.html', 'utf8'),
       css: '',
-      javascript: ''
+      javascript: '',
     },
-    enabledLibraries: []
+    enabledLibraries: [],
   };
 }
 
@@ -57,7 +57,7 @@ var ProjectStore = lodash.assign({}, EventEmitter.prototype, {
 
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  }
+  },
 });
 
 ProjectStore.dispatchToken = AppDispatcher.register(function(action) {

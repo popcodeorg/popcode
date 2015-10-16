@@ -95,7 +95,7 @@ var humanErrors = {
 
   'E036': function() {
     return i18n.t('errors.html.indentation');
-  }
+  },
 };
 
 var htmlLintOptions = {
@@ -108,7 +108,7 @@ var htmlLintOptions = {
     'marginwidth',
     'marginheight',
     'scrolling',
-    'width'
+    'width',
   ],
   'attr-name-style': 'lowercase',
   'attr-no-dup': true,
@@ -130,12 +130,12 @@ var htmlLintOptions = {
     'font',
     'i',
     'tt',
-    'strike'
+    'strike',
   ],
   'tag-name-match': true,
   'tag-name-lowercase': true,
   'title-max-length': 0,
-  'title-no-dup': true
+  'title-no-dup': true,
 };
 
 function convertErrorToAnnotation(error) {
@@ -145,7 +145,7 @@ function convertErrorToAnnotation(error) {
       row: error.line - 1, column: error.column - 1,
       raw: message,
       text: message,
-      type: 'error'
+      type: 'error',
     };
   }
 }

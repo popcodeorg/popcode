@@ -45,7 +45,7 @@ var humanErrors = {
       'errors.prettycss.unknown-property',
       { error: error.token.content }
     );
-  }
+  },
 };
 
 function convertErrorToAnnotation(error) {
@@ -56,7 +56,7 @@ function convertErrorToAnnotation(error) {
       row: error.token.line - 1, column: error.token.charNum - 1,
       raw: message,
       text: message,
-      type: 'error'
+      type: 'error',
     };
   }
 }

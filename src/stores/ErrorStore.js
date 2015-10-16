@@ -72,7 +72,7 @@ var ErrorStore = lodash.assign({}, EventEmitter.prototype, {
     return lodash.some(this.getErrors(projectKey), function(errors) {
       return errors.length > 0;
     });
-  }
+  },
 });
 
 ErrorStore.dispatchToken = AppDispatcher.register(function(action) {
@@ -90,7 +90,7 @@ ErrorStore.dispatchToken = AppDispatcher.register(function(action) {
     case ProjectConstants.PROJECT_LOADED_FROM_STORAGE:
       AppDispatcher.waitFor([
         ProjectStore.dispatchToken,
-        CurrentProjectStore.dispatchToken
+        CurrentProjectStore.dispatchToken,
       ]);
       if (CurrentProjectStore.isCurrentProject(action.project)) {
         validateAllSources(action.project.projectKey);

@@ -14,7 +14,7 @@ var jshintrc = {
   predef: [],
   shadow: 'outer',
   undef: true,
-  unused: true
+  unused: true,
 };
 
 var match = {
@@ -22,7 +22,7 @@ var match = {
   '[': ']',
   '(': ')',
   '\'': '\'',
-  '"': '"'
+  '"': '"',
 };
 
 var humanErrors = {
@@ -108,7 +108,7 @@ var humanErrors = {
       'errors.javascript.duplicated-declaration',
       { variable: error.a }
     );
-  }
+  },
 };
 
 function convertErrorToAnnotation(error) {
@@ -119,7 +119,7 @@ function convertErrorToAnnotation(error) {
       row: error.line - 1, column: error.character - 1,
       raw: message,
       text: message,
-      type: 'error'
+      type: 'error',
     };
   }
 }

@@ -45,12 +45,12 @@ var Storage = {
       fullKeyFor(key),
       lodash.extend({
         storageVersion: storageVersion,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       }, data)
     );
 
     return data;
-  }
+  },
 };
 
 module.exports = Storage;

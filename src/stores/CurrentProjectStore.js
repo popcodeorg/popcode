@@ -40,7 +40,7 @@ var CurrentProjectStore = lodash.assign({}, EventEmitter.prototype, {
 
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  }
+  },
 });
 
 CurrentProjectStore.dispatchToken = AppDispatcher.register(function(action) {

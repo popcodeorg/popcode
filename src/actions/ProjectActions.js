@@ -4,7 +4,7 @@ var ProjectConstants = require('../constants/ProjectConstants');
 var ProjectActions = {
   create: function() {
     AppDispatcher.dispatch({
-      actionType: ProjectConstants.PROJECT_CREATED
+      actionType: ProjectConstants.PROJECT_CREATED,
     });
   },
 
@@ -13,7 +13,7 @@ var ProjectActions = {
       actionType: ProjectConstants.PROJECT_SOURCE_EDITED,
       projectKey: projectKey,
       language: language,
-      source: source
+      source: source,
     });
   },
 
@@ -21,16 +21,16 @@ var ProjectActions = {
     AppDispatcher.dispatch({
       actionType: ProjectConstants.PROJECT_LIBRARY_TOGGLED,
       projectKey: projectKey,
-      libraryKey: libraryKey
+      libraryKey: libraryKey,
     });
   },
 
   loadFromStorage: function(project) {
     AppDispatcher.dispatch({
       actionType: ProjectConstants.PROJECT_LOADED_FROM_STORAGE,
-      project: project
+      project: project,
     });
-  }
+  },
 };
 
 module.exports = ProjectActions;
