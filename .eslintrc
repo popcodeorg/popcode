@@ -16,6 +16,10 @@
         "semi": [
             2,
             "always"
+        ],
+        "strict": [
+            2,
+            "never"
         ]
     },
     "env": {
