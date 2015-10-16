@@ -1,4 +1,6 @@
 var lodash = require('lodash');
+var fs = require('fs');
+
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var ProjectActions = require('../actions/ProjectActions');
@@ -19,7 +21,8 @@ function createNewProject() {
   return {
     projectKey: generateProjectKey(),
     sources: {
-      html: '<!DOCTYPE html>\n<html>\n    <head>\n        <title>Page Title</title>\n    </head>\n    <body>\n        <!-- Put your page markup here -->\n    </body>\n</html>',
+      /*global __dirname*/
+      html: fs.readFileSync(__dirname + '/../../templates/new.html', 'utf8'),
       css: '',
       javascript: ''
     },

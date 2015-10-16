@@ -16,6 +16,7 @@
   "dependencies": {
     "PrettyCSS": "^0.3.10",
     "brace": "^0.5.1",
+    "brfs": "^1.4.1",
     "browserify": "^10.2.6",
     "bulkify": "^1.1.1",
     "classnames": "^2.1.5",
@@ -48,11 +49,12 @@
   "browserify": {
     "transform": [
       "reactify",
+      "brfs",
       "strictify"
     ]
   },
   "devDependencies": {
     "eslint": "^1.4.1",
-    "eslint-plugin-react": "^3.3.2",
+    "eslint-plugin-react": "^3.3.2"
   }
 }

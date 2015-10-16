@@ -12,7 +12,10 @@ var humanErrors = {
         return i18n.t('errors.html.banned-attributes.bgcolor');
       case 'border':
       case 'frameborder':
-        return i18n.t('errors.html.banned-attributes.frameborder', { attribute: error.data.attribute });
+        return i18n.t(
+          'errors.html.banned-attributes.frameborder',
+          { attribute: error.data.attribute }
+        );
       case 'marginwidth':
         return i18n.t('errors.html.banned-attributes.marginwidth');
       case 'marginheight':
@@ -29,7 +32,10 @@ var humanErrors = {
   },
 
   'E005': function(error) {
-    return i18n.t('errors.html.attribute-quotes', { attribute: error.data.attribute });
+    return i18n.t(
+      'errors.html.attribute-quotes',
+      { attribute: error.data.attribute }
+    );
   },
 
   'E006': function() {

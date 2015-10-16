@@ -27,11 +27,17 @@ var match = {
 
 var humanErrors = {
   'E019': function(error) {
-    return i18n.t('errors.javascript.unmatched', { opening_symbol: error.a, closing_symbol: match[error.a] });
+    return i18n.t(
+      'errors.javascript.unmatched',
+      { opening_symbol: error.a, closing_symbol: match[error.a] }
+    );
   },
 
   'E020': function(error) {
-    return i18n.t('errors.javascript.closing-match', { opening_symbol: error.b, closing_symbol: error.a });
+    return i18n.t(
+      'errors.javascript.closing-match',
+      { opening_symbol: error.b, closing_symbol: error.a }
+    );
   },
 
   'E030': function() {
@@ -39,7 +45,10 @@ var humanErrors = {
   },
 
   'W003': function(error) {
-    return i18n.t('errors.javascript.undefined-variable', { variable: error.a });
+    return i18n.t(
+      'errors.javascript.undefined-variable',
+      { variable: error.a }
+    );
   },
 
   'W030': function() {
@@ -59,7 +68,10 @@ var humanErrors = {
   },
 
   'W058': function(error) {
-    return i18n.t('errors.javascript.missing-parentheses', { object: error.a } );
+    return i18n.t(
+      'errors.javascript.missing-parentheses',
+      { object: error.a }
+    );
   },
 
   'W084': function() {
@@ -80,7 +92,10 @@ var humanErrors = {
     } else if (error.a === '!==' && error.b === '!=') {
       return i18n.t('errors.javascript.strict-operators.different');
     } else {
-      return i18n.t('errors.javascript.strict-operators.custom-case', { good_operator: error.a, bad_operator: error.b });
+      return i18n.t(
+        'errors.javascript.strict-operators.custom-case',
+        { good_operator: error.a, bad_operator: error.b }
+      );
     }
   },
 
@@ -89,7 +104,10 @@ var humanErrors = {
   },
 
   'W123': function(error) {
-    return i18n.t('errors.javascript.duplicated-declaration', { variable: error.a });
+    return i18n.t(
+      'errors.javascript.duplicated-declaration',
+      { variable: error.a }
+    );
   }
 };
 

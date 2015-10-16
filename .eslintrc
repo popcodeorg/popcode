@@ -13,6 +13,15 @@
             2,
             "unix"
         ],
+        "max-len": [
+          2,
+          79,
+          2,
+          {"ignoreUrls": true}
+        ],
+        "no-irregular-whitespace": [
+          2
+        ],
         "semi": [
             2,
             "always"
