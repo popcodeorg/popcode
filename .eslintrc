@@ -19,6 +19,9 @@
           2,
           {"ignoreUrls": true}
         ],
+        "no-cond-assign": [
+          2
+        ],
         "no-irregular-whitespace": [
           2
         ],
