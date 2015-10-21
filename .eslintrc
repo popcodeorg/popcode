@@ -46,6 +46,12 @@
           2,
           {"ignoreUrls": true}
         ],
+        "no-alert": [
+            2
+        ],
+        "no-caller": [
+            2
+        ],
         "no-cond-assign": [
           2
         ],
@@ -57,6 +63,9 @@
         ],
         "no-debugger": [
           2
+        ],
+        "no-div-regex": [
+            2
         ],
         "no-dupe-args": [
           2
