@@ -70,18 +70,16 @@ var Toolbar = React.createClass({
   _showHideLabel: function() {
     if (this.state.open) {
       return i18n.t('toolbar.hide');
-    } else {
-      return i18n.t('toolbar.show');
     }
+    return i18n.t('toolbar.show');
   },
 
   _toggleLibraryPicker: function() {
     return this.setState(function(oldState) {
       if (oldState.submenu === 'libraries') {
         return {submenu: null};
-      } else {
-        return {submenu: 'libraries'};
       }
+      return {submenu: 'libraries'};
     });
   },
 
@@ -98,9 +96,8 @@ var Toolbar = React.createClass({
     this.setState(function(oldState) {
       if (oldState.open) {
         return {open: false, submenu: null};
-      } else {
-        return {open: true};
       }
+      return {open: true};
     });
   },
 });

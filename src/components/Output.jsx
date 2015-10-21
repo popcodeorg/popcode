@@ -40,13 +40,13 @@ var Output = React.createClass({
           {...this.state.errors}
           onErrorClicked={this.props.onErrorClicked} />
       );
-    } else if (this.state.project) {
+    }
+    if (this.state.project) {
       return (
         <Preview project={this.state.project} />
       );
-    } else {
-      return null;
     }
+    return null;
   },
 
   _onChange: function() {

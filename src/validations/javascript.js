@@ -89,14 +89,14 @@ var humanErrors = {
   'W116': function(error) {
     if (error.a === '===' && error.b === '==') {
       return i18n.t('errors.javascript.strict-operators.equal');
-    } else if (error.a === '!==' && error.b === '!=') {
-      return i18n.t('errors.javascript.strict-operators.different');
-    } else {
-      return i18n.t(
-        'errors.javascript.strict-operators.custom-case',
-        { good_operator: error.a, bad_operator: error.b }
-      );
     }
+    if (error.a === '!==' && error.b === '!=') {
+      return i18n.t('errors.javascript.strict-operators.different');
+    }
+    return i18n.t(
+      'errors.javascript.strict-operators.custom-case',
+      { good_operator: error.a, bad_operator: error.b }
+    );
   },
 
   'W117': function(error) {
