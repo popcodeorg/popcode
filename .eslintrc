@@ -1,13 +1,40 @@
 {
     "rules": {
+        "accessor-pairs": [
+            2
+        ],
+        "block-scoped-var": [
+          2
+        ],
+        "comma-dangle": [
+          2,
+          "always-multiline"
+        ],
+        "complexity": [
+          2
+        ],
+        "consistent-return": [
+            2
+        ],
+        "curly": [
+            2
+        ],
+        "dot-location": [
+            2
+        ],
+        "dot-notation": [
+            2
+        ],
+        "eqeqeq": [
+            2
+        ],
+        "guard-for-in": [
+            2
+        ],
         "indent": [
             2,
             2,
             {"SwitchCase": 1}
-        ],
-        "quotes": [
-            2,
-            "single"
         ],
         "linebreak-style": [
             2,
@@ -56,8 +83,42 @@
           2,
           "functions"
         ],
+        "no-extra-semi": [
+          2
+        ],
+        "no-func-assign": [
+          2
+        ],
+        "no-inner-declarations": [
+          2
+        ],
+        "no-invalid-regexp": [
+          2
+        ],
         "no-irregular-whitespace": [
           2
+        ],
+        "no-negated-in-lhs": [
+          2
+        ],
+        "no-obj-calls": [
+          2
+        ],
+        "no-regex-spaces": [
+          2
+        ],
+        "no-sparse-arrays": [
+          2
+        ],
+        "no-unexpected-multiline": [
+          2
+        ],
+        "no-unreachable": [
+          2
+        ],
+        "quotes": [
+            2,
+            "single"
         ],
         "semi": [
             2,
@@ -67,9 +128,14 @@
             2,
             "never"
         ],
-        "comma-dangle": [
-            2,
-            "always-multiline"
+        "use-isnan": [
+          2
+        ],
+        "valid-jsdoc": [
+          2
+        ],
+        "valid-typeof": [
+          2
         ]
     },
     "env": {
