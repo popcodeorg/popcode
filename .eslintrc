@@ -28,6 +28,9 @@
         "eqeqeq": [
             2
         ],
+        "global-require": [
+            2
+        ],
         "guard-for-in": [
             2
         ],
