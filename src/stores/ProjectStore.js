@@ -1,3 +1,5 @@
+/* global __dirname */
+
 var lodash = require('lodash');
 var fs = require('fs');
 var path = require('path');
@@ -22,7 +24,6 @@ function createNewProject() {
   return {
     projectKey: generateProjectKey(),
     sources: {
-      /*global __dirname*/
       html: fs.readFileSync(path.join(
         __dirname,
         '..',
