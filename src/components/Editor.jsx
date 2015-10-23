@@ -35,7 +35,7 @@ var Editor = React.createClass({
   render: function() {
     return (
       <div className="editor">
-        {this._getSource()}
+        {this._getSource(this.props.projectKey)}
       </div>
     );
   },
@@ -51,7 +51,7 @@ var Editor = React.createClass({
   },
 
   _onChange: function() {
-    var source = this._getSource();
+    var source = this._getSource(this.props.projectKey);
     if (source && source !== this.editor.getValue()) {
       this._startNewSession(source);
     }
@@ -80,7 +80,6 @@ var Editor = React.createClass({
   },
 
   _getSource: function(projectKey) {
-    projectKey = projectKey || this.props.projectKey;
     var project = ProjectStore.get(projectKey);
     if (project) {
       return project.sources[this.props.language];
