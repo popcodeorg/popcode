@@ -86,6 +86,14 @@
             2,
             "prefer-double"
         ],
+        "key-spacing": [
+            2,
+            {
+                "beforeColon": false,
+                "afterColon": true,
+                "mode": "strict"
+            }
+        ],
         "linebreak-style": [
             2,
             "unix"

@@ -42,7 +42,7 @@ module.exports = {
     },
     normalize: {
       name: 'normalize.css',
-      css:'https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css',
+      css: 'https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css',
     },
   },
 };
