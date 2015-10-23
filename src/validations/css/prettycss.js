@@ -49,9 +49,9 @@ var humanErrors = {
 };
 
 function convertErrorToAnnotation(error) {
-  var normalized_code = error.code.split(':')[0];
-  if (error.token !== null && humanErrors.hasOwnProperty(normalized_code)) {
-    var message = humanErrors[normalized_code](error);
+  var normalizedCode = error.code.split(':')[0];
+  if (error.token !== null && humanErrors.hasOwnProperty(normalizedCode)) {
+    var message = humanErrors[normalizedCode](error);
     return {
       row: error.token.line - 1, column: error.token.charNum - 1,
       raw: message,

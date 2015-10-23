@@ -3,8 +3,24 @@
         "accessor-pairs": [
             2
         ],
+        "array-bracket-spacing": [
+            2,
+            "never"
+        ],
         "block-scoped-var": [
           2
+        ],
+        "block-spacing": [
+            2,
+            "always"
+        ],
+        "brace-style": [
+            2,
+            "1tbs"
+        ],
+        "camelcase": [
+            2,
+            {"properties": "always"}
         ],
         "comma-dangle": [
           2,

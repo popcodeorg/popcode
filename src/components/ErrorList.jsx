@@ -4,7 +4,7 @@ var lodash = require('lodash');
 
 var ErrorItem = React.createClass({
   render: function() {
-    var line_number =
+    var lineNumber =
       i18n.t('errors.line-number', { number: this.props.row + 1 });
 
     return (
@@ -16,7 +16,7 @@ var ErrorItem = React.createClass({
           this.props.column
         )}
       >
-        <span className="errorList-error-line">{line_number}</span>
+        <span className="errorList-error-line">{lineNumber}</span>
         <span className="errorList-error-message">{this.props.text}</span>
       </li>
     );
@@ -40,7 +40,7 @@ var ErrorSublist = React.createClass({
       );
     }.bind(this));
 
-    var error_message = i18n.t(
+    var errorMessage = i18n.t(
       'errors.notice',
       { amount: this.props.errors.length, language: this.props.language }
     );
@@ -48,7 +48,7 @@ var ErrorSublist = React.createClass({
     return (
       <div className="errorList-errorSublist">
         <h2 className="errorList-errorSublist-header">
-          {error_message}
+          {errorMessage}
         </h2>
         <ul className="errorList-errorSublist-list">
           {errors}

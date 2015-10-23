@@ -29,14 +29,14 @@ var humanErrors = {
   'E019': function(error) {
     return i18n.t(
       'errors.javascript.unmatched',
-      { opening_symbol: error.a, closing_symbol: match[error.a] }
+      { openingSymbol: error.a, closingSymbol: match[error.a] }
     );
   },
 
   'E020': function(error) {
     return i18n.t(
       'errors.javascript.closing-match',
-      { opening_symbol: error.b, closing_symbol: error.a }
+      { openingSymbol: error.b, closingSymbol: error.a }
     );
   },
 
@@ -95,7 +95,7 @@ var humanErrors = {
     }
     return i18n.t(
       'errors.javascript.strict-operators.custom-case',
-      { good_operator: error.a, bad_operator: error.b }
+      { goodOperator: error.a, badOperator: error.b }
     );
   },
 
