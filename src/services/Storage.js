@@ -3,9 +3,9 @@ var lodash = require('lodash');
 
 var storageVersion = 3;
 
-var fullKeyFor = function(key) {
+function fullKeyFor(key) {
   return 'workspaces/' + storageVersion + '/' + key;
-};
+}
 
 var Storage = {
   getCurrentProjectKey: function() {

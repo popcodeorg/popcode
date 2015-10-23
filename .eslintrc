@@ -26,10 +26,21 @@
           2,
           "always-multiline"
         ],
+        "comma-spacing": [
+            2,
+            {"before": false, "after": true}
+        ],
         "complexity": [
           2
         ],
+        "computed-property-spacing": [
+            2,
+            "never"
+        ],
         "consistent-return": [
+            2
+        ],
+        "consistent-this": [
             2
         ],
         "curly": [
@@ -41,8 +52,18 @@
         "dot-notation": [
             2
         ],
+        "eol-last": [
+            2
+        ],
         "eqeqeq": [
             2
+        ],
+        "func-names": [
+            0
+        ],
+        "func-style": [
+            2,
+            "declaration"
         ],
         "global-require": [
             2
