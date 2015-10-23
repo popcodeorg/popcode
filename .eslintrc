@@ -36,6 +36,9 @@
             2,
             {"SwitchCase": 1}
         ],
+        "init-declarations": [
+            0
+        ],
         "linebreak-style": [
             2,
             "unix"
@@ -52,6 +55,9 @@
         "no-caller": [
             2
         ],
+        "no-catch-shadow": [
+            2
+        ],
         "no-cond-assign": [
           2
         ],
@@ -63,6 +69,9 @@
         ],
         "no-debugger": [
           2
+        ],
+        "no-delete-var": [
+            2
         ],
         "no-div-regex": [
             2
@@ -146,6 +155,9 @@
         "no-iterator": [
             2
         ],
+        "no-label-var": [
+            2
+        ],
         "no-labels": [
             2
         ],
@@ -217,11 +229,26 @@
         "no-sequences": [
             2
         ],
+        "no-shadow": [
+            2
+        ],
+        "no-shadow-restricted-names": [
+            2
+        ],
         "no-sparse-arrays": [
           2
         ],
         "no-throw-literal": [
             2
+        ],
+        "no-undef": [
+            2
+        ],
+        "no-undef-init": [
+            2
+        ],
+        "no-undefined": [
+            0
         ],
         "no-unexpected-multiline": [
           2
@@ -231,6 +258,13 @@
         ],
         "no-unused-expressions": [
             2
+        ],
+        "no-unused-vars": [
+            2
+        ],
+        "no-use-before-define": [
+            2,
+            "nofunc"
         ],
         "no-useless-call": [
             2
