@@ -3,7 +3,7 @@ var htmllint = require('htmllint');
 
 var humanErrors = {
   E001: function(error) {
-    switch(error.data.attribute.toLowerCase()) {
+    switch (error.data.attribute.toLowerCase()) {
       case 'align':
         return i18n.t('errors.html.banned-attributes.align');
       case 'background':

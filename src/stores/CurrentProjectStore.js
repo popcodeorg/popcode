@@ -45,7 +45,7 @@ var CurrentProjectStore = lodash.assign({}, EventEmitter.prototype, {
 });
 
 CurrentProjectStore.dispatchToken = AppDispatcher.register(function(action) {
-  switch(action.actionType) {
+  switch (action.actionType) {
     case CurrentProjectConstants.CURRENT_PROJECT_KEY_LOADED:
       _currentProjectKey = action.projectKey;
       CurrentProjectStore.emit(CHANGE_EVENT);

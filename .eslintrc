@@ -432,6 +432,14 @@
             2,
             "always"
         ],
+        "semi-spacing": [
+            2,
+            {"before": false, "after": true}
+        ],
+        "space-after-keywords": [
+            2,
+            "always"
+        ],
         "strict": [
             2,
             "never"

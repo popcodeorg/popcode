@@ -84,7 +84,7 @@ var Toolbar = React.createClass({
   },
 
   _getSubmenu: function() {
-    switch(this.state.submenu) {
+    switch (this.state.submenu) {
       case 'libraries':
         return <LibraryPicker />;
       case 'loadProject':

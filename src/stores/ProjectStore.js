@@ -70,7 +70,7 @@ var ProjectStore = lodash.assign({}, EventEmitter.prototype, {
 ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
   var project;
 
-  switch(action.actionType) {
+  switch (action.actionType) {
     case ProjectConstants.PROJECT_CREATED:
       project = createNewProject();
       _lastCreatedProjectKey = project.projectKey;

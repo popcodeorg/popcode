@@ -77,7 +77,7 @@ var ErrorStore = lodash.assign({}, EventEmitter.prototype, {
 });
 
 ErrorStore.dispatchToken = AppDispatcher.register(function(action) {
-  switch(action.actionType) {
+  switch (action.actionType) {
     case ProjectConstants.PROJECT_SOURCE_EDITED:
       AppDispatcher.waitFor([ProjectStore.dispatchToken]);
       var projectKey = action.projectKey;
