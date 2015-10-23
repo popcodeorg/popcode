@@ -6,7 +6,7 @@ var humanErrors = {
   'block-expected': function(error) {
     return i18n.t(
       'errors.prettycss.block-expected',
-      { error: error.token.content }
+      {error: error.token.content}
     );
   },
 
@@ -25,14 +25,14 @@ var humanErrors = {
   'invalid-value': function(error) {
     return i18n.t(
       'errors.prettycss.invalid-value',
-      { error: error.token.content }
+      {error: error.token.content}
     );
   },
 
   'require-value': function(error) {
     return i18n.t(
       'errors.prettycss.require-value',
-      { error: error.token.content }
+      {error: error.token.content}
     );
   },
 
@@ -43,7 +43,7 @@ var humanErrors = {
   'unknown-property': function(error) {
     return i18n.t(
       'errors.prettycss.unknown-property',
-      { error: error.token.content }
+      {error: error.token.content}
     );
   },
 };

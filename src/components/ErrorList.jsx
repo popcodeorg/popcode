@@ -5,7 +5,7 @@ var lodash = require('lodash');
 var ErrorItem = React.createClass({
   render: function() {
     var lineNumber =
-      i18n.t('errors.line-number', { number: this.props.row + 1 });
+      i18n.t('errors.line-number', {number: this.props.row + 1});
 
     return (
       <li
@@ -42,7 +42,7 @@ var ErrorSublist = React.createClass({
 
     var errorMessage = i18n.t(
       'errors.notice',
-      { amount: this.props.errors.length, language: this.props.language }
+      {amount: this.props.errors.length, language: this.props.language}
     );
 
     return (

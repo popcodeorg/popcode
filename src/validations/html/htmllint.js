@@ -14,7 +14,7 @@ var humanErrors = {
       case 'frameborder':
         return i18n.t(
           'errors.html.banned-attributes.frameborder',
-          { attribute: error.data.attribute }
+          {attribute: error.data.attribute}
         );
       case 'marginwidth':
         return i18n.t('errors.html.banned-attributes.marginwidth');
@@ -34,7 +34,7 @@ var humanErrors = {
   'E005': function(error) {
     return i18n.t(
       'errors.html.attribute-quotes',
-      { attribute: error.data.attribute }
+      {attribute: error.data.attribute}
     );
   },
 
@@ -51,7 +51,7 @@ var humanErrors = {
   },
 
   'E012': function(error) {
-    return i18n.t('errors.html.duplicated-id', { id: error.data.id });
+    return i18n.t('errors.html.duplicated-id', {id: error.data.id});
   },
 
   'E014': function() {

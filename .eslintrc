@@ -393,6 +393,10 @@
         "no-with": [
             2
         ],
+        "object-curly-spacing": [
+            2,
+            "never"
+        ],
         "radix": [
             2
         ],
