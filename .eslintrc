@@ -273,6 +273,13 @@
         ],
         "vars-on-top": [
             0
+        ],
+        "wrap-iife": [
+            2
+        ],
+        "yoda": [
+            2,
+            "never"
         ]
     },
     "env": {
