@@ -397,6 +397,25 @@
             2,
             "never"
         ],
+        "one-var": [
+            2,
+            {
+                "uninitialized": "always",
+                "initialized": "never"
+            }
+        ],
+        "operator-assignment": [
+            2,
+            "always"
+        ],
+        "operator-linebreak": [
+            2,
+            "after"
+        ],
+        "padded-blocks": [
+            2,
+            "never"
+        ],
         "radix": [
             2
         ],
