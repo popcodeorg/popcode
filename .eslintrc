@@ -190,19 +190,65 @@
             2
         ],
         "no-param-reassign": [
+            2,
+            {"props": true}
+        ],
+        "no-process-env": [
+            2
+        ],
+        "no-proto": [
+            2
+        ],
+        "no-redeclare": [
             2
         ],
         "no-regex-spaces": [
           2
         ],
+        "no-return-assign": [
+            2
+        ],
+        "no-script-url": [
+            2
+        ],
+        "no-self-compare": [
+            2
+        ],
+        "no-sequences": [
+            2
+        ],
         "no-sparse-arrays": [
           2
+        ],
+        "no-throw-literal": [
+            2
         ],
         "no-unexpected-multiline": [
           2
         ],
         "no-unreachable": [
           2
+        ],
+        "no-unused-expressions": [
+            2
+        ],
+        "no-useless-call": [
+            2
+        ],
+        "no-useless-concat": [
+            2
+        ],
+        "no-void": [
+            2
+        ],
+        "no-warning-comments": [
+            2
+        ],
+        "no-with": [
+            2
+        ],
+        "radix": [
+            2
         ],
         "quotes": [
             2,
