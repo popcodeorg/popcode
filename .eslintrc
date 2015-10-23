@@ -419,6 +419,11 @@
         "radix": [
             2
         ],
+        "quote-props": [
+            2,
+            "as-needed",
+            {"keywords": true}
+        ],
         "quotes": [
             2,
             "single"

@@ -26,67 +26,67 @@ var match = {
 };
 
 var humanErrors = {
-  'E019': function(error) {
+  E019: function(error) {
     return i18n.t(
       'errors.javascript.unmatched',
       {openingSymbol: error.a, closingSymbol: match[error.a]}
     );
   },
 
-  'E020': function(error) {
+  E020: function(error) {
     return i18n.t(
       'errors.javascript.closing-match',
       {openingSymbol: error.b, closingSymbol: error.a}
     );
   },
 
-  'E030': function() {
+  E030: function() {
     return i18n.t('errors.javascript.expected-identifier');
   },
 
-  'W003': function(error) {
+  W003: function(error) {
     return i18n.t(
       'errors.javascript.undefined-variable',
       {variable: error.a}
     );
   },
 
-  'W030': function() {
+  W030: function() {
     return i18n.t('errors.javascript.unexpected-expression');
   },
 
-  'W031': function() {
+  W031: function() {
     return i18n.t('errors.javascript.use-new-object');
   },
 
-  'W032': function() {
+  W032: function() {
     return i18n.t('errors.javascript.unnecessary-semicolon');
   },
 
-  'W033': function() {
+  W033: function() {
     return i18n.t('errors.javascript.missing-semicolon');
   },
 
-  'W058': function(error) {
+  W058: function(error) {
     return i18n.t(
       'errors.javascript.missing-parentheses',
       {object: error.a}
     );
   },
 
-  'W084': function() {
+  W084: function() {
     return i18n.t('errors.javascript.strict-comparison-operator');
   },
 
-  'W098': function(error) {
+  W098: function(error) {
     return i18n.t('errors.javascript.unused-variable', {variable: error.a});
   },
 
-  'W112': function() {
+  W112: function() {
     return i18n.t('errors.javascript.unclosed-string');
   },
 
-  'W116': function(error) {
+  W116: function(error) {
     if (error.a === '===' && error.b === '==') {
       return i18n.t('errors.javascript.strict-operators.equal');
     }
@@ -99,11 +99,11 @@ var humanErrors = {
     );
   },
 
-  'W117': function(error) {
+  W117: function(error) {
     return i18n.t('errors.javascript.declare-variable', {variable: error.a});
   },
 
-  'W123': function(error) {
+  W123: function(error) {
     return i18n.t(
       'errors.javascript.duplicated-declaration',
       {variable: error.a}
