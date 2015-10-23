@@ -44,7 +44,7 @@ function validateSource(projectKey, language) {
   ).then(function(errors) {
     setErrors(projectKey, language, errors);
     ErrorStore.emitChange();
-  }.bind(this));
+  });
 }
 
 var ErrorStore = lodash.assign({}, EventEmitter.prototype, {
