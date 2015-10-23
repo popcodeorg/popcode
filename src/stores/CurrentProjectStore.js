@@ -27,7 +27,8 @@ var CurrentProjectStore = lodash.assign({}, EventEmitter.prototype, {
   },
 
   isCurrentProject: function(project) {
-    return !!_currentProjectKey && project.projectKey === _currentProjectKey;
+    return Boolean(_currentProjectKey) &&
+      project.projectKey === _currentProjectKey;
   },
 
   emitChange: function() {
