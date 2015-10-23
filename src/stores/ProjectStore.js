@@ -1,5 +1,6 @@
 var lodash = require('lodash');
 var fs = require('fs');
+var path = require('path');
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
@@ -22,7 +23,13 @@ function createNewProject() {
     projectKey: generateProjectKey(),
     sources: {
       /*global __dirname*/
-      html: fs.readFileSync(__dirname + '/../../templates/new.html', 'utf8'),
+      html: fs.readFileSync(path.join(
+        __dirname,
+        '..',
+        '..',
+        'templates',
+        'new.html'
+      ), 'utf8'),
       css: '',
       javascript: '',
     },
