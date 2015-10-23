@@ -35,7 +35,7 @@ var Toolbar = React.createClass({
           }
         )}>
           <li onClick={this._newProject}
-            className='toolbar-menu-item'>{i18n.t('toolbar.new-project')}</li>
+            className="toolbar-menu-item">{i18n.t('toolbar.new-project')}</li>
           <li onClick={this._loadProject}
             className={this.state.submenu === 'loadProject' ?
               'toolbar-menu-item toolbar-menu-item--active' :
