@@ -155,6 +155,13 @@
         "no-loop-func": [
             2
         ],
+        "no-magic-numbers": [
+            2,
+            {"ignore": [-1, 0, 1, 2, 1000]}
+        ],
+        "no-multi-spaces": [
+            2
+        ],
         "no-negated-in-lhs": [
           2
         ],
