@@ -107,7 +107,13 @@
         "new-cap": [
             2
         ],
+        "new-parens": [
+            2
+        ],
         "no-alert": [
+            2
+        ],
+        "no-array-constructor": [
             2
         ],
         "no-caller": [
@@ -121,6 +127,9 @@
         ],
         "no-constant-condition": [
           2
+        ],
+        "no-continue": [
+            2
         ],
         "no-control-regex": [
           2
@@ -198,6 +207,9 @@
         "no-implied-eval": [
             2
         ],
+        "no-inline-comments": [
+            2
+        ],
         "no-inner-declarations": [
           2
         ],
@@ -222,6 +234,9 @@
         "no-lone-blocks": [
             2
         ],
+        "no-lonely-if": [
+            2
+        ],
         "no-loop-func": [
             2
         ],
@@ -232,16 +247,31 @@
         "no-mixed-requires": [
             2
         ],
+        "no-mixed-spaces-and-tabs": [
+            2
+        ],
         "no-multi-spaces": [
             2
         ],
         "no-multi-str": [
             2
         ],
+        "no-multiple-empty-lines": [
+            2
+        ],
         "no-native-reassign": [
             2
         ],
+        "no-negated-condition": [
+            2
+        ],
+        "no-nested-ternary": [
+            2
+        ],
         "no-new-func": [
+            2
+        ],
+        "no-new-object": [
             2
         ],
         "no-new-require": [
@@ -302,10 +332,19 @@
         "no-shadow-restricted-names": [
             2
         ],
+        "no-spaced-func": [
+            2
+        ],
         "no-sparse-arrays": [
           2
         ],
+        "no-ternary": [
+            0
+        ],
         "no-throw-literal": [
+            2
+        ],
+        "no-trailing-spaces": [
             2
         ],
         "no-undef": [
@@ -317,8 +356,14 @@
         "no-undefined": [
             0
         ],
+        "no-underscore-dangle": [
+            0
+        ],
         "no-unexpected-multiline": [
           2
+        ],
+        "no-unneeded-ternary": [
+            2
         ],
         "no-unreachable": [
           2

@@ -7,7 +7,7 @@ var CurrentProjectConstants = require('../constants/CurrentProjectConstants');
 var ProjectActions = require('../actions/ProjectActions');
 var ProjectConstants = require('../constants/ProjectConstants');
 var ProjectStore = require('../stores/ProjectStore');
-var Storage = require ('../services/Storage');
+var Storage = require('../services/Storage');
 
 var CHANGE_EVENT = 'change';
 
