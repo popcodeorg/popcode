@@ -135,7 +135,7 @@ module.exports = function(source, enabledLibraries) {
     }
   });
 
-  JSHINT(source, config);
+  JSHINT(source, config); // eslint-disable-line new-cap
   var data = JSHINT.data();
   var annotations = [];
   var annotatedLines = [];

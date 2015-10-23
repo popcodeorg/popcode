@@ -104,6 +104,9 @@
           2,
           {"ignoreUrls": true}
         ],
+        "new-cap": [
+            2
+        ],
         "no-alert": [
             2
         ],
