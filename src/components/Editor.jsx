@@ -10,6 +10,11 @@ var ProjectStore = require('../stores/ProjectStore');
 var ErrorStore = require('../stores/ErrorStore');
 
 var Editor = React.createClass({
+  propTypes: {
+    projectKey: React.PropTypes.number,
+    language: React.PropTypes.string,
+  },
+
   componentDidMount: function(containerElement) {
     this._setupEditor(containerElement);
     ProjectStore.addChangeListener(this._onChange);

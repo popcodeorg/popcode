@@ -17,6 +17,10 @@ function calculateState() {
 }
 
 var Output = React.createClass({
+  propTypes: {
+    onErrorClicked: React.PropTypes.func.isRequired,
+  },
+
   getInitialState: function() {
     return calculateState();
   },

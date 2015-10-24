@@ -5,6 +5,12 @@ var i18n = require('i18n');
 var ErrorItem = require('./ErrorItem');
 
 var ErrorSublist = React.createClass({
+  propTypes: {
+    errors: React.PropTypes.object,
+    onErrorClicked: React.PropTypes.func,
+    language: React.PropTypes.oneOf(['html', 'css', 'javascript']),
+  },
+
   render: function() {
     if (this.props.errors.length === 0) {
       return false;

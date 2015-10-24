@@ -3,6 +3,13 @@ var i18n = require('i18n');
 var lodash = require('lodash');
 
 var ErrorItem = React.createClass({
+  propTypes: {
+    row: React.PropTypes.number,
+    column: React.PropTypes.number,
+    text: React.PropTypes.string,
+    onClick: React.PropTypes.func,
+  },
+
   render: function() {
     var lineNumber =
       i18n.t('errors.line-number', {number: this.props.row + 1});

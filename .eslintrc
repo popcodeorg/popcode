@@ -463,6 +463,12 @@
         "react/no-multi-comp": [
             2
         ],
+        "react/no-unknown-property": [
+            2
+        ],
+        "react/prop-types": [
+            2
+        ],
         "quote-props": [
             2,
             "as-needed",

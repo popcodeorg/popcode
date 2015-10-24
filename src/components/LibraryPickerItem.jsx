@@ -5,6 +5,12 @@ var ProjectActions = require('../actions/ProjectActions');
 var config = require('../config');
 
 var LibraryPickerItem = React.createClass({
+  propTypes: {
+    enabled: React.PropTypes.bool,
+    libraryKey: React.PropTypes.string.required,
+    projectKey: React.PropTypes.number.required,
+  },
+
   render: function() {
     var library = this._getLibrary();
     return (

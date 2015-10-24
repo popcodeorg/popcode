@@ -5,6 +5,10 @@ var parser = new DOMParser();
 var libraries = require('../config').libraries;
 
 var Preview = React.createClass({
+  propTypes: {
+    project: React.PropTypes.object.isRequired,
+  },
+
   render: function() {
     return (
       <div id="preview">

@@ -9,6 +9,10 @@ function calculateState() {
 }
 
 var ProjectList = React.createClass({
+  propTypes: {
+    onProjectSelected: React.PropTypes.func.isRequired,
+  },
+
   getInitialState: function() {
     return calculateState();
   },
