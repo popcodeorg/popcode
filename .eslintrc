@@ -469,6 +469,12 @@
         "react/prop-types": [
             2
         ],
+        "react/react-in-jsx-scope": [
+            2
+        ],
+        "react/require-extension": [
+            2
+        ],
         "quote-props": [
             2,
             "as-needed",

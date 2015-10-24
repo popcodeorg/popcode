@@ -1,6 +1,6 @@
 var React = require('react');
 var i18n = require('i18next-client');
-var Workspace = require('./components/Workspace.jsx');
+var Workspace = require('./components/Workspace');
 
 var i18nOptions = {
   fallbackLng: 'en',

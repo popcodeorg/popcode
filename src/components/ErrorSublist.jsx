@@ -1,6 +1,6 @@
 var React = require('react');
 var lodash = require('lodash');
-var i18n = require('i18n');
+var i18n = require('i18next-client');
 
 var ErrorItem = require('./ErrorItem');
 

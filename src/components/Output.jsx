@@ -1,10 +1,10 @@
 var React = require('react');
 
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
-var ErrorList = require('./ErrorList.jsx');
+var ErrorList = require('./ErrorList');
 var ErrorStore = require('../stores/ErrorStore');
 var ProjectStore = require('../stores/ProjectStore');
-var Preview = require('./Preview.jsx');
+var Preview = require('./Preview');
 
 function calculateState() {
   var projectKey = CurrentProjectStore.getKey();

@@ -2,9 +2,9 @@ var React = require('react');
 var classnames = require('classnames');
 var i18n = require('i18next-client');
 
-var LibraryPicker = require('./LibraryPicker.jsx');
+var LibraryPicker = require('./LibraryPicker');
 var ProjectActions = require('../actions/ProjectActions');
-var ProjectList = require('./ProjectList.jsx');
+var ProjectList = require('./ProjectList');
 
 var Toolbar = React.createClass({
   getInitialState: function() {

@@ -1,9 +1,9 @@
 var React = require('react/addons');
 
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
-var Editor = require('./Editor.jsx');
-var Output = require('./Output.jsx');
-var Toolbar = require('./Toolbar.jsx');
+var Editor = require('./Editor');
+var Output = require('./Output');
+var Toolbar = require('./Toolbar');
 
 function calculateState() {
   return {projectKey: CurrentProjectStore.getKey()};
