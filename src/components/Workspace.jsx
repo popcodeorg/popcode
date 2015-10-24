@@ -22,6 +22,15 @@ var Workspace = React.createClass({
     CurrentProjectStore.removeChangeListener(this._onChange);
   },
 
+  _onErrorClicked: function(language, line, column) {
+    var editor = this.refs[language + 'Editor'];
+    editor._jumpToLine(line, column);
+  },
+
+  _onChange: function() {
+    this.setState(calculateState());
+  },
+
   render: function() {
     var environment;
     if (this.state.projectKey !== undefined) {
@@ -59,15 +68,6 @@ var Workspace = React.createClass({
         {environment}
       </div>
     );
-  },
-
-  _onErrorClicked: function(language, line, column) {
-    var editor = this.refs[language + 'Editor'];
-    editor._jumpToLine(line, column);
-  },
-
-  _onChange: function() {
-    this.setState(calculateState());
   },
 });
 

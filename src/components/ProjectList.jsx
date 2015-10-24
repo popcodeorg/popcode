@@ -25,6 +25,15 @@ var ProjectList = React.createClass({
     ProjectStore.removeChangeListener(this._onChange);
   },
 
+  _onChange: function() {
+    this.setState(calculateState());
+  },
+
+  _onProjectClicked: function(project) {
+    CurrentProjectActions.select(project.projectKey);
+    this.props.onProjectSelected();
+  },
+
   render: function() {
     var MAX_LENGTH = 50;
     var projects = this.state.projects.map(function(project) {
@@ -43,15 +52,6 @@ var ProjectList = React.createClass({
     }.bind(this));
 
     return <ul className="toolbar-menu">{projects}</ul>;
-  },
-
-  _onChange: function() {
-    this.setState(calculateState());
-  },
-
-  _onProjectClicked: function(project) {
-    CurrentProjectActions.select(project.projectKey);
-    this.props.onProjectSelected();
   },
 });
 

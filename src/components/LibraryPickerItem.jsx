@@ -11,6 +11,14 @@ var LibraryPickerItem = React.createClass({
     projectKey: React.PropTypes.number.required,
   },
 
+  _getLibrary: function() {
+    return config.libraries[this.props.libraryKey];
+  },
+
+  _onClicked: function() {
+    ProjectActions.toggleLibrary(this.props.projectKey, this.props.libraryKey);
+  },
+
   render: function() {
     var library = this._getLibrary();
     return (
@@ -22,14 +30,6 @@ var LibraryPickerItem = React.createClass({
         {library.name}
       </li>
     );
-  },
-
-  _getLibrary: function() {
-    return config.libraries[this.props.libraryKey];
-  },
-
-  _onClicked: function() {
-    ProjectActions.toggleLibrary(this.props.projectKey, this.props.libraryKey);
   },
 });
 

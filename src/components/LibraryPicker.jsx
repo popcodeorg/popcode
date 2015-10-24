@@ -36,6 +36,14 @@ var LibraryPicker = React.createClass({
     ProjectStore.removeChangeListener(this._onChange);
   },
 
+  _onChange: function() {
+    this.setState(calculateState());
+  },
+
+  _isLibraryEnabled: function(libraryKey) {
+    return this.state.enabledLibraries.indexOf(libraryKey) !== -1;
+  },
+
   render: function() {
     var libraries = lodash.map(config.libraries, function(library, key) {
       return (
@@ -48,14 +56,6 @@ var LibraryPicker = React.createClass({
     }.bind(this));
 
     return <ul className="toolbar-menu">{libraries}</ul>;
-  },
-
-  _onChange: function() {
-    this.setState(calculateState());
-  },
-
-  _isLibraryEnabled: function(libraryKey) {
-    return this.state.enabledLibraries.indexOf(libraryKey) !== -1;
   },
 });
 

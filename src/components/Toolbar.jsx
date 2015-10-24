@@ -11,6 +11,53 @@ var Toolbar = React.createClass({
     return {open: false};
   },
 
+  _close: function() {
+    this.setState({open: false, submenu: null});
+  },
+
+  _newProject: function() {
+    this._close();
+    ProjectActions.create();
+  },
+
+  _loadProject: function() {
+    this.setState({submenu: 'loadProject'});
+  },
+
+  _showHideLabel: function() {
+    if (this.state.open) {
+      return i18n.t('toolbar.hide');
+    }
+    return i18n.t('toolbar.show');
+  },
+
+  _toggleLibraryPicker: function() {
+    return this.setState(function(oldState) {
+      if (oldState.submenu === 'libraries') {
+        return {submenu: null};
+      }
+      return {submenu: 'libraries'};
+    });
+  },
+
+  _getSubmenu: function() {
+    switch (this.state.submenu) {
+      case 'libraries':
+        return <LibraryPicker />;
+      case 'loadProject':
+        return <ProjectList onProjectSelected={this._close} />;
+    }
+  },
+
+  _toggleShowHideState: function() {
+    this.setState(function(oldState) {
+      if (oldState.open) {
+        return {open: false, submenu: null};
+      }
+      return {open: true};
+    });
+  },
+
   render: function() {
     var toolbarItemsClasses = ['toolbar-menu'];
     if (this.state.open) {
@@ -60,53 +107,6 @@ var Toolbar = React.createClass({
         {this._getSubmenu()}
       </div>
     );
-  },
-
-  _close: function() {
-    this.setState({open: false, submenu: null});
-  },
-
-  _newProject: function() {
-    this._close();
-    ProjectActions.create();
-  },
-
-  _loadProject: function() {
-    this.setState({submenu: 'loadProject'});
-  },
-
-  _showHideLabel: function() {
-    if (this.state.open) {
-      return i18n.t('toolbar.hide');
-    }
-    return i18n.t('toolbar.show');
-  },
-
-  _toggleLibraryPicker: function() {
-    return this.setState(function(oldState) {
-      if (oldState.submenu === 'libraries') {
-        return {submenu: null};
-      }
-      return {submenu: 'libraries'};
-    });
-  },
-
-  _getSubmenu: function() {
-    switch (this.state.submenu) {
-      case 'libraries':
-        return <LibraryPicker />;
-      case 'loadProject':
-        return <ProjectList onProjectSelected={this._close} />;
-    }
-  },
-
-  _toggleShowHideState: function() {
-    this.setState(function(oldState) {
-      if (oldState.open) {
-        return {open: false, submenu: null};
-      }
-      return {open: true};
-    });
   },
 });
 

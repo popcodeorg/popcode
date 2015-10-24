@@ -21,12 +21,6 @@ var Editor = React.createClass({
     ErrorStore.addChangeListener(this._onChange);
   },
 
-  componentDidUnmount: function() {
-    this.editor.destroy();
-    ProjectStore.removeChangeListener(this._onChange);
-    ErrorStore.removeChangeListener(this._onChange);
-  },
-
   componentWillReceiveProps: function(nextProps) {
     if (nextProps.projectKey !== this.props.projectKey) {
       this._startNewSession(this._getSource(nextProps.projectKey));
@@ -37,12 +31,10 @@ var Editor = React.createClass({
     return false;
   },
 
-  render: function() {
-    return (
-      <div className="editor">
-        {this._getSource(this.props.projectKey)}
-      </div>
-    );
+  componentDidUnmount: function() {
+    this.editor.destroy();
+    ProjectStore.removeChangeListener(this._onChange);
+    ErrorStore.removeChangeListener(this._onChange);
   },
 
   _jumpToLine: function(line, column) {
@@ -89,6 +81,14 @@ var Editor = React.createClass({
     if (project) {
       return project.sources[this.props.language];
     }
+  },
+
+  render: function() {
+    return (
+      <div className="editor">
+        {this._getSource(this.props.projectKey)}
+      </div>
+    );
   },
 });
 

@@ -9,14 +9,6 @@ var Preview = React.createClass({
     project: React.PropTypes.object.isRequired,
   },
 
-  render: function() {
-    return (
-      <div id="preview">
-        <iframe id="preview-frame" srcDoc={this._generateDocument()} />
-      </div>
-    );
-  },
-
   _generateDocument: function() {
     var project = this.props.project;
 
@@ -55,6 +47,14 @@ var Preview = React.createClass({
     previewBody.appendChild(scriptTag);
 
     return previewDocument.documentElement.outerHTML;
+  },
+
+  render: function() {
+    return (
+      <div id="preview">
+        <iframe id="preview-frame" srcDoc={this._generateDocument()} />
+      </div>
+    );
   },
 });
 

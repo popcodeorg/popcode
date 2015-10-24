@@ -37,6 +37,10 @@ var Output = React.createClass({
     ProjectStore.removeChangeListener(this._onChange);
   },
 
+  _onChange: function() {
+    this.setState(calculateState());
+  },
+
   render: function() {
     if (this.state.hasErrors) {
       return (
@@ -52,10 +56,6 @@ var Output = React.createClass({
       );
     }
     return null;
-  },
-
-  _onChange: function() {
-    this.setState(calculateState());
   },
 });
 

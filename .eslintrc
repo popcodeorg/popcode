@@ -475,6 +475,12 @@
         "react/require-extension": [
             2
         ],
+        "react/self-closing-comp": [
+          2
+        ],
+        "react/sort-comp": [
+          2
+        ],
         "quote-props": [
             2,
             "as-needed",
