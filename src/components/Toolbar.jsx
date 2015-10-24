@@ -23,7 +23,8 @@ var Toolbar = React.createClass({
       <div className="toolbar">
         <div
           className="toolbar-showHide"
-          onClick={this._toggleShowHideState}>
+          onClick={this._toggleShowHideState}
+        >
 
           {this._showHideLabel()}
         </div>
@@ -33,19 +34,26 @@ var Toolbar = React.createClass({
             'toolbar-menu--open': this.state.open,
             'toolbar-menu--closed': !this.state.open,
           }
-        )}>
-          <li onClick={this._newProject}
-            className="toolbar-menu-item">{i18n.t('toolbar.new-project')}</li>
+        )}
+        >
+          <li onClick={this._newProject} className="toolbar-menu-item">
+            {i18n.t('toolbar.new-project')}
+          </li>
           <li onClick={this._loadProject}
-            className={this.state.submenu === 'loadProject' ?
-              'toolbar-menu-item toolbar-menu-item--active' :
-              'toolbar-menu-item'}>
+            className={classnames(
+              'toolbar-menu-item',
+              {'toolbar-menu-item--active':
+                this.state.submenu === 'loadProject'}
+            )}
+          >
             {i18n.t('toolbar.load-project')}
           </li>
           <li onClick={this._toggleLibraryPicker}
-            className={this.state.submenu === 'libraries' ?
-              'toolbar-menu-item toolbar-menu-item--active' :
-              'toolbar-menu-item'}>
+            className={classnames(
+              'toolbar-menu-item',
+              {'toolbar-menu-item-active': this.state.submenu === 'libraries'}
+            )}
+          >
             {i18n.t('toolbar.libraries')}
           </li>
         </ul>

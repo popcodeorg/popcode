@@ -44,7 +44,7 @@
     "start": "./node_modules/.bin/static ./static -a 0.0.0.0 -p ${PORT:-8080}",
     "build": "./node_modules/.bin/browserify src/application.js -o static/compiled/bundle.js",
     "watch": "./node_modules/.bin/watchify src/application.js -o static/compiled/bundle.js --debug --verbose",
-    "lint": "./node_modules/.bin/eslint --ext .js,.jsx src || true",
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --plugin react src || true",
     "postinstall": "npm run build"
   },
   "browserify": {

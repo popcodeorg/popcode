@@ -29,22 +29,26 @@ var Workspace = React.createClass({
         <div className="environment">
           <Output
             enabledLibraries={this.state.enabledLibraries}
-            onErrorClicked={this._onErrorClicked} />
+            onErrorClicked={this._onErrorClicked}
+          />
 
           <Editor
             ref="htmlEditor"
             projectKey={this.state.projectKey}
-            language="html" />
+            language="html"
+          />
 
           <Editor
             ref="cssEditor"
             projectKey={this.state.projectKey}
-            language="css" />
+            language="css"
+          />
 
           <Editor
             ref="javascriptEditor"
             projectKey={this.state.projectKey}
-            language="javascript" />
+            language="javascript"
+          />
         </div>
       );
     }

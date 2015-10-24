@@ -42,7 +42,8 @@ var LibraryPicker = React.createClass({
         <LibraryPickerItem
           projectKey={this.state.projectKey}
           libraryKey={key}
-          enabled={this._isLibraryEnabled(key)} />
+          enabled={this._isLibraryEnabled(key)}
+        />
       );
     }.bind(this));
 

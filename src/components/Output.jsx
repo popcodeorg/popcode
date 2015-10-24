@@ -38,7 +38,8 @@ var Output = React.createClass({
       return (
         <ErrorList
           {...this.state.errors}
-          onErrorClicked={this.props.onErrorClicked} />
+          onErrorClicked={this.props.onErrorClicked}
+        />
       );
     }
     if (this.state.project) {

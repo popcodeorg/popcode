@@ -11,8 +11,8 @@ var LibraryPickerItem = React.createClass({
       <li className={classnames(
         'toolbar-menu-item',
         {'toolbar-menu-item--active': this.props.enabled}
-      )} onClick={this._onClicked}>
-
+      )} onClick={this._onClicked}
+      >
         {library.name}
       </li>
     );
