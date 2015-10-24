@@ -481,6 +481,9 @@
         "react/sort-comp": [
           2
         ],
+        "react/wrap-multilines": [
+          2
+        ],
         "quote-props": [
             2,
             "as-needed",
