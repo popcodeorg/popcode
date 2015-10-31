@@ -7,7 +7,7 @@ var CurrentProjectConstants = require('../constants/CurrentProjectConstants');
 var ProjectActions = require('../actions/ProjectActions');
 var ProjectConstants = require('../constants/ProjectConstants');
 var ProjectStore = require('../stores/ProjectStore');
-var Storage = require ('../services/Storage');
+var Storage = require('../services/Storage');
 
 var CHANGE_EVENT = 'change';
 
@@ -27,7 +27,8 @@ var CurrentProjectStore = lodash.assign({}, EventEmitter.prototype, {
   },
 
   isCurrentProject: function(project) {
-    return !!_currentProjectKey && project.projectKey === _currentProjectKey;
+    return Boolean(_currentProjectKey) &&
+      project.projectKey === _currentProjectKey;
   },
 
   emitChange: function() {
@@ -40,11 +41,11 @@ var CurrentProjectStore = lodash.assign({}, EventEmitter.prototype, {
 
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  }
+  },
 });
 
 CurrentProjectStore.dispatchToken = AppDispatcher.register(function(action) {
-  switch(action.actionType) {
+  switch (action.actionType) {
     case CurrentProjectConstants.CURRENT_PROJECT_KEY_LOADED:
       _currentProjectKey = action.projectKey;
       CurrentProjectStore.emit(CHANGE_EVENT);

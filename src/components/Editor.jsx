@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react');
 var ACE = require('brace');
 require('brace/mode/html');
@@ -12,16 +10,15 @@ var ProjectStore = require('../stores/ProjectStore');
 var ErrorStore = require('../stores/ErrorStore');
 
 var Editor = React.createClass({
+  propTypes: {
+    projectKey: React.PropTypes.number,
+    language: React.PropTypes.string,
+  },
+
   componentDidMount: function(containerElement) {
     this._setupEditor(containerElement);
     ProjectStore.addChangeListener(this._onChange);
     ErrorStore.addChangeListener(this._onChange);
-  },
-
-  componentDidUnmount: function() {
-    this.editor.destroy();
-    ProjectStore.removeChangeListener(this._onChange);
-    ErrorStore.removeChangeListener(this._onChange);
   },
 
   componentWillReceiveProps: function(nextProps) {
@@ -34,12 +31,10 @@ var Editor = React.createClass({
     return false;
   },
 
-  render: function() {
-    return (
-      <div className="editor">
-        {this._getSource()}
-      </div>
-    );
+  componentDidUnmount: function() {
+    this.editor.destroy();
+    ProjectStore.removeChangeListener(this._onChange);
+    ErrorStore.removeChangeListener(this._onChange);
   },
 
   _jumpToLine: function(line, column) {
@@ -53,7 +48,7 @@ var Editor = React.createClass({
   },
 
   _onChange: function() {
-    var source = this._getSource();
+    var source = this._getSource(this.props.projectKey);
     if (source && source !== this.editor.getValue()) {
       this._startNewSession(source);
     }
@@ -82,12 +77,19 @@ var Editor = React.createClass({
   },
 
   _getSource: function(projectKey) {
-    projectKey = projectKey || this.props.projectKey;
     var project = ProjectStore.get(projectKey);
     if (project) {
       return project.sources[this.props.language];
     }
-  }
+  },
+
+  render: function() {
+    return (
+      <div className="editor">
+        {this._getSource(this.props.projectKey)}
+      </div>
+    );
+  },
 });
 
 module.exports = Editor;

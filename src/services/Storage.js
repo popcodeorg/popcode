@@ -3,9 +3,9 @@ var lodash = require('lodash');
 
 var storageVersion = 3;
 
-var fullKeyFor = function(key) {
+function fullKeyFor(key) {
   return 'workspaces/' + storageVersion + '/' + key;
-};
+}
 
 var Storage = {
   getCurrentProjectKey: function() {
@@ -45,12 +45,12 @@ var Storage = {
       fullKeyFor(key),
       lodash.extend({
         storageVersion: storageVersion,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       }, data)
     );
 
     return data;
-  }
+  },
 };
 
 module.exports = Storage;

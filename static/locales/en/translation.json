@@ -59,8 +59,8 @@
       "indentation": "Lines should be indented with four spaces.\nUse the 'tab' key to increase indentation and the 'delete' key to decrease indentation."
     },
     "javascript": {
-      "unmatched": "There is a __opening_symbol__ on this line that needs a closing __closing_symbol__",
-      "closing-match": "There is a __opening_symbol__ on this line that needs a closing __closing_symbol__",
+      "unmatched": "There is a __openingSymbol__ on this line that needs a closing __closingSymbol__",
+      "closing-match": "There is a __openingSymbol__ on this line that needs a closing __closingSymbol__",
       "expected-identifier": "There's something missing from this line. Did you forget something?",
       "undefined-variable": "You can't use the variable __variable__ before declaring it.",
       "unexpected-expression": "It looks like there's something on this line that doesn't belong there",
@@ -74,7 +74,7 @@
       "strict-operators": {
         "equal": "You should use === instead of ==",
         "different": "You should use !== instead of !=",
-        "custom-case": "There should be a __good_operator__ where you wrote __bad_operator__"
+        "custom-case": "There should be a __goodOperator__ where you wrote __badOperator__"
       },
       "declare-variable": "You haven't declared __variable__.\nTry: var __variable__;",
       "duplicated-declaration": "You already declared __variable__ somewhere else."

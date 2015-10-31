@@ -1,13 +1,9 @@
-"use strict";
-
 var React = require('react/addons');
-var update = React.addons.update;
-var lodash = require('lodash');
 
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
-var Editor = require('./Editor.jsx');
-var Output = require('./Output.jsx');
-var Toolbar = require('./Toolbar.jsx');
+var Editor = require('./Editor');
+var Output = require('./Output');
+var Toolbar = require('./Toolbar');
 
 function calculateState() {
   return {projectKey: CurrentProjectStore.getKey()};
@@ -26,6 +22,15 @@ var Workspace = React.createClass({
     CurrentProjectStore.removeChangeListener(this._onChange);
   },
 
+  _onErrorClicked: function(language, line, column) {
+    var editor = this.refs[language + 'Editor'];
+    editor._jumpToLine(line, column);
+  },
+
+  _onChange: function() {
+    this.setState(calculateState());
+  },
+
   render: function() {
     var environment;
     if (this.state.projectKey !== undefined) {
@@ -33,22 +38,26 @@ var Workspace = React.createClass({
         <div className="environment">
           <Output
             enabledLibraries={this.state.enabledLibraries}
-            onErrorClicked={this._onErrorClicked} />
+            onErrorClicked={this._onErrorClicked}
+          />
 
           <Editor
             ref="htmlEditor"
             projectKey={this.state.projectKey}
-            language="html" />
+            language="html"
+          />
 
           <Editor
             ref="cssEditor"
             projectKey={this.state.projectKey}
-            language="css" />
+            language="css"
+          />
 
           <Editor
             ref="javascriptEditor"
             projectKey={this.state.projectKey}
-            language="javascript" />
+            language="javascript"
+          />
         </div>
       );
     }
@@ -58,16 +67,7 @@ var Workspace = React.createClass({
         <Toolbar />
         {environment}
       </div>
-    )
-  },
-
-  _onErrorClicked: function(language, line, column) {
-    var editor = this.refs[language + 'Editor'];
-    editor._jumpToLine(line, column);
-  },
-
-  _onChange: function() {
-    this.setState(calculateState());
+    );
   },
 });
 

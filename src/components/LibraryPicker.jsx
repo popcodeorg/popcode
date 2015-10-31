@@ -2,7 +2,7 @@ var React = require('react');
 var lodash = require('lodash');
 
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
-var LibraryPickerItem = require('./LibraryPickerItem.jsx');
+var LibraryPickerItem = require('./LibraryPickerItem');
 var ProjectStore = require('../stores/ProjectStore');
 var config = require('../config');
 
@@ -17,7 +17,7 @@ function calculateState() {
 
   return {
     projectKey: projectKey,
-    enabledLibraries: enabledLibraries
+    enabledLibraries: enabledLibraries,
   };
 }
 
@@ -36,26 +36,27 @@ var LibraryPicker = React.createClass({
     ProjectStore.removeChangeListener(this._onChange);
   },
 
-  render: function() {
-    var libraries = _.map(config.libraries, function(library, key) {
-      return (
-        <LibraryPickerItem
-          projectKey={this.state.projectKey}
-          libraryKey={key}
-          enabled={this._isLibraryEnabled(key)} />
-      );
-    }.bind(this));
-
-    return <ul className="toolbar-menu">{libraries}</ul>;
-  },
-
   _onChange: function() {
     this.setState(calculateState());
   },
 
   _isLibraryEnabled: function(libraryKey) {
     return this.state.enabledLibraries.indexOf(libraryKey) !== -1;
-  }
+  },
+
+  render: function() {
+    var libraries = lodash.map(config.libraries, function(library, key) {
+      return (
+        <LibraryPickerItem
+          projectKey={this.state.projectKey}
+          libraryKey={key}
+          enabled={this._isLibraryEnabled(key)}
+        />
+      );
+    }.bind(this));
+
+    return <ul className="toolbar-menu">{libraries}</ul>;
+  },
 });
 
 module.exports = LibraryPicker;

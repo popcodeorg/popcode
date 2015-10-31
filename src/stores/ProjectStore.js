@@ -1,4 +1,9 @@
+/* global __dirname */
+
 var lodash = require('lodash');
+var fs = require('fs');
+var path = require('path');
+
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var ProjectActions = require('../actions/ProjectActions');
@@ -19,11 +24,17 @@ function createNewProject() {
   return {
     projectKey: generateProjectKey(),
     sources: {
-      html: '<!DOCTYPE html>\n<html>\n    <head>\n        <title>Page Title</title>\n    </head>\n    <body>\n        <!-- Put your page markup here -->\n    </body>\n</html>',
+      html: fs.readFileSync(path.join(
+        __dirname,
+        '..',
+        '..',
+        'templates',
+        'new.html'
+      ), 'utf8'),
       css: '',
-      javascript: ''
+      javascript: '',
     },
-    enabledLibraries: []
+    enabledLibraries: [],
   };
 }
 
@@ -54,13 +65,13 @@ var ProjectStore = lodash.assign({}, EventEmitter.prototype, {
 
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  }
+  },
 });
 
 ProjectStore.dispatchToken = AppDispatcher.register(function(action) {
   var project;
 
-  switch(action.actionType) {
+  switch (action.actionType) {
     case ProjectConstants.PROJECT_CREATED:
       project = createNewProject();
       _lastCreatedProjectKey = project.projectKey;

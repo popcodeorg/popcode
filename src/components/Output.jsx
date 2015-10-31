@@ -1,11 +1,10 @@
 var React = require('react');
-var lodash = require('lodash');
 
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
-var ErrorList = require('./ErrorList.jsx');
+var ErrorList = require('./ErrorList');
 var ErrorStore = require('../stores/ErrorStore');
 var ProjectStore = require('../stores/ProjectStore');
-var Preview = require('./Preview.jsx');
+var Preview = require('./Preview');
 
 function calculateState() {
   var projectKey = CurrentProjectStore.getKey();
@@ -13,11 +12,15 @@ function calculateState() {
   return {
     project: ProjectStore.get(projectKey),
     hasErrors: ErrorStore.anyErrors(projectKey),
-    errors: ErrorStore.getErrors(projectKey)
+    errors: ErrorStore.getErrors(projectKey),
   };
 }
 
 var Output = React.createClass({
+  propTypes: {
+    onErrorClicked: React.PropTypes.func.isRequired,
+  },
+
   getInitialState: function() {
     return calculateState();
   },
@@ -34,25 +37,26 @@ var Output = React.createClass({
     ProjectStore.removeChangeListener(this._onChange);
   },
 
+  _onChange: function() {
+    this.setState(calculateState());
+  },
+
   render: function() {
     if (this.state.hasErrors) {
       return (
         <ErrorList
           {...this.state.errors}
-          onErrorClicked={this.props.onErrorClicked} />
+          onErrorClicked={this.props.onErrorClicked}
+        />
       );
-    } else if (this.state.project) {
+    }
+    if (this.state.project) {
       return (
         <Preview project={this.state.project} />
       );
-    } else {
-      return null;
     }
+    return null;
   },
-
-  _onChange: function() {
-    this.setState(calculateState());
-  }
 });
 
 module.exports = Output;

@@ -1,5 +1,5 @@
-module.exports = {
-  html: require('./html.js'),
-  css: require('./css.js'),
-  javascript: require('./javascript.js')
-};
+var html = require('./html.js');
+var css = require('./css.js');
+var javascript = require('./javascript.js');
+
+module.exports = {html: html, css: css, javascript: javascript};

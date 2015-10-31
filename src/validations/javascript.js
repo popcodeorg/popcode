@@ -14,7 +14,7 @@ var jshintrc = {
   predef: [],
   shadow: 'outer',
   undef: true,
-  unused: true
+  unused: true,
 };
 
 var match = {
@@ -22,75 +22,93 @@ var match = {
   '[': ']',
   '(': ')',
   '\'': '\'',
-  '"': '"'
+  '"': '"',
 };
 
 var humanErrors = {
-  'E019': function(error) {
-    return i18n.t('errors.javascript.unmatched', { opening_symbol: error.a, closing_symbol: match[error.a] });
+  E019: function(error) {
+    return i18n.t(
+      'errors.javascript.unmatched',
+      {openingSymbol: error.a, closingSymbol: match[error.a]}
+    );
   },
 
-  'E020': function(error) {
-    return i18n.t('errors.javascript.closing-match', { opening_symbol: error.b, closing_symbol: error.a });
+  E020: function(error) {
+    return i18n.t(
+      'errors.javascript.closing-match',
+      {openingSymbol: error.b, closingSymbol: error.a}
+    );
   },
 
-  'E030': function() {
+  E030: function() {
     return i18n.t('errors.javascript.expected-identifier');
   },
 
-  'W003': function(error) {
-    return i18n.t('errors.javascript.undefined-variable', { variable: error.a });
+  W003: function(error) {
+    return i18n.t(
+      'errors.javascript.undefined-variable',
+      {variable: error.a}
+    );
   },
 
-  'W030': function() {
+  W030: function() {
     return i18n.t('errors.javascript.unexpected-expression');
   },
 
-  'W031': function() {
+  W031: function() {
     return i18n.t('errors.javascript.use-new-object');
   },
 
-  'W032': function() {
+  W032: function() {
     return i18n.t('errors.javascript.unnecessary-semicolon');
   },
 
-  'W033': function() {
+  W033: function() {
     return i18n.t('errors.javascript.missing-semicolon');
   },
 
-  'W058': function(error) {
-    return i18n.t('errors.javascript.missing-parentheses', { object: error.a } );
+  W058: function(error) {
+    return i18n.t(
+      'errors.javascript.missing-parentheses',
+      {object: error.a}
+    );
   },
 
-  'W084': function() {
+  W084: function() {
     return i18n.t('errors.javascript.strict-comparison-operator');
   },
 
-  'W098': function(error) {
-    return i18n.t('errors.javascript.unused-variable', { variable: error.a });
+  W098: function(error) {
+    return i18n.t('errors.javascript.unused-variable', {variable: error.a});
   },
 
-  'W112': function() {
+  W112: function() {
     return i18n.t('errors.javascript.unclosed-string');
   },
 
-  'W116': function(error) {
+  W116: function(error) {
     if (error.a === '===' && error.b === '==') {
       return i18n.t('errors.javascript.strict-operators.equal');
-    } else if (error.a === '!==' && error.b === '!=') {
-      return i18n.t('errors.javascript.strict-operators.different');
-    } else {
-      return i18n.t('errors.javascript.strict-operators.custom-case', { good_operator: error.a, bad_operator: error.b });
     }
+    if (error.a === '!==' && error.b === '!=') {
+      return i18n.t('errors.javascript.strict-operators.different');
+    }
+    return i18n.t(
+      'errors.javascript.strict-operators.custom-case',
+      {goodOperator: error.a, badOperator: error.b}
+    );
   },
 
-  'W117': function(error) {
-    return i18n.t('errors.javascript.declare-variable', { variable: error.a });
+  W117: function(error) {
+    return i18n.t('errors.javascript.declare-variable', {variable: error.a});
   },
 
-  'W123': function(error) {
-    return i18n.t('errors.javascript.duplicated-declaration', { variable: error.a });
-  }
+  W123: function(error) {
+    return i18n.t(
+      'errors.javascript.duplicated-declaration',
+      {variable: error.a}
+    );
+  },
 };
 
 function convertErrorToAnnotation(error) {
@@ -101,7 +119,7 @@ function convertErrorToAnnotation(error) {
       row: error.line - 1, column: error.character - 1,
       raw: message,
       text: message,
-      type: 'error'
+      type: 'error',
     };
   }
 }
@@ -117,7 +135,7 @@ module.exports = function(source, enabledLibraries) {
     }
   });
 
-  JSHINT(source, config);
+  JSHINT(source, config); // eslint-disable-line new-cap
   var data = JSHINT.data();
   var annotations = [];
   var annotatedLines = [];

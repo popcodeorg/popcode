@@ -4,7 +4,10 @@ var Promise = require('es6-promise').Promise;
 
 var humanErrors = {
   'block-expected': function(error) {
-    return i18n.t('errors.prettycss.block-expected', { error: error.token.content });
+    return i18n.t(
+      'errors.prettycss.block-expected',
+      {error: error.token.content}
+    );
   },
 
   'extra-tokens-after-value': function() {
@@ -20,11 +23,17 @@ var humanErrors = {
   },
 
   'invalid-value': function(error) {
-    return i18n.t('errors.prettycss.invalid-value', { error: error.token.content });
+    return i18n.t(
+      'errors.prettycss.invalid-value',
+      {error: error.token.content}
+    );
   },
 
   'require-value': function(error) {
-    return i18n.t('errors.prettycss.require-value', { error: error.token.content });
+    return i18n.t(
+      'errors.prettycss.require-value',
+      {error: error.token.content}
+    );
   },
 
   'selector-expected': function() {
@@ -32,19 +41,22 @@ var humanErrors = {
   },
 
   'unknown-property': function(error) {
-    return i18n.t('errors.prettycss.unknown-property', { error: error.token.content });
-  }
+    return i18n.t(
+      'errors.prettycss.unknown-property',
+      {error: error.token.content}
+    );
+  },
 };
 
 function convertErrorToAnnotation(error) {
-  var normalized_code = error.code.split(':')[0];
-  if (error.token !== null && humanErrors.hasOwnProperty(normalized_code)) {
-    var message = humanErrors[normalized_code](error);
+  var normalizedCode = error.code.split(':')[0];
+  if (error.token !== null && humanErrors.hasOwnProperty(normalizedCode)) {
+    var message = humanErrors[normalizedCode](error);
     return {
       row: error.token.line - 1, column: error.token.charNum - 1,
       raw: message,
       text: message,
-      type: 'error'
+      type: 'error',
     };
   }
 }

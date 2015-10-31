@@ -1,59 +1,14 @@
-"use strict";
-
 var React = require('react');
 var classnames = require('classnames');
 var i18n = require('i18next-client');
 
-var LibraryPicker = require('./LibraryPicker.jsx');
+var LibraryPicker = require('./LibraryPicker');
 var ProjectActions = require('../actions/ProjectActions');
-var ProjectList = require('./ProjectList.jsx');
+var ProjectList = require('./ProjectList');
 
 var Toolbar = React.createClass({
   getInitialState: function() {
     return {open: false};
-  },
-
-  render: function() {
-    var toolbarItemsClasses = ['toolbar-menu'];
-    if (this.state.open) {
-      toolbarItemsClasses.push('toolbar-menu--open');
-    } else {
-      toolbarItemsClasses.push('toolbar-menu--closed');
-    }
-
-    return (
-      <div className="toolbar">
-        <div
-          className="toolbar-showHide"
-          onClick={this._toggleShowHideState}>
-
-          {this._showHideLabel()}
-        </div>
-        <ul className={classnames(
-          'toolbar-menu',
-          {
-            'toolbar-menu--open': this.state.open,
-            'toolbar-menu--closed': !this.state.open
-          }
-        )}>
-          <li onClick={this._newProject}
-            className='toolbar-menu-item'>{i18n.t('toolbar.new-project')}</li>
-          <li onClick={this._loadProject}
-            className={this.state.submenu === 'loadProject' ?
-              'toolbar-menu-item toolbar-menu-item--active' :
-              'toolbar-menu-item'}>
-            {i18n.t('toolbar.load-project')}
-          </li>
-          <li onClick={this._toggleLibraryPicker}
-            className={this.state.submenu === 'libraries' ?
-              'toolbar-menu-item toolbar-menu-item--active' :
-              'toolbar-menu-item'}>
-            {i18n.t('toolbar.libraries')}
-          </li>
-        </ul>
-        {this._getSubmenu()}
-      </div>
-    );
   },
 
   _close: function() {
@@ -71,24 +26,22 @@ var Toolbar = React.createClass({
 
   _showHideLabel: function() {
     if (this.state.open) {
-      return i18n.t("toolbar.hide");
-    } else {
-      return i18n.t("toolbar.show");
+      return i18n.t('toolbar.hide');
     }
+    return i18n.t('toolbar.show');
   },
 
   _toggleLibraryPicker: function() {
     return this.setState(function(oldState) {
       if (oldState.submenu === 'libraries') {
         return {submenu: null};
-      } else {
-        return {submenu: 'libraries'};
       }
+      return {submenu: 'libraries'};
     });
   },
 
   _getSubmenu: function() {
-    switch(this.state.submenu) {
+    switch (this.state.submenu) {
       case 'libraries':
         return <LibraryPicker />;
       case 'loadProject':
@@ -100,11 +53,61 @@ var Toolbar = React.createClass({
     this.setState(function(oldState) {
       if (oldState.open) {
         return {open: false, submenu: null};
-      } else {
-        return {open: true};
       }
+      return {open: true};
     });
-  }
+  },
+
+  render: function() {
+    var toolbarItemsClasses = ['toolbar-menu'];
+    if (this.state.open) {
+      toolbarItemsClasses.push('toolbar-menu--open');
+    } else {
+      toolbarItemsClasses.push('toolbar-menu--closed');
+    }
+
+    return (
+      <div className="toolbar">
+        <div
+          className="toolbar-showHide"
+          onClick={this._toggleShowHideState}
+        >
+
+          {this._showHideLabel()}
+        </div>
+        <ul className={classnames(
+          'toolbar-menu',
+          {
+            'toolbar-menu--open': this.state.open,
+            'toolbar-menu--closed': !this.state.open,
+          }
+        )}
+        >
+          <li onClick={this._newProject} className="toolbar-menu-item">
+            {i18n.t('toolbar.new-project')}
+          </li>
+          <li onClick={this._loadProject}
+            className={classnames(
+              'toolbar-menu-item',
+              {'toolbar-menu-item--active':
+                this.state.submenu === 'loadProject'}
+            )}
+          >
+            {i18n.t('toolbar.load-project')}
+          </li>
+          <li onClick={this._toggleLibraryPicker}
+            className={classnames(
+              'toolbar-menu-item',
+              {'toolbar-menu-item-active': this.state.submenu === 'libraries'}
+            )}
+          >
+            {i18n.t('toolbar.libraries')}
+          </li>
+        </ul>
+        {this._getSubmenu()}
+      </div>
+    );
+  },
 });
 
 module.exports = Toolbar;

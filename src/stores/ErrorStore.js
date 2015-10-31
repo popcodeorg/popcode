@@ -25,9 +25,11 @@ function setErrors(projectKey, language, errors) {
 }
 
 function validateAllSources(projectKey) {
-  validateSource(projectKey, 'html');
-  validateSource(projectKey, 'css');
-  validateSource(projectKey, 'javascript');
+  return Promise.all([
+    validateSource(projectKey, 'html'),
+    validateSource(projectKey, 'css'),
+    validateSource(projectKey, 'javascript'),
+  ]);
 }
 
 function validateSource(projectKey, language) {
@@ -35,16 +37,15 @@ function validateSource(projectKey, language) {
   var project = ProjectStore.get(projectKey);
 
   if (!project) {
-    return;
+    return Promise.resolve([]);
   }
 
-  validate(
+  return validate(
     project.sources[language],
     project.enabledLibraries
   ).then(function(errors) {
     setErrors(projectKey, language, errors);
-    ErrorStore.emitChange();
-  }.bind(this));
+  });
 }
 
 var ErrorStore = lodash.assign({}, EventEmitter.prototype, {
@@ -72,34 +73,42 @@ var ErrorStore = lodash.assign({}, EventEmitter.prototype, {
     return lodash.some(this.getErrors(projectKey), function(errors) {
       return errors.length > 0;
     });
-  }
+  },
 });
 
 ErrorStore.dispatchToken = AppDispatcher.register(function(action) {
-  switch(action.actionType) {
+  switch (action.actionType) {
     case ProjectConstants.PROJECT_SOURCE_EDITED:
       AppDispatcher.waitFor([ProjectStore.dispatchToken]);
       var projectKey = action.projectKey;
       var language = action.language;
-      validateSource(projectKey, language);
+      validateSource(projectKey, language).then(function() {
+        ErrorStore.emitChange();
+      });
       break;
     case ProjectConstants.PROJECT_LIBRARY_TOGGLED:
       AppDispatcher.waitFor([ProjectStore.dispatchToken]);
-      validateAllSources(action.projectKey);
+      validateAllSources(action.projectKey).then(function() {
+        ErrorStore.emitChange();
+      });
       break;
     case ProjectConstants.PROJECT_LOADED_FROM_STORAGE:
       AppDispatcher.waitFor([
         ProjectStore.dispatchToken,
-        CurrentProjectStore.dispatchToken
+        CurrentProjectStore.dispatchToken,
       ]);
       if (CurrentProjectStore.isCurrentProject(action.project)) {
-        validateAllSources(action.project.projectKey);
+        validateAllSources(action.project.projectKey).then(function() {
+          ErrorStore.emitChange();
+        });
       }
       break;
     case CurrentProjectConstants.CURRENT_PROJECT_KEY_LOADED:
     case CurrentProjectConstants.CURRENT_PROJECT_KEY_CHANGED:
       AppDispatcher.waitFor([ProjectStore.dispatchToken]);
-      validateAllSources(action.projectKey);
+      validateAllSources(action.projectKey).then(function() {
+        ErrorStore.emitChange();
+      });
       break;
   }
 });

@@ -1,5 +1,3 @@
-"use strict";
-
 var React = require('react');
 var DOMParser = window.DOMParser;
 
@@ -7,12 +5,8 @@ var parser = new DOMParser();
 var libraries = require('../config').libraries;
 
 var Preview = React.createClass({
-  render: function() {
-    return (
-      <div id="preview">
-        <iframe id="preview-frame" srcDoc={this._generateDocument()} />
-      </div>
-    );
+  propTypes: {
+    project: React.PropTypes.object.isRequired,
   },
 
   _generateDocument: function() {
@@ -53,7 +47,15 @@ var Preview = React.createClass({
     previewBody.appendChild(scriptTag);
 
     return previewDocument.documentElement.outerHTML;
-  }
+  },
+
+  render: function() {
+    return (
+      <div id="preview">
+        <iframe id="preview-frame" srcDoc={this._generateDocument()} />
+      </div>
+    );
+  },
 });
 
 module.exports = Preview;

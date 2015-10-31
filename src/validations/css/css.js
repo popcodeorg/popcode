@@ -13,7 +13,7 @@ var humanErrors = {
 
   'selector missing': function() {
     return i18n.t('errors.css.selector-missing');
-  }
+  },
 };
 
 function convertErrorToAnnotation(error) {
@@ -23,7 +23,7 @@ function convertErrorToAnnotation(error) {
       row: error.line - 1, column: error.column - 1,
       raw: message,
       text: message,
-      type: 'error'
+      type: 'error',
     };
   }
 }
