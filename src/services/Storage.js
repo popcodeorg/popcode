@@ -33,21 +33,21 @@ var Storage = {
   save: function(data) {
     var key = data.projectKey;
 
-    localforage.getItem('allKeys').then(function(oldKeys) {
-      if (oldKeys === null || oldKeys[oldKeys.length - 1] !== key) {
-        var keys = lodash.without(oldKeys || [], key);
-        keys.unshift(key);
-        localforage.setItem('allKeys', keys);
-      }
-    });
-
     localforage.setItem(
       fullKeyFor(key),
       lodash.extend({
         storageVersion: storageVersion,
         updatedAt: new Date(),
       }, data)
-    );
+    ).then(function() {
+      localforage.getItem('allKeys').then(function(oldKeys) {
+        if (oldKeys === null || oldKeys[oldKeys.length - 1] !== key) {
+          var keys = lodash.without(oldKeys || [], key);
+          keys.unshift(key);
+          localforage.setItem('allKeys', keys);
+        }
+      });
+    });
 
     return data;
   },
