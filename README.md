@@ -109,17 +109,12 @@ $ npm install
 That'll pull down the dependencies. Then, in one shell session, run:
 
 ```bash
-$ npm start
+$ npm run devserver
 ```
 
-In another shell session, run:
-
-```bash
-$ npm run watch
-```
-
-Now you'll have a static server, accessible at `http://localhost:8080`. The
-second command will live-update your JavaScript bundle as you edit it.
+Now you'll have a static server, accessible at `http://localhost:8080`.
+The JavaScript bundle will recompile as you edit it, and will even live-reload
+in the browser.
 
 ## License ##
 
