@@ -14,4 +14,4 @@ deploy:
   acl: public_read
   on:
     repo: popcodeorg/popcode
-    branch: production
+    branch: master
