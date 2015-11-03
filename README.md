@@ -12,7 +12,7 @@ progress.
 ### Try it out ###
 
 You can try out Popcode at
-[`http://learnpad.herokuapp.com`](http://learnpad.herokuapp.com).
+[`https://popcode.org`](https://popcode.org).
 
 Try doing something wrong. The main emphasis of this project is giving feedback on code problems that novice users can understand.
 
