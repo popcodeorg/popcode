@@ -18,21 +18,17 @@
     "brace": "^0.5.1",
     "brfs": "^1.4.1",
     "browserify": "^10.2.6",
-    "budo": "^6.0.0",
-    "bulkify": "^1.1.1",
     "classnames": "^2.1.5",
     "css": "^2.2.1",
     "es6-promise": "^2.3.0",
     "flux": "^2.0.3",
     "htmllint": "^0.2.4",
     "i18next-client": "^1.10.2",
-    "jscs": "^1.13.1",
     "jshint": "^2.8.0",
     "keymirror": "^0.1.1",
     "localforage": "^1.2.7",
     "lodash": "^3.10.0",
     "moment": "^2.10.6",
-    "node-static": "^0.7.6",
     "react": "^0.13.3",
     "reactify": "^1.1.1",
     "strictify": "^0.2.0"
@@ -55,7 +51,9 @@
     ]
   },
   "devDependencies": {
+    "budo": "^6.0.0",
     "eslint": "^1.4.1",
-    "eslint-plugin-react": "^3.3.2"
+    "eslint-plugin-react": "^3.3.2",
+    "node-static": "^0.7.7"
   }
 }
