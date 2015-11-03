@@ -1,17 +1,17 @@
-# Learnpad #
+# Popcode #
 
-Learnpad is a simple HTML/CSS/JavaScript editing environment for use in the
+Popcode is a simple HTML/CSS/JavaScript editing environment for use in the
 classroom. It's a lot like JSBin or JSFiddle, but with a strong emphasis on
 novice users.
 
 ### Project status ###
 
-Learnpad is currently somewhere between a proof of concept and a work in
+Popcode is currently somewhere between a proof of concept and a work in
 progress.
 
 ### Try it out ###
 
-You can try out Learnpad at
+You can try out Popcode at
 [`http://learnpad.herokuapp.com`](http://learnpad.herokuapp.com).
 
 Try doing something wrong. The main emphasis of this project is giving feedback on code problems that novice users can understand.
@@ -34,7 +34,7 @@ geared toward experienced coders, not beginners. Thus, providing a translation
 of error messages into plain English for students is the overriding concern of
 this project.
 
-Learnpad tends toward strict enforcement of lint and code style, even when
+Popcode tends toward strict enforcement of lint and code style, even when
 enforced style decisions are arbitrary, under the philosophy that giving
 students one right way to do it eliminates ambiguity and aids the learning
 process.
@@ -56,33 +56,16 @@ topic merits further investigation.
 
 ### Feature roadmap ###
 
-Here are some things that will need to be built before Learnpad is anywhere
-near an MVP:
-
-- [ ] Should be able to easily drop in popular CSS and JavaScript libraries.
-- [ ] Ability to save your work, switch between saved projects (local storage
-      at the very least, realistically some sort of server-side persistence)
-- [ ] Make the validations better, more robust, clearer. They’re off to a good
-      start but there are still plenty of holes.
-- [ ] `console.log` in JavaScript should probably do something useful.
-- [ ] Clearly indicate what each of the three editors is for.
-
-Some more stuff that would be good:
-
-- [ ] Toggle which editors are visible
-- [ ] Save version history, ability to roll back to previous versions
-- [ ] Display preview scaled down to 50% so the whole viewport is visible (this
-      is either an awesome or a terrible idea)
-- [ ] Pop out preview into its own full browser window
-- [ ] GitHub export
+Check out the [Trello board](https://trello.com/b/ONaFg6wh/popcode).
 
 ## Technical details ##
 
-Learnpad uses **React** to manage view state, **Ace** as the code editor, and
-**Browserify** to package the client-side application.
+Popcode uses **React** to render views, **Flux** to manage application state,
+**Ace** as the code editor, and **Browserify** to package the client-side
+application.
 
-Right now, it includes **htmllint**, **css**, **PrettyCSS**, **jshint**, and **jscs** for
-style checking, although as of now jscs is unused.
+Right now, it includes **htmllint**, **css**, **PrettyCSS**, and **jshint** for
+style checking.
 
 The Ace editor has a built-in system for error checking, but it's really hard
 to extend, so I've disabled it. Right now the editor just synchronously runs
@@ -118,7 +101,7 @@ in the browser.
 
 ## License ##
 
-Learnpad is distributed under the MIT license. See the attached LICENSE file
+Popcode is distributed under the MIT license. See the attached LICENSE file
 for all the sordid details.
 
 ## Contributors ##
