@@ -21,7 +21,7 @@ var Editor = React.createClass({
 
   componentWillReceiveProps: function(nextProps) {
     if (nextProps.projectKey !== this.props.projectKey) {
-      this._startNewSession(nextProps);
+      this._startNewSession(nextProps.source);
     } else if (nextProps.source !== this._editor.getValue())  {
       this._editor.setValue(nextProps.source);
     }
