@@ -25,6 +25,7 @@
     "flux": "^2.0.3",
     "htmllint": "^0.2.4",
     "i18next-client": "^1.10.2",
+    "immutable": "^3.7.5",
     "jshint": "^2.8.0",
     "keymirror": "^0.1.1",
     "localforage": "^1.2.7",
@@ -33,7 +34,9 @@
     "react": "^0.14.3",
     "react-addons-update": "^0.14.3",
     "react-dom": "^0.14.3",
+    "react-redux": "^4.0.0",
     "reactify": "^1.1.1",
+    "redux": "^3.0.4",
     "strictify": "^0.2.0"
   },
   "engines": {
@@ -58,6 +61,8 @@
     "budo": "^6.1.0",
     "eslint": "^1.4.1",
     "eslint-plugin-react": "^3.3.2",
+    "jest": "^0.1.40",
+    "jest-cli": "^0.8.0",
     "node-static": "^0.7.7"
   }
 }
