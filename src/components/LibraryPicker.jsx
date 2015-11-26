@@ -1,9 +1,10 @@
 var React = require('react');
 var lodash = require('lodash');
 
-var CurrentProjectStore = require('../stores/CurrentProjectStore');
-var LibraryPickerItem = require('./LibraryPickerItem');
 var ProjectStore = require('../stores/ProjectStore');
+var CurrentProjectStore = require('../stores/CurrentProjectStore');
+var ProjectActions = require('../actions/ProjectActions');
+var LibraryPickerItem = require('./LibraryPickerItem');
 var config = require('../config');
 
 function calculateState() {
@@ -44,13 +45,17 @@ var LibraryPicker = React.createClass({
     return this.state.enabledLibraries.indexOf(libraryKey) !== -1;
   },
 
+  _onLibraryToggled: function(libraryKey) {
+    ProjectActions.toggleLibrary(this.state.projectKey, libraryKey);
+  },
+
   render: function() {
     var libraries = lodash.map(config.libraries, function(library, key) {
       return (
         <LibraryPickerItem
-          projectKey={this.state.projectKey}
-          libraryKey={key}
+          library={library}
           enabled={this._isLibraryEnabled(key)}
+          onLibraryToggled={this._onLibraryToggled.bind(this, key)}
         />
       );
     }.bind(this));
