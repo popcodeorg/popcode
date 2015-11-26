@@ -3,6 +3,7 @@ var classnames = require('classnames');
 var i18n = require('i18next-client');
 
 var LibraryPicker = require('./LibraryPicker');
+var CurrentProjectActions = require('../actions/CurrentProjectActions');
 var ProjectActions = require('../actions/ProjectActions');
 var ProjectList = require('./ProjectList');
 
@@ -58,7 +59,7 @@ var Toolbar = React.createClass({
         return (
           <ProjectList
             projects={this.props.allProjects}
-            onProjectSelected={this._close}
+            onProjectSelected={this._onProjectSelected}
           />
         );
     }
@@ -71,6 +72,11 @@ var Toolbar = React.createClass({
       }
       return {open: true};
     });
+  },
+
+  _onProjectSelected: function(project) {
+    CurrentProjectActions.select(project.projectKey);
+    this._close();
   },
 
   render: function() {
