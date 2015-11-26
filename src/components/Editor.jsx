@@ -6,14 +6,13 @@ require('brace/mode/css');
 require('brace/mode/javascript');
 require('brace/theme/monokai');
 
-var ProjectActions = require('../actions/ProjectActions');
-
 var Editor = React.createClass({
   propTypes: {
     projectKey: React.PropTypes.string.isRequired,
     source: React.PropTypes.string.isRequired,
     errors: React.PropTypes.array.isRequired,
     language: React.PropTypes.string.isRequired,
+    onInput: React.PropTypes.func.isRequired,
   },
 
   componentDidMount: function() {
@@ -61,11 +60,7 @@ var Editor = React.createClass({
     session.setMode('ace/mode/' + language);
     session.setUseWorker(false);
     session.on('change', function() {
-      ProjectActions.updateSource(
-        this.props.projectKey,
-        this.props.language,
-        this._editor.getValue()
-      );
+      this.props.onInput(this._editor.getValue());
     }.bind(this));
   },
 

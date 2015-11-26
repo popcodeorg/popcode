@@ -3,6 +3,7 @@ var React = require('react');
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
 var ErrorStore = require('../stores/ErrorStore');
 var ProjectStore = require('../stores/ProjectStore');
+var ProjectActions = require('../actions/ProjectActions');
 var Editor = require('./Editor');
 var Output = require('./Output');
 var Toolbar = require('./Toolbar');
@@ -49,6 +50,10 @@ var Workspace = React.createClass({
     this.setState(calculateState());
   },
 
+  _onEditorInput: function(language, source) {
+    ProjectActions.updateSource(this.state.projectKey, language, source);
+  },
+
   render: function() {
     var environment;
     if (this.state.project !== undefined) {
@@ -64,6 +69,7 @@ var Workspace = React.createClass({
             projectKey={this.state.projectKey}
             source={this.state.project.sources.html}
             errors={this.state.errors.html}
+            onInput={this._onEditorInput.bind(this, 'html')}
             language="html"
           />
 
@@ -72,6 +78,7 @@ var Workspace = React.createClass({
             projectKey={this.state.projectKey}
             source={this.state.project.sources.css}
             errors={this.state.errors.css}
+            onInput={this._onEditorInput.bind(this, 'css')}
             language="css"
           />
 
@@ -80,6 +87,7 @@ var Workspace = React.createClass({
             projectKey={this.state.projectKey}
             source={this.state.project.sources.javascript}
             errors={this.state.errors.javascript}
+            onInput={this._onEditorInput.bind(this, 'javascript')}
             language="javascript"
           />
         </div>
