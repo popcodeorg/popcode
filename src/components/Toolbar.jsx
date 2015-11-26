@@ -7,6 +7,11 @@ var ProjectActions = require('../actions/ProjectActions');
 var ProjectList = require('./ProjectList');
 
 var Toolbar = React.createClass({
+  propTypes: {
+    projectKey: React.PropTypes.string,
+    enabledLibraries: React.PropTypes.array,
+  },
+
   getInitialState: function() {
     return {open: false};
   },
@@ -43,7 +48,10 @@ var Toolbar = React.createClass({
   _getSubmenu: function() {
     switch (this.state.submenu) {
       case 'libraries':
-        return <LibraryPicker />;
+        return <LibraryPicker
+          projectKey={this.props.projectKey}
+          enabledLibraries={this.props.enabledLibraries}
+        />;
       case 'loadProject':
         return <ProjectList onProjectSelected={this._close} />;
     }
@@ -65,6 +73,8 @@ var Toolbar = React.createClass({
     } else {
       toolbarItemsClasses.push('toolbar-menu--closed');
     }
+
+    if (!this.props.projectKey) return null;
 
     return (
       <div className="toolbar">

@@ -96,7 +96,10 @@ var Workspace = React.createClass({
 
     return (
       <div id="workspace">
-        <Toolbar />
+        <Toolbar
+          projectKey={this.state.projectKey}
+          enabledLibraries={this.state.enabledLibraries}
+        />
         {environment}
       </div>
     );
