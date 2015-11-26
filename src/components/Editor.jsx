@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var ACE = require('brace');
 require('brace/mode/html');
 require('brace/mode/css');

@@ -7,8 +7,8 @@ var config = require('../config');
 var LibraryPickerItem = React.createClass({
   propTypes: {
     enabled: React.PropTypes.bool,
-    libraryKey: React.PropTypes.string.required,
-    projectKey: React.PropTypes.number.required,
+    libraryKey: React.PropTypes.string.isRequired,
+    projectKey: React.PropTypes.string.isRequired,
   },
 
   _getLibrary: function() {

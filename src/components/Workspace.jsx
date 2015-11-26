@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
 var Editor = require('./Editor');
