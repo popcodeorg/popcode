@@ -3,10 +3,17 @@ var classnames = require('classnames');
 var i18n = require('i18next-client');
 
 var LibraryPicker = require('./LibraryPicker');
-var ProjectActions = require('../actions/ProjectActions');
 var ProjectList = require('./ProjectList');
 
 var Toolbar = React.createClass({
+  propTypes: {
+    currentProject: React.PropTypes.object,
+    allProjects: React.PropTypes.array,
+    onLibraryToggled: React.PropTypes.func.isRequired,
+    onNewProject: React.PropTypes.func.isRequired,
+    onProjectSelected: React.PropTypes.func.isRequired,
+  },
+
   getInitialState: function() {
     return {open: false};
   },
@@ -17,7 +24,7 @@ var Toolbar = React.createClass({
 
   _newProject: function() {
     this._close();
-    ProjectActions.create();
+    this.props.onNewProject();
   },
 
   _loadProject: function() {
@@ -43,9 +50,20 @@ var Toolbar = React.createClass({
   _getSubmenu: function() {
     switch (this.state.submenu) {
       case 'libraries':
-        return <LibraryPicker />;
+        return (
+          <LibraryPicker
+            projectKey={this.props.currentProject.projectKey}
+            enabledLibraries={this.props.currentProject.enabledLibraries}
+            onLibraryToggled={this.props.onLibraryToggled}
+          />
+        );
       case 'loadProject':
-        return <ProjectList onProjectSelected={this._close} />;
+        return (
+          <ProjectList
+            projects={this.props.allProjects}
+            onProjectSelected={this._onProjectSelected}
+          />
+        );
     }
   },
 
@@ -58,7 +76,16 @@ var Toolbar = React.createClass({
     });
   },
 
+  _onProjectSelected: function(project) {
+    this.props.onProjectSelected(project);
+    this._close();
+  },
+
   render: function() {
+    if (!this.props.currentProject) {
+      return null;
+    }
+
     var toolbarItemsClasses = ['toolbar-menu'];
     if (this.state.open) {
       toolbarItemsClasses.push('toolbar-menu--open');

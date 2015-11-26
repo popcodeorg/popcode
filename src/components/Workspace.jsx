@@ -1,12 +1,30 @@
-var React = require('react/addons');
+var React = require('react');
 
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
+var CurrentProjectActions = require('../actions/CurrentProjectActions');
+var ErrorStore = require('../stores/ErrorStore');
+var ProjectStore = require('../stores/ProjectStore');
+var ProjectActions = require('../actions/ProjectActions');
 var Editor = require('./Editor');
 var Output = require('./Output');
 var Toolbar = require('./Toolbar');
 
 function calculateState() {
-  return {projectKey: CurrentProjectStore.getKey()};
+  var projectKey = CurrentProjectStore.getKey();
+  var currentProject, errors, hasErrors;
+
+  if (projectKey) {
+    currentProject = ProjectStore.get(projectKey);
+    errors = ErrorStore.getErrors(projectKey);
+    hasErrors = ErrorStore.anyErrors(projectKey);
+  }
+
+  return {
+    allProjects: ProjectStore.all(),
+    currentProject: currentProject,
+    hasErrors: hasErrors,
+    errors: errors,
+  };
 }
 
 var Workspace = React.createClass({
@@ -16,10 +34,14 @@ var Workspace = React.createClass({
 
   componentDidMount: function() {
     CurrentProjectStore.addChangeListener(this._onChange);
+    ProjectStore.addChangeListener(this._onChange);
+    ErrorStore.addChangeListener(this._onChange);
   },
 
-  componentDidUnmount: function() {
+  componentWillUnmount: function() {
     CurrentProjectStore.removeChangeListener(this._onChange);
+    ProjectStore.removeChangeListener(this._onChange);
+    ErrorStore.removeChangeListener(this._onChange);
   },
 
   _onErrorClicked: function(language, line, column) {
@@ -31,31 +53,65 @@ var Workspace = React.createClass({
     this.setState(calculateState());
   },
 
+  _onEditorInput: function(language, source) {
+    ProjectActions.updateSource(
+      this.state.currentProject.projectKey,
+      language,
+      source
+    );
+  },
+
+  _onLibraryToggled: function(libraryKey) {
+    ProjectActions.toggleLibrary(
+      this.state.currentProject.projectKey,
+      libraryKey
+    );
+  },
+
+  _onNewProject: function() {
+    ProjectActions.create();
+  },
+
+  _onProjectSelected: function(project) {
+    CurrentProjectActions.select(project.projectKey);
+  },
+
   render: function() {
     var environment;
-    if (this.state.projectKey !== undefined) {
+    if (this.state.currentProject !== undefined) {
       environment = (
         <div className="environment">
           <Output
-            enabledLibraries={this.state.enabledLibraries}
+            project={this.state.currentProject}
+            errors={this.state.errors}
+            hasErrors={this.state.hasErrors}
             onErrorClicked={this._onErrorClicked}
           />
 
           <Editor
             ref="htmlEditor"
-            projectKey={this.state.projectKey}
+            projectKey={this.state.currentProject.projectKey}
+            source={this.state.currentProject.sources.html}
+            errors={this.state.errors.html}
+            onInput={this._onEditorInput.bind(this, 'html')}
             language="html"
           />
 
           <Editor
             ref="cssEditor"
-            projectKey={this.state.projectKey}
+            projectKey={this.state.currentProject.projectKey}
+            source={this.state.currentProject.sources.css}
+            errors={this.state.errors.css}
+            onInput={this._onEditorInput.bind(this, 'css')}
             language="css"
           />
 
           <Editor
             ref="javascriptEditor"
-            projectKey={this.state.projectKey}
+            projectKey={this.state.currentProject.projectKey}
+            source={this.state.currentProject.sources.javascript}
+            errors={this.state.errors.javascript}
+            onInput={this._onEditorInput.bind(this, 'javascript')}
             language="javascript"
           />
         </div>
@@ -64,7 +120,13 @@ var Workspace = React.createClass({
 
     return (
       <div id="workspace">
-        <Toolbar />
+        <Toolbar
+          allProjects={this.state.allProjects}
+          currentProject={this.state.currentProject}
+          onLibraryToggled={this._onLibraryToggled}
+          onNewProject={this._onNewProject}
+          onProjectSelected={this._onProjectSelected}
+        />
         {environment}
       </div>
     );

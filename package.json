@@ -30,7 +30,9 @@
     "localforage": "^1.2.7",
     "lodash": "^3.10.0",
     "moment": "^2.10.6",
-    "react": "^0.13.3",
+    "react": "^0.14.3",
+    "react-addons-update": "^0.14.3",
+    "react-dom": "^0.14.3",
     "reactify": "^1.1.1",
     "strictify": "^0.2.0"
   },
@@ -53,7 +55,7 @@
     ]
   },
   "devDependencies": {
-    "budo": "^6.0.0",
+    "budo": "^6.1.0",
     "eslint": "^1.4.1",
     "eslint-plugin-react": "^3.3.2",
     "node-static": "^0.7.7"

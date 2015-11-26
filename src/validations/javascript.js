@@ -1,7 +1,7 @@
 var i18n = require('i18next-client');
 var JSHINT = require('jshint').JSHINT;
 var Promise = require('es6-promise').Promise;
-var update = require('react/addons').addons.update;
+var update = require('react-addons-update');
 var libraries = require('../config').libraries;
 
 var jshintrc = {

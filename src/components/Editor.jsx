@@ -1,66 +1,58 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var ACE = require('brace');
 require('brace/mode/html');
 require('brace/mode/css');
 require('brace/mode/javascript');
 require('brace/theme/monokai');
 
-var ProjectActions = require('../actions/ProjectActions');
-var ProjectStore = require('../stores/ProjectStore');
-var ErrorStore = require('../stores/ErrorStore');
-
 var Editor = React.createClass({
   propTypes: {
-    projectKey: React.PropTypes.number,
-    language: React.PropTypes.string,
+    projectKey: React.PropTypes.string.isRequired,
+    source: React.PropTypes.string.isRequired,
+    errors: React.PropTypes.array.isRequired,
+    language: React.PropTypes.string.isRequired,
+    onInput: React.PropTypes.func.isRequired,
   },
 
-  componentDidMount: function(containerElement) {
-    this._setupEditor(containerElement);
-    ProjectStore.addChangeListener(this._onChange);
-    ErrorStore.addChangeListener(this._onChange);
+  componentDidMount: function() {
+    this._setupEditor();
   },
 
   componentWillReceiveProps: function(nextProps) {
     if (nextProps.projectKey !== this.props.projectKey) {
-      this._startNewSession(this._getSource(nextProps.projectKey));
+      this._startNewSession(nextProps.source);
+    } else if (nextProps.source !== this._editor.getValue()) {
+      this._editor.setValue(nextProps.source);
     }
+
+    this._editor.getSession().setAnnotations(nextProps.errors);
   },
 
   shouldComponentUpdate: function() {
     return false;
   },
 
-  componentDidUnmount: function() {
-    this.editor.destroy();
-    ProjectStore.removeChangeListener(this._onChange);
-    ErrorStore.removeChangeListener(this._onChange);
+  componentWillUnmount: function() {
+    this._editor.destroy();
   },
 
   _jumpToLine: function(line, column) {
-    this.editor.moveCursorTo(line, column);
-    this.editor.focus();
+    this._editor.moveCursorTo(line, column);
+    this._editor.focus();
   },
 
   _setupEditor: function() {
-    this.editor = ACE.edit(this.getDOMNode());
-    this._configureSession(this.editor.getSession());
-  },
-
-  _onChange: function() {
-    var source = this._getSource(this.props.projectKey);
-    if (source && source !== this.editor.getValue()) {
-      this._startNewSession(source);
-    }
-    var errors = ErrorStore.getErrors(this.props.projectKey);
-    this.editor.getSession().setAnnotations(errors[this.props.language]);
+    var containerElement = ReactDOM.findDOMNode(this);
+    this._editor = ACE.edit(containerElement);
+    this._configureSession(this._editor.getSession());
   },
 
   _startNewSession: function(source) {
     var session = new ACE.EditSession(source);
     this._configureSession(session);
-    this.editor.setSession(session);
-    this.editor.moveCursorTo(0, 0);
+    this._editor.setSession(session);
+    this._editor.moveCursorTo(0, 0);
   },
 
   _configureSession: function(session) {
@@ -68,25 +60,14 @@ var Editor = React.createClass({
     session.setMode('ace/mode/' + language);
     session.setUseWorker(false);
     session.on('change', function() {
-      ProjectActions.updateSource(
-        this.props.projectKey,
-        this.props.language,
-        this.editor.getValue()
-      );
+      this.props.onInput(this._editor.getValue());
     }.bind(this));
-  },
-
-  _getSource: function(projectKey) {
-    var project = ProjectStore.get(projectKey);
-    if (project) {
-      return project.sources[this.props.language];
-    }
   },
 
   render: function() {
     return (
       <div className="editor">
-        {this._getSource(this.props.projectKey)}
+        {this.props.source}
       </div>
     );
   },

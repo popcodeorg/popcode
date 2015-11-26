@@ -1,58 +1,28 @@
 var React = require('react');
 
-var CurrentProjectStore = require('../stores/CurrentProjectStore');
 var ErrorList = require('./ErrorList');
-var ErrorStore = require('../stores/ErrorStore');
-var ProjectStore = require('../stores/ProjectStore');
 var Preview = require('./Preview');
-
-function calculateState() {
-  var projectKey = CurrentProjectStore.getKey();
-
-  return {
-    project: ProjectStore.get(projectKey),
-    hasErrors: ErrorStore.anyErrors(projectKey),
-    errors: ErrorStore.getErrors(projectKey),
-  };
-}
 
 var Output = React.createClass({
   propTypes: {
+    project: React.PropTypes.object.isRequired,
+    hasErrors: React.PropTypes.bool.isRequired,
+    errors: React.PropTypes.object.isRequired,
     onErrorClicked: React.PropTypes.func.isRequired,
   },
 
-  getInitialState: function() {
-    return calculateState();
-  },
-
-  componentDidMount: function() {
-    CurrentProjectStore.addChangeListener(this._onChange);
-    ErrorStore.addChangeListener(this._onChange);
-    ProjectStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    CurrentProjectStore.removeChangeListener(this._onChange);
-    ErrorStore.removeChangeListener(this._onChange);
-    ProjectStore.removeChangeListener(this._onChange);
-  },
-
-  _onChange: function() {
-    this.setState(calculateState());
-  },
-
   render: function() {
-    if (this.state.hasErrors) {
+    if (this.props.hasErrors) {
       return (
         <ErrorList
-          {...this.state.errors}
+          {...this.props.errors}
           onErrorClicked={this.props.onErrorClicked}
         />
       );
     }
-    if (this.state.project) {
+    if (this.props.project) {
       return (
-        <Preview project={this.state.project} />
+        <Preview project={this.props.project} />
       );
     }
     return null;
