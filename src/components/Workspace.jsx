@@ -10,16 +10,18 @@ var Toolbar = require('./Toolbar');
 
 function calculateState() {
   var projectKey = CurrentProjectStore.getKey();
-  var project;
-  var errors;
+  var project, errors, hasErrors;
+
   if (projectKey) {
     project = ProjectStore.get(projectKey);
     errors = ErrorStore.getErrors(projectKey);
+    hasErrors = ErrorStore.anyErrors(projectKey);
   }
 
   return {
     projectKey: projectKey,
     project: project,
+    hasErrors: hasErrors,
     errors: errors,
   };
 }
@@ -64,7 +66,9 @@ var Workspace = React.createClass({
       environment = (
         <div className="environment">
           <Output
-            enabledLibraries={this.state.enabledLibraries}
+            project={this.state.project}
+            errors={this.state.errors}
+            hasErrors={this.state.hasErrors}
             onErrorClicked={this._onErrorClicked}
           />
 
