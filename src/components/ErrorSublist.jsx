@@ -6,9 +6,9 @@ var ErrorItem = require('./ErrorItem');
 
 var ErrorSublist = React.createClass({
   propTypes: {
-    errors: React.PropTypes.object,
-    onErrorClicked: React.PropTypes.func,
-    language: React.PropTypes.oneOf(['html', 'css', 'javascript']),
+    errors: React.PropTypes.array.isRequired,
+    onErrorClicked: React.PropTypes.func.isRequired,
+    language: React.PropTypes.oneOf(['html', 'css', 'javascript']).isRequired,
   },
 
   render: function() {
