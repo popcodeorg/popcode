@@ -10,17 +10,17 @@ var Toolbar = require('./Toolbar');
 
 function calculateState() {
   var projectKey = CurrentProjectStore.getKey();
-  var project, errors, hasErrors;
+  var currentProject, errors, hasErrors;
 
   if (projectKey) {
-    project = ProjectStore.get(projectKey);
+    currentProject = ProjectStore.get(projectKey);
     errors = ErrorStore.getErrors(projectKey);
     hasErrors = ErrorStore.anyErrors(projectKey);
   }
 
   return {
-    projectKey: projectKey,
-    project: project,
+    allProjects: ProjectStore.all(),
+    currentProject: currentProject,
     hasErrors: hasErrors,
     errors: errors,
   };
@@ -53,20 +53,27 @@ var Workspace = React.createClass({
   },
 
   _onEditorInput: function(language, source) {
-    ProjectActions.updateSource(this.state.projectKey, language, source);
+    ProjectActions.updateSource(
+      this.state.currentProject.projectKey,
+      language,
+      source
+    );
   },
 
   _onLibraryToggled: function(libraryKey) {
-    ProjectActions.toggleLibrary(this.state.projectKey, libraryKey);
+    ProjectActions.toggleLibrary(
+      this.state.currentProject.projectKey,
+      libraryKey
+    );
   },
 
   render: function() {
     var environment;
-    if (this.state.project !== undefined) {
+    if (this.state.currentProject !== undefined) {
       environment = (
         <div className="environment">
           <Output
-            project={this.state.project}
+            project={this.state.currentProject}
             errors={this.state.errors}
             hasErrors={this.state.hasErrors}
             onErrorClicked={this._onErrorClicked}
@@ -74,8 +81,8 @@ var Workspace = React.createClass({
 
           <Editor
             ref="htmlEditor"
-            projectKey={this.state.projectKey}
-            source={this.state.project.sources.html}
+            projectKey={this.state.currentProject.projectKey}
+            source={this.state.currentProject.sources.html}
             errors={this.state.errors.html}
             onInput={this._onEditorInput.bind(this, 'html')}
             language="html"
@@ -83,8 +90,8 @@ var Workspace = React.createClass({
 
           <Editor
             ref="cssEditor"
-            projectKey={this.state.projectKey}
-            source={this.state.project.sources.css}
+            projectKey={this.state.currentProject.projectKey}
+            source={this.state.currentProject.sources.css}
             errors={this.state.errors.css}
             onInput={this._onEditorInput.bind(this, 'css')}
             language="css"
@@ -92,8 +99,8 @@ var Workspace = React.createClass({
 
           <Editor
             ref="javascriptEditor"
-            projectKey={this.state.projectKey}
-            source={this.state.project.sources.javascript}
+            projectKey={this.state.currentProject.projectKey}
+            source={this.state.currentProject.sources.javascript}
             errors={this.state.errors.javascript}
             onInput={this._onEditorInput.bind(this, 'javascript')}
             language="javascript"
@@ -105,7 +112,8 @@ var Workspace = React.createClass({
     return (
       <div id="workspace">
         <Toolbar
-          project={this.state.project}
+          allProjects={this.state.allProjects}
+          currentProject={this.state.currentProject}
           onLibraryToggled={this._onLibraryToggled}
         />
         {environment}

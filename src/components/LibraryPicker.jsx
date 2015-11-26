@@ -22,7 +22,7 @@ var LibraryPicker = React.createClass({
           onLibraryToggled={this.props.onLibraryToggled.bind(this, key)}
         />
       );
-    }.bind(this));
+    }, this);
 
     return <ul className="toolbar-menu">{libraries}</ul>;
   },
