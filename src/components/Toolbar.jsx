@@ -3,8 +3,6 @@ var classnames = require('classnames');
 var i18n = require('i18next-client');
 
 var LibraryPicker = require('./LibraryPicker');
-var CurrentProjectActions = require('../actions/CurrentProjectActions');
-var ProjectActions = require('../actions/ProjectActions');
 var ProjectList = require('./ProjectList');
 
 var Toolbar = React.createClass({
@@ -12,6 +10,8 @@ var Toolbar = React.createClass({
     currentProject: React.PropTypes.object,
     allProjects: React.PropTypes.array,
     onLibraryToggled: React.PropTypes.func.isRequired,
+    onNewProject: React.PropTypes.func.isRequired,
+    onProjectSelected: React.PropTypes.func.isRequired,
   },
 
   getInitialState: function() {
@@ -24,7 +24,7 @@ var Toolbar = React.createClass({
 
   _newProject: function() {
     this._close();
-    ProjectActions.create();
+    this.props.onNewProject();
   },
 
   _loadProject: function() {
@@ -75,7 +75,7 @@ var Toolbar = React.createClass({
   },
 
   _onProjectSelected: function(project) {
-    CurrentProjectActions.select(project.projectKey);
+    this.props.onProjectSelected(project);
     this._close();
   },
 

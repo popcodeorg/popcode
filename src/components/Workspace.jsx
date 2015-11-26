@@ -1,6 +1,7 @@
 var React = require('react');
 
 var CurrentProjectStore = require('../stores/CurrentProjectStore');
+var CurrentProjectActions = require('../actions/CurrentProjectActions');
 var ErrorStore = require('../stores/ErrorStore');
 var ProjectStore = require('../stores/ProjectStore');
 var ProjectActions = require('../actions/ProjectActions');
@@ -67,6 +68,14 @@ var Workspace = React.createClass({
     );
   },
 
+  _onNewProject: function() {
+    ProjectActions.create();
+  },
+
+  _onProjectSelected: function(project) {
+    CurrentProjectActions.select(project.projectKey);
+  },
+
   render: function() {
     var environment;
     if (this.state.currentProject !== undefined) {
@@ -115,6 +124,8 @@ var Workspace = React.createClass({
           allProjects={this.state.allProjects}
           currentProject={this.state.currentProject}
           onLibraryToggled={this._onLibraryToggled}
+          onNewProject={this._onNewProject}
+          onProjectSelected={this._onProjectSelected}
         />
         {environment}
       </div>
