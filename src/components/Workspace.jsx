@@ -54,6 +54,10 @@ var Workspace = React.createClass({
     ProjectActions.updateSource(this.state.projectKey, language, source);
   },
 
+  _onLibraryToggled: function(libraryKey) {
+    ProjectActions.toggleLibrary(this.state.projectKey, libraryKey);
+  },
+
   render: function() {
     var environment;
     if (this.state.project !== undefined) {
@@ -97,8 +101,8 @@ var Workspace = React.createClass({
     return (
       <div id="workspace">
         <Toolbar
-          projectKey={this.state.projectKey}
-          enabledLibraries={this.state.enabledLibraries}
+          project={this.state.project}
+          onLibraryToggled={this._onLibraryToggled}
         />
         {environment}
       </div>

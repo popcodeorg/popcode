@@ -1,17 +1,16 @@
 var React = require('react');
 var lodash = require('lodash');
 
-var ProjectActions = require('../actions/ProjectActions');
 var LibraryPickerItem = require('./LibraryPickerItem');
 var config = require('../config');
 
 var LibraryPicker = React.createClass({
-  _isLibraryEnabled: function(libraryKey) {
-    return this.props.enabledLibraries.indexOf(libraryKey) !== -1;
+  propTypes: {
+    enabledLibraries: React.PropTypes.array.isRequired,
   },
 
-  _onLibraryToggled: function(libraryKey) {
-    ProjectActions.toggleLibrary(this.props.projectKey, libraryKey);
+  _isLibraryEnabled: function(libraryKey) {
+    return this.props.enabledLibraries.indexOf(libraryKey) !== -1;
   },
 
   render: function() {
@@ -20,7 +19,7 @@ var LibraryPicker = React.createClass({
         <LibraryPickerItem
           library={library}
           enabled={this._isLibraryEnabled(key)}
-          onLibraryToggled={this._onLibraryToggled.bind(this, key)}
+          onLibraryToggled={this.props.onLibraryToggled.bind(this, key)}
         />
       );
     }.bind(this));
