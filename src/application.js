@@ -9,4 +9,7 @@ var i18nOptions = {
 };
 i18n.init(i18nOptions);
 
-ReactDOM.render(React.createElement(Workspace), document.getElementById('main'));
+ReactDOM.render(
+  React.createElement(Workspace),
+  document.getElementById('main')
+);

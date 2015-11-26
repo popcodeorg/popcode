@@ -7,6 +7,7 @@ var config = require('../config');
 var LibraryPicker = React.createClass({
   propTypes: {
     enabledLibraries: React.PropTypes.array.isRequired,
+    onLibraryToggled: React.PropTypes.func.isRequired,
   },
 
   _isLibraryEnabled: function(libraryKey) {
