@@ -3,10 +3,10 @@ var ErrorSublist = require('./ErrorSublist');
 
 var ErrorList = React.createClass({
   propTypes: {
-    html: React.PropTypes.array,
-    css: React.PropTypes.array,
-    javascript: React.PropTypes.array,
-    onErrorClicked: React.PropTypes.func,
+    html: React.PropTypes.array.isRequired,
+    css: React.PropTypes.array.isRequired,
+    javascript: React.PropTypes.array.isRequired,
+    onErrorClicked: React.PropTypes.func.isRequired,
   },
 
   render: function() {

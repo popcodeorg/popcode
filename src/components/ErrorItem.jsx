@@ -4,10 +4,10 @@ var lodash = require('lodash');
 
 var ErrorItem = React.createClass({
   propTypes: {
-    row: React.PropTypes.number,
-    column: React.PropTypes.number,
-    text: React.PropTypes.string,
-    onClick: React.PropTypes.func,
+    row: React.PropTypes.number.isRequired,
+    column: React.PropTypes.number.isRequired,
+    text: React.PropTypes.string.isRequired,
+    onClick: React.PropTypes.func.isRequired,
   },
 
   render: function() {
