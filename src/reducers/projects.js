@@ -15,6 +15,11 @@ function projects(stateIn, action) {
         action.payload.project.projectKey,
         action.payload.project
       );
+    case 'PROJECT_SOURCE_EDITED':
+      return state.setIn(
+        [action.payload.projectKey, 'sources', action.payload.language],
+        action.payload.newValue
+      );
     default:
       return state;
   }

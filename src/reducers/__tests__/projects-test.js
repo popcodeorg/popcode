@@ -51,4 +51,32 @@ describe('projects', function() {
       expect(projects(stateIn, action).toJS()).toEqual(expected);
     });
   });
+
+  describe('PROJECT_SOURCE_EDITED', function() {
+    var action = {
+      type: 'PROJECT_SOURCE_EDITED',
+      payload: {
+        projectKey: '12345',
+        language: 'css',
+        newValue: 'p { color: red; }',
+      },
+    };
+
+    var stateIn = Immutable.fromJS({
+      '12345': {
+        projectKey: '12345',
+        sources: {html: '', css: '', javascript: ''},
+        libraries: [],
+      },
+    });
+
+    it('should update source of known project', function() {
+      var expected = stateIn.setIn(
+        ['12345', 'sources', 'css'],
+        action.payload.newValue
+      ).toJS();
+
+      expect(projects(stateIn, action).toJS()).toEqual(expected);
+    });
+  });
 });
