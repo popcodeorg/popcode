@@ -1,11 +1,14 @@
 var Immutable = require('immutable');
 
-var currentProject = function(state, action) {
-  if (state === undefined) {
-    state = Immutable.Map({projectKey: null});
+function currentProject(stateIn, action) {
+  var state;
+  if (stateIn === undefined) {
+    state = new Immutable.Map({projectKey: null});
+  } else {
+    state = stateIn;
   }
 
   return state.set('projectKey', action.payload.project.projectKey);
-};
+}
 
 module.exports = currentProject;
