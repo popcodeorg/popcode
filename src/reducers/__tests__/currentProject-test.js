@@ -8,6 +8,15 @@ var Immutable = require('immutable');
 describe('currentProject', function() {
   var currentProject = require('../currentProject');
 
+  describe('unknown action', function() {
+    var action = {type: 'BOGUS'};
+
+    it('should return given state', function() {
+      var state = new Immutable.Map({projectKey: '12345'});
+      expect(currentProject(state, action)).toBe(state);
+    });
+  });
+
   describe('CURRENT_PROJECT_LOADED_FROM_STORAGE', function() {
     var action = {
       type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',

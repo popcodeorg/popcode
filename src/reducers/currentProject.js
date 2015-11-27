@@ -8,7 +8,12 @@ function currentProject(stateIn, action) {
     state = stateIn;
   }
 
-  return state.set('projectKey', action.payload.project.projectKey);
+  switch (action.type) {
+    case 'CURRENT_PROJECT_LOADED_FROM_STORAGE':
+      return state.set('projectKey', action.payload.project.projectKey);
+    default:
+      return state;
+  }
 }
 
 module.exports = currentProject;
