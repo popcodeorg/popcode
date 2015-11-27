@@ -57,6 +57,14 @@
       "strictify"
     ]
   },
+  "jest": {
+    "unmockedModulePathPatterns": [
+      "./node_modules/immutable",
+      "./node_modules/es6-promise",
+      "./node_modules/keymirror",
+      "./node_modules/lodash"
+    ]
+  },
   "devDependencies": {
     "budo": "^6.1.0",
     "eslint": "^1.4.1",
