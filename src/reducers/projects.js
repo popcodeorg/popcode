@@ -9,7 +9,15 @@ function projects(stateIn, action) {
     state = stateIn;
   }
 
-  return state.set(action.payload.project.projectKey, action.payload.project);
+  switch (action.type) {
+    case 'CURRENT_PROJECT_LOADED_FROM_STORAGE':
+      return state.set(
+        action.payload.project.projectKey,
+        action.payload.project
+      );
+    default:
+      return state;
+  }
 }
 
 module.exports = projects;
