@@ -100,8 +100,60 @@ describe('projects', function() {
     });
 
     it('should initialize new project with enabled libraries', function() {
-      expect(this.newState.getIn(['12345', 'enabledLibraries']).toJS()).
-        toEqual([]);
+      expect(
+        Immutable.Set.isSet(this.newState.getIn(['12345', 'enabledLibraries']))
+      ).toBeTruthy();
+    });
+  });
+
+  describe('PROJECT_LIBRARY_TOGGLED', function() {
+    var action = {
+      type: 'PROJECT_LIBRARY_TOGGLED',
+      payload: {projectKey: '12345', libraryKey: 'jquery'},
+    };
+
+    describe('when library is not enabled', function() {
+      beforeEach(function() {
+        this.newState = projects(Immutable.fromJS({
+          12345: {enabledLibraries: new Immutable.Set(['lodash'])},
+        }), action);
+      });
+
+      it('should add library', function() {
+        expect(
+          this.newState.getIn(['12345', 'enabledLibraries']).
+            includes('jquery')
+        ).toBeTruthy();
+      });
+
+      it('should retain existing library', function() {
+        expect(
+          this.newState.getIn(['12345', 'enabledLibraries']).
+            includes('lodash')
+        ).toBeTruthy();
+      });
+    });
+
+    describe('when library is enabled', function() {
+      beforeEach(function() {
+        this.newState = projects(Immutable.fromJS({
+          12345: {enabledLibraries: new Immutable.Set(['lodash', 'jquery'])},
+        }), action);
+      });
+
+      it('should remove library', function() {
+        expect(
+          this.newState.getIn(['12345', 'enabledLibraries']).
+            includes('jquery')
+        ).toBeFalsy();
+      });
+
+      it('should retain existing library', function() {
+        expect(
+          this.newState.getIn(['12345', 'enabledLibraries']).
+            includes('lodash')
+        ).toBeTruthy();
+      });
     });
   });
 });

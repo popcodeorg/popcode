@@ -14,7 +14,7 @@ var newProject = Immutable.fromJS({
     css: '',
     javascript: '',
   },
-  enabledLibraries: [],
+  enabledLibraries: new Immutable.Set(),
 });
 
 function projects(stateIn, action) {
@@ -44,6 +44,19 @@ function projects(stateIn, action) {
         action.payload.projectKey,
         newProject.set('projectKey', action.payload.projectKey)
       );
+
+    case 'PROJECT_LIBRARY_TOGGLED':
+      return state.updateIn(
+        [action.payload.projectKey, 'enabledLibraries'],
+        function(enabledLibraries) {
+          var libraryKey = action.payload.libraryKey;
+          if (enabledLibraries.has(libraryKey)) {
+            return enabledLibraries.delete(libraryKey);
+          } else {
+            return enabledLibraries.add(libraryKey);
+          }
+        }
+      )
 
     default:
       return state;
