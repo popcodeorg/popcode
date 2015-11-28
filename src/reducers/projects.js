@@ -1,4 +1,21 @@
 var Immutable = require('immutable');
+var fs = require('fs');
+var path = require('path');
+
+var newProject = Immutable.fromJS({
+  sources: {
+    html: fs.readFileSync(path.join(
+      __dirname,
+      '..',
+      '..',
+      'templates',
+      'new.html'
+    ), 'utf8'),
+    css: '',
+    javascript: '',
+  },
+  enabledLibraries: [],
+});
 
 function projects(stateIn, action) {
   var state;
@@ -15,11 +32,19 @@ function projects(stateIn, action) {
         action.payload.project.projectKey,
         action.payload.project
       );
+
     case 'PROJECT_SOURCE_EDITED':
       return state.setIn(
         [action.payload.projectKey, 'sources', action.payload.language],
         action.payload.newValue
       );
+
+    case 'PROJECT_CREATED':
+      return state.set(
+        action.payload.projectKey,
+        newProject.set('projectKey', action.payload.projectKey)
+      );
+
     default:
       return state;
   }

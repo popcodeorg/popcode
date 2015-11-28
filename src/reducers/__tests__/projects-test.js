@@ -79,4 +79,29 @@ describe('projects', function() {
       expect(projects(stateIn, action).toJS()).toEqual(expected);
     });
   });
+
+  describe('PROJECT_CREATED', function() {
+    var action = {
+      type: 'PROJECT_CREATED',
+      payload: {projectKey: '12345'},
+    };
+
+    beforeEach(function() {
+      this.newState = projects(undefined, action);
+    });
+
+    it('should add new project to map', function() {
+      expect(this.newState.getIn(['12345', 'projectKey'])).
+        toEqual('12345');
+    });
+
+    it('should initialize new project with sources', function() {
+      expect(this.newState.getIn(['12345', 'sources', 'html'])).toBeDefined();
+    });
+
+    it('should initialize new project with enabled libraries', function() {
+      expect(this.newState.getIn(['12345', 'enabledLibraries']).toJS()).
+        toEqual([]);
+    });
+  });
 });
