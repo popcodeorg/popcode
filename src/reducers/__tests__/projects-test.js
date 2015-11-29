@@ -9,7 +9,7 @@ describe('projects', function() {
   var projects = require('../projects');
 
   describe('unknown action', function() {
-    var action = {type: 'BOGUS'}
+    var action = {type: 'BOGUS'};
 
     it('should return previous state', function() {
       var stateIn = new Immutable.Map();
@@ -38,7 +38,7 @@ describe('projects', function() {
 
     it('should add project to existing projects map', function() {
       var expected = {
-        '1': {
+        1: {
           projectKey: '1',
           sources: {html: '', css: '', javascript: ''},
           libraries: [],
@@ -63,7 +63,7 @@ describe('projects', function() {
     };
 
     var stateIn = Immutable.fromJS({
-      '12345': {
+      12345: {
         projectKey: '12345',
         sources: {html: '', css: '', javascript: ''},
         libraries: [],

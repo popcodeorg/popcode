@@ -9,7 +9,7 @@ describe('errors', function() {
   var errors = require('../errors');
 
   describe('unknown action', function() {
-    var action = {type: 'BOGUS'}
+    var action = {type: 'BOGUS'};
 
     it('should return previous state', function() {
       var stateIn = new Immutable.Map();

@@ -1,3 +1,5 @@
+/* global __dirname */
+
 var Immutable = require('immutable');
 var fs = require('fs');
 var path = require('path');
@@ -52,11 +54,10 @@ function projects(stateIn, action) {
           var libraryKey = action.payload.libraryKey;
           if (enabledLibraries.has(libraryKey)) {
             return enabledLibraries.delete(libraryKey);
-          } else {
-            return enabledLibraries.add(libraryKey);
           }
+          return enabledLibraries.add(libraryKey);
         }
-      )
+      );
 
     default:
       return state;
