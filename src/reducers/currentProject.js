@@ -9,8 +9,8 @@ function currentProject(stateIn, action) {
   }
 
   switch (action.type) {
-    case 'CURRENT_PROJECT_LOADED_FROM_STORAGE':
-      return state.set('projectKey', action.payload.project.projectKey);
+    case 'CURRENT_PROJECT_CHANGED':
+      return state.set('projectKey', action.payload.projectKey);
     default:
       return state;
   }

@@ -17,9 +17,9 @@ describe('projects', function() {
     });
   });
 
-  describe('CURRENT_PROJECT_LOADED_FROM_STORAGE', function() {
+  describe('PROJECT_LOADED_FROM_STORAGE', function() {
     var action = {
-      type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',
+      type: 'PROJECT_LOADED_FROM_STORAGE',
       payload: {
         project: {
           projectKey: '12345',

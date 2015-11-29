@@ -17,16 +17,16 @@ describe('currentProject', function() {
     });
   });
 
-  describe('CURRENT_PROJECT_LOADED_FROM_STORAGE', function() {
+  describe('CURRENT_PROJECT_CHANGED', function() {
     var action = {
-      type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',
-      payload: {project: {projectKey: '12345'}},
+      type: 'CURRENT_PROJECT_CHANGED',
+      payload: {projectKey: '12345'},
     };
 
     describe('with no initial project key', function() {
       it('should set current project key', function() {
         expect(currentProject(undefined, action).toJS()).toEqual(
-          {projectKey: action.payload.project.projectKey}
+          {projectKey: action.payload.projectKey}
         );
       });
     });
@@ -36,7 +36,7 @@ describe('currentProject', function() {
         var previousState = Immutable.fromJS({projectKey: '1'});
 
         expect(currentProject(previousState, action).toJS()).toEqual(
-          {projectKey: action.payload.project.projectKey}
+          {projectKey: action.payload.projectKey}
         );
       });
     });

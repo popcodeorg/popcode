@@ -27,7 +27,7 @@ function projects(stateIn, action) {
   }
 
   switch (action.type) {
-    case 'CURRENT_PROJECT_LOADED_FROM_STORAGE':
+    case 'PROJECT_LOADED_FROM_STORAGE':
       return state.set(
         action.payload.project.projectKey,
         action.payload.project
