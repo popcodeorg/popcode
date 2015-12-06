@@ -37,6 +37,7 @@
     "react-redux": "^4.0.0",
     "reactify": "^1.1.1",
     "redux": "^3.0.4",
+    "redux-thunk": "^1.0.0",
     "strictify": "^0.2.0"
   },
   "engines": {
