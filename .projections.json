@@ -3,19 +3,22 @@
     "type": "component",
     "template": "var React = require('react');\n\nvar {camelcase|capitalize} = React.createClass({open}\n  render: function() {open}\n  {close}\n{close});\n\nmodule.exports = {camelcase|capitalize};"
   },
-  "src/actions/*Actions.js": {
-    "type": "actions",
-    "template": "var AppDispatcher = require('../dispatcher/AppDispatcher');\nvar {camelcase|capitalize}Constants = require('../constants/{camelcase|capitalize}Constants');\n\nvar {camelcase|capitalize}Actions = {open}\n{close};\n\nmodule.exports = {camelcase|capitalize}Actions;"
+  "src/actions/*.js": {
+    "type": "action",
+    "alternate": "src/actions/__tests__/{}-test.js"
   },
-  "src/constants/*Constants.js": {
-    "type": "constants",
-    "template": "var keyMirror = require('keymirror');\n\nmodule.exports = keyMirror({open}\n{close});"
+  "src/actions/__tests__/*-test.js": {
+    "type": "actiontest",
+    "alternate": "src/actions/{}.js"
   },
-  "src/stores/*Store.js": {
-    "type": "store",
-    "template": "var lodash = require('lodash');\nvar AppDispatcher = require('../dispatcher/AppDispatcher');\nvar EventEmitter = require('events').EventEmitter;\nvar {camelcase|capitalize}Constants = require('../constants/{camelcase|capitalize}Constants');\n\nvar CHANGE_EVENT = 'change';\n\nvar {camelcase|capitalize}Store = _.assign({open}{close}, EventEmitter.prototype, {open}\n  emitChange: function() {open}\n    this.emit(CHANGE_EVENT);\n  {close},\n\n  addChangeListener: function(callback) {open}\n    this.on(CHANGE_EVENT, callback);\n  {close},\n\n  removeChangeListener: function(callback) {open}\n    this.removeListener(CHANGE_EVENT, callback);\n  {close}\n{close});\n\nAppDispatcher.register(function(action) {open}\n  switch(action.actionType) {open}\n  {close}\n{close});\n\nmodule.exports = {camelcase|capitalize}Store;\n"
+  "src/reducers/*.js": {
+    "type": "reducer",
+    "alternate": "src/reducers/__tests__/{}-test.js"
   },
-  "src/dispatcher/AppDispatcher.js": {"type": "dispatcher"},
+  "src/reducers/__tests__/*-test.js": {
+    "type": "reducertest",
+    "alternate": "src/reducers/{}.js"
+  },
   "src/validations/*.js": {"type": "validation"},
   "src/static/*": {"type": "static"}
 }
