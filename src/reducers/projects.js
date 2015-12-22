@@ -19,6 +19,10 @@ var newProject = Immutable.fromJS({
   enabledLibraries: new Immutable.Set(),
 });
 
+function addProject(state, project) {
+  return state.set(project.projectKey, project);
+}
+
 function projects(stateIn, action) {
   var state;
 
@@ -30,10 +34,10 @@ function projects(stateIn, action) {
 
   switch (action.type) {
     case 'PROJECT_LOADED_FROM_STORAGE':
-      return state.set(
-        action.payload.project.projectKey,
-        action.payload.project
-      );
+      return addProject(state, action.payload.project);
+
+    case 'CURRENT_PROJECT_LOADED_FROM_STORAGE':
+      return addProject(state, action.payload.project);
 
     case 'PROJECT_SOURCE_EDITED':
       return state.setIn(

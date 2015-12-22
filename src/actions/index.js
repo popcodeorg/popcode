@@ -22,12 +22,8 @@ exports.loadCurrentProjectFromStorage = function() {
       if (projectKey) {
         Storage.load(projectKey).then(function(project) {
           dispatch({
-            type: 'PROJECT_LOADED_FROM_STORAGE',
+            type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',
             payload: {project: project},
-          });
-          dispatch({
-            type: 'CURRENT_PROJECT_CHANGED',
-            payload: {projectKey: projectKey},
           });
         });
       } else {

@@ -3,6 +3,8 @@
 
 jest.dontMock('..');
 
+var project = require('../../__test__/blankProject');
+
 describe('errors', function() {
   var Actions = require('..');
   var dispatch;
@@ -32,12 +34,6 @@ describe('errors', function() {
   });
 
   describe('loadCurrentProjectFromStorage with project', function() {
-    var project = {
-      projectKey: '12345',
-      sources: {html: '', css: '', javascript: ''},
-      libraries: [],
-    };
-
     var Storage = require('../../services/Storage');
 
     beforeEach(function() {
@@ -50,39 +46,21 @@ describe('errors', function() {
       Storage.load.mockReturnValue(Promise.resolve(project));
       loadCurrentProjectFromStorageFn(dispatch);
 
-      this.actionsDispatched = new Promise(dispatch.mockImplementation).
+      this.actionDispatched = new Promise(dispatch.mockImplementation).
         then(function() {
-          return {
-            projectLoaded: dispatch.mock.calls[0][0],
-            currentProjectChanged: dispatch.mock.calls[1][0],
-          };
+          return dispatch.mock.calls[0][0];
         });
     });
 
-    pit('should dispatch PROJECT_LOADED_FROM_STORAGE', function() {
-      return this.actionsDispatched.then(function(actions) {
-        expect(actions.projectLoaded.type).
-          toBe('PROJECT_LOADED_FROM_STORAGE');
+    pit('should dispatch CURRENT_PROJECT_LOADED_FROM_STORAGE', function() {
+      return this.actionDispatched.then(function(action) {
+        expect(action.type).toBe('CURRENT_PROJECT_LOADED_FROM_STORAGE');
       });
     });
 
-    pit('should pass project to PROJECT_LOADED_FROM_STORAGE', function() {
-      return this.actionsDispatched.then(function(actions) {
-        expect(actions.projectLoaded.payload.project).toBe(project);
-      });
-    });
-
-    pit('should dispatch CURRENT_PROJECT_CHANGED', function() {
-      return this.actionsDispatched.then(function(actions) {
-        expect(actions.currentProjectChanged.type).
-          toBe('CURRENT_PROJECT_CHANGED');
-      });
-    });
-
-    pit('should dispatch CURRENT_PROJECT_CHANGED', function() {
-      return this.actionsDispatched.then(function(actions) {
-        expect(actions.currentProjectChanged.payload.projectKey).
-          toBe(project.projectKey);
+    pit('should pass project in payload', function() {
+      return this.actionDispatched.then(function(action) {
+        expect(action.payload.project).toBe(project);
       });
     });
   });

@@ -1,14 +1,15 @@
 var React = require('react');
+var connect = require('react-redux').connect;
+var ImmutablePropTypes = require('react-immutable-proptypes');
+var lodash = require('lodash');
 
-var CurrentProjectStore = require('../stores/CurrentProjectStore');
-var CurrentProjectActions = require('../actions/CurrentProjectActions');
-var ErrorStore = require('../stores/ErrorStore');
-var ProjectStore = require('../stores/ProjectStore');
-var ProjectActions = require('../actions/ProjectActions');
+var actions = require('../actions');
+
 var Editor = require('./Editor');
 var Output = require('./Output');
 var Toolbar = require('./Toolbar');
 
+/*
 function calculateState() {
   var projectKey = CurrentProjectStore.getKey();
   var currentProject, errors, hasErrors;
@@ -26,22 +27,36 @@ function calculateState() {
     errors: errors,
   };
 }
+*/
+
+function mapStateToProps(state) {
+  var currentProject = state.projects.get(
+    state.currentProject.get('projectKey')
+  );
+
+  var currentProjectJS;
+  if (currentProject) {
+    currentProjectJS = currentProject.toJS();
+  }
+
+  return {
+    allProjects: lodash.values(state.projects.toJS()),
+    currentProject: currentProjectJS,
+    errors: state.errors.toJS(),
+  };
+}
 
 var Workspace = React.createClass({
-  getInitialState: function() {
-    return calculateState();
+  propTypes: {
+    dispatch: React.PropTypes.func.isRequired,
+    allProjects: ImmutablePropTypes.map,
+    currentProject: ImmutablePropTypes.map,
+    projects: ImmutablePropTypes.list,
+    errors: ImmutablePropTypes.map,
   },
 
-  componentDidMount: function() {
-    CurrentProjectStore.addChangeListener(this._onChange);
-    ProjectStore.addChangeListener(this._onChange);
-    ErrorStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    CurrentProjectStore.removeChangeListener(this._onChange);
-    ProjectStore.removeChangeListener(this._onChange);
-    ErrorStore.removeChangeListener(this._onChange);
+  componentWillMount: function() {
+    this.props.dispatch(actions.loadCurrentProjectFromStorage());
   },
 
   _onErrorClicked: function(language, line, column) {
@@ -49,68 +64,69 @@ var Workspace = React.createClass({
     editor._jumpToLine(line, column);
   },
 
-  _onChange: function() {
-    this.setState(calculateState());
-  },
-
   _onEditorInput: function(language, source) {
+    /*
     ProjectActions.updateSource(
       this.state.currentProject.projectKey,
       language,
       source
     );
+    */
   },
 
   _onLibraryToggled: function(libraryKey) {
+    /*
     ProjectActions.toggleLibrary(
       this.state.currentProject.projectKey,
       libraryKey
     );
+    */
   },
 
   _onNewProject: function() {
-    ProjectActions.create();
+    this.props.dispatch(actions.createProject());
   },
 
   _onProjectSelected: function(project) {
+    /*
     CurrentProjectActions.select(project.projectKey);
+    */
   },
 
   render: function() {
     var environment;
-    if (this.state.currentProject !== undefined) {
+    if (this.props.currentProject !== undefined) {
       environment = (
         <div className="environment">
           <Output
-            project={this.state.currentProject}
-            errors={this.state.errors}
-            hasErrors={this.state.hasErrors}
+            project={this.props.currentProject}
+            errors={this.props.errors}
             onErrorClicked={this._onErrorClicked}
           />
 
           <Editor
             ref="htmlEditor"
-            projectKey={this.state.currentProject.projectKey}
-            source={this.state.currentProject.sources.html}
-            errors={this.state.errors.html}
+            projectKey={this.props.currentProject.projectKey}
+            source={this.props.currentProject.sources.html}
+            errors={this.props.errors.html}
             onInput={this._onEditorInput.bind(this, 'html')}
             language="html"
           />
 
           <Editor
             ref="cssEditor"
-            projectKey={this.state.currentProject.projectKey}
-            source={this.state.currentProject.sources.css}
-            errors={this.state.errors.css}
+            projectKey={this.props.currentProject.projectKey}
+            source={this.props.currentProject.sources.css}
+            errors={this.props.errors.css}
             onInput={this._onEditorInput.bind(this, 'css')}
             language="css"
           />
 
           <Editor
             ref="javascriptEditor"
-            projectKey={this.state.currentProject.projectKey}
-            source={this.state.currentProject.sources.javascript}
-            errors={this.state.errors.javascript}
+            projectKey={this.props.currentProject.projectKey}
+            source={this.props.currentProject.sources.javascript}
+            errors={this.props.errors.javascript}
             onInput={this._onEditorInput.bind(this, 'javascript')}
             language="javascript"
           />
@@ -121,8 +137,8 @@ var Workspace = React.createClass({
     return (
       <div id="workspace">
         <Toolbar
-          allProjects={this.state.allProjects}
-          currentProject={this.state.currentProject}
+          allProjects={this.props.allProjects}
+          currentProject={this.props.currentProject}
           onLibraryToggled={this._onLibraryToggled}
           onNewProject={this._onNewProject}
           onProjectSelected={this._onProjectSelected}
@@ -133,4 +149,4 @@ var Workspace = React.createClass({
   },
 });
 
-module.exports = Workspace;
+module.exports = connect(mapStateToProps)(Workspace);

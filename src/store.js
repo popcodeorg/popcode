@@ -2,9 +2,12 @@ var redux = require('redux');
 var createStore = redux.createStore;
 var applyMiddleware = redux.applyMiddleware;
 var reducers = require('./reducers');
-var thunkMiddleware = require('redux-thunk').thunkMiddleware;
+var thunkMiddleware = require('redux-thunk');
+var createLogger = require('redux-logger');
 
-var createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore);
+var logger = createLogger();
+var createStoreWithMiddleware =
+  applyMiddleware(thunkMiddleware, logger)(createStore);
 
 var store = createStoreWithMiddleware(reducers);
 

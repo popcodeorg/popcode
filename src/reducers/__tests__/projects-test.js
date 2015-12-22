@@ -17,38 +17,43 @@ describe('projects', function() {
     });
   });
 
-  describe('PROJECT_LOADED_FROM_STORAGE', function() {
-    var action = {
-      type: 'PROJECT_LOADED_FROM_STORAGE',
-      payload: {
-        project: {
-          projectKey: '12345',
-          sources: {html: '', css: '', javascript: ''},
-          libraries: [],
-        },
-      },
-    };
-
-    it('should initialize projects map with current project', function() {
-      var expected = {};
-      expected[action.payload.project.projectKey] = action.payload.project;
-
-      expect(projects(undefined, action).toJS()).toEqual(expected);
-    });
-
-    it('should add project to existing projects map', function() {
-      var expected = {
-        1: {
-          projectKey: '1',
-          sources: {html: '', css: '', javascript: ''},
-          libraries: [],
+  [
+    'PROJECT_LOADED_FROM_STORAGE',
+    'CURRENT_PROJECT_LOADED_FROM_STORAGE',
+  ].forEach(function(actionType) {
+    describe(actionType, function() {
+      var action = {
+        type: actionType,
+        payload: {
+          project: {
+            projectKey: '12345',
+            sources: {html: '', css: '', javascript: ''},
+            libraries: [],
+          },
         },
       };
 
-      var stateIn = Immutable.fromJS(expected);
-      expected[action.payload.project.projectKey] = action.payload.project;
+      it('should initialize projects map with current project', function() {
+        var expected = {};
+        expected[action.payload.project.projectKey] = action.payload.project;
 
-      expect(projects(stateIn, action).toJS()).toEqual(expected);
+        expect(projects(undefined, action).toJS()).toEqual(expected);
+      });
+
+      it('should add project to existing projects map', function() {
+        var expected = {
+          1: {
+            projectKey: '1',
+            sources: {html: '', css: '', javascript: ''},
+            libraries: [],
+          },
+        };
+
+        var stateIn = Immutable.fromJS(expected);
+        expected[action.payload.project.projectKey] = action.payload.project;
+
+        expect(projects(stateIn, action).toJS()).toEqual(expected);
+      });
     });
   });
 
