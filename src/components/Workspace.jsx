@@ -97,6 +97,9 @@ var Workspace = React.createClass({
           <Output
             project={this.props.currentProject}
             errors={this.props.errors}
+            hasErrors={
+              Boolean(lodash(this.props.errors).values().flatten().size())
+            }
             onErrorClicked={this._onErrorClicked}
           />
 
