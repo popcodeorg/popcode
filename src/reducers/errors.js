@@ -11,7 +11,7 @@ function errors(stateIn, action) {
       return state.delete(action.language);
 
     case 'VALIDATED_SOURCE':
-      return state.set(action.language, new Immutable.List(action.errors));
+      return state.set(action.language, Immutable.fromJS(action.errors));
 
     default:
       return state;

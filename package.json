@@ -66,8 +66,7 @@
       "./node_modules/immutable",
       "./node_modules/es6-promise",
       "./node_modules/keymirror",
-      "./node_modules/lodash",
-      "./src/__test__"
+      "./node_modules/lodash"
     ]
   },
   "devDependencies": {

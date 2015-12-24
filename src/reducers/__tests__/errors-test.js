@@ -44,7 +44,10 @@ describe('errors', function() {
 
     it('should set errors where there were none', function() {
       var stateIn = Immutable.fromJS({html: [], css: []});
-      expect(errors(stateIn, action).get('javascript').get(0)).toBe(error);
+      expect(Immutable.is(
+        errors(stateIn, action).get('javascript').get(0),
+        Immutable.fromJS(error)
+      )).toBeTruthy();
     });
   });
 });

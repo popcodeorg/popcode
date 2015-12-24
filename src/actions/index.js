@@ -1,4 +1,5 @@
 var Storage = require('../services/Storage');
+var validations = require('../validations');
 
 function generateProjectKey() {
   var date = new Date();
@@ -56,6 +57,18 @@ exports.updateProjectSource = function(projectKey, language, newValue) {
       state.currentProject.get('projectKey')
     );
     Storage.save(currentProject.toJS());
+
+    dispatch({
+      type: 'VALIDATING_SOURCE',
+    });
+
+    var validate = validations[language];
+    validate(newValue).then(function(errors) {
+      dispatch({
+        type: 'VALIDATED_SOURCE',
+        payload: {errors: errors},
+      });
+    });
   };
 };
 

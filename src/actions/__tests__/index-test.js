@@ -1,12 +1,19 @@
 /* eslint-env jest */
 /* eslint global-require: 0 */
 
-jest.dontMock('..');
+var lodash = require('lodash');
 
-var blank = require('../../__test__/blank');
+var blank = require.requireActual('../../__test__/blank');
 
 describe('index', function() {
-  var Actions = require('..');
+  var validations = {
+    html: jest.genMockFn(),
+    css: jest.genMockFn(),
+    javascript: jest.genMockFn(),
+  };
+  jest.setMock('../../validations', validations);
+
+  var Actions = require.requireActual('../index');
   var Storage = require('../../services/Storage');
   var dispatch, getState;
 
@@ -107,30 +114,66 @@ describe('index', function() {
     beforeEach(function() {
       getState.mockReturnValue(blank.state);
 
+      this.promisedValidatedSourceAction = new Promise(function(resolve) {
+        dispatch.mockImplementation(function(action) {
+          if (action.type === 'VALIDATED_SOURCE') {
+            resolve(action);
+          }
+        });
+      });
+
+      this.error = {
+        row: 1, column: 1,
+        raw: 'bad css',
+        text: 'bad css',
+        type: 'error',
+      };
+
+      validations.css.mockReturnValue(Promise.resolve([this.error]));
+
       dispatchThunkAction(Actions.updateProjectSource(
         '12345',
         'css',
         'p { display: none; }'
       ));
 
-      this.actionDispatched = dispatch.mock.calls[0][0];
+      this.actionsDispatched = lodash(dispatch.mock.calls).
+        map(0).indexBy('type').value();
     });
 
     it('should dispatch PROJECT_SOURCE_EDITED', function() {
-      expect(this.actionDispatched.type).toBe('PROJECT_SOURCE_EDITED');
+      expect(this.actionsDispatched.PROJECT_SOURCE_EDITED).toBeDefined();
     });
 
     it('should include projectKey in payload', function() {
-      expect(this.actionDispatched.payload.projectKey).toBe('12345');
+      expect(this.actionsDispatched.PROJECT_SOURCE_EDITED.payload.projectKey).
+        toBe('12345');
     });
 
     it('should include language in payload', function() {
-      expect(this.actionDispatched.payload.language).toBe('css');
+      expect(this.actionsDispatched.PROJECT_SOURCE_EDITED.payload.language).
+        toBe('css');
     });
 
     it('should include newValue in payload', function() {
-      expect(this.actionDispatched.payload.newValue).
+      expect(this.actionsDispatched.PROJECT_SOURCE_EDITED.payload.newValue).
         toBe('p { display: none; }');
+    });
+
+    it('should dispatch validation starting action', function() {
+      expect(this.actionsDispatched.VALIDATING_SOURCE).toBeDefined();
+    });
+
+    pit('should dispatch validation complete action', function() {
+      return this.promisedValidatedSourceAction.then(function(action) {
+        expect(action).toBeDefined();
+      });
+    });
+
+    pit('should send errors in validation complete action', function() {
+      return this.promisedValidatedSourceAction.then(function(action) {
+        expect(action.payload.errors).toEqual([this.error]);
+      }.bind(this));
     });
 
     it('should save project', function() {
