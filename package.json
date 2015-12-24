@@ -77,7 +77,6 @@
     "eslint_d": "^2.3.2",
     "immutable-devtools": "0.0.4",
     "jasmine-pit": "^2.0.2",
-    "jest": "^0.1.40",
     "jest-cli": "^0.8.0",
     "node-static": "^0.7.7"
   }
