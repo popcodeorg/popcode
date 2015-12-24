@@ -5,7 +5,7 @@ jest.dontMock('../currentProject');
 
 var Immutable = require('immutable');
 
-var blankProject = require('../../__test__/blankProject');
+var blankProject = require('../../__test__/blank').project;
 
 describe('currentProject', function() {
   var currentProject = require('../currentProject');

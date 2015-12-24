@@ -6,18 +6,25 @@ function generateProjectKey() {
 }
 
 exports.createProject = function() {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     dispatch({
       type: 'PROJECT_CREATED',
       payload: {
         projectKey: generateProjectKey(),
       },
     });
+
+    var state = getState();
+    var projectKey = state.currentProject.get('projectKey');
+    var project = state.projects.get(projectKey);
+
+    Storage.save(project.toJS());
+    Storage.setCurrentProjectKey(projectKey);
   };
 };
 
 exports.loadCurrentProjectFromStorage = function() {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     Storage.getCurrentProjectKey().then(function(projectKey) {
       if (projectKey) {
         Storage.load(projectKey).then(function(project) {
@@ -27,7 +34,7 @@ exports.loadCurrentProjectFromStorage = function() {
           });
         });
       } else {
-        exports.createProject()(dispatch);
+        exports.createProject()(dispatch, getState);
       }
     });
   };

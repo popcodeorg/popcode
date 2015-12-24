@@ -5,20 +5,29 @@ jest.dontMock('..');
 
 var Immutable = require('immutable');
 
-var project = require('../../__test__/blankProject');
+var blank = require('../../__test__/blank');
 
-describe('errors', function() {
+describe('index', function() {
   var Actions = require('..');
+  var Storage = require('../../services/Storage');
   var dispatch;
 
   beforeEach(function() {
     dispatch = jest.genMockFunction();
   });
 
+  afterEach(function() {
+    Storage.setCurrentProjectKey.mockClear();
+    Storage.save.mockClear();
+  });
+
   describe('createProject', function() {
     beforeEach(function() {
+      var getState = jest.genMockFunction();
+      getState.mockReturnValue(blank.state);
+
       var createProjectFn = Actions.createProject();
-      createProjectFn(dispatch);
+      createProjectFn(dispatch, getState);
       this.dispatchedAction = dispatch.mock.calls[0][0];
     });
 
@@ -33,19 +42,29 @@ describe('errors', function() {
     it('should add a project key', function() {
       expect(this.dispatchedAction.payload.projectKey).toBeDefined();
     });
+
+    it('should save current project key', function() {
+      expect(Storage.setCurrentProjectKey.mock.calls).
+        toEqual([['12345']]);
+    });
+
+    it('should save new project', function() {
+      expect(Storage.save.mock.calls).
+        toEqual([
+          [blank.project],
+        ]);
+    });
   });
 
   describe('loadCurrentProjectFromStorage with project', function() {
-    var Storage = require('../../services/Storage');
-
     beforeEach(function() {
       var loadCurrentProjectFromStorageFn =
         Actions.loadCurrentProjectFromStorage();
 
       Storage.getCurrentProjectKey.mockReturnValue(
-        Promise.resolve(project.projectKey)
+        Promise.resolve(blank.project.projectKey)
       );
-      Storage.load.mockReturnValue(Promise.resolve(project));
+      Storage.load.mockReturnValue(Promise.resolve(blank.project));
       loadCurrentProjectFromStorageFn(dispatch);
 
       this.actionDispatched = new Promise(dispatch.mockImplementation).
@@ -62,14 +81,12 @@ describe('errors', function() {
 
     pit('should pass project in payload', function() {
       return this.actionDispatched.then(function(action) {
-        expect(action.payload.project).toBe(project);
+        expect(action.payload.project).toBe(blank.project);
       });
     });
   });
 
   describe('loadCurrentProjectFromStorage with no project', function() {
-    var Storage = require('../../services/Storage');
-
     beforeEach(function() {
       var loadCurrentProjectFromStorageFn =
         Actions.loadCurrentProjectFromStorage();
@@ -91,11 +108,7 @@ describe('errors', function() {
   });
 
   describe('updateProjectSource', function() {
-    var Storage = require('../../services/Storage');
-
     beforeEach(function() {
-      Storage.save.mockClear();
-
       var updateProjectSourceFn = Actions.updateProjectSource(
         '12345',
         'css',
@@ -105,7 +118,7 @@ describe('errors', function() {
       var getState = jest.genMockFunction();
       getState.mockReturnValue({
         currentProject: new Immutable.Map({projectKey: '12345'}),
-        projects: Immutable.fromJS({12345: project}),
+        projects: Immutable.fromJS({12345: blank.project}),
       });
 
       updateProjectSourceFn(dispatch, getState);
@@ -132,7 +145,7 @@ describe('errors', function() {
 
     it('should save project', function() {
       expect(Storage.save.mock.calls).toEqual([
-        [project],
+        [blank.project],
       ]);
     });
   });

@@ -1,6 +1,5 @@
 var React = require('react');
 var connect = require('react-redux').connect;
-var ImmutablePropTypes = require('react-immutable-proptypes');
 var lodash = require('lodash');
 
 var actions = require('../actions');
@@ -49,10 +48,9 @@ function mapStateToProps(state) {
 var Workspace = React.createClass({
   propTypes: {
     dispatch: React.PropTypes.func.isRequired,
-    allProjects: ImmutablePropTypes.map,
-    currentProject: ImmutablePropTypes.map,
-    projects: ImmutablePropTypes.list,
-    errors: ImmutablePropTypes.map,
+    allProjects: React.PropTypes.array,
+    currentProject: React.PropTypes.object,
+    errors: React.PropTypes.object,
   },
 
   componentWillMount: function() {
@@ -67,7 +65,7 @@ var Workspace = React.createClass({
   _onEditorInput: function(language, source) {
     this.props.dispatch(
       actions.updateProjectSource(
-        this.state.currentProject.projectKey,
+        this.props.currentProject.projectKey,
         language,
         source
       )
