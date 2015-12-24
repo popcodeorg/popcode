@@ -52,7 +52,10 @@ describe('projects', function() {
         var stateIn = Immutable.fromJS(expected);
         expected[action.payload.project.projectKey] = action.payload.project;
 
-        expect(projects(stateIn, action).toJS()).toEqual(expected);
+        expect(Immutable.is(
+          projects(stateIn, action),
+          Immutable.fromJS(expected)
+        )).toBeTruthy();
       });
     });
   });

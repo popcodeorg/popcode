@@ -20,7 +20,7 @@ var newProject = Immutable.fromJS({
 });
 
 function addProject(state, project) {
-  return state.set(project.projectKey, project);
+  return state.set(project.projectKey, Immutable.fromJS(project));
 }
 
 function projects(stateIn, action) {
