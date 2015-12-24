@@ -32,3 +32,22 @@ exports.loadCurrentProjectFromStorage = function() {
     });
   };
 };
+
+exports.updateProjectSource = function(projectKey, language, newValue) {
+  return function(dispatch, getState) {
+    dispatch({
+      type: 'PROJECT_SOURCE_EDITED',
+      payload: {
+        projectKey: projectKey,
+        language: language,
+        newValue: newValue,
+      },
+    });
+
+    var state = getState();
+    var currentProject = state.projects.get(
+      state.currentProject.get('projectKey')
+    );
+    Storage.save(currentProject.toJS());
+  };
+};

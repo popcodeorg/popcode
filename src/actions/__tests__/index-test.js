@@ -3,6 +3,8 @@
 
 jest.dontMock('..');
 
+var Immutable = require('immutable');
+
 var project = require('../../__test__/blankProject');
 
 describe('errors', function() {
@@ -85,6 +87,53 @@ describe('errors', function() {
       return this.actionsDispatched.then(function(action) {
         expect(action.type).toBe('PROJECT_CREATED');
       });
+    });
+  });
+
+  describe('updateProjectSource', function() {
+    var Storage = require('../../services/Storage');
+
+    beforeEach(function() {
+      Storage.save.mockClear();
+
+      var updateProjectSourceFn = Actions.updateProjectSource(
+        '12345',
+        'css',
+        'p { display: none; }'
+      );
+
+      var getState = jest.genMockFunction();
+      getState.mockReturnValue({
+        currentProject: new Immutable.Map({projectKey: '12345'}),
+        projects: Immutable.fromJS({12345: project}),
+      });
+
+      updateProjectSourceFn(dispatch, getState);
+
+      this.actionDispatched = dispatch.mock.calls[0][0];
+    });
+
+    it('should dispatch PROJECT_SOURCE_EDITED', function() {
+      expect(this.actionDispatched.type).toBe('PROJECT_SOURCE_EDITED');
+    });
+
+    it('should include projectKey in payload', function() {
+      expect(this.actionDispatched.payload.projectKey).toBe('12345');
+    });
+
+    it('should include language in payload', function() {
+      expect(this.actionDispatched.payload.language).toBe('css');
+    });
+
+    it('should include newValue in payload', function() {
+      expect(this.actionDispatched.payload.newValue).
+        toBe('p { display: none; }');
+    });
+
+    it('should save project', function() {
+      expect(Storage.save.mock.calls).toEqual([
+        [project],
+      ]);
     });
   });
 });

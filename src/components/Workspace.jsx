@@ -65,13 +65,13 @@ var Workspace = React.createClass({
   },
 
   _onEditorInput: function(language, source) {
-    /*
-    ProjectActions.updateSource(
-      this.state.currentProject.projectKey,
-      language,
-      source
+    this.props.dispatch(
+      actions.updateProjectSource(
+        this.state.currentProject.projectKey,
+        language,
+        source
+      )
     );
-    */
   },
 
   _onLibraryToggled: function(libraryKey) {
