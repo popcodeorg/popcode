@@ -3,17 +3,20 @@
 
 jest.dontMock('..');
 
-var Immutable = require('immutable');
-
 var blank = require('../../__test__/blank');
 
 describe('index', function() {
   var Actions = require('..');
   var Storage = require('../../services/Storage');
-  var dispatch;
+  var dispatch, getState;
+
+  function dispatchThunkAction(action) {
+    action(dispatch, getState);
+  }
 
   beforeEach(function() {
     dispatch = jest.genMockFunction();
+    getState = jest.genMockFunction();
   });
 
   afterEach(function() {
@@ -23,11 +26,9 @@ describe('index', function() {
 
   describe('createProject', function() {
     beforeEach(function() {
-      var getState = jest.genMockFunction();
       getState.mockReturnValue(blank.state);
 
-      var createProjectFn = Actions.createProject();
-      createProjectFn(dispatch, getState);
+      dispatchThunkAction(Actions.createProject());
       this.dispatchedAction = dispatch.mock.calls[0][0];
     });
 
@@ -58,14 +59,12 @@ describe('index', function() {
 
   describe('loadCurrentProjectFromStorage with project', function() {
     beforeEach(function() {
-      var loadCurrentProjectFromStorageFn =
-        Actions.loadCurrentProjectFromStorage();
-
       Storage.getCurrentProjectKey.mockReturnValue(
         Promise.resolve(blank.project.projectKey)
       );
       Storage.load.mockReturnValue(Promise.resolve(blank.project));
-      loadCurrentProjectFromStorageFn(dispatch);
+
+      dispatchThunkAction(Actions.loadCurrentProjectFromStorage());
 
       this.actionDispatched = new Promise(dispatch.mockImplementation).
         then(function() {
@@ -88,11 +87,8 @@ describe('index', function() {
 
   describe('loadCurrentProjectFromStorage with no project', function() {
     beforeEach(function() {
-      var loadCurrentProjectFromStorageFn =
-        Actions.loadCurrentProjectFromStorage();
-
       Storage.getCurrentProjectKey.mockReturnValue(Promise.resolve(undefined));
-      loadCurrentProjectFromStorageFn(dispatch);
+      dispatchThunkAction(Actions.loadCurrentProjectFromStorage());
 
       this.actionsDispatched = new Promise(dispatch.mockImplementation).
         then(function() {
@@ -109,19 +105,13 @@ describe('index', function() {
 
   describe('updateProjectSource', function() {
     beforeEach(function() {
-      var updateProjectSourceFn = Actions.updateProjectSource(
+      getState.mockReturnValue(blank.state);
+
+      dispatchThunkAction(Actions.updateProjectSource(
         '12345',
         'css',
         'p { display: none; }'
-      );
-
-      var getState = jest.genMockFunction();
-      getState.mockReturnValue({
-        currentProject: new Immutable.Map({projectKey: '12345'}),
-        projects: Immutable.fromJS({12345: blank.project}),
-      });
-
-      updateProjectSourceFn(dispatch, getState);
+      ));
 
       this.actionDispatched = dispatch.mock.calls[0][0];
     });
@@ -146,6 +136,28 @@ describe('index', function() {
     it('should save project', function() {
       expect(Storage.save.mock.calls).toEqual([
         [blank.project],
+      ]);
+    });
+  });
+
+  describe('changeCurrentProject', function() {
+    beforeEach(function() {
+      dispatchThunkAction(Actions.changeCurrentProject('12345'));
+
+      this.actionDispatched = dispatch.mock.calls[0][0];
+    });
+
+    it('should dispatch CURRENT_PROJECT_CHANGED', function() {
+      expect(this.actionDispatched.type).toBe('CURRENT_PROJECT_CHANGED');
+    });
+
+    it('should dispatch project key in the payload', function() {
+      expect(this.actionDispatched.payload.projectKey).toBe('12345');
+    });
+
+    it('should update current project key in storage', function() {
+      expect(Storage.setCurrentProjectKey.mock.calls).toEqual([
+        ['12345'],
       ]);
     });
   });

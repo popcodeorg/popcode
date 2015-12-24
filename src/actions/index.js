@@ -58,3 +58,14 @@ exports.updateProjectSource = function(projectKey, language, newValue) {
     Storage.save(currentProject.toJS());
   };
 };
+
+exports.changeCurrentProject = function(projectKey) {
+  return function(dispatch) {
+    dispatch({
+      type: 'CURRENT_PROJECT_CHANGED',
+      payload: {projectKey: projectKey},
+    });
+
+    Storage.setCurrentProjectKey(projectKey);
+  };
+};

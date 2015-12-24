@@ -86,9 +86,7 @@ var Workspace = React.createClass({
   },
 
   _onProjectSelected: function(project) {
-    /*
-    CurrentProjectActions.select(project.projectKey);
-    */
+    actions.changeCurrentProject(project.projectKey);
   },
 
   render: function() {
