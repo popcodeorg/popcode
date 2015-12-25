@@ -20,16 +20,16 @@ describe('errors', function() {
   describe('VALIDATING_SOURCE', function() {
     var action = {
       type: 'VALIDATING_SOURCE',
-      language: 'javascript',
+      payload: {language: 'javascript'},
     };
 
-    it('should provide empty map from undefined state', function() {
+    it('should provide map from undefined state', function() {
       expect(Immutable.Map.isMap(errors(undefined, action))).toBeTruthy();
     });
 
     it('should remove errors', function() {
       var stateIn = Immutable.fromJS({html: [], css: [], javascript: []});
-      expect(errors(stateIn, action).has('javascript')).toBeFalsy();
+      expect(errors(stateIn, action).get('javascript').size).toBe(0);
     });
   });
 
@@ -38,8 +38,10 @@ describe('errors', function() {
 
     var action = {
       type: 'VALIDATED_SOURCE',
-      language: 'javascript',
-      errors: [error],
+      payload: {
+        language: 'javascript',
+        errors: [error],
+      },
     };
 
     it('should set errors where there were none', function() {
