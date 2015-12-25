@@ -17,6 +17,28 @@ describe('errors', function() {
     });
   });
 
+  [
+    'CURRENT_PROJECT_LOADED_FROM_STORAGE',
+    'CURRENT_PROJECT_CHANGED',
+  ].forEach(function(actionType) {
+    describe(actionType, function() {
+      var action = {
+        type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',
+        payload: {},
+      };
+
+      it('should clear errors', function() {
+        var stateIn = Immutable.fromJS({
+          html: [{}],
+          css: [{}],
+          javascript: [{}],
+        });
+
+        expect(errors(stateIn, action).get('html').size).toBe(0);
+      });
+    });
+  });
+
   describe('VALIDATING_SOURCE', function() {
     var action = {
       type: 'VALIDATING_SOURCE',

@@ -15,6 +15,12 @@ function errors(stateIn, action) {
   }
 
   switch (action.type) {
+    case 'CURRENT_PROJECT_LOADED_FROM_STORAGE':
+      return emptyErrors;
+
+    case 'CURRENT_PROJECT_CHANGED':
+      return emptyErrors;
+
     case 'VALIDATING_SOURCE':
       return state.set(action.payload.language, emptyList);
 
