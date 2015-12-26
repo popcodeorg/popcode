@@ -203,6 +203,11 @@ describe('index', function() {
       expect(this.actionsDispatched.VALIDATING_SOURCE).toBeDefined();
     });
 
+    it('should include language in validation starting action', function() {
+      expect(this.actionsDispatched.VALIDATING_SOURCE.payload.language).
+        toBe('css');
+    });
+
     pit('should dispatch validation complete action', function() {
       return this.promisedValidatedSourceAction.then(function(action) {
         expect(action).toBeDefined();
@@ -213,6 +218,12 @@ describe('index', function() {
       return this.promisedValidatedSourceAction.then(function(action) {
         expect(action.payload.errors).toEqual([this.error]);
       }.bind(this));
+    });
+
+    pit('should send errors in validation complete action', function() {
+      return this.promisedValidatedSourceAction.then(function(action) {
+        expect(action.payload.language).toBe('css');
+      });
     });
 
     it('should save project', function() {

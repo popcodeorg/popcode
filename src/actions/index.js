@@ -16,13 +16,19 @@ function getCurrentProject(state) {
 function validateSource(dispatch, language, source) {
   dispatch({
     type: 'VALIDATING_SOURCE',
+    payload: {
+      language: language,
+    },
   });
 
   var validate = validations[language];
   validate(source).then(function(errors) {
     dispatch({
       type: 'VALIDATED_SOURCE',
-      payload: {errors: errors},
+      payload: {
+        language: language,
+        errors: errors,
+      },
     });
   });
 }
