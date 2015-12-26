@@ -21,6 +21,23 @@ describe('index', function() {
     action(dispatch, getState);
   }
 
+  function expectActions() {
+    var resolveFns = {};
+    dispatch.promised = {};
+
+    lodash.each(arguments, function(actionType) {
+      dispatch.promised[actionType] = new Promise(function(resolve) {
+        resolveFns[actionType] = resolve;
+      });
+    });
+
+    dispatch.mockImplementation(function(action) {
+      if (resolveFns[action.type]) {
+        resolveFns[action.type](action);
+      }
+    });
+  }
+
   beforeEach(function() {
     dispatch = jest.genMockFunction();
     getState = jest.genMockFunction();
@@ -71,23 +88,45 @@ describe('index', function() {
       );
       Storage.load.mockReturnValue(Promise.resolve(blank.project));
 
-      dispatchThunkAction(Actions.loadCurrentProjectFromStorage());
-
-      this.actionDispatched = new Promise(dispatch.mockImplementation).
-        then(function() {
-          return dispatch.mock.calls[0][0];
+      getState.mockReturnValue(blank.state);
+      lodash.forEach(validations, function(validation) {
+        validation.mockImplementation(function() {
+          return Promise.resolve([]);
         });
+      });
+
+      expectActions(
+        'CURRENT_PROJECT_LOADED_FROM_STORAGE',
+        'VALIDATING_SOURCE',
+        'VALIDATED_SOURCE'
+      );
+
+      dispatchThunkAction(Actions.loadCurrentProjectFromStorage());
     });
 
     pit('should dispatch CURRENT_PROJECT_LOADED_FROM_STORAGE', function() {
-      return this.actionDispatched.then(function(action) {
-        expect(action.type).toBe('CURRENT_PROJECT_LOADED_FROM_STORAGE');
-      });
+      return dispatch.promised.CURRENT_PROJECT_LOADED_FROM_STORAGE.
+        then(function(action) {
+          expect(action).toBeDefined();
+        });
     });
 
     pit('should pass project in payload', function() {
-      return this.actionDispatched.then(function(action) {
-        expect(action.payload.project).toBe(blank.project);
+      return dispatch.promised.CURRENT_PROJECT_LOADED_FROM_STORAGE.
+        then(function(action) {
+          expect(action.payload.project).toBe(blank.project);
+        });
+    });
+
+    pit('should dispatch VALIDATING_SOURCE', function() {
+      return dispatch.promised.VALIDATING_SOURCE.then(function(action) {
+        expect(action).toBeDefined();
+      });
+    });
+
+    pit('should dispatch VALIDATED_SOURCE', function() {
+      return dispatch.promised.VALIDATED_SOURCE.then(function(action) {
+        expect(action).toBeDefined();
       });
     });
   });
@@ -185,23 +224,53 @@ describe('index', function() {
 
   describe('changeCurrentProject', function() {
     beforeEach(function() {
+      expectActions(
+        'CURRENT_PROJECT_CHANGED',
+        'VALIDATING_SOURCE',
+        'VALIDATED_SOURCE'
+      );
+
+      getState.mockReturnValue(blank.state);
+
+      lodash.forEach(validations, function(validation) {
+        validation.mockImplementation(function() {
+          return Promise.resolve([]);
+        });
+      });
+
       dispatchThunkAction(Actions.changeCurrentProject('12345'));
-
-      this.actionDispatched = dispatch.mock.calls[0][0];
     });
 
-    it('should dispatch CURRENT_PROJECT_CHANGED', function() {
-      expect(this.actionDispatched.type).toBe('CURRENT_PROJECT_CHANGED');
+    pit('should dispatch CURRENT_PROJECT_CHANGED', function() {
+      return dispatch.promised.CURRENT_PROJECT_CHANGED.then(function(action) {
+        expect(action).toBeDefined();
+      });
     });
 
-    it('should dispatch project key in the payload', function() {
-      expect(this.actionDispatched.payload.projectKey).toBe('12345');
+    pit('should dispatch project key in the payload', function() {
+      return dispatch.promised.CURRENT_PROJECT_CHANGED.then(function(action) {
+        expect(action.payload.projectKey).toBe('12345');
+      });
     });
 
-    it('should update current project key in storage', function() {
-      expect(Storage.setCurrentProjectKey.mock.calls).toEqual([
-        ['12345'],
-      ]);
+    pit('should update current project key in storage', function() {
+      return dispatch.promised.CURRENT_PROJECT_CHANGED.then(function() {
+        expect(Storage.setCurrentProjectKey.mock.calls).toEqual([
+          ['12345'],
+        ]);
+      });
+    });
+
+    pit('should validate sources', function() {
+      return dispatch.promised.VALIDATING_SOURCE.then(function(action) {
+        expect(action).toBeDefined();
+      });
+    });
+
+    pit('should finish validating sources', function() {
+      return dispatch.promised.VALIDATED_SOURCE.then(function(action) {
+        expect(action).toBeDefined();
+      });
     });
   });
 });

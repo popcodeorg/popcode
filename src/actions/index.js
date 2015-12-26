@@ -6,6 +6,33 @@ function generateProjectKey() {
   return (date.getTime() * 1000 + date.getMilliseconds()).toString();
 }
 
+function getCurrentProject(state) {
+  var projectKey = state.currentProject.get('projectKey');
+  if (projectKey) {
+    return state.projects.get(projectKey);
+  }
+}
+
+function validateSource(dispatch, language, source) {
+  dispatch({
+    type: 'VALIDATING_SOURCE',
+  });
+
+  var validate = validations[language];
+  validate(source).then(function(errors) {
+    dispatch({
+      type: 'VALIDATED_SOURCE',
+      payload: {errors: errors},
+    });
+  });
+}
+
+function validateAllSources(dispatch, project) {
+  project.get('sources').forEach(function(source, language) {
+    validateSource(dispatch, language, source);
+  });
+}
+
 exports.createProject = function() {
   return function(dispatch, getState) {
     dispatch({
@@ -33,6 +60,8 @@ exports.loadCurrentProjectFromStorage = function() {
             type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',
             payload: {project: project},
           });
+
+          validateAllSources(dispatch, getCurrentProject(getState()));
         });
       } else {
         exports.createProject()(dispatch, getState);
@@ -52,33 +81,21 @@ exports.updateProjectSource = function(projectKey, language, newValue) {
       },
     });
 
-    var state = getState();
-    var currentProject = state.projects.get(
-      state.currentProject.get('projectKey')
-    );
-    Storage.save(currentProject.toJS());
+    Storage.save(getCurrentProject(getState()).toJS());
 
-    dispatch({
-      type: 'VALIDATING_SOURCE',
-    });
-
-    var validate = validations[language];
-    validate(newValue).then(function(errors) {
-      dispatch({
-        type: 'VALIDATED_SOURCE',
-        payload: {errors: errors},
-      });
-    });
+    validateSource(dispatch, language, newValue);
   };
 };
 
 exports.changeCurrentProject = function(projectKey) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     dispatch({
       type: 'CURRENT_PROJECT_CHANGED',
       payload: {projectKey: projectKey},
     });
 
     Storage.setCurrentProjectKey(projectKey);
+
+    validateAllSources(dispatch, getCurrentProject(getState()));
   };
 };
