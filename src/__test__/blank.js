@@ -3,7 +3,7 @@ var Immutable = require('immutable');
 exports.project = {
   projectKey: '12345',
   sources: {html: '', css: '', javascript: ''},
-  libraries: [],
+  enabledLibraries: [],
 };
 
 exports.state = {

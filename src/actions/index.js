@@ -13,7 +13,7 @@ function getCurrentProject(state) {
   }
 }
 
-function validateSource(dispatch, language, source) {
+function validateSource(dispatch, language, source, enabledLibraries) {
   dispatch({
     type: 'VALIDATING_SOURCE',
     payload: {
@@ -22,7 +22,7 @@ function validateSource(dispatch, language, source) {
   });
 
   var validate = validations[language];
-  validate(source).then(function(errors) {
+  validate(source, enabledLibraries.toJS()).then(function(errors) {
     dispatch({
       type: 'VALIDATED_SOURCE',
       payload: {
@@ -34,8 +34,9 @@ function validateSource(dispatch, language, source) {
 }
 
 function validateAllSources(dispatch, project) {
+  var enabledLibraries = project.get('enabledLibraries');
   project.get('sources').forEach(function(source, language) {
-    validateSource(dispatch, language, source);
+    validateSource(dispatch, language, source, enabledLibraries);
   });
 }
 
@@ -87,9 +88,15 @@ exports.updateProjectSource = function(projectKey, language, newValue) {
       },
     });
 
-    Storage.save(getCurrentProject(getState()).toJS());
+    var currentProject = getCurrentProject(getState());
+    Storage.save(currentProject.toJS());
 
-    validateSource(dispatch, language, newValue);
+    validateSource(
+      dispatch,
+      language,
+      newValue,
+      currentProject.get('enabledLibraries')
+    );
   };
 };
 
