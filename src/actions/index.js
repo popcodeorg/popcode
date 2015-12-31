@@ -105,3 +105,17 @@ exports.changeCurrentProject = function(projectKey) {
     validateAllSources(dispatch, getCurrentProject(getState()));
   };
 };
+
+exports.toggleLibrary = function(projectKey, libraryKey) {
+  return function(dispatch, getState) {
+    dispatch({
+      type: 'PROJECT_LIBRARY_TOGGLED',
+      payload: {
+        projectKey: projectKey,
+        libraryKey: libraryKey,
+      },
+    });
+
+    validateAllSources(dispatch, getCurrentProject(getState()));
+  };
+};

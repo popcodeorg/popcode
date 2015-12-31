@@ -284,4 +284,43 @@ describe('index', function() {
       });
     });
   });
+
+  describe('toggleLibrary', function() {
+    beforeEach(function() {
+      expectActions(
+        'PROJECT_LIBRARY_TOGGLED',
+        'VALIDATING_SOURCE',
+        'VALIDATED_SOURCE'
+      );
+
+      getState.mockReturnValue(blank.state);
+      lodash.forEach(validations, function(validation) {
+        validation.mockImplementation(function() {
+          return Promise.resolve([]);
+        });
+      });
+
+      dispatchThunkAction(Actions.toggleLibrary('12345', 'jquery'));
+    });
+
+    pit('should dispatch PROJECT_LIBRARY_TOGGLED with library', function() {
+      return dispatch.promised.PROJECT_LIBRARY_TOGGLED.then(function(action) {
+        expect(action.payload.libraryKey).toBe('jquery');
+      });
+    });
+
+    pit('should dispatch PROJECT_LIBRARY_TOGGLED with project', function() {
+      return dispatch.promised.PROJECT_LIBRARY_TOGGLED.then(function(action) {
+        expect(action.payload.projectKey).toBe('12345');
+      });
+    });
+
+    pit('should dispatch VALIDATING_SOURCE', function() {
+      return dispatch.promised.VALIDATING_SOURCE;
+    });
+
+    pit('should dispatch VALIDATED_SOURCE', function() {
+      return dispatch.promised.VALIDATED_SOURCE;
+    });
+  });
 });
