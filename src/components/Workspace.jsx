@@ -73,9 +73,11 @@ var Workspace = React.createClass({
   },
 
   _onLibraryToggled: function(libraryKey) {
-    actions.toggleLibrary(
-      this.props.currentProject.projectKey,
-      libraryKey
+    this.props.dispatch(
+      actions.toggleLibrary(
+        this.props.currentProject.projectKey,
+        libraryKey
+      )
     );
   },
 
