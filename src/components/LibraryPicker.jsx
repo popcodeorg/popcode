@@ -21,7 +21,7 @@ var LibraryPicker = React.createClass({
           key={key}
           library={library}
           enabled={this._isLibraryEnabled(key)}
-          onLibraryToggled={this.props.onLibraryToggled.bind(this, key)}
+          onLibraryToggled={lodash.partial(this.props.onLibraryToggled, key)}
         />
       );
     }, this);
