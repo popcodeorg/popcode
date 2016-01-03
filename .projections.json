@@ -3,6 +3,9 @@
     "type": "component",
     "template": "var React = require('react');\n\nvar {camelcase|capitalize} = React.createClass({open}\n  render: function() {open}\n  {close}\n{close});\n\nmodule.exports = {camelcase|capitalize};"
   },
+  "src/store.js": {
+    "type": "store"
+  },
   "src/actions/*.js": {
     "type": "action",
     "alternate": "src/actions/__tests__/{}-test.js"
