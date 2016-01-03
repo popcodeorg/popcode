@@ -19,8 +19,15 @@ var newProject = Immutable.fromJS({
   enabledLibraries: new Immutable.Set(),
 });
 
+function projectToImmutable(project) {
+  return Immutable.fromJS(project).set(
+    'enabledLibraries',
+    new Immutable.Set(project.enabledLibraries)
+  );
+}
+
 function addProject(state, project) {
-  return state.set(project.projectKey, Immutable.fromJS(project));
+  return state.set(project.projectKey, projectToImmutable(project));
 }
 
 function projects(stateIn, action) {
@@ -67,5 +74,7 @@ function projects(stateIn, action) {
       return state;
   }
 }
+
+projects.projectToImmutable = projectToImmutable;
 
 module.exports = projects;

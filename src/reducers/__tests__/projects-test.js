@@ -28,7 +28,7 @@ describe('projects', function() {
           project: {
             projectKey: '12345',
             sources: {html: '', css: '', javascript: ''},
-            libraries: [],
+            enabledLibraries: [],
           },
         },
       };
@@ -41,16 +41,18 @@ describe('projects', function() {
       });
 
       it('should add project to existing projects map', function() {
-        var expected = {
+        var stateIn = Immutable.fromJS({
           1: {
             projectKey: '1',
             sources: {html: '', css: '', javascript: ''},
-            libraries: [],
+            enabledLibraries: new Immutable.Set(),
           },
-        };
+        });
 
-        var stateIn = Immutable.fromJS(expected);
-        expected[action.payload.project.projectKey] = action.payload.project;
+        var expected = stateIn.set(
+          action.payload.project.projectKey,
+          projects.projectToImmutable(action.payload.project)
+        );
 
         expect(Immutable.is(
           projects(stateIn, action),
@@ -74,7 +76,7 @@ describe('projects', function() {
       12345: {
         projectKey: '12345',
         sources: {html: '', css: '', javascript: ''},
-        libraries: [],
+        enabledLibraries: [],
       },
     });
 
