@@ -18,6 +18,7 @@ var LibraryPicker = React.createClass({
     var libraries = lodash.map(config.libraries, function(library, key) {
       return (
         <LibraryPickerItem
+          key={key}
           library={library}
           enabled={this._isLibraryEnabled(key)}
           onLibraryToggled={this.props.onLibraryToggled.bind(this, key)}
