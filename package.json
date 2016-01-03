@@ -22,7 +22,6 @@
     "classnames": "^2.1.5",
     "css": "^2.2.1",
     "es6-promise": "^2.3.0",
-    "flux": "^2.0.3",
     "htmllint": "^0.2.4",
     "i18next-client": "^1.10.2",
     "immutable": "^3.7.5",
