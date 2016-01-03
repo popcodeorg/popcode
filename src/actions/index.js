@@ -126,3 +126,16 @@ exports.toggleLibrary = function(projectKey, libraryKey) {
     validateAllSources(dispatch, getCurrentProject(getState()));
   };
 };
+
+exports.loadAllProjects = function() {
+  return function(dispatch) {
+    return Storage.all().then(function(projects) {
+      projects.forEach(function(project) {
+        dispatch({
+          type: 'PROJECT_LOADED_FROM_STORAGE',
+          payload: {project: project},
+        });
+      });
+    });
+  };
+};

@@ -55,6 +55,7 @@ var Workspace = React.createClass({
 
   componentWillMount: function() {
     this.props.dispatch(actions.loadCurrentProjectFromStorage());
+    this.props.dispatch(actions.loadAllProjects());
   },
 
   _onErrorClicked: function(language, line, column) {
@@ -86,7 +87,7 @@ var Workspace = React.createClass({
   },
 
   _onProjectSelected: function(project) {
-    actions.changeCurrentProject(project.projectKey);
+    this.props.dispatch(actions.changeCurrentProject(project.projectKey));
   },
 
   render: function() {

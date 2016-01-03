@@ -323,4 +323,27 @@ describe('index', function() {
       return dispatch.promised.VALIDATED_SOURCE;
     });
   });
+
+  describe('loadAllProjects', function() {
+    beforeEach(function() {
+      expectActions('PROJECT_LOADED_FROM_STORAGE');
+
+      getState.mockReturnValue(blank.state);
+
+      Storage.all.mockReturnValue(
+        Promise.resolve([
+          lodash.assign({}, blank.project, {projectKey: '23456'}),
+        ])
+      );
+
+      dispatchThunkAction(Actions.loadAllProjects());
+    });
+
+    pit('should dispatch PROJECT_LOADED_FROM_STORAGE', function() {
+      return dispatch.promised.PROJECT_LOADED_FROM_STORAGE.
+        then(function(action) {
+          expect(action.payload.project.projectKey).toBe('23456');
+        });
+    });
+  });
 });
