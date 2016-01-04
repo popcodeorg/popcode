@@ -1,100 +1,101 @@
 var i18n = require('i18next-client');
 var htmllint = require('htmllint');
+var lodash = require('lodash');
 
 var humanErrors = {
   E001: function(error) {
     switch (error.data.attribute.toLowerCase()) {
       case 'align':
-        return i18n.t('errors.html.banned-attributes.align');
+        return generateAnnotation('banned-attributes.align');
       case 'background':
-        return i18n.t('errors.html.banned-attributes.background');
+        return generateAnnotation('banned-attributes.background');
       case 'bgcolor':
-        return i18n.t('errors.html.banned-attributes.bgcolor');
+        return generateAnnotation('banned-attributes.bgcolor');
       case 'border':
       case 'frameborder':
-        return i18n.t(
-          'errors.html.banned-attributes.frameborder',
+        return generateAnnotation(
+          'banned-attributes.frameborder',
           {attribute: error.data.attribute}
         );
       case 'marginwidth':
-        return i18n.t('errors.html.banned-attributes.marginwidth');
+        return generateAnnotation('banned-attributes.marginwidth');
       case 'marginheight':
-        return i18n.t('errors.html.banned-attributes.marginheight');
+        return generateAnnotation('banned-attributes.marginheight');
       case 'scrolling':
-        return i18n.t('errors.html.banned-attributes.scrolling');
+        return generateAnnotation('banned-attributes.scrolling');
       case 'width':
-        return i18n.t('errors.html.banned-attributes.width');
+        return generateAnnotation('banned-attributes.width');
     }
   },
 
   E002: function() {
-    return i18n.t('errors.html.lower-case');
+    return generateAnnotation('lower-case');
   },
 
   E005: function(error) {
-    return i18n.t(
-      'errors.html.attribute-quotes',
+    return generateAnnotation(
+      'attribute-quotes',
       {attribute: error.data.attribute}
     );
   },
 
   E006: function() {
-    return i18n.t('errors.html.attribute-value');
+    return generateAnnotation('attribute-value');
   },
 
   E007: function() {
-    return i18n.t('errors.html.doctype');
+    return generateAnnotation('doctype');
   },
 
   E008: function() {
-    return i18n.t('errors.html.doctype');
+    return generateAnnotation('doctype');
   },
 
   E012: function(error) {
-    return i18n.t('errors.html.duplicated-id', {id: error.data.id});
+    return generateAnnotation('duplicated-id', {id: error.data.id});
   },
 
   E014: function() {
-    return i18n.t('errors.html.img-src');
+    return generateAnnotation('img-src');
   },
 
   E016: function(error) {
     switch (error.data.tag.toLowerCase()) {
       case 'b':
-        return i18n.t('errors.html.deprecated-tag.b');
+        return generateAnnotation('deprecated-tag.b');
       case 'big':
-        return i18n.t('errors.html.deprecated-tag.big');
+        return generateAnnotation('deprecated-tag.big');
       case 'center':
-        return i18n.t('errors.html.deprecated-tag.center');
+        return generateAnnotation('deprecated-tag.center');
       case 'font':
-        return i18n.t('errors.html.deprecated-tag.font');
+        return generateAnnotation('deprecated-tag.font');
       case 'i':
-        return i18n.t('errors.html.deprecated-tag.i');
+        return generateAnnotation('deprecated-tag.i');
       case 'strike':
-        return i18n.t('errors.html.deprecated-tag.strike');
+        return generateAnnotation('deprecated-tag.strike');
       case 'tt':
-        return i18n.t('errors.html.deprecated-tag.tt');
+        return generateAnnotation('deprecated-tag.tt');
     }
   },
 
   E017: function() {
-    return i18n.t('errors.html.lower-case-tag-name');
+    return generateAnnotation('lower-case-tag-name');
   },
 
   E027: function() {
-    return i18n.t('errors.html.missing-title');
+    return generateAnnotation('missing-title');
   },
 
   E028: function() {
-    return i18n.t('errors.html.duplicated-title');
+    return generateAnnotation('duplicated-title');
   },
 
   E030: function() {
-    return i18n.t('errors.html.opened-tag');
+    return generateAnnotation('opened-tag');
   },
 
   E036: function() {
-    return i18n.t('errors.html.indentation');
+    return generateAnnotation('indentation');
   },
 };
 
@@ -138,15 +139,24 @@ var htmlLintOptions = {
   'title-no-dup': true,
 };
 
+function generateAnnotation(reason, properties, suppresses) {
+  var message = i18n.t('errors.html.' + reason, properties);
+  return {
+    raw: message,
+    text: message,
+    reason: reason,
+    suppresses: suppresses,
+  };
+}
+
 function convertErrorToAnnotation(error) {
   if (humanErrors.hasOwnProperty(error.code)) {
-    var message = humanErrors[error.code](error);
-    return {
+    var annotation = humanErrors[error.code](error);
+
+    return lodash.assign(annotation, {
       row: error.line - 1, column: error.column - 1,
-      raw: message,
-      text: message,
       type: 'error',
-    };
+    });
   }
 }
 
