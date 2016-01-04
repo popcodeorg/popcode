@@ -4,15 +4,16 @@ var validateWithHtmllint = require('./html/htmllint.js');
 var validateWithSlowparse = require('./html/slowparse.js');
 
 function filterErrors(errors) {
-  var indexedErrors = lodash(errors).indexBy('reason');
+  var groupedErrors = lodash(errors).groupBy('reason');
 
-  var suppressedTypes = indexedErrors.
+  var suppressedTypes = groupedErrors.
     values().
+    flatten().
     map('suppresses').
     flatten().
     value();
 
-  return indexedErrors.omit(suppressedTypes).values().value();
+  return groupedErrors.omit(suppressedTypes).values().flatten().value();
 }
 
 module.exports = function(source) {
