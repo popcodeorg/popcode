@@ -89,14 +89,6 @@ var humanErrors = {
   E028: function() {
     return generateAnnotation('duplicated-title');
   },
-
-  E030: function() {
-    return generateAnnotation('opened-tag');
-  },
-
-  E036: function() {
-    return generateAnnotation('indentation');
-  },
 };
 
 var htmlLintOptions = {

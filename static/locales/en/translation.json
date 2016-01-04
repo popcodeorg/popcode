@@ -55,8 +55,6 @@
       "lower-case-tag-name": "Use lower case for tag names",
       "missing-title": "Put a <title> tag inside your <head> tag",
       "duplicated-title": "You have more than one <title> tag in your document; you should only have one",
-      "opened-tag": "You have an opening tag somewhere in the HTML that doesn't have a closing tag to match it.",
-      "indentation": "Lines should be indented with four spaces.\nUse the 'tab' key to increase indentation and the 'delete' key to decrease indentation.",
       "attribute-in-closing-tag": "You have an attribute in your closing </__tag__> tag. Attributes always belong in the opening <__tag__> tag.",
       "close-tag-for-void-element": "You don’t need a closing </__tag__> tag. The <__tag__> tag closes itself.",
       "html-in-css-block": "It looks like you typed some HTML code inside a <style> tag. Remember that only CSS code can go inside a <style> tag.",
