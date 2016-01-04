@@ -37,7 +37,7 @@
         "scrolling": "Don't use the \"scrolling\" attribute. Instead, use the CSS overflow property",
         "width": "Don't use the \"width\" attribute. Instead, use the CSS width property"
       },
-      "lower-case": "Use lower case for attribute names",
+      "lower-case-attribute-name": "Use lower case for attribute names",
       "attribute-quotes": "You need to put the value of the __attribute__ attribute in quotation marks\nTry: __attribute__=\"myvalue\"",
       "attribute-value": "Every attribute needs a value.\nTry: myattribute=\"myvalue\"",
       "doctype": "The first line of your HTML should always be:\n<!DOCTYPE html>",

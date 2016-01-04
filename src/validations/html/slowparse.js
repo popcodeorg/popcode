@@ -24,7 +24,8 @@ var humanErrors = {
   INVALID_ATTR_NAME: function(error) {
     return generateAnnotation(
       'invalid-attribute-name',
-      {attribute: error.attribute.name.value}
+      {attribute: error.attribute.name.value},
+      ['lower-case-attribute-name']
     );
   },
 
@@ -38,14 +39,16 @@ var humanErrors = {
   UNSUPPORTED_ATTR_NAMESPACE: function(error) {
     return generateAnnotation(
       'invalid-attribute-name',
-      {attribute: error.attribute.name.value}
+      {attribute: error.attribute.name.value},
+      ['lower-case-attribute-name']
     );
   },
 
   MULTIPLE_ATTR_NAMESPACES: function(error) {
     return generateAnnotation(
       'invalid-attribute-name',
-      {attribute: error.attribute.name.value}
+      {attribute: error.attribute.name.value},
+      ['lower-case-attribute-name']
     );
   },
 
@@ -106,7 +109,8 @@ var humanErrors = {
   UNBOUND_ATTRIBUTE_VALUE: function(error) {
     return generateAnnotation(
       'unbound-attribute-value',
-      {value: error.value}
+      {value: error.value},
+      ['attribute-value', 'lower-case-attribute-name']
     );
   },
 };

@@ -29,7 +29,7 @@ var humanErrors = {
   },
 
   E002: function() {
-    return generateAnnotation('lower-case');
+    return generateAnnotation('lower-case-attribute-name');
   },
 
   E005: function(error) {
