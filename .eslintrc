@@ -105,7 +105,8 @@
           {"ignoreUrls": true}
         ],
         "new-cap": [
-            2
+            2,
+            {"capIsNewExceptions": ["Slowparse.HTML"]}
         ],
         "new-parens": [
             2

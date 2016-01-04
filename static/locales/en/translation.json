@@ -56,7 +56,20 @@
       "missing-title": "Put a <title> tag inside your <head> tag",
       "duplicated-title": "You have more than one <title> tag in your document; you should only have one",
       "opened-tag": "You have an opening tag somewhere in the HTML that doesn't have a closing tag to match it.",
-      "indentation": "Lines should be indented with four spaces.\nUse the 'tab' key to increase indentation and the 'delete' key to decrease indentation."
+      "indentation": "Lines should be indented with four spaces.\nUse the 'tab' key to increase indentation and the 'delete' key to decrease indentation.",
+      "attribute-in-closing-tag": "You have an attribute in your closing </__tag__> tag. Attributes always belong in the opening <__tag__> tag.",
+      "close-tag-for-void-element": "You don’t need a closing </__tag__> tag. The <__tag__> tag closes itself.",
+      "html-in-css-block": "It looks like you typed some HTML code inside a <style> tag. Remember that only CSS code can go inside a <style> tag.",
+      "invalid-attribute-name": "__attribute__ isn’t allowed as an attribute name.",
+      "mismatched-close-tag": "Your <__open__> tag needs a closing tag, but instead there’s a </__close__> tag where the </__open__> tag should be.",
+      "self-closing-non-void-element": "A <__tag__> tag always needs a closing </__tag__> tag. Writing <__tag__/> is not allowed.",
+      "unclosed-tag": "Your <__tag__> tag needs to be closed by an </__tag__> tag.",
+      "unexpected-close-tag": "You have a closing </__tag__> tag that doesn’t match any opening <__tag__> tag.",
+      "unterminated-attribute-value": "You forgot to put quotation marks after the value of the __attribute__ attribute in the <__tag__> tag.",
+      "unterminated-open-tag": "You forgot to put a > at the end of your <__tag__> tag.",
+      "unterminated-close-tag": "You forgot to put a > at the end of your </__tag__> tag.",
+      "unterminated-comment": "You have a comment that never ends. End the comment with -->",
+      "unbound-attribute-value": "The value __value__ isn’t attached to an attribute. Are you missing an = sign?"
     },
     "javascript": {
       "unmatched": "There is a __openingSymbol__ on this line that needs a closing __closingSymbol__",
