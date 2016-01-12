@@ -1,6 +1,8 @@
 language: node_js
 node_js:
 - '4.2.3'
+env:
+  DEBUG_REDUX: false
 script:
 - npm run lint
 - npm test

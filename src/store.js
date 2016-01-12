@@ -4,11 +4,15 @@ var applyMiddleware = redux.applyMiddleware;
 var reducers = require('./reducers');
 var thunkMiddleware = require('redux-thunk');
 var createLogger = require('redux-logger');
+var config = require('./config');
 
-var logger = createLogger();
-var createStoreWithMiddleware =
-  applyMiddleware(thunkMiddleware, logger)(createStore);
+if (config.debugRedux) {
+  var logger = createLogger();
+  createStore = applyMiddleware(logger)(createStore);
+}
 
-var store = createStoreWithMiddleware(reducers);
+createStore = applyMiddleware(thunkMiddleware)(createStore);
+
+var store = createStore(reducers);
 
 module.exports = store;
