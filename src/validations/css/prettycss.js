@@ -2,6 +2,12 @@ var i18n = require('i18next-client');
 var prettyCSS = require('PrettyCSS');
 var Promise = require('es6-promise').Promise;
 
+var RADIAL_GRADIENT_EXPR =
+  /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/;
+function isIncorrectlyRejectedRadialGradientValue(value) {
+  return RADIAL_GRADIENT_EXPR.test(value);
+}
+
 var humanErrors = {
   'block-expected': function(error) {
     return i18n.t(
@@ -23,6 +29,10 @@ var humanErrors = {
   },
 
   'invalid-value': function(error) {
+    if (isIncorrectlyRejectedRadialGradientValue(error.token.content)) {
+      return;
+    }
+
     return i18n.t(
       'errors.prettycss.invalid-value',
       {error: error.token.content}
@@ -52,12 +62,14 @@ function convertErrorToAnnotation(error) {
   var normalizedCode = error.code.split(':')[0];
   if (error.token !== null && humanErrors.hasOwnProperty(normalizedCode)) {
     var message = humanErrors[normalizedCode](error);
-    return {
-      row: error.token.line - 1, column: error.token.charNum - 1,
-      raw: message,
-      text: message,
-      type: 'error',
-    };
+    if (message !== undefined) {
+      return {
+        row: error.token.line - 1, column: error.token.charNum - 1,
+        raw: message,
+        text: message,
+        type: 'error',
+      };
+    }
   }
 }
 
