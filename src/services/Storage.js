@@ -18,7 +18,11 @@ var Storage = {
 
   all: function() {
     return localforage.getItem('allKeys').then(function(keys) {
-      return Promise.all(keys.map(this.load));
+      if (keys) {
+        return Promise.all(keys.map(this.load));
+      }
+
+      return Promise.resolve([]);
     }.bind(this));
   },
 
