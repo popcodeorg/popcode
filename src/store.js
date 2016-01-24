@@ -6,7 +6,7 @@ var thunkMiddleware = require('redux-thunk');
 var createLogger = require('redux-logger');
 var config = require('./config');
 
-if (config.debugRedux) {
+if (config.logReduxActions()) {
   var logger = createLogger();
   createStore = applyMiddleware(logger)(createStore);
 }

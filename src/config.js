@@ -2,6 +2,10 @@
 /* eslint no-process-env: 0 */
 
 module.exports = {
+  logReduxActions: function() {
+    return process.env.LOG_REDUX_ACTIONS !== 'false';
+  },
+
   libraries: {
     jquery: {
       name: 'jQuery',
@@ -48,6 +52,4 @@ module.exports = {
       css: 'https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css',
     },
   },
-
-  debugRedux: ((process.env.DEBUG_REDUX || 'true') === 'true'),
 };

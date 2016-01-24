@@ -21,6 +21,7 @@
     "bulkify": "^1.1.1",
     "classnames": "^2.1.5",
     "css": "^2.2.1",
+    "envify": "^3.4.0",
     "es6-promise": "^2.3.0",
     "htmllint": "^0.2.4",
     "i18next-client": "^1.10.2",
@@ -34,9 +35,9 @@
     "react-addons-update": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-immutable-proptypes": "^1.5.0",
-    "react-redux": "^4.0.0",
+    "react-redux": "^4.0.6",
     "reactify": "^1.1.1",
-    "redux": "^3.0.4",
+    "redux": "^3.0.5",
     "redux-logger": "^2.3.1",
     "redux-thunk": "^1.0.0"
   },
@@ -56,7 +57,7 @@
     "transform": [
       "reactify",
       "brfs",
-      "localenvify"
+      "envify"
     ]
   },
   "jest": {
