@@ -48,7 +48,7 @@
     "start": "./node_modules/.bin/static ./static -a 0.0.0.0 -p ${PORT:-8080}",
     "test": "./node_modules/.bin/jest",
     "build": "./node_modules/.bin/browserify --extension .jsx src/application.js -o static/compiled/bundle.js",
-    "devserver": "source .env && ./node_modules/.bin/budo src/application.js --serve compiled/bundle.js --port 8080 --dir ./static --live --cwd ./static --index static/index.html -- --extension .jsx -o static/compiled/bundle.js",
+    "devserver": "./node_modules/.bin/budo src/application.js --serve compiled/bundle.js --port 8080 --dir ./static --live --cwd ./static --index static/index.html -- --extension .jsx -o static/compiled/bundle.js",
     "lint": "./node_modules/.bin/eslint --ext .js,.jsx --plugin react src || true",
     "postinstall": "npm run build",
     "watchtests": "./node_modules/.bin/jest --watch"
