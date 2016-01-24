@@ -4,15 +4,24 @@ var Immutable = require('immutable');
 var Provider = require('react-redux').Provider;
 var i18n = require('i18next-client');
 var installDevTools = require('immutable-devtools');
+var fs = require('fs');
 
 var Workspace = require('./components/Workspace');
 var store = require('./store');
 
-var i18nOptions = {
+var translations = {
+  en: {
+    translation: JSON.parse(fs.readFileSync(
+      __dirname + '/../locales/en/translation.json'
+    )),
+  },
+};
+
+i18n.init({
   fallbackLng: 'en',
   debug: true,
-};
-i18n.init(i18nOptions);
+  resStore: translations,
+});
 
 installDevTools(Immutable);
 
