@@ -39,21 +39,6 @@ enforced style decisions are arbitrary, under the philosophy that giving
 students one right way to do it eliminates ambiguity and aids the learning
 process.
 
-#### A weird thing about HTML validation ####
-
-One strange fact about the universe is that, as far as I can tell, no
-JavaScript package exists that will tell you whether an HTML string is
-well-formed or not. So, while the editor will give plenty of feedback on
-various things about your HTML, one thing the student won’t get feedback on is
-if the HTML is totally broken. This is a problem, especially because totally
-broken HTML will probably yield some confusing second-order error.
-
-The best thing I can think of at the moment is to use the [Nu HTML
-Validator](https://github.com/validator/validator) on the server-side to do
-basic syntax checking and validation. However I would also really like to avoid
-having to go to the server (what server?) for anything, ever. In general, this
-topic merits further investigation.
-
 ### Feature roadmap ###
 
 Check out the [Trello board](https://trello.com/b/ONaFg6wh/popcode).
@@ -64,8 +49,8 @@ Popcode uses **React** to render views, **Flux** to manage application state,
 **Ace** as the code editor, and **Browserify** to package the client-side
 application.
 
-Right now, it includes **htmllint**, **css**, **PrettyCSS**, and **jshint** for
-style checking.
+Right now, it includes **slowparse**, **htmllint**, **css**, **PrettyCSS**,
+and **jshint** for error checking.
 
 The Ace editor has a built-in system for error checking, but it's really hard
 to extend, so I've disabled it. Right now the editor just synchronously runs
