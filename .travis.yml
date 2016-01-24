@@ -1,9 +1,14 @@
 language: node_js
 node_js:
-- '0.12'
+- '4.2.3'
+env:
+  DEBUG_REDUX: false
 script:
+- npm run lint
 - npm test
 - npm run build
+env:
+  - LOG_REDUX_ACTIONS=false
 deploy:
   provider: s3
   access_key_id: AKIAJY2GYDQBE4HFF32Q

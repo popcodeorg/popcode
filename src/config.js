@@ -1,4 +1,11 @@
+/* global process */
+/* eslint no-process-env: 0 */
+
 module.exports = {
+  logReduxActions: function() {
+    return process.env.LOG_REDUX_ACTIONS !== 'false';
+  },
+
   libraries: {
     jquery: {
       name: 'jQuery',
