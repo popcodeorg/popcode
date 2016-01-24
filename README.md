@@ -45,7 +45,7 @@ Check out the [Trello board](https://trello.com/b/ONaFg6wh/popcode).
 
 ## Technical details ##
 
-Popcode uses **React** to render views, **Flux** to manage application state,
+Popcode uses **React** to render views, **Redux** to manage application state,
 **Ace** as the code editor, and **Browserify** to package the client-side
 application.
 
