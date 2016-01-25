@@ -30,7 +30,7 @@ var humanErrors = {
 
   'invalid-value': function(error) {
     if (isIncorrectlyRejectedRadialGradientValue(error.token.content)) {
-      return;
+      return null;
     }
 
     return i18n.t(
@@ -62,7 +62,7 @@ function convertErrorToAnnotation(error) {
   var normalizedCode = error.code.split(':')[0];
   if (error.token !== null && humanErrors.hasOwnProperty(normalizedCode)) {
     var message = humanErrors[normalizedCode](error);
-    if (message !== undefined) {
+    if (message !== null) {
       return {
         row: error.token.line - 1, column: error.token.charNum - 1,
         raw: message,
