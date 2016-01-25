@@ -23,6 +23,7 @@
     "css": "^2.2.1",
     "envify": "^3.4.0",
     "es6-promise": "^2.3.0",
+    "github-api": "^0.10.7",
     "htmllint": "^0.2.4",
     "i18next-client": "^1.10.2",
     "immutable": "^3.7.5",

@@ -4,7 +4,8 @@
     "hide": "Hide Tools",
     "new-project": "New Project",
     "load-project": "Load Project",
-    "libraries": "Libraries"
+    "libraries": "Libraries",
+    "export-gist": "Export Gist"
   },
   "errors": {
     "undefined-description": "Couldn't find a human description for",

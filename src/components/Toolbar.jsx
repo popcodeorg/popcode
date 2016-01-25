@@ -4,6 +4,7 @@ var i18n = require('i18next-client');
 
 var LibraryPicker = require('./LibraryPicker');
 var ProjectList = require('./ProjectList');
+var Gists = require('../services/Gists');
 
 var Toolbar = React.createClass({
   propTypes: {
@@ -29,6 +30,15 @@ var Toolbar = React.createClass({
 
   _loadProject: function() {
     this.setState({submenu: 'loadProject'});
+  },
+
+  _exportGist: function() {
+    var newWindow = open('about:blank', 'gist');
+
+    Gists.createFromProject(this.props.currentProject).
+      then(function(response) {
+        newWindow.location = response.html_url;
+      });
   },
 
   _showHideLabel: function() {
@@ -121,6 +131,9 @@ var Toolbar = React.createClass({
             )}
           >
             {i18n.t('toolbar.load-project')}
+          </li>
+          <li onClick={this._exportGist} className="toolbar-menu-item">
+            {i18n.t('toolbar.export-gist')}
           </li>
           <li onClick={this._toggleLibraryPicker}
             className={classnames(

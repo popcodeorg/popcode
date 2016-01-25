@@ -569,6 +569,9 @@
         "jsx": true,
         "experimentalObjectRestSpread": true
     },
+    "globals": {
+      "__dirname": true
+    },
     "plugins": [
         "react"
     ]
