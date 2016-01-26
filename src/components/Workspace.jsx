@@ -8,26 +8,6 @@ var Editor = require('./Editor');
 var Output = require('./Output');
 var Toolbar = require('./Toolbar');
 
-/*
-function calculateState() {
-  var projectKey = CurrentProjectStore.getKey();
-  var currentProject, errors, hasErrors;
-
-  if (projectKey) {
-    currentProject = ProjectStore.get(projectKey);
-    errors = ErrorStore.getErrors(projectKey);
-    hasErrors = ErrorStore.anyErrors(projectKey);
-  }
-
-  return {
-    allProjects: ProjectStore.all(),
-    currentProject: currentProject,
-    hasErrors: hasErrors,
-    errors: errors,
-  };
-}
-*/
-
 function mapStateToProps(state) {
   var currentProject = state.projects.get(
     state.currentProject.get('projectKey')

@@ -49,10 +49,17 @@ var Preview = React.createClass({
     return previewDocument.documentElement.outerHTML;
   },
 
+  _popOut: function() {
+    var doc = this._generateDocument();
+    var url = 'data:text/html;base64,' + btoa(doc);
+    window.open(url, 'preview');
+  },
+
   render: function() {
     return (
-      <div id="preview">
-        <iframe id="preview-frame" srcDoc={this._generateDocument()} />
+      <div className="preview">
+        <div className="preview-popOutButton" onClick={this._popOut} />
+        <iframe className="preview-frame" srcDoc={this._generateDocument()} />
       </div>
     );
   },
