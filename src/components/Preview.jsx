@@ -4,9 +4,46 @@ var DOMParser = window.DOMParser;
 var parser = new DOMParser();
 var libraries = require('../config').libraries;
 
+var errorHandlerScript = '(' + (function() {
+  window.onerror = function(fullMessage, _file, line, column, error) {
+    var name, message;
+    if (error) {
+      name = error.name;
+      message = error.message;
+    } else {
+      var components = fullMessage.split(': ', 2);
+      if (components.length === 2) {
+        name = components[0];
+        message = components[1];
+      } else {
+        name = 'Error';
+        message = fullMessage;
+      }
+    }
+
+    window.parent.postMessage(JSON.stringify({
+      type: 'org.popcode.error',
+      error: {
+        name: name,
+        message: message,
+        line: line,
+        column: column,
+      },
+    }), '*');
+  };
+}.toString()) + '());';
+
 var Preview = React.createClass({
   propTypes: {
     project: React.PropTypes.object.isRequired,
+  },
+
+  componentDidMount: function() {
+    window.addEventListener('message', this._onRuntimeError);
+  },
+
+  componentWillUnmount: function() {
+    window.removeEventListener('message', this._onRuntimeError);
   },
 
   _generateDocument: function() {
@@ -17,7 +54,9 @@ var Preview = React.createClass({
     }
 
     var previewDocument = parser.parseFromString(
-      project.sources.html, 'text/html');
+      project.sources.html,
+      'text/html'
+    );
 
     var previewHead = previewDocument.head;
     var previewBody = previewDocument.body;
@@ -43,10 +82,14 @@ var Preview = React.createClass({
     styleTag.innerHTML = project.sources.css;
     previewHead.appendChild(styleTag);
     var scriptTag = previewDocument.createElement('script');
-    scriptTag.innerHTML = project.sources.javascript;
+    scriptTag.innerHTML =
+      errorMessageScript + project.sources.javascript;
     previewBody.appendChild(scriptTag);
 
     return previewDocument.documentElement.outerHTML;
+  },
+
+  _onRuntimeError: function(message) {
   },
 
   _popOut: function() {
