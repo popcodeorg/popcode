@@ -114,13 +114,13 @@ var Preview = React.createClass({
     var firstSourceLine = this._generateDocument().
       split('\n').indexOf(sourceDelimiter) + 1;
 
-    var error = lodash.assign(
-      {},
-      data.error,
-      {line: data.error.line - firstSourceLine}
-    );
-
-    this.props.onRuntimeError(error);
+    this.props.onRuntimeError({
+      text: data.error.message,
+      raw: data.error.message,
+      row: data.error.line - firstSourceLine - 1,
+      column: data.error.column,
+      type: 'error',
+    });
   },
 
   _popOut: function() {
