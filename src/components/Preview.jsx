@@ -1,4 +1,5 @@
 var React = require('react');
+var lodash = require('lodash');
 var DOMParser = window.DOMParser;
 
 var parser = new DOMParser();
@@ -33,17 +34,20 @@ var errorHandlerScript = '(' + (function() {
   };
 }.toString()) + '());';
 
+var sourceDelimiter = '/*__POPCODESTART__*/';
+
 var Preview = React.createClass({
   propTypes: {
     project: React.PropTypes.object.isRequired,
+    onRuntimeError: React.PropTypes.func.isRequired,
   },
 
   componentDidMount: function() {
-    window.addEventListener('message', this._onRuntimeError);
+    window.addEventListener('message', this._onMessage);
   },
 
   componentWillUnmount: function() {
-    window.removeEventListener('message', this._onRuntimeError);
+    window.removeEventListener('message', this._onMessage);
   },
 
   _generateDocument: function() {
@@ -83,13 +87,40 @@ var Preview = React.createClass({
     previewHead.appendChild(styleTag);
     var scriptTag = previewDocument.createElement('script');
     scriptTag.innerHTML =
-      errorMessageScript + project.sources.javascript;
+      errorHandlerScript + '\n' +
+        sourceDelimiter + '\n' +
+        project.sources.javascript;
     previewBody.appendChild(scriptTag);
 
     return previewDocument.documentElement.outerHTML;
   },
 
-  _onRuntimeError: function(message) {
+  _onMessage: function(message) {
+    if (typeof message.data !== 'string') {
+      return;
+    }
+
+    var data;
+    try {
+      data = JSON.parse(message.data);
+    } catch (_e) {
+      return;
+    }
+
+    if (data.type !== 'org.popcode.error') {
+      return;
+    }
+
+    var firstSourceLine = this._generateDocument().
+      split('\n').indexOf(sourceDelimiter) + 1;
+
+    var error = lodash.assign(
+      {},
+      data.error,
+      {line: data.error.line - firstSourceLine}
+    );
+
+    this.props.onRuntimeError(error);
   },
 
   _popOut: function() {

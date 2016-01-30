@@ -70,6 +70,10 @@ var Workspace = React.createClass({
     this.props.dispatch(actions.changeCurrentProject(project.projectKey));
   },
 
+  _onRuntimeError: function(error) {
+    this.props.dispatch(actions.addRuntimeError(error));
+  },
+
   render: function() {
     var environment;
     if (this.props.currentProject !== undefined) {
@@ -82,6 +86,7 @@ var Workspace = React.createClass({
               Boolean(lodash(this.props.errors).values().flatten().size())
             }
             onErrorClicked={this._onErrorClicked}
+            onRuntimeError={this._onRuntimeError}
           />
 
           <Editor
