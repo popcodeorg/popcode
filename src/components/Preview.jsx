@@ -1,5 +1,5 @@
 var React = require('react');
-var lodash = require('lodash');
+var Bowser = require('bowser');
 var DOMParser = window.DOMParser;
 
 var parser = new DOMParser();
@@ -86,10 +86,11 @@ var Preview = React.createClass({
     styleTag.innerHTML = project.sources.css;
     previewHead.appendChild(styleTag);
     var scriptTag = previewDocument.createElement('script');
-    scriptTag.innerHTML =
-      errorHandlerScript + '\n' +
-        sourceDelimiter + '\n' +
-        project.sources.javascript;
+    scriptTag.innerHTML = errorHandlerScript;
+    previewBody.appendChild(scriptTag);
+
+    scriptTag = previewDocument.createElement('script');
+    scriptTag.innerHTML = "\n" + sourceDelimiter + '\n' + project.sources.javascript;
     previewBody.appendChild(scriptTag);
 
     return previewDocument.documentElement.outerHTML;
@@ -111,16 +112,24 @@ var Preview = React.createClass({
       return;
     }
 
-    var firstSourceLine = this._generateDocument().
-      split('\n').indexOf(sourceDelimiter) + 1;
-
     this.props.onRuntimeError({
       text: data.error.message,
       raw: data.error.message,
-      row: data.error.line - firstSourceLine - 1,
+      row: data.error.line - this._runtimeErrorLineOffset() - 1,
       column: data.error.column,
       type: 'error',
     });
+  },
+
+  _runtimeErrorLineOffset: function() {
+    if (Bowser.safari) {
+      return 2;
+    }
+
+    var firstSourceLine = this._generateDocument().
+      split('\n').indexOf(sourceDelimiter) + 2;
+
+    return firstSourceLine - 1;
   },
 
   _popOut: function() {
@@ -129,11 +138,32 @@ var Preview = React.createClass({
     window.open(url, 'preview');
   },
 
+  _addFrameContents: function(frame) {
+    if (frame === null) {
+      return;
+    }
+
+    var frameDocument = frame.contentDocument;
+    frameDocument.open();
+    frameDocument.write(this._generateDocument());
+    frameDocument.close();
+  },
+
+  _buildFrameNode: function() {
+    if (Bowser.safari) {
+      return <iframe className="preview-frame" ref={this._addFrameContents} />;
+    }
+
+    return (
+      <iframe className="preview-frame" srcDoc={this._generateDocument()} />
+    );
+  },
+
   render: function() {
     return (
       <div className="preview">
         <div className="preview-popOutButton" onClick={this._popOut} />
-        <iframe className="preview-frame" srcDoc={this._generateDocument()} />
+        {this._buildFrameNode()}
       </div>
     );
   },
