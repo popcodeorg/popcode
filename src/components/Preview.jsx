@@ -150,7 +150,7 @@ var Preview = React.createClass({
   },
 
   _buildFrameNode: function() {
-    if (Bowser.safari) {
+    if (Bowser.safari || Bowser.msie) {
       return <iframe className="preview-frame" ref={this._addFrameContents} />;
     }
 
