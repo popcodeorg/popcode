@@ -15,6 +15,7 @@
   ],
   "dependencies": {
     "PrettyCSS": "^0.3.10",
+    "base64-js": "^1.0.2",
     "bowser": "^1.0.0",
     "brace": "^0.5.1",
     "brfs": "^1.4.1",
@@ -42,7 +43,8 @@
     "redux": "^3.0.5",
     "redux-logger": "^2.3.1",
     "redux-thunk": "^1.0.0",
-    "slowparse": "^1.1.4"
+    "slowparse": "^1.1.4",
+    "text-encoding": "^0.5.2"
   },
   "engines": {
     "node": "4.2.x"
