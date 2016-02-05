@@ -1,40 +1,7 @@
 var React = require('react');
 var Bowser = require('bowser');
-var DOMParser = window.DOMParser;
 
-var parser = new DOMParser();
-var libraries = require('../config').libraries;
-
-var errorHandlerScript = '(' + (function() {
-  window.onerror = function(fullMessage, _file, line, column, error) {
-    var name, message;
-    if (error) {
-      name = error.name;
-      message = error.message;
-    } else {
-      var components = fullMessage.split(': ', 2);
-      if (components.length === 2) {
-        name = components[0];
-        message = components[1];
-      } else {
-        name = 'Error';
-        message = fullMessage;
-      }
-    }
-
-    window.parent.postMessage(JSON.stringify({
-      type: 'org.popcode.error',
-      error: {
-        name: name,
-        message: message,
-        line: line,
-        column: column,
-      },
-    }), '*');
-  };
-}.toString()) + '());';
-
-var sourceDelimiter = '/*__POPCODESTART__*/';
+var generatePreview = require('../util/generatePreview.js');
 
 var Preview = React.createClass({
   propTypes: {
@@ -57,43 +24,7 @@ var Preview = React.createClass({
       return '';
     }
 
-    var previewDocument = parser.parseFromString(
-      project.sources.html,
-      'text/html'
-    );
-
-    var previewHead = previewDocument.head;
-    var previewBody = previewDocument.body;
-
-    project.enabledLibraries.forEach(function(libraryKey) {
-      var library = libraries[libraryKey];
-      var css = library.css;
-      var javascript = library.javascript;
-      if (css !== undefined) {
-        var linkTag = previewDocument.createElement('link');
-        linkTag.rel = 'stylesheet';
-        linkTag.href = css;
-        previewHead.appendChild(linkTag);
-      }
-      if (javascript !== undefined) {
-        var scriptTag = previewDocument.createElement('script');
-        scriptTag.src = javascript;
-        previewBody.appendChild(scriptTag);
-      }
-    });
-
-    var styleTag = previewDocument.createElement('style');
-    styleTag.innerHTML = project.sources.css;
-    previewHead.appendChild(styleTag);
-    var scriptTag = previewDocument.createElement('script');
-    scriptTag.innerHTML = errorHandlerScript;
-    previewBody.appendChild(scriptTag);
-
-    scriptTag = previewDocument.createElement('script');
-    scriptTag.innerHTML = "\n" + sourceDelimiter + '\n' + project.sources.javascript;
-    previewBody.appendChild(scriptTag);
-
-    return previewDocument.documentElement.outerHTML;
+    return generatePreview(this.props.project).documentElement.outerHTML;
   },
 
   _onMessage: function(message) {
@@ -127,7 +58,7 @@ var Preview = React.createClass({
     }
 
     var firstSourceLine = this._generateDocument().
-      split('\n').indexOf(sourceDelimiter) + 2;
+      split('\n').indexOf(generatePreview.sourceDelimiter) + 2;
 
     return firstSourceLine - 1;
   },
