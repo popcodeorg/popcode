@@ -80,6 +80,10 @@ var Workspace = React.createClass({
     this.props.dispatch(actions.addRuntimeError(error));
   },
 
+  _clearRuntimeErrors: function() {
+    this.props.dispatch(actions.clearRuntimeErrors());
+  },
+
   render: function() {
     var environment;
     if (this.props.currentProject !== undefined) {
@@ -93,6 +97,7 @@ var Workspace = React.createClass({
             }
             onErrorClicked={this._onErrorClicked}
             onRuntimeError={this._onRuntimeError}
+            clearRuntimeErrors={this._clearRuntimeErrors}
           />
 
           <Editor

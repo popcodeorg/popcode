@@ -10,6 +10,7 @@ var Output = React.createClass({
     errors: React.PropTypes.object.isRequired,
     onErrorClicked: React.PropTypes.func.isRequired,
     onRuntimeError: React.PropTypes.func.isRequired,
+    clearRuntimeErrors: React.PropTypes.func.isRequired,
   },
 
   render: function() {
@@ -26,6 +27,7 @@ var Output = React.createClass({
         <Preview
           project={this.props.project}
           onRuntimeError={this.props.onRuntimeError}
+          clearRuntimeErrors={this.props.clearRuntimeErrors}
         />
       );
     }

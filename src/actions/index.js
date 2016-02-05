@@ -146,3 +146,9 @@ exports.addRuntimeError = function(error) {
     payload: {error: error},
   };
 };
+
+exports.clearRuntimeErrors = function() {
+  return {
+    type: 'RUNTIME_ERRORS_CLEARED',
+  };
+};

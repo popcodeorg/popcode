@@ -12,6 +12,9 @@ function runtimeErrors(stateIn, action) {
     case 'RUNTIME_ERROR_ADDED':
       return state.push(Immutable.fromJS(action.payload.error));
 
+    case 'RUNTIME_ERRORS_CLEARED':
+      return emptyList;
+
     default:
       return state;
   }

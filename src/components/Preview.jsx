@@ -1,5 +1,6 @@
 var React = require('react');
 var Bowser = require('bowser');
+var lodash = require('lodash');
 
 var generatePreview = require('../util/generatePreview.js');
 
@@ -7,10 +8,17 @@ var Preview = React.createClass({
   propTypes: {
     project: React.PropTypes.object.isRequired,
     onRuntimeError: React.PropTypes.func.isRequired,
+    clearRuntimeErrors: React.PropTypes.func.isRequired,
   },
 
   componentDidMount: function() {
     window.addEventListener('message', this._onMessage);
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (!lodash.isEqual(nextProps.project, this.props.project)) {
+      this.props.clearRuntimeErrors();
+    }
   },
 
   componentWillUnmount: function() {
