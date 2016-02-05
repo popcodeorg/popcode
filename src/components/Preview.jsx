@@ -1,12 +1,28 @@
 var React = require('react');
-var DOMParser = window.DOMParser;
+var Bowser = require('bowser');
+var lodash = require('lodash');
 
-var parser = new DOMParser();
-var libraries = require('../config').libraries;
+var generatePreview = require('../util/generatePreview.js');
 
 var Preview = React.createClass({
   propTypes: {
     project: React.PropTypes.object.isRequired,
+    onRuntimeError: React.PropTypes.func.isRequired,
+    clearRuntimeErrors: React.PropTypes.func.isRequired,
+  },
+
+  componentDidMount: function() {
+    window.addEventListener('message', this._onMessage);
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (!lodash.isEqual(nextProps.project, this.props.project)) {
+      this.props.clearRuntimeErrors();
+    }
+  },
+
+  componentWillUnmount: function() {
+    window.removeEventListener('message', this._onMessage);
   },
 
   _generateDocument: function() {
@@ -16,37 +32,43 @@ var Preview = React.createClass({
       return '';
     }
 
-    var previewDocument = parser.parseFromString(
-      project.sources.html, 'text/html');
+    return generatePreview(this.props.project).documentElement.outerHTML;
+  },
 
-    var previewHead = previewDocument.head;
-    var previewBody = previewDocument.body;
+  _onMessage: function(message) {
+    if (typeof message.data !== 'string') {
+      return;
+    }
 
-    project.enabledLibraries.forEach(function(libraryKey) {
-      var library = libraries[libraryKey];
-      var css = library.css;
-      var javascript = library.javascript;
-      if (css !== undefined) {
-        var linkTag = previewDocument.createElement('link');
-        linkTag.rel = 'stylesheet';
-        linkTag.href = css;
-        previewHead.appendChild(linkTag);
-      }
-      if (javascript !== undefined) {
-        var scriptTag = previewDocument.createElement('script');
-        scriptTag.src = javascript;
-        previewBody.appendChild(scriptTag);
-      }
+    var data;
+    try {
+      data = JSON.parse(message.data);
+    } catch (_e) {
+      return;
+    }
+
+    if (data.type !== 'org.popcode.error') {
+      return;
+    }
+
+    this.props.onRuntimeError({
+      text: data.error.message,
+      raw: data.error.message,
+      row: data.error.line - this._runtimeErrorLineOffset() - 1,
+      column: data.error.column,
+      type: 'error',
     });
+  },
 
-    var styleTag = previewDocument.createElement('style');
-    styleTag.innerHTML = project.sources.css;
-    previewHead.appendChild(styleTag);
-    var scriptTag = previewDocument.createElement('script');
-    scriptTag.innerHTML = project.sources.javascript;
-    previewBody.appendChild(scriptTag);
+  _runtimeErrorLineOffset: function() {
+    if (Bowser.safari) {
+      return 2;
+    }
 
-    return previewDocument.documentElement.outerHTML;
+    var firstSourceLine = this._generateDocument().
+      split('\n').indexOf(generatePreview.sourceDelimiter) + 2;
+
+    return firstSourceLine - 1;
   },
 
   _popOut: function() {
@@ -55,11 +77,32 @@ var Preview = React.createClass({
     window.open(url, 'preview');
   },
 
+  _addFrameContents: function(frame) {
+    if (frame === null) {
+      return;
+    }
+
+    var frameDocument = frame.contentDocument;
+    frameDocument.open();
+    frameDocument.write(this._generateDocument());
+    frameDocument.close();
+  },
+
+  _buildFrameNode: function() {
+    if (Bowser.safari || Bowser.msie) {
+      return <iframe className="preview-frame" ref={this._addFrameContents} />;
+    }
+
+    return (
+      <iframe className="preview-frame" srcDoc={this._generateDocument()} />
+    );
+  },
+
   render: function() {
     return (
       <div className="preview">
         <div className="preview-popOutButton" onClick={this._popOut} />
-        <iframe className="preview-frame" srcDoc={this._generateDocument()} />
+        {this._buildFrameNode()}
       </div>
     );
   },

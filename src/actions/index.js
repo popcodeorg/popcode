@@ -139,3 +139,16 @@ exports.loadAllProjects = function() {
     });
   };
 };
+
+exports.addRuntimeError = function(error) {
+  return {
+    type: 'RUNTIME_ERROR_ADDED',
+    payload: {error: error},
+  };
+};
+
+exports.clearRuntimeErrors = function() {
+  return {
+    type: 'RUNTIME_ERRORS_CLEARED',
+  };
+};

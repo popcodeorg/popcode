@@ -9,6 +9,8 @@ var Output = React.createClass({
     hasErrors: React.PropTypes.bool.isRequired,
     errors: React.PropTypes.object.isRequired,
     onErrorClicked: React.PropTypes.func.isRequired,
+    onRuntimeError: React.PropTypes.func.isRequired,
+    clearRuntimeErrors: React.PropTypes.func.isRequired,
   },
 
   render: function() {
@@ -22,7 +24,11 @@ var Output = React.createClass({
     }
     if (this.props.project) {
       return (
-        <Preview project={this.props.project} />
+        <Preview
+          project={this.props.project}
+          onRuntimeError={this.props.onRuntimeError}
+          clearRuntimeErrors={this.props.clearRuntimeErrors}
+        />
       );
     }
     return null;

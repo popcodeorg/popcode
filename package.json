@@ -15,6 +15,7 @@
   ],
   "dependencies": {
     "PrettyCSS": "^0.3.10",
+    "bowser": "^1.0.0",
     "brace": "^0.5.1",
     "brfs": "^1.4.1",
     "browserify": "^10.2.6",
@@ -48,10 +49,11 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/static ./static -a 0.0.0.0 -p ${PORT:-8080}",
+    "pretest": "npm run lint",
     "test": "./node_modules/.bin/jest",
     "build": "./node_modules/.bin/browserify --extension .jsx src/application.js -o static/compiled/bundle.js",
     "devserver": "./node_modules/.bin/budo src/application.js --serve compiled/bundle.js --port 8080 --dir ./static --live --cwd ./static --index static/index.html -- --extension .jsx -o static/compiled/bundle.js",
-    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --plugin react src || true",
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --plugin react src",
     "postinstall": "npm run build",
     "watchtests": "./node_modules/.bin/jest --watch"
   },
@@ -71,7 +73,7 @@
     ]
   },
   "devDependencies": {
-    "budo": "^6.1.0",
+    "budo": "^8.0.3",
     "eslint": "^1.4.1",
     "eslint-plugin-react": "^3.3.2",
     "eslint_d": "^2.3.2",

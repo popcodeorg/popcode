@@ -22,6 +22,7 @@ function mapStateToProps(state) {
     allProjects: lodash.values(state.projects.toJS()),
     currentProject: currentProjectJS,
     errors: state.errors.toJS(),
+    runtimeErrors: state.runtimeErrors.toJS(),
   };
 }
 
@@ -31,11 +32,16 @@ var Workspace = React.createClass({
     allProjects: React.PropTypes.array,
     currentProject: React.PropTypes.object,
     errors: React.PropTypes.object,
+    runtimeErrors: React.PropTypes.array,
   },
 
   componentWillMount: function() {
     this.props.dispatch(actions.loadCurrentProjectFromStorage());
     this.props.dispatch(actions.loadAllProjects());
+  },
+
+  _allJavaScriptErrors: function() {
+    return this.props.errors.javascript.concat(this.props.runtimeErrors);
   },
 
   _onErrorClicked: function(language, line, column) {
@@ -70,6 +76,14 @@ var Workspace = React.createClass({
     this.props.dispatch(actions.changeCurrentProject(project.projectKey));
   },
 
+  _onRuntimeError: function(error) {
+    this.props.dispatch(actions.addRuntimeError(error));
+  },
+
+  _clearRuntimeErrors: function() {
+    this.props.dispatch(actions.clearRuntimeErrors());
+  },
+
   render: function() {
     var environment;
     if (this.props.currentProject !== undefined) {
@@ -82,6 +96,8 @@ var Workspace = React.createClass({
               Boolean(lodash(this.props.errors).values().flatten().size())
             }
             onErrorClicked={this._onErrorClicked}
+            onRuntimeError={this._onRuntimeError}
+            clearRuntimeErrors={this._clearRuntimeErrors}
           />
 
           <Editor
@@ -106,7 +122,7 @@ var Workspace = React.createClass({
             ref="javascriptEditor"
             projectKey={this.props.currentProject.projectKey}
             source={this.props.currentProject.sources.javascript}
-            errors={this.props.errors.javascript}
+            errors={this._allJavaScriptErrors()}
             onInput={this._onEditorInput.bind(this, 'javascript')}
             language="javascript"
           />
