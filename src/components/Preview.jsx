@@ -1,6 +1,8 @@
 var React = require('react');
 var Bowser = require('bowser');
 var lodash = require('lodash');
+var TextEncoder = require('text-encoding').TextEncoder;
+var base64 = require('base64-js');
 
 var generatePreview = require('../util/generatePreview.js');
 
@@ -73,7 +75,9 @@ var Preview = React.createClass({
 
   _popOut: function() {
     var doc = this._generateDocument();
-    var url = 'data:text/html;base64,' + btoa(doc);
+    var uint8array = new TextEncoder('utf-8').encode(doc);
+    var base64encoded = base64.fromByteArray(uint8array);
+    var url = 'data:text/html;base64,' + base64encoded;
     window.open(url, 'preview');
   },
 
