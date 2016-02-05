@@ -32,7 +32,7 @@
     "jshint": "^2.8.0",
     "keymirror": "^0.1.1",
     "localforage": "^1.2.7",
-    "lodash": "^3.10.0",
+    "lodash": "^4.2.1",
     "moment": "^2.10.6",
     "react": "^0.14.3",
     "react-addons-update": "^0.14.3",
