@@ -1,6 +1,6 @@
 var i18n = require('i18next-client');
 var Slowparse = require('slowparse/src');
-var lodash = require('lodash');
+var assign = require('lodash/assign');
 
 var humanErrors = {
   ATTRIBUTE_IN_CLOSING_TAG: function(error) {
@@ -132,7 +132,7 @@ function convertErrorToAnnotation(source, error) {
     var row = lines.length - 1;
     var column = lines[row].length - 1;
 
-    return lodash.assign(annotation, {
+    return assign(annotation, {
       row: row, column: column,
       type: 'error',
     });

@@ -1,5 +1,6 @@
 var React = require('react');
-var lodash = require('lodash');
+var map = require('lodash/map');
+var partial = require('lodash/partial');
 var i18n = require('i18next-client');
 
 var ErrorItem = require('./ErrorItem');
@@ -16,10 +17,10 @@ var ErrorSublist = React.createClass({
       return false;
     }
 
-    var errors = lodash.map(this.props.errors, function(error) {
+    var errors = map(this.props.errors, function(error) {
       return (
         <ErrorItem {...error}
-          onClick={lodash.partial(
+          onClick={partial(
             this.props.onErrorClicked,
             this.props.language
           )}

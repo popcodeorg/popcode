@@ -1,19 +1,22 @@
 var Promise = require('es6-promise').Promise;
-var lodash = require('lodash');
+var groupBy = require('lodash/groupBy');
+var values = require('lodash/values');
+var flatten = require('lodash/flatten');
+var flatMap = require('lodash/flatMap');
+var sortBy = require('lodash/sortBy');
+var omit = require('lodash/omit');
 var validateWithHtmllint = require('./html/htmllint.js');
 var validateWithSlowparse = require('./html/slowparse.js');
 
 function filterErrors(errors) {
-  var groupedErrors = lodash(errors).groupBy('reason');
+  var groupedErrors = groupBy(errors, 'reason');
 
-  var suppressedTypes = groupedErrors.
-    values().
-    flatten().
-    map('suppresses').
-    flatten().
-    value();
+  var suppressedTypes = flatMap(
+    flatten(values(groupedErrors)),
+    'suppresses'
+  );
 
-  return groupedErrors.omit(suppressedTypes).values().flatten().value();
+  return flatten(values(omit(groupedErrors, suppressedTypes)));
 }
 
 module.exports = function(source) {
@@ -21,7 +24,7 @@ module.exports = function(source) {
     validateWithSlowparse(source),
     validateWithHtmllint(source),
   ]).then(function(results) {
-    var filteredErrors = filterErrors(lodash.flatten(results));
-    return lodash.sortBy(filteredErrors, 'row');
+    var filteredErrors = filterErrors(flatten(results));
+    return sortBy(filteredErrors, 'row');
   });
 };

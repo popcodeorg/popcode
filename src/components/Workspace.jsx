@@ -1,6 +1,8 @@
 var React = require('react');
 var connect = require('react-redux').connect;
-var lodash = require('lodash');
+var values = require('lodash/values');
+var flatten = require('lodash/flatten');
+var isEmpty = require('lodash/isEmpty');
 
 var actions = require('../actions');
 
@@ -19,7 +21,7 @@ function mapStateToProps(state) {
   }
 
   return {
-    allProjects: lodash.values(state.projects.toJS()),
+    allProjects: values(state.projects.toJS()),
     currentProject: currentProjectJS,
     errors: state.errors.toJS(),
     runtimeErrors: state.runtimeErrors.toJS(),
@@ -93,7 +95,7 @@ var Workspace = React.createClass({
             project={this.props.currentProject}
             errors={this.props.errors}
             hasErrors={
-              Boolean(lodash(this.props.errors).values().flatten().size())
+              !isEmpty(flatten(values(this.props.errors)))
             }
             onErrorClicked={this._onErrorClicked}
             onRuntimeError={this._onRuntimeError}
