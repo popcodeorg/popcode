@@ -1,6 +1,6 @@
 var React = require('react');
 var i18n = require('i18next-client');
-var lodash = require('lodash');
+var partial = require('lodash/partial');
 
 var ErrorItem = React.createClass({
   propTypes: {
@@ -17,7 +17,7 @@ var ErrorItem = React.createClass({
     return (
       <li
         className="errorList-error"
-        onClick={lodash.partial(
+        onClick={partial(
           this.props.onClick,
           this.props.row,
           this.props.column

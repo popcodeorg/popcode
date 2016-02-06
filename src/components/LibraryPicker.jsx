@@ -1,5 +1,6 @@
 var React = require('react');
-var lodash = require('lodash');
+var map = require('lodash/map');
+var partial = require('lodash/partial');
 
 var LibraryPickerItem = require('./LibraryPickerItem');
 var config = require('../config');
@@ -15,13 +16,13 @@ var LibraryPicker = React.createClass({
   },
 
   render: function() {
-    var libraries = lodash.map(config.libraries, function(library, key) {
+    var libraries = map(config.libraries, function(library, key) {
       return (
         <LibraryPickerItem
           key={key}
           library={library}
           enabled={this._isLibraryEnabled(key)}
-          onLibraryToggled={lodash.partial(this.props.onLibraryToggled, key)}
+          onLibraryToggled={partial(this.props.onLibraryToggled, key)}
         />
       );
     }, this);

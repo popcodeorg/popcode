@@ -1,6 +1,6 @@
 var React = require('react');
 var Bowser = require('bowser');
-var lodash = require('lodash');
+var isEqual = require('lodash/isEqual');
 var TextEncoder = require('text-encoding').TextEncoder;
 var base64 = require('base64-js');
 
@@ -18,7 +18,7 @@ var Preview = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    if (!lodash.isEqual(nextProps.project, this.props.project)) {
+    if (!isEqual(nextProps.project, this.props.project)) {
       this.props.clearRuntimeErrors();
     }
   },

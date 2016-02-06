@@ -1,4 +1,4 @@
-var lodash = require('lodash');
+var assign = require('lodash/assign');
 var DOMParser = window.DOMParser;
 var parser = new DOMParser();
 
@@ -57,7 +57,7 @@ var errorHandlerScript = '(' + (function() {
   };
 }.toString()) + '());';
 
-lodash.assign(PreviewGenerator.prototype, {
+assign(PreviewGenerator.prototype, {
   _addCss: function() {
     var styleTag = this.previewDocument.createElement('style');
     styleTag.innerHTML = this._project.sources.css;

@@ -1,6 +1,6 @@
 var i18n = require('i18next-client');
 var htmllint = require('htmllint');
-var lodash = require('lodash');
+var assign = require('lodash/assign');
 
 var humanErrors = {
   E001: function(error) {
@@ -145,7 +145,7 @@ function convertErrorToAnnotation(error) {
   if (humanErrors.hasOwnProperty(error.code)) {
     var annotation = humanErrors[error.code](error);
 
-    return lodash.assign(annotation, {
+    return assign(annotation, {
       row: error.line - 1, column: error.column - 1,
       type: 'error',
     });
