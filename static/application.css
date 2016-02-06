@@ -107,6 +107,7 @@ body {
   width: 100%;
   position: relative;
   overflow: scroll;
+  background: white;
 }
 
 .errorList--docked {
@@ -115,6 +116,7 @@ body {
   overflow: hidden;
   bottom: 0;
   border-top: 3px solid darkgray;
+  z-index: 1;
 }
 
 .errorList-errorSublist-header {
