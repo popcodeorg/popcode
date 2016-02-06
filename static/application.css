@@ -113,7 +113,8 @@ body {
 .errorList--docked {
   position: absolute;
   height: auto;
-  overflow: hidden;
+  max-height: 100%;
+  overflow: scroll;
   bottom: 0;
   border-top: 3px solid darkgray;
   z-index: 1;
