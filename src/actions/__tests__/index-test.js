@@ -1,7 +1,10 @@
 /* eslint-env jest */
 /* eslint global-require: 0 */
 
-var lodash = require('lodash');
+var each = require('lodash/each');
+var map = require('lodash/map');
+var assign = require('lodash/assign');
+var keyBy = require('lodash/keyBy');
 
 var blank = require.requireActual('../../__test__/blank');
 
@@ -25,7 +28,7 @@ describe('index', function() {
     var resolveFns = {};
     dispatch.promised = {};
 
-    lodash.each(arguments, function(actionType) {
+    each(arguments, function(actionType) {
       dispatch.promised[actionType] = new Promise(function(resolve) {
         resolveFns[actionType] = resolve;
       });
@@ -89,7 +92,7 @@ describe('index', function() {
       Storage.load.mockReturnValue(Promise.resolve(blank.project));
 
       getState.mockReturnValue(blank.state);
-      lodash.forEach(validations, function(validation) {
+      each(validations, function(validation) {
         validation.mockImplementation(function() {
           return Promise.resolve([]);
         });
@@ -176,8 +179,7 @@ describe('index', function() {
         'p { display: none; }'
       ));
 
-      this.actionsDispatched = lodash(dispatch.mock.calls).
-        map(0).indexBy('type').value();
+      this.actionsDispatched = keyBy(map(dispatch.mock.calls, 0), 'type');
     });
 
     it('should dispatch PROJECT_SOURCE_EDITED', function() {
@@ -243,7 +245,7 @@ describe('index', function() {
 
       getState.mockReturnValue(blank.state);
 
-      lodash.forEach(validations, function(validation) {
+      each(validations, function(validation) {
         validation.mockImplementation(function() {
           return Promise.resolve([]);
         });
@@ -294,7 +296,7 @@ describe('index', function() {
       );
 
       getState.mockReturnValue(blank.state);
-      lodash.forEach(validations, function(validation) {
+      each(validations, function(validation) {
         validation.mockImplementation(function() {
           return Promise.resolve([]);
         });
@@ -332,7 +334,7 @@ describe('index', function() {
 
       Storage.all.mockReturnValue(
         Promise.resolve([
-          lodash.assign({}, blank.project, {projectKey: '23456'}),
+          assign({}, blank.project, {projectKey: '23456'}),
         ])
       );
 
