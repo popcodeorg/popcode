@@ -61,6 +61,25 @@ var normalizers = {
       }
     },
   },
+
+  Firefox: {
+    TypeError: function(message) {
+      var match;
+
+      match = /^(\w+) is not a function$/.exec(message);
+      if (match) {
+        return {type: 'not-a-function', params: {name: match[1]}};
+      }
+
+      match = /^([\w\.]+) is (null|undefined)$/.exec(message);
+      if (match) {
+        return {
+          type: 'access-property-of-' + match[2],
+          params: {name: match[1]},
+        };
+      }
+    },
+  },
 };
 
 function attachMessage(normalizedError) {
@@ -88,7 +107,7 @@ function normalizeError(error) {
 
   return {
     type: 'unknown',
-    message: error.name + ': ' + error.message,
+    message: error.message,
   };
 }
 

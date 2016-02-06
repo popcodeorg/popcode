@@ -107,6 +107,10 @@
 
       "access-property-of-null": "You are trying to access a property of a null value.",
 
+      "access-property-of-undefined_with-name": "You are trying to access a property of __name__, but __name__ doesn't have a value.",
+
+      "access-property-of-null_with-name": "You are trying to access a property of a __name__, but __name__ is null.",
+
       "read-property-of-undefined_with-property": "You are trying to access the property __property__ on something that doesn't have a value.",
 
       "read-property-of-null_with-property": "You are trying to access the property __property__ on a null value.",
