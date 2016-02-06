@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 var Immutable = require('immutable');
 var Provider = require('react-redux').Provider;
 var i18n = require('i18next-client');
-var installDevTools = require('immutable-devtools');
+var installDevTools = require('immutable-devtools').default;
 var fs = require('fs');
 var path = require('path');
 

@@ -1,5 +1,5 @@
 var Promise = require('es6-promise').Promise;
-var GitHub = require('github-api/github');
+var GitHub = require('github-api');
 var github = new GitHub({});
 var gist = new github.Gist({});
 
