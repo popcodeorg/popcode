@@ -91,6 +91,29 @@
       },
       "declare-variable": "You haven't declared __variable__.\nTry: var __variable__;",
       "duplicated-declaration": "You already declared __variable__ somewhere else."
+    },
+    "javascriptRuntime": {
+      "not-a-function_with-name": "You tried to call __name__() as a function, but __name__ is not a function.",
+
+      "not-a-function_with-name-type": "You tried to call __name__() as a function, but __name__ is a __type__, not a function.",
+
+      "not-a-function_with-name-value": "You tried to call __name__() as a function, but __name__ is __value__, which is not a function.",
+
+      "undefined-not-a-function_with-name": "You tried to call __name__() as a function, but __name__ does not have a value.",
+
+      "null-not-a-function_with-name": "You tried to call __name__() as a function, but __name__ is null.",
+
+      "access-property-of-undefined": "You are trying to access a property of something that doesn't have a value.",
+
+      "access-property-of-null": "You are trying to access a property of a null value.",
+
+      "read-property-of-undefined_with-property": "You are trying to access the property __property__ on something that doesn't have a value.",
+
+      "read-property-of-null_with-property": "You are trying to access the property __property__ on a null value.",
+
+      "set-property-of-undefined_with-property": "You are trying to set the property __property__ on something that doesn't have a value.",
+
+      "set-property-of-null_with-property": "You are trying to set the property __property__ on a null value."
     }
   }
 }

@@ -5,6 +5,7 @@ var TextEncoder = require('text-encoding').TextEncoder;
 var base64 = require('base64-js');
 
 var generatePreview = require('../util/generatePreview.js');
+var normalizeError = require('../util/normalizeError.js');
 
 var Preview = React.createClass({
   propTypes: {
@@ -53,9 +54,14 @@ var Preview = React.createClass({
       return;
     }
 
+    var ErrorConstructor = window[data.error.name] || Error;
+    var error = new ErrorConstructor(data.error.message);
+
+    var normalizedError = normalizeError(error);
+
     this.props.onRuntimeError({
-      text: data.error.message,
-      raw: data.error.message,
+      text: normalizedError.message,
+      raw: normalizedError.message,
       row: data.error.line - this._runtimeErrorLineOffset() - 1,
       column: data.error.column,
       type: 'error',
