@@ -44,7 +44,7 @@ var humanErrors = {
   },
 
   E007: function() {
-    return generateAnnotation('doctype');
+    return generateAnnotation('doctype', {}, ['invalid-tag-name']);
   },
 
   E008: function() {

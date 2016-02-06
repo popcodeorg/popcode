@@ -5,6 +5,7 @@ var flatten = require('lodash/flatten');
 var flatMap = require('lodash/flatMap');
 var sortBy = require('lodash/sortBy');
 var omit = require('lodash/omit');
+var trim = require('lodash/trim');
 var validateWithHtmllint = require('./html/htmllint.js');
 var validateWithSlowparse = require('./html/slowparse.js');
 
@@ -21,7 +22,7 @@ function filterErrors(errors) {
 
 module.exports = function(source) {
   return Promise.all([
-    validateWithSlowparse(source),
+    validateWithSlowparse(trim(source)),
     validateWithHtmllint(source),
   ]).then(function(results) {
     var filteredErrors = filterErrors(flatten(results));
