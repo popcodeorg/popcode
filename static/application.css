@@ -52,6 +52,12 @@ body {
   clear: left;
 }
 
+.environment-rightColumn {
+  float: right;
+  width: 50%;
+  position: relative;
+}
+
 .editor {
   box-sizing: border-box;
   border-right: 2px solid gray;
@@ -65,8 +71,6 @@ body {
 }
 
 .preview {
-  float: right;
-  width: 50%;
   height: 100%;
   position: relative;
 }
@@ -93,11 +97,18 @@ body {
 }
 
 .errorList {
-  float: right;
-  width: 50%;
   height: 100%;
+  width: 100%;
   position: relative;
   overflow: scroll;
+}
+
+.errorList--docked {
+  position: absolute;
+  height: auto;
+  overflow: hidden;
+  bottom: 2rem;
+  border-top: 3px solid darkgray;
 }
 
 .errorList-errorSublist-header {
