@@ -24,6 +24,12 @@ var Preview = React.createClass({
     }
   },
 
+  componentDidUpdate: function(prevProps) {
+    if (!isEqual(prevProps.project, this.props.project)) {
+      this._addFrameContents();
+    }
+  },
+
   componentWillUnmount: function() {
     window.removeEventListener('message', this._onMessage);
   },
@@ -87,12 +93,17 @@ var Preview = React.createClass({
     window.open(url, 'preview');
   },
 
-  _addFrameContents: function(frame) {
-    if (frame === null) {
+  _saveFrame: function(frame) {
+    this.frame = frame;
+    this._addFrameContents();
+  },
+
+  _addFrameContents: function() {
+    if (!this.frame) {
       return;
     }
 
-    var frameDocument = frame.contentDocument;
+    var frameDocument = this.frame.contentDocument;
     frameDocument.open();
     frameDocument.write(this._generateDocument());
     frameDocument.close();
@@ -100,7 +111,7 @@ var Preview = React.createClass({
 
   _buildFrameNode: function() {
     if (Bowser.safari || Bowser.msie) {
-      return <iframe className="preview-frame" ref={this._addFrameContents} />;
+      return <iframe className="preview-frame" ref={this._saveFrame} />;
     }
 
     return (
