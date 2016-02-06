@@ -5,6 +5,10 @@ body {
 .toolbar {
   border-bottom: 1px solid darkgray;
   overflow: hidden;
+  position: absolute;
+  width: 100%;
+  z-index: 20;
+  background-color: white;
 }
 
 .toolbar-showHide {
@@ -49,7 +53,9 @@ body {
 }
 
 .environment {
-  clear: left;
+  box-sizing: border-box;
+  height: 100%;
+  padding-top: 2rem;
 }
 
 .environment-rightColumn {
@@ -107,7 +113,7 @@ body {
   position: absolute;
   height: auto;
   overflow: hidden;
-  bottom: 2rem;
+  bottom: 0;
   border-top: 3px solid darkgray;
 }
 
