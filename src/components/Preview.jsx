@@ -1,37 +1,15 @@
 var React = require('react');
-var Bowser = require('bowser');
-var isEqual = require('lodash/isEqual');
 var TextEncoder = require('text-encoding').TextEncoder;
 var base64 = require('base64-js');
 
+var PreviewFrame = require('./PreviewFrame');
 var generatePreview = require('../util/generatePreview.js');
-var normalizeError = require('../util/normalizeError.js');
 
 var Preview = React.createClass({
   propTypes: {
     project: React.PropTypes.object.isRequired,
     onRuntimeError: React.PropTypes.func.isRequired,
     clearRuntimeErrors: React.PropTypes.func.isRequired,
-  },
-
-  componentDidMount: function() {
-    window.addEventListener('message', this._onMessage);
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    if (!isEqual(nextProps.project, this.props.project)) {
-      this.props.clearRuntimeErrors();
-    }
-  },
-
-  componentDidUpdate: function(prevProps) {
-    if (!isEqual(prevProps.project, this.props.project)) {
-      this._addFrameContents();
-    }
-  },
-
-  componentWillUnmount: function() {
-    window.removeEventListener('message', this._onMessage);
   },
 
   _generateDocument: function() {
@@ -41,48 +19,7 @@ var Preview = React.createClass({
       return '';
     }
 
-    return generatePreview(this.props.project).documentElement.outerHTML;
-  },
-
-  _onMessage: function(message) {
-    if (typeof message.data !== 'string') {
-      return;
-    }
-
-    var data;
-    try {
-      data = JSON.parse(message.data);
-    } catch (_e) {
-      return;
-    }
-
-    if (data.type !== 'org.popcode.error') {
-      return;
-    }
-
-    var ErrorConstructor = window[data.error.name] || Error;
-    var error = new ErrorConstructor(data.error.message);
-
-    var normalizedError = normalizeError(error);
-
-    this.props.onRuntimeError({
-      text: normalizedError.message,
-      raw: normalizedError.message,
-      row: data.error.line - this._runtimeErrorLineOffset() - 1,
-      column: data.error.column,
-      type: 'error',
-    });
-  },
-
-  _runtimeErrorLineOffset: function() {
-    if (Bowser.safari) {
-      return 2;
-    }
-
-    var firstSourceLine = this._generateDocument().
-      split('\n').indexOf(generatePreview.sourceDelimiter) + 2;
-
-    return firstSourceLine - 1;
+    return generatePreview(project).documentElement.outerHTML;
   },
 
   _popOut: function() {
@@ -93,37 +30,15 @@ var Preview = React.createClass({
     window.open(url, 'preview');
   },
 
-  _saveFrame: function(frame) {
-    this.frame = frame;
-    this._addFrameContents();
-  },
-
-  _addFrameContents: function() {
-    if (!this.frame) {
-      return;
-    }
-
-    var frameDocument = this.frame.contentDocument;
-    frameDocument.open();
-    frameDocument.write(this._generateDocument());
-    frameDocument.close();
-  },
-
-  _buildFrameNode: function() {
-    if (Bowser.safari || Bowser.msie) {
-      return <iframe className="preview-frame" ref={this._saveFrame} />;
-    }
-
-    return (
-      <iframe className="preview-frame" srcDoc={this._generateDocument()} />
-    );
-  },
-
   render: function() {
     return (
       <div className="preview">
         <div className="preview-popOutButton" onClick={this._popOut} />
-        {this._buildFrameNode()}
+        <PreviewFrame
+          src={this._generateDocument()}
+          onRuntimeError={this.props.onRuntimeError}
+          frameWillRefresh={this.props.clearRuntimeErrors}
+        />
       </div>
     );
   },
