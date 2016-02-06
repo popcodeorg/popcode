@@ -83,7 +83,7 @@ var Preview = React.createClass({
     var doc = this._generateDocument();
     var uint8array = new TextEncoder('utf-8').encode(doc);
     var base64encoded = base64.fromByteArray(uint8array);
-    var url = 'data:text/html;base64,' + base64encoded;
+    var url = 'data:text/html;charset=utf-8;base64,' + base64encoded;
     window.open(url, 'preview');
   },
 
