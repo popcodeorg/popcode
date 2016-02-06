@@ -93,6 +93,7 @@ for all the sordid details.
 
 * [Mat Brown](https://github.com/outoftime) (maintainer)
 * [Alejandro AR](https://github.com/kinduff)
+* [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
 
 ## Contact ##
 
