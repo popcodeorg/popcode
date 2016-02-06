@@ -97,6 +97,7 @@ var Workspace = React.createClass({
             hasErrors={
               !isEmpty(flatten(values(this.props.errors)))
             }
+            runtimeErrors={this.props.runtimeErrors}
             onErrorClicked={this._onErrorClicked}
             onRuntimeError={this._onRuntimeError}
             clearRuntimeErrors={this._clearRuntimeErrors}
