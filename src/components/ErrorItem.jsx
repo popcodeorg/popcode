@@ -1,5 +1,4 @@
 var React = require('react');
-var i18n = require('i18next-client');
 var partial = require('lodash/partial');
 
 var ErrorItem = React.createClass({
@@ -11,8 +10,7 @@ var ErrorItem = React.createClass({
   },
 
   render: function() {
-    var lineNumber =
-      i18n.t('errors.line-number', {number: this.props.row + 1});
+    var lineNumber = this.props.row + 1;
 
     return (
       <li
