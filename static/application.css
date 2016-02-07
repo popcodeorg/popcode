@@ -139,3 +139,14 @@ body {
   background-color: #ffe6e6;
   cursor: pointer;
 }
+
+.errorList-error-line {
+  background-color: #802020;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8em;
+  padding: 0.2em 0.5em;
+  border-radius: 25%;
+  display: inline-block;
+  margin-right: 0.5em;
+}
