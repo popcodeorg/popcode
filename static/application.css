@@ -61,6 +61,7 @@ body {
 .environment-rightColumn {
   float: right;
   width: 50%;
+  height: 100%;
   position: relative;
 }
 
@@ -74,6 +75,18 @@ body {
 
 .editor:last-child {
   border-bottom: 0;
+}
+
+.delayedErrorOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: black;
+  background: white url(/images/large-spinner.gif) no-repeat center center;
+  opacity: 0.2;
 }
 
 .preview {

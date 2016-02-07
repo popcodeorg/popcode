@@ -25,6 +25,7 @@ function mapStateToProps(state) {
     currentProject: currentProjectJS,
     errors: state.errors.toJS(),
     runtimeErrors: state.runtimeErrors.toJS(),
+    delayErrorDisplay: state.delayErrorDisplay,
   };
 }
 
@@ -35,6 +36,7 @@ var Workspace = React.createClass({
     currentProject: React.PropTypes.object,
     errors: React.PropTypes.object,
     runtimeErrors: React.PropTypes.array,
+    delayErrorDisplay: React.PropTypes.bool,
   },
 
   componentWillMount: function() {
@@ -97,6 +99,7 @@ var Workspace = React.createClass({
             hasErrors={
               !isEmpty(flatten(values(this.props.errors)))
             }
+            delayErrorDisplay={this.props.delayErrorDisplay}
             runtimeErrors={this.props.runtimeErrors}
             onErrorClicked={this._onErrorClicked}
             onRuntimeError={this._onRuntimeError}

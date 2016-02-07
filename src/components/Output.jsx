@@ -10,6 +10,7 @@ var Output = React.createClass({
     hasErrors: React.PropTypes.bool.isRequired,
     errors: React.PropTypes.object.isRequired,
     runtimeErrors: React.PropTypes.array.isRequired,
+    delayErrorDisplay: React.PropTypes.bool.isRequired,
     onErrorClicked: React.PropTypes.func.isRequired,
     onRuntimeError: React.PropTypes.func.isRequired,
     clearRuntimeErrors: React.PropTypes.func.isRequired,
@@ -34,8 +35,27 @@ var Output = React.createClass({
     );
   },
 
+  _renderRuntimeErrorList: function() {
+    if (!isEmpty(this.props.runtimeErrors) && !this.props.delayErrorDisplay) {
+      return this._renderErrorList({
+        html: [],
+        css: [],
+        javascript: this.props.runtimeErrors,
+        docked: true,
+      });
+    }
+  },
+
   render: function() {
     if (this.props.hasErrors) {
+      if (this.props.delayErrorDisplay) {
+        return (
+          <div className="environment-rightColumn">
+            <div className="delayedErrorOverlay" />
+          </div>
+        );
+      }
+
       return (
         <div className="environment-rightColumn">
           {this._renderErrorList(this.props.errors)}
@@ -47,21 +67,10 @@ var Output = React.createClass({
       return null;
     }
 
-    var errorList;
-
-    if (!isEmpty(this.props.runtimeErrors)) {
-      errorList = this._renderErrorList({
-        html: [],
-        css: [],
-        javascript: this.props.runtimeErrors,
-        docked: true,
-      });
-    }
-
     return (
       <div className="environment-rightColumn">
         {this._renderPreview()}
-        {errorList}
+        {this._renderRuntimeErrorList()}
       </div>
     );
   },
