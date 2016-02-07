@@ -1,3 +1,6 @@
+var isEmpty = require('lodash/isEmpty');
+var debounce = require('lodash/debounce');
+
 var Storage = require('../services/Storage');
 var validations = require('../validations');
 
@@ -12,6 +15,10 @@ function getCurrentProject(state) {
     return state.projects.get(projectKey);
   }
 }
+
+var showErrorsAfterDebounce = debounce(function(dispatch) {
+  dispatch({type: 'ERROR_DEBOUNCE_FINISHED'});
+}, 1000);
 
 function validateSource(dispatch, language, source, enabledLibraries) {
   dispatch({
@@ -30,6 +37,10 @@ function validateSource(dispatch, language, source, enabledLibraries) {
         errors: errors,
       },
     });
+
+    if (!isEmpty(errors)) {
+      showErrorsAfterDebounce(dispatch);
+    }
   });
 }
 
