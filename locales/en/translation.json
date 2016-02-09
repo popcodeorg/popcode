@@ -7,6 +7,11 @@
     "libraries": "Libraries",
     "export-gist": "Export Gist"
   },
+  "languages": {
+    "html": "HTML",
+    "css": "CSS",
+    "javascript": "JavaScript"
+  },
   "errors": {
     "undefined-description": "Couldn't find a human description for",
     "notice": "You have __amount__ errors in your __language__!",

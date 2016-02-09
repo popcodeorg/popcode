@@ -1,6 +1,7 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
 var ACE = require('brace');
+var i18n = require('i18next-client');
+
 require('brace/mode/html');
 require('brace/mode/css');
 require('brace/mode/javascript');
@@ -13,10 +14,6 @@ var Editor = React.createClass({
     errors: React.PropTypes.array.isRequired,
     language: React.PropTypes.string.isRequired,
     onInput: React.PropTypes.func.isRequired,
-  },
-
-  componentDidMount: function() {
-    this._setupEditor();
   },
 
   componentWillReceiveProps: function(nextProps) {
@@ -42,10 +39,13 @@ var Editor = React.createClass({
     this._editor.focus();
   },
 
-  _setupEditor: function() {
-    var containerElement = ReactDOM.findDOMNode(this);
-    this._editor = ACE.edit(containerElement);
-    this._configureSession(this._editor.getSession());
+  _setupEditor: function(containerElement) {
+    if (containerElement) {
+      this._editor = ACE.edit(containerElement);
+      this._configureSession(this._editor.getSession());
+    } else {
+      this._editor.destroy();
+    }
   },
 
   _startNewSession: function(source) {
@@ -66,8 +66,13 @@ var Editor = React.createClass({
 
   render: function() {
     return (
-      <div className="editor">
-        {this.props.source}
+      <div className="editorContainer">
+        <div className="editorContainer-label">
+          {i18n.t('languages.' + this.props.language)}
+        </div>
+        <div className="editorContainer-editor" ref={this._setupEditor}>
+          {this.props.source}
+        </div>
       </div>
     );
   },
