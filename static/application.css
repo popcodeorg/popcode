@@ -65,16 +65,35 @@ body {
   position: relative;
 }
 
-.editor {
+.editorContainer {
   box-sizing: border-box;
   border-right: 2px solid gray;
   border-bottom: 2px solid gray;
   width: 50%;
   height: 33%;
+  position: relative;
 }
 
-.editor:last-child {
+.editorContainer:last-child {
   border-bottom: 0;
+}
+
+.editorContainer-editor {
+  width: 100%;
+  height: 100%;
+}
+
+.editorContainer-label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: black;
+  color: white;
+  z-index: 20;
+  padding: 0.2em;
+  opacity: 0.2;
+  font-size: 0.8rem;
+  border-bottom-left-radius: 4px;
 }
 
 .delayedErrorOverlay {
