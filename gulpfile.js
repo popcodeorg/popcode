@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var browserSync = require('browser-sync').create();
 var watchify = require('watchify');
-var browserify = require('browserify');
+var browserify = require('browserify-incremental');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var gutil = require('gulp-util');
@@ -45,7 +45,7 @@ gulp.task('js', function() {
     pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('watch', ['browserSync', 'css'], function() {
+gulp.task('watch', ['browserSync', 'css', 'js'], function() {
   gulp.watch(stylesheetsDir + '/**/*.css', ['css']);
   gulp.watch(srcDir + '/**/*.js', ['js']);
 });
