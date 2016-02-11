@@ -56,6 +56,8 @@ gulp.task('js', function() {
   return stream;
 });
 
+gulp.task('build', ['css', 'js']);
+
 gulp.task('watch', ['browserSync', 'css', 'js'], function() {
   gulp.watch(stylesheetsDir + '/**/*.css', ['css']);
   gulp.watch(srcDir + '/**/*.js', ['js']);

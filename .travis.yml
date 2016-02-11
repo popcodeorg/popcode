@@ -5,7 +5,7 @@ env:
   DEBUG_REDUX: false
 script:
 - npm test
-- npm run build
+- gulp build --production
 env:
   - LOG_REDUX_ACTIONS=false
 deploy:
