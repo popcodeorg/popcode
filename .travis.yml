@@ -6,11 +6,12 @@ env:
 script:
 - npm test
 - gulp build --production
-sudo: required
-before_install:
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -q
-  - sudo apt-get install gcc-4.8 -y
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8 - sudo apt-get install gcc-4.8 -y
 deploy:
   provider: s3
   access_key_id: AKIAJY2GYDQBE4HFF32Q
