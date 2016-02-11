@@ -2,7 +2,8 @@ language: node_js
 node_js:
 - '4.2.3'
 env:
-  DEBUG_REDUX: false
+  - DEBUG_REDUX=false
+  - CXX=g++-4.8
 script:
 - npm test
 - gulp build --production
