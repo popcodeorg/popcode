@@ -11,7 +11,7 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8 - sudo apt-get install gcc-4.8 -y
+      - g++-4.8
 deploy:
   provider: s3
   access_key_id: AKIAJY2GYDQBE4HFF32Q
