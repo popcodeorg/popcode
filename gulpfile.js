@@ -8,6 +8,8 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var cssnano = require('gulp-cssnano');
 var gutil = require('gulp-util');
+var assign = require('lodash/assign');
+var memoize = require('lodash/memoize');
 var reactify = require('reactify');
 var brfs = require('brfs');
 var envify = require('envify');
@@ -20,12 +22,32 @@ var stylesheetsDir = srcDir + '/css';
 var browserifyDone = Promise.resolve();
 
 var browserifyOpts = {
-  entries: ['src/application.js'],
   extensions: ['.jsx'],
   transform: [reactify, brfs, envify],
   debug: true,
 };
-var browserifyCompiler = browserify(browserifyOpts);
+
+var buildBrowserifyCompiler = memoize(function(filename) {
+  return browserify(assign(
+    browserifyOpts,
+    {entries: ['src/' + filename]}
+  ));
+});
+
+function buildBrowserifyStream(filename) {
+  return new Promise(function(resolve, reject) {
+    buildBrowserifyCompiler(filename).bundle().
+      pipe(source(filename)).
+      pipe(buffer()).
+      pipe(sourcemaps.init({loadMaps: true})).
+      pipe(gutil.env.production ? uglify() : gutil.noop()).
+      pipe(sourcemaps.write('./')).
+      pipe(gulp.dest(distDir)).
+      on('end', resolve).
+      on('error', reject).
+      pipe(browserSync.reload({stream: true}));
+  });
+}
 
 gulp.task('css', function() {
   return gulp.src(stylesheetsDir + '/**/*.css').
@@ -38,29 +60,15 @@ gulp.task('css', function() {
 });
 
 gulp.task('js', function() {
-  var stream;
-
-  browserifyDone = new Promise(function(resolve, reject) {
-    stream = browserifyCompiler.bundle().
-      pipe(source('application.js')).
-      pipe(buffer()).
-      pipe(sourcemaps.init({loadMaps: true})).
-      pipe(gutil.env.production ? uglify() : gutil.noop()).
-      pipe(sourcemaps.write('./')).
-      pipe(gulp.dest(distDir)).
-      pipe(browserSync.reload({stream: true})).
-      on('end', resolve).
-      on('error', reject);
-  });
-
-  return stream;
+  browserifyDone = buildBrowserifyStream('application.js');
+  return browserifyDone;
 });
 
 gulp.task('build', ['css', 'js']);
 
-gulp.task('watch', ['browserSync', 'css', 'js'], function() {
+gulp.task('dev', ['browserSync', 'css', 'js'], function() {
   gulp.watch(stylesheetsDir + '/**/*.css', ['css']);
-  gulp.watch(srcDir + '/**/*.js', ['js']);
+  gulp.watch(srcDir + '/**/*.js{,x}', ['js']);
 });
 
 gulp.task('browserSync', function() {
@@ -68,7 +76,9 @@ gulp.task('browserSync', function() {
     server: {
       baseDir: baseDir,
       middleware: function(_req, _res, next) {
-        browserifyDone.then(next);
+        browserifyDone.then(function() {
+          next();
+        });
       },
     },
   });
