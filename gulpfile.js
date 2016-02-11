@@ -80,7 +80,10 @@ gulp.task('css', function() {
 });
 
 gulp.task('js', ['env'], function() {
-  browserifyDone = buildBrowserifyStream('application.js');
+  browserifyDone = Promise.all([
+    buildBrowserifyStream('application.js'),
+    buildBrowserifyStream('worker.js'),
+  ]);
   return browserifyDone;
 });
 
