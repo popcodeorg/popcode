@@ -2,13 +2,11 @@ language: node_js
 node_js:
 - '4.2.3'
 env:
-  - DEBUG_REDUX=false
   - CXX=g++-4.8
+  - LOG_REDUX_ACTIONS=false
 script:
 - npm test
 - gulp build --production
-env:
-  - LOG_REDUX_ACTIONS=false
 deploy:
   provider: s3
   access_key_id: AKIAJY2GYDQBE4HFF32Q
