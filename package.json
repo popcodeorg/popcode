@@ -33,6 +33,7 @@
     "keymirror": "^0.1.1",
     "localforage": "^1.3.3",
     "lodash": "^4.2.1",
+    "microevent": "^1.0.0",
     "moment": "^2.11.2",
     "postmessage-client-server": "^1.0.0",
     "react": "^0.14.7",
