@@ -12,7 +12,7 @@ var cssnano = require('gulp-cssnano');
 var gutil = require('gulp-util');
 var assign = require('lodash/assign');
 var memoize = require('lodash/memoize');
-var reactify = require('reactify');
+var babelify = require('babelify');
 var brfs = require('brfs');
 var envify = require('envify');
 
@@ -25,7 +25,7 @@ var browserifyDone = Promise.resolve();
 
 var browserifyOpts = {
   extensions: ['.jsx'],
-  transform: [reactify, brfs, envify],
+  transform: [babelify, brfs, envify],
   debug: true,
 };
 
