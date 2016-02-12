@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var browserSync = require('browser-sync').create();
@@ -49,6 +51,12 @@ function buildBrowserifyStream(filename) {
   });
 }
 
+gulp.task('env', function() {
+  if (gulp.env.production) {
+    process.env.NODE_ENV = 'production';
+  }
+});
+
 gulp.task('css', function() {
   return gulp.src(stylesheetsDir + '/**/*.css').
     pipe(concat('application.css')).
@@ -59,7 +67,7 @@ gulp.task('css', function() {
     pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('js', function() {
+gulp.task('js', ['env'], function() {
   browserifyDone = buildBrowserifyStream('application.js');
   return browserifyDone;
 });
