@@ -91,7 +91,7 @@ assign(PreviewGenerator.prototype, {
       if (javascript !== undefined) {
         this._attachJavascriptLibrary(javascript);
       }
-    });
+    }.bind(this));
   },
 
   _attachCssLibrary: function(css) {
