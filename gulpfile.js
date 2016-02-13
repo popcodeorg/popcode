@@ -31,8 +31,12 @@ var browserifyOpts = {
 
 var buildBrowserifyCompiler = memoize(function(filename) {
   return browserify(assign(
+    {},
     browserifyOpts,
-    {entries: ['src/' + filename]}
+    {
+      entries: ['src/' + filename],
+      fullPaths: !gulp.env.production,
+    }
   ));
 });
 
