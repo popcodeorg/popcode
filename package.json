@@ -54,13 +54,6 @@
     "lint": "./node_modules/.bin/eslint --ext .js,.jsx --plugin react src",
     "watchtests": "./node_modules/.bin/jest --watch"
   },
-  "browserify": {
-    "transform": [
-      "reactify",
-      "brfs",
-      "envify"
-    ]
-  },
   "jest": {
     "unmockedModulePathPatterns": [
       "./node_modules/immutable",

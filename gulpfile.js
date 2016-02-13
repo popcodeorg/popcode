@@ -3,7 +3,8 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var browserSync = require('browser-sync').create();
-var browserify = require('browserify-incremental');
+var browserify = require('browserify');
+var browserifyInc = require('browserify-incremental');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var sourcemaps = require('gulp-sourcemaps');
@@ -21,6 +22,13 @@ var baseDir = 'static';
 var distDir = baseDir + '/compiled';
 var stylesheetsDir = srcDir + '/css';
 
+var browserifyImpl;
+if (gulp.env.production) {
+  browserifyImpl = browserify;
+} else {
+  browserifyImpl = browserifyInc;
+}
+
 var browserifyDone = Promise.resolve();
 
 var browserifyOpts = {
@@ -30,7 +38,7 @@ var browserifyOpts = {
 };
 
 var buildBrowserifyCompiler = memoize(function(filename) {
-  return browserify(assign(
+  return browserifyImpl(assign(
     {},
     browserifyOpts,
     {
