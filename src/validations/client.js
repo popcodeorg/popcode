@@ -7,15 +7,13 @@ worker.onmessage = function(event) {
   emitter.trigger(event.data.messageId, event.data.payload);
 };
 
-function validate(language, source) {
+function validate(language, source, enabledLibraries) {
   var messageId = (Date.now() + Math.random()).toString();
 
   worker.postMessage({
     messageId: messageId,
-    payload: {
-      language: language,
-      source: source,
-    },
+    method: 'validate',
+    payload: [language, source, enabledLibraries],
   });
 
   return new Promise(function(resolve) {

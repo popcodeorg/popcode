@@ -2,7 +2,7 @@ var isEmpty = require('lodash/isEmpty');
 var debounce = require('lodash/debounce');
 
 var Storage = require('../services/Storage');
-var validations = require('../validations');
+var validate = require('../validations/client');
 
 function generateProjectKey() {
   var date = new Date();
@@ -28,8 +28,7 @@ function validateSource(dispatch, language, source, enabledLibraries) {
     },
   });
 
-  var validate = validations[language];
-  validate(source, enabledLibraries.toJS()).then(function(errors) {
+  validate(language, source, enabledLibraries.toJS()).then(function(errors) {
     dispatch({
       type: 'VALIDATED_SOURCE',
       payload: {
