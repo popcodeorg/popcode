@@ -1,5 +1,4 @@
 /* global process */
-/* eslint no-process-env: 0 */
 
 module.exports = {
   logReduxActions: function() {
