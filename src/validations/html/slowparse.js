@@ -1,6 +1,18 @@
 var i18n = require('i18next-client');
 var Slowparse = require('slowparse/src');
 var assign = require('lodash/assign');
+var jsdom = require('jsdom');
+var Promise = require('es6-promise').Promise;
+
+var jsdomReady = new Promise(function(resolve, reject) {
+  jsdom.env('<div></div>', function(err, window) {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(window);
+    }
+  });
+});
 
 var humanErrors = {
   ATTRIBUTE_IN_CLOSING_TAG: function(error) {
@@ -140,13 +152,17 @@ function convertErrorToAnnotation(source, error) {
 }
 
 module.exports = function(source) {
-  var error = Slowparse.HTML(document, source).error;
-  if (error !== null) {
-    var annotation = convertErrorToAnnotation(source, error);
-    if (annotation !== undefined) {
-      return Promise.resolve([annotation]);
+  return jsdomReady.then(function(window) {
+    var error = Slowparse.HTML(window.document, source).error;
+    if (error !== null) {
+      var annotation = convertErrorToAnnotation(source, error);
+      if (annotation !== undefined) {
+        return [annotation];
+      }
     }
-  }
 
-  return Promise.resolve([]);
+    return [];
+  }, function(err) {
+    debugger;
+  });
 };
