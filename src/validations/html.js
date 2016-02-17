@@ -20,10 +20,10 @@ function filterErrors(errors) {
   return flatten(values(omit(groupedErrors, suppressedTypes)));
 }
 
-export default source => Promise.all([
+export default (source) => Promise.all([
   validateWithSlowparse(trim(source)),
   validateWithHtmllint(source),
-]).then(results => {
+]).then((results) => {
   const filteredErrors = filterErrors(flatten(results));
   return sortBy(filteredErrors, 'row');
 });

@@ -20,14 +20,16 @@ function convertErrorToAnnotation(error) {
       type: 'error',
     };
   }
+
+  return null;
 }
 
-export default source => {
+export default (source) => {
   const result = css.parse(source, {silent: true}).stylesheet;
   const annotations = [];
-  result.parsingErrors.forEach(error => {
+  result.parsingErrors.forEach((error) => {
     const annotation = convertErrorToAnnotation(error);
-    if (annotation !== undefined) {
+    if (annotation !== null) {
       annotations.push(annotation);
     }
   });

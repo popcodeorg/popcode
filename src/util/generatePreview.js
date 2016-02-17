@@ -81,7 +81,7 @@ assign(PreviewGenerator.prototype, {
   },
 
   _attachLibraries() {
-    this._project.enabledLibraries.forEach(function(libraryKey) {
+    this._project.enabledLibraries.forEach((libraryKey) => {
       const library = libraries[libraryKey];
       const css = library.css;
       const javascript = library.javascript;
@@ -91,7 +91,7 @@ assign(PreviewGenerator.prototype, {
       if (javascript !== undefined) {
         this._attachJavascriptLibrary(javascript);
       }
-    }.bind(this));
+    });
   },
 
   _attachCssLibrary(css) {

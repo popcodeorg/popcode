@@ -20,7 +20,7 @@ describe('errors', () => {
   [
     'CURRENT_PROJECT_LOADED_FROM_STORAGE',
     'CURRENT_PROJECT_CHANGED',
-  ].forEach(actionType => {
+  ].forEach((actionType) => {
     describe(actionType, () => {
       const action = {
         type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',

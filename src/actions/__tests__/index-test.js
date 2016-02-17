@@ -23,17 +23,17 @@ describe('index', () => {
     action(dispatch, getState);
   }
 
-  function expectActions() {
+  function expectActions(...actionTypes) {
     const resolveFns = {};
     dispatch.promised = {};
 
-    each(arguments, actionType => {
-      dispatch.promised[actionType] = new Promise(resolve => {
+    each(actionTypes, (actionType) => {
+      dispatch.promised[actionType] = new Promise((resolve) => {
         resolveFns[actionType] = resolve;
       });
     });
 
-    dispatch.mockImplementation(action => {
+    dispatch.mockImplementation((action) => {
       if (resolveFns[action.type]) {
         resolveFns[action.type](action);
       }
@@ -91,7 +91,7 @@ describe('index', () => {
       Storage.load.mockReturnValue(Promise.resolve(blank.project));
 
       getState.mockReturnValue(blank.state);
-      each(validations, validation => {
+      each(validations, (validation) => {
         validation.mockImplementation(() => Promise.resolve([]));
       });
 
@@ -107,7 +107,7 @@ describe('index', () => {
     pit(
       'should dispatch CURRENT_PROJECT_LOADED_FROM_STORAGE',
       () => dispatch.promised.CURRENT_PROJECT_LOADED_FROM_STORAGE.
-        then(action => {
+        then((action) => {
           expect(action).toBeDefined();
         })
     );
@@ -115,21 +115,21 @@ describe('index', () => {
     pit(
       'should pass project in payload',
       () => dispatch.promised.CURRENT_PROJECT_LOADED_FROM_STORAGE.
-        then(action => {
+        then((action) => {
           expect(action.payload.project).toBe(blank.project);
         })
     );
 
     pit(
       'should dispatch VALIDATING_SOURCE',
-      () => dispatch.promised.VALIDATING_SOURCE.then(action => {
+      () => dispatch.promised.VALIDATING_SOURCE.then((action) => {
         expect(action).toBeDefined();
       })
     );
 
     pit(
       'should dispatch VALIDATED_SOURCE',
-      () => dispatch.promised.VALIDATED_SOURCE.then(action => {
+      () => dispatch.promised.VALIDATED_SOURCE.then((action) => {
         expect(action).toBeDefined();
       })
     );
@@ -145,7 +145,7 @@ describe('index', () => {
     });
 
     pit('should dispatch PROJECT_CREATED action', function() {
-      return this.actionsDispatched.then(action => {
+      return this.actionsDispatched.then((action) => {
         expect(action.type).toBe('PROJECT_CREATED');
       });
     });
@@ -155,8 +155,8 @@ describe('index', () => {
     beforeEach(function() {
       getState.mockReturnValue(blank.state);
 
-      this.promisedValidatedSourceAction = new Promise(resolve => {
-        dispatch.mockImplementation(action => {
+      this.promisedValidatedSourceAction = new Promise((resolve) => {
+        dispatch.mockImplementation((action) => {
           if (action.type === 'VALIDATED_SOURCE') {
             resolve(action);
           }
@@ -210,19 +210,19 @@ describe('index', () => {
     });
 
     pit('should dispatch validation complete action', function() {
-      return this.promisedValidatedSourceAction.then(action => {
+      return this.promisedValidatedSourceAction.then((action) => {
         expect(action).toBeDefined();
       });
     });
 
     pit('should send errors in validation complete action', function() {
-      return this.promisedValidatedSourceAction.then(function(action) {
+      return this.promisedValidatedSourceAction.then((action) => {
         expect(action.payload.errors).toEqual([this.error]);
-      }.bind(this));
+      });
     });
 
     pit('should send errors in validation complete action', function() {
-      return this.promisedValidatedSourceAction.then(action => {
+      return this.promisedValidatedSourceAction.then((action) => {
         expect(action.payload.language).toBe('css');
       });
     });
@@ -244,7 +244,7 @@ describe('index', () => {
 
       getState.mockReturnValue(blank.state);
 
-      each(validations, validation => {
+      each(validations, (validation) => {
         validation.mockImplementation(() => Promise.resolve([]));
       });
 
@@ -253,14 +253,14 @@ describe('index', () => {
 
     pit(
       'should dispatch CURRENT_PROJECT_CHANGED',
-      () => dispatch.promised.CURRENT_PROJECT_CHANGED.then(action => {
+      () => dispatch.promised.CURRENT_PROJECT_CHANGED.then((action) => {
         expect(action).toBeDefined();
       })
     );
 
     pit(
       'should dispatch project key in the payload',
-      () => dispatch.promised.CURRENT_PROJECT_CHANGED.then(action => {
+      () => dispatch.promised.CURRENT_PROJECT_CHANGED.then((action) => {
         expect(action.payload.projectKey).toBe('12345');
       })
     );
@@ -276,14 +276,14 @@ describe('index', () => {
 
     pit(
       'should validate sources',
-      () => dispatch.promised.VALIDATING_SOURCE.then(action => {
+      () => dispatch.promised.VALIDATING_SOURCE.then((action) => {
         expect(action).toBeDefined();
       })
     );
 
     pit(
       'should finish validating sources',
-      () => dispatch.promised.VALIDATED_SOURCE.then(action => {
+      () => dispatch.promised.VALIDATED_SOURCE.then((action) => {
         expect(action).toBeDefined();
       })
     );
@@ -298,7 +298,7 @@ describe('index', () => {
       );
 
       getState.mockReturnValue(blank.state);
-      each(validations, validation => {
+      each(validations, (validation) => {
         validation.mockImplementation(() => Promise.resolve([]));
       });
 
@@ -307,14 +307,14 @@ describe('index', () => {
 
     pit(
       'should dispatch PROJECT_LIBRARY_TOGGLED with library',
-      () => dispatch.promised.PROJECT_LIBRARY_TOGGLED.then(action => {
+      () => dispatch.promised.PROJECT_LIBRARY_TOGGLED.then((action) => {
         expect(action.payload.libraryKey).toBe('jquery');
       })
     );
 
     pit(
       'should dispatch PROJECT_LIBRARY_TOGGLED with project',
-      () => dispatch.promised.PROJECT_LIBRARY_TOGGLED.then(action => {
+      () => dispatch.promised.PROJECT_LIBRARY_TOGGLED.then((action) => {
         expect(action.payload.projectKey).toBe('12345');
       })
     );
@@ -346,7 +346,7 @@ describe('index', () => {
     pit(
       'should dispatch PROJECT_LOADED_FROM_STORAGE',
       () => dispatch.promised.PROJECT_LOADED_FROM_STORAGE.
-        then(action => {
+        then((action) => {
           expect(action.payload.project.projectKey).toBe('23456');
         })
     );

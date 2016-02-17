@@ -3,7 +3,7 @@ import htmllint from 'htmllint';
 import assign from 'lodash/assign';
 
 const humanErrors = {
-  E001: error => {
+  E001: (error) => {
     switch (error.data.attribute.toLowerCase()) {
       case 'align':
         return generateAnnotation('banned-attributes.align');
@@ -26,11 +26,13 @@ const humanErrors = {
       case 'width':
         return generateAnnotation('banned-attributes.width');
     }
+
+    return null;
   },
 
   E002: () => generateAnnotation('lower-case-attribute-name'),
 
-  E005: error => generateAnnotation(
+  E005: (error) => generateAnnotation(
     'attribute-quotes',
     {attribute: error.data.attribute}
   ),
@@ -41,11 +43,11 @@ const humanErrors = {
 
   E008: () => generateAnnotation('doctype'),
 
-  E012: error => generateAnnotation('duplicated-id', {id: error.data.id}),
+  E012: (error) => generateAnnotation('duplicated-id', {id: error.data.id}),
 
   E014: () => generateAnnotation('img-src'),
 
-  E016: error => {
+  E016: (error) => {
     switch (error.data.tag.toLowerCase()) {
       case 'b':
         return generateAnnotation('deprecated-tag.b');
@@ -62,6 +64,8 @@ const humanErrors = {
       case 'tt':
         return generateAnnotation('deprecated-tag.tt');
     }
+
+    return null;
   },
 
   E017: () => generateAnnotation('lower-case-tag-name'),
@@ -130,13 +134,15 @@ function convertErrorToAnnotation(error) {
       type: 'error',
     });
   }
+
+  return null;
 }
 
-export default source => htmllint(source, htmlLintOptions).then(errors => {
+export default (source) => htmllint(source, htmlLintOptions).then((errors) => {
   const annotations = [];
-  errors.forEach(error => {
+  errors.forEach((error) => {
     const annotation = convertErrorToAnnotation(error);
-    if (annotation !== undefined) {
+    if (annotation !== null) {
       annotations.push(annotation);
     }
   });

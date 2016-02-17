@@ -8,7 +8,7 @@ import i18n from 'i18next-client';
 
 const normalizers = {
   Chrome: {
-    TypeError: message => {
+    TypeError: (message) => {
       let match;
 
       match = /^(\w+) is not a function$/.exec(message);
@@ -24,11 +24,13 @@ const normalizers = {
           params: {property: match[2]},
         };
       }
+
+      return null;
     },
   },
 
   Safari: {
-    TypeError: message => {
+    TypeError: (message) => {
       let match;
 
       match = /^(\w+) is not a function. \(In '\w+\(\)', '\w+' is (\w+|an instance of (\w+))\)$/.exec(message); // eslint-disable-line max-len
@@ -58,11 +60,13 @@ const normalizers = {
       if (match) {
         return {type: `access-property-of-${match[1]}`};
       }
+
+      return null;
     },
   },
 
   Firefox: {
-    TypeError: message => {
+    TypeError: (message) => {
       let match;
 
       match = /^(\w+) is not a function$/.exec(message);
@@ -77,6 +81,8 @@ const normalizers = {
           params: {name: match[1]},
         };
       }
+
+      return null;
     },
   },
 };
@@ -99,7 +105,7 @@ function normalizeError(error) {
   const normalizer = get(normalizers, [Bowser.name, error.name]);
   if (normalizer !== undefined) {
     const normalizedError = normalizer(error.message);
-    if (normalizedError !== undefined) {
+    if (normalizedError !== null) {
       return attachMessage(normalizedError);
     }
   }

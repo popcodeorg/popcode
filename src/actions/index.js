@@ -13,9 +13,11 @@ function getCurrentProject(state) {
   if (projectKey) {
     return state.projects.get(projectKey);
   }
+
+  return null;
 }
 
-const showErrorsAfterDebounce = debounce(dispatch => {
+const showErrorsAfterDebounce = debounce((dispatch) => {
   dispatch({type: 'ERROR_DEBOUNCE_FINISHED'});
 }, 1000);
 
@@ -28,7 +30,7 @@ function validateSource(dispatch, language, source, enabledLibraries) {
   });
 
   const validate = validations[language];
-  validate(source, enabledLibraries.toJS()).then(errors => {
+  validate(source, enabledLibraries.toJS()).then((errors) => {
     dispatch({
       type: 'VALIDATED_SOURCE',
       payload: {
@@ -67,9 +69,9 @@ exports.createProject = () => (dispatch, getState) => {
 };
 
 exports.loadCurrentProjectFromStorage = () => (dispatch, getState) => {
-  Storage.getCurrentProjectKey().then(projectKey => {
+  Storage.getCurrentProjectKey().then((projectKey) => {
     if (projectKey) {
-      Storage.load(projectKey).then(project => {
+      Storage.load(projectKey).then((project) => {
         dispatch({
           type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',
           payload: {project},
@@ -83,8 +85,8 @@ exports.loadCurrentProjectFromStorage = () => (dispatch, getState) => {
   });
 };
 
-exports.updateProjectSource = (projectKey, language, newValue) => {
-  return (dispatch, getState) => {
+exports.updateProjectSource = (projectKey, language, newValue) =>
+  (dispatch, getState) => {
     dispatch({
       type: 'PROJECT_SOURCE_EDITED',
       payload: {
@@ -104,9 +106,8 @@ exports.updateProjectSource = (projectKey, language, newValue) => {
       currentProject.get('enabledLibraries')
     );
   };
-};
 
-exports.changeCurrentProject = projectKey => (dispatch, getState) => {
+exports.changeCurrentProject = (projectKey) => (dispatch, getState) => {
   dispatch({
     type: 'CURRENT_PROJECT_CHANGED',
     payload: {projectKey},
@@ -129,8 +130,9 @@ exports.toggleLibrary = (projectKey, libraryKey) => (dispatch, getState) => {
   validateAllSources(dispatch, getCurrentProject(getState()));
 };
 
-exports.loadAllProjects = () => dispatch => Storage.all().then(projects => {
-  projects.forEach(project => {
+exports.loadAllProjects = () => (dispatch) =>
+Storage.all().then((projects) => {
+  projects.forEach((project) => {
     dispatch({
       type: 'PROJECT_LOADED_FROM_STORAGE',
       payload: {project},
@@ -138,7 +140,7 @@ exports.loadAllProjects = () => dispatch => Storage.all().then(projects => {
   });
 });
 
-exports.addRuntimeError = error => ({
+exports.addRuntimeError = (error) => ({
   type: 'RUNTIME_ERROR_ADDED',
   payload: {error},
 });

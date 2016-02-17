@@ -26,19 +26,19 @@ const match = {
 };
 
 const humanErrors = {
-  E019: error => i18n.t(
+  E019: (error) => i18n.t(
     'errors.javascript.unmatched',
     {openingSymbol: error.a, closingSymbol: match[error.a]}
   ),
 
-  E020: error => i18n.t(
+  E020: (error) => i18n.t(
     'errors.javascript.closing-match',
     {openingSymbol: error.b, closingSymbol: error.a}
   ),
 
   E030: () => i18n.t('errors.javascript.expected-identifier'),
 
-  W003: error => i18n.t(
+  W003: (error) => i18n.t(
     'errors.javascript.undefined-variable',
     {variable: error.a}
   ),
@@ -51,21 +51,21 @@ const humanErrors = {
 
   W033: () => i18n.t('errors.javascript.missing-semicolon'),
 
-  W058: error => i18n.t(
+  W058: (error) => i18n.t(
     'errors.javascript.missing-parentheses',
     {object: error.a}
   ),
 
   W084: () => i18n.t('errors.javascript.strict-comparison-operator'),
 
-  W098: error => i18n.t(
+  W098: (error) => i18n.t(
     'errors.javascript.unused-variable',
     {variable: error.a}
   ),
 
   W112: () => i18n.t('errors.javascript.unclosed-string'),
 
-  W116: error => {
+  W116: (error) => {
     if (error.a === '===' && error.b === '==') {
       return i18n.t('errors.javascript.strict-operators.equal');
     }
@@ -78,12 +78,12 @@ const humanErrors = {
     );
   },
 
-  W117: error => i18n.t(
+  W117: (error) => i18n.t(
     'errors.javascript.declare-variable',
     {variable: error.a}
   ),
 
-  W123: error => i18n.t(
+  W123: (error) => i18n.t(
     'errors.javascript.duplicated-declaration',
     {variable: error.a}
   ),
@@ -100,11 +100,12 @@ function convertErrorToAnnotation(error) {
       type: 'error',
     };
   }
+  return undefined;
 }
 
 export default (source, enabledLibraries) => {
   let config = jshintrc;
-  enabledLibraries.forEach(libraryKey => {
+  enabledLibraries.forEach((libraryKey) => {
     const library = libraries[libraryKey];
 
     if (library.validations !== undefined &&
@@ -119,7 +120,7 @@ export default (source, enabledLibraries) => {
   const annotatedLines = [];
 
   if (data.errors) {
-    data.errors.forEach(error => {
+    data.errors.forEach((error) => {
       if (error === null) {
         return;
       }

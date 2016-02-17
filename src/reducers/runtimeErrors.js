@@ -11,7 +11,7 @@ function runtimeErrors(stateIn, action) {
   switch (action.type) {
     case 'RUNTIME_ERROR_ADDED':
       return state.push(Immutable.fromJS(action.payload.error)).
-        sortBy(error => error.get('row'));
+        sortBy((error) => error.get('row'));
 
     case 'RUNTIME_ERRORS_CLEARED':
       return emptyList;

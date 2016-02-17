@@ -9,16 +9,8 @@ import _javascript from 'brace/mode/javascript';
 import _monokai from 'brace/theme/monokai';
 /* eslint-enable no-unused-vars */
 
-var Editor = React.createClass({
-  propTypes: {
-    projectKey: React.PropTypes.string.isRequired,
-    source: React.PropTypes.string.isRequired,
-    errors: React.PropTypes.array.isRequired,
-    language: React.PropTypes.string.isRequired,
-    onInput: React.PropTypes.func.isRequired,
-  },
-
-  componentWillReceiveProps: function(nextProps) {
+class Editor extends React.Component {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.projectKey !== this.props.projectKey) {
       this._startNewSession(nextProps.source);
     } else if (nextProps.source !== this._editor.getValue()) {
@@ -26,58 +18,66 @@ var Editor = React.createClass({
     }
 
     this._editor.getSession().setAnnotations(nextProps.errors);
-  },
+  }
 
-  shouldComponentUpdate: function() {
+  shouldComponentUpdate() {
     return false;
-  },
+  }
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     this._editor.destroy();
-  },
+  }
 
-  _jumpToLine: function(line, column) {
+  _jumpToLine(line, column) {
     this._editor.moveCursorTo(line, column);
     this._editor.focus();
-  },
+  }
 
-  _setupEditor: function(containerElement) {
+  _setupEditor(containerElement) {
     if (containerElement) {
       this._editor = ACE.edit(containerElement);
       this._configureSession(this._editor.getSession());
     } else {
       this._editor.destroy();
     }
-  },
+  }
 
-  _startNewSession: function(source) {
-    var session = new ACE.EditSession(source);
+  _startNewSession(source) {
+    const session = new ACE.EditSession(source);
     this._configureSession(session);
     this._editor.setSession(session);
     this._editor.moveCursorTo(0, 0);
-  },
+  }
 
-  _configureSession: function(session) {
-    var language = this.props.language;
-    session.setMode('ace/mode/' + language);
+  _configureSession(session) {
+    const language = this.props.language;
+    session.setMode(`ace/mode/${language}`);
     session.setUseWorker(false);
-    session.on('change', function() {
+    session.on('change', () => {
       this.props.onInput(this._editor.getValue());
-    }.bind(this));
-  },
+    });
+  }
 
-  render: function() {
+  render() {
     return (
       <div className="editorContainer">
         <div className="editorContainer-label">
-          {i18n.t('languages.' + this.props.language)}
+          {i18n.t(`languages.${this.props.language}`)}
         </div>
         <div className="editorContainer-editor" ref={this._setupEditor}>
           {this.props.source}
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+Editor.propTypes = {
+  projectKey: React.PropTypes.string.isRequired,
+  source: React.PropTypes.string.isRequired,
+  errors: React.PropTypes.array.isRequired,
+  language: React.PropTypes.string.isRequired,
+  onInput: React.PropTypes.func.isRequired,
+};
 
 module.exports = Editor;

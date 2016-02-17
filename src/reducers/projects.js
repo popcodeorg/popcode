@@ -59,7 +59,7 @@ function projects(stateIn, action) {
     case 'PROJECT_LIBRARY_TOGGLED':
       return state.updateIn(
         [action.payload.projectKey, 'enabledLibraries'],
-        enabledLibraries => {
+        (enabledLibraries) => {
           const libraryKey = action.payload.libraryKey;
           if (enabledLibraries.has(libraryKey)) {
             return enabledLibraries.delete(libraryKey);

@@ -9,14 +9,16 @@ function fullKeyFor(key) {
 }
 
 const Storage = {
-  getCurrentProjectKey: () => localforage.getItem('currentProjectKey'),
+  getCurrentProjectKey() {
+    return localforage.getItem('currentProjectKey');
+  },
 
-  setCurrentProjectKey: projectKey => {
-    localforage.setItem('currentProjectKey', projectKey);
+  setCurrentProjectKey(projectKey) {
+    return localforage.setItem('currentProjectKey', projectKey);
   },
 
   all() {
-    return localforage.getItem('allKeys').then(keys => {
+    return localforage.getItem('allKeys').then((keys) => {
       if (keys) {
         return Promise.all(keys.map(this.load));
       }
@@ -25,15 +27,17 @@ const Storage = {
     });
   },
 
-  load: projectKey => {
-    return localforage.getItem(fullKeyFor(projectKey)).then(payload => {
+  load(projectKey) {
+    return localforage.getItem(fullKeyFor(projectKey)).then((payload) => {
       if (payload !== null) {
         return payload;
       }
+
+      return null;
     });
   },
 
-  save: data => {
+  save(data) {
     const key = data.projectKey;
 
     localforage.setItem(
@@ -43,7 +47,7 @@ const Storage = {
         updatedAt: new Date(),
       }, data)
     ).then(() => {
-      localforage.getItem('allKeys').then(oldKeys => {
+      localforage.getItem('allKeys').then((oldKeys) => {
         if (oldKeys === null || oldKeys[oldKeys.length - 1] !== key) {
           const keys = without(oldKeys || [], key);
           keys.unshift(key);

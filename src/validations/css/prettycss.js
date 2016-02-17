@@ -9,7 +9,7 @@ function isIncorrectlyRejectedRadialGradientValue(value) {
 }
 
 const humanErrors = {
-  'block-expected': error => i18n.t(
+  'block-expected': (error) => i18n.t(
     'errors.prettycss.block-expected',
     {error: error.token.content}
   ),
@@ -24,7 +24,7 @@ const humanErrors = {
 
   'invalid-token': () => i18n.t('errors.prettycss.invalid-token'),
 
-  'invalid-value': error => {
+  'invalid-value': (error) => {
     if (isIncorrectlyRejectedRadialGradientValue(error.token.content)) {
       return null;
     }
@@ -35,14 +35,14 @@ const humanErrors = {
     );
   },
 
-  'require-value': error => i18n.t(
+  'require-value': (error) => i18n.t(
     'errors.prettycss.require-value',
     {error: error.token.content}
   ),
 
   'selector-expected': () => i18n.t('errors.prettycss.selector-expected'),
 
-  'unknown-property': error => i18n.t(
+  'unknown-property': (error) => i18n.t(
     'errors.prettycss.unknown-property',
     {error: error.token.content}
   ),
@@ -61,14 +61,16 @@ function convertErrorToAnnotation(error) {
       };
     }
   }
+
+  return null;
 }
 
-export default source => {
+export default (source) => {
   const result = prettyCSS.parse(source);
   const annotations = [];
-  result.errors.concat(result.warnings).forEach(error => {
+  result.errors.concat(result.warnings).forEach((error) => {
     const annotation = convertErrorToAnnotation(error);
-    if (annotation !== undefined) {
+    if (annotation !== null) {
       annotations.push(annotation);
     }
   });

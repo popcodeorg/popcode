@@ -11,11 +11,11 @@ import Output from './Output';
 import Toolbar from './Toolbar';
 
 function mapStateToProps(state) {
-  var currentProject = state.projects.get(
+  const currentProject = state.projects.get(
     state.currentProject.get('projectKey')
   );
 
-  var currentProjectJS;
+  let currentProjectJS;
   if (currentProject) {
     currentProjectJS = currentProject.toJS();
   }
@@ -29,31 +29,23 @@ function mapStateToProps(state) {
   };
 }
 
-var Workspace = React.createClass({
-  propTypes: {
-    dispatch: React.PropTypes.func.isRequired,
-    allProjects: React.PropTypes.array,
-    currentProject: React.PropTypes.object,
-    errors: React.PropTypes.object,
-    runtimeErrors: React.PropTypes.array,
-    delayErrorDisplay: React.PropTypes.bool,
-  },
+class Workspace extends React.Component {
 
-  componentWillMount: function() {
+  componentWillMount() {
     this.props.dispatch(actions.loadCurrentProjectFromStorage());
     this.props.dispatch(actions.loadAllProjects());
-  },
+  }
 
-  _allJavaScriptErrors: function() {
+  _allJavaScriptErrors() {
     return this.props.errors.javascript.concat(this.props.runtimeErrors);
-  },
+  }
 
-  _onErrorClicked: function(language, line, column) {
-    var editor = this.refs[language + 'Editor'];
+  _onErrorClicked(language, line, column) {
+    const editor = this.refs[`${language}Editor`];
     editor._jumpToLine(line, column);
-  },
+  }
 
-  _onEditorInput: function(language, source) {
+  _onEditorInput(language, source) {
     this.props.dispatch(
       actions.updateProjectSource(
         this.props.currentProject.projectKey,
@@ -61,35 +53,35 @@ var Workspace = React.createClass({
         source
       )
     );
-  },
+  }
 
-  _onLibraryToggled: function(libraryKey) {
+  _onLibraryToggled(libraryKey) {
     this.props.dispatch(
       actions.toggleLibrary(
         this.props.currentProject.projectKey,
         libraryKey
       )
     );
-  },
+  }
 
-  _onNewProject: function() {
+  _onNewProject() {
     this.props.dispatch(actions.createProject());
-  },
+  }
 
-  _onProjectSelected: function(project) {
+  _onProjectSelected(project) {
     this.props.dispatch(actions.changeCurrentProject(project.projectKey));
-  },
+  }
 
-  _onRuntimeError: function(error) {
+  _onRuntimeError(error) {
     this.props.dispatch(actions.addRuntimeError(error));
-  },
+  }
 
-  _clearRuntimeErrors: function() {
+  _clearRuntimeErrors() {
     this.props.dispatch(actions.clearRuntimeErrors());
-  },
+  }
 
-  render: function() {
-    var environment;
+  render() {
+    let environment;
     if (this.props.currentProject !== undefined) {
       environment = (
         <div className="environment">
@@ -148,7 +140,16 @@ var Workspace = React.createClass({
         {environment}
       </div>
     );
-  },
-});
+  }
+}
+
+Workspace.propTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+  allProjects: React.PropTypes.array,
+  currentProject: React.PropTypes.object,
+  errors: React.PropTypes.object,
+  runtimeErrors: React.PropTypes.array,
+  delayErrorDisplay: React.PropTypes.bool,
+};
 
 module.exports = connect(mapStateToProps)(Workspace);

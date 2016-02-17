@@ -32,15 +32,17 @@ function createGistFromProject(project) {
 }
 
 const Gists = {
-  createFromProject: project => new Promise((resolve, reject) => {
-    gist.create(createGistFromProject(project), (error, response) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(response);
-      }
+  createFromProject(project) {
+    return new Promise((resolve, reject) => {
+      gist.create(createGistFromProject(project), (error, response) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response);
+        }
+      });
     });
-  }),
+  },
 };
 
 export default Gists;

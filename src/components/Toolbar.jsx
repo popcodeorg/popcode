@@ -5,58 +5,51 @@ import LibraryPicker from './LibraryPicker';
 import ProjectList from './ProjectList';
 import Gists from '../services/Gists';
 
-var Toolbar = React.createClass({
-  propTypes: {
-    currentProject: React.PropTypes.object,
-    allProjects: React.PropTypes.array,
-    onLibraryToggled: React.PropTypes.func.isRequired,
-    onNewProject: React.PropTypes.func.isRequired,
-    onProjectSelected: React.PropTypes.func.isRequired,
-  },
+class Toolbar extends React.Component {
 
-  getInitialState: function() {
+  getInitialState() {
     return {open: false};
-  },
+  }
 
-  _close: function() {
+  _close() {
     this.setState({open: false, submenu: null});
-  },
+  }
 
-  _newProject: function() {
+  _newProject() {
     this._close();
     this.props.onNewProject();
-  },
+  }
 
-  _loadProject: function() {
+  _loadProject() {
     this.setState({submenu: 'loadProject'});
-  },
+  }
 
-  _exportGist: function() {
-    var newWindow = open('about:blank', 'gist');
+  _exportGist() {
+    const newWindow = open('about:blank', 'gist');
 
     Gists.createFromProject(this.props.currentProject).
-      then(function(response) {
+      then((response) => {
         newWindow.location = response.html_url;
       });
-  },
+  }
 
-  _showHideLabel: function() {
+  _showHideLabel() {
     if (this.state.open) {
       return i18n.t('toolbar.hide');
     }
     return i18n.t('toolbar.show');
-  },
+  }
 
-  _toggleLibraryPicker: function() {
-    return this.setState(function(oldState) {
+  _toggleLibraryPicker() {
+    return this.setState((oldState) => {
       if (oldState.submenu === 'libraries') {
         return {submenu: null};
       }
       return {submenu: 'libraries'};
     });
-  },
+  }
 
-  _getSubmenu: function() {
+  _getSubmenu() {
     switch (this.state.submenu) {
       case 'libraries':
         return (
@@ -74,28 +67,30 @@ var Toolbar = React.createClass({
           />
         );
     }
-  },
 
-  _toggleShowHideState: function() {
-    this.setState(function(oldState) {
+    return null;
+  }
+
+  _toggleShowHideState() {
+    this.setState((oldState) => {
       if (oldState.open) {
         return {open: false, submenu: null};
       }
       return {open: true};
     });
-  },
+  }
 
-  _onProjectSelected: function(project) {
+  _onProjectSelected(project) {
     this.props.onProjectSelected(project);
     this._close();
-  },
+  }
 
-  render: function() {
+  render() {
     if (!this.props.currentProject) {
       return null;
     }
 
-    var toolbarItemsClasses = ['toolbar-menu'];
+    const toolbarItemsClasses = ['toolbar-menu'];
     if (this.state.open) {
       toolbarItemsClasses.push('toolbar-menu--open');
     } else {
@@ -146,7 +141,15 @@ var Toolbar = React.createClass({
         {this._getSubmenu()}
       </div>
     );
-  },
-});
+  }
+}
+
+Toolbar.propTypes = {
+  currentProject: React.PropTypes.object,
+  allProjects: React.PropTypes.array,
+  onLibraryToggled: React.PropTypes.func.isRequired,
+  onNewProject: React.PropTypes.func.isRequired,
+  onProjectSelected: React.PropTypes.func.isRequired,
+};
 
 module.exports = Toolbar;

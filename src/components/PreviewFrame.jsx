@@ -3,66 +3,60 @@ import Bowser from 'bowser';
 import normalizeError from '../util/normalizeError';
 import generatePreview from '../util/generatePreview';
 
-var PreviewFrame = React.createClass({
-  propTypes: {
-    src: React.PropTypes.string.isRequired,
-    frameWillRefresh: React.PropTypes.func.isRequired,
-    onRuntimeError: React.PropTypes.func.isRequired,
-  },
-
-  componentDidMount: function() {
+class PreviewFrame extends React.Component {
+  componentDidMount() {
     window.addEventListener('message', this._onMessage);
-  },
+  }
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
       this.props.frameWillRefresh();
     }
-  },
+  }
 
-  componentDidUpdate: function(prevProps) {
+  componentDidUpdate(prevProps) {
     if (prevProps.src !== this.props.src) {
       this._writeFrameContents();
     }
-  },
+  }
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     window.removeEventListener('message', this._onMessage);
-  },
+  }
 
-  _saveFrame: function(frame) {
+  _saveFrame(frame) {
     this.frame = frame;
     this._writeFrameContents();
-  },
+  }
 
-  _writeFrameContents: function() {
+  _writeFrameContents() {
     if (!this.frame) {
       return;
     }
 
-    var frameDocument = this.frame.contentDocument;
+    const frameDocument = this.frame.contentDocument;
     frameDocument.open();
     frameDocument.write(this.props.src);
     frameDocument.close();
-  },
+  }
 
-  _runtimeErrorLineOffset: function() {
+  _runtimeErrorLineOffset() {
     if (Bowser.safari) {
       return 2;
     }
 
-    var firstSourceLine = this.props.src.
+    const firstSourceLine = this.props.src.
       split('\n').indexOf(generatePreview.sourceDelimiter) + 2;
 
     return firstSourceLine - 1;
-  },
+  }
 
-  _onMessage: function(message) {
+  _onMessage(message) {
     if (typeof message.data !== 'string') {
       return;
     }
 
-    var data;
+    let data;
     try {
       data = JSON.parse(message.data);
     } catch (_e) {
@@ -73,10 +67,10 @@ var PreviewFrame = React.createClass({
       return;
     }
 
-    var ErrorConstructor = window[data.error.name] || Error;
-    var error = new ErrorConstructor(data.error.message);
+    const ErrorConstructor = window[data.error.name] || Error;
+    const error = new ErrorConstructor(data.error.message);
 
-    var normalizedError = normalizeError(error);
+    const normalizedError = normalizeError(error);
 
     this.props.onRuntimeError({
       text: normalizedError.message,
@@ -85,9 +79,9 @@ var PreviewFrame = React.createClass({
       column: data.error.column,
       type: 'error',
     });
-  },
+  }
 
-  render: function() {
+  render() {
     if (Bowser.safari || Bowser.msie) {
       return <iframe className="preview-frame" ref={this._saveFrame} />;
     }
@@ -95,7 +89,14 @@ var PreviewFrame = React.createClass({
     return (
       <iframe className="preview-frame" srcDoc={this.props.src} />
     );
-  },
-});
+  }
+}
+
+PreviewFrame.propTypes = {
+  src: React.PropTypes.string.isRequired,
+  frameWillRefresh: React.PropTypes.func.isRequired,
+  onRuntimeError: React.PropTypes.func.isRequired,
+};
+
 
 module.exports = PreviewFrame;

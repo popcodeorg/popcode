@@ -7,7 +7,7 @@ import generatePreview from '../util/generatePreview';
 
 class Preview extends React.Component {
   _generateDocument() {
-    var project = this.props.project;
+    const project = this.props.project;
 
     if (project === undefined) {
       return '';
@@ -17,10 +17,10 @@ class Preview extends React.Component {
   }
 
   _popOut() {
-    var doc = this._generateDocument();
-    var uint8array = new TextEncoder('utf-8').encode(doc);
-    var base64encoded = base64.fromByteArray(uint8array);
-    var url = 'data:text/html;charset=utf-8;base64,' + base64encoded;
+    const doc = this._generateDocument();
+    const uint8array = new TextEncoder('utf-8').encode(doc);
+    const base64encoded = base64.fromByteArray(uint8array);
+    const url = `data:text/html;charset=utf-8;base64,${base64encoded}`;
     window.open(url, 'preview');
   }
 

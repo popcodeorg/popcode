@@ -20,7 +20,7 @@ describe('projects', () => {
   [
     'PROJECT_LOADED_FROM_STORAGE',
     'CURRENT_PROJECT_LOADED_FROM_STORAGE',
-  ].forEach(actionType => {
+  ].forEach((actionType) => {
     describe(actionType, () => {
       const action = {
         type: actionType,

@@ -3,17 +3,9 @@ import classnames from 'classnames';
 import get from 'lodash/get';
 import ErrorSublist from './ErrorSublist';
 
-var ErrorList = React.createClass({
-  propTypes: {
-    html: React.PropTypes.array.isRequired,
-    css: React.PropTypes.array.isRequired,
-    javascript: React.PropTypes.array.isRequired,
-    onErrorClicked: React.PropTypes.func.isRequired,
-    docked: React.PropTypes.bool,
-  },
-
-  render: function() {
-    var docked = get(this, 'props.docked', false);
+class ErrorList extends React.Component {
+  render() {
+    const docked = get(this, 'props.docked', false);
 
     return (
       <div className={classnames('errorList', {'errorList--docked': docked})}>
@@ -34,7 +26,15 @@ var ErrorList = React.createClass({
         />
       </div>
     );
-  },
-});
+  }
+}
+
+ErrorList.propTypes = {
+  html: React.PropTypes.array.isRequired,
+  css: React.PropTypes.array.isRequired,
+  javascript: React.PropTypes.array.isRequired,
+  onErrorClicked: React.PropTypes.func.isRequired,
+  docked: React.PropTypes.bool,
+};
 
 module.exports = ErrorList;

@@ -7,6 +7,17 @@
             2,
             "never"
         ],
+        "arrow-body-style": [
+            2,
+            "as-needed"
+        ],
+        "arrow-parens": [
+            2,
+            "always"
+        ],
+        "arrow-spacing": [
+          2
+        ],
         "block-scoped-var": [
           2
         ],
@@ -43,6 +54,9 @@
         "consistent-this": [
             2
         ],
+        "constructor-super": [
+          2
+        ],
         "curly": [
             2
         ],
@@ -64,6 +78,9 @@
         "func-style": [
             2,
             "declaration"
+        ],
+        "generator-star-spacing": [
+          2
         ],
         "global-require": [
             2
@@ -94,6 +111,13 @@
                 "mode": "strict"
             }
         ],
+        "keyword-spacing": [
+          2,
+          {
+            "before": true,
+            "after": true
+          }
+        ],
         "linebreak-style": [
             2,
             "unix"
@@ -123,7 +147,13 @@
         "no-catch-shadow": [
             2
         ],
+        "no-class-assign": [
+          2
+        ],
         "no-cond-assign": [
+          2
+        ],
+        "no-const-assign": [
           2
         ],
         "no-constant-condition": [
@@ -147,6 +177,9 @@
         "no-dupe-args": [
           2
         ],
+        "no-dupe-class-members": [
+          2
+        ],
         "no-dupe-keys": [
           2
         ],
@@ -161,9 +194,6 @@
         ],
         "no-empty-character-class": [
           2
-        ],
-        "no-empty-label": [
-            2
         ],
         "no-empty-pattern": [
             2
@@ -345,6 +375,9 @@
         "no-throw-literal": [
             2
         ],
+        "no-this-before-super": [
+          2
+        ],
         "no-trailing-spaces": [
             2
         ],
@@ -385,6 +418,12 @@
         "no-useless-concat": [
             2
         ],
+        "no-useless-constructor": [
+          2
+        ],
+        "no-var": [
+          2
+        ],
         "no-void": [
             2
         ],
@@ -397,6 +436,10 @@
         "object-curly-spacing": [
             2,
             "never"
+        ],
+        "object-shorthand": [
+          2,
+          "always"
         ],
         "one-var": [
             2,
@@ -416,6 +459,24 @@
         "padded-blocks": [
             2,
             "never"
+        ],
+        "prefer-arrow-callback": [
+          2
+        ],
+        "prefer-const": [
+          2
+        ],
+        "prefer-reflect": [
+          2
+        ],
+        "prefer-rest-params": [
+          2
+        ],
+        "prefer-spread": [
+          2
+        ],
+        "prefer-template": [
+          2
         ],
         "radix": [
             2
@@ -467,6 +528,10 @@
         "react/no-unknown-property": [
             2
         ],
+        "react/prefer-es6-class": [
+          2,
+          "always"
+        ],
         "react/prop-types": [
             2
         ],
@@ -483,6 +548,9 @@
           2
         ],
         "react/wrap-multilines": [
+          2
+        ],
+        "require-yield": [
           2
         ],
         "quote-props": [
@@ -502,10 +570,6 @@
             2,
             {"before": false, "after": true}
         ],
-        "space-after-keywords": [
-            2,
-            "always"
-        ],
         "space-before-blocks": [
             2,
             "always"
@@ -514,18 +578,11 @@
             2,
             "never"
         ],
-        "space-before-keywords": [
-            2,
-            "always"
-        ],
         "space-in-parens": [
             2,
             "never"
         ],
         "space-infix-ops": [
-            2
-        ],
-        "space-return-throw-case": [
             2
         ],
         "space-unary-ops": [
@@ -543,6 +600,10 @@
         "use-isnan": [
           2
         ],
+        "template-curly-spacing": [
+          2,
+          "never"
+        ],
         "valid-jsdoc": [
           2
         ],
@@ -554,6 +615,9 @@
         ],
         "wrap-iife": [
             2
+        ],
+        "yield-star-spacing": [
+          2
         ],
         "yoda": [
             2,
