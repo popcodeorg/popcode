@@ -1,11 +1,13 @@
-var React = require('react');
-var ACE = require('brace');
-var i18n = require('i18next-client');
+import React from 'react';
+import ACE from 'brace';
+import i18n from 'i18next-client';
 
-require('brace/mode/html');
-require('brace/mode/css');
-require('brace/mode/javascript');
-require('brace/theme/monokai');
+/* eslint-disable no-unused-vars */
+import _html from 'brace/mode/html';
+import _css from 'brace/mode/css';
+import _javascript from 'brace/mode/javascript';
+import _monokai from 'brace/theme/monokai';
+/* eslint-enable no-unused-vars */
 
 var Editor = React.createClass({
   propTypes: {

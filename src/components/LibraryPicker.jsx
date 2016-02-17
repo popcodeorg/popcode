@@ -1,9 +1,9 @@
-var React = require('react');
-var map = require('lodash/map');
-var partial = require('lodash/partial');
+import React from 'react';
+import map from 'lodash/map';
+import partial from 'lodash/partial';
 
-var LibraryPickerItem = require('./LibraryPickerItem');
-var config = require('../config');
+import LibraryPickerItem from './LibraryPickerItem';
+import config from '../config';
 
 var LibraryPicker = React.createClass({
   propTypes: {

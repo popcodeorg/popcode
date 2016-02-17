@@ -1,4 +1,4 @@
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
 exports.project = {
   projectKey: '12345',

@@ -1,14 +1,14 @@
-var React = require('react');
-var connect = require('react-redux').connect;
-var values = require('lodash/values');
-var flatten = require('lodash/flatten');
-var isEmpty = require('lodash/isEmpty');
+import React from 'react';
+import {connect} from 'react-redux';
+import values from 'lodash/values';
+import flatten from 'lodash/flatten';
+import isEmpty from 'lodash/isEmpty';
 
-var actions = require('../actions');
+import actions from '../actions';
 
-var Editor = require('./Editor');
-var Output = require('./Output');
-var Toolbar = require('./Toolbar');
+import Editor from './Editor';
+import Output from './Output';
+import Toolbar from './Toolbar';
 
 function mapStateToProps(state) {
   var currentProject = state.projects.get(

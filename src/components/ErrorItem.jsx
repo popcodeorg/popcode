@@ -1,5 +1,5 @@
-var React = require('react');
-var partial = require('lodash/partial');
+import React from 'react';
+import partial from 'lodash/partial';
 
 var ErrorItem = React.createClass({
   propTypes: {

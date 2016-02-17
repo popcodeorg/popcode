@@ -1,8 +1,7 @@
-var React = require('react');
-var Bowser = require('bowser');
-var normalizeError = require('../util/normalizeError.js');
-
-var generatePreview = require('../util/generatePreview.js');
+import React from 'react';
+import Bowser from 'bowser';
+import normalizeError from '../util/normalizeError';
+import generatePreview from '../util/generatePreview';
 
 var PreviewFrame = React.createClass({
   propTypes: {

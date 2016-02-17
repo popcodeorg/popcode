@@ -1,7 +1,7 @@
-var isEmpty = require('lodash/isEmpty');
+import isEmpty from 'lodash/isEmpty';
 
 function delayErrorDisplay(stateIn, action) {
-  var state = stateIn;
+  let state = stateIn;
   if (state === undefined) {
     state = false;
   }
@@ -21,4 +21,4 @@ function delayErrorDisplay(stateIn, action) {
   }
 }
 
-module.exports = delayErrorDisplay;
+export default delayErrorDisplay;

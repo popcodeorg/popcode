@@ -1,10 +1,9 @@
-var React = require('react');
-var classnames = require('classnames');
-var i18n = require('i18next-client');
-
-var LibraryPicker = require('./LibraryPicker');
-var ProjectList = require('./ProjectList');
-var Gists = require('../services/Gists');
+import React from 'react';
+import classnames from 'classnames';
+import i18n from 'i18next-client';
+import LibraryPicker from './LibraryPicker';
+import ProjectList from './ProjectList';
+import Gists from '../services/Gists';
 
 var Toolbar = React.createClass({
   propTypes: {

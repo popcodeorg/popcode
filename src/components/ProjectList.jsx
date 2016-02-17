@@ -1,5 +1,5 @@
-var React = require('react');
-var moment = require('moment');
+import React from 'react';
+import moment from 'moment';
 
 var ProjectList = React.createClass({
   propTypes: {

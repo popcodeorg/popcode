@@ -1,16 +1,15 @@
 /* eslint-disable no-magic-numbers */
+import Bowser from 'bowser';
+import get from 'lodash/get';
+import keys from 'lodash/keys';
+import isEmpty from 'lodash/isEmpty';
+import assign from 'lodash/assign';
+import i18n from 'i18next-client';
 
-var Bowser = require('bowser');
-var get = require('lodash/get');
-var keys = require('lodash/keys');
-var isEmpty = require('lodash/isEmpty');
-var assign = require('lodash/assign');
-var i18n = require('i18next-client');
-
-var normalizers = {
+const normalizers = {
   Chrome: {
-    TypeError: function(message) {
-      var match;
+    TypeError: message => {
+      let match;
 
       match = /^(\w+) is not a function$/.exec(message);
       if (match) {
@@ -21,7 +20,7 @@ var normalizers = {
         exec(message);
       if (match) {
         return {
-          type: match[1] + '-property-of-' + match[3],
+          type: `${match[1]}-property-of-${match[3]}`,
           params: {property: match[2]},
         };
       }
@@ -29,8 +28,8 @@ var normalizers = {
   },
 
   Safari: {
-    TypeError: function(message) {
-      var match;
+    TypeError: message => {
+      let match;
 
       match = /^(\w+) is not a function. \(In '\w+\(\)', '\w+' is (\w+|an instance of (\w+))\)$/.exec(message); // eslint-disable-line max-len
 
@@ -44,7 +43,7 @@ var normalizers = {
 
         if (match[2] === 'undefined' || match[2] === 'null') {
           return {
-            type: match[2] + '-not-a-function',
+            type: `${match[2]}-not-a-function`,
             params: {name: match[1]},
           };
         }
@@ -57,14 +56,14 @@ var normalizers = {
 
       match = /^(null|undefined) is not an object \(.*\)$/.exec(message);
       if (match) {
-        return {type: 'access-property-of-' + match[1]};
+        return {type: `access-property-of-${match[1]}`};
       }
     },
   },
 
   Firefox: {
-    TypeError: function(message) {
-      var match;
+    TypeError: message => {
+      let match;
 
       match = /^(\w+) is not a function$/.exec(message);
       if (match) {
@@ -74,7 +73,7 @@ var normalizers = {
       match = /^([\w\.]+) is (null|undefined)$/.exec(message);
       if (match) {
         return {
-          type: 'access-property-of-' + match[2],
+          type: `access-property-of-${match[2]}`,
           params: {name: match[1]},
         };
       }
@@ -83,23 +82,23 @@ var normalizers = {
 };
 
 function attachMessage(normalizedError) {
-  var context;
+  let context;
   if (!isEmpty(normalizedError.params)) {
-    context = 'with-' + keys(normalizedError.params).sort().join('-');
+    context = `with-${keys(normalizedError.params).sort().join('-')}`;
   }
 
   return assign(normalizedError, {
     message: i18n.t(
-      'errors.javascriptRuntime.' + normalizedError.type,
-      assign({context: context}, normalizedError.params)
+      `errors.javascriptRuntime.${normalizedError.type}`,
+      assign({context}, normalizedError.params)
     ),
   });
 }
 
 function normalizeError(error) {
-  var normalizer = get(normalizers, [Bowser.name, error.name]);
+  const normalizer = get(normalizers, [Bowser.name, error.name]);
   if (normalizer !== undefined) {
-    var normalizedError = normalizer(error.message);
+    const normalizedError = normalizer(error.message);
     if (normalizedError !== undefined) {
       return attachMessage(normalizedError);
     }
@@ -111,4 +110,4 @@ function normalizeError(error) {
   };
 }
 
-module.exports = normalizeError;
+export default normalizeError;

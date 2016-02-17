@@ -1,8 +1,7 @@
-var React = require('react');
-var isEmpty = require('lodash/isEmpty');
-
-var ErrorList = require('./ErrorList');
-var Preview = require('./Preview');
+import React from 'react';
+import isEmpty from 'lodash/isEmpty';
+import ErrorList from './ErrorList';
+import Preview from './Preview';
 
 var Output = React.createClass({
   propTypes: {

@@ -1,10 +1,11 @@
-var assign = require('lodash/assign');
-var DOMParser = window.DOMParser;
-var parser = new DOMParser();
+import assign from 'lodash/assign';
+import {libraries} from '../config';
 
-var libraries = require('../config').libraries;
+const DOMParser = window.DOMParser;
+const parser = new DOMParser();
 
-var sourceDelimiter = '/*__POPCODESTART__*/';
+
+const sourceDelimiter = '/*__POPCODESTART__*/';
 
 function generatePreview(project) {
   return new PreviewGenerator(project).previewDocument;
@@ -28,14 +29,14 @@ function PreviewGenerator(project) {
   this._addJavascript();
 }
 
-var errorHandlerScript = '(' + (function() {
-  window.onerror = function(fullMessage, _file, line, column, error) {
-    var name, message;
+const errorHandlerScript = `(${(() => {
+  window.onerror = (fullMessage, _file, line, column, error) => {
+    let name, message;
     if (error) {
       name = error.name;
       message = error.message;
     } else {
-      var components = fullMessage.split(': ', 2);
+      const components = fullMessage.split(': ', 2);
       if (components.length === 2) {
         name = components[0];
         message = components[1];
@@ -48,43 +49,42 @@ var errorHandlerScript = '(' + (function() {
     window.parent.postMessage(JSON.stringify({
       type: 'org.popcode.error',
       error: {
-        name: name,
-        message: message,
-        line: line,
-        column: column,
+        name,
+        message,
+        line,
+        column,
       },
     }), '*');
   };
-}.toString()) + '());';
+}).toString()}());`;
 
 assign(PreviewGenerator.prototype, {
-  _addCss: function() {
-    var styleTag = this.previewDocument.createElement('style');
+  _addCss() {
+    const styleTag = this.previewDocument.createElement('style');
     styleTag.innerHTML = this._project.sources.css;
     this._previewHead.appendChild(styleTag);
   },
 
-  _addJavascript: function() {
-    var scriptTag = this.previewDocument.createElement('script');
-    scriptTag.innerHTML = '\n' +
-      sourceDelimiter + '\n' +
-      this._project.sources.javascript;
+  _addJavascript() {
+    const scriptTag = this.previewDocument.createElement('script');
+    scriptTag.innerHTML =
+      `\n${sourceDelimiter}\n${this._project.sources.javascript}`;
     this.previewBody.appendChild(scriptTag);
 
     return this.previewDocument.documentElement.outerHTML;
   },
 
-  _addErrorHandling: function() {
-    var scriptTag = this.previewDocument.createElement('script');
+  _addErrorHandling() {
+    const scriptTag = this.previewDocument.createElement('script');
     scriptTag.innerHTML = errorHandlerScript;
     this.previewBody.appendChild(scriptTag);
   },
 
-  _attachLibraries: function() {
+  _attachLibraries() {
     this._project.enabledLibraries.forEach(function(libraryKey) {
-      var library = libraries[libraryKey];
-      var css = library.css;
-      var javascript = library.javascript;
+      const library = libraries[libraryKey];
+      const css = library.css;
+      const javascript = library.javascript;
       if (css !== undefined) {
         this._attachCssLibrary(css);
       }
@@ -94,18 +94,18 @@ assign(PreviewGenerator.prototype, {
     }.bind(this));
   },
 
-  _attachCssLibrary: function(css) {
-    var linkTag = this.previewDocument.createElement('link');
+  _attachCssLibrary(css) {
+    const linkTag = this.previewDocument.createElement('link');
     linkTag.rel = 'stylesheet';
     linkTag.href = css;
     this._previewHead.appendChild(linkTag);
   },
 
-  _attachJavascriptLibrary: function(javascript) {
-    var scriptTag = this.previewDocument.createElement('script');
+  _attachJavascriptLibrary(javascript) {
+    const scriptTag = this.previewDocument.createElement('script');
     scriptTag.src = javascript;
     this.previewBody.appendChild(scriptTag);
   },
 });
 
-module.exports = generatePreview;
+export default generatePreview;

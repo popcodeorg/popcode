@@ -1,18 +1,20 @@
-var redux = require('redux');
-var createStore = redux.createStore;
-var applyMiddleware = redux.applyMiddleware;
-var reducers = require('./reducers');
-var thunkMiddleware = require('redux-thunk');
-var createLogger = require('redux-logger');
-var config = require('./config');
+import {createStore, applyMiddleware} from 'redux';
+import reducers from './reducers';
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger';
+import config from './config';
+
+let createStoreWithMiddleware = createStore;
 
 if (config.logReduxActions()) {
-  var logger = createLogger();
-  createStore = applyMiddleware(logger)(createStore);
+  const logger = createLogger();
+  createStoreWithMiddleware =
+    applyMiddleware(logger)(createStoreWithMiddleware);
 }
 
-createStore = applyMiddleware(thunkMiddleware)(createStore);
+createStoreWithMiddleware =
+  applyMiddleware(thunkMiddleware)(createStoreWithMiddleware);
 
-var store = createStore(reducers);
+const store = createStoreWithMiddleware(reducers);
 
-module.exports = store;
+export default store;

@@ -3,70 +3,66 @@
 
 jest.dontMock('../currentProject');
 
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
-var blankProject = require.requireActual('../../__test__/blank').project;
+const blankProject = require.requireActual('../../__test__/blank').project;
 
-describe('currentProject', function() {
-  var currentProject = require('../currentProject');
+describe('currentProject', () => {
+  const currentProject = require('../currentProject');
 
-  describe('unknown action', function() {
-    var action = {type: 'BOGUS'};
+  describe('unknown action', () => {
+    const action = {type: 'BOGUS'};
 
-    it('should return given state', function() {
-      var state = new Immutable.Map({projectKey: '12345'});
+    it('should return given state', () => {
+      const state = new Immutable.Map({projectKey: '12345'});
       expect(currentProject(state, action)).toBe(state);
     });
   });
 
-  describe('CURRENT_PROJECT_CHANGED', function() {
-    var action = {
+  describe('CURRENT_PROJECT_CHANGED', () => {
+    const action = {
       type: 'CURRENT_PROJECT_CHANGED',
       payload: {projectKey: '12345'},
     };
 
-    describe('with no initial project key', function() {
-      it('should set current project key', function() {
-        expect(currentProject(undefined, action).toJS()).toEqual(
-          {projectKey: action.payload.projectKey}
-        );
+    describe('with no initial project key', () => {
+      it('should set current project key', () => {
+        expect(currentProject(undefined, action).toJS()).
+          toEqual({projectKey: action.payload.projectKey});
       });
     });
 
-    describe('with initial project key', function() {
-      it('should change current project key', function() {
-        var previousState = Immutable.fromJS({projectKey: '1'});
+    describe('with initial project key', () => {
+      it('should change current project key', () => {
+        const previousState = Immutable.fromJS({projectKey: '1'});
 
-        expect(currentProject(previousState, action).toJS()).toEqual(
-          {projectKey: action.payload.projectKey}
-        );
+        expect(currentProject(previousState, action).toJS()).
+          toEqual({projectKey: action.payload.projectKey});
       });
     });
   });
 
-  describe('CURRENT_PROJECT_LOADED_FROM_STORAGE', function() {
-    var action = {
+  describe('CURRENT_PROJECT_LOADED_FROM_STORAGE', () => {
+    const action = {
       type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',
       payload: {project: blankProject},
     };
 
-    it('should set current project key', function() {
-      expect(currentProject(undefined, action).toJS()).toEqual(
-        {projectKey: action.payload.project.projectKey}
-      );
+    it('should set current project key', () => {
+      expect(currentProject(undefined, action).toJS()).
+        toEqual({projectKey: action.payload.project.projectKey});
     });
   });
 
-  describe('PROJECT_CREATED', function() {
-    var action = {
+  describe('PROJECT_CREATED', () => {
+    const action = {
       type: 'PROJECT_CREATED',
       payload: {projectKey: '12345'},
     };
 
-    it('should set current project key', function() {
-      expect(currentProject(undefined, action).toJS()).toEqual(
-        {projectKey: action.payload.projectKey}
-      );
+    it('should set current project key', () => {
+      expect(currentProject(undefined, action).toJS()).
+        toEqual({projectKey: action.payload.projectKey});
     });
   });
 });

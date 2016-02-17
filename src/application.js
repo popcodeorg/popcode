@@ -1,18 +1,17 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Immutable = require('immutable');
-var Provider = require('react-redux').Provider;
-var i18n = require('i18next-client');
-var installDevTools = require('immutable-devtools').default;
-var fs = require('fs');
-var path = require('path');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Immutable from 'immutable';
+import {Provider} from 'react-redux';
+import i18n from 'i18next-client';
+import installDevTools from 'immutable-devtools';
+import {readFileSync} from 'fs';
+import path from 'path';
+import Workspace from './components/Workspace';
+import store from './store';
 
-var Workspace = require('./components/Workspace');
-var store = require('./store');
-
-var translations = {
+const translations = {
   en: {
-    translation: JSON.parse(fs.readFileSync(
+    translation: JSON.parse(readFileSync(
       path.join(__dirname, '/../locales/en/translation.json')
     )),
   },
@@ -26,11 +25,8 @@ i18n.init({
 
 installDevTools(Immutable);
 
-ReactDOM.render(
-  React.createElement(
-    Provider,
-    {store: store},
-    React.createElement(Workspace)
-  ),
-  document.getElementById('main')
-);
+ReactDOM.render(React.createElement(
+  Provider,
+  {store},
+  React.createElement(Workspace)
+), document.getElementById('main'));

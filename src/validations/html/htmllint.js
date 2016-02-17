@@ -1,9 +1,9 @@
-var i18n = require('i18next-client');
-var htmllint = require('htmllint');
-var assign = require('lodash/assign');
+import i18n from 'i18next-client';
+import htmllint from 'htmllint';
+import assign from 'lodash/assign';
 
-var humanErrors = {
-  E001: function(error) {
+const humanErrors = {
+  E001: error => {
     switch (error.data.attribute.toLowerCase()) {
       case 'align':
         return generateAnnotation('banned-attributes.align');
@@ -28,38 +28,24 @@ var humanErrors = {
     }
   },
 
-  E002: function() {
-    return generateAnnotation('lower-case-attribute-name');
-  },
+  E002: () => generateAnnotation('lower-case-attribute-name'),
 
-  E005: function(error) {
-    return generateAnnotation(
-      'attribute-quotes',
-      {attribute: error.data.attribute}
-    );
-  },
+  E005: error => generateAnnotation(
+    'attribute-quotes',
+    {attribute: error.data.attribute}
+  ),
 
-  E006: function() {
-    return generateAnnotation('attribute-value');
-  },
+  E006: () => generateAnnotation('attribute-value'),
 
-  E007: function() {
-    return generateAnnotation('doctype', {}, ['invalid-tag-name']);
-  },
+  E007: () => generateAnnotation('doctype', {}, ['invalid-tag-name']),
 
-  E008: function() {
-    return generateAnnotation('doctype');
-  },
+  E008: () => generateAnnotation('doctype'),
 
-  E012: function(error) {
-    return generateAnnotation('duplicated-id', {id: error.data.id});
-  },
+  E012: error => generateAnnotation('duplicated-id', {id: error.data.id}),
 
-  E014: function() {
-    return generateAnnotation('img-src');
-  },
+  E014: () => generateAnnotation('img-src'),
 
-  E016: function(error) {
+  E016: error => {
     switch (error.data.tag.toLowerCase()) {
       case 'b':
         return generateAnnotation('deprecated-tag.b');
@@ -78,20 +64,14 @@ var humanErrors = {
     }
   },
 
-  E017: function() {
-    return generateAnnotation('lower-case-tag-name');
-  },
+  E017: () => generateAnnotation('lower-case-tag-name'),
 
-  E027: function() {
-    return generateAnnotation('missing-title');
-  },
+  E027: () => generateAnnotation('missing-title'),
 
-  E028: function() {
-    return generateAnnotation('duplicated-title');
-  },
+  E028: () => generateAnnotation('duplicated-title'),
 };
 
-var htmlLintOptions = {
+const htmlLintOptions = {
   'attr-bans': [
     'align',
     'background',
@@ -132,18 +112,18 @@ var htmlLintOptions = {
 };
 
 function generateAnnotation(reason, properties, suppresses) {
-  var message = i18n.t('errors.html.' + reason, properties);
+  const message = i18n.t(`errors.html.${reason}`, properties);
   return {
     raw: message,
     text: message,
-    reason: reason,
-    suppresses: suppresses,
+    reason,
+    suppresses,
   };
 }
 
 function convertErrorToAnnotation(error) {
   if (humanErrors.hasOwnProperty(error.code)) {
-    var annotation = humanErrors[error.code](error);
+    const annotation = humanErrors[error.code](error);
 
     return assign(annotation, {
       row: error.line - 1, column: error.column - 1,
@@ -152,15 +132,13 @@ function convertErrorToAnnotation(error) {
   }
 }
 
-module.exports = function(source) {
-  return htmllint(source, htmlLintOptions).then(function(errors) {
-    var annotations = [];
-    errors.forEach(function(error) {
-      var annotation = convertErrorToAnnotation(error);
-      if (annotation !== undefined) {
-        annotations.push(annotation);
-      }
-    });
-    return annotations;
+export default source => htmllint(source, htmlLintOptions).then(errors => {
+  const annotations = [];
+  errors.forEach(error => {
+    const annotation = convertErrorToAnnotation(error);
+    if (annotation !== undefined) {
+      annotations.push(annotation);
+    }
   });
-};
+  return annotations;
+});

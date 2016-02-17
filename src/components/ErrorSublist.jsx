@@ -1,9 +1,8 @@
-var React = require('react');
-var map = require('lodash/map');
-var partial = require('lodash/partial');
-var i18n = require('i18next-client');
-
-var ErrorItem = require('./ErrorItem');
+import React from 'react';
+import map from 'lodash/map';
+import partial from 'lodash/partial';
+import i18n from 'i18next-client';
+import ErrorItem from './ErrorItem';
 
 var ErrorSublist = React.createClass({
   propTypes: {

@@ -1,7 +1,7 @@
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
 function currentProject(stateIn, action) {
-  var state;
+  let state;
   if (stateIn === undefined) {
     state = new Immutable.Map({projectKey: null});
   } else {
@@ -20,4 +20,4 @@ function currentProject(stateIn, action) {
   }
 }
 
-module.exports = currentProject;
+export default currentProject;

@@ -1,9 +1,7 @@
 /* global process */
 
-module.exports = {
-  logReduxActions: function() {
-    return process.env.LOG_REDUX_ACTIONS !== 'false';
-  },
+export default {
+  logReduxActions: () => process.env.LOG_REDUX_ACTIONS !== 'false',
 
   libraries: {
     jquery: {

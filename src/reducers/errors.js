@@ -1,15 +1,15 @@
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
-var emptyList = new Immutable.List();
+const emptyList = new Immutable.List();
 
-var emptyErrors = new Immutable.Map({
+const emptyErrors = new Immutable.Map({
   html: emptyList,
   css: emptyList,
   javascript: emptyList,
 });
 
 function errors(stateIn, action) {
-  var state = stateIn;
+  let state = stateIn;
   if (state === undefined) {
     state = emptyErrors;
   }
@@ -35,4 +35,4 @@ function errors(stateIn, action) {
   }
 }
 
-module.exports = errors;
+export default errors;

@@ -1,7 +1,7 @@
-var React = require('react');
-var ErrorSublist = require('./ErrorSublist');
-var classnames = require('classnames');
-var get = require('lodash/get');
+import React from 'react';
+import classnames from 'classnames';
+import get from 'lodash/get';
+import ErrorSublist from './ErrorSublist';
 
 var ErrorList = React.createClass({
   propTypes: {
