@@ -32,18 +32,16 @@ let browserifyDone = Promise.resolve();
 
 const browserifyOpts = {
   extensions: ['.jsx'],
-  transform: [brfs, babelify, envify],
   debug: true,
+  fullPaths: !gulp.env.production,
 };
 
-const buildBrowserifyCompiler = memoize(filename => browserifyImpl(assign(
-  {},
-  browserifyOpts,
-  {
-    entries: [`src/${filename}`],
-    fullPaths: !gulp.env.production,
-  }
-)));
+const buildBrowserifyCompiler = memoize(
+  (filename) => browserifyImpl(`src/${filename}`, browserifyOpts).
+    transform('brfs-babel').
+    transform('babelify', {sourceMaps: true}).
+    transform('envify')
+);
 
 function buildBrowserifyStream(filename) {
   return new Promise((resolve, reject) => {

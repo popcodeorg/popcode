@@ -80,4 +80,4 @@ Editor.propTypes = {
   onInput: React.PropTypes.func.isRequired,
 };
 
-module.exports = Editor;
+export default Editor;

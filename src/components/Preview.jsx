@@ -44,4 +44,4 @@ Preview.propTypes = {
   clearRuntimeErrors: React.PropTypes.func.isRequired,
 };
 
-module.exports = Preview;
+export default Preview;

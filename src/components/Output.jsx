@@ -77,4 +77,4 @@ Output.propTypes = {
   clearRuntimeErrors: React.PropTypes.func.isRequired,
 };
 
-module.exports = Output;
+export default Output;

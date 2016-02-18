@@ -29,4 +29,4 @@ LibraryPicker.propTypes = {
   onLibraryToggled: React.PropTypes.func.isRequired,
 };
 
-module.exports = LibraryPicker;
+export default LibraryPicker;

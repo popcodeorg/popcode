@@ -4,7 +4,16 @@ import values from 'lodash/values';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 
-import actions from '../actions';
+import {
+  addRuntimeError,
+  changeCurrentProject,
+  clearRuntimeErrors,
+  createProject,
+  loadAllProjects,
+  loadCurrentProjectFromStorage,
+  updateProjectSource,
+  toggleLibrary,
+} from '../actions';
 
 import Editor from './Editor';
 import Output from './Output';
@@ -32,8 +41,8 @@ function mapStateToProps(state) {
 class Workspace extends React.Component {
 
   componentWillMount() {
-    this.props.dispatch(actions.loadCurrentProjectFromStorage());
-    this.props.dispatch(actions.loadAllProjects());
+    this.props.dispatch(loadCurrentProjectFromStorage());
+    this.props.dispatch(loadAllProjects());
   }
 
   _allJavaScriptErrors() {
@@ -47,7 +56,7 @@ class Workspace extends React.Component {
 
   _onEditorInput(language, source) {
     this.props.dispatch(
-      actions.updateProjectSource(
+      updateProjectSource(
         this.props.currentProject.projectKey,
         language,
         source
@@ -57,7 +66,7 @@ class Workspace extends React.Component {
 
   _onLibraryToggled(libraryKey) {
     this.props.dispatch(
-      actions.toggleLibrary(
+      toggleLibrary(
         this.props.currentProject.projectKey,
         libraryKey
       )
@@ -65,19 +74,19 @@ class Workspace extends React.Component {
   }
 
   _onNewProject() {
-    this.props.dispatch(actions.createProject());
+    this.props.dispatch(createProject());
   }
 
   _onProjectSelected(project) {
-    this.props.dispatch(actions.changeCurrentProject(project.projectKey));
+    this.props.dispatch(changeCurrentProject(project.projectKey));
   }
 
   _onRuntimeError(error) {
-    this.props.dispatch(actions.addRuntimeError(error));
+    this.props.dispatch(addRuntimeError(error));
   }
 
   _clearRuntimeErrors() {
-    this.props.dispatch(actions.clearRuntimeErrors());
+    this.props.dispatch(clearRuntimeErrors());
   }
 
   render() {
@@ -152,4 +161,4 @@ Workspace.propTypes = {
   delayErrorDisplay: React.PropTypes.bool,
 };
 
-module.exports = connect(mapStateToProps)(Workspace);
+export default connect(mapStateToProps)(Workspace);

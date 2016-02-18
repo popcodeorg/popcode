@@ -27,4 +27,4 @@ ProjectList.propTypes = {
 };
 
 
-module.exports = ProjectList;
+export default ProjectList;

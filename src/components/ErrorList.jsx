@@ -37,4 +37,4 @@ ErrorList.propTypes = {
   docked: React.PropTypes.bool,
 };
 
-module.exports = ErrorList;
+export default ErrorList;

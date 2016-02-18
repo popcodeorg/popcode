@@ -1,14 +1,16 @@
 import React from 'react';
 import classnames from 'classnames';
 import i18n from 'i18next-client';
+import bindAll from 'lodash/bindAll';
 import LibraryPicker from './LibraryPicker';
 import ProjectList from './ProjectList';
 import Gists from '../services/Gists';
 
 class Toolbar extends React.Component {
-
-  getInitialState() {
-    return {open: false};
+  constructor() {
+    super();
+    this.state = {open: false};
+    bindAll(this);
   }
 
   _close() {
@@ -152,4 +154,4 @@ Toolbar.propTypes = {
   onProjectSelected: React.PropTypes.func.isRequired,
 };
 
-module.exports = Toolbar;
+export default Toolbar;

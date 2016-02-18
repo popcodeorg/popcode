@@ -43,4 +43,4 @@ ErrorSublist.propTypes = {
   language: React.PropTypes.oneOf(['html', 'css', 'javascript']).isRequired,
 };
 
-module.exports = ErrorSublist;
+export default ErrorSublist;

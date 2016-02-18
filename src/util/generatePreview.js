@@ -11,8 +11,6 @@ function generatePreview(project) {
   return new PreviewGenerator(project).previewDocument;
 }
 
-generatePreview.sourceDelimiter = sourceDelimiter;
-
 function PreviewGenerator(project) {
   this._project = project;
   this.previewDocument = parser.parseFromString(
@@ -108,4 +106,5 @@ assign(PreviewGenerator.prototype, {
   },
 });
 
+export {sourceDelimiter};
 export default generatePreview;

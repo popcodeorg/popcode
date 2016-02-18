@@ -28,4 +28,4 @@ ErrorItem.propTypes = {
   onClick: React.PropTypes.func.isRequired,
 };
 
-module.exports = ErrorItem;
+export default ErrorItem;

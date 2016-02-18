@@ -99,4 +99,4 @@ PreviewFrame.propTypes = {
 };
 
 
-module.exports = PreviewFrame;
+export default PreviewFrame;
