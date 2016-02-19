@@ -114,10 +114,13 @@ class Toolbar extends React.Component {
           }
         )}
         >
-          <li onClick={this._newProject} className="toolbar-menu-item">
+          <li
+            onClick={this._newProject.bind(this)}
+            className="toolbar-menu-item"
+          >
             {i18n.t('toolbar.new-project')}
           </li>
-          <li onClick={this._loadProject}
+          <li onClick={this._loadProject.bind(this)}
             className={classnames(
               'toolbar-menu-item',
               {'toolbar-menu-item--active':

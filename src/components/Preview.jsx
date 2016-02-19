@@ -27,7 +27,10 @@ class Preview extends React.Component {
   render() {
     return (
       <div className="preview">
-        <div className="preview-popOutButton" onClick={this._popOut} />
+        <div
+          className="preview-popOutButton"
+          onClick={this._popOut.bind(this)}
+        />
         <PreviewFrame
           src={this._generateDocument()}
           onRuntimeError={this.props.onRuntimeError}
