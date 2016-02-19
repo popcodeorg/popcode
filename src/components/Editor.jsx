@@ -10,6 +10,10 @@ import _monokai from 'brace/theme/monokai';
 /* eslint-enable no-unused-vars */
 
 class Editor extends React.Component {
+  constructor() {
+    super();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.projectKey !== this.props.projectKey) {
       this._startNewSession(nextProps.source);
@@ -64,7 +68,10 @@ class Editor extends React.Component {
         <div className="editorContainer-label">
           {i18n.t(`languages.${this.props.language}`)}
         </div>
-        <div className="editorContainer-editor" ref={this._setupEditor}>
+        <div
+          className="editorContainer-editor"
+          ref={this._setupEditor.bind(this)}
+        >
           {this.props.source}
         </div>
       </div>

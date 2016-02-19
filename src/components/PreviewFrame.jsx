@@ -1,9 +1,15 @@
 import React from 'react';
 import Bowser from 'bowser';
+import bindAll from 'lodash/bindAll';
 import normalizeError from '../util/normalizeError';
 import generatePreview from '../util/generatePreview';
 
 class PreviewFrame extends React.Component {
+  constructor() {
+    super();
+    bindAll(this, '_onMessage');
+  }
+
   componentDidMount() {
     window.addEventListener('message', this._onMessage);
   }
@@ -83,7 +89,12 @@ class PreviewFrame extends React.Component {
 
   render() {
     if (Bowser.safari || Bowser.msie) {
-      return <iframe className="preview-frame" ref={this._saveFrame} />;
+      return (
+        <iframe
+          className="preview-frame"
+          ref={this._saveFrame.bind(this)}
+        />
+      );
     }
 
     return (

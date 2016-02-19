@@ -1,7 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
 import i18n from 'i18next-client';
-import bindAll from 'lodash/bindAll';
 import LibraryPicker from './LibraryPicker';
 import ProjectList from './ProjectList';
 import Gists from '../services/Gists';
@@ -10,7 +9,6 @@ class Toolbar extends React.Component {
   constructor() {
     super();
     this.state = {open: false};
-    bindAll(this);
   }
 
   _close() {
@@ -65,7 +63,7 @@ class Toolbar extends React.Component {
         return (
           <ProjectList
             projects={this.props.allProjects}
-            onProjectSelected={this._onProjectSelected}
+            onProjectSelected={this._onProjectSelected.bind(this)}
           />
         );
     }
@@ -103,7 +101,7 @@ class Toolbar extends React.Component {
       <div className="toolbar">
         <div
           className="toolbar-showHide"
-          onClick={this._toggleShowHideState}
+          onClick={this._toggleShowHideState.bind(this)}
         >
 
           {this._showHideLabel()}
@@ -128,10 +126,13 @@ class Toolbar extends React.Component {
           >
             {i18n.t('toolbar.load-project')}
           </li>
-          <li onClick={this._exportGist} className="toolbar-menu-item">
+          <li
+            onClick={this._exportGist.bind(this)}
+            className="toolbar-menu-item"
+          >
             {i18n.t('toolbar.export-gist')}
           </li>
-          <li onClick={this._toggleLibraryPicker}
+          <li onClick={this._toggleLibraryPicker.bind(this)}
             className={classnames(
               'toolbar-menu-item',
               {'toolbar-menu-item-active': this.state.submenu === 'libraries'}

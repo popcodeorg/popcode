@@ -39,7 +39,6 @@ function mapStateToProps(state) {
 }
 
 class Workspace extends React.Component {
-
   componentWillMount() {
     this.props.dispatch(loadCurrentProjectFromStorage());
     this.props.dispatch(loadAllProjects());
@@ -102,9 +101,9 @@ class Workspace extends React.Component {
             }
             delayErrorDisplay={this.props.delayErrorDisplay}
             runtimeErrors={this.props.runtimeErrors}
-            onErrorClicked={this._onErrorClicked}
-            onRuntimeError={this._onRuntimeError}
-            clearRuntimeErrors={this._clearRuntimeErrors}
+            onErrorClicked={this._onErrorClicked.bind(this)}
+            onRuntimeError={this._onRuntimeError.bind(this)}
+            clearRuntimeErrors={this._clearRuntimeErrors.bind(this)}
           />
 
           <Editor
@@ -142,9 +141,9 @@ class Workspace extends React.Component {
         <Toolbar
           allProjects={this.props.allProjects}
           currentProject={this.props.currentProject}
-          onLibraryToggled={this._onLibraryToggled}
-          onNewProject={this._onNewProject}
-          onProjectSelected={this._onProjectSelected}
+          onLibraryToggled={this._onLibraryToggled.bind(this)}
+          onNewProject={this._onNewProject.bind(this)}
+          onProjectSelected={this._onProjectSelected.bind(this)}
         />
         {environment}
       </div>
