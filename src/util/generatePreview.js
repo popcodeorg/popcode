@@ -11,22 +11,6 @@ function generatePreview(project) {
   return new PreviewGenerator(project).previewDocument;
 }
 
-function PreviewGenerator(project) {
-  this._project = project;
-  this.previewDocument = parser.parseFromString(
-    project.sources.html,
-    'text/html'
-  );
-  this._previewHead = this.previewDocument.head;
-  this.previewBody = this.previewDocument.body;
-
-  this._attachLibraries();
-
-  this._addCss();
-  this._addErrorHandling();
-  this._addJavascript();
-}
-
 const errorHandlerScript = `(${(() => {
   window.onerror = (fullMessage, _file, line, column, error) => {
     let name, message;
@@ -56,12 +40,28 @@ const errorHandlerScript = `(${(() => {
   };
 }).toString()}());`;
 
-assign(PreviewGenerator.prototype, {
+class PreviewGenerator {
+  constructor(project) {
+    this._project = project;
+    this.previewDocument = parser.parseFromString(
+      project.sources.html,
+      'text/html'
+    );
+    this._previewHead = this.previewDocument.head;
+    this.previewBody = this.previewDocument.body;
+
+    this._attachLibraries();
+
+    this._addCss();
+    this._addErrorHandling();
+    this._addJavascript();
+  }
+
   _addCss() {
     const styleTag = this.previewDocument.createElement('style');
     styleTag.innerHTML = this._project.sources.css;
     this._previewHead.appendChild(styleTag);
-  },
+  }
 
   _addJavascript() {
     const scriptTag = this.previewDocument.createElement('script');
@@ -70,13 +70,13 @@ assign(PreviewGenerator.prototype, {
     this.previewBody.appendChild(scriptTag);
 
     return this.previewDocument.documentElement.outerHTML;
-  },
+  }
 
   _addErrorHandling() {
     const scriptTag = this.previewDocument.createElement('script');
     scriptTag.innerHTML = errorHandlerScript;
     this.previewBody.appendChild(scriptTag);
-  },
+  }
 
   _attachLibraries() {
     this._project.enabledLibraries.forEach((libraryKey) => {
@@ -90,21 +90,21 @@ assign(PreviewGenerator.prototype, {
         this._attachJavascriptLibrary(javascript);
       }
     });
-  },
+  }
 
   _attachCssLibrary(css) {
     const linkTag = this.previewDocument.createElement('link');
     linkTag.rel = 'stylesheet';
     linkTag.href = css;
     this._previewHead.appendChild(linkTag);
-  },
+  }
 
   _attachJavascriptLibrary(javascript) {
     const scriptTag = this.previewDocument.createElement('script');
     scriptTag.src = javascript;
     this.previewBody.appendChild(scriptTag);
-  },
-});
+  }
+}
 
 export {sourceDelimiter};
 export default generatePreview;
