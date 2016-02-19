@@ -7,8 +7,8 @@ const project = {
 };
 
 const state = {
-  currentProject: new Immutable.Map({projectKey: exports.project.projectKey}),
-  projects: Immutable.fromJS({12345: exports.project}),
+  currentProject: new Immutable.Map({projectKey: project.projectKey}),
+  projects: Immutable.fromJS({12345: project}),
 };
 
 export {project, state};
