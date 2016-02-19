@@ -1,4 +1,3 @@
-import assign from 'lodash/assign';
 import {libraries} from '../config';
 
 const DOMParser = window.DOMParser;
@@ -6,10 +5,6 @@ const parser = new DOMParser();
 
 
 const sourceDelimiter = '/*__POPCODESTART__*/';
-
-function generatePreview(project) {
-  return new PreviewGenerator(project).previewDocument;
-}
 
 const errorHandlerScript = `(${(() => {
   window.onerror = (fullMessage, _file, line, column, error) => {
@@ -104,6 +99,10 @@ class PreviewGenerator {
     scriptTag.src = javascript;
     this.previewBody.appendChild(scriptTag);
   }
+}
+
+function generatePreview(project) {
+  return new PreviewGenerator(project).previewDocument;
 }
 
 export {sourceDelimiter};
