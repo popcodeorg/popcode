@@ -10,6 +10,9 @@ import uglify from 'gulp-uglify';
 import cssnano from 'gulp-cssnano';
 import gutil from 'gulp-util';
 import memoize from 'lodash/memoize';
+import brfs from 'brfs-babel';
+import babelify from 'babelify';
+import envify from 'envify';
 
 const browserSync = require('browser-sync').create();
 const srcDir = 'src';
@@ -34,9 +37,9 @@ const browserifyOpts = {
 
 const buildBrowserifyCompiler = memoize(
   (filename) => browserifyImpl(`src/${filename}`, browserifyOpts).
-    transform('brfs-babel').
-    transform('babelify', {sourceMaps: true}).
-    transform('envify')
+    transform(brfs).
+    transform(babelify.configure({sourceMapRelative: __dirname})).
+    transform(envify)
 );
 
 function buildBrowserifyStream(filename) {
