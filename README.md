@@ -50,9 +50,9 @@ Check out the [Trello board](https://trello.com/b/ONaFg6wh/popcode).
 
 Popcode uses [**React**](https://facebook.github.io/react/) to render views,
 [**Redux**](http://redux.js.org/) to manage application state,
-[**Ace**](https://ace.c9.io/) as the code editor, and
+[**Ace**](https://ace.c9.io/) as the code editor,
 [**Browserify**](http://browserify.org/) to package the client-side
-application.
+application, and [Babel](https://babeljs.io/) to compile ES2015+JSX into ES5.
 
 Right now, it includes **slowparse**, **htmllint**, **css**, **PrettyCSS**,
 and **jshint** for error checking.
