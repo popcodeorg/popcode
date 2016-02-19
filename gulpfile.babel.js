@@ -9,11 +9,7 @@ import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
 import cssnano from 'gulp-cssnano';
 import gutil from 'gulp-util';
-import assign from 'lodash/assign';
 import memoize from 'lodash/memoize';
-import babelify from 'babelify';
-import brfs from 'brfs-babel';
-import envify from 'envify';
 
 const browserSync = require('browser-sync').create();
 const srcDir = 'src';

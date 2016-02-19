@@ -10,10 +10,6 @@ import _monokai from 'brace/theme/monokai';
 /* eslint-enable no-unused-vars */
 
 class Editor extends React.Component {
-  constructor() {
-    super();
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.projectKey !== this.props.projectKey) {
       this._startNewSession(nextProps.source);
