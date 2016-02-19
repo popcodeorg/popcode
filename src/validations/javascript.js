@@ -2,7 +2,7 @@ import i18n from 'i18next-client';
 import {JSHINT} from 'jshint';
 import {Promise} from 'es6-promise';
 import update from 'react-addons-update';
-import {libraries} from '../config';
+import config from '../config';
 
 const jshintrc = {
   browser: true,
@@ -104,17 +104,17 @@ function convertErrorToAnnotation(error) {
 }
 
 export default (source, enabledLibraries) => {
-  let config = jshintrc;
+  let jshintOptions = jshintrc;
   enabledLibraries.forEach((libraryKey) => {
-    const library = libraries[libraryKey];
+    const library = config.libraries[libraryKey];
 
     if (library.validations !== undefined &&
         library.validations.javascript !== undefined) {
-      config = update(config, library.validations.javascript);
+      jshintOptions = update(jshintOptions, library.validations.javascript);
     }
   });
 
-  JSHINT(source, config); // eslint-disable-line new-cap
+  JSHINT(source, jshintOptions); // eslint-disable-line new-cap
   const data = JSHINT.data();
   const annotations = [];
   const annotatedLines = [];

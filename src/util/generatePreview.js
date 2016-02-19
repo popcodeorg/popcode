@@ -1,4 +1,4 @@
-import {libraries} from '../config';
+import config from '../config';
 
 const DOMParser = window.DOMParser;
 const parser = new DOMParser();
@@ -75,7 +75,7 @@ class PreviewGenerator {
 
   _attachLibraries() {
     this._project.enabledLibraries.forEach((libraryKey) => {
-      const library = libraries[libraryKey];
+      const library = config.libraries[libraryKey];
       const css = library.css;
       const javascript = library.javascript;
       if (css !== undefined) {
