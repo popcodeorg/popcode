@@ -6,8 +6,7 @@ novice users.
 
 ### Project status ###
 
-Popcode is currently somewhere between a proof of concept and a work in
-progress.
+Popcode is alpha software.
 
 ### Try it out ###
 
@@ -24,7 +23,11 @@ Try doing something wrong. The main emphasis of this project is giving feedback 
   your code.
 * Errors can't be ignored. If there are any errors in the code, the live
   preview is replaced by an error list.
-* That's it, so far.
+* JavaScript runtime errors are also reported in human-friendly language, with
+  annotations in the source code pointing out the source of the problem.
+* All is work automatically saved in local storage.
+* Pop out preview of web page in its own window.
+* Export to GitHub gist.
 
 ### About validation ###
 
@@ -45,8 +48,10 @@ Check out the [Trello board](https://trello.com/b/ONaFg6wh/popcode).
 
 ## Technical details ##
 
-Popcode uses **React** to render views, **Redux** to manage application state,
-**Ace** as the code editor, and **Browserify** to package the client-side
+Popcode uses [**React**](https://facebook.github.io/react/) to render views,
+[**Redux**](http://redux.js.org/) to manage application state,
+[**Ace**](https://ace.c9.io/) as the code editor, and
+[**Browserify**](http://browserify.org/) to package the client-side
 application.
 
 Right now, it includes **slowparse**, **htmllint**, **css**, **PrettyCSS**,
@@ -74,15 +79,15 @@ Pretty easy. Just check out the code, then run:
 $ npm install
 ```
 
-That'll pull down the dependencies. Then, in one shell session, run:
+That'll pull down the dependencies. Then run:
 
 ```bash
-$ npm run devserver
+$ gulp dev
 ```
 
-Now you'll have a static server, accessible at `http://localhost:8080`.
-The JavaScript bundle will recompile as you edit it, and will even live-reload
-in the browser.
+This will start a local static server, and open it in your browser. The first
+pageload will be rather slow as it compiles the bundle; after you change files,
+assets are recompiled incrementally and your browser automatically reloads.
 
 ## License ##
 
