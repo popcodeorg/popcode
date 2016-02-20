@@ -1,7 +1,14 @@
 {
   "name": "popcode",
   "version": "0.9.0",
-  "description": "Web-based HTML/CSS/JS editor for beginners",
+  "description": "Web-based HTML/CSS/JS editor for educational use",
+  "repository": "popcodeorg/popcode",
+  "homepage": "https://github.com/popcodeorg/popcode",
+  "author": {
+    "name": "Mat Brown",
+    "email": "mat.a.brown@gmail.com",
+    "url": "https://github.com/outoftime"
+  },
   "contributors": [
     {
       "name": "Mat Brown",
@@ -13,6 +20,9 @@
       "url": "https://github.com/kinduff"
     }
   ],
+  "keywords": "code editor education learning",
+  "bugs": "https://trello.com/b/ONaFg6wh/popcode",
+  "licenses": "MIT",
   "dependencies": {
     "PrettyCSS": "^0.3.11",
     "base64-js": "^1.0.2",
