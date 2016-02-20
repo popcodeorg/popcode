@@ -167,10 +167,11 @@ function clearRuntimeErrors() {
 function listenForAuth() {
   return (dispatch) => {
     appFirebase.onAuth((authData) => {
-      dispatch({
-        type: 'USER_AUTHENTICATED',
-        payload: authData,
-      });
+      if (authData === null) {
+        dispatch({type: 'USER_LOGGED_OUT'});
+      } else {
+        dispatch({type: 'USER_AUTHENTICATED', payload: authData});
+      }
     });
   };
 }

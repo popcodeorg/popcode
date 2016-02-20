@@ -90,6 +90,32 @@ class Toolbar extends React.Component {
     appFirebase.authWithOAuthPopup('github');
   }
 
+  _logOut() {
+    appFirebase.unauth();
+  }
+
+  _renderUserSessionToggle() {
+    if (this.props.currentUser.authenticated) {
+      return (
+        <li
+          onClick={this._logOut.bind(this)}
+          className="toolbar-menu-item"
+        >
+          Log out
+        </li>
+      );
+    }
+
+    return (
+      <li
+        onClick={this._promptForLogin.bind(this)}
+        className="toolbar-menu-item"
+      >
+        Log in with GitHub
+      </li>
+    );
+  }
+
   render() {
     if (!this.props.currentProject) {
       return null;
@@ -148,12 +174,7 @@ class Toolbar extends React.Component {
           >
             {i18n.t('toolbar.libraries')}
           </li>
-          <li
-            onClick={this._promptForLogin.bind(this)}
-            className="toolbar-menu-item"
-          >
-            Log in with GitHub
-          </li>
+          {this._renderUserSessionToggle()}
         </ul>
         {this._getSubmenu()}
       </div>
@@ -162,6 +183,7 @@ class Toolbar extends React.Component {
 }
 
 Toolbar.propTypes = {
+  currentUser: React.PropTypes.object.isRequired,
   currentProject: React.PropTypes.object,
   allProjects: React.PropTypes.array,
   onLibraryToggled: React.PropTypes.func.isRequired,
