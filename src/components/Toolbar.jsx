@@ -28,7 +28,7 @@ class Toolbar extends React.Component {
   _exportGist() {
     const newWindow = open('about:blank', 'gist');
 
-    Gists.createFromProject(this.props.currentProject).
+    Gists.createFromProject(this.props.currentProject, this.props.currentUser).
       then((response) => {
         newWindow.location = response.html_url;
       });
@@ -87,7 +87,10 @@ class Toolbar extends React.Component {
   }
 
   _promptForLogin() {
-    appFirebase.authWithOAuthPopup('github');
+    appFirebase.authWithOAuthPopup(
+      'github',
+      {remember: 'sessionOnly', scope: 'gist'}
+    );
   }
 
   _logOut() {
