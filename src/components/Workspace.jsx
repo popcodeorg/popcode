@@ -13,6 +13,7 @@ import {
   loadCurrentProjectFromStorage,
   updateProjectSource,
   toggleLibrary,
+  listenForAuth,
 } from '../actions';
 
 import Editor from './Editor';
@@ -42,6 +43,7 @@ class Workspace extends React.Component {
   componentWillMount() {
     this.props.dispatch(loadCurrentProjectFromStorage());
     this.props.dispatch(loadAllProjects());
+    this.props.dispatch(listenForAuth());
   }
 
   _allJavaScriptErrors() {

@@ -4,6 +4,7 @@ import i18n from 'i18next-client';
 import LibraryPicker from './LibraryPicker';
 import ProjectList from './ProjectList';
 import Gists from '../services/Gists';
+import appFirebase from '../services/appFirebase';
 
 class Toolbar extends React.Component {
   constructor() {
@@ -85,6 +86,10 @@ class Toolbar extends React.Component {
     this._close();
   }
 
+  _promptForLogin() {
+    appFirebase.authWithOAuthPopup('github');
+  }
+
   render() {
     if (!this.props.currentProject) {
       return null;
@@ -142,6 +147,12 @@ class Toolbar extends React.Component {
             )}
           >
             {i18n.t('toolbar.libraries')}
+          </li>
+          <li
+            onClick={this._promptForLogin.bind(this)}
+            className="toolbar-menu-item"
+          >
+            Log in with GitHub
           </li>
         </ul>
         {this._getSubmenu()}
