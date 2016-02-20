@@ -17,6 +17,9 @@ function user(stateIn, action) {
       });
     }
 
+    case 'USER_LOGGED_OUT':
+      return init;
+
     default:
       return state;
   }

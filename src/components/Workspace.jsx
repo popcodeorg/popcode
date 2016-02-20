@@ -36,6 +36,7 @@ function mapStateToProps(state) {
     errors: state.errors.toJS(),
     runtimeErrors: state.runtimeErrors.toJS(),
     delayErrorDisplay: state.delayErrorDisplay,
+    currentUser: state.user.toJS(),
   };
 }
 
@@ -143,6 +144,7 @@ class Workspace extends React.Component {
         <Toolbar
           allProjects={this.props.allProjects}
           currentProject={this.props.currentProject}
+          currentUser={this.props.currentUser}
           onLibraryToggled={this._onLibraryToggled.bind(this)}
           onNewProject={this._onNewProject.bind(this)}
           onProjectSelected={this._onProjectSelected.bind(this)}
@@ -154,6 +156,7 @@ class Workspace extends React.Component {
 }
 
 Workspace.propTypes = {
+  currentUser: React.PropTypes.object.isRequired,
   dispatch: React.PropTypes.func.isRequired,
   allProjects: React.PropTypes.array,
   currentProject: React.PropTypes.object,
