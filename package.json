@@ -34,6 +34,7 @@
     "css": "^2.2.1",
     "envify": "^3.4.0",
     "es6-promise": "^3.0.2",
+    "firebase": "^2.4.1",
     "github-api": "^0.11.2",
     "htmllint": "^0.2.4",
     "i18next-client": "^1.10.2",

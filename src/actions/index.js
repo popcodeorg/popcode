@@ -1,6 +1,7 @@
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import Storage from '../services/Storage';
+import appFirebase from '../services/appFirebase';
 import validations from '../validations';
 
 function generateProjectKey() {
@@ -163,6 +164,17 @@ function clearRuntimeErrors() {
   };
 }
 
+function listenForAuth() {
+  return (dispatch) => {
+    appFirebase.onAuth((authData) => {
+      dispatch({
+        type: 'USER_AUTHENTICATED',
+        payload: authData,
+      });
+    });
+  };
+}
+
 export {
   createProject,
   changeCurrentProject,
@@ -172,4 +184,5 @@ export {
   toggleLibrary,
   addRuntimeError,
   clearRuntimeErrors,
+  listenForAuth,
 };
