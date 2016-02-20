@@ -6,6 +6,8 @@ novice users.
 
 ### Project status ###
 
+[![Build Status](https://travis-ci.org/popcodeorg/popcode.svg?branch=master)](https://travis-ci.org/popcodeorg/popcode) [![Dependency Status](https://david-dm.org/popcodeorg/popcode.svg)](https://david-dm.org/popcodeorg/popcode) ![License](https://img.shields.io/github/license/popcodeorg/popcode.svg)
+
 Popcode is alpha software.
 
 ### Try it out ###
