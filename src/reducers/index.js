@@ -1,16 +1,16 @@
-var combineReducers = require('redux').combineReducers;
-var projects = require('./projects');
-var currentProject = require('./currentProject');
-var errors = require('./errors');
-var runtimeErrors = require('./runtimeErrors');
-var delayErrorDisplay = require('./delayErrorDisplay');
+import {combineReducers} from 'redux';
+import projects from './projects';
+import currentProject from './currentProject';
+import errors from './errors';
+import runtimeErrors from './runtimeErrors';
+import delayErrorDisplay from './delayErrorDisplay';
 
-var reducers = combineReducers({
-  projects: projects,
-  currentProject: currentProject,
-  errors: errors,
-  runtimeErrors: runtimeErrors,
-  delayErrorDisplay: delayErrorDisplay,
+const reducers = combineReducers({
+  projects,
+  currentProject,
+  errors,
+  runtimeErrors,
+  delayErrorDisplay,
 });
 
-module.exports = reducers;
+export default reducers;

@@ -1,31 +1,19 @@
-var React = require('react');
-var isEmpty = require('lodash/isEmpty');
+import React from 'react';
+import isEmpty from 'lodash/isEmpty';
+import ErrorList from './ErrorList';
+import Preview from './Preview';
 
-var ErrorList = require('./ErrorList');
-var Preview = require('./Preview');
-
-var Output = React.createClass({
-  propTypes: {
-    project: React.PropTypes.object.isRequired,
-    hasErrors: React.PropTypes.bool.isRequired,
-    errors: React.PropTypes.object.isRequired,
-    runtimeErrors: React.PropTypes.array.isRequired,
-    delayErrorDisplay: React.PropTypes.bool.isRequired,
-    onErrorClicked: React.PropTypes.func.isRequired,
-    onRuntimeError: React.PropTypes.func.isRequired,
-    clearRuntimeErrors: React.PropTypes.func.isRequired,
-  },
-
-  _renderErrorList: function(props) {
+class Output extends React.Component {
+  _renderErrorList(props) {
     return (
       <ErrorList
         {...props}
         onErrorClicked={this.props.onErrorClicked}
       />
     );
-  },
+  }
 
-  _renderPreview: function() {
+  _renderPreview() {
     return (
       <Preview
         project={this.props.project}
@@ -33,9 +21,9 @@ var Output = React.createClass({
         clearRuntimeErrors={this.props.clearRuntimeErrors}
       />
     );
-  },
+  }
 
-  _renderRuntimeErrorList: function() {
+  _renderRuntimeErrorList() {
     if (!isEmpty(this.props.runtimeErrors) && !this.props.delayErrorDisplay) {
       return this._renderErrorList({
         html: [],
@@ -44,9 +32,11 @@ var Output = React.createClass({
         docked: true,
       });
     }
-  },
 
-  render: function() {
+    return null;
+  }
+
+  render() {
     if (this.props.hasErrors) {
       if (this.props.delayErrorDisplay) {
         return (
@@ -73,7 +63,18 @@ var Output = React.createClass({
         {this._renderRuntimeErrorList()}
       </div>
     );
-  },
-});
+  }
+}
 
-module.exports = Output;
+Output.propTypes = {
+  project: React.PropTypes.object.isRequired,
+  hasErrors: React.PropTypes.bool.isRequired,
+  errors: React.PropTypes.object.isRequired,
+  runtimeErrors: React.PropTypes.array.isRequired,
+  delayErrorDisplay: React.PropTypes.bool.isRequired,
+  onErrorClicked: React.PropTypes.func.isRequired,
+  onRuntimeError: React.PropTypes.func.isRequired,
+  clearRuntimeErrors: React.PropTypes.func.isRequired,
+};
+
+export default Output;

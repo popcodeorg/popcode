@@ -1,22 +1,23 @@
-var isEmpty = require('lodash/isEmpty');
-var debounce = require('lodash/debounce');
-
-var Storage = require('../services/Storage');
-var validations = require('../validations');
+import isEmpty from 'lodash/isEmpty';
+import debounce from 'lodash/debounce';
+import Storage from '../services/Storage';
+import validations from '../validations';
 
 function generateProjectKey() {
-  var date = new Date();
+  const date = new Date();
   return (date.getTime() * 1000 + date.getMilliseconds()).toString();
 }
 
 function getCurrentProject(state) {
-  var projectKey = state.currentProject.get('projectKey');
+  const projectKey = state.currentProject.get('projectKey');
   if (projectKey) {
     return state.projects.get(projectKey);
   }
+
+  return null;
 }
 
-var showErrorsAfterDebounce = debounce(function(dispatch) {
+const showErrorsAfterDebounce = debounce((dispatch) => {
   dispatch({type: 'ERROR_DEBOUNCE_FINISHED'});
 }, 1000);
 
@@ -24,17 +25,17 @@ function validateSource(dispatch, language, source, enabledLibraries) {
   dispatch({
     type: 'VALIDATING_SOURCE',
     payload: {
-      language: language,
+      language,
     },
   });
 
-  var validate = validations[language];
-  validate(source, enabledLibraries.toJS()).then(function(errors) {
+  const validate = validations[language];
+  validate(source, enabledLibraries.toJS()).then((errors) => {
     dispatch({
       type: 'VALIDATED_SOURCE',
       payload: {
-        language: language,
-        errors: errors,
+        language,
+        errors,
       },
     });
 
@@ -45,14 +46,14 @@ function validateSource(dispatch, language, source, enabledLibraries) {
 }
 
 function validateAllSources(dispatch, project) {
-  var enabledLibraries = project.get('enabledLibraries');
-  project.get('sources').forEach(function(source, language) {
+  const enabledLibraries = project.get('enabledLibraries');
+  project.get('sources').forEach((source, language) => {
     validateSource(dispatch, language, source, enabledLibraries);
   });
 }
 
-exports.createProject = function() {
-  return function(dispatch, getState) {
+function createProject() {
+  return (dispatch, getState) => {
     dispatch({
       type: 'PROJECT_CREATED',
       payload: {
@@ -60,46 +61,46 @@ exports.createProject = function() {
       },
     });
 
-    var state = getState();
-    var projectKey = state.currentProject.get('projectKey');
-    var project = state.projects.get(projectKey);
+    const state = getState();
+    const projectKey = state.currentProject.get('projectKey');
+    const project = state.projects.get(projectKey);
 
     Storage.save(project.toJS());
     Storage.setCurrentProjectKey(projectKey);
   };
-};
+}
 
-exports.loadCurrentProjectFromStorage = function() {
-  return function(dispatch, getState) {
-    Storage.getCurrentProjectKey().then(function(projectKey) {
+function loadCurrentProjectFromStorage() {
+  return (dispatch, getState) => {
+    Storage.getCurrentProjectKey().then((projectKey) => {
       if (projectKey) {
-        Storage.load(projectKey).then(function(project) {
+        Storage.load(projectKey).then((project) => {
           dispatch({
             type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',
-            payload: {project: project},
+            payload: {project},
           });
 
           validateAllSources(dispatch, getCurrentProject(getState()));
         });
       } else {
-        exports.createProject()(dispatch, getState);
+        createProject()(dispatch, getState);
       }
     });
   };
-};
+}
 
-exports.updateProjectSource = function(projectKey, language, newValue) {
-  return function(dispatch, getState) {
+function updateProjectSource(projectKey, language, newValue) {
+  return (dispatch, getState) => {
     dispatch({
       type: 'PROJECT_SOURCE_EDITED',
       payload: {
-        projectKey: projectKey,
-        language: language,
-        newValue: newValue,
+        projectKey,
+        language,
+        newValue,
       },
     });
 
-    var currentProject = getCurrentProject(getState());
+    const currentProject = getCurrentProject(getState());
     Storage.save(currentProject.toJS());
 
     validateSource(
@@ -109,57 +110,66 @@ exports.updateProjectSource = function(projectKey, language, newValue) {
       currentProject.get('enabledLibraries')
     );
   };
-};
+}
 
-exports.changeCurrentProject = function(projectKey) {
-  return function(dispatch, getState) {
+function changeCurrentProject(projectKey) {
+  return (dispatch, getState) => {
     dispatch({
       type: 'CURRENT_PROJECT_CHANGED',
-      payload: {projectKey: projectKey},
+      payload: {projectKey},
     });
 
     Storage.setCurrentProjectKey(projectKey);
 
     validateAllSources(dispatch, getCurrentProject(getState()));
   };
-};
+}
 
-exports.toggleLibrary = function(projectKey, libraryKey) {
-  return function(dispatch, getState) {
+function toggleLibrary(projectKey, libraryKey) {
+  return (dispatch, getState) => {
     dispatch({
       type: 'PROJECT_LIBRARY_TOGGLED',
       payload: {
-        projectKey: projectKey,
-        libraryKey: libraryKey,
+        projectKey,
+        libraryKey,
       },
     });
 
     validateAllSources(dispatch, getCurrentProject(getState()));
   };
-};
+}
 
-exports.loadAllProjects = function() {
-  return function(dispatch) {
-    return Storage.all().then(function(projects) {
-      projects.forEach(function(project) {
-        dispatch({
-          type: 'PROJECT_LOADED_FROM_STORAGE',
-          payload: {project: project},
-        });
+function loadAllProjects() {
+  return (dispatch) => Storage.all().then((projects) => {
+    projects.forEach((project) => {
+      dispatch({
+        type: 'PROJECT_LOADED_FROM_STORAGE',
+        payload: {project},
       });
     });
-  };
-};
+  });
+}
 
-exports.addRuntimeError = function(error) {
+function addRuntimeError(error) {
   return {
     type: 'RUNTIME_ERROR_ADDED',
-    payload: {error: error},
+    payload: {error},
   };
-};
+}
 
-exports.clearRuntimeErrors = function() {
+function clearRuntimeErrors() {
   return {
     type: 'RUNTIME_ERRORS_CLEARED',
   };
+}
+
+export {
+  createProject,
+  changeCurrentProject,
+  loadCurrentProjectFromStorage,
+  loadAllProjects,
+  updateProjectSource,
+  toggleLibrary,
+  addRuntimeError,
+  clearRuntimeErrors,
 };

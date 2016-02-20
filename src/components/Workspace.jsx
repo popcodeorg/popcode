@@ -1,21 +1,30 @@
-var React = require('react');
-var connect = require('react-redux').connect;
-var values = require('lodash/values');
-var flatten = require('lodash/flatten');
-var isEmpty = require('lodash/isEmpty');
+import React from 'react';
+import {connect} from 'react-redux';
+import values from 'lodash/values';
+import flatten from 'lodash/flatten';
+import isEmpty from 'lodash/isEmpty';
 
-var actions = require('../actions');
+import {
+  addRuntimeError,
+  changeCurrentProject,
+  clearRuntimeErrors,
+  createProject,
+  loadAllProjects,
+  loadCurrentProjectFromStorage,
+  updateProjectSource,
+  toggleLibrary,
+} from '../actions';
 
-var Editor = require('./Editor');
-var Output = require('./Output');
-var Toolbar = require('./Toolbar');
+import Editor from './Editor';
+import Output from './Output';
+import Toolbar from './Toolbar';
 
 function mapStateToProps(state) {
-  var currentProject = state.projects.get(
+  const currentProject = state.projects.get(
     state.currentProject.get('projectKey')
   );
 
-  var currentProjectJS;
+  let currentProjectJS;
   if (currentProject) {
     currentProjectJS = currentProject.toJS();
   }
@@ -29,67 +38,58 @@ function mapStateToProps(state) {
   };
 }
 
-var Workspace = React.createClass({
-  propTypes: {
-    dispatch: React.PropTypes.func.isRequired,
-    allProjects: React.PropTypes.array,
-    currentProject: React.PropTypes.object,
-    errors: React.PropTypes.object,
-    runtimeErrors: React.PropTypes.array,
-    delayErrorDisplay: React.PropTypes.bool,
-  },
+class Workspace extends React.Component {
+  componentWillMount() {
+    this.props.dispatch(loadCurrentProjectFromStorage());
+    this.props.dispatch(loadAllProjects());
+  }
 
-  componentWillMount: function() {
-    this.props.dispatch(actions.loadCurrentProjectFromStorage());
-    this.props.dispatch(actions.loadAllProjects());
-  },
-
-  _allJavaScriptErrors: function() {
+  _allJavaScriptErrors() {
     return this.props.errors.javascript.concat(this.props.runtimeErrors);
-  },
+  }
 
-  _onErrorClicked: function(language, line, column) {
-    var editor = this.refs[language + 'Editor'];
+  _onErrorClicked(language, line, column) {
+    const editor = this.refs[`${language}Editor`];
     editor._jumpToLine(line, column);
-  },
+  }
 
-  _onEditorInput: function(language, source) {
+  _onEditorInput(language, source) {
     this.props.dispatch(
-      actions.updateProjectSource(
+      updateProjectSource(
         this.props.currentProject.projectKey,
         language,
         source
       )
     );
-  },
+  }
 
-  _onLibraryToggled: function(libraryKey) {
+  _onLibraryToggled(libraryKey) {
     this.props.dispatch(
-      actions.toggleLibrary(
+      toggleLibrary(
         this.props.currentProject.projectKey,
         libraryKey
       )
     );
-  },
+  }
 
-  _onNewProject: function() {
-    this.props.dispatch(actions.createProject());
-  },
+  _onNewProject() {
+    this.props.dispatch(createProject());
+  }
 
-  _onProjectSelected: function(project) {
-    this.props.dispatch(actions.changeCurrentProject(project.projectKey));
-  },
+  _onProjectSelected(project) {
+    this.props.dispatch(changeCurrentProject(project.projectKey));
+  }
 
-  _onRuntimeError: function(error) {
-    this.props.dispatch(actions.addRuntimeError(error));
-  },
+  _onRuntimeError(error) {
+    this.props.dispatch(addRuntimeError(error));
+  }
 
-  _clearRuntimeErrors: function() {
-    this.props.dispatch(actions.clearRuntimeErrors());
-  },
+  _clearRuntimeErrors() {
+    this.props.dispatch(clearRuntimeErrors());
+  }
 
-  render: function() {
-    var environment;
+  render() {
+    let environment;
     if (this.props.currentProject !== undefined) {
       environment = (
         <div className="environment">
@@ -101,9 +101,9 @@ var Workspace = React.createClass({
             }
             delayErrorDisplay={this.props.delayErrorDisplay}
             runtimeErrors={this.props.runtimeErrors}
-            onErrorClicked={this._onErrorClicked}
-            onRuntimeError={this._onRuntimeError}
-            clearRuntimeErrors={this._clearRuntimeErrors}
+            onErrorClicked={this._onErrorClicked.bind(this)}
+            onRuntimeError={this._onRuntimeError.bind(this)}
+            clearRuntimeErrors={this._clearRuntimeErrors.bind(this)}
           />
 
           <Editor
@@ -141,14 +141,23 @@ var Workspace = React.createClass({
         <Toolbar
           allProjects={this.props.allProjects}
           currentProject={this.props.currentProject}
-          onLibraryToggled={this._onLibraryToggled}
-          onNewProject={this._onNewProject}
-          onProjectSelected={this._onProjectSelected}
+          onLibraryToggled={this._onLibraryToggled.bind(this)}
+          onNewProject={this._onNewProject.bind(this)}
+          onProjectSelected={this._onProjectSelected.bind(this)}
         />
         {environment}
       </div>
     );
-  },
-});
+  }
+}
 
-module.exports = connect(mapStateToProps)(Workspace);
+Workspace.propTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+  allProjects: React.PropTypes.array,
+  currentProject: React.PropTypes.object,
+  errors: React.PropTypes.object,
+  runtimeErrors: React.PropTypes.array,
+  delayErrorDisplay: React.PropTypes.bool,
+};
+
+export default connect(mapStateToProps)(Workspace);

@@ -1,10 +1,10 @@
-var i18n = require('i18next-client');
-var JSHINT = require('jshint').JSHINT;
-var Promise = require('es6-promise').Promise;
-var update = require('react-addons-update');
-var libraries = require('../config').libraries;
+import i18n from 'i18next-client';
+import {JSHINT} from 'jshint';
+import {Promise} from 'es6-promise';
+import update from 'react-addons-update';
+import config from '../config';
 
-var jshintrc = {
+const jshintrc = {
   browser: true,
   curly: true,
   devel: true,
@@ -17,7 +17,7 @@ var jshintrc = {
   unused: true,
 };
 
-var match = {
+const match = {
   '{': '}',
   '[': ']',
   '(': ')',
@@ -25,68 +25,47 @@ var match = {
   '"': '"',
 };
 
-var humanErrors = {
-  E019: function(error) {
-    return i18n.t(
-      'errors.javascript.unmatched',
-      {openingSymbol: error.a, closingSymbol: match[error.a]}
-    );
-  },
+const humanErrors = {
+  E019: (error) => i18n.t(
+    'errors.javascript.unmatched',
+    {openingSymbol: error.a, closingSymbol: match[error.a]}
+  ),
 
-  E020: function(error) {
-    return i18n.t(
-      'errors.javascript.closing-match',
-      {openingSymbol: error.b, closingSymbol: error.a}
-    );
-  },
+  E020: (error) => i18n.t(
+    'errors.javascript.closing-match',
+    {openingSymbol: error.b, closingSymbol: error.a}
+  ),
 
-  E030: function() {
-    return i18n.t('errors.javascript.expected-identifier');
-  },
+  E030: () => i18n.t('errors.javascript.expected-identifier'),
 
-  W003: function(error) {
-    return i18n.t(
-      'errors.javascript.undefined-variable',
-      {variable: error.a}
-    );
-  },
+  W003: (error) => i18n.t(
+    'errors.javascript.undefined-variable',
+    {variable: error.a}
+  ),
 
-  W030: function() {
-    return i18n.t('errors.javascript.unexpected-expression');
-  },
+  W030: () => i18n.t('errors.javascript.unexpected-expression'),
 
-  W031: function() {
-    return i18n.t('errors.javascript.use-new-object');
-  },
+  W031: () => i18n.t('errors.javascript.use-new-object'),
 
-  W032: function() {
-    return i18n.t('errors.javascript.unnecessary-semicolon');
-  },
+  W032: () => i18n.t('errors.javascript.unnecessary-semicolon'),
 
-  W033: function() {
-    return i18n.t('errors.javascript.missing-semicolon');
-  },
+  W033: () => i18n.t('errors.javascript.missing-semicolon'),
 
-  W058: function(error) {
-    return i18n.t(
-      'errors.javascript.missing-parentheses',
-      {object: error.a}
-    );
-  },
+  W058: (error) => i18n.t(
+    'errors.javascript.missing-parentheses',
+    {object: error.a}
+  ),
 
-  W084: function() {
-    return i18n.t('errors.javascript.strict-comparison-operator');
-  },
+  W084: () => i18n.t('errors.javascript.strict-comparison-operator'),
 
-  W098: function(error) {
-    return i18n.t('errors.javascript.unused-variable', {variable: error.a});
-  },
+  W098: (error) => i18n.t(
+    'errors.javascript.unused-variable',
+    {variable: error.a}
+  ),
 
-  W112: function() {
-    return i18n.t('errors.javascript.unclosed-string');
-  },
+  W112: () => i18n.t('errors.javascript.unclosed-string'),
 
-  W116: function(error) {
+  W116: (error) => {
     if (error.a === '===' && error.b === '==') {
       return i18n.t('errors.javascript.strict-operators.equal');
     }
@@ -99,22 +78,21 @@ var humanErrors = {
     );
   },
 
-  W117: function(error) {
-    return i18n.t('errors.javascript.declare-variable', {variable: error.a});
-  },
+  W117: (error) => i18n.t(
+    'errors.javascript.declare-variable',
+    {variable: error.a}
+  ),
 
-  W123: function(error) {
-    return i18n.t(
-      'errors.javascript.duplicated-declaration',
-      {variable: error.a}
-    );
-  },
+  W123: (error) => i18n.t(
+    'errors.javascript.duplicated-declaration',
+    {variable: error.a}
+  ),
 };
 
 function convertErrorToAnnotation(error) {
-  var code = error.code;
+  const code = error.code;
   if (humanErrors.hasOwnProperty(code)) {
-    var message = humanErrors[code](error);
+    const message = humanErrors[code](error);
     return {
       row: error.line - 1, column: error.character - 1,
       raw: message,
@@ -122,26 +100,27 @@ function convertErrorToAnnotation(error) {
       type: 'error',
     };
   }
+  return undefined;
 }
 
-module.exports = function(source, enabledLibraries) {
-  var config = jshintrc;
-  enabledLibraries.forEach(function(libraryKey) {
-    var library = libraries[libraryKey];
+export default (source, enabledLibraries) => {
+  let jshintOptions = jshintrc;
+  enabledLibraries.forEach((libraryKey) => {
+    const library = config.libraries[libraryKey];
 
     if (library.validations !== undefined &&
         library.validations.javascript !== undefined) {
-      config = update(config, library.validations.javascript);
+      jshintOptions = update(jshintOptions, library.validations.javascript);
     }
   });
 
-  JSHINT(source, config); // eslint-disable-line new-cap
-  var data = JSHINT.data();
-  var annotations = [];
-  var annotatedLines = [];
+  JSHINT(source, jshintOptions); // eslint-disable-line new-cap
+  const data = JSHINT.data();
+  const annotations = [];
+  const annotatedLines = [];
 
   if (data.errors) {
-    data.errors.forEach(function(error) {
+    data.errors.forEach((error) => {
       if (error === null) {
         return;
       }
@@ -149,7 +128,7 @@ module.exports = function(source, enabledLibraries) {
         return;
       }
 
-      var annotation = convertErrorToAnnotation(error);
+      const annotation = convertErrorToAnnotation(error);
       if (annotation !== undefined) {
         annotatedLines.push(annotation.row);
         annotations.push(annotation);

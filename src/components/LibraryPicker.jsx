@@ -1,34 +1,32 @@
-var React = require('react');
-var map = require('lodash/map');
-var partial = require('lodash/partial');
+import React from 'react';
+import map from 'lodash/map';
+import partial from 'lodash/partial';
 
-var LibraryPickerItem = require('./LibraryPickerItem');
-var config = require('../config');
+import LibraryPickerItem from './LibraryPickerItem';
+import config from '../config';
 
-var LibraryPicker = React.createClass({
-  propTypes: {
-    enabledLibraries: React.PropTypes.array.isRequired,
-    onLibraryToggled: React.PropTypes.func.isRequired,
-  },
-
-  _isLibraryEnabled: function(libraryKey) {
+class LibraryPicker extends React.Component {
+  _isLibraryEnabled(libraryKey) {
     return this.props.enabledLibraries.indexOf(libraryKey) !== -1;
-  },
+  }
 
-  render: function() {
-    var libraries = map(config.libraries, function(library, key) {
-      return (
-        <LibraryPickerItem
-          key={key}
-          library={library}
-          enabled={this._isLibraryEnabled(key)}
-          onLibraryToggled={partial(this.props.onLibraryToggled, key)}
-        />
-      );
-    }.bind(this));
+  render() {
+    const libraries = map(config.libraries, (library, key) => (
+      <LibraryPickerItem
+        key={key}
+        library={library}
+        enabled={this._isLibraryEnabled(key)}
+        onLibraryToggled={partial(this.props.onLibraryToggled, key)}
+      />
+    ));
 
     return <ul className="toolbar-menu">{libraries}</ul>;
-  },
-});
+  }
+}
 
-module.exports = LibraryPicker;
+LibraryPicker.propTypes = {
+  enabledLibraries: React.PropTypes.array.isRequired,
+  onLibraryToggled: React.PropTypes.func.isRequired,
+};
+
+export default LibraryPicker;

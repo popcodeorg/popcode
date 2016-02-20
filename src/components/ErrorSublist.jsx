@@ -1,34 +1,25 @@
-var React = require('react');
-var map = require('lodash/map');
-var partial = require('lodash/partial');
-var i18n = require('i18next-client');
+import React from 'react';
+import map from 'lodash/map';
+import partial from 'lodash/partial';
+import i18n from 'i18next-client';
+import ErrorItem from './ErrorItem';
 
-var ErrorItem = require('./ErrorItem');
-
-var ErrorSublist = React.createClass({
-  propTypes: {
-    errors: React.PropTypes.array.isRequired,
-    onErrorClicked: React.PropTypes.func.isRequired,
-    language: React.PropTypes.oneOf(['html', 'css', 'javascript']).isRequired,
-  },
-
-  render: function() {
+class ErrorSublist extends React.Component {
+  render() {
     if (this.props.errors.length === 0) {
       return false;
     }
 
-    var errors = map(this.props.errors, function(error) {
-      return (
-        <ErrorItem {...error}
-          onClick={partial(
-            this.props.onErrorClicked,
-            this.props.language
-          )}
-        />
-      );
-    }.bind(this));
+    const errors = map(this.props.errors, (error) => (
+      <ErrorItem {...error}
+        onClick={partial(
+          this.props.onErrorClicked,
+          this.props.language
+        )}
+      />
+    ));
 
-    var errorMessage = i18n.t(
+    const errorMessage = i18n.t(
       'errors.notice',
       {amount: this.props.errors.length, language: this.props.language}
     );
@@ -43,7 +34,13 @@ var ErrorSublist = React.createClass({
         </ul>
       </div>
     );
-  },
-});
+  }
+}
 
-module.exports = ErrorSublist;
+ErrorSublist.propTypes = {
+  errors: React.PropTypes.array.isRequired,
+  onErrorClicked: React.PropTypes.func.isRequired,
+  language: React.PropTypes.oneOf(['html', 'css', 'javascript']).isRequired,
+};
+
+export default ErrorSublist;

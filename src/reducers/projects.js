@@ -1,12 +1,10 @@
-/* global __dirname */
+import Immutable from 'immutable';
+import {readFileSync} from 'fs';
+import path from 'path';
 
-var Immutable = require('immutable');
-var fs = require('fs');
-var path = require('path');
-
-var newProject = Immutable.fromJS({
+const newProject = Immutable.fromJS({
   sources: {
-    html: fs.readFileSync(path.join(
+    html: readFileSync(path.join(
       __dirname,
       '..',
       '..',
@@ -31,7 +29,7 @@ function addProject(state, project) {
 }
 
 function projects(stateIn, action) {
-  var state;
+  let state;
 
   if (stateIn === undefined) {
     state = new Immutable.Map();
@@ -61,8 +59,8 @@ function projects(stateIn, action) {
     case 'PROJECT_LIBRARY_TOGGLED':
       return state.updateIn(
         [action.payload.projectKey, 'enabledLibraries'],
-        function(enabledLibraries) {
-          var libraryKey = action.payload.libraryKey;
+        (enabledLibraries) => {
+          const libraryKey = action.payload.libraryKey;
           if (enabledLibraries.has(libraryKey)) {
             return enabledLibraries.delete(libraryKey);
           }
@@ -77,4 +75,4 @@ function projects(stateIn, action) {
 
 projects.projectToImmutable = projectToImmutable;
 
-module.exports = projects;
+export default projects;

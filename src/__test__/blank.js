@@ -1,12 +1,14 @@
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
-exports.project = {
+const project = {
   projectKey: '12345',
   sources: {html: '', css: '', javascript: ''},
   enabledLibraries: [],
 };
 
-exports.state = {
-  currentProject: new Immutable.Map({projectKey: exports.project.projectKey}),
-  projects: Immutable.fromJS({12345: exports.project}),
+const state = {
+  currentProject: new Immutable.Map({projectKey: project.projectKey}),
+  projects: Immutable.fromJS({12345: project}),
 };
+
+export {project, state};

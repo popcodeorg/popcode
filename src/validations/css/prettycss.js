@@ -1,34 +1,30 @@
-var i18n = require('i18next-client');
-var prettyCSS = require('PrettyCSS');
-var Promise = require('es6-promise').Promise;
+import i18n from 'i18next-client';
+import prettyCSS from 'PrettyCSS';
+import {Promise} from 'es6-promise';
 
-var RADIAL_GRADIENT_EXPR =
+const RADIAL_GRADIENT_EXPR =
   /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/;
 function isIncorrectlyRejectedRadialGradientValue(value) {
   return RADIAL_GRADIENT_EXPR.test(value);
 }
 
-var humanErrors = {
-  'block-expected': function(error) {
-    return i18n.t(
-      'errors.prettycss.block-expected',
-      {error: error.token.content}
-    );
-  },
+const humanErrors = {
+  'block-expected': (error) => i18n.t(
+    'errors.prettycss.block-expected',
+    {error: error.token.content}
+  ),
 
-  'extra-tokens-after-value': function() {
-    return i18n.t('errors.prettycss.extra-tokens-after-value');
-  },
+  'extra-tokens-after-value': () => i18n.t(
+    'errors.prettycss.extra-tokens-after-value'
+  ),
 
-  'illegal-token-after-combinator': function() {
-    return i18n.t('errors.prettycss.illegal-token-after-combinator');
-  },
+  'illegal-token-after-combinator': () => i18n.t(
+    'errors.prettycss.illegal-token-after-combinator'
+  ),
 
-  'invalid-token': function() {
-    return i18n.t('errors.prettycss.invalid-token');
-  },
+  'invalid-token': () => i18n.t('errors.prettycss.invalid-token'),
 
-  'invalid-value': function(error) {
+  'invalid-value': (error) => {
     if (isIncorrectlyRejectedRadialGradientValue(error.token.content)) {
       return null;
     }
@@ -39,29 +35,23 @@ var humanErrors = {
     );
   },
 
-  'require-value': function(error) {
-    return i18n.t(
-      'errors.prettycss.require-value',
-      {error: error.token.content}
-    );
-  },
+  'require-value': (error) => i18n.t(
+    'errors.prettycss.require-value',
+    {error: error.token.content}
+  ),
 
-  'selector-expected': function() {
-    return i18n.t('errors.prettycss.selector-expected');
-  },
+  'selector-expected': () => i18n.t('errors.prettycss.selector-expected'),
 
-  'unknown-property': function(error) {
-    return i18n.t(
-      'errors.prettycss.unknown-property',
-      {error: error.token.content}
-    );
-  },
+  'unknown-property': (error) => i18n.t(
+    'errors.prettycss.unknown-property',
+    {error: error.token.content}
+  ),
 };
 
 function convertErrorToAnnotation(error) {
-  var normalizedCode = error.code.split(':')[0];
+  const normalizedCode = error.code.split(':')[0];
   if (error.token !== null && humanErrors.hasOwnProperty(normalizedCode)) {
-    var message = humanErrors[normalizedCode](error);
+    const message = humanErrors[normalizedCode](error);
     if (message !== null) {
       return {
         row: error.token.line - 1, column: error.token.charNum - 1,
@@ -71,14 +61,16 @@ function convertErrorToAnnotation(error) {
       };
     }
   }
+
+  return null;
 }
 
-module.exports = function(source) {
-  var result = prettyCSS.parse(source);
-  var annotations = [];
-  result.errors.concat(result.warnings).forEach(function(error) {
-    var annotation = convertErrorToAnnotation(error);
-    if (annotation !== undefined) {
+export default (source) => {
+  const result = prettyCSS.parse(source);
+  const annotations = [];
+  result.errors.concat(result.warnings).forEach((error) => {
+    const annotation = convertErrorToAnnotation(error);
+    if (annotation !== null) {
       annotations.push(annotation);
     }
   });

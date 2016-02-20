@@ -1,57 +1,56 @@
 /* eslint-env jest */
-/* eslint global-require: 0 */
+/* eslint global-require:0 no-invalid-this:0 */
+import each from 'lodash/each';
+import map from 'lodash/map';
+import assign from 'lodash/assign';
+import keyBy from 'lodash/keyBy';
 
-var each = require('lodash/each');
-var map = require('lodash/map');
-var assign = require('lodash/assign');
-var keyBy = require('lodash/keyBy');
+const blank = require.requireActual('../../__test__/blank');
 
-var blank = require.requireActual('../../__test__/blank');
-
-describe('index', function() {
-  var validations = {
+describe('index', () => {
+  const validations = {
     html: jest.genMockFn(),
     css: jest.genMockFn(),
     javascript: jest.genMockFn(),
   };
   jest.setMock('../../validations', validations);
 
-  var Actions = require.requireActual('../index');
-  var Storage = require('../../services/Storage');
-  var dispatch, getState;
+  const Actions = require.requireActual('../index');
+  const Storage = require('../../services/Storage');
+  let dispatch, getState;
 
   function dispatchThunkAction(action) {
     action(dispatch, getState);
   }
 
-  function expectActions() {
-    var resolveFns = {};
+  function expectActions(...actionTypes) {
+    const resolveFns = {};
     dispatch.promised = {};
 
-    each(arguments, function(actionType) {
-      dispatch.promised[actionType] = new Promise(function(resolve) {
+    each(actionTypes, (actionType) => {
+      dispatch.promised[actionType] = new Promise((resolve) => {
         resolveFns[actionType] = resolve;
       });
     });
 
-    dispatch.mockImplementation(function(action) {
+    dispatch.mockImplementation((action) => {
       if (resolveFns[action.type]) {
         resolveFns[action.type](action);
       }
     });
   }
 
-  beforeEach(function() {
+  beforeEach(() => {
     dispatch = jest.genMockFunction();
     getState = jest.genMockFunction();
   });
 
-  afterEach(function() {
+  afterEach(() => {
     Storage.setCurrentProjectKey.mockClear();
     Storage.save.mockClear();
   });
 
-  describe('createProject', function() {
+  describe('createProject', () => {
     beforeEach(function() {
       getState.mockReturnValue(blank.state);
 
@@ -59,7 +58,7 @@ describe('index', function() {
       this.dispatchedAction = dispatch.mock.calls[0][0];
     });
 
-    it('should dispatch one action', function() {
+    it('should dispatch one action', () => {
       expect(dispatch.mock.calls.length).toBe(1);
     });
 
@@ -71,12 +70,12 @@ describe('index', function() {
       expect(this.dispatchedAction.payload.projectKey).toBeDefined();
     });
 
-    it('should save current project key', function() {
+    it('should save current project key', () => {
       expect(Storage.setCurrentProjectKey.mock.calls).
         toEqual([['12345']]);
     });
 
-    it('should save new project', function() {
+    it('should save new project', () => {
       expect(Storage.save.mock.calls).
         toEqual([
           [blank.project],
@@ -84,18 +83,16 @@ describe('index', function() {
     });
   });
 
-  describe('loadCurrentProjectFromStorage with project', function() {
-    beforeEach(function() {
+  describe('loadCurrentProjectFromStorage with project', () => {
+    beforeEach(() => {
       Storage.getCurrentProjectKey.mockReturnValue(
         Promise.resolve(blank.project.projectKey)
       );
       Storage.load.mockReturnValue(Promise.resolve(blank.project));
 
       getState.mockReturnValue(blank.state);
-      each(validations, function(validation) {
-        validation.mockImplementation(function() {
-          return Promise.resolve([]);
-        });
+      each(validations, (validation) => {
+        validation.mockImplementation(() => Promise.resolve([]));
       });
 
       expectActions(
@@ -107,57 +104,59 @@ describe('index', function() {
       dispatchThunkAction(Actions.loadCurrentProjectFromStorage());
     });
 
-    pit('should dispatch CURRENT_PROJECT_LOADED_FROM_STORAGE', function() {
-      return dispatch.promised.CURRENT_PROJECT_LOADED_FROM_STORAGE.
-        then(function(action) {
+    pit(
+      'should dispatch CURRENT_PROJECT_LOADED_FROM_STORAGE',
+      () => dispatch.promised.CURRENT_PROJECT_LOADED_FROM_STORAGE.
+        then((action) => {
           expect(action).toBeDefined();
-        });
-    });
+        })
+    );
 
-    pit('should pass project in payload', function() {
-      return dispatch.promised.CURRENT_PROJECT_LOADED_FROM_STORAGE.
-        then(function(action) {
+    pit(
+      'should pass project in payload',
+      () => dispatch.promised.CURRENT_PROJECT_LOADED_FROM_STORAGE.
+        then((action) => {
           expect(action.payload.project).toBe(blank.project);
-        });
-    });
+        })
+    );
 
-    pit('should dispatch VALIDATING_SOURCE', function() {
-      return dispatch.promised.VALIDATING_SOURCE.then(function(action) {
+    pit(
+      'should dispatch VALIDATING_SOURCE',
+      () => dispatch.promised.VALIDATING_SOURCE.then((action) => {
         expect(action).toBeDefined();
-      });
-    });
+      })
+    );
 
-    pit('should dispatch VALIDATED_SOURCE', function() {
-      return dispatch.promised.VALIDATED_SOURCE.then(function(action) {
+    pit(
+      'should dispatch VALIDATED_SOURCE',
+      () => dispatch.promised.VALIDATED_SOURCE.then((action) => {
         expect(action).toBeDefined();
-      });
-    });
+      })
+    );
   });
 
-  describe('loadCurrentProjectFromStorage with no project', function() {
+  describe('loadCurrentProjectFromStorage with no project', () => {
     beforeEach(function() {
       Storage.getCurrentProjectKey.mockReturnValue(Promise.resolve(undefined));
       dispatchThunkAction(Actions.loadCurrentProjectFromStorage());
 
       this.actionsDispatched = new Promise(dispatch.mockImplementation).
-        then(function() {
-          return dispatch.mock.calls[0][0];
-        });
+        then(() => dispatch.mock.calls[0][0]);
     });
 
     pit('should dispatch PROJECT_CREATED action', function() {
-      return this.actionsDispatched.then(function(action) {
+      return this.actionsDispatched.then((action) => {
         expect(action.type).toBe('PROJECT_CREATED');
       });
     });
   });
 
-  describe('updateProjectSource', function() {
+  describe('updateProjectSource', () => {
     beforeEach(function() {
       getState.mockReturnValue(blank.state);
 
-      this.promisedValidatedSourceAction = new Promise(function(resolve) {
-        dispatch.mockImplementation(function(action) {
+      this.promisedValidatedSourceAction = new Promise((resolve) => {
+        dispatch.mockImplementation((action) => {
           if (action.type === 'VALIDATED_SOURCE') {
             resolve(action);
           }
@@ -211,32 +210,32 @@ describe('index', function() {
     });
 
     pit('should dispatch validation complete action', function() {
-      return this.promisedValidatedSourceAction.then(function(action) {
+      return this.promisedValidatedSourceAction.then((action) => {
         expect(action).toBeDefined();
       });
     });
 
     pit('should send errors in validation complete action', function() {
-      return this.promisedValidatedSourceAction.then(function(action) {
+      return this.promisedValidatedSourceAction.then((action) => {
         expect(action.payload.errors).toEqual([this.error]);
-      }.bind(this));
+      });
     });
 
     pit('should send errors in validation complete action', function() {
-      return this.promisedValidatedSourceAction.then(function(action) {
+      return this.promisedValidatedSourceAction.then((action) => {
         expect(action.payload.language).toBe('css');
       });
     });
 
-    it('should save project', function() {
+    it('should save project', () => {
       expect(Storage.save.mock.calls).toEqual([
         [blank.project],
       ]);
     });
   });
 
-  describe('changeCurrentProject', function() {
-    beforeEach(function() {
+  describe('changeCurrentProject', () => {
+    beforeEach(() => {
       expectActions(
         'CURRENT_PROJECT_CHANGED',
         'VALIDATING_SOURCE',
@@ -245,50 +244,53 @@ describe('index', function() {
 
       getState.mockReturnValue(blank.state);
 
-      each(validations, function(validation) {
-        validation.mockImplementation(function() {
-          return Promise.resolve([]);
-        });
+      each(validations, (validation) => {
+        validation.mockImplementation(() => Promise.resolve([]));
       });
 
       dispatchThunkAction(Actions.changeCurrentProject('12345'));
     });
 
-    pit('should dispatch CURRENT_PROJECT_CHANGED', function() {
-      return dispatch.promised.CURRENT_PROJECT_CHANGED.then(function(action) {
+    pit(
+      'should dispatch CURRENT_PROJECT_CHANGED',
+      () => dispatch.promised.CURRENT_PROJECT_CHANGED.then((action) => {
         expect(action).toBeDefined();
-      });
-    });
+      })
+    );
 
-    pit('should dispatch project key in the payload', function() {
-      return dispatch.promised.CURRENT_PROJECT_CHANGED.then(function(action) {
+    pit(
+      'should dispatch project key in the payload',
+      () => dispatch.promised.CURRENT_PROJECT_CHANGED.then((action) => {
         expect(action.payload.projectKey).toBe('12345');
-      });
-    });
+      })
+    );
 
-    pit('should update current project key in storage', function() {
-      return dispatch.promised.CURRENT_PROJECT_CHANGED.then(function() {
+    pit(
+      'should update current project key in storage',
+      () => dispatch.promised.CURRENT_PROJECT_CHANGED.then(() => {
         expect(Storage.setCurrentProjectKey.mock.calls).toEqual([
           ['12345'],
         ]);
-      });
-    });
+      })
+    );
 
-    pit('should validate sources', function() {
-      return dispatch.promised.VALIDATING_SOURCE.then(function(action) {
+    pit(
+      'should validate sources',
+      () => dispatch.promised.VALIDATING_SOURCE.then((action) => {
         expect(action).toBeDefined();
-      });
-    });
+      })
+    );
 
-    pit('should finish validating sources', function() {
-      return dispatch.promised.VALIDATED_SOURCE.then(function(action) {
+    pit(
+      'should finish validating sources',
+      () => dispatch.promised.VALIDATED_SOURCE.then((action) => {
         expect(action).toBeDefined();
-      });
-    });
+      })
+    );
   });
 
-  describe('toggleLibrary', function() {
-    beforeEach(function() {
+  describe('toggleLibrary', () => {
+    beforeEach(() => {
       expectActions(
         'PROJECT_LIBRARY_TOGGLED',
         'VALIDATING_SOURCE',
@@ -296,56 +298,57 @@ describe('index', function() {
       );
 
       getState.mockReturnValue(blank.state);
-      each(validations, function(validation) {
-        validation.mockImplementation(function() {
-          return Promise.resolve([]);
-        });
+      each(validations, (validation) => {
+        validation.mockImplementation(() => Promise.resolve([]));
       });
 
       dispatchThunkAction(Actions.toggleLibrary('12345', 'jquery'));
     });
 
-    pit('should dispatch PROJECT_LIBRARY_TOGGLED with library', function() {
-      return dispatch.promised.PROJECT_LIBRARY_TOGGLED.then(function(action) {
+    pit(
+      'should dispatch PROJECT_LIBRARY_TOGGLED with library',
+      () => dispatch.promised.PROJECT_LIBRARY_TOGGLED.then((action) => {
         expect(action.payload.libraryKey).toBe('jquery');
-      });
-    });
+      })
+    );
 
-    pit('should dispatch PROJECT_LIBRARY_TOGGLED with project', function() {
-      return dispatch.promised.PROJECT_LIBRARY_TOGGLED.then(function(action) {
+    pit(
+      'should dispatch PROJECT_LIBRARY_TOGGLED with project',
+      () => dispatch.promised.PROJECT_LIBRARY_TOGGLED.then((action) => {
         expect(action.payload.projectKey).toBe('12345');
-      });
-    });
+      })
+    );
 
-    pit('should dispatch VALIDATING_SOURCE', function() {
-      return dispatch.promised.VALIDATING_SOURCE;
-    });
+    pit(
+      'should dispatch VALIDATING_SOURCE',
+      () => dispatch.promised.VALIDATING_SOURCE
+    );
 
-    pit('should dispatch VALIDATED_SOURCE', function() {
-      return dispatch.promised.VALIDATED_SOURCE;
-    });
+    pit(
+      'should dispatch VALIDATED_SOURCE',
+      () => dispatch.promised.VALIDATED_SOURCE
+    );
   });
 
-  describe('loadAllProjects', function() {
-    beforeEach(function() {
+  describe('loadAllProjects', () => {
+    beforeEach(() => {
       expectActions('PROJECT_LOADED_FROM_STORAGE');
 
       getState.mockReturnValue(blank.state);
 
-      Storage.all.mockReturnValue(
-        Promise.resolve([
-          assign({}, blank.project, {projectKey: '23456'}),
-        ])
-      );
+      Storage.all.mockReturnValue(Promise.resolve([
+        assign({}, blank.project, {projectKey: '23456'}),
+      ]));
 
       dispatchThunkAction(Actions.loadAllProjects());
     });
 
-    pit('should dispatch PROJECT_LOADED_FROM_STORAGE', function() {
-      return dispatch.promised.PROJECT_LOADED_FROM_STORAGE.
-        then(function(action) {
+    pit(
+      'should dispatch PROJECT_LOADED_FROM_STORAGE',
+      () => dispatch.promised.PROJECT_LOADED_FROM_STORAGE.
+        then((action) => {
           expect(action.payload.project.projectKey).toBe('23456');
-        });
-    });
+        })
+    );
   });
 });

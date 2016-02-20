@@ -1,11 +1,9 @@
-var Promise = require('es6-promise').Promise;
-var flatten = require('lodash/flatten');
-var validateWithCss = require('./css/css.js');
-var validateWithPrettyCSS = require('./css/prettycss.js');
+import {Promise} from 'es6-promise';
+import flatten from 'lodash/flatten';
+import validateWithCss from './css/css.js';
+import validateWithPrettyCSS from './css/prettycss.js';
 
-module.exports = function(source) {
-  return Promise.all([validateWithCss(source), validateWithPrettyCSS(source)]).
-    then(function(results) {
-      return flatten(results);
-    });
-};
+export default (source) => Promise.all([
+  validateWithCss(source),
+  validateWithPrettyCSS(source),
+]).then((results) => flatten(results));

@@ -1,5 +1,5 @@
-var html = require('./html.js');
-var css = require('./css.js');
-var javascript = require('./javascript.js');
+import html from './html.js';
+import css from './css.js';
+import javascript from './javascript.js';
+export default {html, css, javascript};
 
-module.exports = {html: html, css: css, javascript: javascript};

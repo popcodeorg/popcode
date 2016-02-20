@@ -1,63 +1,55 @@
-var React = require('react');
-var classnames = require('classnames');
-var i18n = require('i18next-client');
+import React from 'react';
+import classnames from 'classnames';
+import i18n from 'i18next-client';
+import LibraryPicker from './LibraryPicker';
+import ProjectList from './ProjectList';
+import Gists from '../services/Gists';
 
-var LibraryPicker = require('./LibraryPicker');
-var ProjectList = require('./ProjectList');
-var Gists = require('../services/Gists');
+class Toolbar extends React.Component {
+  constructor() {
+    super();
+    this.state = {open: false};
+  }
 
-var Toolbar = React.createClass({
-  propTypes: {
-    currentProject: React.PropTypes.object,
-    allProjects: React.PropTypes.array,
-    onLibraryToggled: React.PropTypes.func.isRequired,
-    onNewProject: React.PropTypes.func.isRequired,
-    onProjectSelected: React.PropTypes.func.isRequired,
-  },
-
-  getInitialState: function() {
-    return {open: false};
-  },
-
-  _close: function() {
+  _close() {
     this.setState({open: false, submenu: null});
-  },
+  }
 
-  _newProject: function() {
+  _newProject() {
     this._close();
     this.props.onNewProject();
-  },
+  }
 
-  _loadProject: function() {
+  _loadProject() {
     this.setState({submenu: 'loadProject'});
-  },
+  }
 
-  _exportGist: function() {
-    var newWindow = open('about:blank', 'gist');
+  _exportGist() {
+    const newWindow = open('about:blank', 'gist');
 
     Gists.createFromProject(this.props.currentProject).
-      then(function(response) {
+      then((response) => {
         newWindow.location = response.html_url;
       });
-  },
+  }
 
-  _showHideLabel: function() {
+  _showHideLabel() {
     if (this.state.open) {
       return i18n.t('toolbar.hide');
     }
     return i18n.t('toolbar.show');
-  },
+  }
 
-  _toggleLibraryPicker: function() {
-    return this.setState(function(oldState) {
+  _toggleLibraryPicker() {
+    return this.setState((oldState) => {
       if (oldState.submenu === 'libraries') {
         return {submenu: null};
       }
       return {submenu: 'libraries'};
     });
-  },
+  }
 
-  _getSubmenu: function() {
+  _getSubmenu() {
     switch (this.state.submenu) {
       case 'libraries':
         return (
@@ -71,32 +63,34 @@ var Toolbar = React.createClass({
         return (
           <ProjectList
             projects={this.props.allProjects}
-            onProjectSelected={this._onProjectSelected}
+            onProjectSelected={this._onProjectSelected.bind(this)}
           />
         );
     }
-  },
 
-  _toggleShowHideState: function() {
-    this.setState(function(oldState) {
+    return null;
+  }
+
+  _toggleShowHideState() {
+    this.setState((oldState) => {
       if (oldState.open) {
         return {open: false, submenu: null};
       }
       return {open: true};
     });
-  },
+  }
 
-  _onProjectSelected: function(project) {
+  _onProjectSelected(project) {
     this.props.onProjectSelected(project);
     this._close();
-  },
+  }
 
-  render: function() {
+  render() {
     if (!this.props.currentProject) {
       return null;
     }
 
-    var toolbarItemsClasses = ['toolbar-menu'];
+    const toolbarItemsClasses = ['toolbar-menu'];
     if (this.state.open) {
       toolbarItemsClasses.push('toolbar-menu--open');
     } else {
@@ -107,7 +101,7 @@ var Toolbar = React.createClass({
       <div className="toolbar">
         <div
           className="toolbar-showHide"
-          onClick={this._toggleShowHideState}
+          onClick={this._toggleShowHideState.bind(this)}
         >
 
           {this._showHideLabel()}
@@ -120,10 +114,13 @@ var Toolbar = React.createClass({
           }
         )}
         >
-          <li onClick={this._newProject} className="toolbar-menu-item">
+          <li
+            onClick={this._newProject.bind(this)}
+            className="toolbar-menu-item"
+          >
             {i18n.t('toolbar.new-project')}
           </li>
-          <li onClick={this._loadProject}
+          <li onClick={this._loadProject.bind(this)}
             className={classnames(
               'toolbar-menu-item',
               {'toolbar-menu-item--active':
@@ -132,10 +129,13 @@ var Toolbar = React.createClass({
           >
             {i18n.t('toolbar.load-project')}
           </li>
-          <li onClick={this._exportGist} className="toolbar-menu-item">
+          <li
+            onClick={this._exportGist.bind(this)}
+            className="toolbar-menu-item"
+          >
             {i18n.t('toolbar.export-gist')}
           </li>
-          <li onClick={this._toggleLibraryPicker}
+          <li onClick={this._toggleLibraryPicker.bind(this)}
             className={classnames(
               'toolbar-menu-item',
               {'toolbar-menu-item-active': this.state.submenu === 'libraries'}
@@ -147,7 +147,15 @@ var Toolbar = React.createClass({
         {this._getSubmenu()}
       </div>
     );
-  },
-});
+  }
+}
 
-module.exports = Toolbar;
+Toolbar.propTypes = {
+  currentProject: React.PropTypes.object,
+  allProjects: React.PropTypes.array,
+  onLibraryToggled: React.PropTypes.func.isRequired,
+  onNewProject: React.PropTypes.func.isRequired,
+  onProjectSelected: React.PropTypes.func.isRequired,
+};
+
+export default Toolbar;

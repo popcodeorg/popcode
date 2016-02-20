@@ -1,18 +1,18 @@
-var Promise = require('es6-promise').Promise;
-var groupBy = require('lodash/groupBy');
-var values = require('lodash/values');
-var flatten = require('lodash/flatten');
-var flatMap = require('lodash/flatMap');
-var sortBy = require('lodash/sortBy');
-var omit = require('lodash/omit');
-var trim = require('lodash/trim');
-var validateWithHtmllint = require('./html/htmllint.js');
-var validateWithSlowparse = require('./html/slowparse.js');
+import {Promise} from 'es6-promise';
+import groupBy from 'lodash/groupBy';
+import values from 'lodash/values';
+import flatten from 'lodash/flatten';
+import flatMap from 'lodash/flatMap';
+import sortBy from 'lodash/sortBy';
+import omit from 'lodash/omit';
+import trim from 'lodash/trim';
+import validateWithHtmllint from './html/htmllint.js';
+import validateWithSlowparse from './html/slowparse.js';
 
 function filterErrors(errors) {
-  var groupedErrors = groupBy(errors, 'reason');
+  const groupedErrors = groupBy(errors, 'reason');
 
-  var suppressedTypes = flatMap(
+  const suppressedTypes = flatMap(
     flatten(values(groupedErrors)),
     'suppresses'
   );
@@ -20,12 +20,10 @@ function filterErrors(errors) {
   return flatten(values(omit(groupedErrors, suppressedTypes)));
 }
 
-module.exports = function(source) {
-  return Promise.all([
-    validateWithSlowparse(trim(source)),
-    validateWithHtmllint(source),
-  ]).then(function(results) {
-    var filteredErrors = filterErrors(flatten(results));
-    return sortBy(filteredErrors, 'row');
-  });
-};
+export default (source) => Promise.all([
+  validateWithSlowparse(trim(source)),
+  validateWithHtmllint(source),
+]).then((results) => {
+  const filteredErrors = filterErrors(flatten(results));
+  return sortBy(filteredErrors, 'row');
+});

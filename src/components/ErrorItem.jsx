@@ -1,16 +1,9 @@
-var React = require('react');
-var partial = require('lodash/partial');
+import React from 'react';
+import partial from 'lodash/partial';
 
-var ErrorItem = React.createClass({
-  propTypes: {
-    row: React.PropTypes.number.isRequired,
-    column: React.PropTypes.number.isRequired,
-    text: React.PropTypes.string.isRequired,
-    onClick: React.PropTypes.func.isRequired,
-  },
-
-  render: function() {
-    var lineNumber = this.props.row + 1;
+class ErrorItem extends React.Component {
+  render() {
+    const lineNumber = this.props.row + 1;
 
     return (
       <li
@@ -25,7 +18,14 @@ var ErrorItem = React.createClass({
         <span className="errorList-error-message">{this.props.text}</span>
       </li>
     );
-  },
-});
+  }
+}
 
-module.exports = ErrorItem;
+ErrorItem.propTypes = {
+  row: React.PropTypes.number.isRequired,
+  column: React.PropTypes.number.isRequired,
+  text: React.PropTypes.string.isRequired,
+  onClick: React.PropTypes.func.isRequired,
+};
+
+export default ErrorItem;

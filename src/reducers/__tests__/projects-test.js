@@ -1,18 +1,18 @@
 /* eslint-env jest */
-/* eslint global-require: 0 */
+/* eslint global-require: 0 no-invalid-this: 0 */
 
 jest.dontMock('../projects');
 
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
-describe('projects', function() {
-  var projects = require('../projects');
+describe('projects', () => {
+  const projects = require('../projects');
 
-  describe('unknown action', function() {
-    var action = {type: 'BOGUS'};
+  describe('unknown action', () => {
+    const action = {type: 'BOGUS'};
 
-    it('should return previous state', function() {
-      var stateIn = new Immutable.Map();
+    it('should return previous state', () => {
+      const stateIn = new Immutable.Map();
       expect(projects(stateIn, action)).toBe(stateIn);
     });
   });
@@ -20,9 +20,9 @@ describe('projects', function() {
   [
     'PROJECT_LOADED_FROM_STORAGE',
     'CURRENT_PROJECT_LOADED_FROM_STORAGE',
-  ].forEach(function(actionType) {
-    describe(actionType, function() {
-      var action = {
+  ].forEach((actionType) => {
+    describe(actionType, () => {
+      const action = {
         type: actionType,
         payload: {
           project: {
@@ -33,15 +33,15 @@ describe('projects', function() {
         },
       };
 
-      it('should initialize projects map with current project', function() {
-        var expected = {};
+      it('should initialize projects map with current project', () => {
+        const expected = {};
         expected[action.payload.project.projectKey] = action.payload.project;
 
         expect(projects(undefined, action).toJS()).toEqual(expected);
       });
 
-      it('should add project to existing projects map', function() {
-        var stateIn = Immutable.fromJS({
+      it('should add project to existing projects map', () => {
+        const stateIn = Immutable.fromJS({
           1: {
             projectKey: '1',
             sources: {html: '', css: '', javascript: ''},
@@ -49,7 +49,7 @@ describe('projects', function() {
           },
         });
 
-        var expected = stateIn.set(
+        const expected = stateIn.set(
           action.payload.project.projectKey,
           projects.projectToImmutable(action.payload.project)
         );
@@ -62,8 +62,8 @@ describe('projects', function() {
     });
   });
 
-  describe('PROJECT_SOURCE_EDITED', function() {
-    var action = {
+  describe('PROJECT_SOURCE_EDITED', () => {
+    const action = {
       type: 'PROJECT_SOURCE_EDITED',
       payload: {
         projectKey: '12345',
@@ -72,7 +72,7 @@ describe('projects', function() {
       },
     };
 
-    var stateIn = Immutable.fromJS({
+    const stateIn = Immutable.fromJS({
       12345: {
         projectKey: '12345',
         sources: {html: '', css: '', javascript: ''},
@@ -80,8 +80,8 @@ describe('projects', function() {
       },
     });
 
-    it('should update source of known project', function() {
-      var expected = stateIn.setIn(
+    it('should update source of known project', () => {
+      const expected = stateIn.setIn(
         ['12345', 'sources', 'css'],
         action.payload.newValue
       ).toJS();
@@ -90,8 +90,8 @@ describe('projects', function() {
     });
   });
 
-  describe('PROJECT_CREATED', function() {
-    var action = {
+  describe('PROJECT_CREATED', () => {
+    const action = {
       type: 'PROJECT_CREATED',
       payload: {projectKey: '12345'},
     };
@@ -116,13 +116,13 @@ describe('projects', function() {
     });
   });
 
-  describe('PROJECT_LIBRARY_TOGGLED', function() {
-    var action = {
+  describe('PROJECT_LIBRARY_TOGGLED', () => {
+    const action = {
       type: 'PROJECT_LIBRARY_TOGGLED',
       payload: {projectKey: '12345', libraryKey: 'jquery'},
     };
 
-    describe('when library is not enabled', function() {
+    describe('when library is not enabled', () => {
       beforeEach(function() {
         this.newState = projects(Immutable.fromJS({
           12345: {enabledLibraries: new Immutable.Set(['lodash'])},
@@ -144,7 +144,7 @@ describe('projects', function() {
       });
     });
 
-    describe('when library is enabled', function() {
+    describe('when library is enabled', () => {
       beforeEach(function() {
         this.newState = projects(Immutable.fromJS({
           12345: {enabledLibraries: new Immutable.Set(['lodash', 'jquery'])},

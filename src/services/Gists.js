@@ -1,10 +1,10 @@
-var Promise = require('es6-promise').Promise;
-var GitHub = require('github-api');
-var github = new GitHub({});
-var gist = new github.Gist({});
+import {Promise} from 'es6-promise';
+import GitHub from 'github-api';
+const github = new GitHub({});
+const gist = new github.Gist({});
 
 function createGistFromProject(project) {
-  var files = {};
+  const files = {};
   if (project.sources.html) {
     files['index.html'] = {
       content: project.sources.html,
@@ -27,25 +27,22 @@ function createGistFromProject(project) {
   return {
     description: 'Exported from Popcode',
     'public': true,
-    files: files,
+    files,
   };
 }
 
-var Gists = {
-  createFromProject: function(project) {
-    return new Promise(function(resolve, reject) {
-      gist.create(
-        createGistFromProject(project),
-        function(error, response) {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(response);
-          }
+const Gists = {
+  createFromProject(project) {
+    return new Promise((resolve, reject) => {
+      gist.create(createGistFromProject(project), (error, response) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response);
         }
-      );
+      });
     });
   },
 };
 
-module.exports = Gists;
+export default Gists;

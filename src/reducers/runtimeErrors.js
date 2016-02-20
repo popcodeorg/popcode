@@ -1,9 +1,9 @@
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
-var emptyList = new Immutable.List();
+const emptyList = new Immutable.List();
 
 function runtimeErrors(stateIn, action) {
-  var state = stateIn;
+  let state = stateIn;
   if (state === undefined) {
     state = emptyList;
   }
@@ -11,9 +11,7 @@ function runtimeErrors(stateIn, action) {
   switch (action.type) {
     case 'RUNTIME_ERROR_ADDED':
       return state.push(Immutable.fromJS(action.payload.error)).
-        sortBy(function(error) {
-          return error.get('row');
-        });
+        sortBy((error) => error.get('row'));
 
     case 'RUNTIME_ERRORS_CLEARED':
       return emptyList;
@@ -23,4 +21,4 @@ function runtimeErrors(stateIn, action) {
   }
 }
 
-module.exports = runtimeErrors;
+export default runtimeErrors;

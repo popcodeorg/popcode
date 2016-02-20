@@ -1,14 +1,8 @@
-var React = require('react');
-var classnames = require('classnames');
+import React from 'react';
+import classnames from 'classnames';
 
-var LibraryPickerItem = React.createClass({
-  propTypes: {
-    enabled: React.PropTypes.bool,
-    library: React.PropTypes.object.isRequired,
-    onLibraryToggled: React.PropTypes.func.isRequired,
-  },
-
-  render: function() {
+class LibraryPickerItem extends React.Component {
+  render() {
     return (
       <li className={classnames(
         'toolbar-menu-item',
@@ -18,7 +12,13 @@ var LibraryPickerItem = React.createClass({
         {this.props.library.name}
       </li>
     );
-  },
-});
+  }
+}
 
-module.exports = LibraryPickerItem;
+LibraryPickerItem.propTypes = {
+  enabled: React.PropTypes.bool,
+  library: React.PropTypes.object.isRequired,
+  onLibraryToggled: React.PropTypes.func.isRequired,
+};
+
+export default LibraryPickerItem;

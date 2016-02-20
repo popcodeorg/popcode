@@ -3,16 +3,16 @@
 
 jest.dontMock('../errors');
 
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
-describe('errors', function() {
-  var errors = require('../errors');
+describe('errors', () => {
+  const errors = require('../errors');
 
-  describe('unknown action', function() {
-    var action = {type: 'BOGUS'};
+  describe('unknown action', () => {
+    const action = {type: 'BOGUS'};
 
-    it('should return previous state', function() {
-      var stateIn = new Immutable.Map();
+    it('should return previous state', () => {
+      const stateIn = new Immutable.Map();
       expect(errors(stateIn, action)).toBe(stateIn);
     });
   });
@@ -20,15 +20,15 @@ describe('errors', function() {
   [
     'CURRENT_PROJECT_LOADED_FROM_STORAGE',
     'CURRENT_PROJECT_CHANGED',
-  ].forEach(function(actionType) {
-    describe(actionType, function() {
-      var action = {
+  ].forEach((actionType) => {
+    describe(actionType, () => {
+      const action = {
         type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',
         payload: {},
       };
 
-      it('should clear errors', function() {
-        var stateIn = Immutable.fromJS({
+      it('should clear errors', () => {
+        const stateIn = Immutable.fromJS({
           html: [{}],
           css: [{}],
           javascript: [{}],
@@ -39,26 +39,26 @@ describe('errors', function() {
     });
   });
 
-  describe('VALIDATING_SOURCE', function() {
-    var action = {
+  describe('VALIDATING_SOURCE', () => {
+    const action = {
       type: 'VALIDATING_SOURCE',
       payload: {language: 'javascript'},
     };
 
-    it('should provide map from undefined state', function() {
+    it('should provide map from undefined state', () => {
       expect(Immutable.Map.isMap(errors(undefined, action))).toBeTruthy();
     });
 
-    it('should remove errors', function() {
-      var stateIn = Immutable.fromJS({html: [], css: [], javascript: []});
+    it('should remove errors', () => {
+      const stateIn = Immutable.fromJS({html: [], css: [], javascript: []});
       expect(errors(stateIn, action).get('javascript').size).toBe(0);
     });
   });
 
-  describe('VALIDATED_SOURCE', function() {
-    var error = {};
+  describe('VALIDATED_SOURCE', () => {
+    const error = {};
 
-    var action = {
+    const action = {
       type: 'VALIDATED_SOURCE',
       payload: {
         language: 'javascript',
@@ -66,8 +66,8 @@ describe('errors', function() {
       },
     };
 
-    it('should set errors where there were none', function() {
-      var stateIn = Immutable.fromJS({html: [], css: []});
+    it('should set errors where there were none', () => {
+      const stateIn = Immutable.fromJS({html: [], css: []});
       expect(Immutable.is(
         errors(stateIn, action).get('javascript').get(0),
         Immutable.fromJS(error)
