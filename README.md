@@ -65,13 +65,32 @@ the validations whenever the code changes. It would be reasonably easy to move
 this into a web worker, although I think a hand-rolled web worker would still
 be much easier than trying to integrate with Ace's web worker framework.
 
+### Architecture Overview ###
+
+The architecture of Popcode’s code base is best understood through the
+lifecycle of a user interaction:
+
+* User interactions are first captured by handlers in React
+  [components](https://github.com/popcodeorg/popcode/tree/master/src/components).
+* These components propagate the event to the view controller, the [`Workspace`
+  component](https://github.com/popcodeorg/popcode/blob/master/src/components/Workspace.jsx).
+* The `Workspace` dispatches one or more Redux
+  [actions](https://github.com/popcodeorg/popcode/tree/master/src/actions).
+* Dispatched actions are consumed by the
+  [reducers](https://github.com/popcodeorg/popcode/tree/master/src/reducers),
+  which update the
+  [store](https://github.com/popcodeorg/popcode/blob/master/src/store.js).
+* Action creators also perform other business logic, such as initiating
+  [validation](https://github.com/popcodeorg/popcode/tree/master/src/validations)
+  of project code and persisting changes to
+  [storage](https://github.com/popcodeorg/popcode/blob/master/src/services/Storage.js).
+* When the action lifecycle is complete, the `Workspace` receives updated
+  props from the store and propagates them to its descendants.
+
 ## Contributing ##
 
 Yes please. I don't think there's any way I'm going to make this a viable
 product on my own. Pull requests are most welcome.
-
-It's worth noting that I am pretty new to a lot of the technologies used in
-this project, so feel free to use a pull request to set me straight.
 
 ### Running locally ###
 
