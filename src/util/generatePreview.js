@@ -43,8 +43,7 @@ class PreviewGenerator {
       'text/html'
     );
     this._previewHead = this._ensureElement('head');
-    this._previewBody = this._ensureElement('body');
-    this.previewBody = this.previewDocument.body;
+    this.previewBody = this._ensureElement('body');
 
     this._attachLibraries();
 
