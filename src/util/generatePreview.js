@@ -42,7 +42,8 @@ class PreviewGenerator {
       project.sources.html,
       'text/html'
     );
-    this._previewHead = this.previewDocument.head;
+    this._previewHead = this._ensureElement('head');
+    this._previewBody = this._ensureElement('body');
     this.previewBody = this.previewDocument.body;
 
     this._attachLibraries();
@@ -50,6 +51,24 @@ class PreviewGenerator {
     this._addCss();
     this._addErrorHandling();
     this._addJavascript();
+  }
+
+  _ensureDocumentElement() {
+    let documentElement = this.previewDocument.documentElement;
+    if (!documentElement) {
+      documentElement = this.previewDocument.createElement('html');
+      this.previewDocument.appendChild(documentElement);
+    }
+    return documentElement;
+  }
+
+  _ensureElement(elementName) {
+    let element = this.previewDocument[elementName];
+    if (!element) {
+      element = this.previewDocument.createElement(elementName);
+      this._ensureDocumentElement().appendChild(element);
+    }
+    return element;
   }
 
   _addCss() {
