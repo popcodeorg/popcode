@@ -8,7 +8,7 @@ function fullKeyFor(key) {
   return `workspaces/${storageVersion}/${key}`;
 }
 
-const Storage = {
+const LocalPersistor = {
   getCurrentProjectKey() {
     return localforage.getItem('currentProjectKey');
   },
@@ -60,4 +60,4 @@ const Storage = {
   },
 };
 
-export default Storage;
+export default LocalPersistor;
