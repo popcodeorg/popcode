@@ -16,7 +16,7 @@ describe('index', () => {
   jest.setMock('../../validations', validations);
 
   const Actions = require.requireActual('../index');
-  const Storage = require('../../services/Storage').default;
+  const LocalPersistor = require('../../persistors/LocalPersistor').default;
   let dispatch, getState;
 
   function dispatchThunkAction(action) {
@@ -46,8 +46,8 @@ describe('index', () => {
   });
 
   afterEach(() => {
-    Storage.setCurrentProjectKey.mockClear();
-    Storage.save.mockClear();
+    LocalPersistor.setCurrentProjectKey.mockClear();
+    LocalPersistor.save.mockClear();
   });
 
   describe('createProject', () => {
@@ -71,12 +71,12 @@ describe('index', () => {
     });
 
     it('should save current project key', () => {
-      expect(Storage.setCurrentProjectKey.mock.calls).
+      expect(LocalPersistor.setCurrentProjectKey.mock.calls).
         toEqual([['12345']]);
     });
 
     it('should save new project', () => {
-      expect(Storage.save.mock.calls).
+      expect(LocalPersistor.save.mock.calls).
         toEqual([
           [blank.project],
         ]);
@@ -85,10 +85,10 @@ describe('index', () => {
 
   describe('loadCurrentProjectFromStorage with project', () => {
     beforeEach(() => {
-      Storage.getCurrentProjectKey.mockReturnValue(
+      LocalPersistor.getCurrentProjectKey.mockReturnValue(
         Promise.resolve(blank.project.projectKey)
       );
-      Storage.load.mockReturnValue(Promise.resolve(blank.project));
+      LocalPersistor.load.mockReturnValue(Promise.resolve(blank.project));
 
       getState.mockReturnValue(blank.state);
       each(validations, (validation) => {
@@ -139,7 +139,8 @@ describe('index', () => {
     let actionsDispatched;
 
     beforeEach(() => {
-      Storage.getCurrentProjectKey.mockReturnValue(Promise.resolve(undefined));
+      LocalPersistor.getCurrentProjectKey.
+        mockReturnValue(Promise.resolve(undefined));
       dispatchThunkAction(Actions.loadCurrentProjectFromStorage());
 
       actionsDispatched = new Promise(dispatch.mockImplementation).
@@ -236,7 +237,7 @@ describe('index', () => {
     );
 
     it('should save project', () => {
-      expect(Storage.save.mock.calls).toEqual([
+      expect(LocalPersistor.save.mock.calls).toEqual([
         [blank.project],
       ]);
     });
@@ -276,7 +277,7 @@ describe('index', () => {
     pit(
       'should update current project key in storage',
       () => dispatch.promised.CURRENT_PROJECT_CHANGED.then(() => {
-        expect(Storage.setCurrentProjectKey.mock.calls).toEqual([
+        expect(LocalPersistor.setCurrentProjectKey.mock.calls).toEqual([
           ['12345'],
         ]);
       })
@@ -344,7 +345,7 @@ describe('index', () => {
 
       getState.mockReturnValue(blank.state);
 
-      Storage.all.mockReturnValue(Promise.resolve([
+      LocalPersistor.all.mockReturnValue(Promise.resolve([
         assign({}, blank.project, {projectKey: '23456'}),
       ]));
 

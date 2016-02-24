@@ -83,7 +83,7 @@ lifecycle of a user interaction:
 * Action creators also perform other business logic, such as initiating
   [validation](https://github.com/popcodeorg/popcode/tree/master/src/validations)
   of project code and persisting changes to
-  [storage](https://github.com/popcodeorg/popcode/blob/master/src/services/Storage.js).
+  [persistent storage](https://github.com/popcodeorg/popcode/blob/master/src/persistors).
 * When the action lifecycle is complete, the `Workspace` receives updated
   props from the store and propagates them to its descendants.
 

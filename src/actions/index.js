@@ -1,6 +1,6 @@
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
-import Storage from '../services/Storage';
+import LocalPersistor from '../persistors/LocalPersistor';
 import appFirebase from '../services/appFirebase';
 import validations from '../validations';
 
@@ -66,16 +66,16 @@ function createProject() {
     const projectKey = state.currentProject.get('projectKey');
     const project = state.projects.get(projectKey);
 
-    Storage.save(project.toJS());
-    Storage.setCurrentProjectKey(projectKey);
+    LocalPersistor.save(project.toJS());
+    LocalPersistor.setCurrentProjectKey(projectKey);
   };
 }
 
 function loadCurrentProjectFromStorage() {
   return (dispatch, getState) => {
-    Storage.getCurrentProjectKey().then((projectKey) => {
+    LocalPersistor.getCurrentProjectKey().then((projectKey) => {
       if (projectKey) {
-        Storage.load(projectKey).then((project) => {
+        LocalPersistor.load(projectKey).then((project) => {
           dispatch({
             type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',
             payload: {project},
@@ -102,7 +102,7 @@ function updateProjectSource(projectKey, language, newValue) {
     });
 
     const currentProject = getCurrentProject(getState());
-    Storage.save(currentProject.toJS());
+    LocalPersistor.save(currentProject.toJS());
 
     validateSource(
       dispatch,
@@ -120,7 +120,7 @@ function changeCurrentProject(projectKey) {
       payload: {projectKey},
     });
 
-    Storage.setCurrentProjectKey(projectKey);
+    LocalPersistor.setCurrentProjectKey(projectKey);
 
     validateAllSources(dispatch, getCurrentProject(getState()));
   };
@@ -141,7 +141,7 @@ function toggleLibrary(projectKey, libraryKey) {
 }
 
 function loadAllProjects() {
-  return (dispatch) => Storage.all().then((projects) => {
+  return (dispatch) => LocalPersistor.all().then((projects) => {
     projects.forEach((project) => {
       dispatch({
         type: 'PROJECT_LOADED_FROM_STORAGE',
