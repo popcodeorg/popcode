@@ -1,8 +1,17 @@
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import LocalPersistor from '../persistors/LocalPersistor';
+import FirebasePersistor from '../persistors/FirebasePersistor';
 import appFirebase from '../services/appFirebase';
 import validations from '../validations';
+
+function getCurrentPersistor(state) {
+  const currentUser = state.user.toJS();
+  if (currentUser.authenticated) {
+    return new FirebasePersistor(currentUser);
+  }
+  return LocalPersistor;
+}
 
 function generateProjectKey() {
   const date = new Date();
@@ -65,17 +74,19 @@ function createProject() {
     const state = getState();
     const projectKey = state.currentProject.get('projectKey');
     const project = state.projects.get(projectKey);
+    const persistor = getCurrentPersistor(state);
 
-    LocalPersistor.save(project.toJS());
-    LocalPersistor.setCurrentProjectKey(projectKey);
+    persistor.save(project.toJS());
+    persistor.setCurrentProjectKey(projectKey);
   };
 }
 
 function loadCurrentProjectFromStorage() {
   return (dispatch, getState) => {
-    LocalPersistor.getCurrentProjectKey().then((projectKey) => {
+    const persistor = getCurrentPersistor(getState());
+    persistor.getCurrentProjectKey().then((projectKey) => {
       if (projectKey) {
-        LocalPersistor.load(projectKey).then((project) => {
+        persistor.load(projectKey).then((project) => {
           dispatch({
             type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',
             payload: {project},
@@ -101,8 +112,9 @@ function updateProjectSource(projectKey, language, newValue) {
       },
     });
 
-    const currentProject = getCurrentProject(getState());
-    LocalPersistor.save(currentProject.toJS());
+    const state = getState();
+    const currentProject = getCurrentProject(state);
+    getCurrentPersistor(state).save(currentProject.toJS());
 
     validateSource(
       dispatch,
@@ -120,9 +132,10 @@ function changeCurrentProject(projectKey) {
       payload: {projectKey},
     });
 
-    LocalPersistor.setCurrentProjectKey(projectKey);
+    const state = getState();
+    getCurrentPersistor(state).setCurrentProjectKey(projectKey);
 
-    validateAllSources(dispatch, getCurrentProject(getState()));
+    validateAllSources(dispatch, getCurrentProject(state));
   };
 }
 
@@ -141,14 +154,16 @@ function toggleLibrary(projectKey, libraryKey) {
 }
 
 function loadAllProjects() {
-  return (dispatch) => LocalPersistor.all().then((projects) => {
-    projects.forEach((project) => {
-      dispatch({
-        type: 'PROJECT_LOADED_FROM_STORAGE',
-        payload: {project},
+  return (dispatch, getState) => getCurrentPersistor(getState()).all().then(
+    (projects) => {
+      projects.forEach((project) => {
+        dispatch({
+          type: 'PROJECT_LOADED_FROM_STORAGE',
+          payload: {project},
+        });
       });
-    });
-  });
+    }
+  );
 }
 
 function addRuntimeError(error) {
