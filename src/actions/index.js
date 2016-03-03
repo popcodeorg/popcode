@@ -179,13 +179,29 @@ function clearRuntimeErrors() {
   };
 }
 
+function resetWorkspace(dispatch) {
+  dispatch({type: 'RESET_WORKSPACE'});
+  dispatch(loadCurrentProjectFromStorage());
+  dispatch(loadAllProjects());
+}
+
+function logIn(dispatch, authData) {
+  dispatch({type: 'USER_AUTHENTICATED', payload: authData});
+  resetWorkspace(dispatch);
+}
+
+function logOut(dispatch) {
+  dispatch({type: 'USER_LOGGED_OUT'});
+  resetWorkspace(dispatch);
+}
+
 function listenForAuth() {
   return (dispatch) => {
     appFirebase.onAuth((authData) => {
       if (authData === null) {
-        dispatch({type: 'USER_LOGGED_OUT'});
+        logOut(dispatch);
       } else {
-        dispatch({type: 'USER_AUTHENTICATED', payload: authData});
+        logIn(dispatch, authData);
       }
     });
   };

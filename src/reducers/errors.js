@@ -30,6 +30,9 @@ function errors(stateIn, action) {
         Immutable.fromJS(action.payload.errors)
       );
 
+    case 'RESET_WORKSPACE':
+      return emptyList;
+
     default:
       return state;
   }

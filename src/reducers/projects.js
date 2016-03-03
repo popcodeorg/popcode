@@ -2,6 +2,8 @@ import Immutable from 'immutable';
 import {readFileSync} from 'fs';
 import path from 'path';
 
+const emptyList = new Immutable.Map();
+
 const newProject = Immutable.fromJS({
   sources: {
     html: readFileSync(path.join(
@@ -32,7 +34,7 @@ function projects(stateIn, action) {
   let state;
 
   if (stateIn === undefined) {
-    state = new Immutable.Map();
+    state = emptyList;
   } else {
     state = stateIn;
   }
@@ -67,6 +69,9 @@ function projects(stateIn, action) {
           return enabledLibraries.add(libraryKey);
         }
       );
+
+    case 'RESET_WORKSPACE':
+      return emptyList;
 
     default:
       return state;

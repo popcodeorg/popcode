@@ -42,9 +42,9 @@ function mapStateToProps(state) {
 
 class Workspace extends React.Component {
   componentWillMount() {
+    this.props.dispatch(listenForAuth());
     this.props.dispatch(loadCurrentProjectFromStorage());
     this.props.dispatch(loadAllProjects());
-    this.props.dispatch(listenForAuth());
   }
 
   _allJavaScriptErrors() {
