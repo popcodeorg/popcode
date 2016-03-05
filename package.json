@@ -66,16 +66,12 @@
   },
   "jest": {
     "unmockedModulePathPatterns": [
-      "./node_modules/immutable",
-      "./node_modules/es6-promise",
-      "./node_modules/keymirror",
-      "./node_modules/lodash"
+      "/node_modules/immutable",
+      "/node_modules/es6-promise",
+      "/node_modules/keymirror",
+      "/node_modules/lodash"
     ],
-    "modulePathIgnorePatterns": [
-      "/node_modules/.*/package.json",
-      "/node_modules/fbjs/lib/.*\\.js",
-      "/node_modules/react/lib/.*\\.js"
-    ]
+    "moduleFileExtensions": ["js"]
   },
   "devDependencies": {
     "babel-core": "^6.5.2",
