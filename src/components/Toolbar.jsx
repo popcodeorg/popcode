@@ -50,7 +50,7 @@ class Toolbar extends React.Component {
     });
   }
 
-  _getSubmenu() {
+  _renderSubmenu() {
     switch (this.state.submenu) {
       case 'libraries':
         return (
@@ -97,6 +97,39 @@ class Toolbar extends React.Component {
     appFirebase.unauth();
   }
 
+  _renderNewProjectButton() {
+    if (!this.props.currentUser.authenticated) {
+      return null;
+    }
+
+    return (
+      <li
+        onClick={this._newProject.bind(this)}
+        className="toolbar-menu-item"
+      >
+        {i18n.t('toolbar.new-project')}
+      </li>
+    );
+  }
+
+  _renderLoadProjectButton() {
+    if (this.props.allProjects.length === 1) {
+      return null;
+    }
+
+    return (
+      <li onClick={this._loadProject.bind(this)}
+        className={classnames(
+          'toolbar-menu-item',
+          {'toolbar-menu-item--active':
+            this.state.submenu === 'loadProject'}
+        )}
+      >
+        {i18n.t('toolbar.load-project')}
+      </li>
+    );
+  }
+
   _renderUserSessionToggle() {
     if (this.props.currentUser.authenticated) {
       return (
@@ -119,16 +152,33 @@ class Toolbar extends React.Component {
     );
   }
 
+  _renderExportGistButton() {
+    return (
+      <li
+        onClick={this._exportGist.bind(this)}
+        className="toolbar-menu-item"
+      >
+        {i18n.t('toolbar.export-gist')}
+      </li>
+    );
+  }
+
+  _renderLibrariesButton() {
+    return (
+      <li onClick={this._toggleLibraryPicker.bind(this)}
+        className={classnames(
+          'toolbar-menu-item',
+          {'toolbar-menu-item-active': this.state.submenu === 'libraries'}
+        )}
+      >
+        {i18n.t('toolbar.libraries')}
+      </li>
+    );
+  }
+
   render() {
     if (!this.props.currentProject) {
       return null;
-    }
-
-    const toolbarItemsClasses = ['toolbar-menu'];
-    if (this.state.open) {
-      toolbarItemsClasses.push('toolbar-menu--open');
-    } else {
-      toolbarItemsClasses.push('toolbar-menu--closed');
     }
 
     return (
@@ -148,38 +198,13 @@ class Toolbar extends React.Component {
           }
         )}
         >
-          <li
-            onClick={this._newProject.bind(this)}
-            className="toolbar-menu-item"
-          >
-            {i18n.t('toolbar.new-project')}
-          </li>
-          <li onClick={this._loadProject.bind(this)}
-            className={classnames(
-              'toolbar-menu-item',
-              {'toolbar-menu-item--active':
-                this.state.submenu === 'loadProject'}
-            )}
-          >
-            {i18n.t('toolbar.load-project')}
-          </li>
-          <li
-            onClick={this._exportGist.bind(this)}
-            className="toolbar-menu-item"
-          >
-            {i18n.t('toolbar.export-gist')}
-          </li>
-          <li onClick={this._toggleLibraryPicker.bind(this)}
-            className={classnames(
-              'toolbar-menu-item',
-              {'toolbar-menu-item-active': this.state.submenu === 'libraries'}
-            )}
-          >
-            {i18n.t('toolbar.libraries')}
-          </li>
+          {this._renderNewProjectButton()}
+          {this._renderLoadProjectButton()}
           {this._renderUserSessionToggle()}
+          {this._renderExportGistButton()}
+          {this._renderLibrariesButton()}
         </ul>
-        {this._getSubmenu()}
+        {this._renderSubmenu()}
       </div>
     );
   }
