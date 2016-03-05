@@ -2,12 +2,10 @@ import React from 'react';
 import ACE from 'brace';
 import i18n from 'i18next-client';
 
-/* eslint-disable no-unused-vars */
-import _html from 'brace/mode/html';
-import _css from 'brace/mode/css';
-import _javascript from 'brace/mode/javascript';
-import _monokai from 'brace/theme/monokai';
-/* eslint-enable no-unused-vars */
+import 'brace/mode/html';
+import 'brace/mode/css';
+import 'brace/mode/javascript';
+import 'brace/theme/monokai';
 
 class Editor extends React.Component {
   componentWillReceiveProps(nextProps) {
