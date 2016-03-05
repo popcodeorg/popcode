@@ -5,7 +5,7 @@ import appFirebase from '../services/appFirebase';
 class FirebasePersistor {
   constructor(user) {
     this.user = user;
-    this.firebase = appFirebase.child(user.id);
+    this.firebase = appFirebase.child(`workspaces/${user.id}`);
   }
 
   getCurrentProjectKey() {
