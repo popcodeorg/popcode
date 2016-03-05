@@ -16,7 +16,7 @@ describe('index', () => {
   jest.setMock('../../validations', validations);
 
   const Actions = require.requireActual('../index');
-  const Storage = require('../../services/Storage');
+  const Storage = require('../../services/Storage').default;
   let dispatch, getState;
 
   function dispatchThunkAction(action) {
@@ -136,26 +136,31 @@ describe('index', () => {
   });
 
   describe('loadCurrentProjectFromStorage with no project', () => {
-    beforeEach(function() {
+    let actionsDispatched;
+
+    beforeEach(() => {
       Storage.getCurrentProjectKey.mockReturnValue(Promise.resolve(undefined));
       dispatchThunkAction(Actions.loadCurrentProjectFromStorage());
 
-      this.actionsDispatched = new Promise(dispatch.mockImplementation).
+      actionsDispatched = new Promise(dispatch.mockImplementation).
         then(() => dispatch.mock.calls[0][0]);
     });
 
-    pit('should dispatch PROJECT_CREATED action', function() {
-      return this.actionsDispatched.then((action) => {
+    pit(
+      'should dispatch PROJECT_CREATED action',
+      () => actionsDispatched.then((action) => {
         expect(action.type).toBe('PROJECT_CREATED');
-      });
-    });
+      })
+    );
   });
 
   describe('updateProjectSource', () => {
-    beforeEach(function() {
+    let actionsDispatched, error, promisedValidatedSourceAction;
+
+    beforeEach(() => {
       getState.mockReturnValue(blank.state);
 
-      this.promisedValidatedSourceAction = new Promise((resolve) => {
+      promisedValidatedSourceAction = new Promise((resolve) => {
         dispatch.mockImplementation((action) => {
           if (action.type === 'VALIDATED_SOURCE') {
             resolve(action);
@@ -163,14 +168,14 @@ describe('index', () => {
         });
       });
 
-      this.error = {
+      error = {
         row: 1, column: 1,
         raw: 'bad css',
         text: 'bad css',
         type: 'error',
       };
 
-      validations.css.mockReturnValue(Promise.resolve([this.error]));
+      validations.css.mockReturnValue(Promise.resolve([error]));
 
       dispatchThunkAction(Actions.updateProjectSource(
         '12345',
@@ -178,54 +183,57 @@ describe('index', () => {
         'p { display: none; }'
       ));
 
-      this.actionsDispatched = keyBy(map(dispatch.mock.calls, 0), 'type');
+      actionsDispatched = keyBy(map(dispatch.mock.calls, 0), 'type');
     });
 
-    it('should dispatch PROJECT_SOURCE_EDITED', function() {
-      expect(this.actionsDispatched.PROJECT_SOURCE_EDITED).toBeDefined();
+    it('should dispatch PROJECT_SOURCE_EDITED', () => {
+      expect(actionsDispatched.PROJECT_SOURCE_EDITED).toBeDefined();
     });
 
-    it('should include projectKey in payload', function() {
-      expect(this.actionsDispatched.PROJECT_SOURCE_EDITED.payload.projectKey).
+    it('should include projectKey in payload', () => {
+      expect(actionsDispatched.PROJECT_SOURCE_EDITED.payload.projectKey).
         toBe('12345');
     });
 
-    it('should include language in payload', function() {
-      expect(this.actionsDispatched.PROJECT_SOURCE_EDITED.payload.language).
+    it('should include language in payload', () => {
+      expect(actionsDispatched.PROJECT_SOURCE_EDITED.payload.language).
         toBe('css');
     });
 
-    it('should include newValue in payload', function() {
-      expect(this.actionsDispatched.PROJECT_SOURCE_EDITED.payload.newValue).
+    it('should include newValue in payload', () => {
+      expect(actionsDispatched.PROJECT_SOURCE_EDITED.payload.newValue).
         toBe('p { display: none; }');
     });
 
-    it('should dispatch validation starting action', function() {
-      expect(this.actionsDispatched.VALIDATING_SOURCE).toBeDefined();
+    it('should dispatch validation starting action', () => {
+      expect(actionsDispatched.VALIDATING_SOURCE).toBeDefined();
     });
 
-    it('should include language in validation starting action', function() {
-      expect(this.actionsDispatched.VALIDATING_SOURCE.payload.language).
+    it('should include language in validation starting action', () => {
+      expect(actionsDispatched.VALIDATING_SOURCE.payload.language).
         toBe('css');
     });
 
-    pit('should dispatch validation complete action', function() {
-      return this.promisedValidatedSourceAction.then((action) => {
+    pit(
+      'should dispatch validation complete action',
+      () => promisedValidatedSourceAction.then((action) => {
         expect(action).toBeDefined();
-      });
-    });
+      })
+    );
 
-    pit('should send errors in validation complete action', function() {
-      return this.promisedValidatedSourceAction.then((action) => {
-        expect(action.payload.errors).toEqual([this.error]);
-      });
-    });
+    pit(
+      'should send errors in validation complete action',
+      () => promisedValidatedSourceAction.then((action) => {
+        expect(action.payload.errors).toEqual([error]);
+      })
+    );
 
-    pit('should send errors in validation complete action', function() {
-      return this.promisedValidatedSourceAction.then((action) => {
+    pit(
+      'should send errors in validation complete action',
+      () => promisedValidatedSourceAction.then((action) => {
         expect(action.payload.language).toBe('css');
-      });
-    });
+      })
+    );
 
     it('should save project', () => {
       expect(Storage.save.mock.calls).toEqual([

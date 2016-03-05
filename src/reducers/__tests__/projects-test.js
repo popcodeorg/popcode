@@ -6,7 +6,7 @@ jest.dontMock('../projects');
 import Immutable from 'immutable';
 
 describe('projects', () => {
-  const projects = require('../projects');
+  const projects = require('../projects').default;
 
   describe('unknown action', () => {
     const action = {type: 'BOGUS'};

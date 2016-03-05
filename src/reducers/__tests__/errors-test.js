@@ -6,7 +6,7 @@ jest.dontMock('../errors');
 import Immutable from 'immutable';
 
 describe('errors', () => {
-  const errors = require('../errors');
+  const errors = require('../errors').default;
 
   describe('unknown action', () => {
     const action = {type: 'BOGUS'};
