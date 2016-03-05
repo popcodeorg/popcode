@@ -1,24 +1,29 @@
 language: node_js
 node_js:
-- '4.2.3'
+- 4.2.3
 env:
-  - CXX=g++-4.8 LOG_REDUX_ACTIONS=false
+  matrix:
+  - CXX=g++-4.8 LOG_REDUX_ACTIONS=false FIREBASE_APP=popcode
+  global:
+    secure: oNSex8CSxFztUhsuIVREJmJTH2H3D+zW1Q8tckp717HyJQQ3j1cVd1FUPJpLYu8sYAxMbf1HrxGPYfXUfXAXPKcXK6eCoWVUfJ9sCjTPgI+IKNYWshOsZxgkpZDELqK02iXfiX2N9IBX9Ucf/QLrtcmVCx4uSOIwU0zlKTnZZKOIaVhZMh9WJl0zetMdnh4zwRwJ0JqN/NDbEq43gKC87BZsk09/j/2kq3soyIqLoTe4kzkOxpnQUYBlQaL0XgrjODnMxiL+7tvmNJXzMgYH5VgfjU8mSrA78JnmrakbQIMtTn53rCXNM+LD67RbvSWwiUwTT6Ve7hYNyriovfXqk3UKL5KoawThn6/SF4zFc8lma395OMbE2NVTU0VaOGZ5wiiQvVeZftg272RRFeAHRSRjERjO5+mAi65nKLEcO7uIIMVG/hVcKVUplo9yfQpLOJyPaVke3iLP74D5s0PLxROM11qwYhrEHk7uE5nhPhc8GADtUbEjIh/HbOeLDpsK0unjwbiQzqQ1P5kxx0Z33ISjraM4aIpMch6bL8kPLKXPxF3i/7J16NkTnbNic6W+O8IOCuHgHgt+7NVdt+NNgQyZJockS4FVdGg3yktgXCFlKwcBcQNMkud3pDhUnivGlK6XV5cZRb3G6Kx/DwpjWqW405lCIFLtyicqKZ/13FI=
 cache:
   apt: true
   directories:
     - node_modules
-script:
-- npm test
-- ./node_modules/.bin/gulp build --production
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
+    - g++-4.8
 before_install:
   - npm install -g npm@'>=3.8.0'
   - npm prune
+script:
+- npm test
+- "./node_modules/.bin/gulp build --production"
+before_deploy:
+- "./node_modules/.bin/gulp syncFirebase"
 deploy:
   provider: s3
   access_key_id: AKIAJY2GYDQBE4HFF32Q
