@@ -1,5 +1,6 @@
 /* eslint-env jest */
 /* eslint global-require:0 no-invalid-this:0 */
+/* global jasmine */
 import each from 'lodash/each';
 import map from 'lodash/map';
 import assign from 'lodash/assign';
