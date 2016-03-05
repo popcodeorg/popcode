@@ -193,9 +193,18 @@ function resetWorkspace() {
 }
 
 function logIn(authData) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const currentProject = getCurrentProject(getState());
     dispatch({type: 'USER_AUTHENTICATED', payload: authData});
-    dispatch(resetWorkspace());
+
+    if (currentProject) {
+      const persistor = getCurrentPersistor(getState());
+      persistor.save(currentProject.toJS());
+      persistor.setCurrentProjectKey(currentProject.get('projectKey'));
+    } else {
+      dispatch(loadCurrentProjectFromStorage());
+    }
+    dispatch(loadAllProjects());
   };
 }
 
