@@ -1,7 +1,8 @@
 import Firebase from 'firebase';
+import config from '../config';
 
 const appFirebase = new Firebase(
-  'https://blistering-inferno-9896.firebaseio.com' // FIXME
+  `https://${config.firebaseApp}.firebaseio.com`
 );
 
 export default appFirebase;
