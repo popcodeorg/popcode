@@ -31,7 +31,7 @@ function errors(stateIn, action) {
       );
 
     case 'RESET_WORKSPACE':
-      return emptyList;
+      return emptyErrors;
 
     default:
       return state;
