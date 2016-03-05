@@ -8,7 +8,7 @@ import Immutable from 'immutable';
 const blankProject = require.requireActual('../../__test__/blank').project;
 
 describe('currentProject', () => {
-  const currentProject = require('../currentProject');
+  const currentProject = require('../currentProject').default;
 
   describe('unknown action', () => {
     const action = {type: 'BOGUS'};

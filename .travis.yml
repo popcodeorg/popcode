@@ -3,6 +3,10 @@ node_js:
 - '4.2.3'
 env:
   - CXX=g++-4.8 LOG_REDUX_ACTIONS=false
+cache:
+  apt: true
+  directories:
+    - node_modules
 script:
 - npm test
 - ./node_modules/.bin/gulp build --production
@@ -12,6 +16,9 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
+before_install:
+  - npm install -g npm@'>=3.8.0'
+  - npm prune
 deploy:
   provider: s3
   access_key_id: AKIAJY2GYDQBE4HFF32Q
