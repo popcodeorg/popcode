@@ -17,9 +17,8 @@ addons:
     packages:
       - g++-4.8
 before_install:
-  npm install -g npm@'>=3.8.0'
-after_install:
-  npm prune
+  - npm install -g npm@'>=3.8.0'
+  - npm prune
 deploy:
   provider: s3
   access_key_id: AKIAJY2GYDQBE4HFF32Q
