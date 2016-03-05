@@ -41,6 +41,7 @@ describe('index', () => {
   }
 
   beforeEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 50;
     dispatch = jest.genMockFunction();
     getState = jest.genMockFunction();
   });

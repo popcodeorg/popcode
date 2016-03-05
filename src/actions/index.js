@@ -5,8 +5,6 @@ import FirebasePersistor from '../persistors/FirebasePersistor';
 import appFirebase from '../services/appFirebase';
 import validations from '../validations';
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 50;
-
 function getCurrentPersistor(state) {
   const currentUser = state.user.toJS();
   if (currentUser.authenticated) {
