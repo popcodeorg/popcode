@@ -27,39 +27,45 @@ function getCurrentProject(state) {
   return null;
 }
 
-const showErrorsAfterDebounce = debounce((dispatch) => {
-  dispatch({type: 'ERROR_DEBOUNCE_FINISHED'});
-}, 1000);
+function showErrorsAfterDebounce() {
+  return debounce((dispatch) => {
+    dispatch({type: 'ERROR_DEBOUNCE_FINISHED'});
+  }, 1000);
+}
 
-function validateSource(dispatch, language, source, enabledLibraries) {
-  dispatch({
-    type: 'VALIDATING_SOURCE',
-    payload: {
-      language,
-    },
-  });
-
-  const validate = validations[language];
-  validate(source, enabledLibraries.toJS()).then((errors) => {
+function validateSource(language, source, enabledLibraries) {
+  return (dispatch) => {
     dispatch({
-      type: 'VALIDATED_SOURCE',
+      type: 'VALIDATING_SOURCE',
       payload: {
         language,
-        errors,
       },
     });
 
-    if (!isEmpty(errors)) {
-      showErrorsAfterDebounce(dispatch);
-    }
-  });
+    const validate = validations[language];
+    validate(source, enabledLibraries.toJS()).then((errors) => {
+      dispatch({
+        type: 'VALIDATED_SOURCE',
+        payload: {
+          language,
+          errors,
+        },
+      });
+
+      if (!isEmpty(errors)) {
+        dispatch(showErrorsAfterDebounce());
+      }
+    });
+  };
 }
 
-function validateAllSources(dispatch, project) {
-  const enabledLibraries = project.get('enabledLibraries');
-  project.get('sources').forEach((source, language) => {
-    validateSource(dispatch, language, source, enabledLibraries);
-  });
+function validateAllSources(project) {
+  return (dispatch) => {
+    const enabledLibraries = project.get('enabledLibraries');
+    project.get('sources').forEach((source, language) => {
+      dispatch(validateSource(language, source, enabledLibraries));
+    });
+  };
 }
 
 function createProject() {
@@ -92,7 +98,7 @@ function loadCurrentProjectFromStorage() {
             payload: {project},
           });
 
-          validateAllSources(dispatch, getCurrentProject(getState()));
+          dispatch(validateAllSources(getCurrentProject(getState())));
         });
       } else {
         createProject()(dispatch, getState);
@@ -116,12 +122,11 @@ function updateProjectSource(projectKey, language, newValue) {
     const currentProject = getCurrentProject(state);
     getCurrentPersistor(state).save(currentProject.toJS());
 
-    validateSource(
-      dispatch,
+    dispatch(validateSource(
       language,
       newValue,
       currentProject.get('enabledLibraries')
-    );
+    ));
   };
 }
 
@@ -135,7 +140,7 @@ function changeCurrentProject(projectKey) {
     const state = getState();
     getCurrentPersistor(state).setCurrentProjectKey(projectKey);
 
-    validateAllSources(dispatch, getCurrentProject(state));
+    dispatch(validateAllSources(getCurrentProject(state)));
   };
 }
 
@@ -149,7 +154,7 @@ function toggleLibrary(projectKey, libraryKey) {
       },
     });
 
-    validateAllSources(dispatch, getCurrentProject(getState()));
+    dispatch(validateAllSources(getCurrentProject(getState())));
   };
 }
 
@@ -179,29 +184,35 @@ function clearRuntimeErrors() {
   };
 }
 
-function resetWorkspace(dispatch) {
-  dispatch({type: 'RESET_WORKSPACE'});
-  dispatch(loadCurrentProjectFromStorage());
-  dispatch(loadAllProjects());
+function resetWorkspace() {
+  return (dispatch) => {
+    dispatch({type: 'RESET_WORKSPACE'});
+    dispatch(loadCurrentProjectFromStorage());
+    dispatch(loadAllProjects());
+  };
 }
 
-function logIn(dispatch, authData) {
-  dispatch({type: 'USER_AUTHENTICATED', payload: authData});
-  resetWorkspace(dispatch);
+function logIn(authData) {
+  return (dispatch) => {
+    dispatch({type: 'USER_AUTHENTICATED', payload: authData});
+    dispatch(resetWorkspace());
+  };
 }
 
-function logOut(dispatch) {
-  dispatch({type: 'USER_LOGGED_OUT'});
-  resetWorkspace(dispatch);
+function logOut() {
+  return (dispatch) => {
+    dispatch({type: 'USER_LOGGED_OUT'});
+    dispatch(resetWorkspace());
+  };
 }
 
 function listenForAuth() {
   return (dispatch) => {
     appFirebase.onAuth((authData) => {
       if (authData === null) {
-        logOut(dispatch);
+        dispatch(logOut());
       } else {
-        logIn(dispatch, authData);
+        dispatch(logIn(authData));
       }
     });
   };
