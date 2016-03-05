@@ -1,4 +1,3 @@
-import {Promise} from 'es6-promise';
 import GitHub from 'github-api';
 const anonymousGithub = new GitHub({});
 

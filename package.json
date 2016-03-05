@@ -33,7 +33,6 @@
     "classnames": "^2.1.5",
     "css": "^2.2.1",
     "envify": "^3.4.0",
-    "es6-promise": "^3.0.2",
     "firebase": "^2.4.1",
     "github-api": "^0.11.2",
     "htmllint": "^0.2.4",
@@ -67,16 +66,18 @@
   "jest": {
     "unmockedModulePathPatterns": [
       "/node_modules/immutable",
-      "/node_modules/es6-promise",
       "/node_modules/keymirror",
       "/node_modules/lodash"
     ],
-    "moduleFileExtensions": ["js"]
+    "moduleFileExtensions": [
+      "js"
+    ]
   },
   "devDependencies": {
     "babel-core": "^6.5.2",
     "babel-eslint": "^5.0.0",
     "babel-jest": "^9.0.0",
+    "babel-polyfill": "^6.6.1",
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-react": "^6.5.0",
     "babelify": "^7.2.0",

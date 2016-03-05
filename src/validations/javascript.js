@@ -1,6 +1,5 @@
 import i18n from 'i18next-client';
 import {JSHINT} from 'jshint';
-import {Promise} from 'es6-promise';
 import update from 'react-addons-update';
 import config from '../config';
 

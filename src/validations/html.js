@@ -1,4 +1,3 @@
-import {Promise} from 'es6-promise';
 import groupBy from 'lodash/groupBy';
 import values from 'lodash/values';
 import flatten from 'lodash/flatten';

@@ -1,5 +1,4 @@
 import values from 'lodash/values';
-import {Promise} from 'es6-promise';
 import appFirebase from '../services/appFirebase';
 
 class FirebasePersistor {

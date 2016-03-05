@@ -139,6 +139,7 @@ describe('index', () => {
     let actionsDispatched;
 
     beforeEach(() => {
+      getState.mockReturnValue(blank.state);
       LocalPersistor.getCurrentProjectKey.
         mockReturnValue(Promise.resolve(undefined));
       dispatchThunkAction(Actions.loadCurrentProjectFromStorage());
