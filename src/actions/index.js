@@ -147,12 +147,7 @@ function changeCurrentProject(projectKey) {
     });
 
     const state = getState();
-    const persistor = getCurrentPersistor(state);
-
-    if (persistor !== null) {
-      persistor.setCurrentProjectKey(projectKey);
-    }
-
+    saveCurrentProject(state);
     dispatch(validateAllSources(getCurrentProject(state)));
   };
 }
