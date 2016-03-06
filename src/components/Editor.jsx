@@ -56,18 +56,30 @@ class Editor extends React.Component {
     });
   }
 
+  _renderLabel() {
+    return (
+      <div className="editorContainer-label">
+        {i18n.t(`languages.${this.props.language}`)}
+      </div>
+    );
+  }
+
+  _renderEditor() {
+    return (
+      <div
+        className="editorContainer-editor"
+        ref={this._setupEditor.bind(this)}
+      >
+        {this.props.source}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="editorContainer">
-        <div className="editorContainer-label">
-          {i18n.t(`languages.${this.props.language}`)}
-        </div>
-        <div
-          className="editorContainer-editor"
-          ref={this._setupEditor.bind(this)}
-        >
-          {this.props.source}
-        </div>
+        {this._renderLabel()}
+        {this._renderEditor()}
       </div>
     );
   }
