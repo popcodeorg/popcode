@@ -61,6 +61,12 @@ function projects(stateIn, action) {
         newProject.set('projectKey', action.payload.projectKey)
       );
 
+    case 'RESET_WORKSPACE':
+      return state.set(
+        action.payload.projectKey,
+        newProject.set('projectKey', action.payload.projectKey)
+      );
+
     case 'PROJECT_LIBRARY_TOGGLED':
       return state.updateIn(
         [action.payload.projectKey, 'enabledLibraries'],
@@ -75,9 +81,6 @@ function projects(stateIn, action) {
         [action.payload.projectKey, 'updatedAt'],
         action.meta.timestamp
       );
-
-    case 'RESET_WORKSPACE':
-      return emptyList;
 
     default:
       return state;

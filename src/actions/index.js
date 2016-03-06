@@ -109,7 +109,7 @@ function loadCurrentProjectFromStorage() {
           dispatch(validateAllSources(getCurrentProject(getState())));
         });
       } else {
-        createProject()(dispatch, getState);
+        dispatch(createProject());
       }
     });
   };
@@ -207,9 +207,10 @@ function clearRuntimeErrors() {
 
 function resetWorkspace() {
   return (dispatch) => {
-    dispatch({type: 'RESET_WORKSPACE'});
-    dispatch(loadCurrentProjectFromStorage());
-    dispatch(loadAllProjects());
+    dispatch({
+      type: 'RESET_WORKSPACE',
+      payload: {projectKey: generateProjectKey()},
+    });
   };
 }
 
