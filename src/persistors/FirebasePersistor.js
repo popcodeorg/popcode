@@ -56,6 +56,11 @@ class FirebasePersistor {
         });
     });
   }
+
+  saveCurrentProject(project) {
+    this.save(project);
+    this.setCurrentProjectKey(project.projectKey);
+  }
 }
 
 export default FirebasePersistor;

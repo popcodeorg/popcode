@@ -26,6 +26,18 @@ function getCurrentProject(state) {
   return null;
 }
 
+function saveCurrentProject(state) {
+  const currentProject = getCurrentProject(state);
+  const persistor = getCurrentPersistor(state);
+
+  if (persistor && currentProject && currentProject.get('updatedAt')) {
+    persistor.saveCurrentProject(currentProject.toJS());
+    return true;
+  }
+
+  return false;
+}
+
 function showErrorsAfterDebounce() {
   return debounce((dispatch) => {
     dispatch({type: 'ERROR_DEBOUNCE_FINISHED'});
@@ -68,24 +80,13 @@ function validateAllSources(project) {
 }
 
 function createProject() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       type: 'PROJECT_CREATED',
       payload: {
         projectKey: generateProjectKey(),
       },
     });
-
-    const state = getState();
-    const persistor = getCurrentPersistor(state);
-
-    if (persistor !== null) {
-      const projectKey = state.currentProject.get('projectKey');
-      const project = state.projects.get(projectKey);
-
-      persistor.save(project.toJS());
-      persistor.setCurrentProjectKey(projectKey);
-    }
   };
 }
 
@@ -127,13 +128,9 @@ function updateProjectSource(projectKey, language, newValue) {
     });
 
     const state = getState();
+    saveCurrentProject(state);
+
     const currentProject = getCurrentProject(state);
-    const persistor = getCurrentPersistor(state);
-
-    if (persistor !== null) {
-      persistor.save(currentProject.toJS());
-    }
-
     dispatch(validateSource(
       language,
       newValue,
@@ -171,7 +168,9 @@ function toggleLibrary(projectKey, libraryKey) {
       },
     });
 
-    dispatch(validateAllSources(getCurrentProject(getState())));
+    const state = getState();
+    dispatch(validateAllSources(getCurrentProject(state)));
+    saveCurrentProject(state);
   };
 }
 
@@ -216,16 +215,9 @@ function resetWorkspace() {
 
 function logIn(authData) {
   return (dispatch, getState) => {
-    const currentProject = getCurrentProject(getState());
     dispatch({type: 'USER_AUTHENTICATED', payload: authData});
 
-    if (currentProject) {
-      const persistor = getCurrentPersistor(getState());
-      if (persistor !== null) {
-        persistor.save(currentProject.toJS());
-        persistor.setCurrentProjectKey(currentProject.get('projectKey'));
-      }
-    } else {
+    if (!saveCurrentProject(getState())) {
       dispatch(loadCurrentProjectFromStorage());
     }
 
