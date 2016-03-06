@@ -11,8 +11,6 @@ import {
   changeCurrentProject,
   clearRuntimeErrors,
   createProject,
-  loadAllProjects,
-  loadCurrentProjectFromStorage,
   updateProjectSource,
   toggleLibrary,
   listenForAuth,

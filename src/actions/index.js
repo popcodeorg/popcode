@@ -95,7 +95,7 @@ function ensureProject() {
     if (getCurrentProject(getState()) === null) {
       dispatch(createProject());
     }
-  }
+  };
 }
 
 function loadCurrentProjectFromStorage() {
