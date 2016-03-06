@@ -62,7 +62,7 @@ function projects(stateIn, action) {
       );
 
     case 'RESET_WORKSPACE':
-      return state.set(
+      return emptyMap.set(
         action.payload.projectKey,
         newProject.set('projectKey', action.payload.projectKey)
       );
