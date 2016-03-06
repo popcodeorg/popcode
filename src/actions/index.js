@@ -209,12 +209,7 @@ function clearRuntimeErrors() {
 }
 
 function resetWorkspace() {
-  return (dispatch) => {
-    dispatch({
-      type: 'RESET_WORKSPACE',
-      payload: {projectKey: generateProjectKey()},
-    });
-  };
+  return {type: 'RESET_WORKSPACE'};
 }
 
 function logIn(authData) {
@@ -222,6 +217,7 @@ function logIn(authData) {
     dispatch({type: 'USER_AUTHENTICATED', payload: authData});
 
     if (!saveCurrentProject(getState())) {
+      dispatch(resetWorkspace());
       dispatch(loadCurrentProjectFromStorage());
     }
 
@@ -233,6 +229,7 @@ function logOut() {
   return (dispatch) => {
     dispatch({type: 'USER_LOGGED_OUT'});
     dispatch(resetWorkspace());
+    dispatch(createProject());
   };
 }
 

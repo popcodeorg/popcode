@@ -62,10 +62,7 @@ function projects(stateIn, action) {
       );
 
     case 'RESET_WORKSPACE':
-      return emptyMap.set(
-        action.payload.projectKey,
-        newProject.set('projectKey', action.payload.projectKey)
-      );
+      return emptyMap;
 
     case 'PROJECT_LIBRARY_TOGGLED':
       return state.updateIn(
