@@ -110,65 +110,85 @@ class Workspace extends React.Component {
     this.props.dispatch(clearRuntimeErrors());
   }
 
-  render() {
-    let environment;
-    if (this.props.currentProject !== undefined) {
-      environment = (
-        <div className="environment">
-          <Output
-            project={this.props.currentProject}
-            errors={this.props.errors}
-            hasErrors={
-              !isEmpty(flatten(values(this.props.errors)))
-            }
-            delayErrorDisplay={this.props.delayErrorDisplay}
-            runtimeErrors={this.props.runtimeErrors}
-            onErrorClicked={this._onErrorClicked.bind(this)}
-            onRuntimeError={this._onRuntimeError.bind(this)}
-            clearRuntimeErrors={this._clearRuntimeErrors.bind(this)}
-          />
+  _renderOutput() {
+    return (
+      <Output
+        project={this.props.currentProject}
+        errors={this.props.errors}
+        hasErrors={
+          !isEmpty(flatten(values(this.props.errors)))
+        }
+        delayErrorDisplay={this.props.delayErrorDisplay}
+        runtimeErrors={this.props.runtimeErrors}
+        onErrorClicked={this._onErrorClicked.bind(this)}
+        onRuntimeError={this._onRuntimeError.bind(this)}
+        clearRuntimeErrors={this._clearRuntimeErrors.bind(this)}
+      />
+    );
+  }
 
-          <Editor
-            ref="htmlEditor"
-            projectKey={this.props.currentProject.projectKey}
-            source={this.props.currentProject.sources.html}
-            errors={this.props.errors.html}
-            onInput={this._onEditorInput.bind(this, 'html')}
-            language="html"
-          />
+  _renderEditors() {
+    return [
+      <Editor
+        ref="htmlEditor"
+        projectKey={this.props.currentProject.projectKey}
+        source={this.props.currentProject.sources.html}
+        errors={this.props.errors.html}
+        onInput={this._onEditorInput.bind(this, 'html')}
+        language="html"
+      />,
 
-          <Editor
-            ref="cssEditor"
-            projectKey={this.props.currentProject.projectKey}
-            source={this.props.currentProject.sources.css}
-            errors={this.props.errors.css}
-            onInput={this._onEditorInput.bind(this, 'css')}
-            language="css"
-          />
+      <Editor
+        ref="cssEditor"
+        projectKey={this.props.currentProject.projectKey}
+        source={this.props.currentProject.sources.css}
+        errors={this.props.errors.css}
+        onInput={this._onEditorInput.bind(this, 'css')}
+        language="css"
+      />,
 
-          <Editor
-            ref="javascriptEditor"
-            projectKey={this.props.currentProject.projectKey}
-            source={this.props.currentProject.sources.javascript}
-            errors={this._allJavaScriptErrors()}
-            onInput={this._onEditorInput.bind(this, 'javascript')}
-            language="javascript"
-          />
-        </div>
-      );
+      <Editor
+        ref="javascriptEditor"
+        projectKey={this.props.currentProject.projectKey}
+        source={this.props.currentProject.sources.javascript}
+        errors={this._allJavaScriptErrors()}
+        onInput={this._onEditorInput.bind(this, 'javascript')}
+        language="javascript"
+      />,
+    ];
+  }
+
+  _renderEnvironment() {
+    if (this.props.currentProject === undefined) {
+      return null;
     }
 
     return (
+      <div className="environment">
+        {this._renderOutput()}
+        {this._renderEditors()}
+      </div>
+    );
+  }
+
+  _renderToolbar() {
+    return (
+      <Toolbar
+        allProjects={this.props.allProjects}
+        currentProject={this.props.currentProject}
+        currentUser={this.props.currentUser}
+        onLibraryToggled={this._onLibraryToggled.bind(this)}
+        onNewProject={this._onNewProject.bind(this)}
+        onProjectSelected={this._onProjectSelected.bind(this)}
+      />
+    );
+  }
+
+  render() {
+    return (
       <div id="workspace">
-        <Toolbar
-          allProjects={this.props.allProjects}
-          currentProject={this.props.currentProject}
-          currentUser={this.props.currentUser}
-          onLibraryToggled={this._onLibraryToggled.bind(this)}
-          onNewProject={this._onNewProject.bind(this)}
-          onProjectSelected={this._onProjectSelected.bind(this)}
-        />
-        {environment}
+        {this._renderToolbar()}
+        {this._renderEnvironment()}
       </div>
     );
   }
