@@ -177,6 +177,35 @@ class Toolbar extends React.Component {
     );
   }
 
+  _renderShowHideBar() {
+    return (
+      <div
+        className="toolbar-showHide"
+        onClick={this._toggleShowHideState.bind(this)}
+      >
+        {this._showHideLabel()}
+      </div>
+    );
+  }
+
+  _renderMenu() {
+    return (
+      <ul className={classnames(
+        'toolbar-menu',
+        {
+          'toolbar-menu--open': this.state.open,
+          'toolbar-menu--closed': !this.state.open,
+        }
+      )}>
+        {this._renderNewProjectButton()}
+        {this._renderLoadProjectButton()}
+        {this._renderUserSessionToggle()}
+        {this._renderExportGistButton()}
+        {this._renderLibrariesButton()}
+      </ul>
+    );
+  }
+
   render() {
     if (!this.props.currentProject) {
       return null;
@@ -184,27 +213,8 @@ class Toolbar extends React.Component {
 
     return (
       <div className="toolbar">
-        <div
-          className="toolbar-showHide"
-          onClick={this._toggleShowHideState.bind(this)}
-        >
-
-          {this._showHideLabel()}
-        </div>
-        <ul className={classnames(
-          'toolbar-menu',
-          {
-            'toolbar-menu--open': this.state.open,
-            'toolbar-menu--closed': !this.state.open,
-          }
-        )}
-        >
-          {this._renderNewProjectButton()}
-          {this._renderLoadProjectButton()}
-          {this._renderUserSessionToggle()}
-          {this._renderExportGistButton()}
-          {this._renderLibrariesButton()}
-        </ul>
+        {this._renderShowHideBar()}
+        {this._renderMenu()}
         {this._renderSubmenu()}
       </div>
     );
