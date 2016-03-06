@@ -90,6 +90,14 @@ function createProject() {
   };
 }
 
+function ensureProject() {
+  return (dispatch, getState) => {
+    if (getCurrentProject(getState()) === null) {
+      dispatch(createProject());
+    }
+  }
+}
+
 function loadCurrentProjectFromStorage() {
   return (dispatch, getState) => {
     const persistor = getCurrentPersistor(getState());
@@ -109,7 +117,7 @@ function loadCurrentProjectFromStorage() {
           dispatch(validateAllSources(getCurrentProject(getState())));
         });
       } else {
-        dispatch(createProject());
+        dispatch(ensureProject());
       }
     });
   };
