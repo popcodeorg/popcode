@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import values from 'lodash/values';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
+import bindAll from 'lodash/bindAll';
+import i18n from 'i18next-client';
 
 import {
   addRuntimeError,
@@ -41,10 +43,29 @@ function mapStateToProps(state) {
 }
 
 class Workspace extends React.Component {
+  constructor () {
+    super();
+    bindAll(this, '_confirmUnload');
+  }
+
   componentWillMount() {
     this.props.dispatch(listenForAuth());
     this.props.dispatch(loadCurrentProjectFromStorage());
     this.props.dispatch(loadAllProjects());
+  }
+
+  componentDidMount() {
+    window.addEventListener('beforeunload', this._confirmUnload);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this._confirmUnload);
+  }
+
+  _confirmUnload(event) {
+    if (!this.props.currentUser.authenticated) {
+      event.returnValue = i18n.t('workspace.confirm-unload');
+    }
   }
 
   _allJavaScriptErrors() {
