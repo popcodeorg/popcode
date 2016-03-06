@@ -50,8 +50,6 @@ class Workspace extends React.Component {
 
   componentWillMount() {
     this.props.dispatch(listenForAuth());
-    this.props.dispatch(loadCurrentProjectFromStorage());
-    this.props.dispatch(loadAllProjects());
   }
 
   componentDidMount() {
