@@ -128,6 +128,10 @@ class Workspace extends React.Component {
   }
 
   _renderEditors() {
+    if (this.props.currentProject === undefined) {
+      return null;
+    }
+
     return [
       <Editor
         key="html"
@@ -162,10 +166,6 @@ class Workspace extends React.Component {
   }
 
   _renderEnvironment() {
-    if (this.props.currentProject === undefined) {
-      return null;
-    }
-
     return (
       <div className="environment">
         {this._renderOutput()}
