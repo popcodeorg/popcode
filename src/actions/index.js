@@ -118,6 +118,7 @@ function updateProjectSource(projectKey, language, newValue) {
   return (dispatch, getState) => {
     dispatch({
       type: 'PROJECT_SOURCE_EDITED',
+      meta: {timestamp: Date.now()},
       payload: {
         projectKey,
         language,
@@ -163,6 +164,7 @@ function toggleLibrary(projectKey, libraryKey) {
   return (dispatch, getState) => {
     dispatch({
       type: 'PROJECT_LIBRARY_TOGGLED',
+      meta: {timestamp: Date.now()},
       payload: {
         projectKey,
         libraryKey,

@@ -64,7 +64,9 @@ class Workspace extends React.Component {
 
   _confirmUnload(event) {
     if (!this.props.currentUser.authenticated) {
-      event.returnValue = i18n.t('workspace.confirm-unload');
+      if (this.props.currentProject.updatedAt) {
+        event.returnValue = i18n.t('workspace.confirm-unload');
+      }
     }
   }
 

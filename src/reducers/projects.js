@@ -50,6 +50,9 @@ function projects(stateIn, action) {
       return state.setIn(
         [action.payload.projectKey, 'sources', action.payload.language],
         action.payload.newValue
+      ).setIn(
+        [action.payload.projectKey, 'updatedAt'],
+        action.meta.timestamp
       );
 
     case 'PROJECT_CREATED':
@@ -68,6 +71,9 @@ function projects(stateIn, action) {
           }
           return enabledLibraries.add(libraryKey);
         }
+      ).setIn(
+        [action.payload.projectKey, 'updatedAt'],
+        action.meta.timestamp
       );
 
     case 'RESET_WORKSPACE':
