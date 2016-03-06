@@ -130,6 +130,7 @@ class Workspace extends React.Component {
   _renderEditors() {
     return [
       <Editor
+        key="html"
         ref="htmlEditor"
         projectKey={this.props.currentProject.projectKey}
         source={this.props.currentProject.sources.html}
@@ -139,6 +140,7 @@ class Workspace extends React.Component {
       />,
 
       <Editor
+        key="css"
         ref="cssEditor"
         projectKey={this.props.currentProject.projectKey}
         source={this.props.currentProject.sources.css}
@@ -148,6 +150,7 @@ class Workspace extends React.Component {
       />,
 
       <Editor
+        key="javascript"
         ref="javascriptEditor"
         projectKey={this.props.currentProject.projectKey}
         source={this.props.currentProject.sources.javascript}
