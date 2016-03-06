@@ -20,6 +20,10 @@ class PreviewFrame extends React.Component {
     }
   }
 
+  shouldComponentUpdate() {
+    return !this.frame;
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.src !== this.props.src) {
       this._writeFrameContents();

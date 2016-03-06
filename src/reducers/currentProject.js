@@ -1,9 +1,11 @@
 import Immutable from 'immutable';
 
+const noCurrentProject = new Immutable.Map({projectKey: null});
+
 function currentProject(stateIn, action) {
   let state;
   if (stateIn === undefined) {
-    state = new Immutable.Map({projectKey: null});
+    state = noCurrentProject;
   } else {
     state = stateIn;
   }
@@ -15,6 +17,8 @@ function currentProject(stateIn, action) {
       return state.set('projectKey', action.payload.project.projectKey);
     case 'PROJECT_CREATED':
       return state.set('projectKey', action.payload.projectKey);
+    case 'RESET_WORKSPACE':
+      return noCurrentProject;
     default:
       return state;
   }

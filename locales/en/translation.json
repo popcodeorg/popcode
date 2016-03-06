@@ -12,6 +12,9 @@
     "css": "CSS",
     "javascript": "JavaScript"
   },
+  "workspace": {
+    "confirm-unload": "If you leave the page, you will lose your work. To save your work, you must log in using your GitHub account."
+  },
   "errors": {
     "undefined-description": "Couldn't find a human description for",
     "notice": "You have __amount__ errors in your __language__!",

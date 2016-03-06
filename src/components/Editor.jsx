@@ -2,12 +2,10 @@ import React from 'react';
 import ACE from 'brace';
 import i18n from 'i18next-client';
 
-/* eslint-disable no-unused-vars */
-import _html from 'brace/mode/html';
-import _css from 'brace/mode/css';
-import _javascript from 'brace/mode/javascript';
-import _monokai from 'brace/theme/monokai';
-/* eslint-enable no-unused-vars */
+import 'brace/mode/html';
+import 'brace/mode/css';
+import 'brace/mode/javascript';
+import 'brace/theme/monokai';
 
 class Editor extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -58,18 +56,30 @@ class Editor extends React.Component {
     });
   }
 
+  _renderLabel() {
+    return (
+      <div className="editorContainer-label">
+        {i18n.t(`languages.${this.props.language}`)}
+      </div>
+    );
+  }
+
+  _renderEditor() {
+    return (
+      <div
+        className="editorContainer-editor"
+        ref={this._setupEditor.bind(this)}
+      >
+        {this.props.source}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="editorContainer">
-        <div className="editorContainer-label">
-          {i18n.t(`languages.${this.props.language}`)}
-        </div>
-        <div
-          className="editorContainer-editor"
-          ref={this._setupEditor.bind(this)}
-        >
-          {this.props.source}
-        </div>
+        {this._renderLabel()}
+        {this._renderEditor()}
       </div>
     );
   }

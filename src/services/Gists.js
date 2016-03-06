@@ -1,7 +1,5 @@
-import {Promise} from 'es6-promise';
 import GitHub from 'github-api';
-const github = new GitHub({});
-const gist = new github.Gist({});
+const anonymousGithub = new GitHub({});
 
 function createGistFromProject(project) {
   const files = {};
@@ -31,16 +29,31 @@ function createGistFromProject(project) {
   };
 }
 
+function clientForUser(user) {
+  if (user.authenticated && user.provider === 'github') {
+    return new GitHub({
+      token: user.info.accessToken,
+      auth: 'oauth',
+    });
+  }
+
+  return anonymousGithub;
+}
+
 const Gists = {
-  createFromProject(project) {
+  createFromProject(project, user) {
     return new Promise((resolve, reject) => {
-      gist.create(createGistFromProject(project), (error, response) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(response);
+      const github = clientForUser(user);
+      new github.Gist({}).create(
+        createGistFromProject(project),
+        (error, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(response);
+          }
         }
-      });
+      );
     });
   },
 };

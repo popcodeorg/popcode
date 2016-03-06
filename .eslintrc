@@ -327,8 +327,7 @@
             2
         ],
         "no-param-reassign": [
-            2,
-            {"props": true}
+            2
         ],
         "no-path-concat": [
             2

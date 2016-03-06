@@ -3,6 +3,8 @@
 export default {
   logReduxActions: () => process.env.LOG_REDUX_ACTIONS !== 'false',
 
+  firebaseApp: process.env.FIREBASE_APP || 'blistering-inferno-9896',
+
   libraries: {
     jquery: {
       name: 'jQuery',

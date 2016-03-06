@@ -4,6 +4,7 @@ import i18n from 'i18next-client';
 import LibraryPicker from './LibraryPicker';
 import ProjectList from './ProjectList';
 import Gists from '../services/Gists';
+import appFirebase from '../services/appFirebase';
 
 class Toolbar extends React.Component {
   constructor() {
@@ -27,7 +28,7 @@ class Toolbar extends React.Component {
   _exportGist() {
     const newWindow = open('about:blank', 'gist');
 
-    Gists.createFromProject(this.props.currentProject).
+    Gists.createFromProject(this.props.currentProject, this.props.currentUser).
       then((response) => {
         newWindow.location = response.html_url;
       });
@@ -49,7 +50,7 @@ class Toolbar extends React.Component {
     });
   }
 
-  _getSubmenu() {
+  _renderSubmenu() {
     switch (this.state.submenu) {
       case 'libraries':
         return (
@@ -85,72 +86,145 @@ class Toolbar extends React.Component {
     this._close();
   }
 
-  render() {
+  _promptForLogin() {
+    appFirebase.authWithOAuthPopup(
+      'github',
+      {remember: 'sessionOnly', scope: 'gist'}
+    ).then(this._close.bind(this));
+  }
+
+  _logOut() {
+    appFirebase.unauth();
+    this._close();
+  }
+
+  _renderNewProjectButton() {
+    if (!this.props.currentUser.authenticated) {
+      return null;
+    }
+
+    return (
+      <li
+        onClick={this._newProject.bind(this)}
+        className="toolbar-menu-item"
+      >
+        {i18n.t('toolbar.new-project')}
+      </li>
+    );
+  }
+
+  _renderLoadProjectButton() {
+    if (this.props.allProjects.length === 1) {
+      return null;
+    }
+
+    return (
+      <li onClick={this._loadProject.bind(this)}
+        className={classnames(
+          'toolbar-menu-item',
+          {'toolbar-menu-item--active':
+            this.state.submenu === 'loadProject'}
+        )}
+      >
+        {i18n.t('toolbar.load-project')}
+      </li>
+    );
+  }
+
+  _renderUserSessionToggle() {
+    if (this.props.currentUser.authenticated) {
+      return (
+        <li
+          onClick={this._logOut.bind(this)}
+          className="toolbar-menu-item"
+        >
+          Log out
+        </li>
+      );
+    }
+
+    return (
+      <li
+        onClick={this._promptForLogin.bind(this)}
+        className="toolbar-menu-item"
+      >
+        Log in with GitHub
+      </li>
+    );
+  }
+
+  _renderExportGistButton() {
+    return (
+      <li
+        onClick={this._exportGist.bind(this)}
+        className="toolbar-menu-item"
+      >
+        {i18n.t('toolbar.export-gist')}
+      </li>
+    );
+  }
+
+  _renderLibrariesButton() {
+    return (
+      <li onClick={this._toggleLibraryPicker.bind(this)}
+        className={classnames(
+          'toolbar-menu-item',
+          {'toolbar-menu-item-active': this.state.submenu === 'libraries'}
+        )}
+      >
+        {i18n.t('toolbar.libraries')}
+      </li>
+    );
+  }
+
+  _renderShowHideBar() {
+    return (
+      <div
+        className="toolbar-showHide"
+        onClick={this._toggleShowHideState.bind(this)}
+      >
+        {this._showHideLabel()}
+      </div>
+    );
+  }
+
+  _renderMenu() {
     if (!this.props.currentProject) {
       return null;
     }
 
-    const toolbarItemsClasses = ['toolbar-menu'];
-    if (this.state.open) {
-      toolbarItemsClasses.push('toolbar-menu--open');
-    } else {
-      toolbarItemsClasses.push('toolbar-menu--closed');
-    }
-
     return (
-      <div className="toolbar">
-        <div
-          className="toolbar-showHide"
-          onClick={this._toggleShowHideState.bind(this)}
-        >
-
-          {this._showHideLabel()}
-        </div>
-        <ul className={classnames(
+      <ul
+        className={classnames(
           'toolbar-menu',
           {
             'toolbar-menu--open': this.state.open,
             'toolbar-menu--closed': !this.state.open,
           }
         )}
-        >
-          <li
-            onClick={this._newProject.bind(this)}
-            className="toolbar-menu-item"
-          >
-            {i18n.t('toolbar.new-project')}
-          </li>
-          <li onClick={this._loadProject.bind(this)}
-            className={classnames(
-              'toolbar-menu-item',
-              {'toolbar-menu-item--active':
-                this.state.submenu === 'loadProject'}
-            )}
-          >
-            {i18n.t('toolbar.load-project')}
-          </li>
-          <li
-            onClick={this._exportGist.bind(this)}
-            className="toolbar-menu-item"
-          >
-            {i18n.t('toolbar.export-gist')}
-          </li>
-          <li onClick={this._toggleLibraryPicker.bind(this)}
-            className={classnames(
-              'toolbar-menu-item',
-              {'toolbar-menu-item-active': this.state.submenu === 'libraries'}
-            )}
-          >
-            {i18n.t('toolbar.libraries')}
-          </li>
-        </ul>
-        {this._getSubmenu()}
+      >
+        {this._renderNewProjectButton()}
+        {this._renderLoadProjectButton()}
+        {this._renderUserSessionToggle()}
+        {this._renderExportGistButton()}
+        {this._renderLibrariesButton()}
+      </ul>
+    );
+  }
+
+  render() {
+    return (
+      <div className="toolbar">
+        {this._renderShowHideBar()}
+        {this._renderMenu()}
+        {this._renderSubmenu()}
       </div>
     );
   }
 }
 
 Toolbar.propTypes = {
+  currentUser: React.PropTypes.object.isRequired,
   currentProject: React.PropTypes.object,
   allProjects: React.PropTypes.array,
   onLibraryToggled: React.PropTypes.func.isRequired,

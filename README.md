@@ -27,7 +27,8 @@ Try doing something wrong. The main emphasis of this project is giving feedback 
   preview is replaced by an error list.
 * JavaScript runtime errors are also reported in human-friendly language, with
   annotations in the source code pointing out the source of the problem.
-* All is work automatically saved in local storage.
+* One-click login using GitHub account; all work is saved remotely to Firebase
+  when logged in.
 * Pop out preview of web page in its own window.
 * Export to GitHub gist.
 
@@ -83,7 +84,7 @@ lifecycle of a user interaction:
 * Action creators also perform other business logic, such as initiating
   [validation](https://github.com/popcodeorg/popcode/tree/master/src/validations)
   of project code and persisting changes to
-  [storage](https://github.com/popcodeorg/popcode/blob/master/src/services/Storage.js).
+  [persistent storage](https://github.com/popcodeorg/popcode/blob/master/src/persistors).
 * When the action lifecycle is complete, the `Workspace` receives updated
   props from the store and propagates them to its descendants.
 

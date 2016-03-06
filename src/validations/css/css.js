@@ -1,6 +1,5 @@
 import i18n from 'i18next-client';
 import css from 'css';
-import {Promise} from 'es6-promise';
 
 const humanErrors = {
   'missing \'}\'': () => i18n.t('errors.css.missing-curly'),

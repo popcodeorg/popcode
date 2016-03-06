@@ -63,8 +63,10 @@ describe('projects', () => {
   });
 
   describe('PROJECT_SOURCE_EDITED', () => {
+    const timestamp = Date.now();
     const action = {
       type: 'PROJECT_SOURCE_EDITED',
+      meta: {timestamp},
       payload: {
         projectKey: '12345',
         language: 'css',
@@ -84,7 +86,7 @@ describe('projects', () => {
       const expected = stateIn.setIn(
         ['12345', 'sources', 'css'],
         action.payload.newValue
-      ).toJS();
+      ).setIn(['12345', 'updatedAt'], timestamp).toJS();
 
       expect(projects(stateIn, action).toJS()).toEqual(expected);
     });
@@ -119,6 +121,7 @@ describe('projects', () => {
   describe('PROJECT_LIBRARY_TOGGLED', () => {
     const action = {
       type: 'PROJECT_LIBRARY_TOGGLED',
+      meta: {timestamp: Date.now()},
       payload: {projectKey: '12345', libraryKey: 'jquery'},
     };
 

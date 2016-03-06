@@ -1,7 +1,16 @@
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
-import Storage from '../services/Storage';
+import FirebasePersistor from '../persistors/FirebasePersistor';
+import appFirebase from '../services/appFirebase';
 import validations from '../validations';
+
+function getCurrentPersistor(state) {
+  const currentUser = state.user.toJS();
+  if (currentUser.authenticated) {
+    return new FirebasePersistor(currentUser);
+  }
+  return null;
+}
 
 function generateProjectKey() {
   const date = new Date();
@@ -17,73 +26,98 @@ function getCurrentProject(state) {
   return null;
 }
 
-const showErrorsAfterDebounce = debounce((dispatch) => {
-  dispatch({type: 'ERROR_DEBOUNCE_FINISHED'});
-}, 1000);
+function saveCurrentProject(state) {
+  const currentProject = getCurrentProject(state);
+  const persistor = getCurrentPersistor(state);
 
-function validateSource(dispatch, language, source, enabledLibraries) {
-  dispatch({
-    type: 'VALIDATING_SOURCE',
-    payload: {
-      language,
-    },
-  });
+  if (persistor && currentProject && currentProject.get('updatedAt')) {
+    persistor.saveCurrentProject(currentProject.toJS());
+    return true;
+  }
 
-  const validate = validations[language];
-  validate(source, enabledLibraries.toJS()).then((errors) => {
+  return false;
+}
+
+function showErrorsAfterDebounce() {
+  return debounce((dispatch) => {
+    dispatch({type: 'ERROR_DEBOUNCE_FINISHED'});
+  }, 1000);
+}
+
+function validateSource(language, source, enabledLibraries) {
+  return (dispatch) => {
     dispatch({
-      type: 'VALIDATED_SOURCE',
+      type: 'VALIDATING_SOURCE',
       payload: {
         language,
-        errors,
       },
     });
 
-    if (!isEmpty(errors)) {
-      showErrorsAfterDebounce(dispatch);
-    }
-  });
+    const validate = validations[language];
+    validate(source, enabledLibraries.toJS()).then((errors) => {
+      dispatch({
+        type: 'VALIDATED_SOURCE',
+        payload: {
+          language,
+          errors,
+        },
+      });
+
+      if (!isEmpty(errors)) {
+        dispatch(showErrorsAfterDebounce());
+      }
+    });
+  };
 }
 
-function validateAllSources(dispatch, project) {
-  const enabledLibraries = project.get('enabledLibraries');
-  project.get('sources').forEach((source, language) => {
-    validateSource(dispatch, language, source, enabledLibraries);
-  });
+function validateAllSources(project) {
+  return (dispatch) => {
+    const enabledLibraries = project.get('enabledLibraries');
+    project.get('sources').forEach((source, language) => {
+      dispatch(validateSource(language, source, enabledLibraries));
+    });
+  };
 }
 
 function createProject() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       type: 'PROJECT_CREATED',
       payload: {
         projectKey: generateProjectKey(),
       },
     });
+  };
+}
 
-    const state = getState();
-    const projectKey = state.currentProject.get('projectKey');
-    const project = state.projects.get(projectKey);
-
-    Storage.save(project.toJS());
-    Storage.setCurrentProjectKey(projectKey);
+function ensureProject() {
+  return (dispatch, getState) => {
+    if (getCurrentProject(getState()) === null) {
+      dispatch(createProject());
+    }
   };
 }
 
 function loadCurrentProjectFromStorage() {
   return (dispatch, getState) => {
-    Storage.getCurrentProjectKey().then((projectKey) => {
+    const persistor = getCurrentPersistor(getState());
+    if (persistor === null) {
+      dispatch(createProject());
+      return;
+    }
+
+    persistor.getCurrentProjectKey().then((projectKey) => {
       if (projectKey) {
-        Storage.load(projectKey).then((project) => {
+        persistor.load(projectKey).then((project) => {
           dispatch({
             type: 'CURRENT_PROJECT_LOADED_FROM_STORAGE',
             payload: {project},
           });
 
-          validateAllSources(dispatch, getCurrentProject(getState()));
+          dispatch(validateAllSources(getCurrentProject(getState())));
         });
       } else {
-        createProject()(dispatch, getState);
+        dispatch(ensureProject());
       }
     });
   };
@@ -93,6 +127,7 @@ function updateProjectSource(projectKey, language, newValue) {
   return (dispatch, getState) => {
     dispatch({
       type: 'PROJECT_SOURCE_EDITED',
+      meta: {timestamp: Date.now()},
       payload: {
         projectKey,
         language,
@@ -100,15 +135,15 @@ function updateProjectSource(projectKey, language, newValue) {
       },
     });
 
-    const currentProject = getCurrentProject(getState());
-    Storage.save(currentProject.toJS());
+    const state = getState();
+    saveCurrentProject(state);
 
-    validateSource(
-      dispatch,
+    const currentProject = getCurrentProject(state);
+    dispatch(validateSource(
       language,
       newValue,
       currentProject.get('enabledLibraries')
-    );
+    ));
   };
 }
 
@@ -119,9 +154,9 @@ function changeCurrentProject(projectKey) {
       payload: {projectKey},
     });
 
-    Storage.setCurrentProjectKey(projectKey);
-
-    validateAllSources(dispatch, getCurrentProject(getState()));
+    const state = getState();
+    saveCurrentProject(state);
+    dispatch(validateAllSources(getCurrentProject(state)));
   };
 }
 
@@ -129,25 +164,35 @@ function toggleLibrary(projectKey, libraryKey) {
   return (dispatch, getState) => {
     dispatch({
       type: 'PROJECT_LIBRARY_TOGGLED',
+      meta: {timestamp: Date.now()},
       payload: {
         projectKey,
         libraryKey,
       },
     });
 
-    validateAllSources(dispatch, getCurrentProject(getState()));
+    const state = getState();
+    dispatch(validateAllSources(getCurrentProject(state)));
+    saveCurrentProject(state);
   };
 }
 
 function loadAllProjects() {
-  return (dispatch) => Storage.all().then((projects) => {
-    projects.forEach((project) => {
-      dispatch({
-        type: 'PROJECT_LOADED_FROM_STORAGE',
-        payload: {project},
+  return (dispatch, getState) => {
+    const persistor = getCurrentPersistor(getState());
+    if (persistor === null) {
+      return;
+    }
+
+    persistor.all().then((projects) => {
+      projects.forEach((project) => {
+        dispatch({
+          type: 'PROJECT_LOADED_FROM_STORAGE',
+          payload: {project},
+        });
       });
     });
-  });
+  };
 }
 
 function addRuntimeError(error) {
@@ -163,6 +208,43 @@ function clearRuntimeErrors() {
   };
 }
 
+function resetWorkspace() {
+  return {type: 'RESET_WORKSPACE'};
+}
+
+function logIn(authData) {
+  return (dispatch, getState) => {
+    dispatch({type: 'USER_AUTHENTICATED', payload: authData});
+
+    if (!saveCurrentProject(getState())) {
+      dispatch(resetWorkspace());
+      dispatch(loadCurrentProjectFromStorage());
+    }
+
+    dispatch(loadAllProjects());
+  };
+}
+
+function logOut() {
+  return (dispatch) => {
+    dispatch({type: 'USER_LOGGED_OUT'});
+    dispatch(resetWorkspace());
+    dispatch(createProject());
+  };
+}
+
+function listenForAuth() {
+  return (dispatch) => {
+    appFirebase.onAuth((authData) => {
+      if (authData === null) {
+        dispatch(logOut());
+      } else {
+        dispatch(logIn(authData));
+      }
+    });
+  };
+}
+
 export {
   createProject,
   changeCurrentProject,
@@ -172,4 +254,5 @@ export {
   toggleLibrary,
   addRuntimeError,
   clearRuntimeErrors,
+  listenForAuth,
 };

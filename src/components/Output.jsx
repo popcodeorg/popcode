@@ -14,6 +14,10 @@ class Output extends React.Component {
   }
 
   _renderPreview() {
+    if (!this.props.project) {
+      return null;
+    }
+
     return (
       <Preview
         project={this.props.project}
@@ -53,10 +57,6 @@ class Output extends React.Component {
       );
     }
 
-    if (!this.props.project) {
-      return null;
-    }
-
     return (
       <div className="environment-rightColumn">
         {this._renderPreview()}
@@ -67,7 +67,7 @@ class Output extends React.Component {
 }
 
 Output.propTypes = {
-  project: React.PropTypes.object.isRequired,
+  project: React.PropTypes.object,
   hasErrors: React.PropTypes.bool.isRequired,
   errors: React.PropTypes.object.isRequired,
   runtimeErrors: React.PropTypes.array.isRequired,

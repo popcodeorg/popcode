@@ -8,6 +8,7 @@ import {readFileSync} from 'fs';
 import path from 'path';
 import Workspace from './components/Workspace';
 import store from './store';
+import 'babel-polyfill';
 
 const translations = {
   en: {

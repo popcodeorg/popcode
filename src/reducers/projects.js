@@ -2,6 +2,8 @@ import Immutable from 'immutable';
 import {readFileSync} from 'fs';
 import path from 'path';
 
+const emptyMap = new Immutable.Map();
+
 const newProject = Immutable.fromJS({
   sources: {
     html: readFileSync(path.join(
@@ -32,7 +34,7 @@ function projects(stateIn, action) {
   let state;
 
   if (stateIn === undefined) {
-    state = new Immutable.Map();
+    state = emptyMap;
   } else {
     state = stateIn;
   }
@@ -48,6 +50,9 @@ function projects(stateIn, action) {
       return state.setIn(
         [action.payload.projectKey, 'sources', action.payload.language],
         action.payload.newValue
+      ).setIn(
+        [action.payload.projectKey, 'updatedAt'],
+        action.meta.timestamp
       );
 
     case 'PROJECT_CREATED':
@@ -55,6 +60,9 @@ function projects(stateIn, action) {
         action.payload.projectKey,
         newProject.set('projectKey', action.payload.projectKey)
       );
+
+    case 'RESET_WORKSPACE':
+      return emptyMap;
 
     case 'PROJECT_LIBRARY_TOGGLED':
       return state.updateIn(
@@ -66,6 +74,9 @@ function projects(stateIn, action) {
           }
           return enabledLibraries.add(libraryKey);
         }
+      ).setIn(
+        [action.payload.projectKey, 'updatedAt'],
+        action.meta.timestamp
       );
 
     default:

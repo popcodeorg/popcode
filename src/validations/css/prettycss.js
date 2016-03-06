@@ -1,6 +1,5 @@
 import i18n from 'i18next-client';
 import prettyCSS from 'PrettyCSS';
-import {Promise} from 'es6-promise';
 
 const RADIAL_GRADIENT_EXPR =
   /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/;

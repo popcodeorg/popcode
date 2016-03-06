@@ -3,16 +3,17 @@ import {connect} from 'react-redux';
 import values from 'lodash/values';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
+import bindAll from 'lodash/bindAll';
+import i18n from 'i18next-client';
 
 import {
   addRuntimeError,
   changeCurrentProject,
   clearRuntimeErrors,
   createProject,
-  loadAllProjects,
-  loadCurrentProjectFromStorage,
   updateProjectSource,
   toggleLibrary,
+  listenForAuth,
 } from '../actions';
 
 import Editor from './Editor';
@@ -35,13 +36,34 @@ function mapStateToProps(state) {
     errors: state.errors.toJS(),
     runtimeErrors: state.runtimeErrors.toJS(),
     delayErrorDisplay: state.delayErrorDisplay,
+    currentUser: state.user.toJS(),
   };
 }
 
 class Workspace extends React.Component {
+  constructor() {
+    super();
+    bindAll(this, '_confirmUnload');
+  }
+
   componentWillMount() {
-    this.props.dispatch(loadCurrentProjectFromStorage());
-    this.props.dispatch(loadAllProjects());
+    this.props.dispatch(listenForAuth());
+  }
+
+  componentDidMount() {
+    window.addEventListener('beforeunload', this._confirmUnload);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this._confirmUnload);
+  }
+
+  _confirmUnload(event) {
+    if (!this.props.currentUser.authenticated) {
+      if (this.props.currentProject.updatedAt) {
+        event.returnValue = i18n.t('workspace.confirm-unload');
+      }
+    }
   }
 
   _allJavaScriptErrors() {
@@ -88,70 +110,95 @@ class Workspace extends React.Component {
     this.props.dispatch(clearRuntimeErrors());
   }
 
-  render() {
-    let environment;
-    if (this.props.currentProject !== undefined) {
-      environment = (
-        <div className="environment">
-          <Output
-            project={this.props.currentProject}
-            errors={this.props.errors}
-            hasErrors={
-              !isEmpty(flatten(values(this.props.errors)))
-            }
-            delayErrorDisplay={this.props.delayErrorDisplay}
-            runtimeErrors={this.props.runtimeErrors}
-            onErrorClicked={this._onErrorClicked.bind(this)}
-            onRuntimeError={this._onRuntimeError.bind(this)}
-            clearRuntimeErrors={this._clearRuntimeErrors.bind(this)}
-          />
+  _renderOutput() {
+    return (
+      <Output
+        project={this.props.currentProject}
+        errors={this.props.errors}
+        hasErrors={
+          !isEmpty(flatten(values(this.props.errors)))
+        }
+        delayErrorDisplay={this.props.delayErrorDisplay}
+        runtimeErrors={this.props.runtimeErrors}
+        onErrorClicked={this._onErrorClicked.bind(this)}
+        onRuntimeError={this._onRuntimeError.bind(this)}
+        clearRuntimeErrors={this._clearRuntimeErrors.bind(this)}
+      />
+    );
+  }
 
-          <Editor
-            ref="htmlEditor"
-            projectKey={this.props.currentProject.projectKey}
-            source={this.props.currentProject.sources.html}
-            errors={this.props.errors.html}
-            onInput={this._onEditorInput.bind(this, 'html')}
-            language="html"
-          />
-
-          <Editor
-            ref="cssEditor"
-            projectKey={this.props.currentProject.projectKey}
-            source={this.props.currentProject.sources.css}
-            errors={this.props.errors.css}
-            onInput={this._onEditorInput.bind(this, 'css')}
-            language="css"
-          />
-
-          <Editor
-            ref="javascriptEditor"
-            projectKey={this.props.currentProject.projectKey}
-            source={this.props.currentProject.sources.javascript}
-            errors={this._allJavaScriptErrors()}
-            onInput={this._onEditorInput.bind(this, 'javascript')}
-            language="javascript"
-          />
-        </div>
-      );
+  _renderEditors() {
+    if (this.props.currentProject === undefined) {
+      return null;
     }
 
+    return [
+      <Editor
+        key="html"
+        ref="htmlEditor"
+        projectKey={this.props.currentProject.projectKey}
+        source={this.props.currentProject.sources.html}
+        errors={this.props.errors.html}
+        onInput={this._onEditorInput.bind(this, 'html')}
+        language="html"
+      />,
+
+      <Editor
+        key="css"
+        ref="cssEditor"
+        projectKey={this.props.currentProject.projectKey}
+        source={this.props.currentProject.sources.css}
+        errors={this.props.errors.css}
+        onInput={this._onEditorInput.bind(this, 'css')}
+        language="css"
+      />,
+
+      <Editor
+        key="javascript"
+        ref="javascriptEditor"
+        projectKey={this.props.currentProject.projectKey}
+        source={this.props.currentProject.sources.javascript}
+        errors={this._allJavaScriptErrors()}
+        onInput={this._onEditorInput.bind(this, 'javascript')}
+        language="javascript"
+      />,
+    ];
+  }
+
+  _renderEnvironment() {
+    return (
+      <div className="environment">
+        {this._renderOutput()}
+        {this._renderEditors()}
+      </div>
+    );
+  }
+
+  _renderToolbar() {
+    return (
+      <Toolbar
+        allProjects={this.props.allProjects}
+        currentProject={this.props.currentProject}
+        currentUser={this.props.currentUser}
+        onLibraryToggled={this._onLibraryToggled.bind(this)}
+        onNewProject={this._onNewProject.bind(this)}
+        onProjectSelected={this._onProjectSelected.bind(this)}
+      />
+    );
+  }
+
+  render() {
     return (
       <div id="workspace">
-        <Toolbar
-          allProjects={this.props.allProjects}
-          currentProject={this.props.currentProject}
-          onLibraryToggled={this._onLibraryToggled.bind(this)}
-          onNewProject={this._onNewProject.bind(this)}
-          onProjectSelected={this._onProjectSelected.bind(this)}
-        />
-        {environment}
+        {this._renderToolbar()}
+        {this._renderEnvironment()}
       </div>
     );
   }
 }
 
 Workspace.propTypes = {
+  currentUser: React.PropTypes.object.isRequired,
   dispatch: React.PropTypes.func.isRequired,
   allProjects: React.PropTypes.array,
   currentProject: React.PropTypes.object,

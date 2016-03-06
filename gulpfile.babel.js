@@ -1,4 +1,6 @@
 /* eslint-env node */
+import fs from 'fs';
+import https from 'https';
 import gulp from 'gulp';
 import concat from 'gulp-concat';
 import browserify from 'browserify';
@@ -13,6 +15,7 @@ import memoize from 'lodash/memoize';
 import brfs from 'brfs-babel';
 import babelify from 'babelify';
 import envify from 'envify';
+import config from './src/config';
 
 const browserSync = require('browser-sync').create();
 const srcDir = 'src';
@@ -77,6 +80,34 @@ gulp.task('js', ['env'], () => {
 });
 
 gulp.task('build', ['css', 'js']);
+
+gulp.task('syncFirebase', () => new Promise((resolve, reject) => {
+  fs.readFile(`${__dirname}/config/firebase-auth.json`, (err, data) => {
+    if (err) {
+      reject(err);
+    }
+
+    const firebaseSecret = process.env.FIREBASE_SECRET;
+    if (!firebaseSecret) {
+      reject('Missing environment variable FIREBASE_SECRET');
+    }
+
+    const req = https.request({
+      hostname: `${config.firebaseApp}.firebaseio.com`,
+      path: `/.settings/rules.json?auth=${firebaseSecret}`,
+      method: 'PUT',
+    }, (res) => {
+      if (res.statusCode === 200) { // eslint-disable-line no-magic-numbers
+        resolve();
+      } else {
+        res.on('data', reject);
+      }
+    });
+
+    req.write(data);
+    req.end();
+  });
+}));
 
 gulp.task('dev', ['browserSync', 'css', 'js'], () => {
   gulp.watch(`${stylesheetsDir}/**/*.css`, ['css']);
