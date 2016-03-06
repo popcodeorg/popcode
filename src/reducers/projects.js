@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 import {readFileSync} from 'fs';
 import path from 'path';
 
-const emptyList = new Immutable.Map();
+const emptyMap = new Immutable.Map();
 
 const newProject = Immutable.fromJS({
   sources: {
@@ -34,7 +34,7 @@ function projects(stateIn, action) {
   let state;
 
   if (stateIn === undefined) {
-    state = emptyList;
+    state = emptyMap;
   } else {
     state = stateIn;
   }
