@@ -43,7 +43,7 @@ function mapStateToProps(state) {
 }
 
 class Workspace extends React.Component {
-  constructor () {
+  constructor() {
     super();
     bindAll(this, '_confirmUnload');
   }
