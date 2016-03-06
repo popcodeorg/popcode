@@ -58,8 +58,10 @@ class FirebasePersistor {
   }
 
   saveCurrentProject(project) {
-    this.save(project);
-    this.setCurrentProjectKey(project.projectKey);
+    return Promise.all([
+      this.save(project),
+      this.setCurrentProjectKey(project.projectKey),
+    ]);
   }
 }
 
