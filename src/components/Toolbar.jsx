@@ -189,14 +189,20 @@ class Toolbar extends React.Component {
   }
 
   _renderMenu() {
+    if (!this.props.currentProject) {
+      return null;
+    }
+
     return (
-      <ul className={classnames(
-        'toolbar-menu',
-        {
-          'toolbar-menu--open': this.state.open,
-          'toolbar-menu--closed': !this.state.open,
-        }
-      )}>
+      <ul
+        className={classnames(
+          'toolbar-menu',
+          {
+            'toolbar-menu--open': this.state.open,
+            'toolbar-menu--closed': !this.state.open,
+          }
+        )}
+      >
         {this._renderNewProjectButton()}
         {this._renderLoadProjectButton()}
         {this._renderUserSessionToggle()}
@@ -207,10 +213,6 @@ class Toolbar extends React.Component {
   }
 
   render() {
-    if (!this.props.currentProject) {
-      return null;
-    }
-
     return (
       <div className="toolbar">
         {this._renderShowHideBar()}
