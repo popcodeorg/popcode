@@ -90,11 +90,12 @@ class Toolbar extends React.Component {
     appFirebase.authWithOAuthPopup(
       'github',
       {remember: 'sessionOnly', scope: 'gist'}
-    );
+    ).then(this._close.bind(this));
   }
 
   _logOut() {
     appFirebase.unauth();
+    this._close();
   }
 
   _renderNewProjectButton() {
