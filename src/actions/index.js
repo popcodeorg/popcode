@@ -38,11 +38,13 @@ function saveCurrentProject(state) {
   return false;
 }
 
-function showErrorsAfterDebounce() {
-  return debounce((dispatch) => {
+const showErrorsAfterDebounce = (() => {
+  const debouncedDispatch = debounce((dispatch) => {
     dispatch({type: 'ERROR_DEBOUNCE_FINISHED'});
   }, 1000);
-}
+
+  return () => debouncedDispatch;
+})();
 
 function validateSource(language, source, enabledLibraries) {
   return (dispatch) => {
