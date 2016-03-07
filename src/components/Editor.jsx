@@ -15,6 +15,8 @@ class Editor extends React.Component {
       this._editor.setValue(nextProps.source);
     }
 
+    //this disables autoclosing of HTML tags
+    this._editor.setBehavioursEnabled(false);
     this._editor.getSession().setAnnotations(nextProps.errors);
   }
 
