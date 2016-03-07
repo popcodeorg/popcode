@@ -2,7 +2,7 @@ import React from 'react';
 import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
 import normalizeError from '../util/normalizeError';
-import generatePreview from '../util/generatePreview';
+import {sourceDelimiter} from '../util/generatePreview';
 
 class PreviewFrame extends React.Component {
   constructor() {
@@ -56,7 +56,7 @@ class PreviewFrame extends React.Component {
     }
 
     const firstSourceLine = this.props.src.
-      split('\n').indexOf(generatePreview.sourceDelimiter) + 2;
+      split('\n').indexOf(sourceDelimiter) + 2;
 
     return firstSourceLine - 1;
   }
