@@ -61,6 +61,17 @@ function projects(stateIn, action) {
         newProject.set('projectKey', action.payload.projectKey)
       );
 
+    case 'PROJECT_IMPORTED':
+      return state.set(
+        action.payload.project.projectKey,
+        Immutable.fromJS(action.payload.project)
+      );
+
+    case 'CURRENT_PROJECT_CHANGED':
+      return state.filter((project, projectKey) => (
+        projectKey === action.payload.projectKey || project.has('updatedAt')
+      ));
+
     case 'RESET_WORKSPACE':
       return emptyMap;
 

@@ -1,6 +1,13 @@
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
+import get from 'lodash/get';
+import find from 'lodash/find';
+import filter from 'lodash/filter';
+import values from 'lodash/values';
+import map from 'lodash/map';
+import moment from 'moment';
 import FirebasePersistor from '../persistors/FirebasePersistor';
+import Gists from '../services/Gists';
 import appFirebase from '../services/appFirebase';
 import validations from '../validations';
 
@@ -214,9 +221,13 @@ function resetWorkspace() {
   return {type: 'RESET_WORKSPACE'};
 }
 
+function userAuthenticated(authData) {
+  return {type: 'USER_AUTHENTICATED', payload: authData};
+}
+
 function logIn(authData) {
   return (dispatch, getState) => {
-    dispatch({type: 'USER_AUTHENTICATED', payload: authData});
+    dispatch(userAuthenticated(authData));
 
     if (!saveCurrentProject(getState())) {
       dispatch(resetWorkspace());
@@ -227,21 +238,69 @@ function logIn(authData) {
   };
 }
 
+function userLoggedOut() {
+  return {type: 'USER_LOGGED_OUT'};
+}
+
 function logOut() {
   return (dispatch) => {
-    dispatch({type: 'USER_LOGGED_OUT'});
+    dispatch(userLoggedOut());
     dispatch(resetWorkspace());
     dispatch(createProject());
   };
 }
 
-function listenForAuth() {
+function initializeCurrentProjectFromGist(gistData) {
   return (dispatch) => {
-    appFirebase.onAuth((authData) => {
-      if (authData === null) {
-        dispatch(logOut());
-      } else {
-        dispatch(logIn(authData));
+    const projectKey = generateProjectKey();
+    dispatch(importProjectFromGist(projectKey, gistData));
+    dispatch(changeCurrentProject(projectKey));
+  };
+}
+
+function importProjectFromGist(projectKey, gistData) {
+  const files = values(gistData.files);
+  const project = {
+    projectKey,
+    sources: {
+      html: get(find(files, {language: 'HTML'}), 'content'),
+      css: map(filter(files, {language: 'CSS'}), 'content').join('\n\n'),
+      javascript: map(filter(files, {language: 'JavaScript'}), 'content').
+        join('\n\n'),
+    },
+    enabledLibraries: [],
+    updatedAt: moment(gistData.updated_at).toDate().getTime(),
+  };
+
+  return {
+    type: 'PROJECT_IMPORTED',
+    payload: {project},
+  };
+}
+
+function bootstrap({gistId} = {gistId: null}) {
+  return (dispatch, getState) => {
+    const initialAuth = new Promise((resolve) => {
+      appFirebase.onAuth((authData) => {
+        if (authData === null) {
+          dispatch(logOut());
+        } else {
+          dispatch(logIn(authData));
+        }
+        resolve();
+      });
+    });
+
+    let gistLoaded;
+    if (gistId) {
+      gistLoaded = Gists.loadFromId(gistId, getState().user.toJS());
+    } else {
+      gistLoaded = Promise.resolve();
+    }
+
+    Promise.all([gistLoaded, initialAuth]).then(([gistData]) => {
+      if (gistData) {
+        dispatch(initializeCurrentProjectFromGist(gistData));
       }
     });
   };
@@ -256,5 +315,5 @@ export {
   toggleLibrary,
   addRuntimeError,
   clearRuntimeErrors,
-  listenForAuth,
+  bootstrap,
 };

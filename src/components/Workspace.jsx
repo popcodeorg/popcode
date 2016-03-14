@@ -5,6 +5,7 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import bindAll from 'lodash/bindAll';
 import i18n from 'i18next-client';
+import qs from 'qs';
 
 import {
   addRuntimeError,
@@ -13,7 +14,7 @@ import {
   createProject,
   updateProjectSource,
   toggleLibrary,
-  listenForAuth,
+  bootstrap,
 } from '../actions';
 
 import Editor from './Editor';
@@ -47,15 +48,21 @@ class Workspace extends React.Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(listenForAuth());
+    let gistId;
+    if (location.search) {
+      const query = qs.parse(location.search.slice(1));
+      gistId = query.gist;
+    }
+    history.replaceState({}, '', location.pathname);
+    this.props.dispatch(bootstrap({gistId}));
   }
 
   componentDidMount() {
-    window.addEventListener('beforeunload', this._confirmUnload);
+    addEventListener('beforeunload', this._confirmUnload);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('beforeunload', this._confirmUnload);
+    removeEventListener('beforeunload', this._confirmUnload);
   }
 
   _confirmUnload(event) {
