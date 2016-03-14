@@ -56,6 +56,20 @@ const Gists = {
       );
     });
   },
+
+  loadFromId(gistId, user) {
+    return new Promise((resolve, reject) => {
+      const github = clientForUser(user);
+      const gist = github.getGist(gistId);
+      gist.read((err, gistData) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(gistData);
+        }
+      });
+    });
+  },
 };
 
 export default Gists;
