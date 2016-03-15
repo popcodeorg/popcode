@@ -23,7 +23,7 @@ function createGistFromProject(project) {
   }
 
   return {
-    description: 'Exported from Popcode',
+    description: 'Exported from Popcode.',
     'public': true,
     files,
   };
@@ -40,10 +40,35 @@ function clientForUser(user) {
   return anonymousGithub;
 }
 
+function canUpdateGist(user) {
+  return user.authenticated && user.provider === 'github';
+}
+
+function updateGistWithImportUrl(github, gistData) {
+  const gist = github.getGist(gistData.id);
+  const uri = document.createElement('a');
+  uri.setAttribute('href', '/');
+  uri.search = `gist=${gistData.id}`;
+
+  return new Promise((resolve, reject) => {
+    gist.update(
+      {description: `${gistData.description} Click to import: ${uri.href}`},
+      (err, updatedGistData) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(updatedGistData);
+        }
+      }
+    );
+  });
+}
+
 const Gists = {
   createFromProject(project, user) {
+    const github = clientForUser(user);
+
     return new Promise((resolve, reject) => {
-      const github = clientForUser(user);
       new github.Gist({}).create(
         createGistFromProject(project),
         (error, response) => {
@@ -54,6 +79,11 @@ const Gists = {
           }
         }
       );
+    }).then((response) => {
+      if (canUpdateGist(user)) {
+        return updateGistWithImportUrl(github, response);
+      }
+      return response;
     });
   },
 
