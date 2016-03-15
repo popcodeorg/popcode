@@ -35,9 +35,14 @@ class Editor extends React.Component {
     if (containerElement) {
       this._editor = ACE.edit(containerElement);
       this._configureSession(this._editor.getSession());
+      this._disableAutoClosing();
     } else {
       this._editor.destroy();
     }
+  }
+
+  _disableAutoClosing() {
+    this._editor.setBehavioursEnabled(false);
   }
 
   _startNewSession(source) {
