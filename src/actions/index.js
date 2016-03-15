@@ -5,7 +5,6 @@ import find from 'lodash/find';
 import filter from 'lodash/filter';
 import values from 'lodash/values';
 import map from 'lodash/map';
-import moment from 'moment';
 import FirebasePersistor from '../persistors/FirebasePersistor';
 import Gists from '../services/Gists';
 import appFirebase from '../services/appFirebase';
@@ -269,7 +268,6 @@ function importProjectFromGist(projectKey, gistData) {
         join('\n\n'),
     },
     enabledLibraries: [],
-    updatedAt: moment(gistData.updated_at).toDate().getTime(),
   };
 
   return {
