@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
-import {Provider} from 'react-redux';
 import i18n from 'i18next-client';
 import installDevTools from 'immutable-devtools';
 import {readFileSync} from 'fs';
 import path from 'path';
-import Workspace from './components/Workspace';
-import store from './store';
+import Application from './components/Application';
 import 'babel-polyfill';
 
 const translations = {
@@ -26,8 +24,7 @@ i18n.init({
 
 installDevTools(Immutable);
 
-ReactDOM.render(React.createElement(
-  Provider,
-  {store},
-  React.createElement(Workspace)
-), document.getElementById('main'));
+ReactDOM.render(
+  React.createElement(Application),
+  document.getElementById('main')
+);
