@@ -89,6 +89,8 @@
     "brfs-babel": "^1.0.0",
     "browser-sync": "^2.11.1",
     "browserify-incremental": "^3.0.1",
+    "chai": "^3.5.0",
+    "chai-react": "^2.0.2",
     "disc": "^1.3.2",
     "eslint": "^2.1.0",
     "eslint-plugin-react": "^3.16.1",
@@ -102,7 +104,12 @@
     "immutable-devtools": "0.0.6",
     "jasmine-pit": "^2.0.2",
     "jest-cli": "^0.9.0",
+    "jsdom": "^8.1.0",
+    "mocha": "^2.4.5",
+    "react-addons-test-utils": "^0.14.7",
+    "rquery": "git+https://github.com/percyhanna/rquery.git",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "xmlshim": "^0.2.0"
   }
 }
