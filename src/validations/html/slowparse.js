@@ -66,7 +66,7 @@ const humanErrors = {
   UNTERMINATED_OPEN_TAG: (error) => generateAnnotation(
     'unterminated-open-tag',
     {tag: error.openTag.name},
-    ['attribute-value', 'lower-case']
+    ['attribute-value', 'lower-case', 'lower-case-attribute-name']
   ),
 
   UNTERMINATED_CLOSE_TAG: (error) => generateAnnotation(
