@@ -1,16 +1,14 @@
 /* eslint-env mocha */
 
-import React from 'react';
-import TestUtils from 'react-addons-test-utils';
-import Application from '../src/components/Application';
+import './setup';
+import $renderApplication from './util/renderApplication';
 import {expect} from 'chai';
-import $R from './util/rquery';
 
 describe('toolbar', () => {
   let $application;
 
   beforeEach(() => {
-    $application = $R(TestUtils.renderIntoDocument(<Application/>));
+    $application = $renderApplication();
   });
 
   describe('clicking show/hide bar', () => {

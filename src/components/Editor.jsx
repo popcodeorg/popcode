@@ -54,8 +54,8 @@ class Editor extends React.Component {
 
   _configureSession(session) {
     const language = this.props.language;
-    session.setMode(`ace/mode/${language}`);
     session.setUseWorker(false);
+    session.setMode(`ace/mode/${language}`);
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
     });

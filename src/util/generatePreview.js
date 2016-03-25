@@ -3,7 +3,6 @@ import config from '../config';
 const DOMParser = window.DOMParser;
 const parser = new DOMParser();
 
-
 const sourceDelimiter = '/*__POPCODESTART__*/';
 
 const errorHandlerScript = `(${(() => {
