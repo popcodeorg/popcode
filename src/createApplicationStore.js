@@ -15,6 +15,8 @@ if (config.logReduxActions()) {
 createStoreWithMiddleware =
   applyMiddleware(thunkMiddleware)(createStoreWithMiddleware);
 
-const store = createStoreWithMiddleware(reducers);
+function createApplicationStore() {
+  return createStoreWithMiddleware(reducers);
+}
 
-export default store;
+export default createApplicationStore;
