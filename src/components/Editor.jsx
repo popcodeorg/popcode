@@ -34,6 +34,7 @@ class Editor extends React.Component {
   _setupEditor(containerElement) {
     if (containerElement) {
       this._editor = ACE.edit(containerElement);
+      this._editor.$blockScrolling = Infinity;
       this._configureSession(this._editor.getSession());
       this._disableAutoClosing();
     } else {
