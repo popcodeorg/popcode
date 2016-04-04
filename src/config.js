@@ -1,7 +1,9 @@
 /* global process */
 
+const nodeEnv = (process.env.NODE_ENV || 'development');
+
 export default {
-  logReduxActions: () => process.env.LOG_REDUX_ACTIONS !== 'false',
+  logReduxActions: () => nodeEnv === 'development',
 
   firebaseApp: process.env.FIREBASE_APP || 'blistering-inferno-9896',
 
