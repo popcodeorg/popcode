@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import {DOMParser} from 'xmlshim';
+import mockFirebase from './mockFirebase';
 
 const parser = new DOMParser();
 
@@ -22,8 +23,23 @@ function parsedPreview($application) {
   );
 }
 
+function logIn() {
+  const uid = '12345';
+  mockFirebase.changeAuthState({
+    uid,
+    provider: 'github',
+    auth: {uid},
+  });
+}
+
+function logOut() {
+  mockFirebase.changeAuthState(null);
+}
+
 export {
   updateSource,
   updateHTMLBody,
   parsedPreview,
+  logIn,
+  logOut,
 };
