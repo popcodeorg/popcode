@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-import './setup';
+import './util/setup';
 import $renderApplication from './util/renderApplication';
 import $ from 'jquery';
 import {expect} from 'chai';
