@@ -9,7 +9,7 @@ import 'chai-react';
 import proxyquire from 'proxyquire';
 import {DOMParser} from 'xmlshim';
 import wrap from 'lodash/wrap';
-import mockFirebase from '../util/mockFirebase';
+import mockFirebase from './mockFirebase';
 import initI18n from '../../src/util/initI18n';
 
 chai.use(chaiAsPromised);
