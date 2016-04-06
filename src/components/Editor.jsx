@@ -34,6 +34,7 @@ class Editor extends React.Component {
   _setupEditor(containerElement) {
     if (containerElement) {
       this._editor = ACE.edit(containerElement);
+      this._editor.$blockScrolling = Infinity;
       this._configureSession(this._editor.getSession());
       this._disableAutoClosing();
     } else {
@@ -54,8 +55,8 @@ class Editor extends React.Component {
 
   _configureSession(session) {
     const language = this.props.language;
-    session.setMode(`ace/mode/${language}`);
     session.setUseWorker(false);
+    session.setMode(`ace/mode/${language}`);
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
     });
