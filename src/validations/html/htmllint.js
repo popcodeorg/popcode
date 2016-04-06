@@ -147,4 +147,4 @@ export default (source) => htmllint(source, htmlLintOptions).then((errors) => {
     }
   });
   return annotations;
-});
+}).catch(() => []);

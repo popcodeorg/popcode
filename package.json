@@ -40,7 +40,7 @@
     "envify": "^3.4.0",
     "firebase": "^2.4.1",
     "github-api": "^0.11.2",
-    "htmllint": "^0.2.4",
+    "htmllint": "^0.3.0",
     "i18next-client": "^1.10.2",
     "immutable": "^3.7.5",
     "jshint": "^2.9.1",
