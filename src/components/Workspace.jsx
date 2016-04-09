@@ -5,6 +5,7 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import bindAll from 'lodash/bindAll';
 import i18n from 'i18next-client';
+import Wordmark from '../../static/images/wordmark-vertical.svg';
 import qs from 'qs';
 
 import {
@@ -199,7 +200,9 @@ class Workspace extends React.Component {
   render() {
     return (
       <div className="layout">
-        <div className="layout-sidebar"/>
+        <div className="layout-sidebar">
+          <Wordmark className="layout-sidebar-wordmark"/>
+        </div>
         <div id="workspace" className="layout-main">
           {this._renderToolbar()}
           {this._renderEnvironment()}

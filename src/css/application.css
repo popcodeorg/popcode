@@ -7,9 +7,19 @@ body {
 }
 
 .layout-sidebar {
-  flex: 0 1 50px;
+  flex: 0 1 auto;
   background-color: #00ff85;
   border-right: 1px solid darkgray;
+}
+
+.layout-sidebar-wordmark {
+  padding: 10px;
+  max-width: 30px;
+  height: auto;
+}
+
+.layout-sidebar-wordmark path {
+  fill: white;
 }
 
 .layout-main {

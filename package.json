@@ -104,6 +104,7 @@
     "proxyquireify": "^3.1.1",
     "react-addons-test-utils": "^0.14.7",
     "rquery": "git+https://github.com/percyhanna/rquery.git",
+    "svg-reactify": "^1.1.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "xmlshim": "^0.2.0"

@@ -15,6 +15,7 @@ import memoize from 'lodash/memoize';
 import brfs from 'brfs-babel';
 import babelify from 'babelify';
 import envify from 'envify';
+import svg from 'svg-reactify';
 import config from './src/config';
 
 const browserSync = require('browser-sync').create();
@@ -40,6 +41,7 @@ const browserifyOpts = {
 
 const buildBrowserifyCompiler = memoize(
   (filename) => browserifyImpl(`src/${filename}`, browserifyOpts).
+    transform(svg).
     transform(brfs).
     transform(babelify.configure({sourceMapRelative: __dirname})).
     transform(envify)
