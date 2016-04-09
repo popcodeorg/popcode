@@ -57,11 +57,8 @@ body {
 .environment {
   box-sizing: border-box;
   flex: 1 1 auto;
-}
-
-.environment-rightColumn {
-  float: right;
-  position: relative;
+  display: flex;
+  flex-direction: row;
 }
 
 .editorContainer {

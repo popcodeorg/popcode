@@ -44,21 +44,21 @@ class Output extends React.Component {
     if (this.props.hasErrors) {
       if (this.props.delayErrorDisplay) {
         return (
-          <div className="environment-rightColumn">
+          <div className="environment-column">
             <div className="delayedErrorOverlay" />
           </div>
         );
       }
 
       return (
-        <div className="environment-rightColumn">
+        <div className="environment-column">
           {this._renderErrorList(this.props.errors)}
         </div>
       );
     }
 
     return (
-      <div className="environment-rightColumn">
+      <div className="environment-column">
         {this._renderPreview()}
         {this._renderRuntimeErrorList()}
       </div>
