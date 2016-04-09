@@ -140,7 +140,7 @@ class Workspace extends React.Component {
     }
 
     return (
-      <div className="environment-column">
+      <div className="environment-column editors">
         <Editor
           key="html"
           ref="htmlEditor"

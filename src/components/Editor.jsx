@@ -64,7 +64,7 @@ class Editor extends React.Component {
 
   _renderLabel() {
     return (
-      <div className="editorContainer-label">
+      <div className="editors-editorContainer-label">
         {i18n.t(`languages.${this.props.language}`)}
       </div>
     );
@@ -73,7 +73,7 @@ class Editor extends React.Component {
   _renderEditor() {
     return (
       <div
-        className="editorContainer-editor"
+        className="editors-editorContainer-editor"
         ref={this._setupEditor.bind(this)}
       >
         {this.props.source}
@@ -83,7 +83,7 @@ class Editor extends React.Component {
 
   render() {
     return (
-      <div className="editorContainer">
+      <div className="editors-editorContainer">
         {this._renderLabel()}
         {this._renderEditor()}
       </div>

@@ -65,23 +65,31 @@ body {
   flex: 1 1 50%;
 }
 
-.editorContainer {
+.editors {
+  display: flex;
+  flex-direction: column;
+}
+
+.editors-editorContainer {
   box-sizing: border-box;
+  flex: 1 1 auto;
   border-right: 2px solid gray;
   border-bottom: 2px solid gray;
   position: relative;
   z-index: 0;
+  display: flex;
 }
 
-.editorContainer:last-child {
+.editors-editorContainer:last-child {
   border-bottom: 0;
 }
 
-.editorContainer-editor {
+.editors-editorContainer-editor {
   z-index: 0;
+  flex: 1 0 100%;
 }
 
-.editorContainer-label {
+.editors-editorContainer-label {
   position: absolute;
   top: 0;
   right: 0;
