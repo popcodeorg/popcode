@@ -5,7 +5,6 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import bindAll from 'lodash/bindAll';
 import i18n from 'i18next-client';
-import Wordmark from '../../static/images/wordmark-vertical.svg';
 import qs from 'qs';
 
 import {
@@ -21,6 +20,7 @@ import {
 import Editor from './Editor';
 import Output from './Output';
 import Toolbar from './Toolbar';
+import {WordmarkVertical} from '../util/SVG';
 
 function mapStateToProps(state) {
   const currentProject = state.projects.get(
@@ -201,7 +201,7 @@ class Workspace extends React.Component {
     return (
       <div className="layout">
         <div className="layout-sidebar">
-          <Wordmark className="layout-sidebar-wordmark"/>
+          <WordmarkVertical className="layout-sidebar-wordmark"/>
         </div>
         <div id="workspace" className="layout-main">
           {this._renderToolbar()}
