@@ -198,9 +198,12 @@ class Workspace extends React.Component {
 
   render() {
     return (
-      <div id="workspace">
-        {this._renderToolbar()}
-        {this._renderEnvironment()}
+      <div className="layout">
+        <div className="layout-sidebar"/>
+        <div id="workspace" className="layout-main">
+          {this._renderToolbar()}
+          {this._renderEnvironment()}
+        </div>
       </div>
     );
   }
