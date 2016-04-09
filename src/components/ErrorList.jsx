@@ -8,7 +8,13 @@ class ErrorList extends React.Component {
     const docked = get(this, 'props.docked', false);
 
     return (
-      <div className={classnames('errorList', {'errorList--docked': docked})}>
+      <div className={
+        classnames(
+          'errorList',
+          'output-item',
+          {'errorList--docked': docked, 'output-item--shrink': docked}
+        )}
+      >
         <ErrorSublist
           language="html"
           errors={this.props.html}

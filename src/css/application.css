@@ -102,7 +102,21 @@ body {
   border-bottom-left-radius: 4px;
 }
 
-.delayedErrorOverlay {
+.output {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.output-item {
+  flex: 1 1 auto;
+}
+
+.output-item--shrink {
+  flex: 0 1 auto;
+}
+
+.output-delayedErrorOverlay {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -116,11 +130,13 @@ body {
 
 .preview {
   position: relative;
+  display: flex;
 }
 
 .preview-frame {
   border: 0;
   z-index: 0;
+  flex: 1 0 100%;
 }
 
 .preview-popOutButton {
@@ -145,12 +161,8 @@ body {
 }
 
 .errorList--docked {
-  position: absolute;
-  height: auto;
   overflow: scroll;
-  bottom: 0;
   border-top: 3px solid darkgray;
-  z-index: 1;
 }
 
 .errorList-errorSublist-header {

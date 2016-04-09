@@ -26,7 +26,7 @@ class Preview extends React.Component {
 
   render() {
     return (
-      <div className="preview">
+      <div className="preview output-item">
         <div
           className="preview-popOutButton"
           onClick={this._popOut.bind(this)}
