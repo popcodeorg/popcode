@@ -2,12 +2,14 @@ body {
   font-family: Verdana;
 }
 
+#workspace {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .toolbar {
   border-bottom: 1px solid darkgray;
-  overflow: hidden;
-  position: absolute;
-  width: 100%;
-  z-index: 1;
   background-color: white;
 }
 
@@ -54,14 +56,11 @@ body {
 
 .environment {
   box-sizing: border-box;
-  height: 100%;
-  padding-top: 2rem;
+  flex: 1 1 auto;
 }
 
 .environment-rightColumn {
   float: right;
-  width: 50%;
-  height: 100%;
   position: relative;
 }
 
@@ -69,8 +68,6 @@ body {
   box-sizing: border-box;
   border-right: 2px solid gray;
   border-bottom: 2px solid gray;
-  width: 50%;
-  height: 33%;
   position: relative;
   z-index: 0;
 }
@@ -80,8 +77,6 @@ body {
 }
 
 .editorContainer-editor {
-  width: 100%;
-  height: 100%;
   z-index: 0;
 }
 
@@ -111,14 +106,11 @@ body {
 }
 
 .preview {
-  height: 100%;
   position: relative;
 }
 
 .preview-frame {
   border: 0;
-  width: 100%;
-  height: 100%;
   z-index: 0;
 }
 
@@ -138,8 +130,6 @@ body {
 }
 
 .errorList {
-  height: 100%;
-  width: 100%;
   position: relative;
   overflow: scroll;
   background: white;
@@ -148,7 +138,6 @@ body {
 .errorList--docked {
   position: absolute;
   height: auto;
-  max-height: 100%;
   overflow: scroll;
   bottom: 0;
   border-top: 3px solid darkgray;
