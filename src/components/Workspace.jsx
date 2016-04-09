@@ -20,6 +20,7 @@ import {
 import Editor from './Editor';
 import Output from './Output';
 import Toolbar from './Toolbar';
+import {WordmarkVertical} from '../util/SVG';
 
 function mapStateToProps(state) {
   const currentProject = state.projects.get(
@@ -139,44 +140,46 @@ class Workspace extends React.Component {
       return null;
     }
 
-    return [
-      <Editor
-        key="html"
-        ref="htmlEditor"
-        projectKey={this.props.currentProject.projectKey}
-        source={this.props.currentProject.sources.html}
-        errors={this.props.errors.html}
-        onInput={this._onEditorInput.bind(this, 'html')}
-        language="html"
-      />,
+    return (
+      <div className="environment-column editors">
+        <Editor
+          key="html"
+          ref="htmlEditor"
+          projectKey={this.props.currentProject.projectKey}
+          source={this.props.currentProject.sources.html}
+          errors={this.props.errors.html}
+          onInput={this._onEditorInput.bind(this, 'html')}
+          language="html"
+        />
 
-      <Editor
-        key="css"
-        ref="cssEditor"
-        projectKey={this.props.currentProject.projectKey}
-        source={this.props.currentProject.sources.css}
-        errors={this.props.errors.css}
-        onInput={this._onEditorInput.bind(this, 'css')}
-        language="css"
-      />,
+        <Editor
+          key="css"
+          ref="cssEditor"
+          projectKey={this.props.currentProject.projectKey}
+          source={this.props.currentProject.sources.css}
+          errors={this.props.errors.css}
+          onInput={this._onEditorInput.bind(this, 'css')}
+          language="css"
+        />
 
-      <Editor
-        key="javascript"
-        ref="javascriptEditor"
-        projectKey={this.props.currentProject.projectKey}
-        source={this.props.currentProject.sources.javascript}
-        errors={this._allJavaScriptErrors()}
-        onInput={this._onEditorInput.bind(this, 'javascript')}
-        language="javascript"
-      />,
-    ];
+        <Editor
+          key="javascript"
+          ref="javascriptEditor"
+          projectKey={this.props.currentProject.projectKey}
+          source={this.props.currentProject.sources.javascript}
+          errors={this._allJavaScriptErrors()}
+          onInput={this._onEditorInput.bind(this, 'javascript')}
+          language="javascript"
+        />
+      </div>
+    );
   }
 
   _renderEnvironment() {
     return (
       <div className="environment">
-        {this._renderOutput()}
         {this._renderEditors()}
+        {this._renderOutput()}
       </div>
     );
   }
@@ -196,9 +199,14 @@ class Workspace extends React.Component {
 
   render() {
     return (
-      <div id="workspace">
-        {this._renderToolbar()}
-        {this._renderEnvironment()}
+      <div className="layout">
+        <div className="layout-sidebar">
+          <WordmarkVertical className="layout-sidebar-wordmark"/>
+        </div>
+        <div id="workspace" className="layout-main">
+          {this._renderToolbar()}
+          {this._renderEnvironment()}
+        </div>
       </div>
     );
   }
