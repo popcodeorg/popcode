@@ -61,6 +61,10 @@ body {
   flex-direction: row;
 }
 
+.environment-column {
+  flex: 1 1 50%;
+}
+
 .editorContainer {
   box-sizing: border-box;
   border-right: 2px solid gray;

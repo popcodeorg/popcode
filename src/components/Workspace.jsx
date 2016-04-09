@@ -177,8 +177,8 @@ class Workspace extends React.Component {
   _renderEnvironment() {
     return (
       <div className="environment">
-        {this._renderOutput()}
         {this._renderEditors()}
+        {this._renderOutput()}
       </div>
     );
   }
