@@ -18,7 +18,7 @@ describe.only('errors', () => {
   it('should add an error when I make a mistake', () => {
     updateHTMLBody($application, '<div id=test></div>');
     return expect(deferImmediate().then(
-      () => $ui.find('.delayedErrorOverlay').length
+      () => $ui.find('.errorList-error').length
     )).to.eventually.equal(1);
   });
 });
