@@ -1,5 +1,13 @@
+html, body {
+  min-height: 100%;
+}
+
 body {
   font-family: Verdana;
+}
+
+#main, .layout {
+  height: 100%;
 }
 
 .layout {
