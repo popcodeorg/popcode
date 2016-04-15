@@ -15,6 +15,9 @@ function errors(stateIn, action) {
   }
 
   switch (action.type) {
+    case 'PROJECT_CREATED':
+      return emptyErrors;
+
     case 'CURRENT_PROJECT_LOADED_FROM_STORAGE':
       return emptyErrors;
 
