@@ -35,14 +35,25 @@ const humanErrors = {
     {openingSymbol: error.b, closingSymbol: error.a}
   ),
 
-  E030: () => i18n.t('errors.javascript.expected-identifier'),
+  E024: (error) => i18n.t(
+    'errors.javascript.unexpected',
+    {character: error.evidence}
+  ),
+
+  E030: (error) => i18n.t(
+    'errors.javascript.expected-identifier',
+    {token: error.a}
+  ),
 
   W003: (error) => i18n.t(
     'errors.javascript.undefined-variable',
     {variable: error.a}
   ),
 
-  W030: () => i18n.t('errors.javascript.unexpected-expression'),
+  W030: (error) => i18n.t(
+    'errors.javascript.unexpected-expression',
+    {expression: error.evidence}
+  ),
 
   W031: () => i18n.t('errors.javascript.use-new-object'),
 
@@ -54,6 +65,8 @@ const humanErrors = {
     'errors.javascript.missing-parentheses',
     {object: error.a}
   ),
+
+  W067: () => i18n.t('errors.javascript.bad-invocation'),
 
   W084: () => i18n.t('errors.javascript.strict-comparison-operator'),
 
