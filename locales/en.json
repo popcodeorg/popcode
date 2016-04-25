@@ -98,7 +98,9 @@
         "custom-case": "There should be a __goodOperator__ where you wrote __badOperator__"
       },
       "declare-variable": "You haven't declared __variable__.\nTry: var __variable__;",
-      "duplicated-declaration": "You already declared __variable__ somewhere else."
+      "duplicated-declaration": "You already declared __variable__ somewhere else.",
+      "unexpected": "You typed a \"__character__\" here, but that’s not allowed in JavaScript.",
+      "bad-invocation": "You’re trying to call something that isn’t a function."
     },
     "javascriptRuntime": {
       "not-a-function_with-name": "You tried to call __name__() as a function, but __name__ is not a function.",
