@@ -1,4 +1,5 @@
 import config from '../config';
+import castArray from 'lodash/castArray';
 
 const DOMParser = window.DOMParser;
 const parser = new DOMParser();
@@ -96,24 +97,24 @@ class PreviewGenerator {
       const css = library.css;
       const javascript = library.javascript;
       if (css !== undefined) {
-        this._attachCssLibrary(css);
+        castArray(css).forEach(this._attachCssLibrary.bind(this));
       }
       if (javascript !== undefined) {
-        this._attachJavascriptLibrary(javascript);
+        castArray(javascript).
+          forEach(this._attachJavascriptLibrary.bind(this));
       }
     });
   }
 
   _attachCssLibrary(css) {
-    const linkTag = this.previewDocument.createElement('link');
-    linkTag.rel = 'stylesheet';
-    linkTag.href = css;
-    this._previewHead.appendChild(linkTag);
+    const styleTag = this.previewDocument.createElement('style');
+    styleTag.textContent = css;
+    this._previewHead.appendChild(styleTag);
   }
 
   _attachJavascriptLibrary(javascript) {
     const scriptTag = this.previewDocument.createElement('script');
-    scriptTag.src = javascript;
+    scriptTag.textContent = javascript;
     this.previewBody.appendChild(scriptTag);
   }
 }

@@ -1,5 +1,8 @@
 /* global process */
 
+import fs from 'fs';
+import path from 'path';
+
 const nodeEnv = (process.env.NODE_ENV || 'development');
 
 export default {
@@ -16,47 +19,104 @@ export default {
   libraries: {
     jquery: {
       name: 'jQuery',
-      javascript: 'https://code.jquery.com/jquery-2.1.4.js',
+      javascript: fs.readFileSync(
+        path.join(__dirname, '../bower_components/jquery/dist/jquery.min.js'),
+        'utf8'
+      ),
       validations: {javascript: {jquery: {$set: true}}},
     },
     lodash: {
       name: 'lodash',
-      javascript: 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js',
+      javascript: fs.readFileSync(
+        path.join(__dirname, '../bower_components/lodash/dist/lodash.min.js'),
+        'utf8'
+      ),
       validations: {javascript: {predef: {$push: ['_']}}},
     },
     underscore: {
       name: 'Underscore.js',
-      javascript: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js',
+      javascript: fs.readFileSync(
+        path.join(
+          __dirname,
+          '../bower_components/underscore/underscore-min.js'
+        ),
+        'utf8'
+      ),
       validations: {javascript: {predef: {$push: ['_']}}},
     },
     angular: {
       name: 'AngularJS',
-      javascript: 'https://code.angularjs.org/1.4.4/angular.js',
+      javascript: fs.readFileSync(
+        path.join(__dirname, '../bower_components/angular/angular.min.js'),
+        'utf8'
+      ),
       validations: {javascript: {predef: {$push: ['angular']}}},
     },
     react: {
       name: 'React',
-      javascript: 'https://fb.me/react-0.13.3.js',
+      javascript: [
+        fs.readFileSync(
+          path.join(__dirname, '../bower_components/react/react.min.js'),
+          'utf8'
+        ),
+        fs.readFileSync(
+          path.join(__dirname, '../bower_components/react/react-dom.min.js'),
+          'utf8'
+        ),
+      ],
       validations: {javascript: {predef: {$push: ['React']}}},
     },
     ember: {
       name: 'Ember.js',
-      javascript: 'http://builds.emberjs.com/release/ember.js',
+      javascript: fs.readFileSync(
+        path.join(__dirname, '../bower_components/ember/ember.min.js'),
+        'utf8'
+      ),
       validations: {javascript: {predef: {$push: ['Ember']}}},
     },
     bootstrap: {
       name: 'Bootstrap',
-      css: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
-      javascript: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js',
+      css: fs.readFileSync(
+        path.join(
+          __dirname,
+          '../bower_components/bootstrap/dist/css/bootstrap.min.css'
+        ),
+        'utf8'
+      ),
+      javascript: fs.readFileSync(
+        path.join(
+          __dirname,
+          '../bower_components/bootstrap/dist/js/bootstrap.min.js'
+        ),
+        'utf8'
+      ),
     },
     foundation: {
       name: 'Foundation',
-      css: 'https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.css',
-      javascript: 'https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.js',
+      css: fs.readFileSync(
+        path.join(
+          __dirname,
+          '../bower_components/foundation/css/foundation.min.css'
+        ),
+        'utf8'
+      ),
+      javascript: fs.readFileSync(
+        path.join(
+          __dirname,
+          '../bower_components/foundation/js/foundation.min.js'
+        ),
+        'utf8'
+      ),
     },
     normalize: {
       name: 'normalize.css',
-      css: 'https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css',
+      css: fs.readFileSync(
+        path.join(
+          __dirname,
+          '../bower_components/normalize-css/normalize.css'
+        ),
+        'utf8'
+      ),
     },
   },
 };
