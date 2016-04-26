@@ -34,6 +34,7 @@
     "bowser": "^1.0.0",
     "brace": "^0.7.0",
     "browserify": "^13.0.0",
+    "bugsnag-js": "^2.5.0",
     "bulkify": "^1.1.1",
     "classnames": "^2.1.5",
     "css": "^2.2.1",

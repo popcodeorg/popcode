@@ -1,3 +1,4 @@
+import './util/Bugsnag';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
