@@ -8,6 +8,8 @@ export default {
 
   firebaseApp: process.env.FIREBASE_APP || 'blistering-inferno-9896',
 
+  feedbackUrl: 'https://gitreports.com/issue/popcodeorg/popcode',
+
   libraries: {
     jquery: {
       name: 'jQuery',
