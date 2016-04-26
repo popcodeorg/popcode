@@ -74,7 +74,8 @@ gulp.task('css', () => gulp.src(`${stylesheetsDir}/**/*.css`).
   pipe(gutil.env.production ? cssnano() : gutil.noop()).
   pipe(sourcemaps.write('./')).
   pipe(gulp.dest(distDir)).
-  pipe(browserSync.reload({stream: true})));
+  pipe(browserSync.reload({stream: true}))
+);
 
 gulp.task('js', ['env'], () => {
   browserifyDone = buildBrowserifyStream('application.js');

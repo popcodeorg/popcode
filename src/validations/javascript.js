@@ -1,7 +1,7 @@
 import i18n from 'i18next-client';
 import {JSHINT} from 'jshint';
 import update from 'react-addons-update';
-import config from '../config';
+import libraries from '../config/libraries';
 
 const jshintrc = {
   browser: true,
@@ -118,7 +118,7 @@ function convertErrorToAnnotation(error) {
 export default (source, enabledLibraries) => {
   let jshintOptions = jshintrc;
   enabledLibraries.forEach((libraryKey) => {
-    const library = config.libraries[libraryKey];
+    const library = libraries[libraryKey];
 
     if (library.validations !== undefined &&
         library.validations.javascript !== undefined) {
