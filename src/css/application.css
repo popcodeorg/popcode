@@ -70,6 +70,12 @@ body {
   margin: 1em;
 }
 
+.toolbar-menu-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .toolbar-menu-item:hover, .toolbar-menu-item--active {
   background-color: lightblue;
 }

@@ -5,6 +5,7 @@ import LibraryPicker from './LibraryPicker';
 import ProjectList from './ProjectList';
 import Gists from '../services/Gists';
 import appFirebase from '../services/appFirebase';
+import config from '../config';
 
 class Toolbar extends React.Component {
   constructor() {
@@ -177,6 +178,20 @@ class Toolbar extends React.Component {
     );
   }
 
+  _renderFeedbackButton() {
+    return (
+      <li className="toolbar-menu-item">
+        <a
+          className="toolbar-menu-link"
+          target="_blank"
+          href={config.feedbackUrl}
+        >
+          Send Feedback
+        </a>
+      </li>
+    );
+  }
+
   _renderShowHideBar() {
     return (
       <div
@@ -208,6 +223,7 @@ class Toolbar extends React.Component {
         {this._renderUserSessionToggle()}
         {this._renderExportGistButton()}
         {this._renderLibrariesButton()}
+        {this._renderFeedbackButton()}
       </ul>
     );
   }
