@@ -11,7 +11,8 @@ function updateSource($application, language, source) {
 
 function updateHTMLBody($application, source) {
   const fullSource =
-    `<!doctype html>\n<html>\n<head></head><body>${source}</body>\n</html>\n`;
+    `<!doctype html>\n<html>\n<head><title>Test</title></head>
+    <body>${source}</body>\n</html>\n`;
   updateSource($application, 'html', fullSource);
 }
 

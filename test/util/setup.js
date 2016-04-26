@@ -10,6 +10,7 @@ import proxyquire from 'proxyquire';
 import {DOMParser} from 'xmlshim';
 import wrap from 'lodash/wrap';
 import mockFirebase from './mockFirebase';
+import debounce from './debounce';
 import initI18n from '../../src/util/initI18n';
 
 chai.use(chaiAsPromised);
@@ -21,6 +22,8 @@ proxyquire('../../src/services/appFirebase', {
     return mockFirebase;
   },
 });
+
+proxyquire('../../src/actions/index', {'lodash/debounce': debounce});
 
 initI18n();
 

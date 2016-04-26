@@ -5,7 +5,7 @@ import {expect} from 'chai';
 import $renderApplication from './util/renderApplication';
 import $ from 'jquery';
 import {logIn} from './util/helpers';
-import afterImmediate from './util/afterImmediate';
+import deferImmediate from './util/deferImmediate';
 
 describe('toolbar', () => {
   let $application, $ui;
@@ -46,7 +46,7 @@ describe('toolbar', () => {
 
     it('should be visible when logged in', () => {
       logIn();
-      return expect(afterImmediate(
+      return expect(deferImmediate().then(
         () => $ui.find('.toolbar-menu-item:contains("New Project")').length
       )).to.eventually.equal(1);
     });
