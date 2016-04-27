@@ -1,4 +1,6 @@
-import config from '../config';
+import libraries from '../config/libraries';
+import castArray from 'lodash/castArray';
+import base64 from 'base64-js';
 
 const DOMParser = window.DOMParser;
 const parser = new DOMParser();
@@ -92,14 +94,15 @@ class PreviewGenerator {
 
   _attachLibraries() {
     this._project.enabledLibraries.forEach((libraryKey) => {
-      const library = config.libraries[libraryKey];
+      const library = libraries[libraryKey];
       const css = library.css;
       const javascript = library.javascript;
       if (css !== undefined) {
-        this._attachCssLibrary(css);
+        castArray(css).forEach(this._attachCssLibrary.bind(this));
       }
       if (javascript !== undefined) {
-        this._attachJavascriptLibrary(javascript);
+        castArray(javascript).
+          forEach(this._attachJavascriptLibrary.bind(this));
       }
     });
   }
@@ -107,13 +110,17 @@ class PreviewGenerator {
   _attachCssLibrary(css) {
     const linkTag = this.previewDocument.createElement('link');
     linkTag.rel = 'stylesheet';
-    linkTag.href = css;
+
+    const base64encoded = base64.fromByteArray(css);
+    linkTag.href = `data:text/css;charset=utf-8;base64,${base64encoded}`;
     this._previewHead.appendChild(linkTag);
   }
 
   _attachJavascriptLibrary(javascript) {
     const scriptTag = this.previewDocument.createElement('script');
-    scriptTag.src = javascript;
+    const base64encoded = base64.fromByteArray(javascript);
+    scriptTag.src =
+      `data:text/javascript;charset=utf-8;base64,${base64encoded}`;
     this.previewBody.appendChild(scriptTag);
   }
 }

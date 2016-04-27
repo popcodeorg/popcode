@@ -3,7 +3,7 @@ import map from 'lodash/map';
 import partial from 'lodash/partial';
 
 import LibraryPickerItem from './LibraryPickerItem';
-import config from '../config';
+import libraries from '../config/libraries';
 
 class LibraryPicker extends React.Component {
   _isLibraryEnabled(libraryKey) {
@@ -11,7 +11,7 @@ class LibraryPicker extends React.Component {
   }
 
   render() {
-    const libraries = map(config.libraries, (library, key) => (
+    const libraryButtons = map(libraries, (library, key) => (
       <LibraryPickerItem
         key={key}
         library={library}
@@ -20,7 +20,7 @@ class LibraryPicker extends React.Component {
       />
     ));
 
-    return <ul className="toolbar-menu">{libraries}</ul>;
+    return <ul className="toolbar-menu">{libraryButtons}</ul>;
   }
 }
 
