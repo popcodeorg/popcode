@@ -1,5 +1,6 @@
 import libraries from '../config/libraries';
 import castArray from 'lodash/castArray';
+import base64 from 'base64-js';
 
 const DOMParser = window.DOMParser;
 const parser = new DOMParser();
@@ -107,14 +108,19 @@ class PreviewGenerator {
   }
 
   _attachCssLibrary(css) {
-    const styleTag = this.previewDocument.createElement('style');
-    styleTag.textContent = css;
-    this._previewHead.appendChild(styleTag);
+    const linkTag = this.previewDocument.createElement('link');
+    linkTag.rel = 'stylesheet';
+
+    const base64encoded = base64.fromByteArray(css);
+    linkTag.href = `data:text/css;charset=utf-8;base64,${base64encoded}`;
+    this._previewHead.appendChild(linkTag);
   }
 
   _attachJavascriptLibrary(javascript) {
     const scriptTag = this.previewDocument.createElement('script');
-    scriptTag.textContent = javascript;
+    const base64encoded = base64.fromByteArray(javascript);
+    scriptTag.src =
+      `data:text/javascript;charset=utf-8;base64,${base64encoded}`;
     this.previewBody.appendChild(scriptTag);
   }
 }
