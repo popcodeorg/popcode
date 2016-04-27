@@ -22,9 +22,7 @@
     "css": {
       "missing-curly": "You have a starting { but no ending } to go with it.",
       "property-missing-colon": "Put a colon (:) between the property and the value.\nTry: color: red",
-      "selector-missing": "Start every block of CSS with a selector, such as an element name or class name.\nTry: p {\n  color: red;\n}"
-    },
-    "prettycss": {
+      "selector-missing": "Start every block of CSS with a selector, such as an element name or class name.\nTry: p {\n  color: red;\n}",
       "block-expected": "Start a block using { after your selector.\nTry: __error__ {",
       "extra-tokens-after-value": "Looks like you're missing a semicolon on the line before this one.",
       "illegal-token-after-combinator": "After a + or > in a selector, you need to specify the name of another element, class, or ID",

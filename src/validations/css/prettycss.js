@@ -1,5 +1,5 @@
-import i18n from 'i18next-client';
 import prettyCSS from 'PrettyCSS';
+import Validator from '../Validator';
 
 const RADIAL_GRADIENT_EXPR =
   /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/;
@@ -7,71 +7,63 @@ function isIncorrectlyRejectedRadialGradientValue(value) {
   return RADIAL_GRADIENT_EXPR.test(value);
 }
 
-const humanErrors = {
-  'block-expected': (error) => i18n.t(
-    'errors.prettycss.block-expected',
-    {error: error.token.content}
-  ),
+const errorMap = {
+  'block-expected': (error) => ({
+    reason: 'block-expected',
+    payload: {error: error.token.content},
+  }),
 
-  'extra-tokens-after-value': () => i18n.t(
-    'errors.prettycss.extra-tokens-after-value'
-  ),
+  'extra-tokens-after-value': () => ({
+    reason: 'extra-tokens-after-value',
+  }),
 
-  'illegal-token-after-combinator': () => i18n.t(
-    'errors.prettycss.illegal-token-after-combinator'
-  ),
+  'illegal-token-after-combinator': () => ({
+    reason: 'illegal-token-after-combinator',
+  }),
 
-  'invalid-token': () => i18n.t('errors.prettycss.invalid-token'),
+  'invalid-token': () => ({reason: 'invalid-token'}),
 
   'invalid-value': (error) => {
     if (isIncorrectlyRejectedRadialGradientValue(error.token.content)) {
       return null;
     }
 
-    return i18n.t(
-      'errors.prettycss.invalid-value',
-      {error: error.token.content}
-    );
+    return {
+      reason: 'invalid-value',
+      payload: {error: error.token.content},
+    };
   },
 
-  'require-value': (error) => i18n.t(
-    'errors.prettycss.require-value',
-    {error: error.token.content}
-  ),
+  'require-value': (error) => ({
+    reason: 'require-value',
+    payload: {error: error.token.content},
+  }),
 
-  'selector-expected': () => i18n.t('errors.prettycss.selector-expected'),
+  'selector-expected': () => ({reason: 'selector-expected'}),
 
-  'unknown-property': (error) => i18n.t(
-    'errors.prettycss.unknown-property',
-    {error: error.token.content}
-  ),
+  'unknown-property': (error) => ({
+    reason: 'unknown-property',
+    payload: {error: error.token.content},
+  }),
 };
 
-function convertErrorToAnnotation(error) {
-  const normalizedCode = error.code.split(':')[0];
-  if (error.token !== null && humanErrors.hasOwnProperty(normalizedCode)) {
-    const message = humanErrors[normalizedCode](error);
-    if (message !== null) {
-      return {
-        row: error.token.line - 1, column: error.token.charNum - 1,
-        raw: message,
-        text: message,
-        type: 'error',
-      };
-    }
+class PrettyCssValidator extends Validator {
+  constructor(source) {
+    super(source, 'css', errorMap);
   }
 
-  return null;
+  _getRawErrors() {
+    const result = prettyCSS.parse(this._source);
+    return result.errors.concat(result.warnings);
+  }
+
+  _keyForError(error) {
+    return error.code.split(':')[0];
+  }
+
+  _locationForError(error) {
+    return {row: error.token.line - 1, column: error.token.charNum - 1};
+  }
 }
 
-export default (source) => {
-  const result = prettyCSS.parse(source);
-  const annotations = [];
-  result.errors.concat(result.warnings).forEach((error) => {
-    const annotation = convertErrorToAnnotation(error);
-    if (annotation !== null) {
-      annotations.push(annotation);
-    }
-  });
-  return Promise.resolve(annotations);
-};
+export default (source) => new PrettyCssValidator(source).getAnnotations();
