@@ -12,6 +12,7 @@ class ErrorSublist extends React.Component {
 
     const errors = map(this.props.errors, (error) => (
       <ErrorItem {...error}
+        key={[error.reason, error.row]}
         onClick={partial(
           this.props.onErrorClicked,
           this.props.language
