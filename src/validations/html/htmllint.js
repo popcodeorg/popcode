@@ -1,78 +1,60 @@
-import i18n from 'i18next-client';
 import htmllint from 'htmllint';
-import assign from 'lodash/assign';
+import Validator from '../Validator';
 
-const humanErrors = {
+const errorMap = {
   E001: (error) => {
     switch (error.data.attribute.toLowerCase()) {
       case 'align':
-        return generateAnnotation('banned-attributes.align');
+        return {reason: 'banned-attributes.align'};
       case 'background':
-        return generateAnnotation('banned-attributes.background');
+        return {reason: 'banned-attributes.background'};
       case 'bgcolor':
-        return generateAnnotation('banned-attributes.bgcolor');
+        return {reason: 'banned-attributes.bgcolor'};
       case 'border':
       case 'frameborder':
-        return generateAnnotation(
-          'banned-attributes.frameborder',
-          {attribute: error.data.attribute}
-        );
+        return {
+          reason: 'banned-attributes.frameborder',
+          payload: {attribute: error.data.attribute},
+        };
       case 'marginwidth':
-        return generateAnnotation('banned-attributes.marginwidth');
+        return {reason: 'banned-attributes.marginwidth'};
       case 'marginheight':
-        return generateAnnotation('banned-attributes.marginheight');
+        return {reason: 'banned-attributes.marginheight'};
       case 'scrolling':
-        return generateAnnotation('banned-attributes.scrolling');
+        return {reason: 'banned-attributes.scrolling'};
       case 'width':
-        return generateAnnotation('banned-attributes.width');
+        return {reason: 'banned-attributes.width'};
     }
 
     return null;
   },
 
-  E002: () => generateAnnotation('lower-case-attribute-name'),
+  E002: () => ({reason: 'lower-case-attribute-name'}),
 
-  E005: (error) => generateAnnotation(
-    'attribute-quotes',
-    {attribute: error.data.attribute}
-  ),
+  E005: (error) => ({
+    reason: 'attribute-quotes',
+    payload: {attribute: error.data.attribute},
+  }),
 
-  E006: () => generateAnnotation('attribute-value'),
+  E006: () => ({reason: 'attribute-value'}),
 
-  E007: () => generateAnnotation('doctype', {}, ['invalid-tag-name']),
+  E007: () => ({reason: 'doctype', suppresses: ['invalid-tag-name']}),
 
-  E008: () => generateAnnotation('doctype'),
+  E008: () => ({reason: 'doctype'}),
 
-  E012: (error) => generateAnnotation('duplicated-id', {id: error.data.id}),
+  E012: (error) => ({reason: 'duplicated-id', payload: {id: error.data.id}}),
 
-  E014: () => generateAnnotation('img-src'),
+  E014: () => ({reason: 'img-src'}),
 
-  E016: (error) => {
-    switch (error.data.tag.toLowerCase()) {
-      case 'b':
-        return generateAnnotation('deprecated-tag.b');
-      case 'big':
-        return generateAnnotation('deprecated-tag.big');
-      case 'center':
-        return generateAnnotation('deprecated-tag.center');
-      case 'font':
-        return generateAnnotation('deprecated-tag.font');
-      case 'i':
-        return generateAnnotation('deprecated-tag.i');
-      case 'strike':
-        return generateAnnotation('deprecated-tag.strike');
-      case 'tt':
-        return generateAnnotation('deprecated-tag.tt');
-    }
+  E016: (error) => ({
+    reason: `deprecated-tag.${error.data.tag.toLowerCase()}`,
+  }),
 
-    return null;
-  },
+  E017: () => ({reason: 'lower-case-tag-name'}),
 
-  E017: () => generateAnnotation('lower-case-tag-name'),
+  E027: () => ({reason: 'missing-title'}),
 
-  E027: () => generateAnnotation('missing-title'),
-
-  E028: () => generateAnnotation('duplicated-title'),
+  E028: () => ({reason: 'duplicated-title'}),
 };
 
 const htmlLintOptions = {
@@ -115,36 +97,24 @@ const htmlLintOptions = {
   'title-no-dup': true,
 };
 
-function generateAnnotation(reason, properties, suppresses) {
-  const message = i18n.t(`errors.html.${reason}`, properties);
-  return {
-    raw: message,
-    text: message,
-    reason,
-    suppresses,
-  };
-}
-
-function convertErrorToAnnotation(error) {
-  if (humanErrors.hasOwnProperty(error.code)) {
-    const annotation = humanErrors[error.code](error);
-
-    return assign(annotation, {
-      row: error.line - 1, column: error.column - 1,
-      type: 'error',
-    });
+class HtmllintValidator extends Validator {
+  constructor(source) {
+    super(source, 'html', errorMap);
   }
 
-  return null;
+  _getRawErrors() {
+    return htmllint(this._source, htmlLintOptions).catch(() => []);
+  }
+
+  _keyForError(error) {
+    return error.code;
+  }
+
+  _locationForError(error) {
+    const row = error.line - 1;
+    const column = error.column - 1;
+    return {row, column};
+  }
 }
 
-export default (source) => htmllint(source, htmlLintOptions).then((errors) => {
-  const annotations = [];
-  errors.forEach((error) => {
-    const annotation = convertErrorToAnnotation(error);
-    if (annotation !== null) {
-      annotations.push(annotation);
-    }
-  });
-  return annotations;
-}).catch(() => []);
+export default (source) => new HtmllintValidator(source).getAnnotations();

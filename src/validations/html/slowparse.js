@@ -101,14 +101,6 @@ class SlowparseValidator extends Validator {
     return error.type;
   }
 
-  _rowForError(error) {
-    return this._locationForError(error).row;
-  }
-
-  _columnForError(error) {
-    return this._locationForError(error).column;
-  }
-
   _locationForError(error) {
     const lines = this._source.slice(0, error.cursor).split('\n');
     const row = lines.length - 1;

@@ -38,12 +38,12 @@ class Validator {
       error.payload
     );
 
-    return assign(error, {
+    const location = this._locationForError(rawError);
+
+    return assign(error, location, {
       text: message,
       raw: message,
       type: 'error',
-      row: this._rowForError(rawError),
-      column: this._columnForError(rawError),
     });
   }
 
