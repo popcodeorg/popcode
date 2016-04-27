@@ -1,6 +1,10 @@
-import i18n from 'i18next-client';
+import Validator from '../Validator';
+import assign from 'lodash/assign';
+import castArray from 'lodash/castArray';
+import clone from 'lodash/clone';
+import compact from 'lodash/compact';
+import get from 'lodash/get';
 import {JSHINT} from 'jshint';
-import update from 'react-addons-update';
 import libraries from '../../config/libraries';
 
 const jshintrc = {
@@ -24,129 +28,117 @@ const match = {
   '"': '"',
 };
 
-const humanErrors = {
-  E019: (error) => i18n.t(
-    'errors.javascript.unmatched',
-    {openingSymbol: error.a, closingSymbol: match[error.a]}
-  ),
+const errorMap = {
+  E019: (error) => ({
+    reason: 'unmatched',
+    payload: {openingSymbol: error.a, closingSymbol: match[error.a]},
+  }),
 
-  E020: (error) => i18n.t(
-    'errors.javascript.closing-match',
-    {openingSymbol: error.b, closingSymbol: error.a}
-  ),
+  E020: (error) => ({
+    reason: 'closing-match',
+    payload: {openingSymbol: error.b, closingSymbol: error.a},
+  }),
 
-  E024: (error) => i18n.t(
-    'errors.javascript.unexpected',
-    {character: error.evidence}
-  ),
+  E024: (error) => ({
+    reason: 'unexpected',
+    payload: {character: error.evidence},
+  }),
 
-  E030: (error) => i18n.t(
-    'errors.javascript.expected-identifier',
-    {token: error.a}
-  ),
+  E030: (error) => ({
+    reason: 'expected-identifier',
+    payload: {token: error.a},
+  }),
 
-  W003: (error) => i18n.t(
-    'errors.javascript.undefined-variable',
-    {variable: error.a}
-  ),
+  W003: (error) => ({
+    reason: 'undefined-variable',
+    payload: {variable: error.a},
+  }),
 
-  W030: (error) => i18n.t(
-    'errors.javascript.unexpected-expression',
-    {expression: error.evidence}
-  ),
+  W030: (error) => ({
+    reason: 'unexpected-expression',
+    payload: {expression: error.evidence},
+  }),
 
-  W031: () => i18n.t('errors.javascript.use-new-object'),
+  W031: () => ({reason: 'use-new-object'}),
 
-  W032: () => i18n.t('errors.javascript.unnecessary-semicolon'),
+  W032: () => ({reason: 'unnecessary-semicolon'}),
 
-  W033: () => i18n.t('errors.javascript.missing-semicolon'),
+  W033: () => ({reason: 'missing-semicolon'}),
 
-  W058: (error) => i18n.t(
-    'errors.javascript.missing-parentheses',
-    {object: error.a}
-  ),
+  W058: (error) => ({
+    reason: 'missing-parentheses',
+    payload: {object: error.a},
+  }),
 
-  W067: () => i18n.t('errors.javascript.bad-invocation'),
+  W067: () => ({reason: 'bad-invocation'}),
 
-  W084: () => i18n.t('errors.javascript.strict-comparison-operator'),
+  W084: () => ({reason: 'strict-comparison-operator'}),
 
-  W098: (error) => i18n.t(
-    'errors.javascript.unused-variable',
-    {variable: error.a}
-  ),
+  W098: (error) => ({
+    reason: 'unused-variable',
+    payload: {variable: error.a},
+  }),
 
-  W112: () => i18n.t('errors.javascript.unclosed-string'),
+  W112: () => ({
+    reason: 'unclosed-string',
+    suppresses: ['expected-identifier', 'tokenize-error', 'missing-semicolon'],
+  }),
 
   W116: (error) => {
     if (error.a === '===' && error.b === '==') {
-      return i18n.t('errors.javascript.strict-operators.equal');
+      return {reason: 'strict-operators.equal'};
     }
     if (error.a === '!==' && error.b === '!=') {
-      return i18n.t('errors.javascript.strict-operators.different');
+      return {reason: 'strict-operators.different'};
     }
-    return i18n.t(
-      'errors.javascript.strict-operators.custom-case',
-      {goodOperator: error.a, badOperator: error.b}
-    );
+    return {
+      reason: 'strict-operators.custom-case',
+      payload: {goodOperator: error.a, badOperator: error.b},
+      suppresses: ['expected-identifier'],
+    };
   },
 
-  W117: (error) => i18n.t(
-    'errors.javascript.declare-variable',
-    {variable: error.a}
-  ),
+  W117: (error) => ({
+    reason: 'declare-variable',
+    payload: {variable: error.a},
+  }),
 
-  W123: (error) => i18n.t(
-    'errors.javascript.duplicated-declaration',
-    {variable: error.a}
-  ),
+  W123: (error) => ({
+    reason: 'duplicated-declaration',
+    payload: {variable: error.a},
+  }),
 };
 
-function convertErrorToAnnotation(error) {
-  const code = error.code;
-  if (humanErrors.hasOwnProperty(code)) {
-    const message = humanErrors[code](error);
-    return {
-      row: error.line - 1, column: error.character - 1,
-      raw: message,
-      text: message,
-      type: 'error',
-    };
-  }
-  return undefined;
-}
+class JsHintValidator extends Validator {
+  constructor(source, enabledLibraries) {
+    super(source, 'javascript', errorMap);
 
-export default (source, enabledLibraries) => {
-  let jshintOptions = jshintrc;
-  enabledLibraries.forEach((libraryKey) => {
-    const library = libraries[libraryKey];
+    this._jshintOptions = clone(jshintrc);
+    enabledLibraries.forEach((libraryKey) => {
+      const library = libraries[libraryKey];
 
-    if (library.validations !== undefined &&
-        library.validations.javascript !== undefined) {
-      jshintOptions = update(jshintOptions, library.validations.javascript);
-    }
-  });
-
-  JSHINT(source, jshintOptions); // eslint-disable-line new-cap
-  const data = JSHINT.data();
-  const annotations = [];
-  const annotatedLines = [];
-
-  if (data.errors) {
-    data.errors.forEach((error) => {
-      if (error === null) {
-        return;
-      }
-      if (annotatedLines.indexOf(error.line) !== -1) {
-        return;
-      }
-
-      const annotation = convertErrorToAnnotation(error);
-      if (annotation !== undefined) {
-        annotatedLines.push(annotation.row);
-        annotations.push(annotation);
+      if (get(library, 'validations.javascript') !== undefined) {
+        assign(this._jshintOptions, library.validations.javascript);
       }
     });
   }
 
-  return Promise.resolve(annotations);
-};
+  _getRawErrors() {
+    JSHINT(this._source, this._jshintOptions); // eslint-disable-line new-cap
+    const data = JSHINT.data();
+    return compact(castArray(data.errors));
+  }
+
+  _keyForError(error) {
+    return error.code;
+  }
+
+  _locationForError(error) {
+    const row = error.line - 1;
+    const column = error.character - 1;
+    return {row, column};
+  }
+}
+
+export default (source, enabledLibraries) =>
+  new JsHintValidator(source, enabledLibraries).getAnnotations();

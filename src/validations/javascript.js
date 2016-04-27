@@ -1,8 +1,8 @@
-import flatten from 'lodash/flatten';
+import mergeValidations from './mergeValidations';
 import validateWithEsprima from './javascript/esprima';
 import validateWithJSHint from './javascript/jshint';
 
-export default (source, enabledLibraries) => Promise.all([
-  validateWithEsprima(source, enabledLibraries),
+export default (source, enabledLibraries) => mergeValidations([
+  validateWithEsprima(source),
   validateWithJSHint(source, enabledLibraries),
-]).then((results) => flatten(results));
+]);

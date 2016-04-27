@@ -1,19 +1,29 @@
-import i18n from 'i18next-client';
+import Validator from '../Validator';
 import esprima from 'esprima';
 import find from 'lodash/find';
 
-const humanErrors = {
-  'Unexpected string': (error, token) => i18n.t(
-    'errors.javascript.unexpected-string',
-    {value: token.value}
-  ),
+const errorMap = {
+  'Unexpected string': ({token}) => ({
+    reason: 'unexpected-string',
+    payload: {value: token.value},
+    suppresses: [
+      'expected-identifier',
+      'strict-operators.custom-case',
+      'unused-variable',
+    ],
+  }),
 
-  'Unexpected number': (error, token) => i18n.t(
-    'errors.javascript.unexpected-number',
-    {value: token.value}
-  ),
+  'Unexpected number': ({token}) => ({
+    reason: 'unexpected-number',
+    payload: {value: token.value},
+    suppresses: [
+      'expected-identifier',
+      'strict-operators.custom-case',
+      'unused-variable',
+    ],
+  }),
 
-  'Invalid left-hand side in assignment': (error, token) => {
+  'Invalid left-hand side in assignment': ({token}) => {
     let message;
     switch (token.type) {
       case 'String':
@@ -29,11 +39,19 @@ const humanErrors = {
         message = 'invalid-left-hand-value';
         break;
     }
-    return i18n.t(
-      `errors.javascript.${message}`,
-      {value: token.value}
-    );
+
+    return ({
+      reason: `${message}`,
+      payload: {value: token.value},
+      suppresses: [
+        'missing-semicolon',
+        'expected-identifier',
+        'unexpected-expression',
+      ],
+    });
   },
+
+  'Unexpected token ILLEGAL': () => ({reason: 'tokenize-error'}),
 };
 
 function findTokenForError(error, tokens) {
@@ -46,43 +64,37 @@ function findTokenForError(error, tokens) {
   });
 }
 
-function convertErrorToAnnotation(error, token) {
-  const description = error.description;
-  if (humanErrors.hasOwnProperty(description)) {
-    const message = humanErrors[description](error, token);
-    return {
-      row: error.lineNumber - 1, column: error.column - 1,
-      raw: message,
-      text: message,
-      type: 'error',
-    };
-  } else {
-    console.debug('no message', error, token);
+class EsprimaValidator extends Validator {
+  constructor(source) {
+    super(source, 'javascript', errorMap);
   }
-  return undefined;
+
+  _getRawErrors() {
+    try {
+      esprima.parse(this._source);
+    } catch (error) {
+      try {
+        const tokens = esprima.tokenize(this._source, {loc: true});
+        const token = findTokenForError(error, tokens);
+        if (token) {
+          return [{error, token}];
+        }
+      } catch (tokenizeError) {
+        return [{error: tokenizeError}];
+      }
+    }
+    return [];
+  }
+
+  _keyForError(error) {
+    return error.error.description;
+  }
+
+  _locationForError(error) {
+    const row = error.error.lineNumber - 1;
+    const column = error.error.column - 1;
+    return {row, column};
+  }
 }
 
-export default (source) => {
-  const annotations = [];
-
-  try {
-    esprima.parse(source);
-  } catch (error) {
-    try {
-      const tokens = esprima.tokenize(source, {loc: true});
-      const token = findTokenForError(error, tokens);
-      if (token) {
-        const annotation = convertErrorToAnnotation(error, token);
-        if (annotation) {
-          annotations.push(annotation);
-        }
-      } else {
-        console.debug('no token', error, tokens);
-      }
-    } catch (tokenizeError) {
-      console.debug('tokenize error', tokenizeError);
-    }
-  }
-
-  return Promise.resolve(annotations);
-};
+export default (source) => new EsprimaValidator(source).getAnnotations();
