@@ -64,7 +64,7 @@ function projects(stateIn, action) {
     case 'PROJECT_IMPORTED':
       return state.set(
         action.payload.project.projectKey,
-        Immutable.fromJS(action.payload.project)
+        projectToImmutable(action.payload.project)
       );
 
     case 'CURRENT_PROJECT_CHANGED':
@@ -94,7 +94,5 @@ function projects(stateIn, action) {
       return state;
   }
 }
-
-projects.projectToImmutable = projectToImmutable;
 
 export default projects;
