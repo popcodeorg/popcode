@@ -64,7 +64,10 @@ class Editor extends React.Component {
 
   _renderLabel() {
     return (
-      <div className="editors-editorContainer-label">
+      <div
+        className="editors-editorContainer-label"
+        onClick={this.props.onMinimize}
+      >
         {i18n.t(`languages.${this.props.language}`)}
       </div>
     );
@@ -97,6 +100,7 @@ Editor.propTypes = {
   errors: React.PropTypes.array.isRequired,
   language: React.PropTypes.string.isRequired,
   onInput: React.PropTypes.func.isRequired,
+  onMinimize: React.PropTypes.func.isRequired,
 };
 
 export default Editor;

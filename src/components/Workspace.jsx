@@ -4,6 +4,7 @@ import values from 'lodash/values';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import bindAll from 'lodash/bindAll';
+import includes from 'lodash/includes';
 import i18n from 'i18next-client';
 import qs from 'qs';
 
@@ -14,6 +15,7 @@ import {
   createProject,
   updateProjectSource,
   toggleLibrary,
+  minimizeComponent,
   bootstrap,
 } from '../actions';
 
@@ -39,6 +41,7 @@ function mapStateToProps(state) {
     runtimeErrors: state.runtimeErrors.toJS(),
     delayErrorDisplay: state.delayErrorDisplay,
     currentUser: state.user.toJS(),
+    ui: state.ui.toJS(),
   };
 }
 
@@ -74,8 +77,16 @@ class Workspace extends React.Component {
     }
   }
 
-  _allJavaScriptErrors() {
-    return this.props.errors.javascript.concat(this.props.runtimeErrors);
+  _allErrorsFor(language) {
+    if (language === 'javascript') {
+      return this.props.errors.javascript.concat(this.props.runtimeErrors);
+    }
+
+    return this.props.errors[language];
+  }
+
+  _onComponentMinimized(componentName) {
+    this.props.dispatch(minimizeComponent(componentName));
   }
 
   _onErrorClicked(language, line, column) {
@@ -140,38 +151,30 @@ class Workspace extends React.Component {
       return null;
     }
 
+    const editors = [];
+    ['html', 'css', 'javascript'].forEach((language) => {
+      if (includes(this.props.ui.minimizedComponents, `editor.${language}`)) {
+        return;
+      }
+
+      editors.push(
+        <Editor
+          key={language}
+          ref={`${language}Editor`}
+          projectKey={this.props.currentProject.projectKey}
+          source={this.props.currentProject.sources[language]}
+          errors={this._allErrorsFor(language)}
+          onInput={this._onEditorInput.bind(this, language)}
+          onMinimize={
+            this._onComponentMinimized.bind(this, `editor.${language}`)
+          }
+          language={language}
+        />
+      );
+    });
+
     return (
-      <div className="environment-column editors">
-        <Editor
-          key="html"
-          ref="htmlEditor"
-          projectKey={this.props.currentProject.projectKey}
-          source={this.props.currentProject.sources.html}
-          errors={this.props.errors.html}
-          onInput={this._onEditorInput.bind(this, 'html')}
-          language="html"
-        />
-
-        <Editor
-          key="css"
-          ref="cssEditor"
-          projectKey={this.props.currentProject.projectKey}
-          source={this.props.currentProject.sources.css}
-          errors={this.props.errors.css}
-          onInput={this._onEditorInput.bind(this, 'css')}
-          language="css"
-        />
-
-        <Editor
-          key="javascript"
-          ref="javascriptEditor"
-          projectKey={this.props.currentProject.projectKey}
-          source={this.props.currentProject.sources.javascript}
-          errors={this._allJavaScriptErrors()}
-          onInput={this._onEditorInput.bind(this, 'javascript')}
-          language="javascript"
-        />
-      </div>
+      <div className="environment-column editors">{editors}</div>
     );
   }
 
@@ -197,11 +200,27 @@ class Workspace extends React.Component {
     );
   }
 
+  _renderMinimizedComponents() {
+    const components = this.props.ui.minimizedComponents.
+      map((componentName) => (
+        <div key={componentName} className="layout-sidebar-minimizedComponent">
+          {i18n.t(`workspace.components.${componentName}`)}
+        </div>
+      ));
+
+    return (
+      <div className="layout-sidebar-minimizedComponents">
+        {components}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="layout">
         <div className="layout-sidebar">
           <WordmarkVertical className="layout-sidebar-wordmark"/>
+          {this._renderMinimizedComponents()}
         </div>
         <div id="workspace" className="layout-main">
           {this._renderToolbar()}
@@ -220,6 +239,7 @@ Workspace.propTypes = {
   errors: React.PropTypes.object,
   runtimeErrors: React.PropTypes.array,
   delayErrorDisplay: React.PropTypes.bool,
+  ui: React.PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps)(Workspace);
