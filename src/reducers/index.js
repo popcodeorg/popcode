@@ -5,6 +5,7 @@ import currentProject from './currentProject';
 import errors from './errors';
 import runtimeErrors from './runtimeErrors';
 import delayErrorDisplay from './delayErrorDisplay';
+import ui from './ui';
 
 const reducers = combineReducers({
   user,
@@ -13,6 +14,7 @@ const reducers = combineReducers({
   errors,
   runtimeErrors,
   delayErrorDisplay,
+  ui,
 });
 
 export default reducers;

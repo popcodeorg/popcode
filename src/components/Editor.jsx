@@ -37,6 +37,7 @@ class Editor extends React.Component {
       this._editor.$blockScrolling = Infinity;
       this._configureSession(this._editor.getSession());
       this._disableAutoClosing();
+      this._editor.on('focus', this._editor.resize.bind(this._editor));
     } else {
       this._editor.destroy();
     }
@@ -60,11 +61,15 @@ class Editor extends React.Component {
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
     });
+    session.setAnnotations(this.props.errors);
   }
 
   _renderLabel() {
     return (
-      <div className="editors-editorContainer-label">
+      <div
+        className="editors-editorContainer-label"
+        onClick={this.props.onMinimize}
+      >
         {i18n.t(`languages.${this.props.language}`)}
       </div>
     );
@@ -97,6 +102,7 @@ Editor.propTypes = {
   errors: React.PropTypes.array.isRequired,
   language: React.PropTypes.string.isRequired,
   onInput: React.PropTypes.func.isRequired,
+  onMinimize: React.PropTypes.func.isRequired,
 };
 
 export default Editor;

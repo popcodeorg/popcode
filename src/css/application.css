@@ -18,6 +18,12 @@ body {
   flex: 0 1 auto;
   background-color: #00ff85;
   border-right: 1px solid darkgray;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-sidebar-wordmarkContainer {
+  flex: 1 0 auto;
 }
 
 .layout-sidebar-wordmark {
@@ -28,6 +34,34 @@ body {
 
 .layout-sidebar-wordmark path {
   fill: white;
+}
+
+.layout-sidebar-minimizedComponents {
+  flex: 0 0 auto;
+}
+
+.layout-sidebar-minimizedComponent {
+  background-color: white;
+  text-align: center;
+  margin-top: 0.5em;
+  padding: 1em 0;
+  font-size: 0.7em;
+  position: relative;
+  cursor: pointer;
+}
+
+.layout-sidebar-minimizedComponent:before {
+  display: block;
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  top: 0;
+  right: 0;
+  content: "";
+  border-top: solid 0.5em #ff5e4f;
+  border-right: solid 0.5em #ff5e4f;
+  border-bottom: solid 0.5em transparent;
+  border-left: solid 0.5em transparent;
 }
 
 .layout-main {
@@ -134,10 +168,14 @@ body {
   background-color: black;
   color: white;
   z-index: 1;
-  padding: 0.2em;
+  padding: 0.2rem 1.6rem 0.2rem 0.2rem;
   opacity: 0.2;
   font-size: 0.8rem;
   border-bottom-left-radius: 4px;
+  cursor: pointer;
+  background: black url(/images/minimize.png) no-repeat;
+  background-position: right 0.2rem center;
+  background-size: 1rem;
 }
 
 .output {
