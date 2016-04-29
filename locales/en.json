@@ -38,10 +38,10 @@
       "duplicated-id": "You can't use the id \"__id__\" more than once in your HTML",
       "img-src": "<img> tags need a src attribute, with the URL of the image you want to display.\nTry: <img src=\"http://coolimages.com/image.jpg\">",
       "deprecated-tag": {
-        "b": "You shouldn't use the <b> tag. Use the <strong> tag instead",
+        "b": "You shouldn't use the <b> tag. Use the <strong> tag or the CSS font-weight property instead",
         "big": "You shouldn't use the <big> tag. Use the CSS font-size property instead",
-        "center": "You shouldn't use the <center> tag. Use the CSS property margin: auto instead",
-        "font": "You shouldn't use the <font> tag. Use the CSS font-face property instead.",
+        "center": "You shouldn't use the <center> tag. Use the CSS text-align property instead",
+        "font": "You shouldn't use the <font> tag. Use the CSS font-family property instead.",
         "i": "You shouldn't use the <i> tag. Use the <em> tag instead",
         "strike": "You shouldn't use the <strike> tag. Use the CSS property text-decoration: line-through instead",
         "tt": "You shouldn't use the <tt> tag. Use the <code> tag instead."
