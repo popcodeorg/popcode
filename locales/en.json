@@ -19,19 +19,6 @@
     "undefined-description": "Couldn't find a human description for",
     "notice": "You have __amount__ errors in your __language__!",
     "line-number": "Line __number__:",
-    "css": {
-      "missing-curly": "You have a starting { but no ending } to go with it.",
-      "property-missing-colon": "Put a colon (:) between the property and the value.\nTry: color: red",
-      "selector-missing": "Start every block of CSS with a selector, such as an element name or class name.\nTry: p {\n  color: red;\n}",
-      "block-expected": "Start a block using { after your selector.\nTry: __error__ {",
-      "extra-tokens-after-value": "Looks like you're missing a semicolon on the line before this one.",
-      "illegal-token-after-combinator": "After a + or > in a selector, you need to specify the name of another element, class, or ID",
-      "invalid-token": "This line doesn't look like valid CSS.",
-      "invalid-value": "__error__ isn't a meaningful value for this property. Double-check what values you can use here.",
-      "require-value": "Put a value for __error__ after the colon.",
-      "selector-expected": "Use a comma to separate multiple tag names, classes, or IDs.",
-      "unknown-property": "__error__ isn't a property that CSS understands. Double-check the name of the property that you want to use."
-    },
     "html": {
       "banned-attributes": {
         "align": "Don't use the \"align\" attribute. Instead, use the CSS text-align property",
@@ -76,6 +63,19 @@
       "unterminated-comment": "You have a comment that never ends. End the comment with -->",
       "unbound-attribute-value": "The value __value__ isn’t attached to an attribute. Are you missing an = sign?",
       "invalid-tag-name": "<__tag__> isn’t a valid HTML tag. If you want to create a custom tag, make sure the name has a - in it, like <my-tag>"
+    },
+    "css": {
+      "missing-curly": "You have a starting { but no ending } to go with it.",
+      "property-missing-colon": "Put a colon (:) between the property and the value.\nTry: color: red",
+      "selector-missing": "Start every block of CSS with a selector, such as an element name or class name.\nTry: p {\n  color: red;\n}",
+      "block-expected": "Start a block using { after your selector.\nTry: __error__ {",
+      "extra-tokens-after-value": "Looks like you're missing a semicolon on the line before this one.",
+      "illegal-token-after-combinator": "After a + or > in a selector, you need to specify the name of another element, class, or ID",
+      "invalid-token": "This line doesn't look like valid CSS.",
+      "invalid-value": "__error__ isn't a meaningful value for this property. Double-check what values you can use here.",
+      "require-value": "Put a value for __error__ after the colon.",
+      "selector-expected": "Use a comma to separate multiple tag names, classes, or IDs.",
+      "unknown-property": "__error__ isn't a property that CSS understands. Double-check the name of the property that you want to use."
     },
     "javascript": {
       "unexpected-string": "JavaScript doesn’t expect a string where you wrote __value__. Remember that variable and function names aren’t surrounded in quotes.",
