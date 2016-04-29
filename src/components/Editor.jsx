@@ -37,6 +37,7 @@ class Editor extends React.Component {
       this._editor.$blockScrolling = Infinity;
       this._configureSession(this._editor.getSession());
       this._disableAutoClosing();
+      this._editor.on('focus', this._editor.resize.bind(this._editor));
     } else {
       this._editor.destroy();
     }
