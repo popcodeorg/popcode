@@ -228,7 +228,9 @@ class Workspace extends React.Component {
     return (
       <div className="layout">
         <div className="layout-sidebar">
-          <WordmarkVertical className="layout-sidebar-wordmark"/>
+          <div className="layout-sidebar-wordmarkContainer">
+            <WordmarkVertical className="layout-sidebar-wordmark"/>
+          </div>
           {this._renderMinimizedComponents()}
         </div>
         <div id="workspace" className="layout-main">
