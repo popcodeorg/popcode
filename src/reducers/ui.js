@@ -16,6 +16,12 @@ function ui(stateIn, action) {
         (components) => components.add(action.payload.componentName)
       );
 
+    case 'COMPONENT_MAXIMIZED':
+      return state.update(
+        'minimizedComponents',
+        (components) => components.delete(action.payload.componentName)
+      );
+
     default:
       return state;
   }

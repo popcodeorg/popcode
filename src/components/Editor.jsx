@@ -60,6 +60,7 @@ class Editor extends React.Component {
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
     });
+    session.setAnnotations(this.props.errors);
   }
 
   _renderLabel() {

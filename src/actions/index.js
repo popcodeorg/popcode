@@ -283,6 +283,13 @@ function minimizeComponent(componentName) {
   };
 }
 
+function maximizeComponent(componentName) {
+  return {
+    type: 'COMPONENT_MAXIMIZED',
+    payload: {componentName},
+  };
+}
+
 function bootstrap({gistId} = {gistId: null}) {
   return (dispatch, getState) => {
     const initialAuth = new Promise((resolve) => {
@@ -321,5 +328,6 @@ export {
   addRuntimeError,
   clearRuntimeErrors,
   minimizeComponent,
+  maximizeComponent,
   bootstrap,
 };

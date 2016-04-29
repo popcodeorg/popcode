@@ -16,6 +16,7 @@ import {
   updateProjectSource,
   toggleLibrary,
   minimizeComponent,
+  maximizeComponent,
   bootstrap,
 } from '../actions';
 
@@ -87,6 +88,10 @@ class Workspace extends React.Component {
 
   _onComponentMinimized(componentName) {
     this.props.dispatch(minimizeComponent(componentName));
+  }
+
+  _onComponentMaximized(componentName) {
+    this.props.dispatch(maximizeComponent(componentName));
   }
 
   _onErrorClicked(language, line, column) {
@@ -203,7 +208,11 @@ class Workspace extends React.Component {
   _renderMinimizedComponents() {
     const components = this.props.ui.minimizedComponents.
       map((componentName) => (
-        <div key={componentName} className="layout-sidebar-minimizedComponent">
+        <div
+          key={componentName}
+          className="layout-sidebar-minimizedComponent"
+          onClick={this._onComponentMaximized.bind(this, componentName)}
+        >
           {i18n.t(`workspace.components.${componentName}`)}
         </div>
       ));
