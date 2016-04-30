@@ -47,6 +47,8 @@ const errorMap = {
         'missing-semicolon',
         'expected-identifier',
         'unexpected-expression',
+        'closing-match',
+        'strict-operators.custom-case',
       ],
     });
   },
