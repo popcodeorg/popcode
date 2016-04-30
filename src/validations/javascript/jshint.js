@@ -42,6 +42,7 @@ const errorMap = {
   E024: (error) => ({
     reason: 'unexpected',
     payload: {character: error.evidence},
+    suppresses: ['tokenize-error'],
   }),
 
   E030: (error) => ({
