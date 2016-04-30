@@ -19,6 +19,7 @@ const errorMap = {
 
   'illegal-token-after-combinator': () => ({
     reason: 'illegal-token-after-combinator',
+    suppresses: ['block-expected'],
   }),
 
   'invalid-token': () => ({reason: 'invalid-token'}),
