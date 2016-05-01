@@ -230,6 +230,7 @@ class Workspace extends React.Component {
         <div className="layout-sidebar">
           <div className="layout-sidebar-wordmarkContainer">
             <WordmarkVertical className="layout-sidebar-wordmark"/>
+            <div className="layout-sidebar-showArrow"/>
           </div>
           {this._renderMinimizedComponents()}
         </div>

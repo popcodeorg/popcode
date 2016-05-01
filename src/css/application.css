@@ -20,6 +20,7 @@ body {
   border-right: 1px solid darkgray;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .layout-sidebar-wordmarkContainer {
@@ -62,6 +63,23 @@ body {
   border-right: solid 0.5em #ff5e4f;
   border-bottom: solid 0.5em transparent;
   border-left: solid 0.5em transparent;
+}
+
+.layout-sidebar-showArrow {
+  border-top: 5px solid white;
+  border-right: 5px solid white;
+  height: 0;
+  width: 50%;
+  padding-bottom: 50%;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: rotate(45deg);
+  transform-origin: left 50%;
+  cursor: pointer;
 }
 
 .layout-main {
