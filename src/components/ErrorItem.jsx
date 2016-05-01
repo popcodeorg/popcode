@@ -8,6 +8,7 @@ class ErrorItem extends React.Component {
     return (
       <li
         className="errorList-error"
+        data-error-reason={this.props.reason}
         onClick={partial(
           this.props.onClick,
           this.props.row,
@@ -25,6 +26,7 @@ ErrorItem.propTypes = {
   row: React.PropTypes.number.isRequired,
   column: React.PropTypes.number.isRequired,
   text: React.PropTypes.string.isRequired,
+  reason: React.PropTypes.string.isRequired,
   onClick: React.PropTypes.func.isRequired,
 };
 

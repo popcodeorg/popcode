@@ -39,6 +39,7 @@
     "classnames": "^2.1.5",
     "css": "^2.2.1",
     "envify": "^3.4.0",
+    "esprima": "^2.7.2",
     "firebase": "^2.4.1",
     "github-api": "^0.11.2",
     "htmllint": "^0.3.0",

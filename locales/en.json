@@ -27,21 +27,6 @@
     "undefined-description": "Couldn't find a human description for",
     "notice": "You have __amount__ errors in your __language__!",
     "line-number": "Line __number__:",
-    "css": {
-      "missing-curly": "You have a starting { but no ending } to go with it.",
-      "property-missing-colon": "Put a colon (:) between the property and the value.\nTry: color: red",
-      "selector-missing": "Start every block of CSS with a selector, such as an element name or class name.\nTry: p {\n  color: red;\n}"
-    },
-    "prettycss": {
-      "block-expected": "Start a block using { after your selector.\nTry: __error__ {",
-      "extra-tokens-after-value": "Looks like you're missing a semicolon on the line before this one.",
-      "illegal-token-after-combinator": "After a + or > in a selector, you need to specify the name of another element, class, or ID",
-      "invalid-token": "This line doesn't look like valid CSS.",
-      "invalid-value": "__error__ isn't a meaningful value for this property. Double-check what values you can use here.",
-      "require-value": "Put a value for __error__ after the colon.",
-      "selector-expected": "Use a comma to separate multiple tag names, classes, or IDs.",
-      "unknown-property": "__error__ isn't a property that CSS understands. Double-check the name of the property that you want to use."
-    },
     "html": {
       "banned-attributes": {
         "align": "Don't use the \"align\" attribute. Instead, use the CSS text-align property",
@@ -61,10 +46,10 @@
       "duplicated-id": "You can't use the id \"__id__\" more than once in your HTML",
       "img-src": "<img> tags need a src attribute, with the URL of the image you want to display.\nTry: <img src=\"http://coolimages.com/image.jpg\">",
       "deprecated-tag": {
-        "b": "You shouldn't use the <b> tag. Use the <strong> tag instead",
+        "b": "You shouldn't use the <b> tag. Use the <strong> tag or the CSS font-weight property instead",
         "big": "You shouldn't use the <big> tag. Use the CSS font-size property instead",
-        "center": "You shouldn't use the <center> tag. Use the CSS property margin: auto instead",
-        "font": "You shouldn't use the <font> tag. Use the CSS font-face property instead.",
+        "center": "You shouldn't use the <center> tag. Use the CSS text-align property instead",
+        "font": "You shouldn't use the <font> tag. Use the CSS font-family property instead.",
         "i": "You shouldn't use the <i> tag. Use the <em> tag instead",
         "strike": "You shouldn't use the <strike> tag. Use the CSS property text-decoration: line-through instead",
         "tt": "You shouldn't use the <tt> tag. Use the <code> tag instead."
@@ -87,7 +72,26 @@
       "unbound-attribute-value": "The value __value__ isn’t attached to an attribute. Are you missing an = sign?",
       "invalid-tag-name": "<__tag__> isn’t a valid HTML tag. If you want to create a custom tag, make sure the name has a - in it, like <my-tag>"
     },
+    "css": {
+      "missing-curly": "You have a starting { but no ending } to go with it.",
+      "property-missing-colon": "Put a colon (:) between the property and the value.\nTry: color: red",
+      "selector-missing": "Start every block of CSS with a selector, such as an element name or class name.\nTry: p {\n  color: red;\n}",
+      "block-expected": "Start a block using { after your selector.\nTry: __error__ {",
+      "extra-tokens-after-value": "Looks like you're missing a semicolon on the line before this one.",
+      "illegal-token-after-combinator": "After a + or > in a selector, you need to specify the name of another element, class, or ID",
+      "invalid-token": "This line doesn't look like valid CSS.",
+      "invalid-value": "__error__ isn't a meaningful value for this property. Double-check what values you can use here.",
+      "require-value": "Put a value for __error__ after the colon.",
+      "selector-expected": "Use a comma to separate multiple tag names, classes, or IDs.",
+      "unknown-property": "__error__ isn't a property that CSS understands. Double-check the name of the property that you want to use."
+    },
     "javascript": {
+      "unexpected-string": "JavaScript doesn’t expect a string where you wrote __value__. Remember that variable and function names aren’t surrounded in quotes.",
+      "unexpected-number": "JavaScript doesn’t expect a number where you wrote __value__. Remember that variable and function names have to start with a letter.",
+      "invalid-left-hand-string": "You wrote __value__ to the left of the = sign here, but that’s not a valid variable name. Remember that variable names aren’t surrounded by quotes.",
+      "invalid-left-hand-number": "You wrote __value__ to the left of the = sign here, but that’s not a valid variable name. Remember that variable names have to start with a letter.",
+      "invalid-left-hand-boolean": "You wrote __value__ to the left of the = sign here, but that’s not a valid variable name. Remember that true and false can’t be used as variable names.",
+      "invalid-left-hand-value": "You wrote __value__ to the left of the = sign here, but that’s not a valid variable name.",
       "unmatched": "There is a __openingSymbol__ on this line that needs a closing __closingSymbol__",
       "closing-match": "There is a __openingSymbol__ on this line that needs a closing __closingSymbol__",
       "expected-identifier": "There's something missing from this line. Did you forget something?",
@@ -108,6 +112,7 @@
       "declare-variable": "You haven't declared __variable__.\nTry: var __variable__;",
       "duplicated-declaration": "You already declared __variable__ somewhere else.",
       "unexpected": "You typed a \"__character__\" here, but that’s not allowed in JavaScript.",
+      "tokenize-error": "This line doesn’t look like valid JavaScript.",
       "bad-invocation": "You’re trying to call something that isn’t a function."
     },
     "javascriptRuntime": {

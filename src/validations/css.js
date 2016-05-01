@@ -1,8 +1,8 @@
-import flatten from 'lodash/flatten';
+import mergeValidations from './mergeValidations';
 import validateWithCss from './css/css.js';
 import validateWithPrettyCSS from './css/prettycss.js';
 
-export default (source) => Promise.all([
+export default (source) => mergeValidations([
   validateWithCss(source),
   validateWithPrettyCSS(source),
-]).then((results) => flatten(results));
+]);

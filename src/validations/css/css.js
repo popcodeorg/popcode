@@ -1,36 +1,38 @@
-import i18n from 'i18next-client';
+import Validator from '../Validator';
 import css from 'css';
 
-const humanErrors = {
-  'missing \'}\'': () => i18n.t('errors.css.missing-curly'),
+const errorMap = {
+  'missing \'}\'': () => ({reason: 'missing-curly'}),
 
-  'property missing \':\'': () => i18n.t('errors.css.property-missing-colon'),
+  'property missing \':\'': () => ({
+    reason: 'property-missing-colon',
+    suppresses: ['invalid-token', 'missing-curly'],
+  }),
 
-  'selector missing': () => i18n.t('errors.css.selector-missing'),
+  'selector missing': () => ({
+    reason: 'selector-missing',
+    suppresses: ['invalid-token'],
+  }),
 };
 
-function convertErrorToAnnotation(error) {
-  if (humanErrors.hasOwnProperty(error.reason)) {
-    const message = humanErrors[error.reason](error);
-    return {
-      row: error.line - 1, column: error.column - 1,
-      raw: message,
-      text: message,
-      type: 'error',
-    };
+class CssValidator extends Validator {
+  constructor(source) {
+    super(source, 'css', errorMap);
   }
 
-  return null;
+  _getRawErrors() {
+    return css.parse(this._source, {silent: true}).stylesheet.parsingErrors;
+  }
+
+  _keyForError(error) {
+    return error.reason;
+  }
+
+  _locationForError(error) {
+    const row = error.line - 1;
+    const column = error.column - 1;
+    return {row, column};
+  }
 }
 
-export default (source) => {
-  const result = css.parse(source, {silent: true}).stylesheet;
-  const annotations = [];
-  result.parsingErrors.forEach((error) => {
-    const annotation = convertErrorToAnnotation(error);
-    if (annotation !== null) {
-      annotations.push(annotation);
-    }
-  });
-  return Promise.resolve(annotations);
-};
+export default (source) => new CssValidator(source).getAnnotations();
