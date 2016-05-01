@@ -183,6 +183,17 @@ class Workspace extends React.Component {
     );
   }
 
+  _renderSidebar() {
+    return (
+      <div className="layout-sidebar">
+        <Sidebar
+          minimizedComponents={this.props.ui.minimizedComponents}
+          onComponentMaximized={this._onComponentMaximized.bind(this)}
+        />
+      </div>
+    );
+  }
+
   _renderEnvironment() {
     return (
       <div className="environment">
@@ -208,12 +219,7 @@ class Workspace extends React.Component {
   render() {
     return (
       <div className="layout">
-        <div className="layout-sidebar">
-          <Sidebar
-            minimizedComponents={this.props.ui.minimizedComponents}
-            onComponentMaximized={this._onComponentMaximized.bind(this)}
-          />
-        </div>
+        {this._renderSidebar()}
         <div id="workspace" className="layout-main">
           {this._renderToolbar()}
           {this._renderEnvironment()}
