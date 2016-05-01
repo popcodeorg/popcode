@@ -1,5 +1,6 @@
 import React from 'react';
 import i18n from 'i18next-client';
+import classnames from 'classnames';
 import partial from 'lodash/partial';
 import {WordmarkVertical} from '../util/SVG';
 
@@ -28,7 +29,16 @@ class Sidebar extends React.Component {
       <div className="sidebar">
         <div className="sidebar-wordmarkContainer">
           <WordmarkVertical className="sidebar-wordmark"/>
-          <div className="sidebar-showArrow"/>
+          <div
+            className={classnames(
+              'sidebar-arrow',
+              {
+                'sidebar-arrow--show': !this.props.dashboardIsOpen,
+                'sidebar-arrow--hide': this.props.dashboardIsOpen,
+              }
+            )}
+            onClick={this.props.onToggleDashboard}
+          />
         </div>
         {this._renderMinimizedComponents()}
       </div>
@@ -38,7 +48,9 @@ class Sidebar extends React.Component {
 
 Sidebar.propTypes = {
   minimizedComponents: React.PropTypes.array.isRequired,
+  dashboardIsOpen: React.PropTypes.bool.isRequired,
   onComponentMaximized: React.PropTypes.func.isRequired,
+  onToggleDashboard: React.PropTypes.func.isRequired,
 };
 
 export default Sidebar;

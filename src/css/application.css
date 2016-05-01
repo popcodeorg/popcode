@@ -70,9 +70,8 @@ body {
   border-left: solid 0.5em transparent;
 }
 
-.sidebar-showArrow {
+.sidebar-arrow {
   border-top: 5px solid white;
-  border-right: 5px solid white;
   height: 0;
   width: 50%;
   padding-bottom: 50%;
@@ -82,9 +81,19 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
+  cursor: pointer;
+}
+
+.sidebar-arrow--show {
+  border-right: 5px solid white;
   transform: rotate(45deg);
   transform-origin: left 50%;
-  cursor: pointer;
+}
+
+.sidebar-arrow--hide {
+  border-left: 5px solid white;
+  transform: rotate(-45deg);
+  transform-origin: right 50%;
 }
 
 .layout-main {

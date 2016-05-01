@@ -17,6 +17,7 @@ import {
   toggleLibrary,
   minimizeComponent,
   maximizeComponent,
+  toggleDashboard,
   bootstrap,
 } from '../actions';
 
@@ -183,10 +184,16 @@ class Workspace extends React.Component {
     );
   }
 
+  _onToggleDashboard() {
+    this.props.dispatch(toggleDashboard());
+  }
+
   _renderSidebar() {
     return (
       <div className="layout-sidebar">
         <Sidebar
+          dashboardIsOpen={this.props.ui.dashboard.isOpen}
+          onToggleDashboard={this._onToggleDashboard.bind(this)}
           minimizedComponents={this.props.ui.minimizedComponents}
           onComponentMaximized={this._onComponentMaximized.bind(this)}
         />
