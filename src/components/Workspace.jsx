@@ -210,7 +210,7 @@ class Workspace extends React.Component {
       map((componentName) => (
         <div
           key={componentName}
-          className="layout-sidebar-minimizedComponent"
+          className="sidebar-minimizedComponent"
           onClick={this._onComponentMaximized.bind(this, componentName)}
         >
           {i18n.t(`workspace.components.${componentName}`)}
@@ -218,7 +218,7 @@ class Workspace extends React.Component {
       ));
 
     return (
-      <div className="layout-sidebar-minimizedComponents">
+      <div className="sidebar-minimizedComponents">
         {components}
       </div>
     );
@@ -227,10 +227,10 @@ class Workspace extends React.Component {
   render() {
     return (
       <div className="layout">
-        <div className="layout-sidebar">
-          <div className="layout-sidebar-wordmarkContainer">
-            <WordmarkVertical className="layout-sidebar-wordmark"/>
-            <div className="layout-sidebar-showArrow"/>
+        <div className="layout-sidebar sidebar">
+          <div className="sidebar-wordmarkContainer">
+            <WordmarkVertical className="sidebar-wordmark"/>
+            <div className="sidebar-showArrow"/>
           </div>
           {this._renderMinimizedComponents()}
         </div>

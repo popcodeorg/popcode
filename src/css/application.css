@@ -16,32 +16,35 @@ body {
 
 .layout-sidebar {
   flex: 0 1 auto;
-  background-color: #00ff85;
   border-right: 1px solid darkgray;
+}
+
+.sidebar {
+  background-color: #00ff85;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-.layout-sidebar-wordmarkContainer {
+.sidebar-wordmarkContainer {
   flex: 1 0 auto;
 }
 
-.layout-sidebar-wordmark {
+.sidebar-wordmark {
   padding: 10px;
   max-width: 30px;
   height: auto;
 }
 
-.layout-sidebar-wordmark path {
+.sidebar-wordmark path {
   fill: white;
 }
 
-.layout-sidebar-minimizedComponents {
+.sidebar-minimizedComponents {
   flex: 0 0 auto;
 }
 
-.layout-sidebar-minimizedComponent {
+.sidebar-minimizedComponent {
   background-color: white;
   text-align: center;
   margin-top: 0.5em;
@@ -51,7 +54,7 @@ body {
   cursor: pointer;
 }
 
-.layout-sidebar-minimizedComponent:before {
+.sidebar-minimizedComponent:before {
   display: block;
   position: absolute;
   width: 1em;
@@ -65,7 +68,7 @@ body {
   border-left: solid 0.5em transparent;
 }
 
-.layout-sidebar-showArrow {
+.sidebar-showArrow {
   border-top: 5px solid white;
   border-right: 5px solid white;
   height: 0;
