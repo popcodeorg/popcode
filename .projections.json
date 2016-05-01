@@ -23,5 +23,6 @@
     "alternate": "src/reducers/{}.js"
   },
   "src/validations/*.js": {"type": "validation"},
-  "src/static/*": {"type": "static"}
+  "src/static/*": {"type": "static"},
+  "src/css/application.css": {"type": "stylesheet"}
 }
