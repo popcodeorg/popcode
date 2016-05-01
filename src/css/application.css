@@ -17,6 +17,7 @@ body {
 .layout-sidebar {
   flex: 0 1 auto;
   border-right: 1px solid darkgray;
+  display: flex;
 }
 
 .sidebar {
@@ -24,6 +25,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  flex: 0 1 auto;
 }
 
 .sidebar-wordmarkContainer {

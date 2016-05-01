@@ -23,7 +23,7 @@ import {
 import Editor from './Editor';
 import Output from './Output';
 import Toolbar from './Toolbar';
-import {WordmarkVertical} from '../util/SVG';
+import Sidebar from './Sidebar';
 
 function mapStateToProps(state) {
   const currentProject = state.projects.get(
@@ -205,34 +205,14 @@ class Workspace extends React.Component {
     );
   }
 
-  _renderMinimizedComponents() {
-    const components = this.props.ui.minimizedComponents.
-      map((componentName) => (
-        <div
-          key={componentName}
-          className="sidebar-minimizedComponent"
-          onClick={this._onComponentMaximized.bind(this, componentName)}
-        >
-          {i18n.t(`workspace.components.${componentName}`)}
-        </div>
-      ));
-
-    return (
-      <div className="sidebar-minimizedComponents">
-        {components}
-      </div>
-    );
-  }
-
   render() {
     return (
       <div className="layout">
-        <div className="layout-sidebar sidebar">
-          <div className="sidebar-wordmarkContainer">
-            <WordmarkVertical className="sidebar-wordmark"/>
-            <div className="sidebar-showArrow"/>
-          </div>
-          {this._renderMinimizedComponents()}
+        <div className="layout-sidebar">
+          <Sidebar
+            minimizedComponents={this.props.ui.minimizedComponents}
+            onComponentMaximized={this._onComponentMaximized.bind(this)}
+          />
         </div>
         <div id="workspace" className="layout-main">
           {this._renderToolbar()}
