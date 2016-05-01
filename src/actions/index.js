@@ -276,6 +276,20 @@ function importProjectFromGist(projectKey, gistData) {
   };
 }
 
+function minimizeComponent(componentName) {
+  return {
+    type: 'COMPONENT_MINIMIZED',
+    payload: {componentName},
+  };
+}
+
+function maximizeComponent(componentName) {
+  return {
+    type: 'COMPONENT_MAXIMIZED',
+    payload: {componentName},
+  };
+}
+
 function bootstrap({gistId} = {gistId: null}) {
   return (dispatch, getState) => {
     const initialAuth = new Promise((resolve) => {
@@ -313,5 +327,7 @@ export {
   toggleLibrary,
   addRuntimeError,
   clearRuntimeErrors,
+  minimizeComponent,
+  maximizeComponent,
   bootstrap,
 };

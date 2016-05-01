@@ -13,7 +13,15 @@
     "javascript": "JavaScript"
   },
   "workspace": {
-    "confirm-unload": "If you leave the page, you will lose your work. To save your work, you must log in using your GitHub account."
+    "confirm-unload": "If you leave the page, you will lose your work. To save your work, you must log in using your GitHub account.",
+    "components": {
+      "editor": {
+        "html": "HTML",
+        "css": "CSS",
+        "javascript": "JS"
+      },
+      "preview": "Preview"
+    }
   },
   "errors": {
     "undefined-description": "Couldn't find a human description for",
