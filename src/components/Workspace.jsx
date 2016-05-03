@@ -7,6 +7,7 @@ import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
 import i18n from 'i18next-client';
 import qs from 'qs';
+import appFirebase from '../services/appFirebase';
 
 import {
   addRuntimeError,
@@ -25,6 +26,7 @@ import Editor from './Editor';
 import Output from './Output';
 import Toolbar from './Toolbar';
 import Sidebar from './Sidebar';
+import Dashboard from './Dashboard';
 
 function mapStateToProps(state) {
   const currentProject = state.projects.get(
@@ -188,6 +190,33 @@ class Workspace extends React.Component {
     this.props.dispatch(toggleDashboard());
   }
 
+  _onStartLogIn() {
+    appFirebase.authWithOAuthPopup(
+      'github',
+      {remember: 'sessionOnly', scope: 'gist'}
+    );
+  }
+
+  _onLogOut() {
+    appFirebase.unauth();
+  }
+
+  _renderDashboard() {
+    if (!this.props.ui.dashboard.isOpen) {
+      return null;
+    }
+
+    return (
+      <div className="layout-dashboard">
+        <Dashboard
+          currentUser={this.props.currentUser}
+          onStartLogIn={this._onStartLogIn.bind(this)}
+          onLogOut={this._onLogOut.bind(this)}
+        />
+      </div>
+    );
+  }
+
   _renderSidebar() {
     return (
       <div className="layout-sidebar">
@@ -226,6 +255,7 @@ class Workspace extends React.Component {
   render() {
     return (
       <div className="layout">
+        {this._renderDashboard()}
         {this._renderSidebar()}
         <div id="workspace" className="layout-main">
           {this._renderToolbar()}

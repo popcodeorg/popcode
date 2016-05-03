@@ -4,7 +4,6 @@ import i18n from 'i18next-client';
 import LibraryPicker from './LibraryPicker';
 import ProjectList from './ProjectList';
 import Gists from '../services/Gists';
-import appFirebase from '../services/appFirebase';
 import config from '../config';
 
 class Toolbar extends React.Component {
@@ -87,18 +86,6 @@ class Toolbar extends React.Component {
     this._close();
   }
 
-  _promptForLogin() {
-    appFirebase.authWithOAuthPopup(
-      'github',
-      {remember: 'sessionOnly', scope: 'gist'}
-    ).then(this._close.bind(this));
-  }
-
-  _logOut() {
-    appFirebase.unauth();
-    this._close();
-  }
-
   _renderNewProjectButton() {
     if (!this.props.currentUser.authenticated) {
       return null;
@@ -128,28 +115,6 @@ class Toolbar extends React.Component {
         )}
       >
         {i18n.t('toolbar.load-project')}
-      </li>
-    );
-  }
-
-  _renderUserSessionToggle() {
-    if (this.props.currentUser.authenticated) {
-      return (
-        <li
-          onClick={this._logOut.bind(this)}
-          className="toolbar-menu-item"
-        >
-          Log out
-        </li>
-      );
-    }
-
-    return (
-      <li
-        onClick={this._promptForLogin.bind(this)}
-        className="toolbar-menu-item"
-      >
-        Log in with GitHub
       </li>
     );
   }
@@ -220,7 +185,6 @@ class Toolbar extends React.Component {
       >
         {this._renderNewProjectButton()}
         {this._renderLoadProjectButton()}
-        {this._renderUserSessionToggle()}
         {this._renderExportGistButton()}
         {this._renderLibrariesButton()}
         {this._renderFeedbackButton()}

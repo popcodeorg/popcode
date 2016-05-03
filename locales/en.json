@@ -1,4 +1,11 @@
 {
+  "dashboard": {
+    "session": {
+      "notLoggedIn": "Not logged in",
+      "logInPrompt": "Sign in",
+      "logOutPrompt": "Sign out"
+    }
+  },
   "toolbar": {
     "show": "Show Tools",
     "hide": "Hide Tools",

@@ -96,6 +96,37 @@ body {
   transform-origin: right 50%;
 }
 
+.dashboard {
+  background-color: #00ff85;
+  color: white;
+}
+
+.dashboard-session {
+  font-size: 0.8rem;
+  white-space: nowrap;
+  padding: 1em;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.dashboard-session-avatar {
+  max-width: 32px;
+  max-height: 32px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.dashboard-session-name {
+  font-weight: bold;
+  padding-left: 0.5rem;
+}
+
+.dashboard-session-logInOut {
+  padding-left: 1rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .layout-main {
   flex: 1 1 100%;
 }
@@ -303,4 +334,24 @@ body {
   border-radius: 25%;
   display: inline-block;
   margin-right: 0.5em;
+}
+
+.u-flexContainer {
+  display: flex;
+}
+
+.u-flexContainer--column {
+  flex-direction: column;
+}
+
+.u-flexItem {
+  flex: 0 1 auto;
+}
+
+.u-flexItem--grow {
+  flex: 1 0 auto;
+}
+
+.u-flexItem--fill {
+  flex: 1 0 100%;
 }
