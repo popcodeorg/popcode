@@ -19,12 +19,12 @@ import {
   minimizeComponent,
   maximizeComponent,
   toggleDashboard,
+  toggleProjectList,
   bootstrap,
 } from '../actions';
 
 import Editor from './Editor';
 import Output from './Output';
-import Toolbar from './Toolbar';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 
@@ -129,6 +129,10 @@ class Workspace extends React.Component {
     this.props.dispatch(changeCurrentProject(project.projectKey));
   }
 
+  _onProjectListToggled() {
+    this.props.dispatch(toggleProjectList());
+  }
+
   _onRuntimeError(error) {
     this.props.dispatch(addRuntimeError(error));
   }
@@ -210,8 +214,14 @@ class Workspace extends React.Component {
       <div className="layout-dashboard">
         <Dashboard
           currentUser={this.props.currentUser}
+          currentProject={this.props.currentProject}
+          allProjects={this.props.allProjects}
+          activeSubmenu={this.props.ui.dashboard.activeSubmenu}
+          onProjectSelected={this._onProjectSelected.bind(this)}
           onStartLogIn={this._onStartLogIn.bind(this)}
           onLogOut={this._onLogOut.bind(this)}
+          onNewProject={this._onNewProject.bind(this)}
+          onProjectListToggled={this._onProjectListToggled.bind(this)}
         />
       </div>
     );
@@ -239,26 +249,12 @@ class Workspace extends React.Component {
     );
   }
 
-  _renderToolbar() {
-    return (
-      <Toolbar
-        allProjects={this.props.allProjects}
-        currentProject={this.props.currentProject}
-        currentUser={this.props.currentUser}
-        onLibraryToggled={this._onLibraryToggled.bind(this)}
-        onNewProject={this._onNewProject.bind(this)}
-        onProjectSelected={this._onProjectSelected.bind(this)}
-      />
-    );
-  }
-
   render() {
     return (
       <div className="layout">
         {this._renderDashboard()}
         {this._renderSidebar()}
         <div id="workspace" className="layout-main">
-          {this._renderToolbar()}
           {this._renderEnvironment()}
         </div>
       </div>

@@ -4,15 +4,13 @@
       "notLoggedIn": "Not logged in",
       "logInPrompt": "Sign in",
       "logOutPrompt": "Sign out"
+    },
+    "menu": {
+      "new-project": "New Project",
+      "load-project": "Load Project",
+      "libraries": "Libraries",
+      "export-gist": "Export Gist"
     }
-  },
-  "toolbar": {
-    "show": "Show Tools",
-    "hide": "Hide Tools",
-    "new-project": "New Project",
-    "load-project": "Load Project",
-    "libraries": "Libraries",
-    "export-gist": "Export Gist"
   },
   "languages": {
     "html": "HTML",

@@ -294,6 +294,13 @@ function toggleDashboard() {
   return {type: 'DASHBOARD_TOGGLED'};
 }
 
+function toggleProjectList() {
+  return {
+    type: 'DASHBOARD_SUBMENU_TOGGLED',
+    payload: {submenu: 'projectList'},
+  };
+}
+
 function bootstrap({gistId} = {gistId: null}) {
   return (dispatch, getState) => {
     const initialAuth = new Promise((resolve) => {
@@ -334,5 +341,6 @@ export {
   minimizeComponent,
   maximizeComponent,
   toggleDashboard,
+  toggleProjectList,
   bootstrap,
 };
