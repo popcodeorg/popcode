@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ncu --upgrade $1 && rm -fv npm-shrinkwrap.json && npm install && npm prune && npm-shrinkwrap --dev
