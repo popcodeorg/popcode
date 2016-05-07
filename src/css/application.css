@@ -189,58 +189,6 @@ body {
   height: 100%;
 }
 
-.toolbar {
-  border-bottom: 1px solid darkgray;
-  background-color: white;
-}
-
-.toolbar-showHide {
-  height: 1rem;
-  padding: 0.5rem 0;
-  background-color: rgb(220, 220, 220);
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-}
-
-.toolbar-menu {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 50%;
-  float: left;
-}
-
-.toolbar-menu-item {
-  cursor: pointer;
-  border-radius: 3px;
-  border: 1px solid gray;
-  padding: 0.5em;
-  margin: 1em;
-}
-
-.toolbar-menu-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.toolbar-menu-item:hover, .toolbar-menu-item--active {
-  background-color: lightblue;
-}
-
-.toolbar-menu-item--active {
-  font-weight: bold;
-}
-
-.toolbar-menu--closed {
-  display: none;
-}
-
-.toolbar-menu--open {
-  display: block;
-}
-
 .environment {
   box-sizing: border-box;
   flex: 1 1 auto;
