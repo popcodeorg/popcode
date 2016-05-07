@@ -1508,8 +1508,8 @@
       }
     },
     "eslint-plugin-react": {
-      "version": "3.16.1",
-      "resolved": "https://registry.npmjs.org/eslint-plugin-react/-/eslint-plugin-react-3.16.1.tgz"
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/eslint-plugin-react/-/eslint-plugin-react-5.0.1.tgz"
     },
     "eslint_d": {
       "version": "2.5.1",
