@@ -55,7 +55,7 @@
         "big": "You shouldn't use the <big> tag. Use the CSS font-size property instead",
         "center": "You shouldn't use the <center> tag. Use the CSS text-align property instead",
         "font": "You shouldn't use the <font> tag. Use the CSS font-family property instead.",
-        "i": "You shouldn't use the <i> tag. Use the <em> tag instead",
+        "i": "You shouldn't use the <i> tag. Use the <em> tag or the CSS font-style: italic property instead",
         "strike": "You shouldn't use the <strike> tag. Use the CSS property text-decoration: line-through instead",
         "tt": "You shouldn't use the <tt> tag. Use the <code> tag instead."
       },
