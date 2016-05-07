@@ -290,6 +290,14 @@ function maximizeComponent(componentName) {
   };
 }
 
+function toggleDashboard() {
+  return {type: 'DASHBOARD_TOGGLED'};
+}
+
+function toggleDashboardSubmenu(submenu) {
+  return {type: 'DASHBOARD_SUBMENU_TOGGLED', payload: {submenu}};
+}
+
 function bootstrap({gistId} = {gistId: null}) {
   return (dispatch, getState) => {
     const initialAuth = new Promise((resolve) => {
@@ -329,5 +337,7 @@ export {
   clearRuntimeErrors,
   minimizeComponent,
   maximizeComponent,
+  toggleDashboard,
+  toggleDashboardSubmenu,
   bootstrap,
 };

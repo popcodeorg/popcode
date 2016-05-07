@@ -46,6 +46,7 @@ class PreviewGenerator {
     this._previewHead = this._ensureElement('head');
     this.previewBody = this._ensureElement('body');
 
+    this.previewText = (this.previewBody.innerText || '').trim();
     this._attachLibraries();
 
     this._addCss();
@@ -129,5 +130,9 @@ function generatePreview(project) {
   return new PreviewGenerator(project).previewDocument;
 }
 
-export {sourceDelimiter};
+function generateTextPreview(project) {
+  return new PreviewGenerator(project).previewText;
+}
+
+export {sourceDelimiter, generateTextPreview};
 export default generatePreview;

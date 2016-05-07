@@ -5,8 +5,10 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
+import sortBy from 'lodash/sortBy';
 import i18n from 'i18next-client';
 import qs from 'qs';
+import appFirebase from '../services/appFirebase';
 
 import {
   addRuntimeError,
@@ -17,13 +19,15 @@ import {
   toggleLibrary,
   minimizeComponent,
   maximizeComponent,
+  toggleDashboard,
+  toggleDashboardSubmenu,
   bootstrap,
 } from '../actions';
 
 import Editor from './Editor';
 import Output from './Output';
-import Toolbar from './Toolbar';
-import {WordmarkVertical} from '../util/SVG';
+import Sidebar from './Sidebar';
+import Dashboard from './Dashboard';
 
 function mapStateToProps(state) {
   const currentProject = state.projects.get(
@@ -35,8 +39,13 @@ function mapStateToProps(state) {
     currentProjectJS = currentProject.toJS();
   }
 
+  const projects = sortBy(
+    values(state.projects.toJS()),
+    (project) => -project.updatedAt
+  );
+
   return {
-    allProjects: values(state.projects.toJS()),
+    allProjects: projects,
     currentProject: currentProjectJS,
     errors: state.errors.toJS(),
     runtimeErrors: state.runtimeErrors.toJS(),
@@ -126,6 +135,10 @@ class Workspace extends React.Component {
     this.props.dispatch(changeCurrentProject(project.projectKey));
   }
 
+  _onDashboardSubmenuToggled(submenu) {
+    this.props.dispatch(toggleDashboardSubmenu(submenu));
+  }
+
   _onRuntimeError(error) {
     this.props.dispatch(addRuntimeError(error));
   }
@@ -183,6 +196,57 @@ class Workspace extends React.Component {
     );
   }
 
+  _onToggleDashboard() {
+    this.props.dispatch(toggleDashboard());
+  }
+
+  _onStartLogIn() {
+    appFirebase.authWithOAuthPopup(
+      'github',
+      {remember: 'sessionOnly', scope: 'gist'}
+    );
+  }
+
+  _onLogOut() {
+    appFirebase.unauth();
+  }
+
+  _renderDashboard() {
+    if (!this.props.ui.dashboard.isOpen) {
+      return null;
+    }
+
+    return (
+      <div className="layout-dashboard">
+        <Dashboard
+          currentUser={this.props.currentUser}
+          currentProject={this.props.currentProject}
+          allProjects={this.props.allProjects}
+          activeSubmenu={this.props.ui.dashboard.activeSubmenu}
+          onProjectSelected={this._onProjectSelected.bind(this)}
+          onStartLogIn={this._onStartLogIn.bind(this)}
+          onLogOut={this._onLogOut.bind(this)}
+          onNewProject={this._onNewProject.bind(this)}
+          onSubmenuToggled={this._onDashboardSubmenuToggled.bind(this)}
+          onLibraryToggled={this._onLibraryToggled.bind(this)}
+        />
+      </div>
+    );
+  }
+
+  _renderSidebar() {
+    return (
+      <div className="layout-sidebar">
+        <Sidebar
+          dashboardIsOpen={this.props.ui.dashboard.isOpen}
+          onToggleDashboard={this._onToggleDashboard.bind(this)}
+          minimizedComponents={this.props.ui.minimizedComponents}
+          onComponentMaximized={this._onComponentMaximized.bind(this)}
+        />
+      </div>
+    );
+  }
+
   _renderEnvironment() {
     return (
       <div className="environment">
@@ -192,49 +256,12 @@ class Workspace extends React.Component {
     );
   }
 
-  _renderToolbar() {
-    return (
-      <Toolbar
-        allProjects={this.props.allProjects}
-        currentProject={this.props.currentProject}
-        currentUser={this.props.currentUser}
-        onLibraryToggled={this._onLibraryToggled.bind(this)}
-        onNewProject={this._onNewProject.bind(this)}
-        onProjectSelected={this._onProjectSelected.bind(this)}
-      />
-    );
-  }
-
-  _renderMinimizedComponents() {
-    const components = this.props.ui.minimizedComponents.
-      map((componentName) => (
-        <div
-          key={componentName}
-          className="layout-sidebar-minimizedComponent"
-          onClick={this._onComponentMaximized.bind(this, componentName)}
-        >
-          {i18n.t(`workspace.components.${componentName}`)}
-        </div>
-      ));
-
-    return (
-      <div className="layout-sidebar-minimizedComponents">
-        {components}
-      </div>
-    );
-  }
-
   render() {
     return (
       <div className="layout">
-        <div className="layout-sidebar">
-          <div className="layout-sidebar-wordmarkContainer">
-            <WordmarkVertical className="layout-sidebar-wordmark"/>
-          </div>
-          {this._renderMinimizedComponents()}
-        </div>
+        {this._renderDashboard()}
+        {this._renderSidebar()}
         <div id="workspace" className="layout-main">
-          {this._renderToolbar()}
           {this._renderEnvironment()}
         </div>
       </div>

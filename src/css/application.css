@@ -16,31 +16,37 @@ body {
 
 .layout-sidebar {
   flex: 0 1 auto;
-  background-color: #00ff85;
   border-right: 1px solid darkgray;
   display: flex;
-  flex-direction: column;
 }
 
-.layout-sidebar-wordmarkContainer {
+.sidebar {
+  background-color: #00ff85;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 0 1 auto;
+}
+
+.sidebar-wordmarkContainer {
   flex: 1 0 auto;
 }
 
-.layout-sidebar-wordmark {
+.sidebar-wordmark {
   padding: 10px;
   max-width: 30px;
   height: auto;
 }
 
-.layout-sidebar-wordmark path {
+.sidebar-wordmark path {
   fill: white;
 }
 
-.layout-sidebar-minimizedComponents {
+.sidebar-minimizedComponents {
   flex: 0 0 auto;
 }
 
-.layout-sidebar-minimizedComponent {
+.sidebar-minimizedComponent {
   background-color: white;
   text-align: center;
   margin-top: 0.5em;
@@ -50,7 +56,7 @@ body {
   cursor: pointer;
 }
 
-.layout-sidebar-minimizedComponent:before {
+.sidebar-minimizedComponent:before {
   display: block;
   position: absolute;
   width: 1em;
@@ -64,6 +70,115 @@ body {
   border-left: solid 0.5em transparent;
 }
 
+.sidebar-arrow {
+  border-top: 5px solid white;
+  height: 0;
+  width: 50%;
+  padding-bottom: 50%;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.sidebar-arrow--show {
+  border-right: 5px solid white;
+  transform: rotate(45deg);
+  transform-origin: left 50%;
+}
+
+.sidebar-arrow--hide {
+  border-left: 5px solid white;
+  transform: rotate(-45deg);
+  transform-origin: right 50%;
+}
+
+.dashboard {
+  background-color: #00ff85;
+  color: white;
+  height: 100vh;
+}
+
+.dashboard-session {
+  font-size: 0.8rem;
+  white-space: nowrap;
+  padding: 1em;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.dashboard-session-avatar {
+  max-width: 32px;
+  max-height: 32px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.dashboard-session-name {
+  font-weight: bold;
+  padding-left: 0.5rem;
+}
+
+.dashboard-session-logInOut {
+  padding-left: 1rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.dashboard-menu {
+  flex: 0 1 auto;
+}
+
+.dashboard-menu--scrollable {
+  margin: 1rem 0;
+  overflow: scroll;
+}
+
+.dashboard-menu--grid {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  justify-content: space-around;
+}
+
+.dashboard-menu-item {
+  font-size: 0.8rem;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  box-sizing: border-box;
+  margin: 0.5rem 10%;
+  padding: 0.2rem 0.5rem;
+}
+
+.dashboard-menu-item--grid {
+  flex: 0 0 40%;
+  white-space: nowrap;
+  margin: 0 0 0.5rem 0;
+  padding: 1rem 0.5rem;
+  text-align: center;
+}
+
+.dashboard-menu-item:hover, .dashboard-menu-item--active {
+  background-color: lightgray;
+  color: white;
+}
+
+.dashboard-menu-item--active {
+  font-weight: bold;
+}
+
+.projectPreview-timestamp {
+  text-align: right;
+  color: darkgray;
+  font-style: italic;
+  font-weight: normal;
+}
+
 .layout-main {
   flex: 1 1 100%;
 }
@@ -72,58 +187,6 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-
-.toolbar {
-  border-bottom: 1px solid darkgray;
-  background-color: white;
-}
-
-.toolbar-showHide {
-  height: 1rem;
-  padding: 0.5rem 0;
-  background-color: rgb(220, 220, 220);
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-}
-
-.toolbar-menu {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 50%;
-  float: left;
-}
-
-.toolbar-menu-item {
-  cursor: pointer;
-  border-radius: 3px;
-  border: 1px solid gray;
-  padding: 0.5em;
-  margin: 1em;
-}
-
-.toolbar-menu-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.toolbar-menu-item:hover, .toolbar-menu-item--active {
-  background-color: lightblue;
-}
-
-.toolbar-menu-item--active {
-  font-weight: bold;
-}
-
-.toolbar-menu--closed {
-  display: none;
-}
-
-.toolbar-menu--open {
-  display: block;
 }
 
 .environment {
@@ -271,4 +334,24 @@ body {
   border-radius: 25%;
   display: inline-block;
   margin-right: 0.5em;
+}
+
+.u-flexContainer {
+  display: flex;
+}
+
+.u-flexContainer--column {
+  flex-direction: column;
+}
+
+.u-flexItem {
+  flex: 0 1 auto;
+}
+
+.u-flexItem--grow {
+  flex: 1 0 auto;
+}
+
+.u-flexItem--fill {
+  flex: 1 0 100%;
 }

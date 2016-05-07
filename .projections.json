@@ -1,7 +1,7 @@
 {
   "src/components/*.jsx": {
     "type": "component",
-    "template": "var React = require('react');\n\nvar {camelcase|capitalize} = React.createClass({open}\n  render: function() {open}\n  {close}\n{close});\n\nmodule.exports = {camelcase|capitalize};"
+    "template": "import React from 'react';\n\nclass {camelcase|capitalize} extends React.Component {open}\n  render() {open}\n  {close}\n{close};\n\nexport default {camelcase|capitalize};"
   },
   "src/store.js": {
     "type": "store"
@@ -23,5 +23,6 @@
     "alternate": "src/reducers/{}.js"
   },
   "src/validations/*.js": {"type": "validation"},
-  "src/static/*": {"type": "static"}
+  "src/static/*": {"type": "static"},
+  "src/css/application.css": {"type": "stylesheet"}
 }

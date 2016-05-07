@@ -23,6 +23,7 @@ const srcDir = 'src';
 const baseDir = 'static';
 const distDir = `${baseDir}/compiled`;
 const stylesheetsDir = `${srcDir}/css`;
+const bowerComponents = 'bower_components';
 
 let browserifyImpl;
 if (gulp.env.production) {
@@ -68,7 +69,11 @@ gulp.task('env', () => {
   }
 });
 
-gulp.task('css', () => gulp.src(`${stylesheetsDir}/**/*.css`).
+gulp.task('css', () => gulp.
+  src([
+    `${bowerComponents}/normalize-css/normalize.css`,
+    `${stylesheetsDir}/**/*.css`,
+  ]).
   pipe(concat('application.css')).
   pipe(sourcemaps.init({loadMaps: true})).
   pipe(gutil.env.production ? cssnano() : gutil.noop()).
