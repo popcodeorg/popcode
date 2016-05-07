@@ -172,6 +172,13 @@ body {
   font-weight: bold;
 }
 
+.projectPreview-timestamp {
+  text-align: right;
+  color: darkgray;
+  font-style: italic;
+  font-weight: normal;
+}
+
 .layout-main {
   flex: 1 1 100%;
 }

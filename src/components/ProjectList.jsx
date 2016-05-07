@@ -16,13 +16,18 @@ class ProjectList extends React.Component {
         <div
           key={project.projectKey}
           className={classnames(
+            'projectPreview',
             'dashboard-menu-item',
             {'dashboard-menu-item--active': isSelected}
           )}
           onClick={this.props.onProjectSelected.bind(null, project)}
         >
-          <div>{moment(project.updatedAt).fromNow()}</div>
-          <div>{preview.slice(0, MAX_LENGTH)}</div>
+          <div className="projectPreview-timestamp">
+            {moment(project.updatedAt).fromNow()}
+          </div>
+          <div className="projectPreview-previewText">
+            {preview.slice(0, MAX_LENGTH)}
+          </div>
         </div>
       );
     });
