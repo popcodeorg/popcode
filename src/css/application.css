@@ -32,14 +32,14 @@ body {
   flex: 1 0 auto;
 }
 
-.sidebar-wordmark {
+.sidebar-wordmarkContainer svg {
   padding: 10px;
   max-width: 30px;
   height: auto;
 }
 
-.sidebar-wordmark path {
-  fill: white;
+.sidebar-wordmarkContainer path {
+  fill: white !important;
 }
 
 .sidebar-minimizedComponents {
