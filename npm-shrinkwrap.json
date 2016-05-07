@@ -2855,8 +2855,8 @@
       "resolved": "https://registry.npmjs.org/js-yaml/-/js-yaml-3.6.0.tgz"
     },
     "jsdom": {
-      "version": "8.5.0",
-      "resolved": "https://registry.npmjs.org/jsdom/-/jsdom-8.5.0.tgz",
+      "version": "9.0.0",
+      "resolved": "https://registry.npmjs.org/jsdom/-/jsdom-9.0.0.tgz",
       "dependencies": {
         "acorn": {
           "version": "2.7.0",
@@ -2864,19 +2864,21 @@
         },
         "escodegen": {
           "version": "1.8.0",
-          "resolved": "https://registry.npmjs.org/escodegen/-/escodegen-1.8.0.tgz"
-        },
-        "estraverse": {
-          "version": "1.9.3",
-          "resolved": "https://registry.npmjs.org/estraverse/-/estraverse-1.9.3.tgz"
-        },
-        "esutils": {
-          "version": "2.0.2",
-          "resolved": "https://registry.npmjs.org/esutils/-/esutils-2.0.2.tgz"
-        },
-        "source-map": {
-          "version": "0.2.0",
-          "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.2.0.tgz"
+          "resolved": "https://registry.npmjs.org/escodegen/-/escodegen-1.8.0.tgz",
+          "dependencies": {
+            "estraverse": {
+              "version": "1.9.3",
+              "resolved": "https://registry.npmjs.org/estraverse/-/estraverse-1.9.3.tgz"
+            },
+            "esutils": {
+              "version": "2.0.2",
+              "resolved": "https://registry.npmjs.org/esutils/-/esutils-2.0.2.tgz"
+            },
+            "source-map": {
+              "version": "0.2.0",
+              "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.2.0.tgz"
+            }
+          }
         }
       }
     },

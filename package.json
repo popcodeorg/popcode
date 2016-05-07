@@ -100,7 +100,7 @@
     "immutable-devtools": "0.0.7",
     "jasmine-pit": "^2.0.2",
     "jquery": "^2.2.2",
-    "jsdom": "^8.1.0",
+    "jsdom": "^9.0.0",
     "mocha": "^2.4.5",
     "mockfirebase": "^0.12.0",
     "npm-shrinkwrap": "^200.5.1",
