@@ -216,11 +216,6 @@
       "version": "0.6.0",
       "resolved": "https://registry.npmjs.org/aws-sign2/-/aws-sign2-0.6.0.tgz"
     },
-    "axios": {
-      "version": "0.9.0",
-      "from": "axios@git+https://github.com/github-tools/axios.git",
-      "resolved": "git+https://github.com/github-tools/axios.git#65e8691b48e10a11a064f0e027dd3d7e0b97609c"
-    },
     "babel-code-frame": {
       "version": "6.8.0",
       "resolved": "https://registry.npmjs.org/babel-code-frame/-/babel-code-frame-6.8.0.tgz",
@@ -546,10 +541,6 @@
     "balanced-match": {
       "version": "0.4.1",
       "resolved": "https://registry.npmjs.org/balanced-match/-/balanced-match-0.4.1.tgz"
-    },
-    "base-64": {
-      "version": "0.1.0",
-      "resolved": "https://registry.npmjs.org/base-64/-/base-64-0.1.0.tgz"
     },
     "base62": {
       "version": "0.1.1",
@@ -2324,8 +2315,14 @@
       "resolved": "https://registry.npmjs.org/get-stdin/-/get-stdin-4.0.1.tgz"
     },
     "github-api": {
-      "version": "0.11.2",
-      "resolved": "https://registry.npmjs.org/github-api/-/github-api-0.11.2.tgz"
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/github-api/-/github-api-1.1.0.tgz",
+      "dependencies": {
+        "axios": {
+          "version": "0.10.0",
+          "resolved": "https://registry.npmjs.org/axios/-/axios-0.10.0.tgz"
+        }
+      }
     },
     "glob": {
       "version": "5.0.15",

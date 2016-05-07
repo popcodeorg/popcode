@@ -69,7 +69,7 @@ const Gists = {
     const github = clientForUser(user);
 
     return new Promise((resolve, reject) => {
-      new github.Gist({}).create(
+      github.getGist().create(
         createGistFromProject(project),
         (error, response) => {
           if (error) {

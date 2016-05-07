@@ -41,7 +41,7 @@
     "envify": "^3.4.0",
     "esprima": "^2.7.2",
     "firebase": "^2.4.1",
-    "github-api": "^0.11.2",
+    "github-api": "^1.1.0",
     "htmllint": "^0.3.0",
     "i18next-client": "^1.10.2",
     "immutable": "^3.7.5",
