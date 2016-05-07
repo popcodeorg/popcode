@@ -294,11 +294,8 @@ function toggleDashboard() {
   return {type: 'DASHBOARD_TOGGLED'};
 }
 
-function toggleProjectList() {
-  return {
-    type: 'DASHBOARD_SUBMENU_TOGGLED',
-    payload: {submenu: 'projectList'},
-  };
+function toggleDashboardSubmenu(submenu) {
+  return {type: 'DASHBOARD_SUBMENU_TOGGLED', payload: {submenu}};
 }
 
 function bootstrap({gistId} = {gistId: null}) {
@@ -341,6 +338,6 @@ export {
   minimizeComponent,
   maximizeComponent,
   toggleDashboard,
-  toggleProjectList,
+  toggleDashboardSubmenu,
   bootstrap,
 };

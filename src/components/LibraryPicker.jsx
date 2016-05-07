@@ -20,7 +20,7 @@ class LibraryPicker extends React.Component {
       />
     ));
 
-    return <ul className="toolbar-menu">{libraryButtons}</ul>;
+    return <div className="dashboard-menu">{libraryButtons}</div>;
   }
 }
 

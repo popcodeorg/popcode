@@ -5,6 +5,7 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
+import sortBy from 'lodash/sortBy';
 import i18n from 'i18next-client';
 import qs from 'qs';
 import appFirebase from '../services/appFirebase';
@@ -19,7 +20,7 @@ import {
   minimizeComponent,
   maximizeComponent,
   toggleDashboard,
-  toggleProjectList,
+  toggleDashboardSubmenu,
   bootstrap,
 } from '../actions';
 
@@ -38,8 +39,13 @@ function mapStateToProps(state) {
     currentProjectJS = currentProject.toJS();
   }
 
+  const projects = sortBy(
+    values(state.projects.toJS()),
+    (project) => -project.updatedAt
+  );
+
   return {
-    allProjects: values(state.projects.toJS()),
+    allProjects: projects,
     currentProject: currentProjectJS,
     errors: state.errors.toJS(),
     runtimeErrors: state.runtimeErrors.toJS(),
@@ -129,8 +135,8 @@ class Workspace extends React.Component {
     this.props.dispatch(changeCurrentProject(project.projectKey));
   }
 
-  _onProjectListToggled() {
-    this.props.dispatch(toggleProjectList());
+  _onDashboardSubmenuToggled(submenu) {
+    this.props.dispatch(toggleDashboardSubmenu(submenu));
   }
 
   _onRuntimeError(error) {
@@ -221,7 +227,8 @@ class Workspace extends React.Component {
           onStartLogIn={this._onStartLogIn.bind(this)}
           onLogOut={this._onLogOut.bind(this)}
           onNewProject={this._onNewProject.bind(this)}
-          onProjectListToggled={this._onProjectListToggled.bind(this)}
+          onSubmenuToggled={this._onDashboardSubmenuToggled.bind(this)}
+          onLibraryToggled={this._onLibraryToggled.bind(this)}
         />
       </div>
     );

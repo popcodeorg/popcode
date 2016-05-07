@@ -4,13 +4,13 @@ import classnames from 'classnames';
 class LibraryPickerItem extends React.Component {
   render() {
     return (
-      <li className={classnames(
-        'toolbar-menu-item',
-        {'toolbar-menu-item--active': this.props.enabled}
+      <div className={classnames(
+        'dashboard-menu-item',
+        {'dashboard-menu-item--active': this.props.enabled}
       )} onClick={this.props.onLibraryToggled}
       >
         {this.props.library.name}
-      </li>
+      </div>
     );
   }
 }

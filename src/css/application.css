@@ -129,7 +129,15 @@ body {
 }
 
 .dashboard-menu {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
+}
+
+.dashboard-menu--scrollable {
+  margin: 1rem 0;
+  overflow: scroll;
+}
+
+.dashboard-menu--grid {
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
@@ -139,20 +147,29 @@ body {
 
 .dashboard-menu-item {
   font-size: 0.8rem;
-  text-align: center;
   background-color: white;
   color: black;
-  padding: 1rem 0.5rem;
-  margin-bottom: 0.5rem;
   cursor: pointer;
-  white-space: nowrap;
-  flex: 0 0 40%;
   box-sizing: border-box;
+  margin: 0.5rem 10%;
+  padding: 0.2rem 0.5rem;
 }
 
-.dashboard-menu-item:hover {
+.dashboard-menu-item--grid {
+  flex: 0 0 40%;
+  white-space: nowrap;
+  margin: 0 0 0.5rem 0;
+  padding: 1rem 0.5rem;
+  text-align: center;
+}
+
+.dashboard-menu-item:hover, .dashboard-menu-item--active {
   background-color: lightgray;
   color: white;
+}
+
+.dashboard-menu-item--active {
+  font-weight: bold;
 }
 
 .layout-main {
