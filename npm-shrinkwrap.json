@@ -1216,9 +1216,9 @@
       }
     },
     "babelify": {
-      "version": "7.2.0",
-      "from": "babelify@>=7.2.0 <8.0.0",
-      "resolved": "https://registry.npmjs.org/babelify/-/babelify-7.2.0.tgz"
+      "version": "7.3.0",
+      "from": "babelify@7.3.0",
+      "resolved": "https://registry.npmjs.org/babelify/-/babelify-7.3.0.tgz"
     },
     "babylon": {
       "version": "6.8.0",
@@ -1256,9 +1256,9 @@
       "resolved": "https://registry.npmjs.org/base64-arraybuffer/-/base64-arraybuffer-0.1.2.tgz"
     },
     "base64-js": {
-      "version": "1.1.1",
-      "from": "base64-js@>=1.0.2 <2.0.0",
-      "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-1.1.1.tgz"
+      "version": "1.1.2",
+      "from": "base64-js@1.1.2",
+      "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-1.1.2.tgz"
     },
     "base64id": {
       "version": "0.1.0",
@@ -8243,7 +8243,8 @@
       "dependencies": {
         "semver": {
           "version": "5.1.0",
-          "from": "semver@>=5.0.3 <6.0.0"
+          "from": "semver@5.1.0",
+          "resolved": "https://registry.npmjs.org/semver/-/semver-5.1.0.tgz"
         }
       }
     },
