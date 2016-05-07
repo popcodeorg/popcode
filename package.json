@@ -108,7 +108,6 @@
     "proxyquire-universal": "^1.0.8",
     "proxyquireify": "^3.1.1",
     "react-addons-test-utils": "^15.0.2",
-    "rquery": "git+https://github.com/percyhanna/rquery.git#v4.3.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "xmlshim": "^0.2.0"

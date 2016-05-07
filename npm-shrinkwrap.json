@@ -5511,17 +5511,6 @@
       "version": "1.0.1",
       "resolved": "https://registry.npmjs.org/ripemd160/-/ripemd160-1.0.1.tgz"
     },
-    "rquery": {
-      "version": "4.3.0",
-      "from": "rquery@git+https://github.com/percyhanna/rquery.git#2cde1aced6e63486d4695b1166b3344cd4d42d52",
-      "resolved": "git+https://github.com/percyhanna/rquery.git#2cde1aced6e63486d4695b1166b3344cd4d42d52",
-      "dependencies": {
-        "lodash": {
-          "version": "3.10.1",
-          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
-        }
-      }
-    },
     "ruglify": {
       "version": "1.0.0",
       "resolved": "https://registry.npmjs.org/ruglify/-/ruglify-1.0.0.tgz",
