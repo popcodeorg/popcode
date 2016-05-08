@@ -5334,8 +5334,8 @@
       "resolved": "https://registry.npmjs.org/redux-logger/-/redux-logger-2.6.1.tgz"
     },
     "redux-thunk": {
-      "version": "1.0.3",
-      "resolved": "https://registry.npmjs.org/redux-thunk/-/redux-thunk-1.0.3.tgz"
+      "version": "2.0.1",
+      "resolved": "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.0.1.tgz"
     },
     "regenerate": {
       "version": "1.2.1",
