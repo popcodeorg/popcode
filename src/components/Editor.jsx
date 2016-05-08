@@ -37,6 +37,7 @@ class Editor extends React.Component {
       this._editor.$blockScrolling = Infinity;
       this._configureSession(this._editor.getSession());
       this._disableAutoClosing();
+      this._editor.resize();
       this._editor.on('focus', this._editor.resize.bind(this._editor));
     } else {
       this._editor.destroy();
@@ -52,10 +53,12 @@ class Editor extends React.Component {
     this._configureSession(session);
     this._editor.setSession(session);
     this._editor.moveCursorTo(0, 0);
+    this._editor.resize();
   }
 
   _configureSession(session) {
     const language = this.props.language;
+    session.setUseWrapMode(true);
     session.setUseWorker(false);
     session.setMode(`ace/mode/${language}`);
     session.on('change', () => {
