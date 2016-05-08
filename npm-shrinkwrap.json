@@ -5900,8 +5900,8 @@
       "resolved": "https://registry.npmjs.org/ternary/-/ternary-1.0.0.tgz"
     },
     "text-encoding": {
-      "version": "0.5.5",
-      "resolved": "https://registry.npmjs.org/text-encoding/-/text-encoding-0.5.5.tgz"
+      "version": "0.6.0",
+      "resolved": "https://registry.npmjs.org/text-encoding/-/text-encoding-0.6.0.tgz"
     },
     "text-table": {
       "version": "0.2.0",

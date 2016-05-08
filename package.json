@@ -59,7 +59,7 @@
     "redux-logger": "^2.5.0",
     "redux-thunk": "^2.0.1",
     "slowparse": "^1.1.4",
-    "text-encoding": "^0.5.2"
+    "text-encoding": "^0.6.0"
   },
   "engines": {
     "node": "4.2.x"
