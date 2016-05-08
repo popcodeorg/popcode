@@ -28,7 +28,7 @@ class Sidebar extends React.Component {
     return (
       <div className="sidebar">
         <div className="sidebar-wordmarkContainer">
-          <Isvg src="/images/wordmark-vertical.svg"/>
+          <Isvg src="/images/wordmark-vertical.svg" />
           <div
             className={classnames(
               'sidebar-arrow',
