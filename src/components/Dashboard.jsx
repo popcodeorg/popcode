@@ -77,7 +77,7 @@ class Dashboard extends React.Component {
     }
 
     return (
-      <div className="dashboard-menu--grid">
+      <div className="dashboard-menu dashboard-menu--grid">
         {newProjectButton}
         {loadProjectButton}
         {this._renderSubmenuToggleButton('libraryPicker', 'libraries')}
