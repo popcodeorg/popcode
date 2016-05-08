@@ -83,6 +83,7 @@ class PreviewFrame extends React.Component {
     const normalizedError = normalizeError(error);
 
     this.props.onRuntimeError({
+      reason: normalizedError.type,
       text: normalizedError.message,
       raw: normalizedError.message,
       row: data.error.line - this._runtimeErrorLineOffset() - 1,
