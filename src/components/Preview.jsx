@@ -13,7 +13,10 @@ class Preview extends React.Component {
       return '';
     }
 
-    return generatePreview(project).documentElement.outerHTML;
+    return generatePreview(
+      project,
+      {targetBaseTop: true, propagateErrorsToParent: true}
+    ).documentElement.outerHTML;
   }
 
   _popOut() {
