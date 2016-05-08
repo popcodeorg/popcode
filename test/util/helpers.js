@@ -1,23 +1,33 @@
 import $ from 'jquery';
+import find from 'lodash/find';
+import ReactDOM from 'react-dom';
+import Editor from '../../src/components/Editor';
+import {scryRenderedComponentsWithType} from 'react-addons-test-utils';
 import {DOMParser} from 'xmlshim';
 import mockFirebase from './mockFirebase';
 
 const parser = new DOMParser();
 
-function updateSource($application, language, source) {
-  const $editor = $application.find(`Editor[language="${language}"]`);
-  $editor[0]._editor.setValue(source);
+function updateSource(application, language, source) {
+  const editors = scryRenderedComponentsWithType(application, Editor);
+  const editor = find(
+    editors,
+    (anEditor) => anEditor.props.language === language
+  );
+  editor._editor.setValue(source);
 }
 
-function updateHTMLBody($application, source) {
+function updateHTMLBody(application, source) {
   const fullSource =
-    `<!doctype html>\n<html>\n<head><title>Test</title></head>
-    <body>${source}</body>\n</html>\n`;
-  updateSource($application, 'html', fullSource);
+    `<!doctype html>\n<html>\n<head><title>Test</title></head><body>
+    ${source}
+    </body>\n</html>\n`;
+  updateSource(application, 'html', fullSource);
 }
 
-function parsedPreview($application) {
-  const $iframe = $($application.nodes()).find('.preview-frame');
+function parsedPreview(application) {
+  const $ui = $(ReactDOM.findDOMNode(application));
+  const $iframe = $ui.find('.preview-frame');
   return parser.parseFromString(
     $iframe.prop('srcdoc'),
     'text/html'
