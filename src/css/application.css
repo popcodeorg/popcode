@@ -103,6 +103,7 @@ body {
 }
 
 .dashboard-session {
+  flex: 0 0 auto;
   font-size: 0.8rem;
   white-space: nowrap;
   padding: 1em;
@@ -129,11 +130,11 @@ body {
 }
 
 .dashboard-menu {
-  flex: 0 1 auto;
+  flex: 0 0 auto;
 }
 
 .dashboard-menu--scrollable {
-  margin: 1rem 0;
+  flex: 0 1 auto;
   overflow: scroll;
 }
 
