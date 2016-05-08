@@ -4,7 +4,7 @@ import castArray from 'lodash/castArray';
 import clone from 'lodash/clone';
 import compact from 'lodash/compact';
 import get from 'lodash/get';
-import {JSHINT} from 'jshint';
+import {JSHINT as jshint} from 'jshint';
 import libraries from '../../config/libraries';
 
 const jshintrc = {
@@ -17,7 +17,6 @@ const jshintrc = {
   predef: [],
   shadow: 'outer',
   undef: true,
-  unused: true,
 };
 
 const match = {
@@ -125,8 +124,13 @@ class JsHintValidator extends Validator {
   }
 
   _getRawErrors() {
-    JSHINT(this._source, this._jshintOptions); // eslint-disable-line new-cap
-    const data = JSHINT.data();
+    try {
+      jshint(this._source, this._jshintOptions);
+    } catch (e) {
+      return [];
+    }
+
+    const data = jshint.data();
     return compact(castArray(data.errors));
   }
 
