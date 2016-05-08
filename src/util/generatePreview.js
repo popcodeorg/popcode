@@ -37,7 +37,7 @@ const errorHandlerScript = `(${(() => {
 }).toString()}());`;
 
 class PreviewGenerator {
-  constructor(project) {
+  constructor(project, options = {}) {
     this._project = project;
     this.previewDocument = parser.parseFromString(
       project.sources.html,
@@ -49,8 +49,13 @@ class PreviewGenerator {
     this.previewText = (this.previewBody.innerText || '').trim();
     this._attachLibraries();
 
+    if (options.targetBaseTop) {
+      this._addBase();
+    }
     this._addCss();
-    this._addErrorHandling();
+    if (options.propagateErrorsToParent) {
+      this._addErrorHandling();
+    }
     this._addJavascript();
   }
 
@@ -70,6 +75,17 @@ class PreviewGenerator {
       this._ensureDocumentElement().appendChild(element);
     }
     return element;
+  }
+
+  _addBase() {
+    const baseTag = this.previewDocument.createElement('base');
+    baseTag.target = '_top';
+    const firstChild = this._previewHead.childNodes[0];
+    if (firstChild) {
+      this._previewHead.insertBefore(baseTag, firstChild);
+    } else {
+      this._previewHead.appendChild(baseTag);
+    }
   }
 
   _addCss() {
@@ -126,8 +142,8 @@ class PreviewGenerator {
   }
 }
 
-function generatePreview(project) {
-  return new PreviewGenerator(project).previewDocument;
+function generatePreview(project, options) {
+  return new PreviewGenerator(project, options).previewDocument;
 }
 
 function generateTextPreview(project) {
