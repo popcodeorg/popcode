@@ -53,6 +53,8 @@ const errorMap = {
     });
   },
 
+  'Unexpected end of input': () => ({reason: 'end-of-input'}),
+
   'Unexpected token ILLEGAL': () => ({reason: 'tokenize-error'}),
 };
 
@@ -78,9 +80,7 @@ class EsprimaValidator extends Validator {
       try {
         const tokens = esprima.tokenize(this._source, {loc: true});
         const token = findTokenForError(error, tokens);
-        if (token) {
-          return [{error, token}];
-        }
+        return [{error, token}];
       } catch (tokenizeError) {
         return [{error: tokenizeError}];
       }
