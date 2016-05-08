@@ -1,6 +1,7 @@
 import React from 'react';
 import ACE from 'brace';
 import i18n from 'i18next-client';
+import bindAll from 'lodash/bindAll';
 
 import 'brace/mode/html';
 import 'brace/mode/css';
@@ -15,6 +16,11 @@ function createSessionWithoutWorker(source, language) {
 }
 
 class Editor extends React.Component {
+  constructor() {
+    super();
+    bindAll(this, '_resizeEditor', '_setupEditor');
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.projectKey !== this.props.projectKey) {
       this._startNewSession(nextProps.source);
@@ -38,14 +44,18 @@ class Editor extends React.Component {
     this._editor.focus();
   }
 
+  _resizeEditor() {
+    this._editor.resize();
+  }
+
   _setupEditor(containerElement) {
     if (containerElement) {
       this._editor = ACE.edit(containerElement);
       this._editor.$blockScrolling = Infinity;
       this._startNewSession(this.props.source);
       this._disableAutoClosing();
-      this._editor.resize();
-      this._editor.on('focus', this._editor.resize.bind(this._editor));
+      this._resizeEditor();
+      this._editor.on('focus', this._resizeEditor);
     } else {
       this._editor.destroy();
     }
@@ -82,7 +92,7 @@ class Editor extends React.Component {
     return (
       <div
         className="editors-editorContainer-editor"
-        ref={this._setupEditor.bind(this)}
+        ref={this._setupEditor}
       />
     );
   }
@@ -98,10 +108,10 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  projectKey: React.PropTypes.string.isRequired,
-  source: React.PropTypes.string.isRequired,
   errors: React.PropTypes.array.isRequired,
   language: React.PropTypes.string.isRequired,
+  projectKey: React.PropTypes.string.isRequired,
+  source: React.PropTypes.string.isRequired,
   onInput: React.PropTypes.func.isRequired,
   onMinimize: React.PropTypes.func.isRequired,
 };
