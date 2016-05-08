@@ -4,6 +4,7 @@ import config from '../config';
 const Bugsnag = window.Bugsnag.noConflict();
 Bugsnag.apiKey = config.bugsnagApiKey;
 Bugsnag.releaseStage = config.nodeEnv;
+Bugsnag.appVersion = config.gitRevision;
 
 function includeStoreInBugReports(store) {
   Bugsnag.beforeNotify = (payload) => {

@@ -15,6 +15,7 @@ import memoize from 'lodash/memoize';
 import brfs from 'brfs-babel';
 import babelify from 'babelify';
 import envify from 'envify';
+import git from 'git-rev-sync';
 import config from './src/config';
 
 const browserSync = require('browser-sync').create();
@@ -62,6 +63,7 @@ function buildBrowserifyStream(filename) {
 }
 
 gulp.task('env', () => {
+  process.env.GIT_REVISION = git.short();
   if (gulp.env.production) {
     process.env.NODE_ENV = 'production';
   }
