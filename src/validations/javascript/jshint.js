@@ -17,7 +17,6 @@ const jshintrc = {
   predef: [],
   shadow: 'outer',
   undef: true,
-  unused: true,
 };
 
 const match = {
