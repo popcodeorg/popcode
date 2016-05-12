@@ -268,6 +268,7 @@ function importProjectFromGist(projectKey, gistData) {
         join('\n\n'),
     },
     enabledLibraries: [],
+    updatedAt: Date.now(),
   };
 
   return {
