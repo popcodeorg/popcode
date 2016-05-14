@@ -49,10 +49,8 @@ class Editor extends React.Component {
   }
 
   _startNewSession(source) {
-    const language = this.props.language;
-    const session = ACE.createEditSession(source, `ace/mode/${language}`);
+    const session = this._createSessionWithoutWorker(source);
     session.setUseWrapMode(true);
-    session.setUseWorker(false);
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
     });
@@ -60,6 +58,14 @@ class Editor extends React.Component {
     this._editor.setSession(session);
     this._editor.moveCursorTo(0, 0);
     this._editor.resize();
+  }
+
+  _createSessionWithoutWorker(source) {
+    const language = this.props.language;
+    const session = ACE.createEditSession(source, null);
+    session.setUseWorker(false);
+    session.setMode(`ace/mode/${language}`);
+    return session;
   }
 
   _renderLabel() {
