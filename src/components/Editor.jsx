@@ -35,7 +35,7 @@ class Editor extends React.Component {
     if (containerElement) {
       this._editor = ACE.edit(containerElement);
       this._editor.$blockScrolling = Infinity;
-      this._configureSession(this._editor.getSession());
+      this._startNewSession(this.props.source);
       this._disableAutoClosing();
       this._editor.resize();
       this._editor.on('focus', this._editor.resize.bind(this._editor));
@@ -51,21 +51,15 @@ class Editor extends React.Component {
   _startNewSession(source) {
     const language = this.props.language;
     const session = ACE.createEditSession(source, `ace/mode/${language}`);
-    this._configureSession(session);
-    this._editor.setSession(session);
-    this._editor.moveCursorTo(0, 0);
-    this._editor.resize();
-  }
-
-  _configureSession(session) {
-    const language = this.props.language;
     session.setUseWrapMode(true);
     session.setUseWorker(false);
-    session.setMode(`ace/mode/${language}`);
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
     });
     session.setAnnotations(this.props.errors);
+    this._editor.setSession(session);
+    this._editor.moveCursorTo(0, 0);
+    this._editor.resize();
   }
 
   _renderLabel() {
@@ -84,9 +78,7 @@ class Editor extends React.Component {
       <div
         className="editors-editorContainer-editor"
         ref={this._setupEditor.bind(this)}
-      >
-        {this.props.source}
-      </div>
+      />
     );
   }
 
