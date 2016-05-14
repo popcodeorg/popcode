@@ -49,7 +49,8 @@ class Editor extends React.Component {
   }
 
   _startNewSession(source) {
-    const session = new ACE.EditSession(source);
+    const language = this.props.language;
+    const session = ACE.createEditSession(source, `ace/mode/${language}`);
     this._configureSession(session);
     this._editor.setSession(session);
     this._editor.moveCursorTo(0, 0);
