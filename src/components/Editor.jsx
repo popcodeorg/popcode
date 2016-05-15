@@ -7,6 +7,13 @@ import 'brace/mode/css';
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 
+function createSessionWithoutWorker(source, language) {
+  const session = ACE.createEditSession(source, null);
+  session.setUseWorker(false);
+  session.setMode(`ace/mode/${language}`);
+  return session;
+}
+
 class Editor extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.projectKey !== this.props.projectKey) {
@@ -49,7 +56,7 @@ class Editor extends React.Component {
   }
 
   _startNewSession(source) {
-    const session = this._createSessionWithoutWorker(source);
+    const session = createSessionWithoutWorker(source, this.props.language);
     session.setUseWrapMode(true);
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
@@ -58,14 +65,6 @@ class Editor extends React.Component {
     this._editor.setSession(session);
     this._editor.moveCursorTo(0, 0);
     this._editor.resize();
-  }
-
-  _createSessionWithoutWorker(source) {
-    const language = this.props.language;
-    const session = ACE.createEditSession(source, null);
-    session.setUseWorker(false);
-    session.setMode(`ace/mode/${language}`);
-    return session;
   }
 
   _renderLabel() {
