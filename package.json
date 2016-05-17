@@ -48,6 +48,7 @@
     "jshint": "^2.9.1",
     "keymirror": "^0.1.1",
     "lodash": "^4.2.1",
+    "loop-protect": "git+https://github.com/jsbin/loop-protect.git#v1.0.1",
     "moment": "^2.11.2",
     "qs": "^6.1.0",
     "react": "^15.0.2",

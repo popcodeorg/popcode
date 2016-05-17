@@ -15,7 +15,7 @@ class Preview extends React.Component {
 
     return generatePreview(
       project,
-      {targetBaseTop: true, propagateErrorsToParent: true}
+      {targetBaseTop: true, propagateErrorsToParent: true, breakLoops: true}
     ).documentElement.outerHTML;
   }
 

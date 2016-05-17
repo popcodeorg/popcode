@@ -3,6 +3,7 @@ import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
 import normalizeError from '../util/normalizeError';
 import {sourceDelimiter} from '../util/generatePreview';
+import loopProtect from 'loop-protect';
 
 class PreviewFrame extends React.Component {
   constructor() {
@@ -46,6 +47,7 @@ class PreviewFrame extends React.Component {
 
     const frameDocument = this.frame.contentDocument;
     frameDocument.open();
+    this.frame.contentWindow.loopProtect = loopProtect;
     frameDocument.write(this.props.src);
     frameDocument.close();
   }
@@ -93,17 +95,11 @@ class PreviewFrame extends React.Component {
   }
 
   render() {
-    if (Bowser.safari || Bowser.msie) {
-      return (
-        <iframe
-          className="preview-frame"
-          ref={this._saveFrame.bind(this)}
-        />
-      );
-    }
-
     return (
-      <iframe className="preview-frame" srcDoc={this.props.src} />
+      <iframe
+        className="preview-frame"
+        ref={this._saveFrame.bind(this)}
+      />
     );
   }
 }
