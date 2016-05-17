@@ -1,6 +1,8 @@
 import React from 'react';
 import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
+import noop from 'lodash/noop';
+import i18n from 'i18next-client';
 import normalizeError from '../util/normalizeError';
 import {sourceDelimiter} from '../util/generatePreview';
 import loopProtect from 'loop-protect';
@@ -9,6 +11,10 @@ class PreviewFrame extends React.Component {
   constructor() {
     super();
     bindAll(this, '_onMessage');
+  }
+
+  componentWillMount() {
+    loopProtect.hit = this._onInfiniteLoop.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +34,7 @@ class PreviewFrame extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('message', this._onMessage);
+    loopProtect.hit = noop;
   }
 
   _saveFrame(frame) {
@@ -85,6 +92,18 @@ class PreviewFrame extends React.Component {
       raw: normalizedError.message,
       row: data.error.line - this._runtimeErrorLineOffset() - 1,
       column: data.error.column,
+      type: 'error',
+    });
+  }
+
+  _onInfiniteLoop(line) {
+    const message = i18n.t('errors.javascriptRuntime.infinite-loop');
+    this.props.onRuntimeError({
+      reason: 'infinite-loop',
+      text: message,
+      raw: message,
+      row: line - 1,
+      column: 0,
       type: 'error',
     });
   }
