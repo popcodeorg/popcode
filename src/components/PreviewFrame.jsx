@@ -17,18 +17,13 @@ class PreviewFrame extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
-      this.props.frameWillRefresh();
+      this._writeFrameContents(nextProps.src);
+      nextProps.frameWillRefresh();
     }
   }
 
   shouldComponentUpdate() {
-    return !this.frame;
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.src !== this.props.src) {
-      this._writeFrameContents();
-    }
+    return false;
   }
 
   componentWillUnmount() {
@@ -37,10 +32,10 @@ class PreviewFrame extends React.Component {
 
   _saveFrame(frame) {
     this.frame = frame;
-    this._writeFrameContents();
+    this._writeFrameContents(this.props.src);
   }
 
-  _writeFrameContents() {
+  _writeFrameContents(src) {
     if (!this.frame) {
       return;
     }
@@ -48,12 +43,12 @@ class PreviewFrame extends React.Component {
     const frameDocument = this.frame.contentDocument;
     frameDocument.open();
     this.frame.contentWindow.loopProtect = loopProtect;
-    frameDocument.write(this.props.src);
+    frameDocument.write(src);
     frameDocument.close();
   }
 
   _runtimeErrorLineOffset() {
-    if (Bowser.safari) {
+    if (Bowser.safari || Bowser.chrome) {
       return 2;
     }
 
