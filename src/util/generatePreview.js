@@ -1,6 +1,8 @@
-import libraries from '../config/libraries';
 import castArray from 'lodash/castArray';
+import pick from 'lodash/pick';
 import base64 from 'base64-js';
+import loopProtect from 'loop-protect';
+import libraries from '../config/libraries';
 
 const DOMParser = window.DOMParser;
 const parser = new DOMParser();
@@ -56,7 +58,7 @@ class PreviewGenerator {
     if (options.propagateErrorsToParent) {
       this._addErrorHandling();
     }
-    this._addJavascript();
+    this._addJavascript(pick(options, 'breakLoops'));
   }
 
   _ensureDocumentElement() {
@@ -94,10 +96,18 @@ class PreviewGenerator {
     this._previewHead.appendChild(styleTag);
   }
 
-  _addJavascript() {
+  _addJavascript({breakLoops = false}) {
+    let source = this._project.sources.javascript;
+    if (breakLoops) {
+      try {
+        source = loopProtect(source);
+      } catch (e) {
+        return '';
+      }
+    }
     const scriptTag = this.previewDocument.createElement('script');
     scriptTag.innerHTML =
-      `\n${sourceDelimiter}\n${this._project.sources.javascript}`;
+      `\n${sourceDelimiter}\n${source}`;
     this.previewBody.appendChild(scriptTag);
 
     return this.previewDocument.documentElement.outerHTML;

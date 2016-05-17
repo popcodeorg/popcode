@@ -146,7 +146,8 @@
 
       "set-property-of-undefined_with-property": "You are trying to set the property __property__ on something that doesn't have a value.",
 
-      "set-property-of-null_with-property": "You are trying to set the property __property__ on a null value."
+      "set-property-of-null_with-property": "You are trying to set the property __property__ on a null value.",
+      "infinite-loop": "There is a loop on this line that looks like it might run forever. Check the loop to make sure it has the right stopping condition."
     }
   }
 }
