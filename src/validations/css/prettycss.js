@@ -54,8 +54,12 @@ class PrettyCssValidator extends Validator {
   }
 
   _getRawErrors() {
-    const result = prettyCSS.parse(this._source);
-    return result.errors.concat(result.warnings);
+    try {
+      const result = prettyCSS.parse(this._source);
+      return result.errors.concat(result.warnings);
+    } catch (_e) {
+      return [];
+    }
   }
 
   _keyForError(error) {
