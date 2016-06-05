@@ -37,7 +37,7 @@ class Preview extends React.Component {
         <PreviewFrame
           src={this._generateDocument()}
           onRuntimeError={this.props.onRuntimeError}
-          frameWillRefresh={this.props.clearRuntimeErrors}
+          frameWillRefresh={this.props.onClearRuntimeErrors}
         />
       </div>
     );
@@ -47,7 +47,7 @@ class Preview extends React.Component {
 Preview.propTypes = {
   project: React.PropTypes.object.isRequired,
   onRuntimeError: React.PropTypes.func.isRequired,
-  clearRuntimeErrors: React.PropTypes.func.isRequired,
+  onClearRuntimeErrors: React.PropTypes.func.isRequired,
 };
 
 export default Preview;

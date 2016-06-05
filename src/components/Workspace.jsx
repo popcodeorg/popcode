@@ -5,6 +5,7 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
+import partial from 'lodash/partial';
 import sortBy from 'lodash/sortBy';
 import i18n from 'i18next-client';
 import qs from 'qs';
@@ -58,7 +59,26 @@ function mapStateToProps(state) {
 class Workspace extends React.Component {
   constructor() {
     super();
-    bindAll(this, '_confirmUnload');
+    bindAll(
+      this,
+      '_confirmUnload',
+      '_handleClearRuntimeErrors',
+      '_handleComponentMaximized',
+      '_handleComponentMinimized',
+      '_handleDashboardSubmenuToggled',
+      '_handleEditorInput',
+      '_handleEditorMountedOrUnmounted',
+      '_handleErrorClick',
+      '_handleLibraryToggled',
+      '_handleLogOut',
+      '_handleNewProject',
+      '_handleProjectSelected',
+      '_handleRuntimeError',
+      '_handleStartLogIn',
+      '_handleToggleDashboard'
+    );
+
+    this.editors = {};
   }
 
   componentWillMount() {
@@ -95,20 +115,23 @@ class Workspace extends React.Component {
     return this.props.errors[language];
   }
 
-  _onComponentMinimized(componentName) {
+  _handleComponentMinimized(componentName) {
     this.props.dispatch(minimizeComponent(componentName));
   }
 
-  _onComponentMaximized(componentName) {
+  _handleComponentMaximized(componentName) {
     this.props.dispatch(maximizeComponent(componentName));
   }
 
-  _onErrorClicked(language, line, column) {
-    const editor = this.refs[`${language}Editor`];
-    editor._jumpToLine(line, column);
+  _handleErrorClick(language, line, column) {
+    this.editors[language]._jumpToLine(line, column);
   }
 
-  _onEditorInput(language, source) {
+  _handleEditorMountedOrUnmounted(language, editor) {
+    this.editors[language] = editor;
+  }
+
+  _handleEditorInput(language, source) {
     this.props.dispatch(
       updateProjectSource(
         this.props.currentProject.projectKey,
@@ -118,7 +141,7 @@ class Workspace extends React.Component {
     );
   }
 
-  _onLibraryToggled(libraryKey) {
+  _handleLibraryToggled(libraryKey) {
     this.props.dispatch(
       toggleLibrary(
         this.props.currentProject.projectKey,
@@ -127,39 +150,39 @@ class Workspace extends React.Component {
     );
   }
 
-  _onNewProject() {
+  _handleNewProject() {
     this.props.dispatch(createProject());
   }
 
-  _onProjectSelected(project) {
+  _handleProjectSelected(project) {
     this.props.dispatch(changeCurrentProject(project.projectKey));
   }
 
-  _onDashboardSubmenuToggled(submenu) {
+  _handleDashboardSubmenuToggled(submenu) {
     this.props.dispatch(toggleDashboardSubmenu(submenu));
   }
 
-  _onRuntimeError(error) {
+  _handleRuntimeError(error) {
     this.props.dispatch(addRuntimeError(error));
   }
 
-  _clearRuntimeErrors() {
+  _handleClearRuntimeErrors() {
     this.props.dispatch(clearRuntimeErrors());
   }
 
   _renderOutput() {
     return (
       <Output
-        project={this.props.currentProject}
+        delayErrorDisplay={this.props.delayErrorDisplay}
         errors={this.props.errors}
         hasErrors={
           !isEmpty(flatten(values(this.props.errors)))
         }
-        delayErrorDisplay={this.props.delayErrorDisplay}
+        project={this.props.currentProject}
         runtimeErrors={this.props.runtimeErrors}
-        onErrorClicked={this._onErrorClicked.bind(this)}
-        onRuntimeError={this._onRuntimeError.bind(this)}
-        clearRuntimeErrors={this._clearRuntimeErrors.bind(this)}
+        onClearRuntimeErrors={this._handleClearRuntimeErrors}
+        onErrorClick={this._handleErrorClick}
+        onRuntimeError={this._handleRuntimeError}
       />
     );
   }
@@ -177,16 +200,16 @@ class Workspace extends React.Component {
 
       editors.push(
         <Editor
-          key={language}
-          ref={`${language}Editor`}
-          projectKey={this.props.currentProject.projectKey}
-          source={this.props.currentProject.sources[language]}
           errors={this._allErrorsFor(language)}
-          onInput={this._onEditorInput.bind(this, language)}
-          onMinimize={
-            this._onComponentMinimized.bind(this, `editor.${language}`)
-          }
+          key={language}
           language={language}
+          projectKey={this.props.currentProject.projectKey}
+          ref={partial(this._handleEditorMountedOrUnmounted, language)}
+          source={this.props.currentProject.sources[language]}
+          onInput={partial(this._handleEditorInput, language)}
+          onMinimize={
+            partial(this._handleComponentMinimized, `editor.${language}`)
+          }
         />
       );
     });
@@ -196,18 +219,18 @@ class Workspace extends React.Component {
     );
   }
 
-  _onToggleDashboard() {
+  _handleToggleDashboard() {
     this.props.dispatch(toggleDashboard());
   }
 
-  _onStartLogIn() {
+  _handleStartLogIn() {
     appFirebase.authWithOAuthPopup(
       'github',
       {remember: 'sessionOnly', scope: 'gist'}
     );
   }
 
-  _onLogOut() {
+  _handleLogOut() {
     appFirebase.unauth();
   }
 
@@ -219,16 +242,16 @@ class Workspace extends React.Component {
     return (
       <div className="layout-dashboard">
         <Dashboard
-          currentUser={this.props.currentUser}
-          currentProject={this.props.currentProject}
-          allProjects={this.props.allProjects}
           activeSubmenu={this.props.ui.dashboard.activeSubmenu}
-          onProjectSelected={this._onProjectSelected.bind(this)}
-          onStartLogIn={this._onStartLogIn.bind(this)}
-          onLogOut={this._onLogOut.bind(this)}
-          onNewProject={this._onNewProject.bind(this)}
-          onSubmenuToggled={this._onDashboardSubmenuToggled.bind(this)}
-          onLibraryToggled={this._onLibraryToggled.bind(this)}
+          allProjects={this.props.allProjects}
+          currentProject={this.props.currentProject}
+          currentUser={this.props.currentUser}
+          onLibraryToggled={this._handleLibraryToggled}
+          onLogOut={this._handleLogOut}
+          onNewProject={this._handleNewProject}
+          onProjectSelected={this._handleProjectSelected}
+          onStartLogIn={this._handleStartLogIn}
+          onSubmenuToggled={this._handleDashboardSubmenuToggled}
         />
       </div>
     );
@@ -239,9 +262,9 @@ class Workspace extends React.Component {
       <div className="layout-sidebar">
         <Sidebar
           dashboardIsOpen={this.props.ui.dashboard.isOpen}
-          onToggleDashboard={this._onToggleDashboard.bind(this)}
           minimizedComponents={this.props.ui.minimizedComponents}
-          onComponentMaximized={this._onComponentMaximized.bind(this)}
+          onComponentMaximized={this._handleComponentMaximized}
+          onToggleDashboard={this._handleToggleDashboard}
         />
       </div>
     );
@@ -261,7 +284,7 @@ class Workspace extends React.Component {
       <div className="layout">
         {this._renderDashboard()}
         {this._renderSidebar()}
-        <div id="workspace" className="layout-main">
+        <div className="layout-main" id="workspace">
           {this._renderEnvironment()}
         </div>
       </div>
@@ -270,13 +293,13 @@ class Workspace extends React.Component {
 }
 
 Workspace.propTypes = {
-  currentUser: React.PropTypes.object.isRequired,
-  dispatch: React.PropTypes.func.isRequired,
   allProjects: React.PropTypes.array,
   currentProject: React.PropTypes.object,
+  currentUser: React.PropTypes.object.isRequired,
+  delayErrorDisplay: React.PropTypes.bool,
+  dispatch: React.PropTypes.func.isRequired,
   errors: React.PropTypes.object,
   runtimeErrors: React.PropTypes.array,
-  delayErrorDisplay: React.PropTypes.bool,
   ui: React.PropTypes.object.isRequired,
 };
 

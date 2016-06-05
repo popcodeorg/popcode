@@ -17,17 +17,17 @@ function ErrorList(props) {
       <ErrorSublist
         errors={props.html}
         language="html"
-        onErrorClicked={props.onErrorClicked}
+        onErrorClick={props.onErrorClick}
       />
       <ErrorSublist
         errors={props.css}
         language="css"
-        onErrorClicked={props.onErrorClicked}
+        onErrorClick={props.onErrorClick}
       />
       <ErrorSublist
         errors={props.javascript}
         language="javascript"
-        onErrorClicked={props.onErrorClicked}
+        onErrorClick={props.onErrorClick}
       />
     </div>
   );
@@ -38,7 +38,7 @@ ErrorList.propTypes = {
   docked: React.PropTypes.bool,
   html: React.PropTypes.array.isRequired,
   javascript: React.PropTypes.array.isRequired,
-  onErrorClicked: React.PropTypes.func.isRequired,
+  onErrorClick: React.PropTypes.func.isRequired,
 };
 
 export default ErrorList;

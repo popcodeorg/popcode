@@ -8,7 +8,7 @@ class Output extends React.Component {
     return (
       <ErrorList
         {...props}
-        onErrorClicked={this.props.onErrorClicked}
+        onErrorClick={this.props.onErrorClick}
       />
     );
   }
@@ -22,7 +22,7 @@ class Output extends React.Component {
       <Preview
         project={this.props.project}
         onRuntimeError={this.props.onRuntimeError}
-        clearRuntimeErrors={this.props.clearRuntimeErrors}
+        onClearRuntimeErrors={this.props.onClearRuntimeErrors}
       />
     );
   }
@@ -72,9 +72,9 @@ Output.propTypes = {
   errors: React.PropTypes.object.isRequired,
   runtimeErrors: React.PropTypes.array.isRequired,
   delayErrorDisplay: React.PropTypes.bool.isRequired,
-  onErrorClicked: React.PropTypes.func.isRequired,
+  onErrorClick: React.PropTypes.func.isRequired,
   onRuntimeError: React.PropTypes.func.isRequired,
-  clearRuntimeErrors: React.PropTypes.func.isRequired,
+  onClearRuntimeErrors: React.PropTypes.func.isRequired,
 };
 
 export default Output;

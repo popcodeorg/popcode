@@ -14,7 +14,7 @@ function ErrorSublist(props) {
       {...error}
       key={[error.reason, error.row]}
       onClick={partial(
-        props.onErrorClicked,
+        props.onErrorClick,
         props.language
       )}
     />
@@ -40,7 +40,7 @@ function ErrorSublist(props) {
 ErrorSublist.propTypes = {
   errors: React.PropTypes.array.isRequired,
   language: React.PropTypes.oneOf(['html', 'css', 'javascript']).isRequired,
-  onErrorClicked: React.PropTypes.func.isRequired,
+  onErrorClick: React.PropTypes.func.isRequired,
 };
 
 export default ErrorSublist;
