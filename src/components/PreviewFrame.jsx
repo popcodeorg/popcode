@@ -1,13 +1,20 @@
 import React from 'react';
 import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
+import noop from 'lodash/noop';
+import i18n from 'i18next-client';
 import normalizeError from '../util/normalizeError';
 import {sourceDelimiter} from '../util/generatePreview';
+import loopProtect from 'loop-protect';
 
 class PreviewFrame extends React.Component {
   constructor() {
     super();
     bindAll(this, '_onMessage');
+  }
+
+  componentWillMount() {
+    loopProtect.hit = this._onInfiniteLoop.bind(this);
   }
 
   componentDidMount() {
@@ -16,42 +23,39 @@ class PreviewFrame extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
-      this.props.frameWillRefresh();
+      this._writeFrameContents(nextProps.src);
+      nextProps.frameWillRefresh();
     }
   }
 
   shouldComponentUpdate() {
-    return !this.frame;
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.src !== this.props.src) {
-      this._writeFrameContents();
-    }
+    return false;
   }
 
   componentWillUnmount() {
     window.removeEventListener('message', this._onMessage);
+    loopProtect.hit = noop;
   }
 
   _saveFrame(frame) {
     this.frame = frame;
-    this._writeFrameContents();
+    this._writeFrameContents(this.props.src);
   }
 
-  _writeFrameContents() {
+  _writeFrameContents(src) {
     if (!this.frame) {
       return;
     }
 
     const frameDocument = this.frame.contentDocument;
     frameDocument.open();
-    frameDocument.write(this.props.src);
+    this.frame.contentWindow.loopProtect = loopProtect;
+    frameDocument.write(src);
     frameDocument.close();
   }
 
   _runtimeErrorLineOffset() {
-    if (Bowser.safari) {
+    if (Bowser.safari || Bowser.chrome) {
       return 2;
     }
 
@@ -92,18 +96,24 @@ class PreviewFrame extends React.Component {
     });
   }
 
-  render() {
-    if (Bowser.safari || Bowser.msie) {
-      return (
-        <iframe
-          className="preview-frame"
-          ref={this._saveFrame.bind(this)}
-        />
-      );
-    }
+  _onInfiniteLoop(line) {
+    const message = i18n.t('errors.javascriptRuntime.infinite-loop');
+    this.props.onRuntimeError({
+      reason: 'infinite-loop',
+      text: message,
+      raw: message,
+      row: line - 1,
+      column: 0,
+      type: 'error',
+    });
+  }
 
+  render() {
     return (
-      <iframe className="preview-frame" srcDoc={this.props.src} />
+      <iframe
+        className="preview-frame"
+        ref={this._saveFrame.bind(this)}
+      />
     );
   }
 }

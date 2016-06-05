@@ -3175,6 +3175,11 @@
       "version": "1.0.1",
       "resolved": "https://registry.npmjs.org/longest/-/longest-1.0.1.tgz"
     },
+    "loop-protect": {
+      "version": "1.0.1",
+      "from": "loop-protect@git+https://github.com/jsbin/loop-protect.git#335856f37ee4a805704bfcd1d7429ab94620bf6d",
+      "resolved": "git+https://github.com/jsbin/loop-protect.git#335856f37ee4a805704bfcd1d7429ab94620bf6d"
+    },
     "loose-envify": {
       "version": "1.1.0",
       "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.1.0.tgz"
