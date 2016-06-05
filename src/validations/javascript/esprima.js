@@ -2,6 +2,8 @@ import Validator from '../Validator';
 import esprima from 'esprima';
 import find from 'lodash/find';
 
+const UNEXPECTED_TOKEN_EXPR = /^Unexpected token (.+)$/;
+
 const errorMap = {
   'Unexpected string': ({token}) => ({
     reason: 'unexpected-string',
@@ -90,6 +92,24 @@ class EsprimaValidator extends Validator {
 
   _keyForError(error) {
     return error.error.description;
+  }
+
+  _mapError(error) {
+    const mappedError = super._mapError(error);
+    if (mappedError) {
+      return mappedError;
+    }
+
+    const match = UNEXPECTED_TOKEN_EXPR.exec(this._keyForError(error));
+    if (match) {
+      return {
+        reason: 'unexpected-token',
+        payload: {token: match[1]},
+        suppresses: ['unexpected-expression'],
+      };
+    }
+
+    return null;
   }
 
   _locationForError(error) {
