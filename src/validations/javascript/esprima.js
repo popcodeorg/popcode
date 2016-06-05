@@ -25,6 +25,11 @@ const errorMap = {
     ],
   }),
 
+  'Unexpected identifier': ({token}) => ({
+    reason: 'unexpected-identifier',
+    payload: {name: token.value},
+  }),
+
   'Invalid left-hand side in assignment': ({token}) => {
     let message;
     switch (token.type) {
