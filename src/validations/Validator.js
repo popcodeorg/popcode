@@ -33,7 +33,7 @@ class Validator {
     if (!error) {
       if (config.warnOnDroppedErrors) {
         // eslint-disable-next-line no-console
-        console.warn('Dropped error', this._language, rawError);
+        console.warn(this.constructor.name, 'dropped error', rawError);
       }
 
       return null;

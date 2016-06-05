@@ -2,11 +2,13 @@ import Validator from '../Validator';
 import css from 'css';
 
 const errorMap = {
-  'missing \'}\'': () => ({reason: 'missing-curly'}),
+  'missing \'{\'': () => ({reason: 'missing-opening-curly'}),
+
+  'missing \'}\'': () => ({reason: 'missing-closing-curly'}),
 
   'property missing \':\'': () => ({
     reason: 'property-missing-colon',
-    suppresses: ['invalid-token', 'missing-curly'],
+    suppresses: ['invalid-token', 'missing-closing-curly'],
   }),
 
   'selector missing': () => ({
