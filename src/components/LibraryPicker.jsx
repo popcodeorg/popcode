@@ -13,9 +13,9 @@ class LibraryPicker extends React.Component {
   render() {
     const libraryButtons = map(libraries, (library, key) => (
       <LibraryPickerItem
+        enabled={this._isLibraryEnabled(key)}
         key={key}
         library={library}
-        enabled={this._isLibraryEnabled(key)}
         onLibraryToggled={partial(this.props.onLibraryToggled, key)}
       />
     ));
