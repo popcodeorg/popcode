@@ -78,6 +78,7 @@
       "invalid-tag-name": "<__tag__> isn’t a valid HTML tag. If you want to create a custom tag, make sure the name has a - in it, like <my-tag>"
     },
     "css": {
+      "missing-opening-curly": "You should have a { at the end of this line.",
       "missing-closing-curly": "You have a starting { but no ending } to go with it.",
       "property-missing-colon": "Put a colon (:) between the property and the value.\nTry: color: red",
       "selector-missing": "Start every block of CSS with a selector, such as an element name or class name.\nTry: p {\n  color: red;\n}",
