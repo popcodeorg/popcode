@@ -94,6 +94,7 @@
     "javascript": {
       "unexpected-string": "JavaScript doesn’t expect a string where you wrote __value__. Remember that variable and function names aren’t surrounded in quotes.",
       "unexpected-number": "JavaScript doesn’t expect a number where you wrote __value__. Remember that variable and function names have to start with a letter.",
+      "unexpected-token": "JavaScript doesn’t expect a __token__ where you wrote one here.",
       "invalid-left-hand-string": "You wrote __value__ to the left of the = sign here, but that’s not a valid variable name. Remember that variable names aren’t surrounded by quotes.",
       "invalid-left-hand-number": "You wrote __value__ to the left of the = sign here, but that’s not a valid variable name. Remember that variable names have to start with a letter.",
       "invalid-left-hand-boolean": "You wrote __value__ to the left of the = sign here, but that’s not a valid variable name. Remember that true and false can’t be used as variable names.",
