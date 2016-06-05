@@ -1,11 +1,17 @@
 import React from 'react';
 import {TextEncoder} from 'text-encoding';
 import base64 from 'base64-js';
+import bindAll from 'lodash/bindAll';
 
 import PreviewFrame from './PreviewFrame';
 import generatePreview from '../util/generatePreview';
 
 class Preview extends React.Component {
+  constructor() {
+    super();
+    bindAll(this, '_popOut');
+  }
+
   _generateDocument() {
     const project = this.props.project;
 
@@ -17,6 +23,10 @@ class Preview extends React.Component {
       project,
       {targetBaseTop: true, propagateErrorsToParent: true, breakLoops: true}
     ).documentElement.outerHTML;
+  }
+
+  _handlePopOutClick() {
+    this._popOut();
   }
 
   _popOut() {
@@ -32,12 +42,12 @@ class Preview extends React.Component {
       <div className="preview output-item">
         <div
           className="preview-popOutButton"
-          onClick={this._popOut.bind(this)}
+          onClick={this._handlePopOutClick}
         />
         <PreviewFrame
           src={this._generateDocument()}
+          onFrameWillRefresh={this.props.onClearRuntimeErrors}
           onRuntimeError={this.props.onRuntimeError}
-          frameWillRefresh={this.props.onClearRuntimeErrors}
         />
       </div>
     );
@@ -46,8 +56,8 @@ class Preview extends React.Component {
 
 Preview.propTypes = {
   project: React.PropTypes.object.isRequired,
-  onRuntimeError: React.PropTypes.func.isRequired,
   onClearRuntimeErrors: React.PropTypes.func.isRequired,
+  onRuntimeError: React.PropTypes.func.isRequired,
 };
 
 export default Preview;

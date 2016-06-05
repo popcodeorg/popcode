@@ -24,7 +24,7 @@ class PreviewFrame extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
       this._writeFrameContents(nextProps.src);
-      nextProps.frameWillRefresh();
+      nextProps.onFrameWillRefresh();
     }
   }
 
@@ -119,8 +119,8 @@ class PreviewFrame extends React.Component {
 }
 
 PreviewFrame.propTypes = {
-  frameWillRefresh: React.PropTypes.func.isRequired,
   src: React.PropTypes.string.isRequired,
+  onFrameWillRefresh: React.PropTypes.func.isRequired,
   onRuntimeError: React.PropTypes.func.isRequired,
 };
 
