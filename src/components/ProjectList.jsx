@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import classnames from 'classnames';
-import partial from 'lodash';
+import partial from 'lodash/partial';
 import {generateTextPreview} from '../util/generatePreview';
 
 const MAX_LENGTH = 50;
