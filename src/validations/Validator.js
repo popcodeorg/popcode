@@ -2,6 +2,7 @@ import i18n from 'i18next-client';
 import assign from 'lodash/assign';
 import map from 'lodash/map';
 import compact from 'lodash/compact';
+import config from '../config';
 
 class Validator {
   constructor(source, language, errorMap) {
@@ -30,6 +31,11 @@ class Validator {
   _convertErrorToAnnotation(rawError) {
     const error = this._mapError(rawError);
     if (!error) {
+      if (config.warnOnDroppedErrors) {
+        // eslint-disable-next-line no-console
+        console.warn('Dropped error', this._language, rawError);
+      }
+
       return null;
     }
 
