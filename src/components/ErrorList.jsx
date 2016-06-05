@@ -3,44 +3,42 @@ import classnames from 'classnames';
 import get from 'lodash/get';
 import ErrorSublist from './ErrorSublist';
 
-class ErrorList extends React.Component {
-  render() {
-    const docked = get(this, 'props.docked', false);
+function ErrorList(props) {
+  const docked = get(this, 'props.docked', false);
 
-    return (
-      <div className={
-        classnames(
-          'errorList',
-          'output-item',
-          {'errorList--docked': docked, 'output-item--shrink': docked}
-        )}
-      >
-        <ErrorSublist
-          language="html"
-          errors={this.props.html}
-          onErrorClicked={this.props.onErrorClicked}
-        />
-        <ErrorSublist
-          language="css"
-          errors={this.props.css}
-          onErrorClicked={this.props.onErrorClicked}
-        />
-        <ErrorSublist
-          language="javascript"
-          errors={this.props.javascript}
-          onErrorClicked={this.props.onErrorClicked}
-        />
-      </div>
-    );
-  }
+  return (
+    <div
+      className={classnames(
+        'errorList',
+        'output-item',
+        {'errorList--docked': docked, 'output-item--shrink': docked}
+      )}
+    >
+      <ErrorSublist
+        errors={props.html}
+        language="html"
+        onErrorClick={props.onErrorClick}
+      />
+      <ErrorSublist
+        errors={props.css}
+        language="css"
+        onErrorClick={props.onErrorClick}
+      />
+      <ErrorSublist
+        errors={props.javascript}
+        language="javascript"
+        onErrorClick={props.onErrorClick}
+      />
+    </div>
+  );
 }
 
 ErrorList.propTypes = {
-  html: React.PropTypes.array.isRequired,
   css: React.PropTypes.array.isRequired,
-  javascript: React.PropTypes.array.isRequired,
-  onErrorClicked: React.PropTypes.func.isRequired,
   docked: React.PropTypes.bool,
+  html: React.PropTypes.array.isRequired,
+  javascript: React.PropTypes.array.isRequired,
+  onErrorClick: React.PropTypes.func.isRequired,
 };
 
 export default ErrorList;

@@ -1,5 +1,6 @@
 import React from 'react';
 import i18n from 'i18next-client';
+import bindAll from 'lodash/bindAll';
 import partial from 'lodash/partial';
 import classnames from 'classnames';
 import Gists from '../services/Gists';
@@ -7,6 +8,11 @@ import ProjectList from './ProjectList';
 import LibraryPicker from './LibraryPicker';
 
 class Dashboard extends React.Component {
+  constructor() {
+    super();
+    bindAll(this, '_handleNewProject', '_handleExportGist');
+  }
+
   _renderLoginState() {
     const currentUser = this.props.currentUser;
 
@@ -66,7 +72,7 @@ class Dashboard extends React.Component {
       newProjectButton = (
         <div
           className="dashboard-menu-item dashboard-menu-item--grid"
-          onClick={this._newProject.bind(this)}
+          onClick={this._handleNewProject}
         >
           {i18n.t('dashboard.menu.new-project')}
         </div>
@@ -83,7 +89,7 @@ class Dashboard extends React.Component {
         {this._renderSubmenuToggleButton('libraryPicker', 'libraries')}
         <div
           className="dashboard-menu-item dashboard-menu-item--grid"
-          onClick={this._exportGist.bind(this)}
+          onClick={this._handleExportGist}
         >
           {i18n.t('dashboard.menu.export-gist')}
         </div>
@@ -91,11 +97,11 @@ class Dashboard extends React.Component {
     );
   }
 
-  _newProject() {
+  _handleNewProject() {
     this.props.onNewProject();
   }
 
-  _exportGist() {
+  _handleExportGist() {
     const newWindow = open('about:blank', 'gist');
 
     Gists.createFromProject(this.props.currentProject, this.props.currentUser).
@@ -117,8 +123,8 @@ class Dashboard extends React.Component {
   _renderProjects() {
     return (
       <ProjectList
-        projects={this.props.allProjects}
         currentProject={this.props.currentProject}
+        projects={this.props.allProjects}
         onProjectSelected={this.props.onProjectSelected}
       />
     );
@@ -153,16 +159,16 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  currentUser: React.PropTypes.object.isRequired,
-  currentProject: React.PropTypes.object,
-  allProjects: React.PropTypes.array.isRequired,
   activeSubmenu: React.PropTypes.string,
-  onStartLogIn: React.PropTypes.func.isRequired,
+  allProjects: React.PropTypes.array.isRequired,
+  currentProject: React.PropTypes.object,
+  currentUser: React.PropTypes.object.isRequired,
+  onLibraryToggled: React.PropTypes.func.isRequired,
   onLogOut: React.PropTypes.func.isRequired,
   onNewProject: React.PropTypes.func.isRequired,
   onProjectSelected: React.PropTypes.func.isRequired,
+  onStartLogIn: React.PropTypes.func.isRequired,
   onSubmenuToggled: React.PropTypes.func.isRequired,
-  onLibraryToggled: React.PropTypes.func.isRequired,
 };
 
 export default Dashboard;

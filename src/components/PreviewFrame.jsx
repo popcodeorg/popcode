@@ -10,7 +10,7 @@ import loopProtect from 'loop-protect';
 class PreviewFrame extends React.Component {
   constructor() {
     super();
-    bindAll(this, '_onMessage');
+    bindAll(this, '_onMessage', '_saveFrame');
   }
 
   componentWillMount() {
@@ -24,7 +24,7 @@ class PreviewFrame extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
       this._writeFrameContents(nextProps.src);
-      nextProps.frameWillRefresh();
+      nextProps.onFrameWillRefresh();
     }
   }
 
@@ -112,7 +112,7 @@ class PreviewFrame extends React.Component {
     return (
       <iframe
         className="preview-frame"
-        ref={this._saveFrame.bind(this)}
+        ref={this._saveFrame}
       />
     );
   }
@@ -120,7 +120,7 @@ class PreviewFrame extends React.Component {
 
 PreviewFrame.propTypes = {
   src: React.PropTypes.string.isRequired,
-  frameWillRefresh: React.PropTypes.func.isRequired,
+  onFrameWillRefresh: React.PropTypes.func.isRequired,
   onRuntimeError: React.PropTypes.func.isRequired,
 };
 

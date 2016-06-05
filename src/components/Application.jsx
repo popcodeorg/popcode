@@ -15,7 +15,7 @@ class Application extends React.Component {
   render() {
     return (
       <Provider store={this.state.store}>
-        <Workspace/>
+        <Workspace />
       </Provider>
     );
   }
