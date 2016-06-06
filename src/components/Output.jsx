@@ -30,9 +30,12 @@ class Output extends React.Component {
   _renderRuntimeErrorList() {
     if (!isEmpty(this.props.runtimeErrors) && !this.props.delayErrorDisplay) {
       return this._renderErrorList({
-        html: [],
-        css: [],
-        javascript: this.props.runtimeErrors,
+        html: {items: [], state: 'passed'},
+        css: {items: [], state: 'passed'},
+        javascript: {
+          items: this.props.runtimeErrors,
+          state: this.props.runtimeErrors.length ? 'failed' : 'passed',
+        },
         docked: true,
       });
     }

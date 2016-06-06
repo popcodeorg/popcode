@@ -34,10 +34,10 @@ function ErrorList(props) {
 }
 
 ErrorList.propTypes = {
-  css: React.PropTypes.array.isRequired,
+  css: React.PropTypes.object.isRequired,
   docked: React.PropTypes.bool,
-  html: React.PropTypes.array.isRequired,
-  javascript: React.PropTypes.array.isRequired,
+  html: React.PropTypes.object.isRequired,
+  javascript: React.PropTypes.object.isRequired,
   onErrorClick: React.PropTypes.func.isRequired,
 };
 

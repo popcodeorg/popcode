@@ -1,12 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import values from 'lodash/values';
-import flatten from 'lodash/flatten';
-import isEmpty from 'lodash/isEmpty';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
 import partial from 'lodash/partial';
 import sortBy from 'lodash/sortBy';
+import map from 'lodash/map';
 import i18n from 'i18next-client';
 import qs from 'qs';
 import appFirebase from '../services/appFirebase';
@@ -109,10 +108,11 @@ class Workspace extends React.Component {
 
   _allErrorsFor(language) {
     if (language === 'javascript') {
-      return this.props.errors.javascript.concat(this.props.runtimeErrors);
+      return this.props.errors.javascript.items.
+        concat(this.props.runtimeErrors);
     }
 
-    return this.props.errors[language];
+    return this.props.errors[language].items;
   }
 
   _handleComponentMinimized(componentName) {
@@ -176,7 +176,7 @@ class Workspace extends React.Component {
         delayErrorDisplay={this.props.delayErrorDisplay}
         errors={this.props.errors}
         hasErrors={
-          !isEmpty(flatten(values(this.props.errors)))
+          includes(map(values(this.props.errors), 'state'), 'failed')
         }
         project={this.props.currentProject}
         runtimeErrors={this.props.runtimeErrors}

@@ -2,10 +2,27 @@ import Immutable from 'immutable';
 
 const emptyList = new Immutable.List();
 
+const passedLanguageErrors = new Immutable.Map({
+  items: emptyList,
+  state: 'passed',
+});
+
+const validatingLanguageErrors = new Immutable.Map({
+  items: emptyList,
+  state: 'validating',
+});
+
+function buildFailedLanguageErrors(errorList) {
+  return Immutable.fromJS({
+    items: errorList,
+    state: 'failed',
+  });
+}
+
 const emptyErrors = new Immutable.Map({
-  html: emptyList,
-  css: emptyList,
-  javascript: emptyList,
+  html: passedLanguageErrors,
+  css: passedLanguageErrors,
+  javascript: passedLanguageErrors,
 });
 
 function errors(stateIn, action) {
@@ -25,13 +42,16 @@ function errors(stateIn, action) {
       return emptyErrors;
 
     case 'VALIDATING_SOURCE':
-      return state.set(action.payload.language, emptyList);
+      return state.set(action.payload.language, validatingLanguageErrors);
 
     case 'VALIDATED_SOURCE':
-      return state.set(
-        action.payload.language,
-        Immutable.fromJS(action.payload.errors)
-      );
+      if (action.payload.errors.length) {
+        return state.set(
+          action.payload.language,
+          buildFailedLanguageErrors(action.payload.errors)
+        );
+      }
+      return state.set(action.payload.language, passedLanguageErrors);
 
     case 'RESET_WORKSPACE':
       return emptyErrors;
