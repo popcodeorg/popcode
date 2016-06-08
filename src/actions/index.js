@@ -53,7 +53,7 @@ const showErrorsAfterDebounce = (() => {
 })();
 
 function validateSource(language, source, enabledLibraries) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({
       type: 'VALIDATING_SOURCE',
       payload: {
@@ -63,6 +63,13 @@ function validateSource(language, source, enabledLibraries) {
 
     const validate = validations[language];
     validate(source, enabledLibraries.toJS()).then((errors) => {
+      const currentSource = getCurrentProject(getState()).
+        get('sources').get(language);
+
+      if (currentSource !== source) {
+        return;
+      }
+
       dispatch({
         type: 'VALIDATED_SOURCE',
         payload: {
@@ -133,13 +140,6 @@ function loadCurrentProjectFromStorage() {
 
 function updateProjectSource(projectKey, language, newValue) {
   return (dispatch, getState) => {
-    const currentProject = getCurrentProject(getState());
-    dispatch(validateSource(
-      language,
-      newValue,
-      currentProject.get('enabledLibraries')
-    ));
-
     dispatch({
       type: 'PROJECT_SOURCE_EDITED',
       meta: {timestamp: Date.now()},
@@ -150,7 +150,15 @@ function updateProjectSource(projectKey, language, newValue) {
       },
     });
 
-    saveCurrentProject(getState());
+    const state = getState();
+    saveCurrentProject(state);
+
+    const currentProject = getCurrentProject(state);
+    dispatch(validateSource(
+      language,
+      newValue,
+      currentProject.get('enabledLibraries')
+    ));
   };
 }
 

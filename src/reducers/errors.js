@@ -19,6 +19,12 @@ function buildFailedLanguageErrors(errorList) {
   });
 }
 
+const validatingErrors = new Immutable.Map({
+  html: validatingLanguageErrors,
+  css: validatingLanguageErrors,
+  javascript: validatingLanguageErrors,
+});
+
 const emptyErrors = new Immutable.Map({
   html: passedLanguageErrors,
   css: passedLanguageErrors,
@@ -36,10 +42,13 @@ function errors(stateIn, action) {
       return emptyErrors;
 
     case 'CURRENT_PROJECT_LOADED_FROM_STORAGE':
-      return emptyErrors;
+      return validatingErrors;
 
     case 'CURRENT_PROJECT_CHANGED':
-      return emptyErrors;
+      return validatingErrors;
+
+    case 'PROJECT_SOURCE_EDITED':
+      return state.set(action.payload.language, validatingLanguageErrors);
 
     case 'VALIDATING_SOURCE':
       return state.set(action.payload.language, validatingLanguageErrors);
