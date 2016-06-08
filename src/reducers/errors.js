@@ -50,9 +50,6 @@ function errors(stateIn, action) {
     case 'PROJECT_SOURCE_EDITED':
       return state.set(action.payload.language, validatingLanguageErrors);
 
-    case 'VALIDATING_SOURCE':
-      return state.set(action.payload.language, validatingLanguageErrors);
-
     case 'VALIDATED_SOURCE':
       if (action.payload.errors.length) {
         return state.set(
