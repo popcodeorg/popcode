@@ -9,7 +9,7 @@ import generatePreview from '../util/generatePreview';
 class Preview extends React.Component {
   constructor() {
     super();
-    bindAll(this, '_popOut');
+    bindAll(this, '_handlePopOutClick');
   }
 
   _generateDocument() {
