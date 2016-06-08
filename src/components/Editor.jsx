@@ -24,7 +24,8 @@ class Editor extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.projectKey !== this.props.projectKey) {
       this._startNewSession(nextProps.source);
-    } else if (nextProps.source !== this._editor.getValue()) {
+    } else if (nextProps.source !== this.props.source &&
+        nextProps.source !== this._editor.getValue()) {
       this._editor.setValue(nextProps.source);
     }
 

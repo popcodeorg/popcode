@@ -171,15 +171,25 @@ class Workspace extends React.Component {
   }
 
   _renderOutput() {
+    const errorStates = map(values(this.props.errors), 'state');
+
+    let validationState;
+    if (this.props.delayErrorDisplay) {
+      validationState = 'validating';
+    } else if (includes(errorStates, 'failed')) {
+      validationState = 'failed';
+    } else if (includes(errorStates, 'validating')) {
+      validationState = 'validating';
+    } else {
+      validationState = 'passed';
+    }
+
     return (
       <Output
-        delayErrorDisplay={this.props.delayErrorDisplay}
         errors={this.props.errors}
-        hasErrors={
-          includes(map(values(this.props.errors), 'state'), 'failed')
-        }
         project={this.props.currentProject}
         runtimeErrors={this.props.runtimeErrors}
+        validationState={validationState}
         onClearRuntimeErrors={this._handleClearRuntimeErrors}
         onErrorClick={this._handleErrorClick}
         onRuntimeError={this._handleRuntimeError}

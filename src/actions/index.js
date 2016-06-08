@@ -133,6 +133,13 @@ function loadCurrentProjectFromStorage() {
 
 function updateProjectSource(projectKey, language, newValue) {
   return (dispatch, getState) => {
+    const currentProject = getCurrentProject(getState());
+    dispatch(validateSource(
+      language,
+      newValue,
+      currentProject.get('enabledLibraries')
+    ));
+
     dispatch({
       type: 'PROJECT_SOURCE_EDITED',
       meta: {timestamp: Date.now()},
@@ -143,15 +150,7 @@ function updateProjectSource(projectKey, language, newValue) {
       },
     });
 
-    const state = getState();
-    saveCurrentProject(state);
-
-    const currentProject = getCurrentProject(state);
-    dispatch(validateSource(
-      language,
-      newValue,
-      currentProject.get('enabledLibraries')
-    ));
+    saveCurrentProject(getState());
   };
 }
 
