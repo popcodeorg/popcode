@@ -53,16 +53,16 @@ const showErrorsAfterDebounce = (() => {
 })();
 
 function validateSource(language, source, enabledLibraries) {
-  return (dispatch) => {
-    dispatch({
-      type: 'VALIDATING_SOURCE',
-      payload: {
-        language,
-      },
-    });
-
+  return (dispatch, getState) => {
     const validate = validations[language];
     validate(source, enabledLibraries.toJS()).then((errors) => {
+      const currentSource = getCurrentProject(getState()).
+        get('sources').get(language);
+
+      if (currentSource !== source) {
+        return;
+      }
+
       dispatch({
         type: 'VALIDATED_SOURCE',
         payload: {

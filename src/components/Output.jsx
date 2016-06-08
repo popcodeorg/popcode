@@ -28,11 +28,14 @@ class Output extends React.Component {
   }
 
   _renderRuntimeErrorList() {
-    if (!isEmpty(this.props.runtimeErrors) && !this.props.delayErrorDisplay) {
+    if (!isEmpty(this.props.runtimeErrors)) {
       return this._renderErrorList({
-        html: [],
-        css: [],
-        javascript: this.props.runtimeErrors,
+        html: {items: [], state: 'passed'},
+        css: {items: [], state: 'passed'},
+        javascript: {
+          items: this.props.runtimeErrors,
+          state: this.props.runtimeErrors.length ? 'failed' : 'passed',
+        },
         docked: true,
       });
     }
@@ -41,15 +44,15 @@ class Output extends React.Component {
   }
 
   render() {
-    if (this.props.hasErrors) {
-      if (this.props.delayErrorDisplay) {
-        return (
-          <div className="environment-column output">
-            <div className="output-delayedErrorOverlay" />
-          </div>
-        );
-      }
+    if (this.props.validationState === 'validating') {
+      return (
+        <div className="environment-column output">
+          <div className="output-delayedErrorOverlay" />
+        </div>
+      );
+    }
 
+    if (this.props.validationState === 'failed') {
       return (
         <div className="environment-column output">
           {this._renderErrorList(this.props.errors)}
@@ -67,11 +70,10 @@ class Output extends React.Component {
 }
 
 Output.propTypes = {
-  delayErrorDisplay: React.PropTypes.bool.isRequired,
   errors: React.PropTypes.object.isRequired,
-  hasErrors: React.PropTypes.bool.isRequired,
   project: React.PropTypes.object,
   runtimeErrors: React.PropTypes.array.isRequired,
+  validationState: React.PropTypes.string,
   onClearRuntimeErrors: React.PropTypes.func.isRequired,
   onErrorClick: React.PropTypes.func.isRequired,
   onRuntimeError: React.PropTypes.func.isRequired,
