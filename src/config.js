@@ -4,7 +4,7 @@ const nodeEnv = (process.env.NODE_ENV || 'development');
 
 export default {
   nodeEnv,
-  logReduxActions: () => Boolean(process.env.LOG_REDUX_ACTIONS),
+  logReduxActions: () => process.env.LOG_REDUX_ACTIONS === 'true',
   warnOnDroppedErrors: nodeEnv === 'development',
   stubSVGs: nodeEnv === 'test',
 
