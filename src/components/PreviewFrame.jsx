@@ -24,7 +24,6 @@ class PreviewFrame extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
       this._writeFrameContents(nextProps.src);
-      nextProps.onFrameWillRefresh();
     }
   }
 
@@ -52,6 +51,8 @@ class PreviewFrame extends React.Component {
     this.frame.contentWindow.loopProtect = loopProtect;
     frameDocument.write(src);
     frameDocument.close();
+
+    this.props.onFrameWillRefresh();
   }
 
   _runtimeErrorLineOffset() {
