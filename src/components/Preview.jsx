@@ -2,6 +2,7 @@ import React from 'react';
 import {TextEncoder} from 'text-encoding';
 import base64 from 'base64-js';
 import bindAll from 'lodash/bindAll';
+import classnames from 'classnames';
 
 import PreviewFrame from './PreviewFrame';
 import generatePreview from '../util/generatePreview';
@@ -13,6 +14,10 @@ class Preview extends React.Component {
   }
 
   _generateDocument() {
+    if (!this.props.isValid) {
+      return '';
+    }
+
     const project = this.props.project;
 
     if (project === undefined) {
@@ -39,7 +44,13 @@ class Preview extends React.Component {
 
   render() {
     return (
-      <div className="preview output-item">
+      <div
+        className={classnames(
+          'preview',
+          'output-item',
+          {'u-hidden': !this.props.isValid}
+        )}
+      >
         <div
           className="preview-popOutButton"
           onClick={this._handlePopOutClick}
@@ -55,6 +66,7 @@ class Preview extends React.Component {
 }
 
 Preview.propTypes = {
+  isValid: React.PropTypes.bool.isRequired,
   project: React.PropTypes.object.isRequired,
   onClearRuntimeErrors: React.PropTypes.func.isRequired,
   onRuntimeError: React.PropTypes.func.isRequired,

@@ -20,6 +20,7 @@ class Output extends React.Component {
 
     return (
       <Preview
+        isValid={this.props.validationState === 'passed'}
         project={this.props.project}
         onClearRuntimeErrors={this.props.onClearRuntimeErrors}
         onRuntimeError={this.props.onRuntimeError}
@@ -43,25 +44,22 @@ class Output extends React.Component {
     return null;
   }
 
-  render() {
+  _renderErrors() {
     if (this.props.validationState === 'validating') {
-      return (
-        <div className="environment-column output">
-          <div className="output-delayedErrorOverlay" />
-        </div>
-      );
+      return <div className="output-delayedErrorOverlay" />;
     }
 
     if (this.props.validationState === 'failed') {
-      return (
-        <div className="environment-column output">
-          {this._renderErrorList(this.props.errors)}
-        </div>
-      );
+      return this._renderErrorList(this.props.errors);
     }
 
+    return null;
+  }
+
+  render() {
     return (
       <div className="environment-column output">
+        {this._renderErrors()}
         {this._renderPreview()}
         {this._renderRuntimeErrorList()}
       </div>

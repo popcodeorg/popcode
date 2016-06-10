@@ -10,11 +10,11 @@ import loopProtect from 'loop-protect';
 class PreviewFrame extends React.Component {
   constructor() {
     super();
-    bindAll(this, '_onMessage', '_saveFrame');
+    bindAll(this, '_onMessage', '_saveFrame', '_handleInfiniteLoop');
   }
 
   componentWillMount() {
-    loopProtect.hit = this._onInfiniteLoop.bind(this);
+    loopProtect.hit = this._handleInfiniteLoop;
   }
 
   componentDidMount() {
@@ -24,7 +24,6 @@ class PreviewFrame extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
       this._writeFrameContents(nextProps.src);
-      nextProps.onFrameWillRefresh();
     }
   }
 
@@ -52,6 +51,8 @@ class PreviewFrame extends React.Component {
     this.frame.contentWindow.loopProtect = loopProtect;
     frameDocument.write(src);
     frameDocument.close();
+
+    this.props.onFrameWillRefresh();
   }
 
   _runtimeErrorLineOffset() {
@@ -96,7 +97,7 @@ class PreviewFrame extends React.Component {
     });
   }
 
-  _onInfiniteLoop(line) {
+  _handleInfiniteLoop(line) {
     const message = i18n.t('errors.javascriptRuntime.infinite-loop');
     this.props.onRuntimeError({
       reason: 'infinite-loop',
