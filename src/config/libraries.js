@@ -7,14 +7,14 @@ const libraries = {
     javascript: fs.readFileSync(
       path.join(__dirname, '../../bower_components/jquery/dist/jquery.min.js')
     ),
-    validations: {javascript: {jquery: {$set: true}}},
+    predefined: ['$', 'jQuery'],
   },
   lodash: {
     name: 'lodash',
     javascript: fs.readFileSync(
       path.join(__dirname, '../../bower_components/lodash/dist/lodash.min.js')
     ),
-    validations: {javascript: {predef: {$push: ['_']}}},
+    predefined: ['_'],
   },
   underscore: {
     name: 'Underscore.js',
@@ -24,14 +24,14 @@ const libraries = {
         '../../bower_components/underscore/underscore-min.js'
       )
     ),
-    validations: {javascript: {predef: {$push: ['_']}}},
+    predefined: ['_'],
   },
   angular: {
     name: 'AngularJS',
     javascript: fs.readFileSync(
       path.join(__dirname, '../../bower_components/angular/angular.min.js')
     ),
-    validations: {javascript: {predef: {$push: ['angular']}}},
+    predefined: ['angular'],
   },
   react: {
     name: 'React',
@@ -43,14 +43,14 @@ const libraries = {
         path.join(__dirname, '../../bower_components/react/react-dom.min.js')
       ),
     ],
-    validations: {javascript: {predef: {$push: ['React']}}},
+    predefined: ['React'],
   },
   ember: {
     name: 'Ember.js',
     javascript: fs.readFileSync(
       path.join(__dirname, '../../bower_components/ember/ember.min.js')
     ),
-    validations: {javascript: {predef: {$push: ['Ember']}}},
+    predefined: ['Ember'],
   },
   bootstrap: {
     name: 'Bootstrap',
