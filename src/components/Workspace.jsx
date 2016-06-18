@@ -170,26 +170,31 @@ class Workspace extends React.Component {
     this.props.dispatch(clearRuntimeErrors());
   }
 
-  _renderOutput() {
-    const errorStates = map(values(this.props.errors), 'state');
-
-    let validationState;
+  _getOverallValidationState() {
     if (this.props.delayErrorDisplay) {
-      validationState = 'validating';
-    } else if (includes(errorStates, 'failed')) {
-      validationState = 'failed';
-    } else if (includes(errorStates, 'validating')) {
-      validationState = 'validating';
-    } else {
-      validationState = 'passed';
+      return 'validating';
     }
 
+    const errorStates = map(values(this.props.errors), 'state');
+
+    if (includes(errorStates, 'failed')) {
+      return 'failed';
+    }
+
+    if (includes(errorStates, 'validating')) {
+      return 'validating';
+    }
+
+    return 'passed';
+  }
+
+  _renderOutput() {
     return (
       <Output
         errors={this.props.errors}
         project={this.props.currentProject}
         runtimeErrors={this.props.runtimeErrors}
-        validationState={validationState}
+        validationState={this._getOverallValidationState()}
         onClearRuntimeErrors={this._handleClearRuntimeErrors}
         onErrorClick={this._handleErrorClick}
         onRuntimeError={this._handleRuntimeError}
@@ -257,6 +262,7 @@ class Workspace extends React.Component {
           allProjects={this.props.allProjects}
           currentProject={this.props.currentProject}
           currentUser={this.props.currentUser}
+          validationState={this._getOverallValidationState()}
           onLibraryToggled={this._handleLibraryToggled}
           onLogOut={this._handleLogOut}
           onNewProject={this._handleNewProject}
@@ -274,6 +280,7 @@ class Workspace extends React.Component {
         <Sidebar
           dashboardIsOpen={this.props.ui.dashboard.isOpen}
           minimizedComponents={this.props.ui.minimizedComponents}
+          validationState={this._getOverallValidationState()}
           onComponentMaximized={this._handleComponentMaximized}
           onToggleDashboard={this._handleToggleDashboard}
         />
