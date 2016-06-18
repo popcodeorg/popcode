@@ -213,6 +213,7 @@ class Workspace extends React.Component {
           errors={this._allErrorsFor(language)}
           key={language}
           language={language}
+          percentageOfHeight={1 / editors.length}
           projectKey={this.props.currentProject.projectKey}
           ref={partial(this._handleEditorMountedOrUnmounted, language)}
           source={this.props.currentProject.sources[language]}

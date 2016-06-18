@@ -43,6 +43,10 @@ class Editor extends React.Component {
       this._editor.setValue(nextProps.source);
     }
 
+    if (nextProps.percentageOfHeight !== this.props.percentageOfHeight) {
+      requestAnimationFrame(this._resizeEditor);
+    }
+
     this._editor.getSession().setAnnotations(nextProps.errors);
   }
 
@@ -126,6 +130,7 @@ class Editor extends React.Component {
 Editor.propTypes = {
   errors: React.PropTypes.array.isRequired,
   language: React.PropTypes.string.isRequired,
+  percentageOfHeight: React.PropTypes.number.isRequired,
   projectKey: React.PropTypes.string.isRequired,
   source: React.PropTypes.string.isRequired,
   onInput: React.PropTypes.func.isRequired,
