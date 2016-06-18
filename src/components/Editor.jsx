@@ -2,11 +2,14 @@ import React from 'react';
 import ACE from 'brace';
 import i18n from 'i18next-client';
 import bindAll from 'lodash/bindAll';
+import throttle from 'lodash/throttle';
 
 import 'brace/mode/html';
 import 'brace/mode/css';
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
+
+const RESIZE_THROTTLE = 250;
 
 function createSessionWithoutWorker(source, language) {
   const session = ACE.createEditSession(source, null);
@@ -18,7 +21,18 @@ function createSessionWithoutWorker(source, language) {
 class Editor extends React.Component {
   constructor() {
     super();
-    bindAll(this, '_resizeEditor', '_setupEditor');
+
+    this._handleWindowResize = throttle(() => {
+      if (this._editor) {
+        this._resizeEditor();
+      }
+    }, RESIZE_THROTTLE);
+
+    bindAll(this, '_handleWindowResize', '_resizeEditor', '_setupEditor');
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this._handleWindowResize);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -38,6 +52,7 @@ class Editor extends React.Component {
 
   componentWillUnmount() {
     this._editor.destroy();
+    window.removeEventListener('resize', this._handleWindowResize);
   }
 
   _jumpToLine(line, column) {
@@ -75,7 +90,7 @@ class Editor extends React.Component {
     session.setAnnotations(this.props.errors);
     this._editor.setSession(session);
     this._editor.moveCursorTo(0, 0);
-    this._editor.resize();
+    this._resizeEditor();
   }
 
   _renderLabel() {
