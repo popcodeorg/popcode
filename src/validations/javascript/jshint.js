@@ -1,9 +1,11 @@
 import Validator from '../Validator';
-import assign from 'lodash/assign';
 import castArray from 'lodash/castArray';
+import concat from 'lodash/concat';
 import clone from 'lodash/clone';
 import compact from 'lodash/compact';
-import get from 'lodash/get';
+import defaults from 'lodash/defaults';
+import find from 'lodash/find';
+import includes from 'lodash/includes';
 import {JSHINT as jshint} from 'jshint';
 import libraries from '../../config/libraries';
 
@@ -98,10 +100,27 @@ const errorMap = {
     };
   },
 
-  W117: (error) => ({
-    reason: 'declare-variable',
-    payload: {variable: error.a},
-  }),
+  W117: (error) => {
+    const identifier = error.a;
+
+    const providingLibrary = find(
+      libraries,
+      (library) =>
+        library.predefined && includes(library.predefined, identifier)
+    );
+
+    if (providingLibrary) {
+      return {
+        reason: 'missing-library',
+        payload: {variable: identifier, library: providingLibrary.name},
+      };
+    }
+
+    return {
+      reason: 'declare-variable',
+      payload: {variable: identifier},
+    };
+  },
 
   W123: (error) => ({
     reason: 'duplicated-declaration',
@@ -113,12 +132,13 @@ class JsHintValidator extends Validator {
   constructor(source, enabledLibraries) {
     super(source, 'javascript', errorMap);
 
-    this._jshintOptions = clone(jshintrc);
+    this._jshintOptions = defaults(clone(jshintrc), {predef: []});
     enabledLibraries.forEach((libraryKey) => {
       const library = libraries[libraryKey];
 
-      if (get(library, 'validations.javascript') !== undefined) {
-        assign(this._jshintOptions, library.validations.javascript);
+      if (library.predefined) {
+        this._jshintOptions.predef =
+          concat(this._jshintOptions.predef, library.predefined);
       }
     });
   }

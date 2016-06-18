@@ -118,6 +118,7 @@
         "custom-case": "There should be a __goodOperator__ where you wrote __badOperator__"
       },
       "declare-variable": "You haven't declared __variable__.\nTry: var __variable__;",
+      "missing-library": "__variable__ isn’t defined. Did you mean to enable the __library__ library?",
       "duplicated-declaration": "You already declared __variable__ somewhere else.",
       "unexpected": "You typed a \"__character__\" here, but that’s not allowed in JavaScript.",
       "end-of-input": "Looks like you’re missing something at the end of this line.",
