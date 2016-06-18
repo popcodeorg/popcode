@@ -25,8 +25,16 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    const sidebarClassnames = classnames(
+      'sidebar',
+      {
+        'sidebar--yellow': this.props.validationState === 'validating',
+        'sidebar--red': this.props.validationState === 'failed',
+      }
+    );
+
     return (
-      <div className="sidebar">
+      <div className={sidebarClassnames}>
         <div className="sidebar-wordmarkContainer">
           <Isvg src="/images/wordmark-vertical.svg" />
           <div
@@ -49,6 +57,7 @@ class Sidebar extends React.Component {
 Sidebar.propTypes = {
   dashboardIsOpen: React.PropTypes.bool.isRequired,
   minimizedComponents: React.PropTypes.array.isRequired,
+  validationState: React.PropTypes.string.isRequired,
   onComponentMaximized: React.PropTypes.func.isRequired,
   onToggleDashboard: React.PropTypes.func.isRequired,
 };

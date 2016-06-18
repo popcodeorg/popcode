@@ -147,8 +147,18 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    const sidebarClassnames = classnames(
+      'dashboard',
+      'u-flexContainer',
+      'u-flexContainer--column',
+      {
+        'dashboard--yellow': this.props.validationState === 'validating',
+        'dashboard--red': this.props.validationState === 'failed',
+      }
+    );
+
     return (
-      <div className="dashboard u-flexContainer u-flexContainer--column">
+      <div className={sidebarClassnames}>
         {this._renderLoginState()}
         {this._renderMenu()}
         {this._renderSubmenu()}
@@ -163,6 +173,7 @@ Dashboard.propTypes = {
   allProjects: React.PropTypes.array.isRequired,
   currentProject: React.PropTypes.object,
   currentUser: React.PropTypes.object.isRequired,
+  validationState: React.PropTypes.string.isRequired,
   onLibraryToggled: React.PropTypes.func.isRequired,
   onLogOut: React.PropTypes.func.isRequired,
   onNewProject: React.PropTypes.func.isRequired,

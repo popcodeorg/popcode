@@ -28,6 +28,14 @@ body {
   flex: 0 1 auto;
 }
 
+.sidebar--yellow {
+  background-color: #ffd100;
+}
+
+.sidebar--red {
+  background-color: #ff5e4f;
+}
+
 .sidebar-wordmarkContainer {
   flex: 1 0 auto;
 }
@@ -100,6 +108,14 @@ body {
   background-color: #00ff85;
   color: white;
   height: 100vh;
+}
+
+.dashboard--yellow {
+  background-color: #ffd100;
+}
+
+.dashboard--red {
+  background-color: #ff5e4f;
 }
 
 .dashboard-session {
@@ -307,7 +323,8 @@ body {
 }
 
 .errorList-errorSublist-header {
-  background-color: #ffb2b2;
+  background-color: gray;
+  color: white;
   text-align: center;
   margin: 0.5rem 0;
   padding: 0.5rem 0;
@@ -322,12 +339,12 @@ body {
 .errorList-error {
   margin: 0.5rem 0;
   padding: 0.5rem;
-  background-color: #ffe6e6;
+  background-color: lightgray;
   cursor: pointer;
 }
 
 .errorList-error-line {
-  background-color: #802020;
+  background-color: gray;
   color: white;
   font-weight: bold;
   font-size: 0.8em;

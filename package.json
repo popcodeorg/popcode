@@ -27,7 +27,7 @@
   ],
   "keywords": "code editor education learning",
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
-  "licenses": "MIT",
+  "license": "MIT",
   "dependencies": {
     "PrettyCSS": "^0.3.11",
     "base64-js": "^1.0.2",
