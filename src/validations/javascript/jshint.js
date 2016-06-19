@@ -33,6 +33,7 @@ const errorMap = {
   E019: (error) => ({
     reason: 'unmatched',
     payload: {openingSymbol: error.a, closingSymbol: match[error.a]},
+    suppresses: ['end-of-input'],
   }),
 
   E020: (error) => ({
@@ -93,6 +94,15 @@ const errorMap = {
     if (error.a === '!==' && error.b === '!=') {
       return {reason: 'strict-operators.different'};
     }
+
+    if (error.b === '') {
+      return {
+        reason: 'missing-token',
+        payload: {token: error.a},
+        suppresses: ['end-of-input'],
+      };
+    }
+
     return {
       reason: 'strict-operators.custom-case',
       payload: {goodOperator: error.a, badOperator: error.b},

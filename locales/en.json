@@ -112,6 +112,7 @@
       "strict-comparison-operator": "Use === to check if two things are equal",
       "unused-variable": "You don't use the variable __variable__ anywhere",
       "unclosed-string": "The string on this line needs to end with another quotation mark",
+      "missing-token": "Looks like you’re missing a __token__ here.",
       "strict-operators": {
         "equal": "You should use === instead of ==",
         "different": "You should use !== instead of !=",
