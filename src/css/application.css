@@ -1,9 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+@import url(https://fonts.googleapis.com/css?family=Inconsolata);
+
 html, body {
   min-height: 100%;
 }
 
 body {
-  font-family: Verdana;
+  font-family: 'Roboto', sans-serif;
 }
 
 #main, .layout {

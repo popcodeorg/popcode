@@ -76,6 +76,10 @@ class Editor extends React.Component {
       this._disableAutoClosing();
       this._resizeEditor();
       this._editor.on('focus', this._resizeEditor);
+      this._editor.setOptions({
+        fontFamily: 'Inconsolata',
+        fontSize: '14px',
+      });
     } else {
       this._editor.destroy();
     }
