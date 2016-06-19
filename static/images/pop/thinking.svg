@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="SVG_Pops"
+   data-name="SVG Pops"
+   viewBox="0 0 116 150"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="thinking.svg">
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>04</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview17"
+     showgrid="false"
+     inkscape:zoom="1.5733333"
+     inkscape:cx="58"
+     inkscape:cy="75"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="SVG_Pops" />
+  <defs
+     id="defs3">
+    <style
+       id="style5">.cls-1{fill:#00ff85;}.cls-2{fill:#fff;}.cls-3{fill:#221f1f;}</style>
+  </defs>
+  <title
+     id="title7">04</title>
+  <g
+     id="Pop4">
+    <path
+       class="cls-2"
+       d="M107.49,59.65A8.56,8.56,0,0,0,102.83,52a8.55,8.55,0,0,0-4.2-14.35A8.55,8.55,0,0,0,84,29.8a8.52,8.52,0,0,0-10-2,8.55,8.55,0,0,0-15.82-.49,8.56,8.56,0,0,0-16.36,3.39,8.55,8.55,0,0,0-14.2,6.44c0,0.14,0,.28,0,0.42A8.53,8.53,0,0,0,18.05,46a8.51,8.51,0,0,0,1.32,4.55,8.54,8.54,0,0,0-1.55,14.52A8.55,8.55,0,0,0,16.07,79a8.54,8.54,0,0,0,3.86,13,8.55,8.55,0,0,0-.68,13.87,8.53,8.53,0,0,0,7.9,10.41,8.55,8.55,0,1,0,16.56,3.53,8.55,8.55,0,0,0,11.19-9.7,8.55,8.55,0,0,0,3.58-13.48,8.44,8.44,0,0,0,3.29-7.9,8.56,8.56,0,0,0,12.09-4.14,8.54,8.54,0,0,0,14.3-6A8.56,8.56,0,0,0,100.75,68,8.56,8.56,0,0,0,107.49,59.65Z"
+       id="path11" />
+    <circle
+       class="cls-3"
+       cx="58.9"
+       cy="40.04"
+       r="1.55"
+       id="circle13" />
+    <circle
+       class="cls-3"
+       cx="65.96"
+       cy="40.04"
+       r="1.55"
+       id="circle15" />
+  </g>
+</svg>

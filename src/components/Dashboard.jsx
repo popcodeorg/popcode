@@ -1,4 +1,5 @@
 import React from 'react';
+import Isvg from 'react-inlinesvg';
 import i18n from 'i18next-client';
 import bindAll from 'lodash/bindAll';
 import partial from 'lodash/partial';
@@ -143,7 +144,30 @@ class Dashboard extends React.Component {
     );
   }
 
+  _renderPopSvg(variant, validationState) {
+    return (
+      <div
+        className={classnames(
+          'dashboard-pop',
+          {
+            'dashboard-pop--visible':
+              this.props.validationState === validationState,
+          }
+        )}
+      >
+        <Isvg src={`/images/pop/${variant}.svg`} />
+      </div>
+    );
+  }
+
   _renderPop() {
+    return (
+      <div className="dashboard-popContainer">
+        {this._renderPopSvg('neutral', 'passed')}
+        {this._renderPopSvg('thinking', 'validating')}
+        {this._renderPopSvg('horns', 'failed')}
+      </div>
+    );
   }
 
   render() {

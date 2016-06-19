@@ -189,6 +189,22 @@ body {
   font-weight: bold;
 }
 
+.dashboard-popContainer {
+  flex: 1 0 auto;
+  position: relative;
+}
+
+.dashboard-pop {
+  display: none;
+}
+
+.dashboard-pop--visible {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
 .projectPreview-timestamp {
   text-align: right;
   color: darkgray;

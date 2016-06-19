@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="SVG_Pops"
+   data-name="SVG Pops"
+   viewBox="0 0 116 150"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="neutral.svg">
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>01-07</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview17"
+     showgrid="false"
+     inkscape:zoom="1.5733333"
+     inkscape:cx="58"
+     inkscape:cy="75"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="SVG_Pops" />
+  <defs
+     id="defs3">
+    <style
+       id="style5">.cls-1{fill:#00ff85;}.cls-2{fill:#fff;}.cls-3{fill:#221f1f;}</style>
+  </defs>
+  <title
+     id="title7">01-07</title>
+  <g
+     id="Pop1">
+    <path
+       class="cls-2"
+       d="M42.54,34.45a54.25,54.25,0,0,1,19.12-4.52C67,29.68,89.4,28.62,97.28,43.08c3.81,7,4.52,18.09-1,25.06-8,10.17-23.08,3.83-37.2,17.28a31,31,0,0,0-6.65,8.28C47,104,51.6,111,46.46,116.38c-4,4.1-11.57,5-16.12,2.15s-5.29-8.88-5.79-14.24c-2.81-30.14-5-53.69,10.65-65.71A30.17,30.17,0,0,1,42.54,34.45Z"
+       id="path11" />
+    <circle
+       class="cls-3"
+       cx="59.34"
+       cy="40.17"
+       r="1.55"
+       id="circle13" />
+    <circle
+       class="cls-3"
+       cx="66.4"
+       cy="40.17"
+       r="1.55"
+       id="circle15" />
+  </g>
+</svg>
