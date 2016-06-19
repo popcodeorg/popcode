@@ -37,17 +37,17 @@ class Sidebar extends React.Component {
       <div className={sidebarClassnames}>
         <div className="sidebar-wordmarkContainer">
           <Isvg src="/images/wordmark-vertical.svg" />
-          <div
-            className={classnames(
-              'sidebar-arrow',
-              {
-                'sidebar-arrow--show': !this.props.dashboardIsOpen,
-                'sidebar-arrow--hide': this.props.dashboardIsOpen,
-              }
-            )}
-            onClick={this.props.onToggleDashboard}
-          />
         </div>
+        <div
+          className={classnames(
+            'sidebar-arrow',
+            {
+              'sidebar-arrow--show': !this.props.dashboardIsOpen,
+              'sidebar-arrow--hide': this.props.dashboardIsOpen,
+            }
+          )}
+          onClick={this.props.onToggleDashboard}
+        />
         {this._renderMinimizedComponents()}
       </div>
     );

@@ -38,6 +38,7 @@ body {
 
 .sidebar-wordmarkContainer {
   flex: 1 0 auto;
+  position: relative;
 }
 
 .sidebar-wordmarkContainer svg {
@@ -79,6 +80,14 @@ body {
 }
 
 .sidebar-arrow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.sidebar-arrow::before {
+  content: "";
   border-top: 5px solid white;
   height: 0;
   width: 50%;
@@ -92,13 +101,13 @@ body {
   cursor: pointer;
 }
 
-.sidebar-arrow--show {
+.sidebar-arrow--show::before {
   border-right: 5px solid white;
   transform: rotate(45deg);
   transform-origin: left 50%;
 }
 
-.sidebar-arrow--hide {
+.sidebar-arrow--hide::before {
   border-left: 5px solid white;
   transform: rotate(-45deg);
   transform-origin: right 50%;
