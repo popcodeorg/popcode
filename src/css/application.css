@@ -45,6 +45,7 @@ body {
   padding: 10px;
   max-width: 30px;
   height: auto;
+  max-height: 100%;
 }
 
 .sidebar-wordmarkContainer path {
