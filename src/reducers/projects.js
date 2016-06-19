@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
-import {readFileSync} from 'fs';
-import path from 'path';
+
+import NEW_HTML from 'raw!../../templates/new.html';
 
 import {isPristineProject} from '../util/projectUtils';
 
@@ -8,13 +8,7 @@ const emptyMap = new Immutable.Map();
 
 const newProject = Immutable.fromJS({
   sources: {
-    html: readFileSync(path.join(
-      __dirname,
-      '..',
-      '..',
-      'templates',
-      'new.html'
-    ), 'utf8'),
+    html: NEW_HTML,
     css: '',
     javascript: '',
   },
