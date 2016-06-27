@@ -69,6 +69,15 @@ gulp.task('env', () => {
   }
 });
 
+gulp.task('fonts', () => gulp.
+  src([
+    `${bowerComponents}/inconsolata-webfont/fonts/inconsolata-regular.*`,
+    `${bowerComponents}/roboto-webfont-bower/fonts/` +
+      'Roboto-{Bold,Regular}-webfont.*',
+  ]).
+    pipe(gulp.dest(`${distDir}/fonts`))
+);
+
 gulp.task('css', () => gulp.
   src([
     `${bowerComponents}/normalize-css/normalize.css`,
@@ -87,7 +96,7 @@ gulp.task('js', ['env'], () => {
   return browserifyDone;
 });
 
-gulp.task('build', ['css', 'js']);
+gulp.task('build', ['fonts', 'css', 'js']);
 
 gulp.task('syncFirebase', () => new Promise((resolve, reject) => {
   fs.readFile(`${__dirname}/config/firebase-auth.json`, (err, data) => {
@@ -117,7 +126,7 @@ gulp.task('syncFirebase', () => new Promise((resolve, reject) => {
   });
 }));
 
-gulp.task('dev', ['browserSync', 'css', 'js'], () => {
+gulp.task('dev', ['browserSync', 'fonts', 'css', 'js'], () => {
   gulp.watch(`${stylesheetsDir}/**/*.css`, ['css']);
   gulp.watch(`${srcDir}/**/*.js{,x}`, ['js']);
 });
