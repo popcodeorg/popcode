@@ -30,6 +30,8 @@
     "lodash": "^4.11.2",
     "underscore": "^1.8.3",
     "normalize-css": "normalize.css#^4.1.1",
-    "jquery": "^2.2.3"
+    "jquery": "^2.2.3",
+    "inconsolata-webfont": "^1.0.3",
+    "roboto-webfont-bower": "roboto-webfont#^0.1.1"
   }
 }

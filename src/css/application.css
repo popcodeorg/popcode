@@ -1,5 +1,33 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
-@import url(https://fonts.googleapis.com/css?family=Inconsolata);
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'),
+    url('/compiled/fonts/Roboto-Regular-webfont.woff') format('woff'),
+    url('/compiled/fonts/Roboto-Regular-webfont.ttf') format('ttf'),
+    url('/compiled/fonts/Roboto-Regular-webfont.eot') format('eot');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: bold;
+  font-weight: 700;
+  src: local('Roboto'),
+    url('/compiled/fonts/Roboto-Bold-webfont.woff') format('woff'),
+    url('/compiled/fonts/Roboto-Bold-webfont.ttf') format('ttf'),
+    url('/compiled/fonts/Roboto-Bold-webfont.eot') format('eot');
+}
+
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Inconsolata'),
+    url('/compiled/fonts/inconsolata-regular.woff2') format('woff2'),
+    url('/compiled/fonts/inconsolata-regular.woff') format('woff'),
+    url('/compiled/fonts/inconsolata-regular.ttf') format('ttf'),
+    url('/compiled/fonts/inconsolata-regular.eot') format('eot');
+}
 
 html, body {
   min-height: 100%;
