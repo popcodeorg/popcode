@@ -249,6 +249,7 @@ body {
 .editors {
   display: flex;
   flex-direction: column;
+  font-family: 'Inconsolata';
 }
 
 .editors-editorContainer {
