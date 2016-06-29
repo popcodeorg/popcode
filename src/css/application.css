@@ -263,6 +263,10 @@ body {
   height: 100%;
 }
 
+.layout-dashboard {
+  flex: 1 0 20%;
+}
+
 .environment {
   box-sizing: border-box;
   flex: 1 1 auto;
