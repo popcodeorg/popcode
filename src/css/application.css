@@ -321,6 +321,18 @@ body {
   opacity: 0.5;
 }
 
+.editors-editorContainer-helpText {
+  position: absolute;
+  z-index: 1;
+  max-width: 11rem;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  margin: -1rem 0 0 -5.5rem;
+  opacity: 0.4;
+  font-family: Roboto;
+}
+
 .output {
   display: flex;
   flex-direction: column;

@@ -12,6 +12,9 @@
       "export-gist": "Export Gist"
     }
   },
+  "editors": {
+    "helpText": "Type in your __language__ code here."
+  },
   "languages": {
     "html": "HTML",
     "css": "CSS",
