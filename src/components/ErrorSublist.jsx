@@ -22,7 +22,7 @@ function ErrorSublist(props) {
 
   const errorMessage = i18n.t(
     'errors.notice',
-    {amount: props.errors.items.length, language: props.language}
+    {count: props.errors.items.length, language: props.language}
   );
 
   return (
