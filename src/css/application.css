@@ -29,6 +29,14 @@
     url('/compiled/fonts/inconsolata-regular.eot') format('eot');
 }
 
+:root {
+  --color-gray: #eeeeee;
+  --color-green: #00ff85;
+  --color-yellow: #ffd100;
+  --color-red: #ff5e4f;
+  --color-purple: #ff00ff;
+}
+
 html, body {
   min-height: 100%;
 }
@@ -47,12 +55,12 @@ body {
 
 .layout-sidebar {
   flex: 0 0 auto;
-  border-right: 1px solid darkgray;
+  border-right: 1px solid var(--color-gray);
   display: flex;
 }
 
 .sidebar {
-  background-color: #00ff85;
+  background-color: var(--color-green);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -60,11 +68,11 @@ body {
 }
 
 .sidebar--yellow {
-  background-color: #ffd100;
+  background-color: var(--color-yellow);
 }
 
 .sidebar--red {
-  background-color: #ff5e4f;
+  background-color: var(--color-red);
 }
 
 .sidebar-wordmarkContainer {
@@ -105,8 +113,8 @@ body {
   top: 0;
   right: 0;
   content: "";
-  border-top: solid 0.5em #ff5e4f;
-  border-right: solid 0.5em #ff5e4f;
+  border-top: solid 0.5em var(--color-red);
+  border-right: solid 0.5em var(--color-red);
   border-bottom: solid 0.5em transparent;
   border-left: solid 0.5em transparent;
 }
@@ -146,17 +154,17 @@ body {
 }
 
 .dashboard {
-  background-color: #00ff85;
+  background-color: var(--color-green);
   color: white;
   height: 100vh;
 }
 
 .dashboard--yellow {
-  background-color: #ffd100;
+  background-color: var(--color-yellow);
 }
 
 .dashboard--red {
-  background-color: #ff5e4f;
+  background-color: var(--color-red);
 }
 
 .dashboard-session {
@@ -222,7 +230,7 @@ body {
 }
 
 .dashboard-menu-item:hover, .dashboard-menu-item--active {
-  background-color: lightgray;
+  background-color: var(--color-gray);
   color: white;
 }
 
@@ -248,7 +256,7 @@ body {
 
 .projectPreview-timestamp {
   text-align: right;
-  color: darkgray;
+  color: var(--color-gray);
   font-style: italic;
   font-weight: normal;
 }
@@ -287,8 +295,8 @@ body {
 .editors-editorContainer {
   box-sizing: border-box;
   flex: 1 1 auto;
-  border-right: 2px solid gray;
-  border-bottom: 2px solid gray;
+  border-right: 2px solid var(--color-gray);
+  border-bottom: 2px solid var(--color-gray);
   position: relative;
   z-index: 0;
   display: flex;
@@ -394,11 +402,11 @@ body {
 
 .errorList--docked {
   overflow: scroll;
-  border-top: 3px solid darkgray;
+  border-top: 3px solid var(--color-gray);
 }
 
 .errorList-errorSublist-header {
-  background-color: gray;
+  background-color: var(--color-gray);
   color: white;
   text-align: center;
   margin: 0.5rem 0;
@@ -414,12 +422,12 @@ body {
 .errorList-error {
   margin: 0.5rem 0;
   padding: 0.5rem;
-  background-color: lightgray;
+  background-color: var(--color-gray);
   cursor: pointer;
 }
 
 .errorList-error-line {
-  background-color: gray;
+  background-color: var(--color-gray);
   color: white;
   font-weight: bold;
   font-size: 0.8em;
