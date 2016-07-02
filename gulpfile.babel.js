@@ -17,6 +17,8 @@ import babelify from 'babelify';
 import envify from 'envify';
 import git from 'git-rev-sync';
 import config from './src/config';
+import postcss from 'gulp-postcss';
+import cssnext from 'postcss-cssnext';
 
 const browserSync = require('browser-sync').create();
 const srcDir = 'src';
@@ -85,6 +87,7 @@ gulp.task('css', () => gulp.
   ]).
   pipe(concat('application.css')).
   pipe(sourcemaps.init({loadMaps: true})).
+  pipe(postcss([cssnext()])).
   pipe(gutil.env.production ? cssnano() : gutil.noop()).
   pipe(sourcemaps.write('./')).
   pipe(gulp.dest(distDir)).

@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import ErrorSublist from './ErrorSublist';
 
 function ErrorList(props) {
-  const docked = get(this, 'props.docked', false);
+  const docked = get(props, 'docked', false);
 
   return (
     <div

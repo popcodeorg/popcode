@@ -24,6 +24,7 @@ import {
   bootstrap,
 } from '../actions';
 
+import EditorContainer from './EditorContainer';
 import Editor from './Editor';
 import Output from './Output';
 import Sidebar from './Sidebar';
@@ -214,19 +215,25 @@ class Workspace extends React.Component {
       }
 
       editors.push(
-        <Editor
-          errors={this._allErrorsFor(language)}
+        <EditorContainer
           key={language}
           language={language}
-          percentageOfHeight={1 / editors.length}
-          projectKey={this.props.currentProject.projectKey}
-          ref={partial(this._handleEditorMountedOrUnmounted, language)}
           source={this.props.currentProject.sources[language]}
-          onInput={partial(this._handleEditorInput, language)}
           onMinimize={
             partial(this._handleComponentMinimized, `editor.${language}`)
           }
-        />
+        >
+          <Editor
+            errors={this._allErrorsFor(language)}
+            key={language}
+            language={language}
+            percentageOfHeight={1 / editors.length}
+            projectKey={this.props.currentProject.projectKey}
+            ref={partial(this._handleEditorMountedOrUnmounted, language)}
+            source={this.props.currentProject.sources[language]}
+            onInput={partial(this._handleEditorInput, language)}
+          />
+        </EditorContainer>
       );
     });
 

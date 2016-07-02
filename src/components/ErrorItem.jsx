@@ -12,8 +12,8 @@ function ErrorItem(props) {
         props.column
       )}
     >
-      <span className="errorList-error-line">{props.row + 1}</span>
-      <span className="errorList-error-message">{props.text}</span>
+      <div className="errorList-error-line">{props.row + 1}</div>
+      <div className="errorList-error-message">{props.text}</div>
     </li>
   );
 }

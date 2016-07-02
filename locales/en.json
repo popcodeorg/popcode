@@ -12,6 +12,9 @@
       "export-gist": "Export Gist"
     }
   },
+  "editors": {
+    "helpText": "Type in your $t(languages.__language__) code here."
+  },
   "languages": {
     "html": "HTML",
     "css": "CSS",
@@ -30,7 +33,8 @@
   },
   "errors": {
     "undefined-description": "Couldn't find a human description for",
-    "notice": "You have __amount__ errors in your __language__!",
+    "notice": "You have an error in your $t(languages.__language__)!",
+    "notice_plural": "You have __count__ errors in your $t(languages.__language__)!",
     "line-number": "Line __number__:",
     "html": {
       "banned-attributes": {

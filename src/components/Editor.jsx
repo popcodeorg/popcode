@@ -1,6 +1,5 @@
 import React from 'react';
 import ACE from 'brace';
-import i18n from 'i18next-client';
 import bindAll from 'lodash/bindAll';
 import throttle from 'lodash/throttle';
 
@@ -101,18 +100,7 @@ class Editor extends React.Component {
     this._resizeEditor();
   }
 
-  _renderLabel() {
-    return (
-      <div
-        className="editors-editorContainer-label"
-        onClick={this.props.onMinimize}
-      >
-        {i18n.t(`languages.${this.props.language}`)}
-      </div>
-    );
-  }
-
-  _renderEditor() {
+  render() {
     return (
       <div
         className="editors-editorContainer-editor"
@@ -121,14 +109,6 @@ class Editor extends React.Component {
     );
   }
 
-  render() {
-    return (
-      <div className="editors-editorContainer">
-        {this._renderLabel()}
-        {this._renderEditor()}
-      </div>
-    );
-  }
 }
 
 Editor.propTypes = {
@@ -138,7 +118,6 @@ Editor.propTypes = {
   projectKey: React.PropTypes.string.isRequired,
   source: React.PropTypes.string.isRequired,
   onInput: React.PropTypes.func.isRequired,
-  onMinimize: React.PropTypes.func.isRequired,
 };
 
 export default Editor;
