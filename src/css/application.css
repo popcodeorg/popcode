@@ -82,13 +82,13 @@ body {
 
 .sidebar-wordmarkContainer svg {
   padding: 10px;
-  max-width: 30px;
+  max-width: 24px;
   height: auto;
   max-height: 100%;
 }
 
 .sidebar-wordmarkContainer path {
-  fill: white !important;
+  fill: black !important;
 }
 
 .sidebar-minimizedComponents {
@@ -119,6 +119,10 @@ body {
   border-left: solid 0.5em transparent;
 }
 
+:root {
+  --sidebar-arrow-stroke: 4px solid black;
+}
+
 .sidebar-arrow {
   position: absolute;
   top: 0;
@@ -127,8 +131,8 @@ body {
 }
 
 .sidebar-arrow::before {
+  border-top: var(--sidebar-arrow-stroke);
   content: "";
-  border-top: 5px solid white;
   height: 0;
   width: 50%;
   padding-bottom: 50%;
@@ -142,20 +146,20 @@ body {
 }
 
 .sidebar-arrow--show::before {
-  border-right: 5px solid white;
+  border-right: var(--sidebar-arrow-stroke);
   transform: rotate(45deg);
   transform-origin: left 50%;
 }
 
 .sidebar-arrow--hide::before {
-  border-left: 5px solid white;
+  border-left: var(--sidebar-arrow-stroke);
   transform: rotate(-45deg);
   transform-origin: right 50%;
 }
 
 .dashboard {
   background-color: var(--color-green);
-  color: white;
+  color: black;
   height: 100vh;
 }
 
