@@ -406,35 +406,21 @@ body {
 }
 
 .errorList-errorSublist-header {
-  background-color: var(--color-gray);
-  color: white;
   text-align: center;
-  margin: 0.5rem 0;
-  padding: 0.5rem 0;
+  margin: 1rem 0 0.5rem;
   font-size: 1rem;
 }
 
 .errorList-errorSublist-list {
   list-style-type: none;
-  padding: 0;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-gray);
 }
 
 .errorList-error {
-  margin: 0.5rem 0;
-  padding: 0.5rem;
-  background-color: var(--color-gray);
+  padding: 0.5rem 0;
   cursor: pointer;
-}
-
-.errorList-error-line {
-  background-color: var(--color-gray);
-  color: white;
-  font-weight: bold;
-  font-size: 0.8em;
-  padding: 0.2em 0.5em;
-  border-radius: 25%;
-  display: inline-block;
-  margin-right: 0.5em;
 }
 
 .u-flexContainer {
