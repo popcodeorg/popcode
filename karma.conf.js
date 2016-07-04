@@ -11,7 +11,12 @@ module.exports = function(config) {
   config.set({
     basePath: '',
 
-    frameworks: ['mocha', 'sinon-chai', 'browserify'],
+    frameworks: [
+      'mocha',
+      'chai-as-promised',
+      'sinon-chai',
+      'browserify',
+    ],
 
     files: [
       'spec/examples/**/*.spec.js',
