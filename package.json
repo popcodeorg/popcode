@@ -68,7 +68,8 @@
   "scripts": {
     "postinstall": "./node_modules/.bin/bower install",
     "pretest": "npm run lint",
-    "test": "true",
+    "test": "./node_modules/.bin/karma start --single-run --no-auto-watch",
+    "autotest": "./node_modules/.bin/karma start --no-single-run --auto-watch",
     "lint": "./node_modules/.bin/eslint --ext .js,.jsx --plugin react src"
   },
   "devDependencies": {
