@@ -7,20 +7,14 @@
     "type": "store"
   },
   "src/actions/*.js": {
-    "type": "action",
-    "alternate": "src/actions/__tests__/{}-test.js"
-  },
-  "src/actions/__tests__/*-test.js": {
-    "type": "actiontest",
-    "alternate": "src/actions/{}.js"
+    "type": "action"
   },
   "src/reducers/*.js": {
-    "type": "reducer",
-    "alternate": "src/reducers/__tests__/{}-test.js"
+    "type": "reducer"
   },
-  "src/reducers/__tests__/*-test.js": {
-    "type": "reducertest",
-    "alternate": "src/reducers/{}.js"
+  "spec/examples/*.spec.js": {
+    "type": "spec",
+    "template": "/* eslint-env mocha */\n\nimport '../../helper';\nimport {open}assert{close} from 'chai';\n\nimport {basename} from '../../../src/{}';\n\ndescribe('{basename}', () => {open}\n{close});\n"
   },
   "src/validations/*.js": {"type": "validation"},
   "src/static/*": {"type": "static"},
