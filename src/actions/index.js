@@ -10,17 +10,19 @@ import Gists from '../services/Gists';
 import appFirebase from '../services/appFirebase';
 import validations from '../validations';
 
+import {createProject} from './projects';
+
+function generateProjectKey() {
+  const date = new Date();
+  return (date.getTime() * 1000 + date.getMilliseconds()).toString();
+}
+
 function getCurrentPersistor(state) {
   const currentUser = state.user.toJS();
   if (currentUser.authenticated) {
     return new FirebasePersistor(currentUser);
   }
   return null;
-}
-
-function generateProjectKey() {
-  const date = new Date();
-  return (date.getTime() * 1000 + date.getMilliseconds()).toString();
 }
 
 function getCurrentProject(state) {
@@ -83,17 +85,6 @@ function validateAllSources(project) {
     const enabledLibraries = project.get('enabledLibraries');
     project.get('sources').forEach((source, language) => {
       dispatch(validateSource(language, source, enabledLibraries));
-    });
-  };
-}
-
-function createProject() {
-  return (dispatch) => {
-    dispatch({
-      type: 'PROJECT_CREATED',
-      payload: {
-        projectKey: generateProjectKey(),
-      },
     });
   };
 }
