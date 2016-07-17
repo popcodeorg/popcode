@@ -57,6 +57,7 @@
     "react-inlinesvg": "^0.4.2",
     "react-redux": "^4.4.5",
     "redux": "^3.3.0",
+    "redux-actions": "^0.10.1",
     "redux-logger": "^2.5.0",
     "redux-thunk": "^2.0.1",
     "slowparse": "^1.1.4",

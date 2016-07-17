@@ -1,11 +1,13 @@
+import {createAction} from 'redux-actions';
+
+const createProjectWithKey = createAction(
+  'PROJECT_CREATED',
+  (projectKey) => ({projectKey})
+);
+
 export function createProject() {
   return (dispatch) => {
-    dispatch({
-      type: 'PROJECT_CREATED',
-      payload: {
-        projectKey: generateProjectKey(),
-      },
-    });
+    dispatch(createProjectWithKey(generateProjectKey()));
   };
 }
 
