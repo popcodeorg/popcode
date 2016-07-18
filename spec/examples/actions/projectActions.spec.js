@@ -2,13 +2,15 @@
 
 import '../../helper';
 import {assert} from 'chai';
-import toArray from 'lodash/toArray';
 
 import createApplicationStore from '../../../src/createApplicationStore';
 
+import {createProject} from '../../../src/actions/projects';
+
 import {
-  createProject,
-} from '../../../src/actions/projects';
+  getProjectKeys,
+  getCurrentProject,
+} from '../../../src/util/projectUtils';
 
 describe('projectActions', () => {
   let store;
@@ -19,23 +21,12 @@ describe('projectActions', () => {
 
   describe('createProject', () => {
     it('creates a new project', () => {
-      const previousKeys = getProjectKeys(store);
+      const previousKeys = getProjectKeys(store.getState());
       store.dispatch(createProject());
       assert.notInclude(
         previousKeys,
-        getCurrentProject(store).projectKey
+        getCurrentProject(store.getState()).projectKey
       );
     });
   });
 });
-
-function getProjectKeys(store) {
-  const state = store.getState();
-  return toArray(state.projects.keys());
-}
-
-function getCurrentProject(store) {
-  const state = store.getState();
-  const projectKey = state.currentProject.get('projectKey');
-  return state.projects.get(projectKey).toJS();
-}
