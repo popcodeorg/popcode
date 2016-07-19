@@ -531,8 +531,8 @@
       "resolved": "https://registry.npmjs.org/boom/-/boom-2.10.1.tgz"
     },
     "bowser": {
-      "version": "1.1.1",
-      "resolved": "https://registry.npmjs.org/bowser/-/bowser-1.1.1.tgz"
+      "version": "1.4.1",
+      "resolved": "https://registry.npmjs.org/bowser/-/bowser-1.4.1.tgz"
     },
     "brace": {
       "version": "0.8.0",
