@@ -15,6 +15,10 @@
   "editors": {
     "helpText": "Type in your $t(languages.__language__) code here."
   },
+  "bad-browser": {
+    "message": "Popcode doesn’t work with your version of __name__.",
+    "download": "Click here to download a new version."
+  },
   "languages": {
     "html": "HTML",
     "css": "CSS",
