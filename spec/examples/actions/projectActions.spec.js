@@ -10,6 +10,7 @@ import {createProject} from '../../../src/actions/projects';
 import {
   getProjectKeys,
   getCurrentProject,
+  isPristineProject,
 } from '../../../src/util/projectUtils';
 
 describe('projectActions', () => {
@@ -26,6 +27,14 @@ describe('projectActions', () => {
       assert.notInclude(
         previousKeys,
         getCurrentProject(store.getState()).projectKey
+      );
+    });
+
+    it('creates a project that is pristine', () => {
+      store.dispatch(createProject());
+      assert(
+        isPristineProject(getCurrentProject(store.getState())),
+        'project should be pristine'
       );
     });
   });

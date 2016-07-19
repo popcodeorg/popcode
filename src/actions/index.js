@@ -11,6 +11,7 @@ import appFirebase from '../services/appFirebase';
 import validations from '../validations';
 
 import {createProject} from './projects';
+import {isPristineProject} from '../util/projectUtils';
 
 function generateProjectKey() {
   const date = new Date();
@@ -38,7 +39,7 @@ function saveCurrentProject(state) {
   const currentProject = getCurrentProject(state);
   const persistor = getCurrentPersistor(state);
 
-  if (persistor && currentProject && currentProject.get('updatedAt')) {
+  if (persistor && currentProject && !isPristineProject(currentProject)) {
     persistor.saveCurrentProject(currentProject.toJS());
     return true;
   }

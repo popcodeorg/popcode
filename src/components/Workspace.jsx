@@ -24,7 +24,7 @@ import {
   bootstrap,
 } from '../actions';
 
-import {getCurrentProject} from '../util/projectUtils';
+import {getCurrentProject, isPristineProject} from '../util/projectUtils';
 
 import EditorContainer from './EditorContainer';
 import Editor from './Editor';
@@ -94,7 +94,7 @@ class Workspace extends React.Component {
 
   _confirmUnload(event) {
     if (!this.props.currentUser.authenticated) {
-      if (this.props.currentProject.updatedAt) {
+      if (!isPristineProject(this.props.currentProject)) {
         event.returnValue = i18n.t('workspace.confirm-unload');
       }
     }

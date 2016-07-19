@@ -1,4 +1,5 @@
 import toArray from 'lodash/toArray';
+import {Map} from 'immutable';
 
 export function getProjectKeys(state) {
   return toArray(state.projects.keys());
@@ -10,4 +11,11 @@ export function getCurrentProject(state) {
     return state.projects.get(projectKey).toJS();
   }
   return null;
+}
+
+export function isPristineProject(project) {
+  if (Map.isMap(project)) {
+    return !project.has('updatedAt');
+  }
+  return !('updatedAt' in project);
 }
