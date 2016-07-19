@@ -24,6 +24,8 @@ import {
   bootstrap,
 } from '../actions';
 
+import {getCurrentProject, isPristineProject} from '../util/projectUtils';
+
 import EditorContainer from './EditorContainer';
 import Editor from './Editor';
 import Output from './Output';
@@ -31,15 +33,6 @@ import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 
 function mapStateToProps(state) {
-  const currentProject = state.projects.get(
-    state.currentProject.get('projectKey')
-  );
-
-  let currentProjectJS;
-  if (currentProject) {
-    currentProjectJS = currentProject.toJS();
-  }
-
   const projects = sortBy(
     values(state.projects.toJS()),
     (project) => -project.updatedAt
@@ -47,7 +40,7 @@ function mapStateToProps(state) {
 
   return {
     allProjects: projects,
-    currentProject: currentProjectJS,
+    currentProject: getCurrentProject(state),
     errors: state.errors.toJS(),
     runtimeErrors: state.runtimeErrors.toJS(),
     delayErrorDisplay: state.delayErrorDisplay,
@@ -101,7 +94,7 @@ class Workspace extends React.Component {
 
   _confirmUnload(event) {
     if (!this.props.currentUser.authenticated) {
-      if (this.props.currentProject.updatedAt) {
+      if (!isPristineProject(this.props.currentProject)) {
         event.returnValue = i18n.t('workspace.confirm-unload');
       }
     }
@@ -204,7 +197,7 @@ class Workspace extends React.Component {
   }
 
   _renderEditors() {
-    if (this.props.currentProject === undefined) {
+    if (this.props.currentProject === null) {
       return null;
     }
 

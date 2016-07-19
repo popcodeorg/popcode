@@ -2,6 +2,8 @@ import Immutable from 'immutable';
 import {readFileSync} from 'fs';
 import path from 'path';
 
+import {isPristineProject} from '../util/projectUtils';
+
 const emptyMap = new Immutable.Map();
 
 const newProject = Immutable.fromJS({
@@ -69,7 +71,7 @@ function projects(stateIn, action) {
 
     case 'CURRENT_PROJECT_CHANGED':
       return state.filter((project, projectKey) => (
-        projectKey === action.payload.projectKey || project.has('updatedAt')
+        projectKey === action.payload.projectKey || isPristineProject(project)
       ));
 
     case 'RESET_WORKSPACE':

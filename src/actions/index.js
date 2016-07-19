@@ -10,17 +10,20 @@ import Gists from '../services/Gists';
 import appFirebase from '../services/appFirebase';
 import validations from '../validations';
 
+import {createProject} from './projects';
+import {isPristineProject} from '../util/projectUtils';
+
+function generateProjectKey() {
+  const date = new Date();
+  return (date.getTime() * 1000 + date.getMilliseconds()).toString();
+}
+
 function getCurrentPersistor(state) {
   const currentUser = state.user.toJS();
   if (currentUser.authenticated) {
     return new FirebasePersistor(currentUser);
   }
   return null;
-}
-
-function generateProjectKey() {
-  const date = new Date();
-  return (date.getTime() * 1000 + date.getMilliseconds()).toString();
 }
 
 function getCurrentProject(state) {
@@ -36,7 +39,7 @@ function saveCurrentProject(state) {
   const currentProject = getCurrentProject(state);
   const persistor = getCurrentPersistor(state);
 
-  if (persistor && currentProject && currentProject.get('updatedAt')) {
+  if (persistor && currentProject && !isPristineProject(currentProject)) {
     persistor.saveCurrentProject(currentProject.toJS());
     return true;
   }
@@ -83,17 +86,6 @@ function validateAllSources(project) {
     const enabledLibraries = project.get('enabledLibraries');
     project.get('sources').forEach((source, language) => {
       dispatch(validateSource(language, source, enabledLibraries));
-    });
-  };
-}
-
-function createProject() {
-  return (dispatch) => {
-    dispatch({
-      type: 'PROJECT_CREATED',
-      payload: {
-        projectKey: generateProjectKey(),
-      },
     });
   };
 }
