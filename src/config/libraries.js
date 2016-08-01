@@ -26,6 +26,26 @@ const libraries = {
     ),
     predefined: ['_'],
   },
+  mustache: {
+    name: 'Mustache.js',
+    javascript: fs.readFileSync(
+      path.join(
+        __dirname,
+        '../../bower_components/mustache.js/mustache.js'
+      )
+    ),
+    predefined: ['Mustache'],
+  },
+  handlebars: {
+    name: 'Handlebars.js',
+    javascript: fs.readFileSync(
+      path.join(
+        __dirname,
+        '../../bower_components/handlebars/handlebars.js'
+      )
+    ),
+    predefined: ['Handlebars'],
+  },
   angular: {
     name: 'AngularJS',
     javascript: fs.readFileSync(
