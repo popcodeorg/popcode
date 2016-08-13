@@ -37,4 +37,12 @@ describe('html', () => {
       'banned-attributes.align'
     )
   );
+
+  it('gives error message for missing structure and unclosed p tag', () =>
+    assertFailsHtmlValidationWith(
+      '<p>T',
+      'unclosed-tag',
+      'doctype'
+    )
+  );
 });

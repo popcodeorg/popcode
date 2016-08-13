@@ -88,7 +88,12 @@ class SlowparseValidator extends Validator {
   }
 
   _getRawErrors() {
-    const error = Slowparse.HTML(document, this._source).error;
+    let error;
+    try {
+      error = Slowparse.HTML(document, this._source).error;
+    } catch (e) {
+      error = null;
+    }
 
     if (error !== null) {
       return [error];
