@@ -9,8 +9,8 @@
       "resolved": "https://registry.npmjs.org/JSONStream/-/JSONStream-1.1.1.tgz"
     },
     "PrettyCSS": {
-      "version": "0.3.10-popcode.1",
-      "resolved": "git://github.com/popcodeorg/PrettyCSS.git#cb63676363405b0dadaa4e42376ab86ce5dafc58"
+      "version": "0.3.10-popcode.2",
+      "resolved": "git://github.com/popcodeorg/PrettyCSS.git#80c44114d1a4eea78252aa1371dffc600241337e"
     },
     "abbrev": {
       "version": "1.0.7",

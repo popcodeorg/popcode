@@ -29,7 +29,7 @@
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
   "license": "MIT",
   "dependencies": {
-    "PrettyCSS": "popcodeorg/PrettyCSS#v0.3.10-popcode.1",
+    "PrettyCSS": "popcodeorg/PrettyCSS#v0.3.10-popcode.2",
     "base64-js": "^1.0.2",
     "bowser": "^1.4.1",
     "brace": "^0.8.0",
