@@ -91,10 +91,11 @@
       "property-missing-colon": "Put a colon (:) between the property and the value.\nTry: color: red",
       "selector-missing": "Start every block of CSS with a selector, such as an element name or class name.\nTry: p {\n  color: red;\n}",
       "block-expected": "Start a block using { after your selector.\nTry: __error__ {",
-      "extra-tokens-after-value": "Looks like you're missing a semicolon on the line before this one.",
+      "extra-tokens-after-value": "The __token__ at the end of this line doesn’t belong there.",
       "illegal-token-after-combinator": "After a + or > in a selector, you need to specify the name of another element, class, or ID",
       "invalid-token": "This line doesn't look like valid CSS.",
       "invalid-value": "__error__ isn't a meaningful value for this property. Double-check what values you can use here.",
+      "missing-semicolon": "Looks like you’re missing a semicolon at the end of this line.",
       "require-value": "Put a value for __error__ after the colon.",
       "selector-expected": "Use a comma to separate multiple tag names, classes, or IDs.",
       "unknown-property": "__error__ isn't a property that CSS understands. Double-check the name of the property that you want to use."

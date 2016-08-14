@@ -4,21 +4,14 @@ import '../../helper';
 import {
   assertPassesValidation,
   assertFailsValidationWith,
+  assertFailsValidationAtLine,
 } from '../../assertions/validations';
 
 import css from '../../../src/validations/css';
 
-function assertPassesCssValidation(source) {
-  return assertPassesValidation(css, source);
-}
-
-function assertFailsCssValidationWith(source, ...errors) {
-  return assertFailsValidationWith(css, source, ...errors);
-}
-
 describe('css', () => {
   it('allows valid flexbox', () =>
-    assertPassesCssValidation(`
+    assertPassesValidation(css, `
       .flex-container {
         display: flex;
         flex-flow: nowrap column;
@@ -35,10 +28,44 @@ describe('css', () => {
   );
 
   it('fails with bogus flex value', () =>
-    assertFailsCssValidationWith(
+    assertFailsValidationWith(
+      css,
       '.flex-item { flex: bogus; }',
       'invalid-value'
     )
   );
+
+  context('missing semicolon', () => {
+    const stylesheet = `
+      p {
+        margin: 10px
+        padding: 5px;
+      }
+    `;
+
+    it('gives missing semicolon error', () =>
+      assertFailsValidationWith(css, stylesheet, 'missing-semicolon')
+    );
+
+    it('fails at the line missing the semicolon', () => {
+      assertFailsValidationAtLine(css, stylesheet, 1);
+    });
+  });
+
+  context('extra tokens after value', () => {
+    const stylesheet = `
+      p {
+        padding: 5px 5px 5px 5px 5px;
+      }
+    `;
+
+    it('gives extra tokens error', () =>
+      assertFailsValidationWith(css, stylesheet, 'extra-tokens-after-value')
+    );
+
+    it('fails at the line missing the semicolon', () =>
+      assertFailsValidationAtLine(css, stylesheet, 2)
+    );
+  });
 });
 

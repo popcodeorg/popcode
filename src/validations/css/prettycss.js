@@ -1,5 +1,8 @@
 import prettyCSS from 'PrettyCSS';
 import Validator from '../Validator';
+import trim from 'lodash/trim';
+import startsWith from 'lodash/startsWith';
+import endsWith from 'lodash/endsWith';
 
 const RADIAL_GRADIENT_EXPR =
   /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/;
@@ -13,9 +16,28 @@ const errorMap = {
     payload: {error: error.token.content},
   }),
 
-  'extra-tokens-after-value': () => ({
-    reason: 'extra-tokens-after-value',
-  }),
+  'extra-tokens-after-value': (error, source) => {
+    const lineNumber = error.token.line;
+    const lines = source.split('\n');
+    const previousLine = lines[lineNumber - 2];
+    const thisLine = lines[lineNumber - 1];
+
+    if (
+      startsWith(trim(thisLine), error.token.content) &&
+        !endsWith(trim(previousLine), ';')
+    ) {
+      return {
+        reason: 'missing-semicolon',
+        row: lineNumber - 2,
+        column: previousLine.length - 1,
+      };
+    }
+
+    return ({
+      reason: 'extra-tokens-after-value',
+      payload: {token: error.token.content},
+    });
+  },
 
   'illegal-token-after-combinator': () => ({
     reason: 'illegal-token-after-combinator',
