@@ -23,7 +23,7 @@ class Validator {
   _mapError(rawError) {
     const key = this._keyForError(rawError);
     if (this._errorMap.hasOwnProperty(key)) {
-      return this._errorMap[key](rawError);
+      return this._errorMap[key](rawError, this._source);
     }
     return null;
   }
@@ -46,7 +46,7 @@ class Validator {
 
     const location = this._locationForError(rawError);
 
-    return assign(error, location, {
+    return assign({}, location, error, {
       text: message,
       raw: message,
       type: 'error',

@@ -1,7 +1,8 @@
 import {assert} from 'chai';
 import map from 'lodash/map';
+import trim from 'lodash/trim';
 
-function assertPassesValidation(validate, source) {
+export function assertPassesValidation(validate, source) {
   return assert.eventually.deepEqual(
     validate(source),
     [],
@@ -9,7 +10,7 @@ function assertPassesValidation(validate, source) {
   );
 }
 
-function assertFailsValidationWith(validate, source, ...reasons) {
+export function assertFailsValidationWith(validate, source, ...reasons) {
   return assert.eventually.sameMembers(
     validate(source).then((errors) => map(errors, 'reason')),
     reasons,
@@ -17,7 +18,10 @@ function assertFailsValidationWith(validate, source, ...reasons) {
   );
 }
 
-export {
-  assertPassesValidation,
-  assertFailsValidationWith,
-};
+export function assertFailsValidationAtLine(validate, source, line) {
+  return assert.eventually.include(
+    validate(trim(source)).then((errors) => map(errors, 'row')),
+    line - 1,
+    `source fails validation at line: ${line}`
+  );
+}
