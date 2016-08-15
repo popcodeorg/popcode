@@ -50,6 +50,7 @@ const errorMap = {
   UNCLOSED_TAG: (error) => ({
     reason: 'unclosed-tag',
     payload: {tag: error.openTag.name},
+    suppresses: ['mismatched-close-tag'],
   }),
 
   UNEXPECTED_CLOSE_TAG: (error) => ({
@@ -71,6 +72,7 @@ const errorMap = {
   UNTERMINATED_CLOSE_TAG: (error) => ({
     reason: 'unterminated-close-tag',
     payload: {tag: error.closeTag.name},
+    suppresses: ['unclosed-tag'],
   }),
 
   UNTERMINATED_COMMENT: () => ({reason: 'unterminated-comment'}),
