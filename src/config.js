@@ -5,8 +5,7 @@ const nodeEnv = (process.env.NODE_ENV || 'development');
 export default {
   nodeEnv,
   logReduxActions: () => process.env.LOG_REDUX_ACTIONS === 'true',
-  warnOnDroppedErrors: nodeEnv === 'development',
-  stubSVGs: nodeEnv === 'test',
+  warnOnDroppedErrors: process.env.WARN_ON_DROPPED_ERRORS === 'true',
 
   firebaseApp: process.env.FIREBASE_APP || 'blistering-inferno-9896',
 
