@@ -71,4 +71,17 @@ describe('html', () => {
       'space-before-tag-name'
     )
   );
+
+  it('generates meaningful error for extra tag at end of doc', () =>
+    assertFailsValidationWith(
+      html,
+      `<!DOCTYPE html>
+       <html>
+       <head><title>Page Title</title></head>
+       <body></body>
+       </html>
+       </div>`,
+      'unexpected-close-tag'
+    )
+  );
 });
