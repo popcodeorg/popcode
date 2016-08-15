@@ -52,10 +52,21 @@ const errorMap = {
     suppresses: ['lower-case-attribute-name'],
   }),
 
-  MISMATCHED_CLOSE_TAG: (error) => ({
-    reason: 'mismatched-close-tag',
-    payload: {open: error.openTag.name, close: error.closeTag.name},
-  }),
+  MISMATCHED_CLOSE_TAG: (error) => {
+    const openTagName = error.openTag.name;
+    const closeTagName = error.closeTag.name;
+    if (openTagName === '#document-fragment') {
+      return {
+        reason: 'unexpected-close-tag',
+        payload: {tag: closeTagName},
+      };
+    }
+
+    return {
+      reason: 'mismatched-close-tag',
+      payload: {open: openTagName, close: closeTagName},
+    };
+  },
 
   SELF_CLOSING_NON_VOID_ELEMENT: (error) => ({
     reason: 'self-closing-non-void-element',
