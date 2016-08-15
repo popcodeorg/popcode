@@ -20,10 +20,25 @@ const errorMap = {
     suppresses: ['lower-case-attribute-name'],
   }),
 
-  INVALID_TAG_NAME: (error) => ({
-    reason: 'invalid-tag-name',
-    payload: {tag: error.openTag.name},
-  }),
+  INVALID_TAG_NAME: (error, source) => {
+    const tagName = error.openTag.name;
+    if (tagName === '') {
+      const tagMatch = /^<\s+([A-Za-z0-9\-]+)/.exec(
+        source.slice(error.openTag.start)
+      );
+      if (tagMatch) {
+        return {
+          reason: 'space-before-tag-name',
+          payload: {tag: tagMatch[1]},
+        };
+      }
+    }
+
+    return {
+      reason: 'invalid-tag-name',
+      payload: {tag: error.openTag.name},
+    };
+  },
 
   UNSUPPORTED_ATTR_NAMESPACE: (error) => ({
     reason: 'invalid-attribute-name',
