@@ -63,4 +63,12 @@ describe('html', () => {
       'mismatched-close-tag'
     )
   );
+
+  it('generates meaningful error for space inside HTML angle bracket', () =>
+    assertFailsValidationWith(
+      html,
+      htmlWithBody('< p>Content</p>'),
+      'space-before-tag-name'
+    )
+  );
 });
