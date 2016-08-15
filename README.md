@@ -1,21 +1,23 @@
 # Popcode #
 
-Popcode is a simple HTML/CSS/JavaScript editing environment for use in the
-classroom. It's a lot like JSBin or JSFiddle, but with a strong emphasis on
-novice users.
+[Popcode](https://popcode.org) is a simple HTML/CSS/JavaScript editing
+environment for use in the classroom. It's a lot like JSBin, JSFiddle, or
+Codepen, but it focuses on giving specific, immediate, human-friendly feedback
+when the code contains errors.
+
+[![](https://cl.ly/1W1e1h3w073u/popscreens.png)](https://popcode.org)
 
 ### Project status ###
 
 [![Build Status](https://travis-ci.org/popcodeorg/popcode.svg?branch=master)](https://travis-ci.org/popcodeorg/popcode) [![Dependency Status](https://david-dm.org/popcodeorg/popcode.svg)](https://david-dm.org/popcodeorg/popcode) ![License](https://img.shields.io/github/license/popcodeorg/popcode.svg)
 
-Popcode is alpha software.
+Popcode is the official first semester editing environment for the [ScriptEd
+program](https://scripted.org) in the 2016–2017 school year.
 
 ### Try it out ###
 
 You can try out Popcode at
 [`https://popcode.org`](https://popcode.org).
-
-Try doing something wrong. The main emphasis of this project is giving feedback on code problems that novice users can understand.
 
 ## Features ##
 
@@ -27,10 +29,11 @@ Try doing something wrong. The main emphasis of this project is giving feedback 
   preview is replaced by an error list.
 * JavaScript runtime errors are also reported in human-friendly language, with
   annotations in the source code pointing out the source of the problem.
-* One-click login using GitHub account; all work is saved remotely to Firebase
-  when logged in.
+* One-click login using GitHub account; all work is saved remotely to
+  [Firebase](https://firebase.google.com/) when logged in.
 * Pop out preview of web page in its own window.
 * Export to GitHub gist.
+* Import starter code from a GitHub gist.
 
 ### About validation ###
 
@@ -55,16 +58,14 @@ Popcode uses [**React**](https://facebook.github.io/react/) to render views,
 [**Redux**](http://redux.js.org/) to manage application state,
 [**Ace**](https://ace.c9.io/) as the code editor,
 [**Browserify**](http://browserify.org/) to package the client-side
-application, and [Babel](https://babeljs.io/) to compile ES2015+JSX into ES5.
+application, and [Babel](https://babeljs.io/) to compile ES2016+JSX into ES5.
 
-Right now, it includes **slowparse**, **htmllint**, **css**, **PrettyCSS**,
-and **jshint** for error checking.
-
-The Ace editor has a built-in system for error checking, but it's really hard
-to extend, so I've disabled it. Right now the editor just synchronously runs
-the validations whenever the code changes. It would be reasonably easy to move
-this into a web worker, although I think a hand-rolled web worker would still
-be much easier than trying to integrate with Ace's web worker framework.
+Popcode detects code errors using
+[slowparse](https://github.com/mozilla/slowparse),
+[htmllint](https://github.com/htmllint/htmllint),
+[Rework CSS](https://github.com/reworkcss/css),
+[PrettyCSS](https://github.com/fidian/PrettyCSS),
+[jshint](https://github.com/jshint/jshint), and [esprima](http://esprima.org/).
 
 ### Architecture Overview ###
 
@@ -90,8 +91,9 @@ lifecycle of a user interaction:
 
 ## Contributing ##
 
-Yes please. I don't think there's any way I'm going to make this a viable
-product on my own. Pull requests are most welcome.
+Yes please! There are a [ton of ways](https://trello.com/b/ONaFg6wh/popcode)
+Popcode could be made better. Pull requests, bug reports, feature suggestions
+are all very very welcome.
 
 ### Running locally ###
 
@@ -122,6 +124,14 @@ for all the sordid details.
 * [Alejandro AR](https://github.com/kinduff)
 * [Vaibhav Verma](https://github.com/v)
 * [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
+* Logo design, "Pop" concept, and UI by the team at
+  [http://redpeakgroup.com](Red Peak): Andrew Haug, Aya Kawabata, Jieun Lee,
+  Achu Fones, Iwona Waluk, Stewart Devlin, and Katie Conneally
+
+## Thanks to ##
+
+[Bugsnag](https://bugsnag.com) provides excellent error alerting to Popcode for
+free.
 
 ## Contact ##
 
