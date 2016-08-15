@@ -55,6 +55,18 @@ const errorMap = {
   E027: () => ({reason: 'missing-title'}),
 
   E028: () => ({reason: 'duplicated-title'}),
+
+  E042: (error, source) => {
+    const lines = source.split('\n');
+    const tagNameExpr = /[^\s>]+/;
+    const tag = tagNameExpr.exec(lines[error.line - 1].slice(error.column))[0];
+
+    return {
+      reason: 'unclosed-tag',
+      payload: {tag},
+      suppresses: ['mismatched-close-tag'],
+    };
+  },
 };
 
 const htmlLintOptions = {
@@ -91,6 +103,7 @@ const htmlLintOptions = {
     'tt',
     'strike',
   ],
+  'tag-close': true,
   'tag-name-match': true,
   'tag-name-lowercase': true,
   'title-max-length': 0,

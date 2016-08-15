@@ -18,31 +18,49 @@ function htmlWithBody(body) {
 `;
 }
 
-function assertPassesHtmlValidation(source) {
-  return assertPassesValidation(html, source);
-}
-
-function assertFailsHtmlValidationWith(source, ...errors) {
-  return assertFailsValidationWith(html, source, ...errors);
-}
-
 describe('html', () => {
   it('allows valid HTML', () =>
-    assertPassesHtmlValidation(htmlWithBody(''))
+    assertPassesValidation(html, htmlWithBody(''))
   );
 
   it('fails with banned attribute', () =>
-    assertFailsHtmlValidationWith(
+    assertFailsValidationWith(
+      html,
       htmlWithBody('<p align="center"></p>'),
       'banned-attributes.align'
     )
   );
 
   it('gives error message for missing structure and unclosed p tag', () =>
-    assertFailsHtmlValidationWith(
+    assertFailsValidationWith(
+      html,
       '<p>T',
       'unclosed-tag',
       'doctype'
+    )
+  );
+
+  it('generates unclosed-tag error for missing closing tag', () =>
+    assertFailsValidationWith(
+      html,
+      htmlWithBody('<div>'),
+      'unclosed-tag'
+    )
+  );
+
+  it('generates unterminated-close-tag error for unfinished closing tag', () =>
+    assertFailsValidationWith(
+      html,
+      htmlWithBody('<div></div'),
+      'unterminated-close-tag'
+    )
+  );
+
+  it('generates mismatched-close-tag error for mismatched closing tag', () =>
+    assertFailsValidationWith(
+      html,
+      htmlWithBody('<div></div></span>'),
+      'mismatched-close-tag'
     )
   );
 });
