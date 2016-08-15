@@ -161,6 +161,10 @@ class Dashboard extends React.Component {
   }
 
   _renderPop() {
+    if (this.props.activeSubmenu) {
+      return null;
+    }
+
     return (
       <div className="dashboard-popContainer">
         {this._renderPopSvg('neutral', 'passed')}
