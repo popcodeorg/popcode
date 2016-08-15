@@ -47,9 +47,9 @@ describe('css', () => {
       assertFailsValidationWith(css, stylesheet, 'missing-semicolon')
     );
 
-    it('fails at the line missing the semicolon', () => {
-      assertFailsValidationAtLine(css, stylesheet, 1);
-    });
+    it('fails at the line missing the semicolon', () =>
+      assertFailsValidationAtLine(css, stylesheet, 2)
+    );
   });
 
   context('extra tokens after value', () => {
