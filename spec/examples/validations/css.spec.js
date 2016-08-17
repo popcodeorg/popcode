@@ -35,6 +35,33 @@ describe('css', () => {
     )
   );
 
+  it('gives a useful error when there is no opening curly brace', () =>
+    assertFailsValidationWith(
+      css,
+      `p
+        display: block;`,
+      'block-expected'
+    )
+  );
+
+  it('gives a useful error with no opening curly brace and whitespace', () =>
+    assertFailsValidationWith(
+      css,
+      `p
+        display: block;
+      `,
+      'block-expected'
+    )
+  );
+
+  it('gives a useful error when a bogus character is in selector', () =>
+    assertFailsValidationWith(
+      css,
+      'p; div { display: block; }',
+      'invalid-token-in-selector'
+    )
+  );
+
   context('missing semicolon', () => {
     const stylesheet = `
       p {
