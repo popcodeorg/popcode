@@ -11,10 +11,23 @@ function isIncorrectlyRejectedRadialGradientValue(value) {
 }
 
 const errorMap = {
-  'block-expected': (error) => ({
-    reason: 'block-expected',
-    payload: {error: error.token.content},
-  }),
+  'block-expected': (error) => {
+    const tokenType = error.token.type;
+    const token = error.token.content;
+
+    if (tokenType === 'IDENT' || tokenType === 'S') {
+      return {
+        reason: 'block-expected',
+        payload: {error: token},
+        suppresses: ['missing-opening-curly'],
+      };
+    }
+
+    return {
+      reason: 'invalid-token-in-selector',
+      payload: {token},
+    };
+  },
 
   'extra-tokens-after-value': (error, source) => {
     const lineNumber = error.token.line;
@@ -78,7 +91,7 @@ class PrettyCssValidator extends Validator {
   _getRawErrors() {
     try {
       const result = prettyCSS.parse(this._source);
-      return result.errors.concat(result.warnings);
+      return result.getProblems();
     } catch (_e) {
       return [];
     }

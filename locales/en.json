@@ -95,6 +95,7 @@
       "extra-tokens-after-value": "The __token__ at the end of this line doesn’t belong there.",
       "illegal-token-after-combinator": "After a + or > in a selector, you need to specify the name of another element, class, or ID",
       "invalid-token": "This line doesn't look like valid CSS.",
+      "invalid-token-in-selector": "The __token__ on this line doesn’t belong here.",
       "invalid-value": "__error__ isn't a meaningful value for this property. Double-check what values you can use here.",
       "missing-semicolon": "Looks like you’re missing a semicolon at the end of this line.",
       "require-value": "Put a value for __error__ after the colon.",
