@@ -74,6 +74,7 @@ gulp.task('env', () => {
 gulp.task('fonts', () => gulp.
   src([
     `${bowerComponents}/inconsolata-webfont/fonts/inconsolata-regular.*`,
+    `${bowerComponents}/fontawesome/fonts/fontawesome-webfont.*`,
     `${bowerComponents}/roboto-webfont-bower/fonts/` +
       'Roboto-{Bold,Regular}-webfont.*',
   ]).
