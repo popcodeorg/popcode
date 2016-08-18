@@ -103,7 +103,7 @@ const htmlLintOptions = {
     'tt',
     'strike',
   ],
-  'tag-close': true,
+  'tag-close': false,
   'tag-name-match': true,
   'tag-name-lowercase': true,
   'title-max-length': 0,

@@ -31,6 +31,13 @@ describe('html', () => {
     )
   );
 
+  it('allows void tags without explicit close', () =>
+    assertPassesValidation(
+      html,
+      htmlWithBody('<img src="test.jpg">')
+    )
+  );
+
   it('gives error message for missing structure and unclosed p tag', () =>
     assertFailsValidationWith(
       html,
@@ -44,7 +51,7 @@ describe('html', () => {
     assertFailsValidationWith(
       html,
       htmlWithBody('<div>'),
-      'unclosed-tag'
+      'mismatched-close-tag'
     )
   );
 
