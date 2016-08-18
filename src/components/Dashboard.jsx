@@ -174,6 +174,21 @@ class Dashboard extends React.Component {
     );
   }
 
+  _renderLinks() {
+    return (
+      <div className="dashboard-links">
+        <a
+          className="dashboard-links-link fontawesome"
+          href="https://github.com/popcodeorg/popcode"
+        >&#xf09b;</a>
+        <a
+          className="dashboard-links-link fontawesome"
+          href="https://twitter.com/popcodeorg"
+        >&#xf099;</a>
+      </div>
+    );
+  }
+
   render() {
     const sidebarClassnames = classnames(
       'dashboard',
@@ -191,6 +206,7 @@ class Dashboard extends React.Component {
         {this._renderMenu()}
         {this._renderSubmenu()}
         {this._renderPop()}
+        {this._renderLinks()}
       </div>
     );
   }

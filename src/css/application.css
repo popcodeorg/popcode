@@ -29,6 +29,17 @@
     url('/compiled/fonts/inconsolata-regular.eot') format('eot');
 }
 
+@font-face {
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-weight: 400;
+  src: local('FontAwesome'),
+    url('/compiled/fonts/fontawesome-webfont.woff2') format('woff2'),
+    url('/compiled/fonts/fontawesome-webfont.woff') format('woff'),
+    url('/compiled/fonts/fontawesome-webfont.ttf') format('ttf'),
+    url('/compiled/fonts/fontawesome-webfont.eot') format('eot');
+}
+
 :root {
   --color-gray: #eeeeee;
   --color-green: #00ff85;
@@ -255,6 +266,25 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
+}
+
+.dashboard-links {
+  flex: 0 0 auto;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+.dashboard-links-link {
+  flex: 0 0 auto;
+  padding: 1rem;
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.fontawesome {
+  font-family: 'FontAwesome';
 }
 
 .projectPreview-timestamp {
