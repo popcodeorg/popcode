@@ -62,6 +62,22 @@ describe('css', () => {
     )
   );
 
+  it('gives a good error when an invalid negative value is given', () =>
+    assertFailsValidationWith(
+      css,
+      'p { padding-left: -2px; }',
+      'invalid-negative-value'
+    )
+  );
+
+  it('gives a good error when invalid fractional value is given', () =>
+    assertFailsValidationWith(
+      css,
+      'p { z-index: 2.4; }',
+      'invalid-fractional-value'
+    )
+  );
+
   context('missing semicolon', () => {
     const stylesheet = `
       p {

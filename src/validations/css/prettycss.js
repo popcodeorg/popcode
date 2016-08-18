@@ -75,6 +75,16 @@ const errorMap = {
     payload: {error: error.token.content},
   }),
 
+  'require-positive-value': (error) => ({
+    reason: 'invalid-negative-value',
+    payload: {error: error.token.content},
+  }),
+
+  'require-integer': (error) => ({
+    reason: 'invalid-fractional-value',
+    payload: {error: error.token.content},
+  }),
+
   'selector-expected': () => ({reason: 'selector-expected'}),
 
   'unknown-property': (error) => ({
