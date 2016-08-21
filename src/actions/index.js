@@ -11,6 +11,7 @@ import appFirebase from '../services/appFirebase';
 import validations from '../validations';
 
 import {createProject} from './projects';
+import {userTyped} from './ui';
 import {isPristineProject} from '../util/projectUtils';
 
 function generateProjectKey() {
@@ -332,5 +333,6 @@ export {
   maximizeComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
+  userTyped,
   bootstrap,
 };

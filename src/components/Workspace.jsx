@@ -21,6 +21,7 @@ import {
   maximizeComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
+  userTyped,
   bootstrap,
 } from '../actions';
 
@@ -43,7 +44,7 @@ function mapStateToProps(state) {
     currentProject: getCurrentProject(state),
     errors: state.errors.toJS(),
     runtimeErrors: state.runtimeErrors.toJS(),
-    delayErrorDisplay: state.delayErrorDisplay,
+    isUserTyping: state.ui.getIn(['editors', 'typing']),
     currentUser: state.user.toJS(),
     ui: state.ui.toJS(),
   };
@@ -126,6 +127,8 @@ class Workspace extends React.Component {
   }
 
   _handleEditorInput(language, source) {
+    this.props.dispatch(userTyped());
+
     this.props.dispatch(
       updateProjectSource(
         this.props.currentProject.projectKey,
@@ -165,13 +168,12 @@ class Workspace extends React.Component {
   }
 
   _getOverallValidationState() {
-    if (this.props.delayErrorDisplay) {
-      return 'validating';
-    }
-
     const errorStates = map(values(this.props.errors), 'state');
 
     if (includes(errorStates, 'failed')) {
+      if (this.props.isUserTyping) {
+        return 'validating';
+      }
       return 'failed';
     }
 
@@ -314,9 +316,9 @@ Workspace.propTypes = {
   allProjects: React.PropTypes.array,
   currentProject: React.PropTypes.object,
   currentUser: React.PropTypes.object.isRequired,
-  delayErrorDisplay: React.PropTypes.bool,
   dispatch: React.PropTypes.func.isRequired,
   errors: React.PropTypes.object,
+  isUserTyping: React.PropTypes.bool,
   runtimeErrors: React.PropTypes.array,
   ui: React.PropTypes.object.isRequired,
 };
