@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import Bowser from 'bowser';
 import get from 'lodash/get';
 import keys from 'lodash/keys';
