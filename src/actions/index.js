@@ -1,5 +1,3 @@
-import isEmpty from 'lodash/isEmpty';
-import debounce from 'lodash/debounce';
 import get from 'lodash/get';
 import find from 'lodash/find';
 import filter from 'lodash/filter';
@@ -48,14 +46,6 @@ function saveCurrentProject(state) {
   return false;
 }
 
-const showErrorsAfterDebounce = (() => {
-  const debouncedDispatch = debounce((dispatch) => {
-    dispatch({type: 'ERROR_DEBOUNCE_FINISHED'});
-  }, 1000);
-
-  return () => debouncedDispatch;
-})();
-
 function validateSource(language, source, enabledLibraries) {
   return (dispatch, getState) => {
     const validate = validations[language];
@@ -74,10 +64,6 @@ function validateSource(language, source, enabledLibraries) {
           errors,
         },
       });
-
-      if (!isEmpty(errors)) {
-        dispatch(showErrorsAfterDebounce());
-      }
     });
   };
 }
