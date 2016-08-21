@@ -3,6 +3,7 @@ import pick from 'lodash/pick';
 import base64 from 'base64-js';
 import loopProtect from 'loop-protect';
 import libraries from '../config/libraries';
+import previewFrameLibraries from '../config/previewFrameLibraries';
 
 const DOMParser = window.DOMParser;
 const parser = new DOMParser();
@@ -38,6 +39,18 @@ const errorHandlerScript = `(${(() => {
   };
 }).toString()}());`;
 
+const alertReplacementScript = `(${(() => {
+  const _swal = window.swal;
+
+  Object.defineProperty(window, // eslint-disable-line prefer-reflect
+    'alert', {
+      value: (message) => {
+        _swal(message);
+      },
+    });
+  delete window.swal; // eslint-disable-line prefer-reflect
+}).toString()}());`;
+
 class PreviewGenerator {
   constructor(project, options = {}) {
     this._project = project;
@@ -49,7 +62,7 @@ class PreviewGenerator {
     this.previewBody = this._ensureElement('body');
 
     this.previewText = (this.previewBody.innerText || '').trim();
-    this._attachLibraries();
+    this._attachLibraries(options.nonBlockingAlerts);
 
     if (options.targetBaseTop) {
       this._addBase();
@@ -58,6 +71,11 @@ class PreviewGenerator {
     if (options.propagateErrorsToParent) {
       this._addErrorHandling();
     }
+
+    if (options.nonBlockingAlerts) {
+      this._addAlertHandling();
+    }
+
     this._addJavascript(pick(options, 'breakLoops'));
   }
 
@@ -119,19 +137,36 @@ class PreviewGenerator {
     this.previewBody.appendChild(scriptTag);
   }
 
-  _attachLibraries() {
+  _addAlertHandling() {
+    const scriptTag = this.previewDocument.createElement('script');
+    scriptTag.innerHTML = alertReplacementScript;
+    this.previewBody.appendChild(scriptTag);
+  }
+
+  _attachLibraries(includePreviewFrame = false) {
     this._project.enabledLibraries.forEach((libraryKey) => {
       const library = libraries[libraryKey];
-      const css = library.css;
-      const javascript = library.javascript;
-      if (css !== undefined) {
-        castArray(css).forEach(this._attachCssLibrary.bind(this));
-      }
-      if (javascript !== undefined) {
-        castArray(javascript).
-          forEach(this._attachJavascriptLibrary.bind(this));
-      }
+      this._attachLibrary(library);
     });
+
+    if (includePreviewFrame) {
+      Object.keys(previewFrameLibraries).forEach((libraryKey) => {
+        const library = previewFrameLibraries[libraryKey];
+        this._attachLibrary(library);
+      });
+    }
+  }
+
+  _attachLibrary(library) {
+    const css = library.css;
+    const javascript = library.javascript;
+    if (css !== undefined) {
+      castArray(css).forEach(this._attachCssLibrary.bind(this));
+    }
+    if (javascript !== undefined) {
+      castArray(javascript).
+        forEach(this._attachJavascriptLibrary.bind(this));
+    }
   }
 
   _attachCssLibrary(css) {
