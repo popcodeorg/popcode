@@ -118,7 +118,7 @@ gulp.task('syncFirebase', () => new Promise((resolve, reject) => {
       path: `/.settings/rules.json?auth=${firebaseSecret}`,
       method: 'PUT',
     }, (res) => {
-      if (res.statusCode === 200) { // eslint-disable-line no-magic-numbers
+      if (res.statusCode === 200) {
         resolve();
       } else {
         res.on('data', reject);

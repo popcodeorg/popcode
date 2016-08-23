@@ -1,6 +1,7 @@
 import Immutable from 'immutable';
 
 const defaultState = new Immutable.Map().
+  set('editors', new Immutable.Map({typing: false})).
   set('minimizedComponents', new Immutable.Set()).
   set(
     'dashboard',
@@ -16,6 +17,12 @@ function ui(stateIn, action) {
   }
 
   switch (action.type) {
+    case 'USER_TYPING':
+      return state.setIn(['editors', 'typing'], true);
+
+    case 'USER_DONE_TYPING':
+      return state.setIn(['editors', 'typing'], false);
+
     case 'DASHBOARD_TOGGLED':
       return state.updateIn(['dashboard', 'isOpen'], (isOpen) => !isOpen).
         setIn(['dashboard', 'activeSubmenu'], null);
