@@ -35,6 +35,7 @@
     "roboto-webfont-bower": "roboto-webfont#^0.1.1",
     "fontawesome": "^4.6.3",
     "mustache.js": "mustache#^2.2.1",
-    "handlebars": "^4.0.5"
+    "handlebars": "^4.0.5",
+    "sweetalert": "^1.1.3"
   }
 }

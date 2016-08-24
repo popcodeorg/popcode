@@ -113,6 +113,12 @@ This will start a local static server, and open it in your browser. The first
 pageload will be rather slow as it compiles the bundle; after you change files,
 assets are recompiled incrementally and your browser automatically reloads.
 
+When you're done, lint and make sure tests pass before opening a pull request:
+
+```bash
+$ npm test
+```
+
 ## License ##
 
 Popcode is distributed under the MIT license. See the attached LICENSE file

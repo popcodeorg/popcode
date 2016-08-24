@@ -13,7 +13,7 @@ class Preview extends React.Component {
     bindAll(this, '_handlePopOutClick');
   }
 
-  _generateDocument() {
+  _generateDocument(nonBlockingAlerts = false) {
     if (!this.props.isValid) {
       return '';
     }
@@ -26,7 +26,12 @@ class Preview extends React.Component {
 
     return generatePreview(
       project,
-      {targetBaseTop: true, propagateErrorsToParent: true, breakLoops: true}
+      {
+        targetBaseTop: true,
+        propagateErrorsToParent: true,
+        breakLoops: true,
+        nonBlockingAlerts,
+      }
     ).documentElement.outerHTML;
   }
 
@@ -56,7 +61,7 @@ class Preview extends React.Component {
           onClick={this._handlePopOutClick}
         />
         <PreviewFrame
-          src={this._generateDocument()}
+          src={this._generateDocument(true)}
           onFrameWillRefresh={this.props.onClearRuntimeErrors}
           onRuntimeError={this.props.onRuntimeError}
         />
