@@ -13,7 +13,7 @@ class Preview extends React.Component {
     bindAll(this, '_handlePopOutClick');
   }
 
-  _generateDocument(nonBlockingAlerts = false) {
+  _generateDocument(isLivePreview = false) {
     if (!this.props.isValid) {
       return '';
     }
@@ -27,10 +27,10 @@ class Preview extends React.Component {
     return generatePreview(
       project,
       {
-        targetBaseTop: true,
-        propagateErrorsToParent: true,
-        breakLoops: true,
-        nonBlockingAlerts,
+        targetBaseTop: isLivePreview,
+        propagateErrorsToParent: isLivePreview,
+        breakLoops: isLivePreview,
+        nonBlockingAlerts: isLivePreview,
       }
     ).documentElement.outerHTML;
   }
