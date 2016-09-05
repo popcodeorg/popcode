@@ -1,4 +1,4 @@
-import i18n from 'i18next-client';
+import i18n from 'i18next';
 import assign from 'lodash/assign';
 import map from 'lodash/map';
 import compact from 'lodash/compact';

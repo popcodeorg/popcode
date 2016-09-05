@@ -1,7 +1,7 @@
 import React from 'react';
 import map from 'lodash/map';
 import partial from 'lodash/partial';
-import i18n from 'i18next-client';
+import i18n from 'i18next';
 import ErrorItem from './ErrorItem';
 
 function ErrorSublist(props) {

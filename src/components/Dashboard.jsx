@@ -1,5 +1,5 @@
 import React from 'react';
-import i18n from 'i18next-client';
+import i18n from 'i18next';
 import partial from 'lodash/partial';
 import classnames from 'classnames';
 import ProjectList from './ProjectList';
