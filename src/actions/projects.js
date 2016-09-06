@@ -1,4 +1,5 @@
 import {createAction} from 'redux-actions';
+import {validateAllSources, getCurrentProject, saveCurrentProject} from '.';
 
 const createProjectWithKey = createAction(
   'PROJECT_CREATED',
@@ -8,6 +9,19 @@ const createProjectWithKey = createAction(
 export function createProject() {
   return (dispatch) => {
     dispatch(createProjectWithKey(generateProjectKey()));
+  };
+}
+
+export function changeCurrentProject(projectKey) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'CURRENT_PROJECT_CHANGED',
+      payload: {projectKey},
+    });
+
+    const state = getState();
+    saveCurrentProject(state);
+    dispatch(validateAllSources(getCurrentProject(state)));
   };
 }
 

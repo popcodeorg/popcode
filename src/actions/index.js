@@ -8,7 +8,7 @@ import Gists from '../services/Gists';
 import appFirebase from '../services/appFirebase';
 import validations from '../validations';
 
-import {createProject} from './projects';
+import {createProject, changeCurrentProject} from './projects';
 import {userTyped} from './ui';
 import {isPristineProject} from '../util/projectUtils';
 
@@ -25,7 +25,7 @@ function getCurrentPersistor(state) {
   return null;
 }
 
-function getCurrentProject(state) {
+export function getCurrentProject(state) {
   const projectKey = state.currentProject.get('projectKey');
   if (projectKey) {
     return state.projects.get(projectKey);
@@ -34,7 +34,7 @@ function getCurrentProject(state) {
   return null;
 }
 
-function saveCurrentProject(state) {
+export function saveCurrentProject(state) {
   const currentProject = getCurrentProject(state);
   const persistor = getCurrentPersistor(state);
 
@@ -68,7 +68,7 @@ function validateSource(language, source, enabledLibraries) {
   };
 }
 
-function validateAllSources(project) {
+export function validateAllSources(project) {
   return (dispatch) => {
     const enabledLibraries = project.get('enabledLibraries');
     project.get('sources').forEach((source, language) => {
@@ -131,19 +131,6 @@ function updateProjectSource(projectKey, language, newValue) {
       newValue,
       currentProject.get('enabledLibraries')
     ));
-  };
-}
-
-function changeCurrentProject(projectKey) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: 'CURRENT_PROJECT_CHANGED',
-      payload: {projectKey},
-    });
-
-    const state = getState();
-    saveCurrentProject(state);
-    dispatch(validateAllSources(getCurrentProject(state)));
   };
 }
 
