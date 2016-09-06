@@ -71,7 +71,7 @@ function projects(stateIn, action) {
 
     case 'CURRENT_PROJECT_CHANGED':
       return state.filter((project, projectKey) => (
-        projectKey === action.payload.projectKey || isPristineProject(project)
+        projectKey === action.payload.projectKey || !isPristineProject(project)
       ));
 
     case 'RESET_WORKSPACE':

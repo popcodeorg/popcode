@@ -5,7 +5,12 @@ import {assert} from 'chai';
 
 import createApplicationStore from '../../../src/createApplicationStore';
 
-import {createProject} from '../../../src/actions/projects';
+import {
+  createProject,
+  changeCurrentProject,
+} from '../../../src/actions/projects';
+
+import {toggleLibrary} from '../../../src/actions';
 
 import {
   getProjectKeys,
@@ -36,6 +41,28 @@ describe('projectActions', () => {
         isPristineProject(getCurrentProject(store.getState())),
         'project should be pristine'
       );
+    });
+  });
+
+  describe('changeCurrentProject', () => {
+    let projectKey;
+
+    beforeEach(() => {
+      store.dispatch(createProject());
+      projectKey = getCurrentProject(store.getState()).projectKey;
+      store.dispatch(toggleLibrary(projectKey, 'jquery'));
+      store.dispatch(createProject());
+      const secondProjectKey = getCurrentProject(store.getState()).projectKey;
+      store.dispatch(toggleLibrary(secondProjectKey, 'jquery'));
+      store.dispatch(changeCurrentProject(projectKey));
+    });
+
+    it('changes to the specified project', () => {
+      assert.equal(projectKey, getCurrentProject(store.getState()).projectKey);
+    });
+
+    it('keeps all projects in list', () => {
+      assert.lengthOf(getProjectKeys(store.getState()), 2);
     });
   });
 });
