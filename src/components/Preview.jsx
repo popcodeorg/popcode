@@ -30,7 +30,7 @@ class Preview extends React.Component {
         targetBaseTop: isLivePreview,
         propagateErrorsToParent: isLivePreview,
         breakLoops: isLivePreview,
-        nonBlockingAlerts: isLivePreview,
+        nonBlockingAlertsAndPrompts: isLivePreview,
       }
     ).documentElement.outerHTML;
   }

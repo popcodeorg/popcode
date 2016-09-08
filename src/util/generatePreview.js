@@ -39,15 +39,20 @@ const errorHandlerScript = `(${(() => {
   };
 }).toString()}());`;
 
-const alertReplacementScript = `(${(() => {
+const alertAndPromptReplacementScript = `(${(() => {
   const _swal = window.swal;
 
-  Object.defineProperty(window, // eslint-disable-line prefer-reflect
-    'alert', {
+  Object.defineProperties(window, { // eslint-disable-line prefer-reflect
+    alert: {
       value: (message) => {
         _swal(message);
       },
-    });
+    },
+    prompt: {
+      value: (message, defaultValue = '') => defaultValue,
+    },
+  });
+
   delete window.swal; // eslint-disable-line prefer-reflect
 }).toString()}());`;
 
@@ -62,7 +67,7 @@ class PreviewGenerator {
     this.previewBody = this._ensureElement('body');
 
     this.previewText = (this.previewBody.innerText || '').trim();
-    this._attachLibraries(options.nonBlockingAlerts);
+    this._attachLibraries(options.nonBlockingAlertsAndPrompts);
 
     if (options.targetBaseTop) {
       this._addBase();
@@ -72,8 +77,8 @@ class PreviewGenerator {
       this._addErrorHandling();
     }
 
-    if (options.nonBlockingAlerts) {
-      this._addAlertHandling();
+    if (options.nonBlockingAlertsAndPrompts) {
+      this._addAlertAndPromptHandling();
     }
 
     this._addJavascript(pick(options, 'breakLoops'));
@@ -137,9 +142,9 @@ class PreviewGenerator {
     this.previewBody.appendChild(scriptTag);
   }
 
-  _addAlertHandling() {
+  _addAlertAndPromptHandling() {
     const scriptTag = this.previewDocument.createElement('script');
-    scriptTag.innerHTML = alertReplacementScript;
+    scriptTag.innerHTML = alertAndPromptReplacementScript;
     this.previewBody.appendChild(scriptTag);
   }
 
