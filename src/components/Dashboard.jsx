@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import Gists from '../services/Gists';
 import ProjectList from './ProjectList';
 import LibraryPicker from './LibraryPicker';
+import config from '../config';
 
 class Dashboard extends React.Component {
   constructor() {
@@ -94,6 +95,13 @@ class Dashboard extends React.Component {
         >
           {i18n.t('dashboard.menu.export-gist')}
         </div>
+        <a
+          className="dashboard-menu-item dashboard-menu-item--grid"
+          href={config.feedbackUrl}
+          target="_blank"
+        >
+          {i18n.t('dashboard.menu.send-feedback')}
+        </a>
       </div>
     );
   }
