@@ -223,10 +223,11 @@ body {
   flex-flow: row wrap;
   align-items: flex-start;
   align-content: flex-start;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .dashboard-menu-item {
+  display: block;
   font-size: 0.8rem;
   background-color: white;
   color: black;
@@ -234,6 +235,7 @@ body {
   box-sizing: border-box;
   margin: 1px 0;
   padding: 0.2rem 0.5rem;
+  text-decoration: none;
 }
 
 .dashboard-menu-item--grid {

@@ -9,7 +9,8 @@
       "new-project": "New Project",
       "load-project": "Load Project",
       "libraries": "Libraries",
-      "export-gist": "Export Gist"
+      "export-gist": "Export Gist",
+      "send-feedback": "Send Feedback"
     }
   },
   "editors": {
