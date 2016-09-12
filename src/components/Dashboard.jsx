@@ -188,11 +188,18 @@ class Dashboard extends React.Component {
         <a
           className="dashboard-links-link fontawesome"
           href="https://github.com/popcodeorg/popcode"
+          target="_blank"
         >&#xf09b;</a>
         <a
           className="dashboard-links-link fontawesome"
           href="https://twitter.com/popcodeorg"
+          target="_blank"
         >&#xf099;</a>
+        <a
+          className="dashboard-links-link fontawesome"
+          href="https://join-popcode-slack.herokuapp.com/"
+          target="_blank"
+        >&#xf198;</a>
       </div>
     );
   }
