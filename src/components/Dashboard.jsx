@@ -111,6 +111,13 @@ class Dashboard extends React.Component {
   }
 
   _handleExportGist() {
+    if (!this.props.currentUser.authenticated) {
+      // eslint-disable-next-line no-alert
+      if (!confirm(i18n.t('dashboard.anonymous-gist-export'))) {
+        return;
+      }
+    }
+
     const newWindow = open('about:blank', 'gist');
 
     Gists.createFromProject(this.props.currentProject, this.props.currentUser).

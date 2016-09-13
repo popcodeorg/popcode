@@ -11,7 +11,8 @@
       "libraries": "Libraries",
       "export-gist": "Export Gist",
       "send-feedback": "Send Feedback"
-    }
+    },
+    "anonymous-gist-export": "Are you sure you want to export this gist anonymously? If you sign in before exporting, the gist will be added to your GitHub account."
   },
   "editors": {
     "helpText": "Type in your $t(languages.__language__) code here."
