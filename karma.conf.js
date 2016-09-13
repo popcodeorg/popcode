@@ -2,7 +2,13 @@
 /* eslint-disable no-var, object-shorthand */
 
 var isCi = Boolean(process.env.TRAVIS);
-var customBrowsers = ['Chrome', 'Firefox', 'Safari', 'PhantomJS'];
+var customBrowsers = [
+  'Chrome',
+  'ChromeCanary',
+  'Firefox',
+  'Safari',
+  'PhantomJS',
+];
 if (isCi) {
   customBrowsers = ['Firefox', 'PhantomJS'];
 }
