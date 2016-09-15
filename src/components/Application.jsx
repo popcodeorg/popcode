@@ -1,10 +1,16 @@
 import React from 'react';
+import fs from 'fs';
+import path from 'path';
 import {Provider} from 'react-redux';
 import bowser from 'bowser';
 import createApplicationStore from '../createApplicationStore';
 import Workspace from './Workspace';
 import BrowserError from './BrowserError';
 import {includeStoreInBugReports} from '../util/Bugsnag';
+
+const supportedBrowsers = JSON.parse(fs.readFileSync(
+  path.join(__dirname, '../../config/browsers.json')
+));
 
 class Application extends React.Component {
   constructor() {
@@ -15,12 +21,10 @@ class Application extends React.Component {
   }
 
   _isUnsupportedBrowser() {
-    return bowser.isUnsupportedBrowser({
-      msie: '10',
-      firefox: '12',
-      chrome: '30',
-      safari: '7.1',
-    }, window.navigator.userAgent);
+    return bowser.isUnsupportedBrowser(
+      supportedBrowsers,
+      window.navigator.userAgent
+    );
   }
 
   render() {
