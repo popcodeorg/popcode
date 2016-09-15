@@ -12,6 +12,7 @@ import uglify from 'gulp-uglify';
 import cssnano from 'gulp-cssnano';
 import gutil from 'gulp-util';
 import memoize from 'lodash/memoize';
+import forOwn from 'lodash/forOwn';
 import brfs from 'brfs-babel';
 import babelify from 'babelify';
 import envify from 'envify';
@@ -26,6 +27,17 @@ const baseDir = 'static';
 const distDir = `${baseDir}/compiled`;
 const stylesheetsDir = `${srcDir}/css`;
 const bowerComponents = 'bower_components';
+
+const cssnextBrowsers = [];
+const supportedBrowsers =
+  JSON.parse(fs.readFileSync('./config/browsers.json'));
+forOwn(supportedBrowsers, (version, browser) => {
+  let browserForCssnext = browser;
+  if (browser === 'msie') {
+    browserForCssnext = 'ie';
+  }
+  cssnextBrowsers.push(`${browserForCssnext} >= ${version}`);
+});
 
 let browserifyImpl;
 if (gulp.env.production) {
@@ -88,7 +100,7 @@ gulp.task('css', () => gulp.
   ]).
   pipe(concat('application.css')).
   pipe(sourcemaps.init({loadMaps: true})).
-  pipe(postcss([cssnext()])).
+  pipe(postcss([cssnext({browsers: cssnextBrowsers})])).
   pipe(gutil.env.production ? cssnano() : gutil.noop()).
   pipe(sourcemaps.write('./')).
   pipe(gulp.dest(distDir)).
