@@ -9,7 +9,11 @@ import appFirebase from '../services/appFirebase';
 import validations from '../validations';
 
 import {createProject, changeCurrentProject} from './projects';
-import {userTyped} from './ui';
+import {
+  userTyped,
+  userRequestedFocusedLine,
+  editorFocusedRequestedLine,
+} from './ui';
 import {isPristineProject} from '../util/projectUtils';
 
 function generateProjectKey() {
@@ -307,5 +311,7 @@ export {
   toggleDashboard,
   toggleDashboardSubmenu,
   userTyped,
+  userRequestedFocusedLine,
+  editorFocusedRequestedLine,
   bootstrap,
 };

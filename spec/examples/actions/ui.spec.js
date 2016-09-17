@@ -6,7 +6,12 @@ import {useFakeTimers} from 'sinon';
 import createApplicationStore from '../../../src/createApplicationStore';
 import waitFor from '../../helpers/waitFor';
 
-import {TYPING_DEBOUNCE_DELAY, userTyped} from '../../../src/actions/ui';
+import {
+  TYPING_DEBOUNCE_DELAY,
+  editorFocusedRequestedLine,
+  userTyped,
+  userRequestedFocusedLine,
+} from '../../../src/actions/ui';
 
 const timeInterval = 1000 * 60 * 60 * 24;
 
@@ -54,5 +59,31 @@ describe('interfaceStateActions', () => {
         })
       )
     );
+  });
+
+  describe('userRequestedFocusedLine', () => {
+    beforeEach(
+      () => store.dispatch(userRequestedFocusedLine('javascript', 4, 2))
+    );
+
+    it('sets requestedFocusedLine to given value', () => {
+      assert.deepEqual(
+        store.getState().ui.getIn(['editors', 'requestedFocusedLine']).toJS(),
+        {language: 'javascript', line: 4, column: 2}
+      );
+    });
+  });
+
+  describe('editorFocusedRequestedLine', () => {
+    beforeEach(() => {
+      store.dispatch(userRequestedFocusedLine('javascript', 4, 2));
+      store.dispatch(editorFocusedRequestedLine());
+    });
+
+    it('sets requestedFocusedLine to null', () => {
+      assert.isNull(
+        store.getState().ui.getIn(['editors', 'requestedFocusedLine']),
+      );
+    });
   });
 });

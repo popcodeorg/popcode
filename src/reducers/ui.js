@@ -2,6 +2,7 @@ import Immutable from 'immutable';
 
 const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({typing: false})).
+  set('requestedLine', null).
   set('minimizedComponents', new Immutable.Set()).
   set(
     'dashboard',
@@ -48,6 +49,18 @@ function ui(stateIn, action) {
         'minimizedComponents',
         (components) => components.delete(action.payload.componentName)
       );
+
+    case 'USER_REQUESTED_FOCUSED_LINE':
+      return state.setIn(
+        ['editors', 'requestedFocusedLine'],
+        new Immutable.Map().
+          set('language', action.payload.language).
+          set('line', action.payload.line).
+          set('column', action.payload.column)
+      );
+
+    case 'EDITOR_FOCUSED_REQUESTED_LINE':
+      return state.setIn(['editors', 'requestedFocusedLine'], null);
 
     default:
       return state;

@@ -23,3 +23,12 @@ export function userTyped() {
     dispatch(userIsDoneTypingWithDebounce());
   };
 }
+
+export const userRequestedFocusedLine = createAction(
+  'USER_REQUESTED_FOCUSED_LINE',
+  (language, line, column) => ({language, line, column})
+);
+
+export const editorFocusedRequestedLine = createAction(
+  'EDITOR_FOCUSED_REQUESTED_LINE'
+);
