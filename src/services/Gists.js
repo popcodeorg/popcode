@@ -1,4 +1,6 @@
 import GitHub from 'github-api';
+import pick from 'lodash/pick';
+import Bugsnag from '../util/Bugsnag';
 const anonymousGithub = new GitHub({});
 
 function createGistFromProject(project) {
@@ -50,55 +52,47 @@ function updateGistWithImportUrl(github, gistData) {
   uri.setAttribute('href', '/');
   uri.search = `gist=${gistData.id}`;
 
-  return new Promise((resolve, reject) => {
-    gist.update(
-      {description: `${gistData.description} Click to import: ${uri.href}`},
-      (err, updatedGistData) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(updatedGistData);
-        }
-      }
+  return gist.update({
+    description: `${gistData.description} Click to import: ${uri.href}`,
+  }).then(
+    (response) => response.data,
+    notifyAndRejectApiError
+  );
+}
+
+function notifyAndRejectApiError(error) {
+  if (error.response) {
+    Bugsnag.notifyException(
+      error,
+      'GistError',
+      {failedRequest: pick(error, ['request', 'response', 'status'])}
     );
-  });
+  }
+
+  return Promise.reject(error);
 }
 
 const Gists = {
   createFromProject(project, user) {
     const github = clientForUser(user);
 
-    return new Promise((resolve, reject) => {
-      github.getGist().create(
-        createGistFromProject(project),
-        (error, response) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(response);
-          }
+    return github.getGist().create(createGistFromProject(project)).
+      then((response) => {
+        const gistData = response.data;
+        if (canUpdateGist(user)) {
+          return updateGistWithImportUrl(github, gistData);
         }
-      );
-    }).then((response) => {
-      if (canUpdateGist(user)) {
-        return updateGistWithImportUrl(github, response);
-      }
-      return response;
-    });
+        return gistData;
+      }, notifyAndRejectApiError);
   },
 
   loadFromId(gistId, user) {
-    return new Promise((resolve, reject) => {
-      const github = clientForUser(user);
-      const gist = github.getGist(gistId);
-      gist.read((err, gistData) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(gistData);
-        }
-      });
-    });
+    const github = clientForUser(user);
+    const gist = github.getGist(gistId);
+    return gist.read().then(
+      (response) => response.data,
+      notifyAndRejectApiError
+    );
   },
 };
 
