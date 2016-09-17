@@ -228,7 +228,7 @@ function importProjectFromGist(projectKey, gistData) {
   const project = {
     projectKey,
     sources: {
-      html: get(find(files, {language: 'HTML'}), 'content'),
+      html: get(find(files, {language: 'HTML'}), 'content', ''),
       css: map(filter(files, {language: 'CSS'}), 'content').join('\n\n'),
       javascript: map(filter(files, {language: 'JavaScript'}), 'content').
         join('\n\n'),
