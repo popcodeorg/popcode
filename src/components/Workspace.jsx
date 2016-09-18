@@ -22,6 +22,8 @@ import {
   toggleDashboard,
   toggleDashboardSubmenu,
   userTyped,
+  userRequestedFocusedLine,
+  editorFocusedRequestedLine,
   bootstrap,
 } from '../actions';
 
@@ -61,7 +63,6 @@ class Workspace extends React.Component {
       '_handleComponentMinimized',
       '_handleDashboardSubmenuToggled',
       '_handleEditorInput',
-      '_handleEditorMountedOrUnmounted',
       '_handleErrorClick',
       '_handleLibraryToggled',
       '_handleLogOut',
@@ -69,10 +70,9 @@ class Workspace extends React.Component {
       '_handleProjectSelected',
       '_handleRuntimeError',
       '_handleStartLogIn',
-      '_handleToggleDashboard'
+      '_handleToggleDashboard',
+      '_handleRequestedLineFocused'
     );
-
-    this.editors = {};
   }
 
   componentWillMount() {
@@ -119,11 +119,8 @@ class Workspace extends React.Component {
   }
 
   _handleErrorClick(language, line, column) {
-    this.editors[language]._jumpToLine(line, column);
-  }
-
-  _handleEditorMountedOrUnmounted(language, editor) {
-    this.editors[language] = editor;
+    this.props.dispatch(maximizeComponent(`editor.${language}`));
+    this.props.dispatch(userRequestedFocusedLine(language, line, column));
   }
 
   _handleEditorInput(language, source) {
@@ -224,9 +221,10 @@ class Workspace extends React.Component {
             language={language}
             percentageOfHeight={1 / editors.length}
             projectKey={this.props.currentProject.projectKey}
-            ref={partial(this._handleEditorMountedOrUnmounted, language)}
+            requestedFocusedLine={this.props.ui.editors.requestedFocusedLine}
             source={this.props.currentProject.sources[language]}
             onInput={partial(this._handleEditorInput, language)}
+            onRequestedLineFocused={this._handleRequestedLineFocused}
           />
         </EditorContainer>
       );
@@ -250,6 +248,10 @@ class Workspace extends React.Component {
 
   _handleLogOut() {
     appFirebase.unauth();
+  }
+
+  _handleRequestedLineFocused() {
+    this.props.dispatch(editorFocusedRequestedLine());
   }
 
   _renderDashboard() {

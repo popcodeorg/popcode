@@ -1,6 +1,7 @@
 import React from 'react';
 import ACE from 'brace';
 import bindAll from 'lodash/bindAll';
+import get from 'lodash/get';
 import throttle from 'lodash/throttle';
 
 import 'brace/mode/html';
@@ -31,6 +32,7 @@ class Editor extends React.Component {
   }
 
   componentDidMount() {
+    this._focusRequestedLine(this.props.requestedFocusedLine);
     window.addEventListener('resize', this._handleWindowResize);
   }
 
@@ -41,6 +43,8 @@ class Editor extends React.Component {
         nextProps.source !== this._editor.getValue()) {
       this._editor.setValue(nextProps.source);
     }
+
+    this._focusRequestedLine(nextProps.requestedFocusedLine);
 
     if (nextProps.percentageOfHeight !== this.props.percentageOfHeight) {
       requestAnimationFrame(this._resizeEditor);
@@ -58,9 +62,18 @@ class Editor extends React.Component {
     window.removeEventListener('resize', this._handleWindowResize);
   }
 
-  _jumpToLine(line, column) {
-    this._editor.moveCursorTo(line, column);
+  _focusRequestedLine(requestedFocusedLine) {
+    if (get(requestedFocusedLine, 'language') !== this.props.language) {
+      return;
+    }
+
+    this._editor.moveCursorTo(
+      requestedFocusedLine.line,
+      requestedFocusedLine.column
+    );
+    this._editor.clearSelection();
     this._editor.focus();
+    this.props.onRequestedLineFocused();
   }
 
   _resizeEditor() {
@@ -116,8 +129,10 @@ Editor.propTypes = {
   language: React.PropTypes.string.isRequired,
   percentageOfHeight: React.PropTypes.number.isRequired,
   projectKey: React.PropTypes.string.isRequired,
+  requestedFocusedLine: React.PropTypes.object,
   source: React.PropTypes.string.isRequired,
   onInput: React.PropTypes.func.isRequired,
+  onRequestedLineFocused: React.PropTypes.func.isRequired,
 };
 
 export default Editor;
