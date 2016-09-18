@@ -1,23 +1,24 @@
 import GitHub from 'github-api';
 import pick from 'lodash/pick';
+import trim from 'lodash/trim';
 import Bugsnag from '../util/Bugsnag';
 const anonymousGithub = new GitHub({});
 
 function createGistFromProject(project) {
   const files = {};
-  if (project.sources.html) {
+  if (trim(project.sources.html)) {
     files['index.html'] = {
       content: project.sources.html,
       language: 'HTML',
     };
   }
-  if (project.sources.css) {
+  if (trim(project.sources.css)) {
     files['styles.css'] = {
       content: project.sources.css,
       language: 'CSS',
     };
   }
-  if (project.sources.javascript) {
+  if (trim(project.sources.javascript)) {
     files['script.js'] = {
       content: project.sources.javascript,
       language: 'JavaScript',
