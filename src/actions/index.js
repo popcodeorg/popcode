@@ -13,6 +13,8 @@ import {
   userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
+  globalErrorTriggered,
+  userDismissedGlobalError,
 } from './ui';
 import {isPristineProject} from '../util/projectUtils';
 
@@ -313,5 +315,7 @@ export {
   userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
+  globalErrorTriggered,
+  userDismissedGlobalError,
   bootstrap,
 };

@@ -458,6 +458,21 @@ body {
   cursor: pointer;
 }
 
+.globalErrors-globalError {
+  background-color: var(--color-red);
+  text-align: center;
+  margin-bottom: 0.2rem;
+  padding: 0.2rem 0;
+}
+
+.globalErrors-globalError-dismiss {
+  font-family: 'FontAwesome';
+  display: block;
+  padding: 0.2rem 0.5rem;
+  float: right;
+  cursor: pointer;
+}
+
 #unsupported-browser {
   font-size: 1.5rem;
   margin-top: 5rem;
