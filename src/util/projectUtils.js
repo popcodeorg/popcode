@@ -1,8 +1,7 @@
-import toArray from 'lodash/toArray';
 import {Map} from 'immutable';
 
 export function getProjectKeys(state) {
-  return toArray(state.projects.keys());
+  return Array.from(state.projects.keys());
 }
 
 export function getCurrentProject(state) {
