@@ -108,7 +108,7 @@ describe('interfaceStateActions', () => {
       store.dispatch(userDismissedGlobalError('some-error'));
     });
 
-    it('sets globalErrors to contain argument', () => {
+    it('removes argument from globalErrors', () => {
       assert.notInclude(
         store.getState().ui.get('globalErrors'),
         'some-error'
