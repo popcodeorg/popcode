@@ -8,6 +8,7 @@ import sortBy from 'lodash/sortBy';
 import map from 'lodash/map';
 import i18n from 'i18next-client';
 import qs from 'qs';
+import Bugsnag from '../util/Bugsnag';
 import appFirebase from '../services/appFirebase';
 
 import {
@@ -24,6 +25,8 @@ import {
   userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
+  applicationErrorTriggered,
+  userDismissedApplicationError,
   bootstrap,
 } from '../actions';
 
@@ -34,6 +37,7 @@ import Editor from './Editor';
 import Output from './Output';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
+import ApplicationErrors from './ApplicationErrors';
 
 function mapStateToProps(state) {
   const projects = sortBy(
@@ -71,7 +75,8 @@ class Workspace extends React.Component {
       '_handleRuntimeError',
       '_handleStartLogIn',
       '_handleToggleDashboard',
-      '_handleRequestedLineFocused'
+      '_handleRequestedLineFocused',
+      '_handleApplicationErrorDismissed'
     );
   }
 
@@ -243,7 +248,23 @@ class Workspace extends React.Component {
     appFirebase.authWithOAuthPopup(
       'github',
       {remember: 'sessionOnly', scope: 'gist'}
-    );
+    ).catch((e) => {
+      switch (e.code) {
+        case 'USER_CANCELLED':
+          this.props.dispatch(
+            applicationErrorTriggered('user-cancelled-auth')
+          );
+          break;
+        default:
+          this.props.dispatch(applicationErrorTriggered('auth-error'));
+          Bugsnag.notifyException(e, e.code);
+          break;
+      }
+    });
+  }
+
+  _handleApplicationErrorDismissed(error) {
+    this.props.dispatch(userDismissedApplicationError(error));
   }
 
   _handleLogOut() {
@@ -303,11 +324,17 @@ class Workspace extends React.Component {
 
   render() {
     return (
-      <div className="layout">
-        {this._renderDashboard()}
-        {this._renderSidebar()}
-        <div className="layout-main" id="workspace">
-          {this._renderEnvironment()}
+      <div>
+        <ApplicationErrors
+          errors={this.props.ui.applicationErrors}
+          onErrorDismissed={this._handleApplicationErrorDismissed}
+        />
+        <div className="layout">
+          {this._renderDashboard()}
+          {this._renderSidebar()}
+          <div className="layout-main" id="workspace">
+            {this._renderEnvironment()}
+          </div>
         </div>
       </div>
     );

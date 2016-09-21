@@ -1057,6 +1057,10 @@
       "from": "chai-as-promised@https://registry.npmjs.org/chai-as-promised/-/chai-as-promised-5.3.0.tgz",
       "resolved": "https://registry.npmjs.org/chai-as-promised/-/chai-as-promised-5.3.0.tgz"
     },
+    "chai-immutable": {
+      "version": "1.6.0",
+      "resolved": "https://registry.npmjs.org/chai-immutable/-/chai-immutable-1.6.0.tgz"
+    },
     "chalk": {
       "version": "1.1.3",
       "from": "chalk@https://registry.npmjs.org/chalk/-/chalk-1.1.3.tgz",
@@ -4036,9 +4040,8 @@
       }
     },
     "lodash": {
-      "version": "4.15.0",
-      "from": "lodash@https://registry.npmjs.org/lodash/-/lodash-4.15.0.tgz",
-      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.15.0.tgz"
+      "version": "4.16.1",
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.16.1.tgz"
     },
     "lodash-es": {
       "version": "4.15.0",

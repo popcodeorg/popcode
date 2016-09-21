@@ -11,6 +11,8 @@ import {
   editorFocusedRequestedLine,
   userTyped,
   userRequestedFocusedLine,
+  applicationErrorTriggered,
+  userDismissedApplicationError,
 } from '../../../src/actions/ui';
 
 const timeInterval = 1000 * 60 * 60 * 24;
@@ -83,6 +85,33 @@ describe('interfaceStateActions', () => {
     it('sets requestedFocusedLine to null', () => {
       assert.isNull(
         store.getState().ui.getIn(['editors', 'requestedFocusedLine']),
+      );
+    });
+  });
+
+  describe('applicationErrorTriggered', () => {
+    beforeEach(() => {
+      store.dispatch(applicationErrorTriggered('some-error'));
+    });
+
+    it('sets applicationErrors to contain argument', () => {
+      assert.include(
+        store.getState().ui.get('applicationErrors'),
+        'some-error'
+      );
+    });
+  });
+
+  describe('userDismissedApplicationError', () => {
+    beforeEach(() => {
+      store.dispatch(applicationErrorTriggered('some-error'));
+      store.dispatch(userDismissedApplicationError('some-error'));
+    });
+
+    it('removes argument from applicationErrors', () => {
+      assert.notInclude(
+        store.getState().ui.get('applicationErrors'),
+        'some-error'
       );
     });
   });
