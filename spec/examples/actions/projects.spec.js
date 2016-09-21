@@ -48,12 +48,8 @@ describe('projectActions', () => {
     let projectKey;
 
     beforeEach(() => {
-      store.dispatch(createProject());
-      projectKey = getCurrentProject(store.getState()).projectKey;
-      store.dispatch(toggleLibrary(projectKey, 'jquery'));
-      store.dispatch(createProject());
-      const secondProjectKey = getCurrentProject(store.getState()).projectKey;
-      store.dispatch(toggleLibrary(secondProjectKey, 'jquery'));
+      projectKey = createAndMutateProject();
+      createAndMutateProject();
       store.dispatch(changeCurrentProject(projectKey));
     });
 
@@ -65,4 +61,11 @@ describe('projectActions', () => {
       assert.lengthOf(getProjectKeys(store.getState()), 2);
     });
   });
+
+  function createAndMutateProject() {
+    store.dispatch(createProject());
+    const projectKey = getCurrentProject(store.getState()).projectKey;
+    store.dispatch(toggleLibrary(projectKey, 'jquery'));
+    return projectKey;
+  }
 });
