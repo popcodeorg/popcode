@@ -47,9 +47,11 @@ const alertAndPromptReplacementScript = `(${(() => {
       value: (message) => {
         _swal(message);
       },
+      configurable: true,
     },
     prompt: {
       value: (message, defaultValue = '') => defaultValue,
+      configurable: true,
     },
   });
 
