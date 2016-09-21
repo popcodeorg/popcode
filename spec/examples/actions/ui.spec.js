@@ -11,6 +11,8 @@ import {
   editorFocusedRequestedLine,
   userTyped,
   userRequestedFocusedLine,
+  globalErrorTriggered,
+  userDismissedGlobalError,
 } from '../../../src/actions/ui';
 
 const timeInterval = 1000 * 60 * 60 * 24;
@@ -83,6 +85,33 @@ describe('interfaceStateActions', () => {
     it('sets requestedFocusedLine to null', () => {
       assert.isNull(
         store.getState().ui.getIn(['editors', 'requestedFocusedLine']),
+      );
+    });
+  });
+
+  describe('globalErrorTriggered', () => {
+    beforeEach(() => {
+      store.dispatch(globalErrorTriggered('some-error'));
+    });
+
+    it('sets globalErrors to contain argument', () => {
+      assert.include(
+        store.getState().ui.get('globalErrors'),
+        'some-error'
+      );
+    });
+  });
+
+  describe('userDismissedGlobalError', () => {
+    beforeEach(() => {
+      store.dispatch(globalErrorTriggered('some-error'));
+      store.dispatch(userDismissedGlobalError('some-error'));
+    });
+
+    it('sets globalErrors to contain argument', () => {
+      assert.notInclude(
+        store.getState().ui.get('globalErrors'),
+        'some-error'
       );
     });
   });

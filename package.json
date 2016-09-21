@@ -91,6 +91,7 @@
     "browserify-incremental": "^3.0.1",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
+    "chai-immutable": "^1.6.0",
     "check-dependencies": "^1.0.1",
     "eslint": "^3.3.0",
     "eslint-plugin-react": "^6.1.0",
