@@ -25,8 +25,8 @@ import {
   userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
-  globalErrorTriggered,
-  userDismissedGlobalError,
+  applicationErrorTriggered,
+  userDismissedApplicationError,
   bootstrap,
 } from '../actions';
 
@@ -37,7 +37,7 @@ import Editor from './Editor';
 import Output from './Output';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
-import GlobalErrors from './GlobalErrors';
+import ApplicationErrors from './ApplicationErrors';
 
 function mapStateToProps(state) {
   const projects = sortBy(
@@ -76,7 +76,7 @@ class Workspace extends React.Component {
       '_handleStartLogIn',
       '_handleToggleDashboard',
       '_handleRequestedLineFocused',
-      '_handleGlobalErrorDismissed'
+      '_handleApplicationErrorDismissed'
     );
   }
 
@@ -251,18 +251,20 @@ class Workspace extends React.Component {
     ).catch((e) => {
       switch (e.code) {
         case 'USER_CANCELLED':
-          this.props.dispatch(globalErrorTriggered('user-cancelled-auth'));
+          this.props.dispatch(
+            applicationErrorTriggered('user-cancelled-auth')
+          );
           break;
         default:
-          this.props.dispatch(globalErrorTriggered('auth-error'));
+          this.props.dispatch(applicationErrorTriggered('auth-error'));
           Bugsnag.notifyException(e, e.code);
           break;
       }
     });
   }
 
-  _handleGlobalErrorDismissed(error) {
-    this.props.dispatch(userDismissedGlobalError(error));
+  _handleApplicationErrorDismissed(error) {
+    this.props.dispatch(userDismissedApplicationError(error));
   }
 
   _handleLogOut() {
@@ -323,9 +325,9 @@ class Workspace extends React.Component {
   render() {
     return (
       <div>
-        <GlobalErrors
-          errors={this.props.ui.globalErrors}
-          onErrorDismissed={this._handleGlobalErrorDismissed}
+        <ApplicationErrors
+          errors={this.props.ui.applicationErrors}
+          onErrorDismissed={this._handleApplicationErrorDismissed}
         />
         <div className="layout">
           {this._renderDashboard()}

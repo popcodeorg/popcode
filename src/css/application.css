@@ -458,14 +458,14 @@ body {
   cursor: pointer;
 }
 
-.globalErrors-globalError {
+.applicationErrors-error {
   background-color: var(--color-red);
   text-align: center;
   margin-bottom: 0.2rem;
   padding: 0.2rem 0;
 }
 
-.globalErrors-globalError-dismiss {
+.applicationErrors-error-dismiss {
   font-family: 'FontAwesome';
   display: block;
   padding: 0.2rem 0.5rem;

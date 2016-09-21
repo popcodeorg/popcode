@@ -4,7 +4,7 @@ const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({typing: false})).
   set('requestedLine', null).
   set('minimizedComponents', new Immutable.Set()).
-  set('globalErrors', new Immutable.Set()).
+  set('applicationErrors', new Immutable.Set()).
   set(
     'dashboard',
     new Immutable.Map().
@@ -65,13 +65,13 @@ function ui(stateIn, action) {
 
     case 'GLOBAL_ERROR_TRIGGERED':
       return state.update(
-        'globalErrors',
+        'applicationErrors',
         (errors) => errors.add(action.payload.errorType)
       );
 
     case 'USER_DISMISSED_GLOBAL_ERROR':
       return state.update(
-        'globalErrors',
+        'applicationErrors',
         (errors) => errors.remove(action.payload.errorType)
       );
 

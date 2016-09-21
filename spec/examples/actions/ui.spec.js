@@ -11,8 +11,8 @@ import {
   editorFocusedRequestedLine,
   userTyped,
   userRequestedFocusedLine,
-  globalErrorTriggered,
-  userDismissedGlobalError,
+  applicationErrorTriggered,
+  userDismissedApplicationError,
 } from '../../../src/actions/ui';
 
 const timeInterval = 1000 * 60 * 60 * 24;
@@ -89,28 +89,28 @@ describe('interfaceStateActions', () => {
     });
   });
 
-  describe('globalErrorTriggered', () => {
+  describe('applicationErrorTriggered', () => {
     beforeEach(() => {
-      store.dispatch(globalErrorTriggered('some-error'));
+      store.dispatch(applicationErrorTriggered('some-error'));
     });
 
-    it('sets globalErrors to contain argument', () => {
+    it('sets applicationErrors to contain argument', () => {
       assert.include(
-        store.getState().ui.get('globalErrors'),
+        store.getState().ui.get('applicationErrors'),
         'some-error'
       );
     });
   });
 
-  describe('userDismissedGlobalError', () => {
+  describe('userDismissedApplicationError', () => {
     beforeEach(() => {
-      store.dispatch(globalErrorTriggered('some-error'));
-      store.dispatch(userDismissedGlobalError('some-error'));
+      store.dispatch(applicationErrorTriggered('some-error'));
+      store.dispatch(userDismissedApplicationError('some-error'));
     });
 
-    it('removes argument from globalErrors', () => {
+    it('removes argument from applicationErrors', () => {
       assert.notInclude(
-        store.getState().ui.get('globalErrors'),
+        store.getState().ui.get('applicationErrors'),
         'some-error'
       );
     });
