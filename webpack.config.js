@@ -1,23 +1,40 @@
+const path = require('path');
+
 module.exports = {
   entry: './src/application.js',
   output: {
     path: './static/compiled',
     filename: 'application.js',
+    sourceMapFilename: 'application.js.map',
   },
   module: {
     loaders: [
       {
-        test: /node_modules\/htmllint\//,
+        test: /\.js$/,
+        include: [
+          path.resolve(__dirname, 'node_modules/htmllint'),
+        ],
         loader: 'transform?bulkify',
       },
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
+        include: [
+          path.resolve(__dirname, 'node_modules/PrettyCSS'),
+          path.resolve(__dirname, 'node_modules/css'),
+        ],
         loader: 'transform?brfs',
       },
       {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
+        test: /\.js$/,
+        include: [
+          path.resolve(__dirname, 'node_modules/redux'),
+        ],
         loader: 'babel-loader',
+      },
+      {
+        test: /\.jsx?$/,
+        include: path.resolve(__dirname, 'src'),
+        loaders: ['babel-loader', 'transform?brfs-babel'],
       },
       {
         test: /\.json$/,
@@ -26,6 +43,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
   },
+  devtool: 'source-map',
 };
