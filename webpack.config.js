@@ -28,8 +28,16 @@ module.exports = {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, 'node_modules/redux'),
+          path.resolve(__dirname, 'node_modules/lodash-es'),
         ],
         loader: 'babel-loader',
+      },
+      {
+        test: /\.js$/,
+        include: [
+          path.resolve(__dirname, 'node_modules/loop-protect'),
+        ],
+        loader: 'imports?define=>false',
       },
       {
         test: /\.jsx?$/,
