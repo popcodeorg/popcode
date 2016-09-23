@@ -108,7 +108,6 @@ gulp.task('css', () => gulp.
 );
 
 gulp.task('js', ['env'], () => {
-  return Promise.resolve();
   browserifyDone = buildBrowserifyStream('application.js');
   return browserifyDone;
 });

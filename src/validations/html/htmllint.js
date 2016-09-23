@@ -1,4 +1,4 @@
-import htmllint from '../../util/htmllint';
+import htmllint from 'htmllint';
 import Validator from '../Validator';
 
 const errorMap = {
