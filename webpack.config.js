@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   entry: './src/application.js',
   output: {
-    path: './static/compiled',
+    path: path.resolve(__dirname, './static/compiled'),
     publicPath: '/compiled/',
     filename: 'application.js',
     sourceMapFilename: 'application.js.map',
