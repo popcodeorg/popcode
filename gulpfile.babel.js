@@ -66,8 +66,26 @@ gulp.task('css', () => gulp.
 );
 
 gulp.task('js', ['env'], () => {
-  browserifyDone = buildBrowserifyStream('application.js');
-  return browserifyDone;
+  const productionWebpackConfig = Object.create(webpackConfiguration);
+  productionWebpackConfig.plugins = productionWebpackConfig.plugins.concat(
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin()
+  );
+
+  return new Promise((resolve, reject) => {
+    webpack(productionWebpackConfig, (err, stats) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      gutil.log('[webpack:build]', stats.toString({
+        colors: true,
+      }));
+
+      resolve();
+    });
+  });
 });
 
 gulp.task('build', ['fonts', 'css', 'js']);

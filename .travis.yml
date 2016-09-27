@@ -24,9 +24,9 @@ before_script:
   - sh -e /etc/init.d/xvfb start
 script:
 - npm test
-- "./node_modules/.bin/gulp build --production"
+- "gulp build --production"
 before_deploy:
-- "./node_modules/.bin/gulp syncFirebase"
+- "gulp syncFirebase"
 deploy:
   provider: s3
   access_key_id: AKIAJY2GYDQBE4HFF32Q

@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/application.js',
@@ -51,6 +52,15 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.EnvironmentPlugin([
+      'FIREBASE_APP',
+      'GIT_REVISION',
+      'LOG_REDUX_ACTIONS',
+      'NODE_ENV',
+      'WARN_ON_DROPPED_ERRORS',
+    ]),
+  ],
   resolve: {
     extensions: ['.js', '.jsx'],
   },
