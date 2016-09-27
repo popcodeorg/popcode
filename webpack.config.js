@@ -12,6 +12,14 @@ module.exports = {
   module: {
     loaders: [
       {
+        test: /\.jsx?$/,
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'spec'),
+        ],
+        loaders: ['babel-loader', 'transform?brfs-babel'],
+      },
+      {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, 'node_modules/htmllint'),
@@ -40,11 +48,6 @@ module.exports = {
           path.resolve(__dirname, 'node_modules/loop-protect'),
         ],
         loader: 'imports?define=>false',
-      },
-      {
-        test: /\.jsx?$/,
-        include: path.resolve(__dirname, 'src'),
-        loaders: ['babel-loader', 'transform?brfs-babel'],
       },
       {
         test: /\.json$/,

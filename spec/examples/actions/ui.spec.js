@@ -1,8 +1,8 @@
 /* eslint-env mocha */
+/* global sinon */
 
 import '../../helper';
 import {assert} from 'chai';
-import {useFakeTimers} from 'sinon';
 import createApplicationStore from '../../../src/createApplicationStore';
 import waitFor from '../../helpers/waitFor';
 
@@ -22,7 +22,7 @@ describe('interfaceStateActions', () => {
 
   beforeEach(() => {
     store = createApplicationStore();
-    clock = useFakeTimers();
+    clock = sinon.useFakeTimers();
   });
 
   afterEach(() => {

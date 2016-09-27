@@ -1,6 +1,8 @@
 /* eslint-env node */
 /* eslint-disable no-var, object-shorthand */
 
+var assign = require('lodash/assign');
+var webpackConfiguration = require('./webpack.config.js');
 var isCi = Boolean(process.env.TRAVIS);
 var customBrowsers = [
   'Chrome',
@@ -21,25 +23,23 @@ module.exports = function(config) {
       'mocha',
       'chai-as-promised',
       'sinon-chai',
-      'browserify',
     ],
 
     files: [
-      'spec/examples/**/*.spec.js',
+      'spec/index.js',
     ],
 
     preprocessors: {
-      'spec/examples/**/*.spec.js': ['browserify'],
+      'spec/index.js': ['webpack', 'sourcemap'],
     },
 
-    browserify: {
-      debug: true,
-      extensions: ['.js', '.jsx'],
-      transform: [
-        ['brfs-babel'],
-        ['babelify', {presets: ['react', 'es2015']}],
-        ['envify'],
-      ],
+    webpack: assign({}, webpackConfiguration, {
+      entry: null,
+      devtool: 'inline-source-map',
+    }),
+
+    webpackMiddleware: {
+      stats: 'errors-only',
     },
 
     mochaReporter: {
