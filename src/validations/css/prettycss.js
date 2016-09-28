@@ -1,4 +1,3 @@
-import prettyCSS from 'PrettyCSS';
 import Validator from '../Validator';
 import trim from 'lodash/trim';
 import startsWith from 'lodash/startsWith';
@@ -99,12 +98,14 @@ class PrettyCssValidator extends Validator {
   }
 
   _getRawErrors() {
-    try {
-      const result = prettyCSS.parse(this._source);
-      return result.getProblems();
-    } catch (_e) {
-      return [];
-    }
+    return System.import('../linters').then(({prettyCSS}) => {
+      try {
+        const result = prettyCSS.parse(this._source);
+        return result.getProblems();
+      } catch (_e) {
+        return [];
+      }
+    });
   }
 
   _keyForError(error) {
