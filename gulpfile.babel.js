@@ -3,23 +3,17 @@ import fs from 'fs';
 import https from 'https';
 import gulp from 'gulp';
 import concat from 'gulp-concat';
-import browserify from 'browserify';
-import browserifyInc from 'browserify-incremental';
-import source from 'vinyl-source-stream';
-import buffer from 'vinyl-buffer';
 import sourcemaps from 'gulp-sourcemaps';
-import uglify from 'gulp-uglify';
 import cssnano from 'gulp-cssnano';
 import gutil from 'gulp-util';
-import memoize from 'lodash/memoize';
 import forOwn from 'lodash/forOwn';
-import brfs from 'brfs-babel';
-import babelify from 'babelify';
-import envify from 'envify';
 import git from 'git-rev-sync';
 import config from './src/config';
 import postcss from 'gulp-postcss';
 import cssnext from 'postcss-cssnext';
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackConfiguration from './webpack.config';
 
 const browserSync = require('browser-sync').create();
 const srcDir = 'src';
@@ -38,43 +32,6 @@ forOwn(supportedBrowsers, (version, browser) => {
   }
   cssnextBrowsers.push(`${browserForCssnext} >= ${version}`);
 });
-
-let browserifyImpl;
-if (gulp.env.production) {
-  browserifyImpl = browserify;
-} else {
-  browserifyImpl = browserifyInc;
-}
-
-let browserifyDone = Promise.resolve();
-
-const browserifyOpts = {
-  extensions: ['.jsx'],
-  debug: true,
-  fullPaths: !gulp.env.production,
-};
-
-const buildBrowserifyCompiler = memoize(
-  (filename) => browserifyImpl(`src/${filename}`, browserifyOpts).
-    transform(brfs).
-    transform(babelify.configure({sourceMapRelative: __dirname})).
-    transform(envify)
-);
-
-function buildBrowserifyStream(filename) {
-  return new Promise((resolve, reject) => {
-    buildBrowserifyCompiler(filename).bundle().
-      pipe(source(filename)).
-      pipe(buffer()).
-      pipe(sourcemaps.init({loadMaps: true})).
-      pipe(gutil.env.production ? uglify() : gutil.noop()).
-      pipe(sourcemaps.write('./')).
-      pipe(gulp.dest(distDir)).
-      on('end', resolve).
-      on('error', reject).
-      pipe(browserSync.reload({stream: true}));
-  });
-}
 
 gulp.task('env', () => {
   process.env.GIT_REVISION = git.short();
@@ -104,12 +61,30 @@ gulp.task('css', () => gulp.
   pipe(gutil.env.production ? cssnano() : gutil.noop()).
   pipe(sourcemaps.write('./')).
   pipe(gulp.dest(distDir)).
-  pipe(browserSync.reload({stream: true}))
+  pipe(browserSync.stream())
 );
 
 gulp.task('js', ['env'], () => {
-  browserifyDone = buildBrowserifyStream('application.js');
-  return browserifyDone;
+  const productionWebpackConfig = Object.create(webpackConfiguration);
+  productionWebpackConfig.plugins = productionWebpackConfig.plugins.concat(
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin()
+  );
+
+  return new Promise((resolve, reject) => {
+    webpack(productionWebpackConfig, (err, stats) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      gutil.log('[webpack:build]', stats.toString({
+        colors: true,
+      }));
+
+      resolve();
+    });
+  });
 });
 
 gulp.task('build', ['fonts', 'css', 'js']);
@@ -142,20 +117,25 @@ gulp.task('syncFirebase', () => new Promise((resolve, reject) => {
   });
 }));
 
-gulp.task('dev', ['browserSync', 'fonts', 'css', 'js'], () => {
+gulp.task('dev', ['browserSync', 'fonts', 'css'], () => {
   gulp.watch(`${stylesheetsDir}/**/*.css`, ['css']);
-  gulp.watch(`${srcDir}/**/*.js{,x}`, ['js']);
+  gulp.watch(`${baseDir}/*`).on('change', browserSync.reload);
 });
 
 gulp.task('browserSync', () => {
+  const compiler = webpack(webpackConfiguration);
+  compiler.plugin('invalid', browserSync.reload);
   browserSync.init({
     server: {
       baseDir,
-      middleware: (_req, _res, next) => {
-        browserifyDone.then(() => {
-          next();
-        });
-      },
+      middleware: [webpackDevMiddleware(
+        compiler,
+        {
+          lazy: false,
+          stats: 'errors-only',
+          publicPath: webpackConfiguration.output.publicPath,
+        }
+      )],
     },
   });
 });
