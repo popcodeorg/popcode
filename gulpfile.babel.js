@@ -13,7 +13,6 @@ import postcss from 'gulp-postcss';
 import cssnext from 'postcss-cssnext';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfiguration from './webpack.config';
 
 const browserSync = require('browser-sync').create();
@@ -120,26 +119,23 @@ gulp.task('syncFirebase', () => new Promise((resolve, reject) => {
 
 gulp.task('dev', ['browserSync', 'fonts', 'css'], () => {
   gulp.watch(`${stylesheetsDir}/**/*.css`, ['css']);
-  gulp.watch(`${srcDir}/**/*.js{,x,on}`, browserSync.reload);
   gulp.watch(`${baseDir}/*`).on('change', browserSync.reload);
 });
 
 gulp.task('browserSync', () => {
   const compiler = webpack(webpackConfiguration);
+  compiler.plugin('invalid', browserSync.reload);
   browserSync.init({
     server: {
       baseDir,
-      middleware: [
-        webpackDevMiddleware(
-          compiler,
-          {
-            lazy: false,
-            stats: 'errors-only',
-            publicPath: webpackConfiguration.output.publicPath,
-          }
-        ),
-        webpackHotMiddleware(compiler),
-      ],
+      middleware: [webpackDevMiddleware(
+        compiler,
+        {
+          lazy: false,
+          stats: 'errors-only',
+          publicPath: webpackConfiguration.output.publicPath,
+        }
+      )],
     },
   });
 });

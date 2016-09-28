@@ -17,14 +17,14 @@ module.exports = {
           path.resolve(__dirname, 'src'),
           path.resolve(__dirname, 'spec'),
         ],
-        loaders: ['babel-loader', 'transform?brfs-babel'],
+        loaders: ['babel-loader', 'transform/cacheable?brfs-babel'],
       },
       {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, 'node_modules/htmllint'),
         ],
-        loader: 'transform?bulkify',
+        loader: 'transform/cacheable?bulkify',
       },
       {
         test: /\.js$/,
@@ -32,7 +32,7 @@ module.exports = {
           path.resolve(__dirname, 'node_modules/PrettyCSS'),
           path.resolve(__dirname, 'node_modules/css'),
         ],
-        loader: 'transform?brfs',
+        loader: 'transform/cacheable?brfs',
       },
       {
         test: /\.js$/,
