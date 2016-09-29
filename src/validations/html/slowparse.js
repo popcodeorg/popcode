@@ -1,4 +1,3 @@
-import Slowparse from 'slowparse/src';
 import Validator from '../Validator';
 
 const errorMap = {
@@ -116,18 +115,20 @@ class SlowparseValidator extends Validator {
   }
 
   _getRawErrors() {
-    let error;
-    try {
-      error = Slowparse.HTML(document, this._source).error;
-    } catch (e) {
-      error = null;
-    }
+    return System.import('../linters').then(({Slowparse}) => {
+      let error;
+      try {
+        error = Slowparse.HTML(document, this._source).error;
+      } catch (e) {
+        error = null;
+      }
 
-    if (error !== null) {
-      return [error];
-    }
+      if (error !== null) {
+        return [error];
+      }
 
-    return [];
+      return [];
+    });
   }
 
   _keyForError(error) {

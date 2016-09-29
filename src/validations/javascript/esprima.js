@@ -1,5 +1,4 @@
 import Validator from '../Validator';
-import esprima from 'esprima';
 import find from 'lodash/find';
 
 const UNEXPECTED_TOKEN_EXPR = /^Unexpected token (.+)$/;
@@ -81,18 +80,20 @@ class EsprimaValidator extends Validator {
   }
 
   _getRawErrors() {
-    try {
-      esprima.parse(this._source);
-    } catch (error) {
+    return System.import('../linters').then(({esprima}) => {
       try {
-        const tokens = esprima.tokenize(this._source, {loc: true});
-        const token = findTokenForError(error, tokens);
-        return [{error, token}];
-      } catch (tokenizeError) {
-        return [{error: tokenizeError}];
+        esprima.parse(this._source);
+      } catch (error) {
+        try {
+          const tokens = esprima.tokenize(this._source, {loc: true});
+          const token = findTokenForError(error, tokens);
+          return [{error, token}];
+        } catch (tokenizeError) {
+          return [{error: tokenizeError}];
+        }
       }
-    }
-    return [];
+      return [];
+    });
   }
 
   _keyForError(error) {

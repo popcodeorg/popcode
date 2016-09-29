@@ -6,7 +6,6 @@ import compact from 'lodash/compact';
 import defaults from 'lodash/defaults';
 import find from 'lodash/find';
 import includes from 'lodash/includes';
-import {JSHINT as jshint} from 'jshint';
 import libraries from '../../config/libraries';
 
 const jshintrc = {
@@ -154,14 +153,16 @@ class JsHintValidator extends Validator {
   }
 
   _getRawErrors() {
-    try {
-      jshint(this._source, this._jshintOptions);
-    } catch (e) {
-      return [];
-    }
+    return System.import('../linters').then(({jshint}) => {
+      try {
+        jshint(this._source, this._jshintOptions);
+      } catch (e) {
+        return [];
+      }
 
-    const data = jshint.data();
-    return compact(castArray(data.errors));
+      const data = jshint.data();
+      return compact(castArray(data.errors));
+    });
   }
 
   _keyForError(error) {

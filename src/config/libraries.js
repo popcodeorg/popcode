@@ -16,16 +16,6 @@ const libraries = {
     ),
     predefined: ['_'],
   },
-  underscore: {
-    name: 'Underscore.js',
-    javascript: fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../bower_components/underscore/underscore-min.js'
-      )
-    ),
-    predefined: ['_'],
-  },
   mustache: {
     name: 'Mustache.js',
     javascript: fs.readFileSync(
@@ -35,42 +25,6 @@ const libraries = {
       )
     ),
     predefined: ['Mustache'],
-  },
-  handlebars: {
-    name: 'Handlebars.js',
-    javascript: fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../bower_components/handlebars/handlebars.js'
-      )
-    ),
-    predefined: ['Handlebars'],
-  },
-  angular: {
-    name: 'AngularJS',
-    javascript: fs.readFileSync(
-      path.join(__dirname, '../../bower_components/angular/angular.min.js')
-    ),
-    predefined: ['angular'],
-  },
-  react: {
-    name: 'React',
-    javascript: [
-      fs.readFileSync(
-        path.join(__dirname, '../../bower_components/react/react.min.js')
-      ),
-      fs.readFileSync(
-        path.join(__dirname, '../../bower_components/react/react-dom.min.js')
-      ),
-    ],
-    predefined: ['React'],
-  },
-  ember: {
-    name: 'Ember.js',
-    javascript: fs.readFileSync(
-      path.join(__dirname, '../../bower_components/ember/ember.min.js')
-    ),
-    predefined: ['Ember'],
   },
   bootstrap: {
     name: 'Bootstrap',
@@ -84,30 +38,6 @@ const libraries = {
       path.join(
         __dirname,
         '../../bower_components/bootstrap/dist/js/bootstrap.min.js'
-      )
-    ),
-  },
-  foundation: {
-    name: 'Foundation',
-    css: fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../bower_components/foundation/css/foundation.min.css'
-      )
-    ),
-    javascript: fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../bower_components/foundation/js/foundation.js'
-      )
-    ),
-  },
-  normalize: {
-    name: 'normalize.css',
-    css: fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../bower_components/normalize-css/normalize.css'
       )
     ),
   },

@@ -50,6 +50,13 @@ module.exports = {
         loader: 'imports?define=>false',
       },
       {
+        test: /\.js$/,
+        include: [
+          path.resolve(__dirname, 'node_modules/brace/worker'),
+        ],
+        loader: 'null',
+      },
+      {
         test: /\.json$/,
         loader: 'json-loader',
       },
