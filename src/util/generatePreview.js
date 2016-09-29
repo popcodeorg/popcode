@@ -152,6 +152,10 @@ class PreviewGenerator {
 
   _attachLibraries(includePreviewFrame = false) {
     this._project.enabledLibraries.forEach((libraryKey) => {
+      if (!(libraryKey in libraries)) {
+        return;
+      }
+
       const library = libraries[libraryKey];
       this._attachLibrary(library);
     });
