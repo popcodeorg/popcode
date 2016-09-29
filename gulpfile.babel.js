@@ -68,7 +68,11 @@ gulp.task('js', ['env'], () => {
   const productionWebpackConfig = Object.create(webpackConfiguration);
   productionWebpackConfig.plugins = productionWebpackConfig.plugins.concat(
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin()
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {warnings: false},
+      output: {comments: false},
+      sourceMap: true,
+    })
   );
 
   return new Promise((resolve, reject) => {
