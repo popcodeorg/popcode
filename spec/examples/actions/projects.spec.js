@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+/* global sinon */
 
 import '../../helper';
 import {assert} from 'chai';
@@ -45,12 +46,18 @@ describe('projectActions', () => {
   });
 
   describe('changeCurrentProject', () => {
-    let projectKey;
+    let projectKey, clock;
 
     beforeEach(() => {
+      clock = sinon.useFakeTimers();
       projectKey = createAndMutateProject();
+      clock.tick(1);
       createAndMutateProject();
       store.dispatch(changeCurrentProject(projectKey));
+    });
+
+    afterEach(() => {
+      clock.restore();
     });
 
     it('changes to the specified project', () => {
