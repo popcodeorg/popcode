@@ -143,6 +143,10 @@ class JsHintValidator extends Validator {
 
     this._jshintOptions = defaults(clone(jshintrc), {predef: []});
     enabledLibraries.forEach((libraryKey) => {
+      if (!(libraryKey in libraries)) {
+        return;
+      }
+
       const library = libraries[libraryKey];
 
       if (library.predefined) {
