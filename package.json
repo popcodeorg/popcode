@@ -122,6 +122,7 @@
     "mocha": "https://registry.npmjs.org/mocha/-/mocha-2.4.5.tgz",
     "npm-check": "^5.2.1",
     "npm-shrinkwrap": "^200.5.1",
+    "npm-shrinkwrap-check": "^0.1.4",
     "null-loader": "^0.1.1",
     "phantomjs-prebuilt": "^2.1.7",
     "postcss": "https://registry.npmjs.org/postcss/-/postcss-5.0.21.tgz",
