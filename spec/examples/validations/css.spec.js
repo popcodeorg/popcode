@@ -9,7 +9,9 @@ import {
 
 import css from '../../../src/validations/css';
 
-describe('css', () => {
+describe('css', function() {
+  this.timeout(10000); // eslint-disable-line no-invalid-this
+
   it('allows valid flexbox', () =>
     assertPassesValidation(css, `
       .flex-container {

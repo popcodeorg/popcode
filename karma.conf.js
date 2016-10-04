@@ -1,19 +1,19 @@
 /* eslint-env node */
-/* eslint-disable no-var, object-shorthand */
+/* eslint-disable no-var, object-shorthand, prefer-template */
+/* eslint-disable prefer-arrow-callback, prefer-reflect */
 
 var assign = require('lodash/assign');
 var webpackConfiguration = require('./webpack.config.js');
 var isCi = Boolean(process.env.TRAVIS);
-var customBrowsers = [
-  'Chrome',
-  'ChromeCanary',
-  'Firefox',
-  'Safari',
-  'PhantomJS',
+var browserStackAvailable = Boolean(process.env.BROWSER_STACK_ACCESS_TOKEN);
+
+var allBrowsers = [
+  ['Chrome', '53', 'Windows', '10'],
+  ['Firefox', '48', 'Windows', '10'],
+  ['IE', '11', 'Windows', '10'],
+  ['Chrome', '53', 'OS X', 'Sierra'],
+  ['Firefox', '48', 'OS X', 'Sierra'],
 ];
-if (isCi) {
-  customBrowsers = ['Firefox', 'PhantomJS'];
-}
 
 module.exports = function(config) {
   config.set({
@@ -55,8 +55,38 @@ module.exports = function(config) {
 
     logLevel: config.LOG_WARN,
 
-    browsers: customBrowsers,
+    browsers: ['Chrome'],
 
     concurrency: Infinity,
   });
+
+  if (browserStackAvailable) {
+    var customLaunchers = {};
+    allBrowsers.forEach(function(browser) {
+      customLaunchers['browserStack' + browser[0] + browser[2]] = {
+        base: 'BrowserStack',
+        browser: browser[0],
+        browser_version: browser[1], // eslint-disable-line camelcase
+        os: browser[2],
+        os_version: browser[3], // eslint-disable-line camelcase
+      };
+    });
+
+    config.set({
+      browserStack: {
+        username: process.env.BROWSER_STACK_USERNAME,
+        accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
+      },
+
+      browserNoActivityTimeout: 60000,
+
+      customLaunchers: customLaunchers,
+
+      browsers: Object.getOwnPropertyNames(customLaunchers),
+
+      reporters: ['mocha', 'BrowserStack'],
+    });
+  } else if (isCi) {
+    config.set({browsers: ['Firefox']});
+  }
 };
