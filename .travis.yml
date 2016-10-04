@@ -18,7 +18,7 @@ addons:
     packages:
     - g++-4.8
 before_install:
-- npm install -g npm@'>=3.8.0'
+- npm install -g npm@'3.10.7'
 - npm prune
 before_script:
 - export DISPLAY=:99.0
