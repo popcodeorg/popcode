@@ -1,8 +1,16 @@
 import GitHub from 'github-api';
 import pick from 'lodash/pick';
 import trim from 'lodash/trim';
+import isEmpty from 'lodash/isEmpty';
 import Bugsnag from '../util/Bugsnag';
 const anonymousGithub = new GitHub({});
+
+export function EmptyGistError(message) {
+  this.name = 'EmptyGistError';
+  this.message = message;
+  this.stack = new Error().stack;
+}
+EmptyGistError.prototype = Object.create(Error.prototype);
 
 function createGistFromProject(project) {
   const files = {};
@@ -77,7 +85,12 @@ const Gists = {
   createFromProject(project, user) {
     const github = clientForUser(user);
 
-    return github.getGist().create(createGistFromProject(project)).
+    const gist = createGistFromProject(project);
+    if (isEmpty(gist.files)) {
+      return Promise.reject(new EmptyGistError());
+    }
+
+    return github.getGist().create(gist).
       then((response) => {
         const gistData = response.data;
         if (canUpdateGist(user)) {

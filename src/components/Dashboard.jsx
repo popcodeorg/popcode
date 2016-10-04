@@ -5,6 +5,7 @@ import bindAll from 'lodash/bindAll';
 import partial from 'lodash/partial';
 import classnames from 'classnames';
 import Gists from '../services/Gists';
+import {EmptyGistError} from '../services/Gists';
 import ProjectList from './ProjectList';
 import LibraryPicker from './LibraryPicker';
 import config from '../config';
@@ -123,6 +124,13 @@ class Dashboard extends React.Component {
     Gists.createFromProject(this.props.currentProject, this.props.currentUser).
       then((response) => {
         newWindow.location = response.html_url;
+      }, (error) => {
+        if (error instanceof EmptyGistError) {
+          this.props.onEmptyGist();
+          newWindow.close();
+          return Promise.resolve();
+        }
+        return Promise.reject(error);
       });
   }
 
@@ -240,6 +248,7 @@ Dashboard.propTypes = {
   currentProject: React.PropTypes.object,
   currentUser: React.PropTypes.object.isRequired,
   validationState: React.PropTypes.string.isRequired,
+  onEmptyGist: React.PropTypes.func.isRequired,
   onLibraryToggled: React.PropTypes.func.isRequired,
   onLogOut: React.PropTypes.func.isRequired,
   onNewProject: React.PropTypes.func.isRequired,
