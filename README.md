@@ -137,8 +137,25 @@ for all the sordid details.
 
 ## Thanks to ##
 
-[Bugsnag](https://bugsnag.com) provides excellent error alerting to Popcode for
-free.
+These companies generously offer Popcode access to paid tiers of their
+excellent services, free of charge:
+
+<table><tbody><tr>
+<td>
+<a href="https://browserstack.com">
+<img alt="BrowserStack"
+src="https://cloud.githubusercontent.com/assets/14214/19059103/23ffe174-89ab-11e6-8de3-482780488df5.png">
+</a>
+</td>
+<td>
+<a href="https://bugsnag.com">
+<img alt="Bugsnag"
+src="https://cloud.githubusercontent.com/assets/14214/19059115/428a80f4-89ab-11e6-8d05-d8d0795266fd.png">
+</a>
+</td>
+</tr>
+</tbody>
+</table>
 
 ## Contact ##
 

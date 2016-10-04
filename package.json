@@ -68,7 +68,7 @@
   },
   "engines": {
     "node": "6.3.1",
-    "npm": "3.10.3"
+    "npm": "3.10.7"
   },
   "scripts": {
     "postinstall": "./node_modules/.bin/bower install",
@@ -107,6 +107,7 @@
     "imports-loader": "^0.6.5",
     "json-loader": "^0.5.4",
     "karma": "^1.1.0",
+    "karma-browserstack-launcher": "^1.1.1",
     "karma-chai": "^0.1.0",
     "karma-chai-as-promised": "^0.1.2",
     "karma-chrome-launcher": "^2.0.0",
