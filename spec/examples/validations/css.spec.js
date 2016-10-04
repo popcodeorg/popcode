@@ -110,5 +110,13 @@ describe('css', () => {
       assertFailsValidationAtLine(css, stylesheet, 2)
     );
   });
+
+  context('thoroughly unparseable CSS', () => {
+    const stylesheet = '<a href=\"http;.facebook.com>';
+
+    it('fails at the first line', () =>
+      assertFailsValidationAtLine(css, stylesheet, 1)
+    );
+  });
 });
 

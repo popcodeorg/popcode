@@ -113,6 +113,9 @@ class PrettyCssValidator extends Validator {
   }
 
   _locationForError(error) {
+    if (!error.token) {
+      return {row: 0, column: 0};
+    }
     return {row: error.token.line - 1, column: error.token.charNum - 1};
   }
 }
