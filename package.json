@@ -45,7 +45,7 @@
     "es6-set": "https://registry.npmjs.org/es6-set/-/es6-set-0.1.4.tgz",
     "esprima": "^3.0.0",
     "firebase": "^2.4.1",
-    "github-api": "^2.3.0",
+    "github-api": "git+https://github.com/michael/github.git#v2.4.0",
     "htmllint": "^0.4.0",
     "i18next-client": "^1.10.2",
     "immutable": "^3.7.5",

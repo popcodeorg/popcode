@@ -39,6 +39,7 @@ module.exports = {
         include: [
           path.resolve(__dirname, 'node_modules/redux'),
           path.resolve(__dirname, 'node_modules/lodash-es'),
+          path.resolve(__dirname, 'node_modules/github-api'),
         ],
         loader: 'babel-loader',
       },
@@ -72,6 +73,10 @@ module.exports = {
     ]),
   ],
   resolve: {
+    alias: {
+      'github-api$': 'github-api/lib/GitHub.js',
+      'github-api': 'github-api/lib',
+    },
     extensions: ['.js', '.jsx'],
   },
   devtool: 'source-map',
