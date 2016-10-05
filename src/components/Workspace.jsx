@@ -76,7 +76,8 @@ class Workspace extends React.Component {
       '_handleStartLogIn',
       '_handleToggleDashboard',
       '_handleRequestedLineFocused',
-      '_handleApplicationErrorDismissed'
+      '_handleApplicationErrorDismissed',
+      '_handleEmptyGist'
     );
   }
 
@@ -275,6 +276,10 @@ class Workspace extends React.Component {
     this.props.dispatch(editorFocusedRequestedLine());
   }
 
+  _handleEmptyGist() {
+    this.props.dispatch(applicationErrorTriggered('empty-gist'));
+  }
+
   _renderDashboard() {
     if (!this.props.ui.dashboard.isOpen) {
       return null;
@@ -288,6 +293,7 @@ class Workspace extends React.Component {
           currentProject={this.props.currentProject}
           currentUser={this.props.currentUser}
           validationState={this._getOverallValidationState()}
+          onEmptyGist={this._handleEmptyGist}
           onLibraryToggled={this._handleLibraryToggled}
           onLogOut={this._handleLogOut}
           onNewProject={this._handleNewProject}
