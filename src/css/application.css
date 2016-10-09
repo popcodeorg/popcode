@@ -48,16 +48,8 @@
   --color-purple: #ff00ff;
 }
 
-html, body {
-  min-height: 100%;
-}
-
 body {
   font-family: 'Roboto', sans-serif;
-}
-
-#main, .layout {
-  height: 100%;
 }
 
 .layout {
@@ -323,6 +315,7 @@ body {
 }
 
 .editors {
+  height: 100vh;
   display: flex;
   flex-direction: column;
   font-family: 'Inconsolata';
@@ -330,7 +323,7 @@ body {
 
 .editors-editorContainer {
   box-sizing: border-box;
-  flex: 0 1 100%;
+  flex: 0 1 100vh;
   border-right: 2px solid var(--color-gray);
   border-bottom: 2px solid var(--color-gray);
   position: relative;
