@@ -1,5 +1,8 @@
 import React from 'react';
+import fs from 'fs';
+import path from 'path';
 import Isvg from 'react-inlinesvg';
+import base64 from 'base64-js';
 import i18n from 'i18next-client';
 import bindAll from 'lodash/bindAll';
 import partial from 'lodash/partial';
@@ -9,6 +12,17 @@ import {EmptyGistError} from '../services/Gists';
 import ProjectList from './ProjectList';
 import LibraryPicker from './LibraryPicker';
 import config from '../config';
+
+const spinnerPage = base64.fromByteArray(
+  new TextEncoder('utf-8').encode(
+    fs.readFileSync(
+      path.join(
+        __dirname,
+        '../../templates/github-export.html'
+      )
+    )
+  )
+);
 
 class Dashboard extends React.Component {
   constructor() {
@@ -120,6 +134,7 @@ class Dashboard extends React.Component {
     }
 
     const newWindow = open('about:blank', 'gist');
+    newWindow.location = `data:text/html;base64,${spinnerPage}`;
 
     Gists.createFromProject(this.props.currentProject, this.props.currentUser).
       then((response) => {
