@@ -7,6 +7,7 @@ import i18n from 'i18next-client';
 import bindAll from 'lodash/bindAll';
 import partial from 'lodash/partial';
 import classnames from 'classnames';
+import {TextEncoder} from 'text-encoding';
 import Gists from '../services/Gists';
 import {EmptyGistError} from '../services/Gists';
 import ProjectList from './ProjectList';
