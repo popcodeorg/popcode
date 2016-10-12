@@ -1,8 +1,7 @@
 import GitHub from 'github-api';
-import pick from 'lodash/pick';
 import trim from 'lodash/trim';
 import isEmpty from 'lodash/isEmpty';
-import Bugsnag from '../util/Bugsnag';
+import promiseRetry from 'promise-retry';
 const anonymousGithub = new GitHub({});
 
 export function EmptyGistError(message) {
@@ -63,22 +62,7 @@ function updateGistWithImportUrl(github, gistData) {
 
   return gist.update({
     description: `${gistData.description} Click to import: ${uri.href}`,
-  }).then(
-    (response) => response.data,
-    notifyAndRejectApiError
-  );
-}
-
-function notifyAndRejectApiError(error) {
-  if (error.response) {
-    Bugsnag.notifyException(
-      error,
-      'GistError',
-      {failedRequest: pick(error, ['request', 'response', 'status'])}
-    );
-  }
-
-  return Promise.reject(error);
+  }).then((response) => response.data);
 }
 
 const Gists = {
@@ -97,16 +81,21 @@ const Gists = {
           return updateGistWithImportUrl(github, gistData);
         }
         return gistData;
-      }, notifyAndRejectApiError);
+      }).then((gistData) => promiseRetry(
+        (retry) => this.loadFromId(gistData.id, user).catch(retry),
+        {
+          retries: 5,
+          factor: 2,
+          minTimeout: 1000,
+          maxTimeout: 10000,
+        }
+      ));
   },
 
   loadFromId(gistId, user) {
     const github = clientForUser(user);
     const gist = github.getGist(gistId);
-    return gist.read().then(
-      (response) => response.data,
-      notifyAndRejectApiError
-    );
+    return gist.read().then((response) => response.data);
   },
 };
 

@@ -146,6 +146,8 @@ class Dashboard extends React.Component {
           newWindow.close();
           return Promise.resolve();
         }
+        this.props.onGistExportError();
+        newWindow.close();
         return Promise.reject(error);
       });
   }
@@ -265,6 +267,7 @@ Dashboard.propTypes = {
   currentUser: React.PropTypes.object.isRequired,
   validationState: React.PropTypes.string.isRequired,
   onEmptyGist: React.PropTypes.func.isRequired,
+  onGistExportError: React.PropTypes.func.isRequired,
   onLibraryToggled: React.PropTypes.func.isRequired,
   onLogOut: React.PropTypes.func.isRequired,
   onNewProject: React.PropTypes.func.isRequired,

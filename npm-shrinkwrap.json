@@ -5560,6 +5560,20 @@
       "version": "7.1.1",
       "resolved": "https://registry.npmjs.org/promise/-/promise-7.1.1.tgz"
     },
+    "promise-retry": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/promise-retry/-/promise-retry-1.1.1.tgz",
+      "dependencies": {
+        "err-code": {
+          "version": "1.1.1",
+          "resolved": "https://registry.npmjs.org/err-code/-/err-code-1.1.1.tgz"
+        },
+        "retry": {
+          "version": "0.10.0",
+          "resolved": "https://registry.npmjs.org/retry/-/retry-0.10.0.tgz"
+        }
+      }
+    },
     "prr": {
       "version": "0.0.0",
       "resolved": "https://registry.npmjs.org/prr/-/prr-0.0.0.tgz"
