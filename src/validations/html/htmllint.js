@@ -80,7 +80,7 @@ const htmlLintOptions = {
     'scrolling',
     'width',
   ],
-  'attr-name-style': 'lowercase',
+  'attr-name-style': 'dash',
   'attr-no-dup': true,
   'attr-quote-style': 'quoted',
   'doctype-first': true,

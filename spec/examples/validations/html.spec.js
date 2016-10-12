@@ -87,6 +87,36 @@ describe('html', () => {
     )
   );
 
+  it('allows lowercase attributes', () =>
+    assertPassesValidation(
+      html,
+      htmlWithBody('<div id="first">Content</div>')
+    )
+  );
+
+  it('allows lowercase data attributes', () =>
+    assertPassesValidation(
+      html,
+      htmlWithBody('<div data-id="1">Content</div>')
+    )
+  );
+
+  it('generates error for uppercase attributes', () =>
+    assertFailsValidationWith(
+      html,
+      htmlWithBody('<div ID="first">Content</div>'),
+      'lower-case-attribute-name'
+    )
+  );
+
+  it('generates error for uppercase data attributes', () =>
+    assertFailsValidationWith(
+      html,
+      htmlWithBody('<div data-ID="first">Content</div>'),
+      'lower-case-attribute-name'
+    )
+  );
+
   it('generates meaningful error for extra tag at end of doc', () =>
     assertFailsValidationWith(
       html,
