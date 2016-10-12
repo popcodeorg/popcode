@@ -286,7 +286,14 @@ function bootstrap({gistId} = {gistId: null}) {
 
     let gistLoaded;
     if (gistId) {
-      gistLoaded = Gists.loadFromId(gistId, getState().user.toJS());
+      gistLoaded =
+        Gists.loadFromId(gistId, getState().user.toJS()).catch((error) => {
+          if (get(error, 'response.status') === 404) {
+            dispatch(applicationErrorTriggered('gist-import-not-found'));
+            return Promise.resolve();
+          }
+          return Promise.reject(error);
+        });
     } else {
       gistLoaded = Promise.resolve();
     }
