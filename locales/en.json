@@ -24,7 +24,8 @@
   "applicationErrors": {
     "user-cancelled-auth": "Looks like you didn’t finish linking GitHub to Popcode. Try again, and be sure to click the green “Authorize application” button.",
     "auth-error": "Something went wrong trying to sign in. Please try again!",
-    "empty-gist": "You need some code in your project to export a gist!"
+    "empty-gist": "You need some code in your project to export a gist!",
+    "gist-export-error": "Something went wrong trying to create that gist. Please try again."
   },
   "languages": {
     "html": "HTML",
