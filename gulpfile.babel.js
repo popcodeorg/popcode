@@ -4,7 +4,7 @@ import https from 'https';
 import gulp from 'gulp';
 import concat from 'gulp-concat';
 import sourcemaps from 'gulp-sourcemaps';
-import cssnano from 'gulp-cssnano';
+import cssnano from 'cssnano';
 import gutil from 'gulp-util';
 import forOwn from 'lodash/forOwn';
 import git from 'git-rev-sync';
@@ -50,19 +50,24 @@ gulp.task('fonts', () => gulp.
     pipe(gulp.dest(`${distDir}/fonts`))
 );
 
-gulp.task('css', () => gulp.
-  src([
-    `${bowerComponents}/normalize-css/normalize.css`,
-    `${stylesheetsDir}/**/*.css`,
-  ]).
-  pipe(concat('application.css')).
-  pipe(sourcemaps.init({loadMaps: true})).
-  pipe(postcss([cssnext({browsers: cssnextBrowsers})])).
-  pipe(gutil.env.production ? cssnano() : gutil.noop()).
-  pipe(sourcemaps.write('./')).
-  pipe(gulp.dest(distDir)).
-  pipe(browserSync.stream())
-);
+gulp.task('css', () => {
+  const processors = [cssnext({browsers: cssnextBrowsers})];
+  if (gutil.env.production) {
+    processors.push(cssnano());
+  }
+
+  return gulp.
+    src([
+      `${bowerComponents}/normalize-css/normalize.css`,
+      `${stylesheetsDir}/**/*.css`,
+    ]).
+    pipe(concat('application.css')).
+    pipe(sourcemaps.init({loadMaps: true})).
+    pipe(postcss(processors)).
+    pipe(sourcemaps.write('./')).
+    pipe(gulp.dest(distDir)).
+    pipe(browserSync.stream());
+});
 
 gulp.task('js', ['env'], () => {
   const productionWebpackConfig = Object.create(webpackConfiguration);
