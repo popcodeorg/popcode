@@ -2702,16 +2702,6 @@
         }
       }
     },
-    "gulp-cssnano": {
-      "version": "2.1.2",
-      "resolved": "https://registry.npmjs.org/gulp-cssnano/-/gulp-cssnano-2.1.2.tgz",
-      "dependencies": {
-        "object-assign": {
-          "version": "4.1.0",
-          "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.0.tgz"
-        }
-      }
-    },
     "gulp-postcss": {
       "version": "6.2.0",
       "resolved": "https://registry.npmjs.org/gulp-postcss/-/gulp-postcss-6.2.0.tgz",
