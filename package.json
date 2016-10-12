@@ -54,6 +54,7 @@
     "lodash": "^4.15.0",
     "loop-protect": "git+https://github.com/jsbin/loop-protect.git#v1.0.1",
     "moment": "^2.14.1",
+    "promise-retry": "^1.1.1",
     "qs": "^6.1.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",

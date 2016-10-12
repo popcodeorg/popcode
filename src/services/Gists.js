@@ -1,6 +1,7 @@
 import GitHub from 'github-api';
 import trim from 'lodash/trim';
 import isEmpty from 'lodash/isEmpty';
+import promiseRetry from 'promise-retry';
 const anonymousGithub = new GitHub({});
 
 export function EmptyGistError(message) {
@@ -80,7 +81,15 @@ const Gists = {
           return updateGistWithImportUrl(github, gistData);
         }
         return gistData;
-      }, notifyAndRejectApiError);
+      }).then((gistData) => promiseRetry(
+        (retry) => this.loadFromId(gistData.id, user).catch(retry),
+        {
+          retries: 5,
+          factor: 2,
+          minTimeout: 1000,
+          maxTimeout: 10000,
+        }
+      ));
   },
 
   loadFromId(gistId, user) {
