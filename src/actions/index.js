@@ -231,6 +231,7 @@ function initializeCurrentProjectFromGist(gistData) {
 
 function importProjectFromGist(projectKey, gistData) {
   const files = values(gistData.files);
+  const popcodeJson = parsePopcodeJson(files);
   const project = {
     projectKey,
     sources: {
@@ -239,7 +240,7 @@ function importProjectFromGist(projectKey, gistData) {
       javascript: map(filter(files, {language: 'JavaScript'}), 'content').
         join('\n\n'),
     },
-    enabledLibraries: [],
+    enabledLibraries: popcodeJson.enabledLibraries || [],
     updatedAt: Date.now(),
   };
 
@@ -247,6 +248,14 @@ function importProjectFromGist(projectKey, gistData) {
     type: 'PROJECT_IMPORTED',
     payload: {project},
   };
+}
+
+function parsePopcodeJson(files) {
+  const popcodeJsonFile = find(files, {filename: 'popcode.json'});
+  if (!popcodeJsonFile) {
+    return {};
+  }
+  return JSON.parse(get(popcodeJsonFile, 'content', '{}'));
 }
 
 function minimizeComponent(componentName) {
@@ -325,4 +334,5 @@ export {
   applicationErrorTriggered,
   userDismissedApplicationError,
   bootstrap,
+  importProjectFromGist,
 };
