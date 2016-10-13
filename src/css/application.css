@@ -247,20 +247,29 @@ body {
   font-weight: bold;
 }
 
-.dashboard-popContainer {
+.dashboard-spacer {
   flex: 1 0 auto;
+}
+
+.dashboard-popContainer {
+  flex: 0 1 auto;
   position: relative;
+  display: flex;
 }
 
 .dashboard-pop {
   display: none;
+  flex: 0 1 100%;
+  overflow: hidden;
 }
 
 .dashboard-pop--visible {
   display: block;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+}
+
+.dashboard-pop--visible svg {
+  max-height: 100%;
+  max-width: 100%;
 }
 
 .dashboard-links {

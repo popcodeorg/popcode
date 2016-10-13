@@ -202,10 +202,6 @@ class Dashboard extends React.Component {
   }
 
   _renderPop() {
-    if (this.props.activeSubmenu) {
-      return null;
-    }
-
     return (
       <div className="dashboard-popContainer">
         {this._renderPopSvg('neutral', 'passed')}
@@ -253,6 +249,7 @@ class Dashboard extends React.Component {
         {this._renderLoginState()}
         {this._renderMenu()}
         {this._renderSubmenu()}
+        <div className="dashboard-spacer" />
         {this._renderPop()}
         {this._renderLinks()}
       </div>
