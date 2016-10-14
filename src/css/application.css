@@ -228,7 +228,6 @@ body {
   margin: 1px 0;
   padding: 0.2rem 0.5rem;
   text-decoration: none;
-  z-index: 1;
 }
 
 .dashboard-menu-item--grid {
