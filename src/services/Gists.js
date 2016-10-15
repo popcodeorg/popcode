@@ -31,6 +31,12 @@ function createGistFromProject(project) {
       language: 'JavaScript',
     };
   }
+  if (project.enabledLibraries.length) {
+    files['popcode.json'] = {
+      content: createPopcodeJson(project),
+      language: 'JSON',
+    };
+  }
 
   return {
     description: 'Exported from Popcode.',
@@ -63,6 +69,13 @@ function updateGistWithImportUrl(github, gistData) {
   return gist.update({
     description: `${gistData.description} Click to import: ${uri.href}`,
   }).then((response) => response.data);
+}
+
+function createPopcodeJson(project) {
+  const json = {
+    enabledLibraries: project.enabledLibraries,
+  };
+  return JSON.stringify(json);
 }
 
 const Gists = {
