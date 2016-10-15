@@ -5,6 +5,7 @@ import {
   assertPassesValidation,
   assertFailsValidationWith,
 } from '../../assertions/validations';
+import assertPassesAcceptance from './assertPassesAcceptance';
 
 import html from '../../../src/validations/html';
 
@@ -129,4 +130,6 @@ describe('html', () => {
       'unexpected-close-tag'
     )
   );
+
+  assertPassesAcceptance(html, 'html');
 });

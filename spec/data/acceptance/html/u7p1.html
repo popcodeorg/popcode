@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- saved from url=(0077)http://www.webstepbook.com/supplements/labsection/lab8-potatohead/potato.html -->
+<html>
+  <head>
+    <title>Mr. Potato Head</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link href="assets/potato.css" type="text/css" rel="stylesheet">
+  </head>
+  <body>
+    <h1>Mr. Potato Head</h1>
+    <div id="potato">
+      <img id="body" src="assets/body.png">
+      <img id="arms" src="assets/arms.png">
+      <img id="ears" src="assets/ears.png">
+      <img id="eyes" src="assets/eyes.png">
+      <img id="mouth" src ="assets/mouth.png">
+      <img id="nose" src="assets/nose.png">
+      <img id="eyebrows" src="assets/eyebrows.png">
+      <img id="glasses" src="assets/glasses.png">
+      <img id="hat" src="assets/hat.png">
+      <img id="moustache" src="assets/moustache.png">
+      <img id="shoes" src="assets/shoes.png">
+    </div>
+    <script>
+    $(function() {
+      console.log('ready');
+      $('img').click(function(e) {
+        console.log($(e.target).attr('id'))
+      });
+    })
+    </script>
+  </body>
+</html>

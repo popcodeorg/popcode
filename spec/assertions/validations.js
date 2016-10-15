@@ -2,9 +2,9 @@ import {assert} from 'chai';
 import map from 'lodash/map';
 import trim from 'lodash/trim';
 
-export function assertPassesValidation(validate, source) {
+export function assertPassesValidation(validate, source, validatorArgs = []) {
   return assert.eventually.deepEqual(
-    validate(source),
+    validate(source, ...validatorArgs),
     [],
     'source passes validation'
   );
