@@ -118,6 +118,14 @@ describe('html', () => {
     )
   );
 
+  it('generates error when li is not inside ul', () =>
+    assertFailsValidationWith(
+      html,
+      htmlWithBody('<li>Orphaned List Item</li>'),
+      'invalid-tag-location'
+    )
+  );
+
   it('generates meaningful error for extra tag at end of doc', () =>
     assertFailsValidationWith(
       html,
