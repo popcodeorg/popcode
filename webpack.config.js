@@ -51,6 +51,15 @@ module.exports = {
         loader: 'imports?define=>false',
       },
       {
+        include: [
+          path.resolve(
+            __dirname,
+            'node_modules/html-inspector/html-inspector.js'
+          ),
+        ],
+        loader: 'imports?window=>{}!exports?window.HTMLInspector',
+      },
+      {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, 'node_modules/brace/worker'),
@@ -76,6 +85,7 @@ module.exports = {
     alias: {
       'github-api$': 'github-api/lib/GitHub.js',
       'github-api': 'github-api/lib',
+      'html-inspector$': 'html-inspector/html-inspector.js',
     },
     extensions: ['.js', '.jsx'],
   },
