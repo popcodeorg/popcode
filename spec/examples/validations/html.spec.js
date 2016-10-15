@@ -55,6 +55,14 @@ describe('html', () => {
     )
   );
 
+  it('generates unclosed-tag error for missing closing p tag', () =>
+    assertFailsValidationWith(
+      html,
+      htmlWithBody('<p>'),
+      'mismatched-close-tag'
+    )
+  );
+
   it('generates unterminated-close-tag error for unfinished closing tag', () =>
     assertFailsValidationWith(
       html,
