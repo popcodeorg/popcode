@@ -6,6 +6,7 @@ import {
   assertFailsValidationWith,
   assertFailsValidationAtLine,
 } from '../../assertions/validations';
+import assertPassesAcceptance from './assertPassesAcceptance';
 
 import css from '../../../src/validations/css';
 
@@ -120,5 +121,7 @@ describe('css', function() {
       assertFailsValidationAtLine(css, stylesheet, 1)
     );
   });
+
+  assertPassesAcceptance(css, 'css');
 });
 

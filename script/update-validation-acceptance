@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const path = require('path');
+
+const output = {};
+
+['html', 'css', 'javascript'].forEach((language) => {
+  const dir = `./spec/data/acceptance/${language}`;
+
+  output[language] = [];
+
+  fs.readdirSync(dir).forEach((file) => {
+    output[language].push(
+      fs.readFileSync(path.join(dir, file), {encoding: 'utf8'})
+    );
+  });
+});
+
+fs.writeFile(
+  './spec/examples/validations/acceptance.json',
+  JSON.stringify(output, null, 2)
+);
