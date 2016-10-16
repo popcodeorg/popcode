@@ -1,1 +1,5 @@
-*.js text eol=lf
+* text eol=lf
+
+*.gif binary
+*.png binary
+*.jpg binary
