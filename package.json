@@ -33,6 +33,11 @@
       "name": "Carol Chau",
       "email": "carol.chau@macaulay.cuny.edu",
       "url": "https://github.com/carolchau"
+    },
+    {
+      "name": "Jesse Wang",
+      "email": "jesse.wang19@gmail.com",
+      "url": "https://github.com/jwang1919"
     }
   ],
   "keywords": "code editor education learning",
@@ -140,5 +145,8 @@
     "webpack": "^2.1.0-beta.25",
     "webpack-dev-middleware": "^1.8.2",
     "webpack-hot-middleware": "^2.12.2"
+  },
+  "optionalDependencies": {
+    "fsevents": "*"
   }
 }
