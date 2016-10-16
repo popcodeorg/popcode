@@ -2,4 +2,3 @@ static/compiled
 node_modules
 npm-debug.log
 bower_components
-*.idea
