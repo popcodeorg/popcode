@@ -1,7 +1,6 @@
 import React from 'react';
 import Isvg from 'react-inlinesvg';
 import i18n from 'i18next-client';
-import bindAll from 'lodash/bindAll';
 import partial from 'lodash/partial';
 import classnames from 'classnames';
 import ProjectList from './ProjectList';
@@ -9,11 +8,6 @@ import LibraryPicker from './LibraryPicker';
 import config from '../config';
 
 class Dashboard extends React.Component {
-  constructor() {
-    super();
-    bindAll(this, '_handleNewProject');
-  }
-
   _renderLoginState() {
     const currentUser = this.props.currentUser;
 
@@ -73,7 +67,7 @@ class Dashboard extends React.Component {
       newProjectButton = (
         <div
           className="dashboard-menu-item dashboard-menu-item--grid"
-          onClick={this._handleNewProject}
+          onClick={this.props.onNewProject}
         >
           {i18n.t('dashboard.menu.new-project')}
         </div>
@@ -109,10 +103,6 @@ class Dashboard extends React.Component {
         </a>
       </div>
     );
-  }
-
-  _handleNewProject() {
-    this.props.onNewProject();
   }
 
   _renderSubmenu() {
