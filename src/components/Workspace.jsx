@@ -6,6 +6,8 @@ import includes from 'lodash/includes';
 import partial from 'lodash/partial';
 import sortBy from 'lodash/sortBy';
 import map from 'lodash/map';
+import isError from 'lodash/isError';
+import isString from 'lodash/isString';
 import i18n from 'i18next-client';
 import qs from 'qs';
 import Bugsnag from '../util/Bugsnag';
@@ -259,7 +261,11 @@ class Workspace extends React.Component {
           break;
         default:
           this.props.dispatch(applicationErrorTriggered('auth-error'));
-          Bugsnag.notifyException(e, e.code);
+          if (isError(e)) {
+            Bugsnag.notifyException(e, e.code);
+          } else if (isString(e)) {
+            Bugsnag.notifyException(new Error(e));
+          }
           break;
       }
     });
