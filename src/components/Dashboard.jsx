@@ -134,7 +134,7 @@ class Dashboard extends React.Component {
       }
     }
 
-    const newWindow = open('about:blank', 'gist');
+    const newWindow = open('about:blank', '_blank');
     newWindow.location = `data:text/html;base64,${spinnerPage}`;
 
     Gists.createFromProject(this.props.currentProject, this.props.currentUser).
