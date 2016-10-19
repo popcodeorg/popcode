@@ -8,19 +8,19 @@ const RADIAL_GRADIENT_EXPR =
 
 const FILTER_VALUE_EXPR =
     new RegExp([
-      'blur\\(|' +
-      'brightness\\(|' +
-      'contrast\\(|' +
-      'drop-shadow\\(|' +
-      'grayscale\\(|' +
-      'hue-rotate\\(|' +
-      'invert\\(|' +
-      'opacity\\(|' +
-      'saturate\\(' +
-      'sepia\\(|' +
-      'inherit|' +
-      'initial|' +
-      'unset'].join(''));
+      'blur\\(',
+      'brightness\\(',
+      'contrast\\(',
+      'drop-shadow\\(',
+      'grayscale\\(',
+      'hue-rotate\\(',
+      'invert\\(',
+      'opacity\\(',
+      'saturate\\(',
+      'sepia\\(',
+      'inherit',
+      'initial',
+      'unset'].join('|'));
 
 function isIncorrectlyRejectedValue(value) {
   return isIncorrectlyRejectedRadialGradientValue(value) ||

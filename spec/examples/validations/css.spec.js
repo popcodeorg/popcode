@@ -30,12 +30,28 @@ describe('css', function() {
     `)
   );
 
+  it('allows valid filter', () =>
+      assertPassesValidation(css, `
+      img {
+        filter: grayscale(100%);
+      }
+    `)
+  );
+
   it('fails with bogus flex value', () =>
     assertFailsValidationWith(
       css,
       '.flex-item { flex: bogus; }',
       'invalid-value'
     )
+  );
+
+  it('fails with bogus filter value', () =>
+      assertFailsValidationWith(
+          css,
+          'img { filter: whitescale(100%); }',
+          'invalid-value'
+      )
   );
 
   it('gives a useful error when there is no opening curly brace', () =>
