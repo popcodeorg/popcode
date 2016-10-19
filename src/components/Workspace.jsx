@@ -29,6 +29,7 @@ import {
   editorFocusedRequestedLine,
   applicationErrorTriggered,
   userDismissedApplicationError,
+  exportingGist,
   bootstrap,
 } from '../actions';
 
@@ -55,6 +56,7 @@ function mapStateToProps(state) {
     isUserTyping: state.ui.getIn(['editors', 'typing']),
     currentUser: state.user.toJS(),
     ui: state.ui.toJS(),
+    clients: state.clients.toJS(),
   };
 }
 
@@ -80,7 +82,8 @@ class Workspace extends React.Component {
       '_handleRequestedLineFocused',
       '_handleApplicationErrorDismissed',
       '_handleEmptyGist',
-      '_handleGistExportError'
+      '_handleGistExportError',
+      '_handleExportingGist',
     );
   }
 
@@ -291,6 +294,10 @@ class Workspace extends React.Component {
     this.props.dispatch(applicationErrorTriggered('gist-export-error'));
   }
 
+  _handleExportingGist(gistWillExport) {
+    this.props.dispatch(exportingGist(gistWillExport));
+  }
+
   _renderDashboard() {
     if (!this.props.ui.dashboard.isOpen) {
       return null;
@@ -303,8 +310,10 @@ class Workspace extends React.Component {
           allProjects={this.props.allProjects}
           currentProject={this.props.currentProject}
           currentUser={this.props.currentUser}
+          gistExportInProgress={this.props.clients.gists.exportInProgress}
           validationState={this._getOverallValidationState()}
           onEmptyGist={this._handleEmptyGist}
+          onExportingGist={this._handleExportingGist}
           onGistExportError={this._handleGistExportError}
           onLibraryToggled={this._handleLibraryToggled}
           onLogOut={this._handleLogOut}
@@ -361,6 +370,7 @@ class Workspace extends React.Component {
 
 Workspace.propTypes = {
   allProjects: React.PropTypes.array,
+  clients: React.PropTypes.object,
   currentProject: React.PropTypes.object,
   currentUser: React.PropTypes.object.isRequired,
   dispatch: React.PropTypes.func.isRequired,
