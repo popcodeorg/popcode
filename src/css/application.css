@@ -238,8 +238,21 @@ body {
   text-align: center;
 }
 
+.dashboard-menu-item--spinner {
+  color: transparent;
+  background-image: url('/images/spinner.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: not-allowed;
+}
+
 .dashboard-menu-item:hover, .dashboard-menu-item--active {
   background-color: var(--color-gray);
+}
+
+.dashboard-menu-item--spinner:hover {
+  background-color: white;
 }
 
 .dashboard-menu-item--active {

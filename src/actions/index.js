@@ -16,6 +16,7 @@ import {
   applicationErrorTriggered,
   userDismissedApplicationError,
 } from './ui';
+import {exportingGist} from './clients';
 import {isPristineProject} from '../util/projectUtils';
 
 function generateProjectKey() {
@@ -333,6 +334,7 @@ export {
   editorFocusedRequestedLine,
   applicationErrorTriggered,
   userDismissedApplicationError,
+  exportingGist,
   bootstrap,
   importProjectFromGist,
 };
