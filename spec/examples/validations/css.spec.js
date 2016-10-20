@@ -10,7 +10,7 @@ import assertPassesAcceptance from './assertPassesAcceptance';
 
 import css from '../../../src/validations/css';
 
-describe('css', function () {
+describe('css', function() {
   this.timeout(10000); // eslint-disable-line no-invalid-this
 
   it('allows valid flexbox', () =>
