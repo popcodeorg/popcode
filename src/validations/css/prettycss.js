@@ -59,9 +59,8 @@ const errorMap = {
     const previousLine = lines[lineNumber - 2];
     const thisLine = lines[lineNumber - 1];
 
-    if (
-      startsWith(trim(thisLine), error.token.content) && !endsWith(trim(previousLine), ';')
-    ) {
+    if (startsWith(trim(thisLine), error.token.content) &&
+          !endsWith(trim(previousLine), ';')) {
       return {
         reason: 'missing-semicolon',
         row: lineNumber - 2,
