@@ -10,7 +10,7 @@ import assertPassesAcceptance from './assertPassesAcceptance';
 
 import css from '../../../src/validations/css';
 
-describe('css', function() {
+describe('css', function () {
   this.timeout(10000); // eslint-disable-line no-invalid-this
 
   it('allows valid flexbox', () =>
@@ -31,7 +31,7 @@ describe('css', function() {
   );
 
   it('allows valid filter', () =>
-      assertPassesValidation(css, `
+    assertPassesValidation(css, `
       img {
         filter: grayscale(100%);
       }
@@ -47,11 +47,11 @@ describe('css', function() {
   );
 
   it('fails with bogus filter value', () =>
-      assertFailsValidationWith(
-          css,
-          'img { filter: whitescale(100%); }',
-          'invalid-value'
-      )
+    assertFailsValidationWith(
+      css,
+      'img { filter: whitescale(100%); }',
+      'invalid-value'
+    )
   );
 
   it('gives a useful error when there is no opening curly brace', () =>

@@ -7,24 +7,24 @@ const RADIAL_GRADIENT_EXPR =
   /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/;
 
 const FILTER_VALUE_EXPR =
-    new RegExp([
-      'blur\\(',
-      'brightness\\(',
-      'contrast\\(',
-      'drop-shadow\\(',
-      'grayscale\\(',
-      'hue-rotate\\(',
-      'invert\\(',
-      'opacity\\(',
-      'saturate\\(',
-      'sepia\\(',
-      'inherit',
-      'initial',
-      'unset'].join('|'));
+  new RegExp([
+    'blur\\(',
+    'brightness\\(',
+    'contrast\\(',
+    'drop-shadow\\(',
+    'grayscale\\(',
+    'hue-rotate\\(',
+    'invert\\(',
+    'opacity\\(',
+    'saturate\\(',
+    'sepia\\(',
+    'inherit',
+    'initial',
+    'unset'].join('|'));
 
 function isIncorrectlyRejectedValue(value) {
   return isIncorrectlyRejectedRadialGradientValue(value) ||
-          isIncorrectlyRejectedFilterValue(value);
+    isIncorrectlyRejectedFilterValue(value);
 }
 
 function isIncorrectlyRejectedRadialGradientValue(value) {
@@ -60,8 +60,7 @@ const errorMap = {
     const thisLine = lines[lineNumber - 1];
 
     if (
-      startsWith(trim(thisLine), error.token.content) &&
-        !endsWith(trim(previousLine), ';')
+      startsWith(trim(thisLine), error.token.content) && !endsWith(trim(previousLine), ';')
     ) {
       return {
         reason: 'missing-semicolon',
