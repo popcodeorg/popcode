@@ -5,8 +5,31 @@ import endsWith from 'lodash/endsWith';
 
 const RADIAL_GRADIENT_EXPR =
   /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/;
+
+const FILTER_VALUE_EXPR =
+  new RegExp([
+    '^blur\\(',
+    '^brightness\\(',
+    '^contrast\\(',
+    '^drop-shadow\\(',
+    '^grayscale\\(',
+    '^hue-rotate\\(',
+    '^invert\\(',
+    '^opacity\\(',
+    '^saturate\\(',
+    '^sepia\\(',
+    '^inherit$'].join('|'));
+
+function isIncorrectlyRejectedValue(value) {
+  return isIncorrectlyRejectedRadialGradientValue(value) ||
+    isIncorrectlyRejectedFilterValue(value);
+}
+
 function isIncorrectlyRejectedRadialGradientValue(value) {
   return RADIAL_GRADIENT_EXPR.test(value);
+}
+function isIncorrectlyRejectedFilterValue(value) {
+  return FILTER_VALUE_EXPR.test(value);
 }
 
 const errorMap = {
@@ -59,7 +82,7 @@ const errorMap = {
   'invalid-token': () => ({reason: 'invalid-token'}),
 
   'invalid-value': (error) => {
-    if (isIncorrectlyRejectedRadialGradientValue(error.token.content)) {
+    if (isIncorrectlyRejectedValue(error.token.content)) {
       return null;
     }
 
