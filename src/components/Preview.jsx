@@ -6,6 +6,7 @@ import classnames from 'classnames';
 
 import PreviewFrame from './PreviewFrame';
 import generatePreview from '../util/generatePreview';
+import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 
 class Preview extends React.Component {
   constructor() {
@@ -44,7 +45,8 @@ class Preview extends React.Component {
     const uint8array = new TextEncoder('utf-8').encode(doc);
     const base64encoded = base64.fromByteArray(uint8array);
     const url = `data:text/html;charset=utf-8;base64,${base64encoded}`;
-    window.open(url, 'preview');
+
+    openWindowWithWorkaroundForChromeClosingBug(url);
   }
 
   render() {

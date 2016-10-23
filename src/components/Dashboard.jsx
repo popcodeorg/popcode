@@ -12,6 +12,7 @@ import Gists from '../services/Gists';
 import {EmptyGistError} from '../services/Gists';
 import ProjectList from './ProjectList';
 import LibraryPicker from './LibraryPicker';
+import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 import config from '../config';
 
 const spinnerPage = base64.fromByteArray(
@@ -144,8 +145,9 @@ class Dashboard extends React.Component {
       }
     }
 
-    const newWindow = open('about:blank', '_blank');
-    newWindow.location.href = `data:text/html;base64,${spinnerPage}`;
+    const newWindow = openWindowWithWorkaroundForChromeClosingBug(
+      `data:text/html;base64,${spinnerPage}`
+    );
 
     const gistWillExport = Gists.createFromProject(
       this.props.currentProject,
