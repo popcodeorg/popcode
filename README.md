@@ -1,9 +1,9 @@
 # Popcode #
 
 [Popcode](https://popcode.org) is a simple HTML/CSS/JavaScript editing
-environment for use in the classroom. It's a lot like JSBin, JSFiddle, or
-Codepen, but it focuses on giving specific, immediate, human-friendly feedback
-when the code contains errors.
+environment for use in the classroom. It's a lot like [JSBin](http://jsbin.com), 
+[JSFiddle](https://jsfiddle.net), or [CodePen](https://codepen.io), but it focuses on 
+giving specific, immediate, human-friendly feedback when the code contains errors.
 
 [![](https://cl.ly/1W1e1h3w073u/popscreens.png)](https://popcode.org)
 
@@ -50,7 +50,7 @@ process.
 
 ### Feature roadmap ###
 
-Check out the [Trello board](https://trello.com/b/ONaFg6wh/popcode).
+Check out the [Project Board](https://github.com/popcodeorg/popcode/projects/2).
 
 ## Technical details ##
 
@@ -160,4 +160,4 @@ src="https://cloud.githubusercontent.com/assets/14214/19059115/428a80f4-89ab-11e
 
 ## Contact ##
 
-Feel free to email me at mat.a.brown@gmail.com if you have any questions.
+Feel free to email me at [mat.a.brown@gmail.com](mailto:mat.a.brown@gmail.com) if you have any questions.
