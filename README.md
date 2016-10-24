@@ -1,7 +1,7 @@
 # Popcode #
 
 [Popcode](https://popcode.org) is a simple HTML/CSS/JavaScript editing
-environment for use in the classroom. It's a lot like [JSBin](http://http://jsbin.com), 
+environment for use in the classroom. It's a lot like [JSBin](http://jsbin.com), 
 [JSFiddle](https://jsfiddle.net), or [CodePen](https://codepen.io), but it focuses on 
 giving specific, immediate, human-friendly feedback when the code contains errors.
 
