@@ -7,10 +7,17 @@ import normalizeError from '../util/normalizeError';
 import {sourceDelimiter} from '../util/generatePreview';
 import loopProtect from 'loop-protect';
 
+const sandboxOptions = [
+  'allow-forms',
+  'allow-popups',
+  'allow-scripts',
+  'allow-top-navigation',
+].join(' ');
+
 class PreviewFrame extends React.Component {
   constructor() {
     super();
-    bindAll(this, '_onMessage', '_saveFrame', '_handleInfiniteLoop');
+    bindAll(this, '_onMessage', '_handleInfiniteLoop');
   }
 
   componentWillMount() {
@@ -22,13 +29,13 @@ class PreviewFrame extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.src !== this.props.src) {
-      this._writeFrameContents(nextProps.src);
+    if (this.shouldComponentUpdate(nextProps)) {
+      this.props.onFrameWillRefresh();
     }
   }
 
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(nextProps) {
+    return nextProps.src !== this.props.src;
   }
 
   componentWillUnmount() {
@@ -56,10 +63,6 @@ class PreviewFrame extends React.Component {
   }
 
   _runtimeErrorLineOffset() {
-    if (Bowser.safari || Bowser.chrome) {
-      return 2;
-    }
-
     const firstSourceLine = this.props.src.
       split('\n').indexOf(sourceDelimiter) + 2;
 
@@ -86,12 +89,17 @@ class PreviewFrame extends React.Component {
     const error = new ErrorConstructor(data.error.message);
 
     const normalizedError = normalizeError(error);
+    let line = data.error.line - this._runtimeErrorLineOffset();
+
+    if (Bowser.safari) {
+      line = 1;
+    }
 
     this.props.onRuntimeError({
       reason: normalizedError.type,
       text: normalizedError.message,
       raw: normalizedError.message,
-      row: data.error.line - this._runtimeErrorLineOffset() - 1,
+      row: line - 1,
       column: data.error.column,
       type: 'error',
     });
@@ -113,7 +121,8 @@ class PreviewFrame extends React.Component {
     return (
       <iframe
         className="preview-frame"
-        ref={this._saveFrame}
+        sandbox={sandboxOptions}
+        srcDoc={this.props.src}
       />
     );
   }
