@@ -1,11 +1,9 @@
 import React from 'react';
 import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
-import noop from 'lodash/noop';
 import i18n from 'i18next-client';
 import normalizeError from '../util/normalizeError';
 import {sourceDelimiter} from '../util/generatePreview';
-import loopProtect from 'loop-protect';
 
 const sandboxOptions = [
   'allow-forms',
@@ -18,10 +16,6 @@ class PreviewFrame extends React.Component {
   constructor() {
     super();
     bindAll(this, '_onMessage', '_handleInfiniteLoop');
-  }
-
-  componentWillMount() {
-    loopProtect.hit = this._handleInfiniteLoop;
   }
 
   componentDidMount() {
@@ -40,26 +34,11 @@ class PreviewFrame extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('message', this._onMessage);
-    loopProtect.hit = noop;
   }
 
   _saveFrame(frame) {
     this.frame = frame;
     this._writeFrameContents(this.props.src);
-  }
-
-  _writeFrameContents(src) {
-    if (!this.frame) {
-      return;
-    }
-
-    const frameDocument = this.frame.contentDocument;
-    frameDocument.open();
-    this.frame.contentWindow.loopProtect = loopProtect;
-    frameDocument.write(src);
-    frameDocument.close();
-
-    this.props.onFrameWillRefresh();
   }
 
   _runtimeErrorLineOffset() {
@@ -78,6 +57,11 @@ class PreviewFrame extends React.Component {
     try {
       data = JSON.parse(message.data);
     } catch (_e) {
+      return;
+    }
+
+    if (data.type === 'org.popcode.infinite-loop') {
+      this._handleInfiniteLoop(data.line);
       return;
     }
 

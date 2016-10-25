@@ -37,6 +37,15 @@ const errorHandlerScript = `(${(() => {
       },
     }), '*');
   };
+
+  if ('loopProtect' in window) {
+    window.loopProtect.hit = function(line) {
+      window.parent.postMessage(JSON.stringify({
+        type: 'org.popcode.infinite-loop',
+        line,
+      }), '*');
+    };
+  }
 }).toString()}());`;
 
 const alertAndPromptReplacementScript = `(${(() => {
@@ -69,7 +78,9 @@ class PreviewGenerator {
     this.previewBody = this._ensureElement('body');
 
     this.previewText = (this.previewBody.innerText || '').trim();
-    this._attachLibraries(options.nonBlockingAlertsAndPrompts);
+    this._attachLibraries(
+      pick(options, ['nonBlockingAlertsAndPrompts', 'breakLoops'])
+    );
 
     if (options.targetBaseTop) {
       this._addBase();
@@ -150,7 +161,7 @@ class PreviewGenerator {
     this.previewBody.appendChild(scriptTag);
   }
 
-  _attachLibraries(includePreviewFrame = false) {
+  _attachLibraries({nonBlockingAlertsAndPrompts = false, breakLoops = false}) {
     this._project.enabledLibraries.forEach((libraryKey) => {
       if (!(libraryKey in libraries)) {
         return;
@@ -160,11 +171,12 @@ class PreviewGenerator {
       this._attachLibrary(library);
     });
 
-    if (includePreviewFrame) {
-      Object.keys(previewFrameLibraries).forEach((libraryKey) => {
-        const library = previewFrameLibraries[libraryKey];
-        this._attachLibrary(library);
-      });
+    if (nonBlockingAlertsAndPrompts) {
+      this._attachLibrary(previewFrameLibraries.sweetalert);
+    }
+
+    if (breakLoops) {
+      this._attachLibrary(previewFrameLibraries.loopProtect);
     }
   }
 
