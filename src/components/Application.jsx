@@ -23,6 +23,7 @@ class Application extends React.Component {
   _isUnsupportedBrowser() {
     return bowser.isUnsupportedBrowser(
       supportedBrowsers,
+      true,
       window.navigator.userAgent
     );
   }
