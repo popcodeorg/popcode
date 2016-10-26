@@ -33,7 +33,7 @@ class Preview extends React.Component {
         breakLoops: isLivePreview,
         nonBlockingAlertsAndPrompts: isLivePreview,
       }
-    ).documentElement.outerHTML;
+    );
   }
 
   _handlePopOutClick() {

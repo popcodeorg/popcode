@@ -211,7 +211,9 @@ class PreviewGenerator {
 }
 
 function generatePreview(project, options) {
-  return new PreviewGenerator(project, options).previewDocument;
+  const previewDocument =
+    new PreviewGenerator(project, options).previewDocument;
+  return `<!DOCTYPE html> ${previewDocument.documentElement.outerHTML}`;
 }
 
 function generateTextPreview(project) {
