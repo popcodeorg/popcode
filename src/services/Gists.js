@@ -108,7 +108,8 @@ const Gists = {
   loadFromId(gistId, user) {
     const github = clientForUser(user);
     const gist = github.getGist(gistId);
-    return gist.read().then((response) => response.data);
+    return promiseRetry((retry) => gist.read().catch(retry), {retries: 3}).
+      then((response) => response.data);
   },
 };
 
