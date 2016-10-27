@@ -1,37 +1,13 @@
 import React from 'react';
-import fs from 'fs';
-import path from 'path';
 import Isvg from 'react-inlinesvg';
-import base64 from 'base64-js';
 import i18n from 'i18next-client';
-import bindAll from 'lodash/bindAll';
 import partial from 'lodash/partial';
 import classnames from 'classnames';
-import {TextEncoder} from 'text-encoding';
-import Gists from '../services/Gists';
-import {EmptyGistError} from '../services/Gists';
 import ProjectList from './ProjectList';
 import LibraryPicker from './LibraryPicker';
-import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 import config from '../config';
 
-const spinnerPage = base64.fromByteArray(
-  new TextEncoder('utf-8').encode(
-    fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../templates/github-export.html'
-      )
-    )
-  )
-);
-
 class Dashboard extends React.Component {
-  constructor() {
-    super();
-    bindAll(this, '_handleNewProject', '_handleExportGist');
-  }
-
   _renderLoginState() {
     const currentUser = this.props.currentUser;
 
@@ -91,7 +67,7 @@ class Dashboard extends React.Component {
       newProjectButton = (
         <div
           className="dashboard-menu-item dashboard-menu-item--grid"
-          onClick={this._handleNewProject}
+          onClick={this.props.onNewProject}
         >
           {i18n.t('dashboard.menu.new-project')}
         </div>
@@ -114,7 +90,7 @@ class Dashboard extends React.Component {
               {'dashboard-menu-item--spinner': this.props.gistExportInProgress}
             )
           }
-          onClick={this._handleExportGist}
+          onClick={this.props.onExportGist}
         >
           {i18n.t('dashboard.menu.export-gist')}
         </div>
@@ -127,46 +103,6 @@ class Dashboard extends React.Component {
         </a>
       </div>
     );
-  }
-
-  _handleNewProject() {
-    this.props.onNewProject();
-  }
-
-  _handleExportGist() {
-    if (this.props.gistExportInProgress) {
-      return;
-    }
-
-    if (!this.props.currentUser.authenticated) {
-      // eslint-disable-next-line no-alert
-      if (!confirm(i18n.t('dashboard.anonymous-gist-export'))) {
-        return;
-      }
-    }
-
-    const newWindow = openWindowWithWorkaroundForChromeClosingBug(
-      `data:text/html;base64,${spinnerPage}`
-    );
-
-    const gistWillExport = Gists.createFromProject(
-      this.props.currentProject,
-      this.props.currentUser
-    );
-    this.props.onExportingGist(gistWillExport);
-
-    gistWillExport.then((response) => {
-      newWindow.location = response.html_url;
-    }, (error) => {
-      if (error instanceof EmptyGistError) {
-        this.props.onEmptyGist();
-        newWindow.close();
-        return Promise.resolve();
-      }
-      this.props.onGistExportError();
-      newWindow.close();
-      return Promise.reject(error);
-    });
   }
 
   _renderSubmenu() {
@@ -281,9 +217,7 @@ Dashboard.propTypes = {
   currentUser: React.PropTypes.object.isRequired,
   gistExportInProgress: React.PropTypes.bool.isRequired,
   validationState: React.PropTypes.string.isRequired,
-  onEmptyGist: React.PropTypes.func.isRequired,
-  onExportingGist: React.PropTypes.func.isRequired,
-  onGistExportError: React.PropTypes.func.isRequired,
+  onExportGist: React.PropTypes.func.isRequired,
   onLibraryToggled: React.PropTypes.func.isRequired,
   onLogOut: React.PropTypes.func.isRequired,
   onNewProject: React.PropTypes.func.isRequired,

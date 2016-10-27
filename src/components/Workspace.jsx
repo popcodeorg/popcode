@@ -10,8 +10,15 @@ import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import i18n from 'i18next-client';
 import qs from 'qs';
+import fs from 'fs';
+import path from 'path';
+import base64 from 'base64-js';
+import {TextEncoder} from 'text-encoding';
 import Bugsnag from '../util/Bugsnag';
 import appFirebase from '../services/appFirebase';
+import Gists from '../services/Gists';
+import {EmptyGistError} from '../services/Gists';
+import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 
 import {
   addRuntimeError,
@@ -41,6 +48,17 @@ import Output from './Output';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 import ApplicationErrors from './ApplicationErrors';
+
+const spinnerPage = base64.fromByteArray(
+  new TextEncoder('utf-8').encode(
+    fs.readFileSync(
+      path.join(
+        __dirname,
+        '../../templates/github-export.html'
+      )
+    )
+  )
+);
 
 function mapStateToProps(state) {
   const projects = sortBy(
@@ -81,9 +99,7 @@ class Workspace extends React.Component {
       '_handleToggleDashboard',
       '_handleRequestedLineFocused',
       '_handleApplicationErrorDismissed',
-      '_handleEmptyGist',
-      '_handleGistExportError',
-      '_handleExportingGist',
+      '_handleExportGist'
     );
   }
 
@@ -108,7 +124,7 @@ class Workspace extends React.Component {
   _confirmUnload(event) {
     if (!this.props.currentUser.authenticated) {
       if (!isPristineProject(this.props.currentProject)) {
-        event.returnValue = i18n.t('workspace.confirm-unload');
+        event.returnValue = i18n.t('workspace.confirmations.unload-unsaved');
       }
     }
   }
@@ -286,16 +302,50 @@ class Workspace extends React.Component {
     this.props.dispatch(editorFocusedRequestedLine());
   }
 
-  _handleEmptyGist() {
-    this.props.dispatch(applicationErrorTriggered('empty-gist'));
-  }
+  _handleExportGist() {
+    if (this.props.clients.gists.exportInProgress) {
+      return;
+    }
 
-  _handleGistExportError() {
-    this.props.dispatch(applicationErrorTriggered('gist-export-error'));
-  }
+    if (!this.props.currentUser.authenticated) {
+      // eslint-disable-next-line no-alert
+      if (!confirm(i18n.t('workspace.confirmations.anonymous-gist-export'))) {
+        return;
+      }
+    }
 
-  _handleExportingGist(gistWillExport) {
+    const newWindow = openWindowWithWorkaroundForChromeClosingBug(
+      `data:text/html;base64,${spinnerPage}`
+    );
+
+    const gistWillExport = Gists.createFromProject(
+      this.props.currentProject,
+      this.props.currentUser
+    );
     this.props.dispatch(exportingGist(gistWillExport));
+
+    gistWillExport.then((response) => {
+      if (newWindow.closed) {
+        this.props.dispatch(
+          applicationErrorTriggered('gist-export-window-closed')
+        );
+      } else {
+        newWindow.location.href = response.html_url;
+      }
+    }, (error) => {
+      if (error instanceof EmptyGistError) {
+        this.props.dispatch(applicationErrorTriggered('empty-gist'));
+        if (!newWindow.closed) {
+          newWindow.close();
+        }
+        return Promise.resolve();
+      }
+      this.props.dispatch(applicationErrorTriggered('gist-export-error'));
+      if (!newWindow.closed) {
+        newWindow.close();
+      }
+      return Promise.reject(error);
+    });
   }
 
   _renderDashboard() {
@@ -312,9 +362,7 @@ class Workspace extends React.Component {
           currentUser={this.props.currentUser}
           gistExportInProgress={this.props.clients.gists.exportInProgress}
           validationState={this._getOverallValidationState()}
-          onEmptyGist={this._handleEmptyGist}
-          onExportingGist={this._handleExportingGist}
-          onGistExportError={this._handleGistExportError}
+          onExportGist={this._handleExportGist}
           onLibraryToggled={this._handleLibraryToggled}
           onLogOut={this._handleLogOut}
           onNewProject={this._handleNewProject}

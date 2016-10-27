@@ -11,8 +11,7 @@
       "libraries": "Libraries",
       "export-gist": "Export Gist",
       "send-feedback": "Send Feedback"
-    },
-    "anonymous-gist-export": "Are you sure you want to export this gist anonymously? If you sign in before exporting, the gist will be added to your GitHub account."
+    }
   },
   "editors": {
     "helpText": "Type in your $t(languages.__language__) code here."
@@ -26,6 +25,7 @@
     "auth-error": "Something went wrong trying to sign in. Please try again!",
     "empty-gist": "You need some code in your project to export a gist!",
     "gist-export-error": "Something went wrong trying to create that gist. Please try again.",
+    "gist-export-window-closed": "Looks like you closed your gist tab before it finished exporting. Please try again.",
     "gist-import-not-found": "Looks like that gist doesn’t exist. Check the URL and try again."
   },
   "languages": {
@@ -34,7 +34,10 @@
     "javascript": "JavaScript"
   },
   "workspace": {
-    "confirm-unload": "If you leave the page, you will lose your work. To save your work, you must log in using your GitHub account.",
+    "confirmations": {
+      "unload-unsaved": "If you leave the page, you will lose your work. To save your work, you must log in using your GitHub account.",
+      "anonymous-gist-export": "Are you sure you want to export this gist anonymously? If you sign in before exporting, the gist will be added to your GitHub account."
+    },
     "components": {
       "editor": {
         "html": "HTML",
