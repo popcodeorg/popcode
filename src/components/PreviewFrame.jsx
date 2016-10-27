@@ -102,11 +102,19 @@ class PreviewFrame extends React.Component {
   }
 
   render() {
+    let srcProps;
+
+    if (this.props.src) {
+      srcProps = {srcDoc: this.props.src};
+    } else {
+      srcProps = {src: 'about:blank'};
+    }
+
     return (
       <iframe
         className="preview-frame"
         sandbox={sandboxOptions}
-        srcDoc={this.props.src}
+        {...srcProps}
       />
     );
   }
