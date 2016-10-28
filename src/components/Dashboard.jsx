@@ -179,7 +179,7 @@ class Dashboard extends React.Component {
         >&#xf099;</a>
         <a
           className="dashboard-links-link fontawesome"
-          href="https://join-popcode-slack.herokuapp.com/"
+          href="https://slack.popcode.org/"
           target="_blank"
         >&#xf198;</a>
       </div>
