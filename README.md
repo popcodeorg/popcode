@@ -131,6 +131,7 @@ for all the sordid details.
 * [Vaibhav Verma](https://github.com/v)
 * [Alex Pelan](https://github.com/alexpelan)
 * [Jesse Wang](https://github.com/jwang1919)
+* [Carol Chau](https://github.com/carolchau)
 * [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
 * Logo design, "Pop" concept, and UI by the team at
   [http://redpeakgroup.com](Red Peak): Andrew Haug, Aya Kawabata, Jieun Lee,
