@@ -3,6 +3,7 @@ import find from 'lodash/find';
 import filter from 'lodash/filter';
 import values from 'lodash/values';
 import map from 'lodash/map';
+import isFunction from 'lodash/isFunction';
 import FirebasePersistor from '../persistors/FirebasePersistor';
 import Gists from '../services/Gists';
 import appFirebase from '../services/appFirebase';
@@ -288,6 +289,10 @@ function bootstrap({gistId} = {gistId: null}) {
         if (authData === null) {
           dispatch(logOut());
         } else {
+          if (isFunction(get(window, 'console.log'))) {
+            // eslint-disable-next-line no-console
+            console.log('logged in with user ID', authData.uid);
+          }
           dispatch(logIn(authData));
         }
         resolve();
