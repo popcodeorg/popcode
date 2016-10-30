@@ -4,6 +4,23 @@ import isEmpty from 'lodash/isEmpty';
 import promiseRetry from 'promise-retry';
 const anonymousGithub = new GitHub({});
 
+function performWithRetries(perform, options = {}) {
+  return promiseRetry(
+    (retry) => perform().catch((error) => {
+      if (error.message === 'Network Error') {
+        return retry(error);
+      }
+      return Promise.reject(error);
+    }),
+    Object.assign({
+      retries: 5,
+      factor: 2,
+      minTimeout: 1000,
+      maxTimeout: 10000,
+    }, options)
+  );
+}
+
 export function EmptyGistError(message) {
   this.name = 'EmptyGistError';
   this.message = message;
@@ -66,9 +83,9 @@ function updateGistWithImportUrl(github, gistData) {
   uri.setAttribute('href', '/');
   uri.search = `gist=${gistData.id}`;
 
-  return gist.update({
-    description: `${gistData.description} Click to import: ${uri.href}`,
-  }).then((response) => response.data);
+  const description = `${gistData.description} Click to import: ${uri.href}`;
+  return performWithRetries(() => gist.update({description})).
+    then((response) => response.data);
 }
 
 function createPopcodeJson(project) {
@@ -87,28 +104,20 @@ const Gists = {
       return Promise.reject(new EmptyGistError());
     }
 
-    return github.getGist().create(gist).
+    return performWithRetries(() => github.getGist().create(gist)).
       then((response) => {
         const gistData = response.data;
         if (canUpdateGist(user)) {
           return updateGistWithImportUrl(github, gistData);
         }
         return gistData;
-      }).then((gistData) => promiseRetry(
-        (retry) => this.loadFromId(gistData.id, user).catch(retry),
-        {
-          retries: 5,
-          factor: 2,
-          minTimeout: 1000,
-          maxTimeout: 10000,
-        }
-      ));
+      });
   },
 
   loadFromId(gistId, user) {
     const github = clientForUser(user);
     const gist = github.getGist(gistId);
-    return promiseRetry((retry) => gist.read().catch(retry), {retries: 3}).
+    return performWithRetries(() => gist.read(), {retries: 3}).
       then((response) => response.data);
   },
 };
