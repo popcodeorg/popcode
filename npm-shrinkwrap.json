@@ -12,6 +12,10 @@
       "version": "0.3.12",
       "resolved": "https://registry.npmjs.org/PrettyCSS/-/PrettyCSS-0.3.12.tgz"
     },
+    "stylelint": {
+      "version": "7.5.0",
+      "resolved": "https://registry.npmjs.org/stylelint/-/stylelint-7.5.0.tgz"
+    },
     "abbrev": {
       "version": "1.0.9",
       "resolved": "https://registry.npmjs.org/abbrev/-/abbrev-1.0.9.tgz"

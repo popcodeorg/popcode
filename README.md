@@ -65,6 +65,7 @@ Popcode detects code errors using
 [htmllint](https://github.com/htmllint/htmllint),
 [Rework CSS](https://github.com/reworkcss/css),
 [PrettyCSS](https://github.com/fidian/PrettyCSS),
+[stylelint](https://github.com/stylelint/stylelint),
 [jshint](https://github.com/jshint/jshint), and [esprima](http://esprima.org/).
 
 ### Architecture Overview ###
