@@ -1,4 +1,5 @@
 import last from 'lodash/last';
+import isNull from 'lodash/isNull';
 import Validator from '../Validator';
 
 const errorMap = {
@@ -18,6 +19,10 @@ class HtmlInspectorValidator extends Validator {
   }
 
   _getRawErrors() {
+    if (isNull(this._doc.documentElement)) {
+      return Promise.resolve([]);
+    }
+
     return System.import('../linters').then(({HTMLInspector}) =>
       new Promise((resolve) => {
         HTMLInspector.inspect({
