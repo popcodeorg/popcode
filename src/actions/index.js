@@ -6,6 +6,7 @@ import map from 'lodash/map';
 import isFunction from 'lodash/isFunction';
 import FirebasePersistor from '../persistors/FirebasePersistor';
 import Gists from '../services/Gists';
+import Bugsnag from '../util/Bugsnag';
 import appFirebase from '../services/appFirebase';
 import validations from '../validations';
 
@@ -14,8 +15,8 @@ import {
   userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
-  applicationErrorTriggered,
-  userDismissedApplicationError,
+  notificationTriggered,
+  userDismissedNotification,
 } from './ui';
 import {exportingGist} from './clients';
 import {isPristineProject} from '../util/projectUtils';
@@ -304,10 +305,14 @@ function bootstrap({gistId} = {gistId: null}) {
       gistLoaded =
         Gists.loadFromId(gistId, getState().user.toJS()).catch((error) => {
           if (get(error, 'response.status') === 404) {
-            dispatch(applicationErrorTriggered('gist-import-not-found'));
-            return Promise.resolve();
+            dispatch(notificationTriggered('gist-import-not-found'));
+          } else {
+            Bugsnag.notify(error);
+            dispatch(
+              notificationTriggered('gist-import-error', 'error', {gistId})
+            );
           }
-          return Promise.reject(error);
+          return Promise.resolve();
         });
     } else {
       gistLoaded = Promise.resolve();
@@ -337,8 +342,8 @@ export {
   userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
-  applicationErrorTriggered,
-  userDismissedApplicationError,
+  notificationTriggered,
+  userDismissedNotification,
   exportingGist,
   bootstrap,
   importProjectFromGist,

@@ -33,12 +33,12 @@ export const editorFocusedRequestedLine = createAction(
   'EDITOR_FOCUSED_REQUESTED_LINE'
 );
 
-export const applicationErrorTriggered = createAction(
-  'GLOBAL_ERROR_TRIGGERED',
-  (errorType) => ({errorType})
+export const notificationTriggered = createAction(
+  'NOTIFICATION_TRIGGERED',
+  (type, severity = 'error', payload = {}) => ({type, severity, payload})
 );
 
-export const userDismissedApplicationError = createAction(
-  'USER_DISMISSED_GLOBAL_ERROR',
-  (errorType) => ({errorType})
+export const userDismissedNotification = createAction(
+  'USER_DISMISSED_NOTIFICATION',
+  (type) => ({type})
 );

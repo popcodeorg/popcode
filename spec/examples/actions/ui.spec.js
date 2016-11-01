@@ -11,8 +11,8 @@ import {
   editorFocusedRequestedLine,
   userTyped,
   userRequestedFocusedLine,
-  applicationErrorTriggered,
-  userDismissedApplicationError,
+  notificationTriggered,
+  userDismissedNotification,
 } from '../../../src/actions/ui';
 
 const timeInterval = 1000 * 60 * 60 * 24;
@@ -89,28 +89,41 @@ describe('interfaceStateActions', () => {
     });
   });
 
-  describe('applicationErrorTriggered', () => {
-    beforeEach(() => {
-      store.dispatch(applicationErrorTriggered('some-error'));
-    });
+  describe('notificationTriggered', () => {
+    it('sets notifications to given type and severity', () => {
+      store.dispatch(notificationTriggered('some-error', 'error'));
 
-    it('sets applicationErrors to contain argument', () => {
       assert.include(
-        store.getState().ui.get('applicationErrors'),
-        'some-error'
+        store.getState().ui.get('notifications').toJSON(),
+        {type: 'some-error', severity: 'error', payload: {}},
       );
     });
   });
 
-  describe('userDismissedApplicationError', () => {
+  describe('notificationTriggered', () => {
+    it('sets notifications to given type, severity, and payload', () => {
+      store.dispatch(
+        notificationTriggered('some-error', 'error', {spooky: true})
+      );
+
+      assert.include(
+        store.getState().ui.get('notifications').toJSON(),
+        {type: 'some-error', severity: 'error', payload: {spooky: true}},
+      );
+    });
+  });
+
+  describe('userDismissedNotification', () => {
     beforeEach(() => {
-      store.dispatch(applicationErrorTriggered('some-error'));
-      store.dispatch(userDismissedApplicationError('some-error'));
+      store.dispatch(notificationTriggered('some-error', 'error'));
+      store.dispatch(userDismissedNotification('some-error'));
     });
 
-    it('removes argument from applicationErrors', () => {
+    it('removes notifications of given type', () => {
       assert.notInclude(
-        store.getState().ui.get('applicationErrors'),
+        store.getState().ui.get('notifications').map(
+          (notification) => notification.get('type')
+        ),
         'some-error'
       );
     });

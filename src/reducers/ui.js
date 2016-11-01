@@ -1,10 +1,11 @@
 import Immutable from 'immutable';
+import pick from 'lodash/pick';
 
 const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({typing: false})).
   set('requestedLine', null).
   set('minimizedComponents', new Immutable.Set()).
-  set('applicationErrors', new Immutable.Set()).
+  set('notifications', new Immutable.Set()).
   set(
     'dashboard',
     new Immutable.Map().
@@ -63,16 +64,20 @@ function ui(stateIn, action) {
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.setIn(['editors', 'requestedFocusedLine'], null);
 
-    case 'GLOBAL_ERROR_TRIGGERED':
+    case 'NOTIFICATION_TRIGGERED':
       return state.update(
-        'applicationErrors',
-        (errors) => errors.add(action.payload.errorType)
+        'notifications',
+        (errors) => errors.add(new Immutable.Map(
+          pick(action.payload, ['type', 'severity', 'payload'])
+        ))
       );
 
-    case 'USER_DISMISSED_GLOBAL_ERROR':
+    case 'USER_DISMISSED_NOTIFICATION':
       return state.update(
-        'applicationErrors',
-        (errors) => errors.remove(action.payload.errorType)
+        'notifications',
+        (errors) => errors.filterNot(
+          (error) => error.get('type') === action.payload.type
+        )
       );
 
     default:
