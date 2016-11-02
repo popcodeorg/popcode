@@ -6,5 +6,5 @@ import validateWithStyleLint from './css/stylelint.js';
 export default (source) => mergeValidations([
   validateWithCss(source),
   validateWithPrettyCSS(source),
-  // validateWithStyleLint(source),
+  validateWithStyleLint(source),
 ]);
