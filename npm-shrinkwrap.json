@@ -9,8 +9,9 @@
       "resolved": "https://registry.npmjs.org/Base64/-/Base64-0.2.1.tgz"
     },
     "PrettyCSS": {
-      "version": "0.3.12",
-      "resolved": "https://registry.npmjs.org/PrettyCSS/-/PrettyCSS-0.3.12.tgz"
+      "version": "0.3.12-unicodefix",
+      "from": "PrettyCSS@git+https://github.com/popcodeorg/PrettyCSS.git#5ab276ba72992cef0c08b28348d9cbfcb948bfa0",
+      "resolved": "git+https://github.com/popcodeorg/PrettyCSS.git#5ab276ba72992cef0c08b28348d9cbfcb948bfa0"
     },
     "abbrev": {
       "version": "1.0.9",
