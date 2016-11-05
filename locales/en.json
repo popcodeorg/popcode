@@ -25,7 +25,8 @@
     "auth-error": "Something went wrong trying to sign in. Please try again!",
     "empty-gist": "You need some code in your project to export a gist!",
     "gist-export-error": "Something went wrong trying to create that gist. Please try again.",
-    "gist-export-window-closed": "Looks like you closed your gist tab before it finished exporting. Please try again.",
+    "gist-export-complete": "Your gist export is ready!",
+    "gist-export-link": "Click here to open it",
     "gist-import-not-found": "Looks like that gist doesn’t exist. Check the URL and try again."
   },
   "languages": {

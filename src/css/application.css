@@ -479,12 +479,19 @@ body {
   padding: 0.2rem 0;
 }
 
+.notificationList-notification a {
+  color: inherit;
+  text-align: center;
+  margin-bottom: 0.2rem;
+  padding: 0.2rem 0;
+}
+
 .notificationList-notification--error {
   background-color: var(--color-red);
 }
 
 .notificationList-notification--notice {
-  background-color: var(--color-gray);
+  background-color: var(--color-green);
 }
 
 .notificationList-notification-dismiss {

@@ -327,7 +327,11 @@ class Workspace extends React.Component {
     gistWillExport.then((response) => {
       if (newWindow.closed) {
         this.props.dispatch(
-          notificationTriggered('gist-export-window-closed')
+          notificationTriggered(
+            'gist-export-complete',
+            'notice',
+            {url: response.html_url}
+          )
         );
       } else {
         newWindow.location.href = response.html_url;

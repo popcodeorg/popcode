@@ -1,21 +1,41 @@
 import React from 'react';
 import partial from 'lodash/partial';
-import {GenericNotification} from './notifications';
+import NotificationContainer from './NotificationContainer';
+import {GenericNotification, GistExportNotification} from './notifications';
+
+const NOTIFICATION_COMPONENTS = {
+  'gist-export-complete': GistExportNotification,
+};
+
+function chooseNotificationComponent(notification) {
+  if (notification.type in NOTIFICATION_COMPONENTS) {
+    return NOTIFICATION_COMPONENTS[notification.type];
+  }
+
+  return GenericNotification;
+}
 
 export default function NotificationList(props) {
   if (!props.notifications.length) {
     return null;
   }
 
-  const notificationList = props.notifications.map((notification) => (
-    <GenericNotification
-      key={notification}
-      payload={notification.payload}
-      severity={notification.severity}
-      type={notification.type}
-      onErrorDismissed={partial(props.onErrorDismissed, notification)}
-    />
-  ));
+  const notificationList = props.notifications.map((notification) => {
+    const Notification = chooseNotificationComponent(notification);
+
+    return (
+      <NotificationContainer
+        key={notification.type}
+        severity={notification.severity}
+        onErrorDismissed={partial(props.onErrorDismissed, notification)}
+      >
+        <Notification
+          payload={notification.payload}
+          type={notification.type}
+        />
+      </NotificationContainer>
+    );
+  });
 
   return (
     <div className="notificationList">{notificationList}</div>
