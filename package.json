@@ -45,7 +45,6 @@
   "license": "MIT",
   "dependencies": {
     "PrettyCSS": "^0.3.12",
-    "stylelint": "^7.5.0",
     "base64-js": "^1.0.2",
     "bowser": "^1.4.5",
     "brace": "^0.8.0",
@@ -77,6 +76,7 @@
     "redux-logger": "^2.5.0",
     "redux-thunk": "^2.1.0",
     "slowparse": "^1.1.4",
+    "stylelint": "^7.5.0",
     "text-encoding": "^0.6.0"
   },
   "engines": {
@@ -142,7 +142,8 @@
     "postcss": "https://registry.npmjs.org/postcss/-/postcss-5.0.21.tgz",
     "postcss-cssnext": "^2.8.0",
     "raw-loader": "^0.5.1",
-    "stylelint": "https://registry.npmjs.org/stylelint/-/stylelint-7.5.0.tgz",
+    "string-replace-loader": "^1.0.5",
+    "substitute-loader": "^1.0.0",
     "transform-loader": "^0.2.3",
     "webpack": "^2.1.0-beta.25",
     "webpack-dev-middleware": "^1.8.2",
