@@ -1,5 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
+const escapeRegExp = require('lodash/escapeRegExp');
+
+function matchModule(modulePath) {
+  return new RegExp(`\\/node_modules\\/${escapeRegExp(modulePath)}`);
+}
 
 module.exports = {
   entry: './src/application.js',
@@ -30,17 +35,32 @@ module.exports = {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, 'node_modules/PrettyCSS'),
-          path.resolve(__dirname, 'node_modules/stylelint'),
-          path.resolve(__dirname, 'node_modules/browserslist'),
-          path.resolve(__dirname, 'node_modules/graceful-fs'),
-          path.resolve(__dirname, 'node_modules/postcss'),
-          path.resolve(__dirname, 'node_modules/sugarss'),
-          path.resolve(__dirname, 'node_modules/fs.realpath'),
-          path.resolve(__dirname, 'node_modules/postcss-scss'),
-          path.resolve(__dirname, 'node_modules/autoprefixer'),
           path.resolve(__dirname, 'node_modules/css'),
         ],
         loader: 'transform/cacheable?brfs',
+      },
+      {
+        test: /\.js$/,
+        include: [
+          matchModule('postcss/lib/previous-map'),
+          matchModule('stylelint/dist/getPostcssResult'),
+        ],
+        loader: 'string-replace',
+        query: {
+          search: /require\(['"]fs['"]\)/,
+          replace: '{}',
+        },
+      },
+      {
+        test: /\.js$/,
+        include: [
+          path.resolve(
+            __dirname,
+            'node_modules/stylelint/dist/utils/isAutoprefixable'
+          ),
+        ],
+        loader: 'substitute',
+        query: {content: '() => false'},
       },
       {
         test: /\.js$/,
@@ -71,6 +91,18 @@ module.exports = {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, 'node_modules/brace/worker'),
+          path.resolve(
+            __dirname,
+            'node_modules/stylelint/dist/rules/no-unsupported-browser-features'
+          ),
+          path.resolve(
+            __dirname,
+            'node_modules/stylelint/dist/rules/no-browser-hacks'
+          ),
+          matchModule('autoprefixer'),
+          matchModule('postcss-scss'),
+          matchModule('postcss-less'),
+          matchModule('sugarss'),
         ],
         loader: 'null',
       },
@@ -95,7 +127,7 @@ module.exports = {
       'github-api': 'github-api/lib',
       'html-inspector$': 'html-inspector/html-inspector.js',
     },
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.json'],
   },
   devtool: 'source-map',
 };
