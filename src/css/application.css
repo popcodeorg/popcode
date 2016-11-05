@@ -473,14 +473,21 @@ body {
   cursor: pointer;
 }
 
-.applicationErrors-error {
-  background-color: var(--color-red);
+.notificationList-notification {
   text-align: center;
   margin-bottom: 0.2rem;
   padding: 0.2rem 0;
 }
 
-.applicationErrors-error-dismiss {
+.notificationList-notification--error {
+  background-color: var(--color-red);
+}
+
+.notificationList-notification--notice {
+  background-color: var(--color-gray);
+}
+
+.notificationList-notification-dismiss {
   font-family: 'FontAwesome';
   display: block;
   padding: 0.2rem 0.5rem;

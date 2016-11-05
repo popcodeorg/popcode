@@ -47,7 +47,7 @@ import Editor from './Editor';
 import Output from './Output';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
-import ApplicationErrors from './ApplicationErrors';
+import NotificationList from './NotificationList';
 
 const spinnerPage = base64.fromByteArray(
   new TextEncoder('utf-8').encode(
@@ -400,8 +400,8 @@ class Workspace extends React.Component {
   render() {
     return (
       <div>
-        <ApplicationErrors
-          errors={this.props.ui.notifications}
+        <NotificationList
+          notifications={this.props.ui.notifications}
           onErrorDismissed={this._handleNotificationDismissed}
         />
         <div className="layout">

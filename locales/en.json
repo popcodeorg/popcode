@@ -20,7 +20,7 @@
     "message": "Popcode doesn’t work with your version of __name__.",
     "download": "Click here to download a new version."
   },
-  "applicationErrors": {
+  "notifications": {
     "user-cancelled-auth": "Looks like you didn’t finish linking GitHub to Popcode. Try again, and be sure to click the green “Authorize application” button.",
     "auth-error": "Something went wrong trying to sign in. Please try again!",
     "empty-gist": "You need some code in your project to export a gist!",
