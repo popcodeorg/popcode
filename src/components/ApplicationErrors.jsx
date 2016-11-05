@@ -9,7 +9,7 @@ export default function ApplicationErrors(props) {
 
   const errorList = props.errors.map((error) => (
     <div className="applicationErrors-error" key={error}>
-      {i18n.t(`applicationErrors.${error}`)}
+      {i18n.t(`applicationErrors.${error.type}`)}
       <span
         className="applicationErrors-error-dismiss"
         onClick={partial(props.onErrorDismissed, error)}

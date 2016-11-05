@@ -34,8 +34,8 @@ import {
   userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
-  applicationErrorTriggered,
-  userDismissedApplicationError,
+  notificationTriggered,
+  userDismissedNotification,
   exportingGist,
   bootstrap,
 } from '../actions';
@@ -98,7 +98,7 @@ class Workspace extends React.Component {
       '_handleStartLogIn',
       '_handleToggleDashboard',
       '_handleRequestedLineFocused',
-      '_handleApplicationErrorDismissed',
+      '_handleNotificationDismissed',
       '_handleExportGist'
     );
   }
@@ -275,11 +275,11 @@ class Workspace extends React.Component {
       switch (e.code) {
         case 'USER_CANCELLED':
           this.props.dispatch(
-            applicationErrorTriggered('user-cancelled-auth')
+            notificationTriggered('user-cancelled-auth')
           );
           break;
         default:
-          this.props.dispatch(applicationErrorTriggered('auth-error'));
+          this.props.dispatch(notificationTriggered('auth-error'));
           if (isError(e)) {
             Bugsnag.notifyException(e, e.code);
           } else if (isString(e)) {
@@ -290,8 +290,8 @@ class Workspace extends React.Component {
     });
   }
 
-  _handleApplicationErrorDismissed(error) {
-    this.props.dispatch(userDismissedApplicationError(error));
+  _handleNotificationDismissed(error) {
+    this.props.dispatch(userDismissedNotification(error.type));
   }
 
   _handleLogOut() {
@@ -327,20 +327,20 @@ class Workspace extends React.Component {
     gistWillExport.then((response) => {
       if (newWindow.closed) {
         this.props.dispatch(
-          applicationErrorTriggered('gist-export-window-closed')
+          notificationTriggered('gist-export-window-closed')
         );
       } else {
         newWindow.location.href = response.html_url;
       }
     }, (error) => {
       if (error instanceof EmptyGistError) {
-        this.props.dispatch(applicationErrorTriggered('empty-gist'));
+        this.props.dispatch(notificationTriggered('empty-gist'));
         if (!newWindow.closed) {
           newWindow.close();
         }
         return Promise.resolve();
       }
-      this.props.dispatch(applicationErrorTriggered('gist-export-error'));
+      this.props.dispatch(notificationTriggered('gist-export-error'));
       if (!newWindow.closed) {
         newWindow.close();
       }
@@ -401,8 +401,8 @@ class Workspace extends React.Component {
     return (
       <div>
         <ApplicationErrors
-          errors={this.props.ui.applicationErrors}
-          onErrorDismissed={this._handleApplicationErrorDismissed}
+          errors={this.props.ui.notifications}
+          onErrorDismissed={this._handleNotificationDismissed}
         />
         <div className="layout">
           {this._renderDashboard()}
