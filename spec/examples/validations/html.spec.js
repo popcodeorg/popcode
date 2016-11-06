@@ -122,6 +122,36 @@ describe('html', () => {
     assertFailsValidationWith(
       html,
       htmlWithBody('<li>Orphaned List Item</li>'),
+      'invalid-tag-parent'
+    )
+  );
+
+  it('generates error when li is inside a non-body tag', () =>
+    assertFailsValidationWith(
+      html,
+      htmlWithBody('<div><li>List within span</li></div>'),
+      'invalid-tag-parent'
+    )
+  );
+
+  it('allows li within ul', () =>
+    assertPassesValidation(
+      html,
+      htmlWithBody('<ul><li>List item</li></ul>')
+    )
+  );
+
+  it('allows li within ol', () =>
+    assertPassesValidation(
+      html,
+      htmlWithBody('<ol><li>List item</li></ol>')
+    )
+  );
+
+  it('generates error when div is inside span', () =>
+    assertFailsValidationWith(
+      html,
+      htmlWithBody('<span><div>Block inside inline</div></span>'),
       'invalid-tag-location'
     )
   );

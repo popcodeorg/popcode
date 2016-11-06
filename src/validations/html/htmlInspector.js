@@ -2,14 +2,40 @@ import last from 'lodash/last';
 import isNull from 'lodash/isNull';
 import Validator from '../Validator';
 
+const specialCases = {
+  li: {
+    reason: 'invalid-tag-parent',
+    parent: '<ul>, <ol>, <menu>',
+  },
+  title: {
+    reason: 'invalid-tag-parent',
+    parent: '<head>',
+  },
+};
+
 const errorMap = {
-  'validate-element-location': (error) => ({
-    reason: 'invalid-tag-location',
-    payload: {
-      tag: error.context.tagName.toLowerCase(),
-      parent: error.context.parentNode.tagName.toLowerCase(),
-    },
-  }),
+  'validate-element-location': (error) => {
+    const tag = error.context.tagName.toLowerCase();
+    const parent = error.context.parentNode.tagName.toLowerCase();
+    if (specialCases[tag]) {
+      const specialCase = specialCases[tag];
+      return {
+        reason: specialCase.reason,
+        payload: {
+          tag,
+          parent: specialCase.parent,
+        },
+      };
+    }
+
+    return {
+      reason: 'invalid-tag-location',
+      payload: {
+        tag,
+        parent,
+      },
+    };
+  },
 };
 
 class HtmlInspectorValidator extends Validator {
