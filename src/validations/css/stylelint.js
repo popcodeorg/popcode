@@ -10,10 +10,10 @@ class StyleLintValidator extends Validator {
   _getRawErrors() {
     return System.import('../linters').then(({stylelint}) => {
       try {
-        stylelint.lint(this._source)
-          .then(function(result) {
-            return result.output;
-          });
+        stylelint.lint({
+          code: this._source,
+        }).then((result) => result.output);
+        return [];
       } catch (_e) {
         return [];
       }
