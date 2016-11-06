@@ -44,8 +44,12 @@ module.exports = {
         include: [
           path.resolve(__dirname, 'node_modules/postcss/lib/previous-map'),
           path.resolve(__dirname, 'node_modules/stylelint/dist/getPostcssResult'),
-          path.resolve(__dirname, 'node_modules/stylelint/node_modules/sugarss/node_modules/postcss/lib/previous-map'),
-          path.resolve(__dirname, 'node_modules/stylelint/node_modules/postcss-scss/node_modules/postcss/lib/previous-map'),
+          path.resolve(__dirname,
+            'node_modules/stylelint/node_modules/sugarss/node_modules/postcss/lib/previous-map'
+          ),
+          path.resolve(__dirname,
+            'node_modules/stylelint/node_modules/postcss-scss/node_modules/postcss/lib/previous-map'
+          ),
         ],
         loader: 'string-replace',
         query: {
