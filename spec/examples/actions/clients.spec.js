@@ -4,7 +4,7 @@ import '../../helper';
 import createApplicationStore from '../../../src/createApplicationStore';
 import {assert} from 'chai';
 
-import {exportingGist} from '../../../src/actions/clients';
+import {exportingGist} from '../../../src/actions';
 
 describe('clients', () => {
   let store;

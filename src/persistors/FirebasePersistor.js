@@ -2,9 +2,8 @@ import values from 'lodash/values';
 import appFirebase from '../services/appFirebase';
 
 class FirebasePersistor {
-  constructor(user) {
-    this.user = user;
-    this.firebase = appFirebase.child(`workspaces/${user.id}`);
+  constructor(uid) {
+    this.firebase = appFirebase.child(`workspaces/${uid}`);
   }
 
   getCurrentProjectKey() {
@@ -41,6 +40,15 @@ class FirebasePersistor {
         once('value', (snapshot) => {
           resolve(snapshot.val());
         });
+    });
+  }
+
+  loadCurrentProject() {
+    return this.getCurrentProjectKey().then((projectKey) => {
+      if (projectKey) {
+        return this.load(projectKey);
+      }
+      return null;
     });
   }
 

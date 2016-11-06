@@ -9,9 +9,8 @@ import createApplicationStore from '../../../src/createApplicationStore';
 import {
   createProject,
   changeCurrentProject,
-} from '../../../src/actions/projects';
-
-import {toggleLibrary} from '../../../src/actions';
+  toggleLibrary,
+} from '../../../src/actions';
 
 import {
   getProjectKeys,

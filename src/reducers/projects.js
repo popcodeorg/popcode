@@ -42,10 +42,7 @@ function projects(stateIn, action) {
   }
 
   switch (action.type) {
-    case 'PROJECT_LOADED_FROM_STORAGE':
-      return addProject(state, action.payload.project);
-
-    case 'CURRENT_PROJECT_LOADED_FROM_STORAGE':
+    case 'PROJECT_LOADED':
       return addProject(state, action.payload.project);
 
     case 'PROJECT_SOURCE_EDITED':
@@ -61,12 +58,6 @@ function projects(stateIn, action) {
       return state.set(
         action.payload.projectKey,
         newProject.set('projectKey', action.payload.projectKey)
-      );
-
-    case 'PROJECT_IMPORTED':
-      return state.set(
-        action.payload.project.projectKey,
-        projectToImmutable(action.payload.project)
       );
 
     case 'CURRENT_PROJECT_CHANGED':

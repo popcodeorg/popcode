@@ -27,6 +27,8 @@ import {
   clearRuntimeErrors,
   createProject,
   updateProjectSource,
+  logIn,
+  logOut,
   toggleLibrary,
   minimizeComponent,
   maximizeComponent,
@@ -111,7 +113,7 @@ class Workspace extends React.Component {
       gistId = query.gist;
     }
     history.replaceState({}, '', location.pathname);
-    this.props.dispatch(bootstrap({gistId}));
+    this.props.dispatch(bootstrap(gistId));
   }
 
   componentDidMount() {
@@ -284,23 +286,27 @@ class Workspace extends React.Component {
     appFirebase.authWithOAuthPopup(
       'github',
       {remember: 'sessionOnly', scope: 'gist'}
-    ).catch((e) => {
-      switch (e.code) {
-        case 'USER_CANCELLED':
-          this.props.dispatch(
-            notificationTriggered('user-cancelled-auth')
-          );
-          break;
-        default:
-          this.props.dispatch(notificationTriggered('auth-error'));
-          if (isError(e)) {
-            Bugsnag.notifyException(e, e.code);
-          } else if (isString(e)) {
-            Bugsnag.notifyException(new Error(e));
-          }
-          break;
-      }
-    });
+    ).then(
+      (authData) => {
+        this.props.dispatch(logIn(authData));
+      },
+      (e) => {
+        switch (e.code) {
+          case 'USER_CANCELLED':
+            this.props.dispatch(
+              notificationTriggered('user-cancelled-auth')
+            );
+            break;
+          default:
+            this.props.dispatch(notificationTriggered('auth-error'));
+            if (isError(e)) {
+              Bugsnag.notifyException(e, e.code);
+            } else if (isString(e)) {
+              Bugsnag.notifyException(new Error(e));
+            }
+            break;
+        }
+      });
   }
 
   _handleNotificationDismissed(error) {
@@ -308,7 +314,7 @@ class Workspace extends React.Component {
   }
 
   _handleLogOut() {
-    appFirebase.unauth();
+    appFirebase.unauth().then(() => this.props.dispatch(logOut()));
   }
 
   _handleRequestedLineFocused() {
