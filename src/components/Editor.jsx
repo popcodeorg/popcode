@@ -3,6 +3,7 @@ import ACE from 'brace';
 import bindAll from 'lodash/bindAll';
 import get from 'lodash/get';
 import throttle from 'lodash/throttle';
+import noop from 'lodash/noop';
 
 import 'brace/mode/html';
 import 'brace/mode/css';
@@ -71,6 +72,9 @@ class Editor extends React.Component {
       requestedFocusedLine.line,
       requestedFocusedLine.column
     );
+
+    this._scrollToLine(requestedFocusedLine.line);
+
     this._editor.clearSelection();
     this._editor.focus();
     this.props.onRequestedLineFocused();
@@ -78,6 +82,17 @@ class Editor extends React.Component {
 
   _resizeEditor() {
     this._editor.resize();
+  }
+
+  _scrollToLine(lineNumber) {
+    const shouldCenterVertically = true;
+    const shouldAnimate = true;
+    this._editor.scrollToLine(
+      lineNumber,
+      shouldCenterVertically,
+      shouldAnimate,
+      noop
+    );
   }
 
   _setupEditor(containerElement) {
