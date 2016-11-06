@@ -14,8 +14,8 @@ import {
   userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
-  applicationErrorTriggered,
-  userDismissedApplicationError,
+  notificationTriggered,
+  userDismissedNotification,
 } from './ui';
 import {exportingGist} from './clients';
 import {isPristineProject} from '../util/projectUtils';
@@ -304,7 +304,7 @@ function bootstrap({gistId} = {gistId: null}) {
       gistLoaded =
         Gists.loadFromId(gistId, getState().user.toJS()).catch((error) => {
           if (get(error, 'response.status') === 404) {
-            dispatch(applicationErrorTriggered('gist-import-not-found'));
+            dispatch(notificationTriggered('gist-import-not-found'));
             return Promise.resolve();
           }
           return Promise.reject(error);
@@ -337,8 +337,8 @@ export {
   userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
-  applicationErrorTriggered,
-  userDismissedApplicationError,
+  notificationTriggered,
+  userDismissedNotification,
   exportingGist,
   bootstrap,
   importProjectFromGist,
