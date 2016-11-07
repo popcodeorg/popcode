@@ -1,10 +1,15 @@
 import React from 'react';
 import partial from 'lodash/partial';
 import NotificationContainer from './NotificationContainer';
-import {GenericNotification, GistExportNotification} from './notifications';
+import {
+  GenericNotification,
+  GistExportNotification,
+  GistImportError,
+} from './notifications';
 
 const NOTIFICATION_COMPONENTS = {
   'gist-export-complete': GistExportNotification,
+  'gist-import-error': GistImportError,
 };
 
 function chooseNotificationComponent(notification) {
