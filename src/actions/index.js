@@ -6,6 +6,7 @@ import map from 'lodash/map';
 import isFunction from 'lodash/isFunction';
 import FirebasePersistor from '../persistors/FirebasePersistor';
 import Gists from '../services/Gists';
+import Bugsnag from '../util/Bugsnag';
 import appFirebase from '../services/appFirebase';
 import validations from '../validations';
 
@@ -305,9 +306,13 @@ function bootstrap({gistId} = {gistId: null}) {
         Gists.loadFromId(gistId, getState().user.toJS()).catch((error) => {
           if (get(error, 'response.status') === 404) {
             dispatch(notificationTriggered('gist-import-not-found'));
-            return Promise.resolve();
+          } else {
+            Bugsnag.notify(error);
+            dispatch(
+              notificationTriggered('gist-import-error', 'error', {gistId})
+            );
           }
-          return Promise.reject(error);
+          return Promise.resolve();
         });
     } else {
       gistLoaded = Promise.resolve();
