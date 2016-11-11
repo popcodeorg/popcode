@@ -1,6 +1,16 @@
 import Validator from '../Validator';
 
-const errorMap = {};
+const errorMap = {
+  'Unclosed block': (error) => {
+    const token = error.source;
+
+    return {
+      reason: 'missing-closing-curly',
+      payload: {error: token},
+      suppresses: ['missing-opening-curly'],
+    };
+  }
+};
 
 class StyleLintValidator extends Validator {
   constructor(source) {
@@ -9,19 +19,56 @@ class StyleLintValidator extends Validator {
 
   _getRawErrors() {
     return System.import('../linters').then(({stylelint}) => {
-      try {
-        stylelint.lint({
-          code: this._source,
-        }).then((result) => result.output);
-        return [];
-      } catch (_e) {
-        return [];
-      }
+
+      // Wrap in an object to avoid iterating over properties in _baseForOwn.js
+      // return Promise.resolve(stylelint(this._source))
+      return Promise.resolve(stylelint(this._source))
+        .then(
+          (result) => {
+            console.log(result.output);
+            return {result};
+          })
+        .catch(
+          (syntaxError) => {
+            console.log(syntaxError);
+            return {syntaxError};
+          }
+      );
+
+      // return Promise.resolve(stylelint(currentSource))
+      //   .then((result) => {
+      //     console.log(result.output);
+      //     // Wrap in an object to avoid iterating over properties in _baseForOwn.js
+      //     return {result};
+      //   })
+      //   .catch(
+      //     (syntaxError) => {
+      //       console.log(syntaxError);
+      //       // Wrap in an object to avoid iterating over properties in _baseForOwn.js
+      //       return {syntaxError};
+      //     }
+      //   );
+      // try {
+      //   stylelint("a { color: pink; ")
+      //     .then((result) => console.log(result.output))
+      //     .catch(
+      //       (syntaxError) => {
+      //         console.log(syntaxError);
+      //         return syntaxError;
+      //       }
+      //     );
+      //   return [];
+      // } catch (_e) {
+      //   return [];
+      // }
     });
   }
 
   _keyForError(error) {
-    return error.code.split(':')[0];
+    // On Syntax Errors
+    if (error.reason) {
+      return error.reason;
+    }
   }
 
   _locationForError(error) {

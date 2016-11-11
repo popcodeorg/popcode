@@ -26,4 +26,7 @@ Object.assign(stylelint, {
   _getPostcssResult: partial(getPostcssResult, stylelint),
 });
 
-export default (code) => lintSource(stylelint, {code});
+export default (code) => {
+  console.log(code);
+  return lintSource(stylelint, {code});
+};
