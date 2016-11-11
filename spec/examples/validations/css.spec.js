@@ -73,6 +73,15 @@ describe('css', function() {
     )
   );
 
+  it('gives a useful error when there is no closing curly brace', () =>
+    assertFailsValidationWith(
+      css,
+      `p {
+        display: block;`,
+      'missing-closing-curly'
+    )
+  );
+
   it('gives a useful error when a bogus character is in selector', () =>
     assertFailsValidationWith(
       css,

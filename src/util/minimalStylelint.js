@@ -26,4 +26,8 @@ Object.assign(stylelint, {
   _getPostcssResult: partial(getPostcssResult, stylelint),
 });
 
-export default (code) => lintSource(stylelint, {code});
+export default (code) => {
+  // Prevent postcssResultCache from caching results
+  stylelint._postcssResultCache.clear();
+  return lintSource(stylelint, {code});
+};
