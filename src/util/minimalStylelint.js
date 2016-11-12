@@ -27,6 +27,7 @@ Object.assign(stylelint, {
 });
 
 export default (code) => {
-  console.log(code);
+  // Prevent postcssResultCache from caching results
+  stylelint._postcssResultCache.clear();
   return lintSource(stylelint, {code});
 };

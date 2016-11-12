@@ -1,6 +1,7 @@
 import Validator from '../Validator';
 
 const errorMap = {
+  // CSS Syntax Errors
   'Unclosed block': (error) => {
     const token = error.source;
 
@@ -9,7 +10,19 @@ const errorMap = {
       payload: {error: token},
       suppresses: ['missing-opening-curly'],
     };
-  }
+  },
+
+  // Custom rules
+  'declaration-block-trailing-semicolon': (error) => {
+    const token = error.css;
+    const rowError = error.messages[0].line - 1;
+
+    return {
+      reason: 'missing-semicolon',
+      row: rowError,
+      payload: {error: token},
+    };
+  },
 };
 
 class StyleLintValidator extends Validator {
@@ -17,51 +30,17 @@ class StyleLintValidator extends Validator {
     super(source, 'css', errorMap);
   }
 
+  // Wrap in an object to avoid iterating over properties in _baseForOwn.js
   _getRawErrors() {
-    return System.import('../linters').then(({stylelint}) => {
-
-      // Wrap in an object to avoid iterating over properties in _baseForOwn.js
-      // return Promise.resolve(stylelint(this._source))
-      return Promise.resolve(stylelint(this._source))
-        .then(
-          (result) => {
-            console.log(result.output);
-            return {result};
-          })
-        .catch(
-          (syntaxError) => {
-            console.log(syntaxError);
-            return {syntaxError};
-          }
-      );
-
-      // return Promise.resolve(stylelint(currentSource))
-      //   .then((result) => {
-      //     console.log(result.output);
-      //     // Wrap in an object to avoid iterating over properties in _baseForOwn.js
-      //     return {result};
-      //   })
-      //   .catch(
-      //     (syntaxError) => {
-      //       console.log(syntaxError);
-      //       // Wrap in an object to avoid iterating over properties in _baseForOwn.js
-      //       return {syntaxError};
-      //     }
-      //   );
-      // try {
-      //   stylelint("a { color: pink; ")
-      //     .then((result) => console.log(result.output))
-      //     .catch(
-      //       (syntaxError) => {
-      //         console.log(syntaxError);
-      //         return syntaxError;
-      //       }
-      //     );
-      //   return [];
-      // } catch (_e) {
-      //   return [];
-      // }
-    });
+    return System.import('../linters').then(
+      ({stylelint}) => stylelint(
+        this._source
+      ).then(
+        (result) => ({result})
+      ).catch(
+        (syntaxError) => ({syntaxError})
+      )
+    );
   }
 
   _keyForError(error) {
@@ -69,6 +48,13 @@ class StyleLintValidator extends Validator {
     if (error.reason) {
       return error.reason;
     }
+
+    // On Custom Rules
+    if (error.messages.length > 0) {
+      return error.messages[0].rule;
+    }
+
+    return '';
   }
 
   _locationForError(error) {
