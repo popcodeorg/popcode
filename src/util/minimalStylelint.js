@@ -11,6 +11,10 @@ const config = {
   pluginFunctions: {},
 };
 
+function preventPostcssResultCaching() {
+  stylelint._postcssResultCache.clear();
+}
+
 Object.assign(stylelint, {
   _postcssResultCache: new Map(),
   _options: {},
@@ -27,7 +31,6 @@ Object.assign(stylelint, {
 });
 
 export default (code) => {
-  // Prevent postcssResultCache from caching results
-  stylelint._postcssResultCache.clear();
+  preventPostcssResultCaching();
   return lintSource(stylelint, {code});
 };
