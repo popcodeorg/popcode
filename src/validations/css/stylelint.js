@@ -8,18 +8,15 @@ const errorMap = {
     return {
       reason: 'missing-closing-curly',
       payload: {error: token},
-      suppresses: ['missing-opening-curly'],
     };
   },
 
-  // Custom rules
+  // Custom Rules
   'declaration-block-trailing-semicolon': (error) => {
     const token = error.css;
-    const rowError = error.messages[0].line - 1;
 
     return {
       reason: 'missing-semicolon',
-      row: rowError,
       payload: {error: token},
     };
   },
@@ -30,7 +27,6 @@ class StyleLintValidator extends Validator {
     super(source, 'css', errorMap);
   }
 
-  // Wrap in an object to avoid iterating over properties in _baseForOwn.js
   _getRawErrors() {
     return System.import('../linters').then(
       ({stylelint}) => stylelint(
@@ -44,24 +40,25 @@ class StyleLintValidator extends Validator {
   }
 
   _keyForError(error) {
-    // On Syntax Errors
-    if (error.reason) {
-      return error.reason;
-    }
-
-    // On Custom Rules
-    if (error.messages.length > 0) {
-      return error.messages[0].rule;
-    }
-
-    return '';
+    // CSS Syntax Error or Custom Rule
+    return error.reason || (error.messages[0] && error.messages[0].rule);
   }
 
   _locationForError(error) {
-    if (!error.token) {
-      return {row: 0, column: 0};
+    // CSS Syntax Error
+    if (error.reason) {
+      return {row: error.line - 1, column: error.column};
     }
-    return {row: error.token.line - 1, column: error.token.charNum - 1};
+
+    // Custom Rule
+    const customRule = error.messages[0];
+    if (customRule) {
+      return {
+        row: customRule.line - 1, column: customRule.column,
+      };
+    }
+
+    return {row: 0, column: 0};
   }
 }
 
