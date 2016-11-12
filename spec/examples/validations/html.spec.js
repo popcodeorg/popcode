@@ -139,5 +139,9 @@ describe('html', () => {
     )
   );
 
+  it('produces an error for a malformed DOCTYPE that doesn’t parse', () =>
+    assertFailsValidationWith(html, '<!DOCT\n', 'doctype')
+  );
+
   assertPassesAcceptance(html, 'html');
 });

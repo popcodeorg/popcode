@@ -44,7 +44,7 @@
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
   "license": "MIT",
   "dependencies": {
-    "PrettyCSS": "^0.3.12",
+    "PrettyCSS": "git+https://github.com/popcodeorg/PrettyCSS#v0.3.12-unicodefix",
     "base64-js": "^1.0.2",
     "bowser": "^1.4.5",
     "brace": "^0.8.0",
