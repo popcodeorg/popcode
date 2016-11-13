@@ -24,8 +24,8 @@ class StyleLintValidator extends Validator {
       ({stylelint}) => stylelint(
         this._source
       ).then(
-        (result) => ({result}),
-        (syntaxError) => ({syntaxError})
+        (result) => (result.messages),
+        (syntaxError) => ([syntaxError])
       )
     );
   }
@@ -35,22 +35,11 @@ class StyleLintValidator extends Validator {
       return `syntaxError/${error.reason}`;
     }
 
-    return error.messages[0] && `lintRule/${error.messages[0].rule}`;
+    return `lintRule/${error.rule}`;
   }
 
   _locationForError(error) {
-    if (isSyntaxError(error)) {
-      return {row: error.line - 1, column: error.column};
-    }
-
-    const lintRule = error.messages[0];
-    if (lintRule) {
-      return {
-        row: lintRule.line - 1, column: lintRule.column,
-      };
-    }
-
-    return {row: 0, column: 0};
+    return {row: error.line - 1, column: error.column};
   }
 }
 
