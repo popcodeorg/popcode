@@ -47,7 +47,7 @@
         "css": "CSS",
         "javascript": "JS"
       },
-      "preview": "Preview"
+      "output": "Output"
     }
   },
   "errors": {

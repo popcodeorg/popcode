@@ -211,7 +211,7 @@ class Workspace extends React.Component {
   }
 
   _renderOutput() {
-    if (includes(this.props.ui.minimizedComponents, 'preview')) {
+    if (includes(this.props.ui.minimizedComponents, 'output')) {
       return null;
     }
 
@@ -225,7 +225,7 @@ class Workspace extends React.Component {
         onErrorClick={this._handleErrorClick}
         onMinimize={
           partial(this._handleComponentMinimized,
-            'preview')
+            'output')
         }
         onRuntimeError={this._handleRuntimeError}
       />
