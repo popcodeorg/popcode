@@ -24,8 +24,8 @@ class StyleLintValidator extends Validator {
       ({stylelint}) => stylelint(
         this._source
       ).then(
-        (result) => (result.messages),
-        (syntaxError) => ([syntaxError])
+        (result) => result.messages,
+        (syntaxError) => [syntaxError]
       )
     );
   }
