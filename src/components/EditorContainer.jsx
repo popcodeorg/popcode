@@ -18,7 +18,7 @@ function EditorContainer(props) {
   return (
     <div className="editors-editorContainer">
       <div
-        className="editors-editorContainer-label"
+        className="editors-editorContainer-label container-label"
         onClick={props.onMinimize}
       >
         {i18n.t(`languages.${props.language}`)}
