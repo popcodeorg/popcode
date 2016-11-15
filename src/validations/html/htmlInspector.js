@@ -1,15 +1,16 @@
 import last from 'lodash/last';
 import isNull from 'lodash/isNull';
+import {localizedArrayToSentence} from '../../util/arrayToSentence';
 import Validator from '../Validator';
 
 const specialCases = {
   li: {
     reason: 'invalid-tag-parent',
-    parent: '<ul>, <ol>, <menu>',
+    parent: ['<ul>', '<ol>', '<menu> tags'],
   },
   title: {
     reason: 'invalid-tag-parent',
-    parent: '<head>',
+    parent: ['<head> tag'],
   },
 };
 
@@ -23,7 +24,7 @@ const errorMap = {
         reason: specialCase.reason,
         payload: {
           tag,
-          parent: specialCase.parent,
+          parent: localizedArrayToSentence(specialCase.parent),
         },
       };
     }

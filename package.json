@@ -45,6 +45,7 @@
   "license": "MIT",
   "dependencies": {
     "PrettyCSS": "git+https://github.com/popcodeorg/PrettyCSS#v0.3.12-unicodefix",
+    "array-to-sentence": "^1.1.0",
     "base64-js": "^1.0.2",
     "bowser": "^1.4.5",
     "brace": "^0.8.0",
