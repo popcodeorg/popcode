@@ -382,12 +382,13 @@ body {
 
 .label {
   background-color: black;
-  color: white;
-  padding: 0.2rem;
-  opacity: 0.2;
-  font-size: 0.8rem;
   border-radius: 4px;
+  color: white;
   cursor: pointer;
+  font-family: 'Inconsolata';
+  font-size: 0.8rem;
+  opacity: 0.2;
+  padding: 0.2rem;
 }
 
 .label:hover {
