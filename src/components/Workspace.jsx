@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import values from 'lodash/values';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
+import isEmpty from 'lodash/isEmpty';
 import partial from 'lodash/partial';
 import sortBy from 'lodash/sortBy';
 import map from 'lodash/map';
@@ -210,6 +211,10 @@ class Workspace extends React.Component {
   }
 
   _renderOutput() {
+    if (includes(this.props.ui.minimizedComponents, 'output')) {
+      return null;
+    }
+
     return (
       <Output
         errors={this.props.errors}
@@ -218,6 +223,10 @@ class Workspace extends React.Component {
         validationState={this._getOverallValidationState()}
         onClearRuntimeErrors={this._handleClearRuntimeErrors}
         onErrorClick={this._handleErrorClick}
+        onMinimize={
+          partial(this._handleComponentMinimized,
+            'output')
+        }
         onRuntimeError={this._handleRuntimeError}
       />
     );
@@ -257,6 +266,10 @@ class Workspace extends React.Component {
         </EditorContainer>
       );
     });
+
+    if (isEmpty(editors)) {
+      return null;
+    }
 
     return (
       <div className="environment-column editors">{editors}</div>
