@@ -6,6 +6,7 @@ import {JSHINT as jshint} from 'jshint';
 import prettyCSS from 'PrettyCSS';
 import Slowparse from 'slowparse/src';
 import SlowparseHTMLParser from 'slowparse/src/HTMLParser';
+import stylelint from '../util/minimalStylelint';
 
 SlowparseHTMLParser.prototype.omittableCloseTagHtmlElements = [];
 
@@ -17,4 +18,5 @@ export {
   jshint,
   prettyCSS,
   Slowparse,
+  stylelint,
 };
