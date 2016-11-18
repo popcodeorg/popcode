@@ -329,14 +329,21 @@ body {
   flex: 1 1 auto;
   display: flex;
   flex-direction: row;
+  height: 100vh;
 }
 
 .environment-column {
   flex: 1 1 50%;
 }
 
+.environment-column-label {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  z-index: 1;
+}
+
 .editors {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   font-family: 'Inconsolata';
@@ -361,24 +368,6 @@ body {
   flex: 1 0 100%;
 }
 
-.editors-editorContainer-label {
-  position: absolute;
-  bottom: 1em;
-  right: 1em;
-  background-color: black;
-  color: white;
-  z-index: 1;
-  padding: 0.2rem;
-  opacity: 0.2;
-  font-size: 0.8rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.editors-editorContainer-label:hover {
-  opacity: 0.5;
-}
-
 .editors-editorContainer-helpText {
   position: absolute;
   z-index: 1;
@@ -389,6 +378,21 @@ body {
   margin: -1rem 0 0 -5.5rem;
   opacity: 0.4;
   font-family: Roboto;
+}
+
+.label {
+  background-color: black;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-family: 'Inconsolata';
+  font-size: 0.8rem;
+  opacity: 0.2;
+  padding: 0.2rem;
+}
+
+.label:hover {
+  opacity: 0.5;
 }
 
 .output {

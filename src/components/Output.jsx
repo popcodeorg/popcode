@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from 'i18next-client';
 import isEmpty from 'lodash/isEmpty';
 import ErrorList from './ErrorList';
 import Preview from './Preview';
@@ -59,6 +60,12 @@ class Output extends React.Component {
   render() {
     return (
       <div className="environment-column output">
+        <div
+          className="environment-column-label label"
+          onClick={this.props.onMinimize}
+        >
+          {i18n.t('workspace.components.output')}
+        </div>
         {this._renderErrors()}
         {this._renderPreview()}
         {this._renderRuntimeErrorList()}
@@ -74,6 +81,7 @@ Output.propTypes = {
   validationState: React.PropTypes.string,
   onClearRuntimeErrors: React.PropTypes.func.isRequired,
   onErrorClick: React.PropTypes.func.isRequired,
+  onMinimize: React.PropTypes.func.isRequired,
   onRuntimeError: React.PropTypes.func.isRequired,
 };
 
