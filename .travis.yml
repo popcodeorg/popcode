@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- 4.2.3
+- 6.3.1
 env:
   matrix:
   - CXX=g++-4.8 LOG_REDUX_ACTIONS=false FIREBASE_APP=popcode BROWSER_STACK_USERNAME=matthewbrown17
@@ -10,7 +10,7 @@ env:
 cache:
   apt: true
   directories:
-  - node_modules
+  - $HOME/.yarn-cache
 addons:
   apt:
     sources:
@@ -18,14 +18,18 @@ addons:
     packages:
     - g++-4.8
 before_install:
-- npm install -g npm@'3.10.7'
-- npm prune
+- sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
+- echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+- sudo apt-get update -qq
+- sudo apt-get install -y -qq yarn=0.17.6-1
+install:
+- yarn
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 script:
-- npm-shrinkwrap-check --v3 --dev --verbose
-- npm test
+- yarn check
+- yarn test
 - gulp build --production
 before_deploy:
 - gulp syncFirebase
