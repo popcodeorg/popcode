@@ -1,9 +1,31 @@
 const path = require('path');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
+const startsWith = require('lodash/startsWith');
+const map = require('lodash/map');
+const includes = require('lodash/includes');
 
 function matchModule(modulePath) {
-  return new RegExp(`\\/node_modules\\/${escapeRegExp(modulePath)}`);
+  const modulePattern = new RegExp(
+    `\\/node_modules\\/${escapeRegExp(modulePath)}`
+  );
+  const moduleDependencyPattern = new RegExp(
+    `\\/node_modules\\/${escapeRegExp(modulePath)}\\/node_modules`
+  );
+
+  return (filePath) =>
+    modulePattern.test(filePath) && !moduleDependencyPattern.test(filePath);
+}
+
+function directoryContentsExcept(directory, exceptions) {
+  const fullExceptions = map(
+    exceptions,
+    (exception) => path.resolve(directory, exception)
+  );
+
+  return (filePath) =>
+    startsWith(filePath, path.resolve(directory)) &&
+      !includes(fullExceptions, filePath);
 }
 
 module.exports = {
@@ -22,14 +44,14 @@ module.exports = {
           path.resolve(__dirname, 'src'),
           path.resolve(__dirname, 'spec'),
         ],
-        loaders: ['babel-loader', 'transform/cacheable?brfs-babel'],
+        loaders: ['babel-loader', 'transform-loader/cacheable?brfs-babel'],
       },
       {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, 'node_modules/htmllint'),
         ],
-        loader: 'transform/cacheable?bulkify',
+        loader: 'transform-loader/cacheable?bulkify',
       },
       {
         test: /\.js$/,
@@ -37,21 +59,19 @@ module.exports = {
           path.resolve(__dirname, 'node_modules/PrettyCSS'),
           path.resolve(__dirname, 'node_modules/css'),
         ],
-        loader: 'transform/cacheable?brfs',
+        loader: 'transform-loader/cacheable?brfs',
       },
       {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, 'node_modules/postcss/lib/previous-map'),
-          path.resolve(__dirname, 'node_modules/stylelint/dist/getPostcssResult'),
-          path.resolve(__dirname,
-            'node_modules/stylelint/node_modules/sugarss/node_modules/postcss/lib/previous-map'
+          path.resolve(
+            __dirname,
+            'node_modules/stylelint/dist/getPostcssResult'
           ),
-          path.resolve(__dirname,
-            'node_modules/stylelint/node_modules/postcss-scss/node_modules/postcss/lib/previous-map'
-          ),
+          matchModule('postcss/lib/previous-map'),
         ],
-        loader: 'string-replace',
+        loader: 'string-replace-loader',
         query: {
           search: /require\(['"]fs['"]\)/,
           replace: '{}',
@@ -65,15 +85,15 @@ module.exports = {
             'node_modules/stylelint/dist/utils/isAutoprefixable'
           ),
         ],
-        loader: 'substitute',
+        loader: 'substitute-loader',
         query: {content: '() => false'},
       },
       {
         test: /\.js$/,
         include: [
-          path.resolve(__dirname, 'node_modules/redux'),
-          path.resolve(__dirname, 'node_modules/lodash-es'),
-          path.resolve(__dirname, 'node_modules/github-api'),
+          matchModule('redux'),
+          matchModule('lodash-es'),
+          matchModule('github-api'),
         ],
         loader: 'babel-loader',
       },
@@ -82,7 +102,7 @@ module.exports = {
         include: [
           path.resolve(__dirname, 'node_modules/loop-protect'),
         ],
-        loader: 'imports?define=>false',
+        loader: 'imports-loader?define=>false',
       },
       {
         include: [
@@ -91,26 +111,30 @@ module.exports = {
             'node_modules/html-inspector/html-inspector.js'
           ),
         ],
-        loader: 'imports?window=>{}!exports?window.HTMLInspector',
+        loader:
+          'imports-loader?window=>{}!exports-loader?window.HTMLInspector',
       },
       {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, 'node_modules/brace/worker'),
-          path.resolve(
-            __dirname,
-            'node_modules/stylelint/dist/rules/no-unsupported-browser-features'
-          ),
-          path.resolve(
-            __dirname,
-            'node_modules/stylelint/dist/rules/no-browser-hacks'
-          ),
           matchModule('autoprefixer'),
           matchModule('postcss-scss'),
           matchModule('postcss-less'),
           matchModule('sugarss'),
         ],
-        loader: 'null',
+        loader: 'null-loader',
+      },
+      {
+        test: /\.js$/,
+        include: directoryContentsExcept(
+          'node_modules/stylelint/dist/rules',
+          [
+            'index.js',
+            'declaration-block-trailing-semicolon/index.js',
+          ]
+        ),
+        loader: 'null-loader',
       },
       {
         test: /\.json$/,
