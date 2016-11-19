@@ -50,6 +50,9 @@
       "output": "Output"
     }
   },
+  "utility": {
+    "or": " or "
+  },
   "errors": {
     "undefined-description": "Couldn't find a human description for",
     "notice": "You have an error in your $t(languages.__language__)!",
@@ -69,6 +72,7 @@
       },
       "lower-case-attribute-name": "Use lower case for attribute names",
       "invalid-tag-location": "The <__tag__> tag can’t go inside the <__parent__> tag.",
+      "invalid-tag-parent": "The <__tag__> tag needs to be inside the __parent__",
       "attribute-quotes": "You need to put the value of the __attribute__ attribute in quotation marks\nTry: __attribute__=\"myvalue\"",
       "attribute-value": "Every attribute needs a value.\nTry: myattribute=\"myvalue\"",
       "doctype": "The first line of your HTML should always be:\n<!DOCTYPE html>",
