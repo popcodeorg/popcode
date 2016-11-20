@@ -424,7 +424,7 @@ class Workspace extends React.Component {
         <div className="layout">
           {this._renderDashboard()}
           {this._renderSidebar()}
-          <div className="layout__main" id="workspace">
+          <div className="workspace layout__main">
             {this._renderEnvironment()}
           </div>
         </div>
