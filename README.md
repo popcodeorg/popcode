@@ -19,6 +19,25 @@ program](https://scripted.org) in the 2016–2017 school year.
 You can try out Popcode at
 [`https://popcode.org`](https://popcode.org).
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
+
+- [Features](#features)
+  - [About validation](#about-validation)
+  - [Feature roadmap](#feature-roadmap)
+- [Technical details](#technical-details)
+  - [Architecture Overview](#architecture-overview)
+- [Contributing](#contributing)
+  - [Running locally](#running-locally)
+  - [Developer Reference](#developer-reference)
+- [License](#license)
+- [Contributors](#contributors)
+- [Thanks to](#thanks-to)
+- [Contact](#contact)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Features ##
 
 * Edit HTML, CSS, and JavaScript in the browser; in-browser preview updates as
