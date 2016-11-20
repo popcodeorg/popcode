@@ -10,8 +10,8 @@ function ErrorList(props) {
     <div
       className={classnames(
         'errorList',
-        'output-item',
-        {'errorList--docked': docked, 'output-item--shrink': docked}
+        'output__item',
+        {'errorList--docked': docked, 'output__item--shrink': docked}
       )}
     >
       <ErrorSublist

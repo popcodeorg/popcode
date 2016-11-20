@@ -5,8 +5,8 @@ function LibraryPickerItem(props) {
   return (
     <div
       className={classnames(
-        'dashboard-menu-item',
-        {'dashboard-menu-item--active': props.enabled}
+        'dashboard__menuItem',
+        {'dashboard__menuItem--active': props.enabled}
       )} onClick={props.onLibraryToggled}
     >
       {props.library.name}

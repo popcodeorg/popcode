@@ -54,12 +54,12 @@ class Preview extends React.Component {
       <div
         className={classnames(
           'preview',
-          'output-item',
-          {'u-hidden': !this.props.isValid}
+          'output__item',
+          {u__hidden: !this.props.isValid}
         )}
       >
         <div
-          className="preview-popOutButton"
+          className="preview__popOutButton"
           onClick={this._handlePopOutClick}
         />
         <PreviewFrame
