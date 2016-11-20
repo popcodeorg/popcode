@@ -15,17 +15,17 @@ function ProjectList(props) {
     return (
       <div
         className={classnames(
-          'projectPreview',
-          'dashboard__menuItem',
-          {'dashboard__menuItem_active': isSelected}
+          'project-preview',
+          'dashboard__menu-item',
+          {'dashboard__menu-item_active': isSelected}
         )}
         key={project.projectKey}
         onClick={partial(props.onProjectSelected, project)}
       >
-        <div className="projectPreview__timestamp">
+        <div className="project-preview__timestamp">
           {moment(project.updatedAt).fromNow()}
         </div>
-        <div className="projectPreview-previewText">
+        <div>
           {preview.slice(0, MAX_LENGTH)}
         </div>
       </div>

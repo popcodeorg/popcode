@@ -47,7 +47,7 @@ class Output extends React.Component {
 
   _renderErrors() {
     if (this.props.validationState === 'validating') {
-      return <div className="output__delayedErrorOverlay" />;
+      return <div className="output__delayed-error-overlay" />;
     }
 
     if (this.props.validationState === 'failed') {

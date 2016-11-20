@@ -22,7 +22,7 @@ class Dashboard extends React.Component {
           />
           <span className="dashboard__username">{name}</span>
           <span
-            className="dashboard__logInOut"
+            className="dashboard__log-in-out"
             onClick={this.props.onLogOut}
           >
             {i18n.t('dashboard.session.logOutPrompt')}
@@ -36,7 +36,7 @@ class Dashboard extends React.Component {
           {i18n.t('dashboard.session.notLoggedIn')}
         </span>
         <span
-          className="dashboard__logInOut"
+          className="dashboard__log-in-out"
           onClick={this.props.onStartLogIn}
         >
           {i18n.t('dashboard.session.logInPrompt')}
@@ -49,9 +49,9 @@ class Dashboard extends React.Component {
     return (
       <div
         className={classnames(
-          'dashboard__menuItem',
-          'dashboard__menuItem_grid',
-          {'dashboard__menuItem_active':
+          'dashboard__menu-item',
+          'dashboard__menu-item_grid',
+          {'dashboard__menu-item_active':
             this.props.activeSubmenu === submenu}
         )}
         onClick={partial(this.props.onSubmenuToggled, submenu)}
@@ -66,7 +66,7 @@ class Dashboard extends React.Component {
     if (this.props.currentUser.authenticated) {
       newProjectButton = (
         <div
-          className="dashboard__menuItem dashboard__menuItem_grid"
+          className="dashboard__menu-item dashboard__menu-item_grid"
           onClick={this.props.onNewProject}
         >
           {i18n.t('dashboard.menu.new-project')}
@@ -85,9 +85,9 @@ class Dashboard extends React.Component {
         <div
           className={
             classnames(
-              'dashboard__menuItem',
-              'dashboard__menuItem_grid',
-              {'dashboard__menuItem_spinner': this.props.gistExportInProgress}
+              'dashboard__menu-item',
+              'dashboard__menu-item_grid',
+              {'dashboard__menu-item_spinner': this.props.gistExportInProgress}
             )
           }
           onClick={this.props.onExportGist}
@@ -95,7 +95,7 @@ class Dashboard extends React.Component {
           {i18n.t('dashboard.menu.export-gist')}
         </div>
         <a
-          className="dashboard__menuItem dashboard__menuItem_grid"
+          className="dashboard__menu-item dashboard__menu-item_grid"
           href={config.feedbackUrl}
           target="_blank"
         >
@@ -156,7 +156,7 @@ class Dashboard extends React.Component {
 
   _renderPop() {
     return (
-      <div className="dashboard__popContainer">
+      <div className="dashboard__pop-container">
         {this._renderPopSvg('neutral', 'passed')}
         {this._renderPopSvg('thinking', 'validating')}
         {this._renderPopSvg('horns', 'failed')}
@@ -189,8 +189,8 @@ class Dashboard extends React.Component {
   render() {
     const sidebarClassnames = classnames(
       'dashboard',
-      'u__flexContainer',
-      'u__flexContainer_column',
+      'u__flex-container',
+      'u__flex-container_column',
       {
         dashboard_yellow: this.props.validationState === 'validating',
         dashboard_red: this.props.validationState === 'failed',

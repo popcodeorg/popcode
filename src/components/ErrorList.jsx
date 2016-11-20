@@ -9,9 +9,9 @@ function ErrorList(props) {
   return (
     <div
       className={classnames(
-        'errorList',
+        'error-list',
         'output__item',
-        {'errorList_docked': docked, output__item_shrink: docked}
+        {'error-list_docked': docked, output__item_shrink: docked}
       )}
     >
       <ErrorSublist

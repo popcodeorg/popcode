@@ -9,7 +9,7 @@ class Sidebar extends React.Component {
     const components = this.props.minimizedComponents.
       map((componentName) => (
         <div
-          className="sidebar__minimizedComponent"
+          className="sidebar__minimized-component"
           key={componentName}
           onClick={partial(this.props.onComponentMaximized, componentName)}
         >
@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
       ));
 
     return (
-      <div className="sidebar__minimizedComponents">
+      <div className="sidebar__minimized-components">
         {components}
       </div>
     );
@@ -35,7 +35,7 @@ class Sidebar extends React.Component {
 
     return (
       <div className={sidebarClassnames}>
-        <div className="sidebar__wordmarkContainer">
+        <div className="sidebar__wordmark-container">
           <Isvg src="/images/wordmark-vertical.svg" />
         </div>
         <div

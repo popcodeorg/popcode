@@ -59,7 +59,7 @@ class Preview extends React.Component {
         )}
       >
         <div
-          className="preview__popOutButton"
+          className="preview__pop-out-button"
           onClick={this._handlePopOutClick}
         />
         <PreviewFrame

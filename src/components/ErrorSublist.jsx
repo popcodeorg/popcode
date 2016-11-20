@@ -27,10 +27,10 @@ function ErrorSublist(props) {
 
   return (
     <div>
-      <h2 className="errorList__header">
+      <h2 className="error-list__header">
         {errorMessage}
       </h2>
-      <ul className="errorList__errors">
+      <ul className="error-list__errors">
         {errors}
       </ul>
     </div>

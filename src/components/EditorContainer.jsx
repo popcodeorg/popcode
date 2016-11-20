@@ -6,7 +6,7 @@ function EditorContainer(props) {
 
   if (props.source === '') {
     helpText = (
-      <div className="editors__helpText">
+      <div className="editors__help-text">
         {i18n.t(
           'editors.helpText',
           {language: props.language}
@@ -16,7 +16,7 @@ function EditorContainer(props) {
   }
 
   return (
-    <div className="editors__editorContainer">
+    <div className="editors__editor-container">
       <div
         className="environment__label label"
         onClick={props.onMinimize}
