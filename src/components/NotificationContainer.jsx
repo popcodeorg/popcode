@@ -6,8 +6,8 @@ export default function NotificationContainer(props) {
     <div
       className={
         classnames(
-          'notificationList__notification',
-          `notificationList__notification--${props.severity}`
+          'notification-list__notification',
+          `notificationList__notification_${props.severity}`
         )
       }
     >

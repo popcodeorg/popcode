@@ -50,8 +50,8 @@ class Dashboard extends React.Component {
       <div
         className={classnames(
           'dashboard__menuItem',
-          'dashboard__menuItem--grid',
-          {'dashboard__menuItem--active':
+          'dashboard__menuItem_grid',
+          {'dashboard__menuItem_active':
             this.props.activeSubmenu === submenu}
         )}
         onClick={partial(this.props.onSubmenuToggled, submenu)}
@@ -66,7 +66,7 @@ class Dashboard extends React.Component {
     if (this.props.currentUser.authenticated) {
       newProjectButton = (
         <div
-          className="dashboard__menuItem dashboard__menuItem--grid"
+          className="dashboard__menuItem dashboard__menuItem_grid"
           onClick={this.props.onNewProject}
         >
           {i18n.t('dashboard.menu.new-project')}
@@ -78,7 +78,7 @@ class Dashboard extends React.Component {
     }
 
     return (
-      <div className="dashboard__menu dashboard__menu--grid">
+      <div className="dashboard__menu dashboard__menu_grid">
         {newProjectButton}
         {loadProjectButton}
         {this._renderSubmenuToggleButton('libraryPicker', 'libraries')}
@@ -86,8 +86,8 @@ class Dashboard extends React.Component {
           className={
             classnames(
               'dashboard__menuItem',
-              'dashboard__menuItem--grid',
-              {'dashboard__menuItem--spinner': this.props.gistExportInProgress}
+              'dashboard__menuItem_grid',
+              {'dashboard__menuItem_spinner': this.props.gistExportInProgress}
             )
           }
           onClick={this.props.onExportGist}
@@ -95,7 +95,7 @@ class Dashboard extends React.Component {
           {i18n.t('dashboard.menu.export-gist')}
         </div>
         <a
-          className="dashboard__menuItem dashboard__menuItem--grid"
+          className="dashboard__menuItem dashboard__menuItem_grid"
           href={config.feedbackUrl}
           target="_blank"
         >
@@ -144,7 +144,7 @@ class Dashboard extends React.Component {
         className={classnames(
           'dashboard__pop',
           {
-            'dashboard__pop--visible':
+            dashboard__pop_visible:
               this.props.validationState === validationState,
           }
         )}
@@ -190,10 +190,10 @@ class Dashboard extends React.Component {
     const sidebarClassnames = classnames(
       'dashboard',
       'u__flexContainer',
-      'u__flexContainer--column',
+      'u__flexContainer_column',
       {
-        'dashboard--yellow': this.props.validationState === 'validating',
-        'dashboard--red': this.props.validationState === 'failed',
+        dashboard_yellow: this.props.validationState === 'validating',
+        dashboard_red: this.props.validationState === 'failed',
       }
     );
 

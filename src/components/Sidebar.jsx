@@ -28,8 +28,8 @@ class Sidebar extends React.Component {
     const sidebarClassnames = classnames(
       'sidebar',
       {
-        'sidebar--yellow': this.props.validationState === 'validating',
-        'sidebar--red': this.props.validationState === 'failed',
+        sidebar_yellow: this.props.validationState === 'validating',
+        sidebar_red: this.props.validationState === 'failed',
       }
     );
 
@@ -42,8 +42,8 @@ class Sidebar extends React.Component {
           className={classnames(
             'sidebar__arrow',
             {
-              'sidebar__arrow--show': !this.props.dashboardIsOpen,
-              'sidebar__arrow--hide': this.props.dashboardIsOpen,
+              sidebar__arrow_show: !this.props.dashboardIsOpen,
+              sidebar__arrow_hide: this.props.dashboardIsOpen,
             }
           )}
           onClick={this.props.onToggleDashboard}
