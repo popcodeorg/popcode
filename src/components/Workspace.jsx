@@ -272,7 +272,7 @@ class Workspace extends React.Component {
     }
 
     return (
-      <div className="environment-column editors">{editors}</div>
+      <div className="environment__column editors">{editors}</div>
     );
   }
 
@@ -371,7 +371,7 @@ class Workspace extends React.Component {
     }
 
     return (
-      <div className="layout-dashboard">
+      <div className="layout__dashboard">
         <Dashboard
           activeSubmenu={this.props.ui.dashboard.activeSubmenu}
           allProjects={this.props.allProjects}
@@ -393,7 +393,7 @@ class Workspace extends React.Component {
 
   _renderSidebar() {
     return (
-      <div className="layout-sidebar">
+      <div className="layout__sidebar">
         <Sidebar
           dashboardIsOpen={this.props.ui.dashboard.isOpen}
           minimizedComponents={this.props.ui.minimizedComponents}
@@ -424,7 +424,7 @@ class Workspace extends React.Component {
         <div className="layout">
           {this._renderDashboard()}
           {this._renderSidebar()}
-          <div className="layout-main" id="workspace">
+          <div className="workspace layout__main">
             {this._renderEnvironment()}
           </div>
         </div>

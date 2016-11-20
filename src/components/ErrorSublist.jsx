@@ -26,11 +26,11 @@ function ErrorSublist(props) {
   );
 
   return (
-    <div className="errorList-errorSublist">
-      <h2 className="errorList-errorSublist-header">
+    <div>
+      <h2 className="error-list__header">
         {errorMessage}
       </h2>
-      <ul className="errorList-errorSublist-list">
+      <ul className="error-list__errors">
         {errors}
       </ul>
     </div>

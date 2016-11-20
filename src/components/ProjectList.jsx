@@ -15,17 +15,17 @@ function ProjectList(props) {
     return (
       <div
         className={classnames(
-          'projectPreview',
-          'dashboard-menu-item',
-          {'dashboard-menu-item--active': isSelected}
+          'project-preview',
+          'dashboard__menu-item',
+          {'dashboard__menu-item_active': isSelected}
         )}
         key={project.projectKey}
         onClick={partial(props.onProjectSelected, project)}
       >
-        <div className="projectPreview-timestamp">
+        <div className="project-preview__timestamp">
           {moment(project.updatedAt).fromNow()}
         </div>
-        <div className="projectPreview-previewText">
+        <div>
           {preview.slice(0, MAX_LENGTH)}
         </div>
       </div>
@@ -33,7 +33,7 @@ function ProjectList(props) {
   });
 
   return (
-    <div className="dashboard-menu dashboard-menu--scrollable">
+    <div className="dashboard__menu dashboard__menu_scrollable">
       {projects}
     </div>
   );

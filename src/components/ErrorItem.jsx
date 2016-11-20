@@ -4,7 +4,7 @@ import partial from 'lodash/partial';
 function ErrorItem(props) {
   return (
     <li
-      className="errorList-error"
+      className="error-list__error"
       data-error-reason={props.reason}
       onClick={partial(
         props.onClick,
@@ -12,8 +12,8 @@ function ErrorItem(props) {
         props.column
       )}
     >
-      <div className="errorList-error-line">{props.row + 1}</div>
-      <div className="errorList-error-message">{props.text}</div>
+      <div>{props.row + 1}</div>
+      <div className="error-list__message">{props.text}</div>
     </li>
   );
 }

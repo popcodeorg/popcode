@@ -15,14 +15,14 @@ class Dashboard extends React.Component {
       const name = currentUser.info.displayName || currentUser.info.username;
 
       return (
-        <div className="dashboard-session">
+        <div className="dashboard__session">
           <img
-            className="dashboard-session-avatar"
+            className="dashboard__avatar"
             src={currentUser.info.profileImageURL}
           />
-          <span className="dashboard-session-name">{name}</span>
+          <span className="dashboard__username">{name}</span>
           <span
-            className="dashboard-session-logInOut"
+            className="dashboard__log-in-out"
             onClick={this.props.onLogOut}
           >
             {i18n.t('dashboard.session.logOutPrompt')}
@@ -31,12 +31,12 @@ class Dashboard extends React.Component {
       );
     }
     return (
-      <div className="dashboard-session">
-        <span className="dashboard-session-name">
+      <div className="dashboard__session">
+        <span className="dashboard__username">
           {i18n.t('dashboard.session.notLoggedIn')}
         </span>
         <span
-          className="dashboard-session-logInOut"
+          className="dashboard__log-in-out"
           onClick={this.props.onStartLogIn}
         >
           {i18n.t('dashboard.session.logInPrompt')}
@@ -49,9 +49,9 @@ class Dashboard extends React.Component {
     return (
       <div
         className={classnames(
-          'dashboard-menu-item',
-          'dashboard-menu-item--grid',
-          {'dashboard-menu-item--active':
+          'dashboard__menu-item',
+          'dashboard__menu-item_grid',
+          {'dashboard__menu-item_active':
             this.props.activeSubmenu === submenu}
         )}
         onClick={partial(this.props.onSubmenuToggled, submenu)}
@@ -66,7 +66,7 @@ class Dashboard extends React.Component {
     if (this.props.currentUser.authenticated) {
       newProjectButton = (
         <div
-          className="dashboard-menu-item dashboard-menu-item--grid"
+          className="dashboard__menu-item dashboard__menu-item_grid"
           onClick={this.props.onNewProject}
         >
           {i18n.t('dashboard.menu.new-project')}
@@ -78,16 +78,16 @@ class Dashboard extends React.Component {
     }
 
     return (
-      <div className="dashboard-menu dashboard-menu--grid">
+      <div className="dashboard__menu dashboard__menu_grid">
         {newProjectButton}
         {loadProjectButton}
         {this._renderSubmenuToggleButton('libraryPicker', 'libraries')}
         <div
           className={
             classnames(
-              'dashboard-menu-item',
-              'dashboard-menu-item--grid',
-              {'dashboard-menu-item--spinner': this.props.gistExportInProgress}
+              'dashboard__menu-item',
+              'dashboard__menu-item_grid',
+              {'dashboard__menu-item_spinner': this.props.gistExportInProgress}
             )
           }
           onClick={this.props.onExportGist}
@@ -95,7 +95,7 @@ class Dashboard extends React.Component {
           {i18n.t('dashboard.menu.export-gist')}
         </div>
         <a
-          className="dashboard-menu-item dashboard-menu-item--grid"
+          className="dashboard__menu-item dashboard__menu-item_grid"
           href={config.feedbackUrl}
           target="_blank"
         >
@@ -142,9 +142,9 @@ class Dashboard extends React.Component {
     return (
       <div
         className={classnames(
-          'dashboard-pop',
+          'dashboard__pop',
           {
-            'dashboard-pop--visible':
+            dashboard__pop_visible:
               this.props.validationState === validationState,
           }
         )}
@@ -156,7 +156,7 @@ class Dashboard extends React.Component {
 
   _renderPop() {
     return (
-      <div className="dashboard-popContainer">
+      <div className="dashboard__pop-container">
         {this._renderPopSvg('neutral', 'passed')}
         {this._renderPopSvg('thinking', 'validating')}
         {this._renderPopSvg('horns', 'failed')}
@@ -166,19 +166,19 @@ class Dashboard extends React.Component {
 
   _renderLinks() {
     return (
-      <div className="dashboard-links">
+      <div className="dashboard__links">
         <a
-          className="dashboard-links-link fontawesome"
+          className="dashboard__link fontawesome"
           href="https://github.com/popcodeorg/popcode"
           target="_blank"
         >&#xf09b;</a>
         <a
-          className="dashboard-links-link fontawesome"
+          className="dashboard__link fontawesome"
           href="https://twitter.com/popcodeorg"
           target="_blank"
         >&#xf099;</a>
         <a
-          className="dashboard-links-link fontawesome"
+          className="dashboard__link fontawesome"
           href="https://slack.popcode.org/"
           target="_blank"
         >&#xf198;</a>
@@ -189,11 +189,11 @@ class Dashboard extends React.Component {
   render() {
     const sidebarClassnames = classnames(
       'dashboard',
-      'u-flexContainer',
-      'u-flexContainer--column',
+      'u__flex-container',
+      'u__flex-container_column',
       {
-        'dashboard--yellow': this.props.validationState === 'validating',
-        'dashboard--red': this.props.validationState === 'failed',
+        dashboard_yellow: this.props.validationState === 'validating',
+        dashboard_red: this.props.validationState === 'failed',
       }
     );
 
@@ -202,7 +202,7 @@ class Dashboard extends React.Component {
         {this._renderLoginState()}
         {this._renderMenu()}
         {this._renderSubmenu()}
-        <div className="dashboard-spacer" />
+        <div className="dashboard__spacer" />
         {this._renderPop()}
         {this._renderLinks()}
       </div>

@@ -6,14 +6,14 @@ export default function NotificationContainer(props) {
     <div
       className={
         classnames(
-          'notificationList-notification',
-          `notificationList-notification--${props.severity}`
+          'notification-list__notification',
+          `notification-list__notification_${props.severity}`
         )
       }
     >
       {props.children}
       <span
-        className="notificationList-notification-dismiss"
+        className="notification-list__dismiss"
         onClick={props.onErrorDismissed}
       >&#xf00d;</span>
     </div>

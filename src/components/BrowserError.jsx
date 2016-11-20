@@ -15,7 +15,7 @@ function BrowserError(props) {
   const browserName = props.browser.name;
 
   return (
-    <div id="unsupported-browser">
+    <div className="unsupported-browser">
       <p>{i18n.t('bad-browser.message', {name: browserName})}</p>
 
       <p>

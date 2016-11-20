@@ -43,7 +43,7 @@ export default function NotificationList(props) {
   });
 
   return (
-    <div className="notificationList">{notificationList}</div>
+    <div className="notification-list">{notificationList}</div>
   );
 }
 

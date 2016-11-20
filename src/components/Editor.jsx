@@ -131,7 +131,7 @@ class Editor extends React.Component {
   render() {
     return (
       <div
-        className="editors-editorContainer-editor"
+        className="editors__editor"
         ref={this._setupEditor}
       />
     );

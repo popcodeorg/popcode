@@ -47,7 +47,7 @@ class Output extends React.Component {
 
   _renderErrors() {
     if (this.props.validationState === 'validating') {
-      return <div className="output-delayedErrorOverlay" />;
+      return <div className="output__delayed-error-overlay" />;
     }
 
     if (this.props.validationState === 'failed') {
@@ -59,9 +59,9 @@ class Output extends React.Component {
 
   render() {
     return (
-      <div className="environment-column output">
+      <div className="environment__column output">
         <div
-          className="environment-column-label label"
+          className="environment__label label"
           onClick={this.props.onMinimize}
         >
           {i18n.t('workspace.components.output')}
