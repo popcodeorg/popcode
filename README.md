@@ -120,6 +120,25 @@ When you're done, lint and make sure tests pass before opening a pull request:
 $ npm test
 ```
 
+### Developer Reference ###
+
+Popcode endeavors to use up-to-date technologies and code conventions to make
+development as pleasant as possible. Below are links to reference documentation
+on the major tools:
+
+* [React](https://facebook.github.io/react/docs/react-component.html) for
+  constructing the user interface
+* [Redux](http://redux.js.org/) for managing application state
+* [cssnext](http://cssnext.io/features/) gives us cutting-edge CSS features
+* [Block Element Modifier](https://en.bem.info/methodology/naming-convention/)
+  provides a convention for organizing DOM classes
+* [Webpack](https://webpack.github.io/docs/configuration.html) builds the
+  JavaScript
+* [Mocha](https://mochajs.org/#assertions), [Chai
+  assertions](http://chaijs.com/api/assert/),
+  [Karma](https://karma-runner.github.io/1.0/config/configuration-file.html),
+  and [Sinon](http://sinonjs.org/docs/) provide the test framework
+
 ## License ##
 
 Popcode is distributed under the MIT license. See the attached LICENSE file
