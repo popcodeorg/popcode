@@ -89,7 +89,8 @@
     "pretest": "npm run lint",
     "test": "./node_modules/.bin/karma start --single-run --no-auto-watch",
     "autotest": "./node_modules/.bin/karma start --no-single-run --auto-watch",
-    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --plugin react src"
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --plugin react src",
+    "toc": "./node_modules/.bin/doctoc README.md --github --title '## Table of Contents'"
   },
   "devDependencies": {
     "babel-core": "^6.14.0",
@@ -108,6 +109,7 @@
     "chai-immutable": "^1.6.0",
     "check-dependencies": "^1.0.1",
     "cssnano": "https://registry.npmjs.org/cssnano/-/cssnano-3.7.5.tgz",
+    "doctoc": "^1.2.0",
     "eslint": "^3.3.0",
     "eslint-plugin-react": "^6.1.0",
     "eslint_d": "^4.0.1",
