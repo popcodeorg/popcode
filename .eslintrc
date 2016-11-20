@@ -31,7 +31,7 @@
         ],
         "camelcase": [
             2,
-            {"properties": "always"}
+            {"properties": "never"}
         ],
         "comma-dangle": [
           2,
