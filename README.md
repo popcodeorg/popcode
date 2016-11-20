@@ -82,6 +82,7 @@ application, and [Babel](https://babeljs.io/) to compile ES2016+JSX into ES5.
 Popcode detects code errors using
 [slowparse](https://github.com/mozilla/slowparse),
 [htmllint](https://github.com/htmllint/htmllint),
+[HTML Inspector](https://github.com/philipwalton/html-inspector),
 [Rework CSS](https://github.com/reworkcss/css),
 [PrettyCSS](https://github.com/fidian/PrettyCSS),
 [stylelint](https://github.com/stylelint/stylelint),
