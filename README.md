@@ -77,7 +77,7 @@ Popcode uses [**React**](https://facebook.github.io/react/) to render views,
 [**Redux**](http://redux.js.org/) to manage application state,
 [**Ace**](https://ace.c9.io/) as the code editor,
 [**Webpack**](https://webpack.github.io/) to package the client-side
-application, and [Babel](https://babeljs.io/) to compile ES2016+JSX into ES5.
+application, and [**Babel**](https://babeljs.io/) to compile ES2016+JSX into ES5.
 
 Popcode detects code errors using
 [slowparse](https://github.com/mozilla/slowparse),
@@ -112,9 +112,32 @@ lifecycle of a user interaction:
 
 ## Contributing ##
 
-Yes please! There are a [ton of ways](https://trello.com/b/ONaFg6wh/popcode)
+Yes please! There are a [ton of
+ways](https://github.com/popcodeorg/popcode/issues)
 Popcode could be made better. Pull requests, bug reports, feature suggestions
 are all very very welcome.
+
+When you’re first getting started, I recommend picking an issue that’s [good for
+beginners](https://github.com/popcodeorg/popcode/issues?q=is%3Aopen+is%3Aissue+label%3Agood-for-beginner) so you can get your feet wet and make sure you can run a development environment smoothly.
+
+Everyone is welcome to submit pull requests that implement a new feature or fix
+a bug that you’re particularly passionate about. But if you just want to help
+out and you’re looking for ideas, you’ve got lots of options. You might check
+out some of the
+[enhancements](https://github.com/popcodeorg/popcode/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
+that have been proposed, or maybe fix a
+[bug](https://github.com/popcodeorg/popcode/issues?q=is%3Aopen+is%3Aissue+label%3Abug).
+There’s also plenty of
+[UX](https://github.com/popcodeorg/popcode/issues?utf8=%E2%9C%93&q=is%3Aopen%20is%3Aissue%20label%3Aux)
+and
+[design](https://github.com/popcodeorg/popcode/issues?utf8=%E2%9C%93&q=is%3Aopen%20is%3Aissue%20label%3Adesign%20)
+work to do, if that’s more your speed. Or, if you’re more about tinkering with
+the guts, there’s lots of [development
+tooling](https://github.com/popcodeorg/popcode/issues?utf8=%E2%9C%93&q=is%3Aopen%20is%3Aissue%20label%3Adevelopment-tooling),
+[deployment](https://github.com/popcodeorg/popcode/issues?utf8=%E2%9C%93&q=is%3Aopen%20is%3Aissue%20label%3Adeployment),
+and
+[performance](https://github.com/popcodeorg/popcode/issues?utf8=%E2%9C%93&q=is%3Aopen%20is%3Aissue%20label%3Aperformance)
+work to do.
 
 ### Running locally ###
 
