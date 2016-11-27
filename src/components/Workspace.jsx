@@ -51,6 +51,7 @@ import Output from './Output';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 import NotificationList from './NotificationList';
+import PopThrobber from './PopThrobber';
 
 const spinnerPage = base64.fromByteArray(
   new TextEncoder('utf-8').encode(
@@ -235,10 +236,6 @@ class Workspace extends React.Component {
   }
 
   _renderEditors() {
-    if (this.props.currentProject === null) {
-      return null;
-    }
-
     const editors = [];
     ['html', 'css', 'javascript'].forEach((language) => {
       if (includes(this.props.ui.minimizedComponents, `editor.${language}`)) {
@@ -412,6 +409,10 @@ class Workspace extends React.Component {
   }
 
   _renderEnvironment() {
+    if (this.props.currentProject === null) {
+      return <PopThrobber message={i18n.t('workspace.loading')} />;
+    }
+
     return (
       <div className="environment">
         {this._renderEditors()}
