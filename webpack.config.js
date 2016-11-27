@@ -7,10 +7,10 @@ const includes = require('lodash/includes');
 
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
-    `\\/node_modules\\/${escapeRegExp(modulePath)}`
+    escapeRegExp(path.join('/node_modules', modulePath))
   );
   const moduleDependencyPattern = new RegExp(
-    `\\/node_modules\\/${escapeRegExp(modulePath)}\\/node_modules`
+    escapeRegExp(path.join('/node_modules', modulePath, 'node_modules'))
   );
 
   return (filePath) =>
