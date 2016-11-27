@@ -1,11 +1,11 @@
 import React from 'react';
-import Isvg from 'react-inlinesvg';
+import Pop from './Pop';
 
 function PopThrobber(props) {
   return (
     <div className="pop-spinner">
       <div className="pop-spinner__message">{props.message}</div>
-      <Isvg src="/images/pop/thinking.svg" />
+      <Pop variant="thinking" />
     </div>
   );
 }

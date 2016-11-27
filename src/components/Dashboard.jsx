@@ -1,10 +1,10 @@
 import React from 'react';
-import Isvg from 'react-inlinesvg';
 import i18n from 'i18next-client';
 import partial from 'lodash/partial';
 import classnames from 'classnames';
 import ProjectList from './ProjectList';
 import LibraryPicker from './LibraryPicker';
+import Pop from './Pop';
 import config from '../config';
 
 class Dashboard extends React.Component {
@@ -149,7 +149,7 @@ class Dashboard extends React.Component {
           }
         )}
       >
-        <Isvg src={`/images/pop/${variant}.svg`} />
+        <Pop variant={variant} />
       </div>
     );
   }

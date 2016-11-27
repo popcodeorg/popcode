@@ -140,6 +140,30 @@ module.exports = {
         test: /\.json$/,
         loader: 'json-loader',
       },
+      {
+        test: /\.svg$/,
+        loader: [
+          'svg-react-loader',
+          {
+            loader: 'image-webpack-loader',
+            query: {
+              svgo: {
+                plugins: [
+                  {
+                    removeXMLNS: true,
+                  },
+                  {
+                    removeAttrs: {
+                      active: true,
+                      attrs: 'svg:data-name',
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
