@@ -6,14 +6,15 @@ import {assert} from 'chai';
 import createApplicationStore from '../../../src/createApplicationStore';
 import waitFor from '../../helpers/waitFor';
 
+import {TYPING_DEBOUNCE_DELAY} from '../../../src/actions/ui';
+
 import {
-  TYPING_DEBOUNCE_DELAY,
   editorFocusedRequestedLine,
   userTyped,
   userRequestedFocusedLine,
   notificationTriggered,
   userDismissedNotification,
-} from '../../../src/actions/ui';
+} from '../../../src/actions';
 
 const timeInterval = 1000 * 60 * 60 * 24;
 

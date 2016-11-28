@@ -1,8 +1,8 @@
-import GitHub from 'github-api';
-import trim from 'lodash/trim';
+import assign from 'lodash/assign';
 import isEmpty from 'lodash/isEmpty';
+import trim from 'lodash/trim';
 import promiseRetry from 'promise-retry';
-const anonymousGithub = new GitHub({});
+import gitHub from './gitHub';
 
 function performWithRetries(perform, options = {}) {
   return promiseRetry(
@@ -12,7 +12,7 @@ function performWithRetries(perform, options = {}) {
       }
       return Promise.reject(error);
     }),
-    Object.assign({
+    assign({
       retries: 5,
       factor: 2,
       minTimeout: 1000,
@@ -28,7 +28,7 @@ export function EmptyGistError(message) {
 }
 EmptyGistError.prototype = Object.create(Error.prototype);
 
-function createGistFromProject(project) {
+export function createGistFromProject(project) {
   const files = {};
   if (trim(project.sources.html)) {
     files['index.html'] = {
@@ -64,13 +64,10 @@ function createGistFromProject(project) {
 
 function clientForUser(user) {
   if (user.authenticated && user.provider === 'github') {
-    return new GitHub({
-      token: user.info.accessToken,
-      auth: 'oauth',
-    });
+    return gitHub.withAccessToken(user.info.accessToken);
   }
 
-  return anonymousGithub;
+  return gitHub.anonymous();
 }
 
 function canUpdateGist(user) {

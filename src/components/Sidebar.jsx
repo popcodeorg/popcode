@@ -1,8 +1,8 @@
 import React from 'react';
 import i18n from 'i18next-client';
 import classnames from 'classnames';
-import Isvg from 'react-inlinesvg';
 import partial from 'lodash/partial';
+import WordmarkVertical from '../../static/images/wordmark-vertical.svg';
 
 class Sidebar extends React.Component {
   _renderMinimizedComponents() {
@@ -36,7 +36,7 @@ class Sidebar extends React.Component {
     return (
       <div className={sidebarClassnames}>
         <div className="sidebar__wordmark-container">
-          <Isvg src="/images/wordmark-vertical.svg" />
+          <WordmarkVertical />
         </div>
         <div
           className={classnames(

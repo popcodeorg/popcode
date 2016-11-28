@@ -27,6 +27,8 @@ import {
   clearRuntimeErrors,
   createProject,
   updateProjectSource,
+  logIn,
+  logOut,
   toggleLibrary,
   minimizeComponent,
   maximizeComponent,
@@ -49,6 +51,7 @@ import Output from './Output';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 import NotificationList from './NotificationList';
+import PopThrobber from './PopThrobber';
 
 const spinnerPage = base64.fromByteArray(
   new TextEncoder('utf-8').encode(
@@ -111,7 +114,7 @@ class Workspace extends React.Component {
       gistId = query.gist;
     }
     history.replaceState({}, '', location.pathname);
-    this.props.dispatch(bootstrap({gistId}));
+    this.props.dispatch(bootstrap(gistId));
   }
 
   componentDidMount() {
@@ -233,10 +236,6 @@ class Workspace extends React.Component {
   }
 
   _renderEditors() {
-    if (this.props.currentProject === null) {
-      return null;
-    }
-
     const editors = [];
     ['html', 'css', 'javascript'].forEach((language) => {
       if (includes(this.props.ui.minimizedComponents, `editor.${language}`)) {
@@ -284,23 +283,27 @@ class Workspace extends React.Component {
     appFirebase.authWithOAuthPopup(
       'github',
       {remember: 'sessionOnly', scope: 'gist'}
-    ).catch((e) => {
-      switch (e.code) {
-        case 'USER_CANCELLED':
-          this.props.dispatch(
-            notificationTriggered('user-cancelled-auth')
-          );
-          break;
-        default:
-          this.props.dispatch(notificationTriggered('auth-error'));
-          if (isError(e)) {
-            Bugsnag.notifyException(e, e.code);
-          } else if (isString(e)) {
-            Bugsnag.notifyException(new Error(e));
-          }
-          break;
-      }
-    });
+    ).then(
+      (authData) => {
+        this.props.dispatch(logIn(authData));
+      },
+      (e) => {
+        switch (e.code) {
+          case 'USER_CANCELLED':
+            this.props.dispatch(
+              notificationTriggered('user-cancelled-auth')
+            );
+            break;
+          default:
+            this.props.dispatch(notificationTriggered('auth-error'));
+            if (isError(e)) {
+              Bugsnag.notifyException(e, e.code);
+            } else if (isString(e)) {
+              Bugsnag.notifyException(new Error(e));
+            }
+            break;
+        }
+      });
   }
 
   _handleNotificationDismissed(error) {
@@ -308,7 +311,7 @@ class Workspace extends React.Component {
   }
 
   _handleLogOut() {
-    appFirebase.unauth();
+    appFirebase.unauth().then(() => this.props.dispatch(logOut()));
   }
 
   _handleRequestedLineFocused() {
@@ -406,6 +409,10 @@ class Workspace extends React.Component {
   }
 
   _renderEnvironment() {
+    if (this.props.currentProject === null) {
+      return <PopThrobber message={i18n.t('workspace.loading')} />;
+    }
+
     return (
       <div className="environment">
         {this._renderEditors()}
