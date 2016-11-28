@@ -3,8 +3,8 @@ import Pop from './Pop';
 
 function PopThrobber(props) {
   return (
-    <div className="pop-spinner">
-      <div className="pop-spinner__message">{props.message}</div>
+    <div className="pop-throbber">
+      <div className="pop-throbber__message">{props.message}</div>
       <Pop variant="thinking" />
     </div>
   );
