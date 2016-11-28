@@ -532,7 +532,7 @@ body {
   }
 }
 
-.pop-spinner {
+.pop-throbber {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -543,7 +543,7 @@ body {
   animation: pulsing ease-in-out 2s infinite;
 }
 
-.pop-spinner__message {
+.pop-throbber__message {
   text-align: center;
   letter-spacing: 1em;
   text-transform: uppercase;
@@ -552,7 +552,7 @@ body {
   color: var(--color-dark-gray);
 }
 
-.pop-spinner path {
+.pop-throbber path {
   fill: var(--color-gray) !important;
 }
 
