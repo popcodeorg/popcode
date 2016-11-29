@@ -4,6 +4,7 @@ import values from 'lodash/values';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
 import isEmpty from 'lodash/isEmpty';
+import isNil from 'lodash/isNil';
 import partial from 'lodash/partial';
 import sortBy from 'lodash/sortBy';
 import map from 'lodash/map';
@@ -127,7 +128,8 @@ class Workspace extends React.Component {
 
   _confirmUnload(event) {
     if (!this.props.currentUser.authenticated) {
-      if (!isPristineProject(this.props.currentProject)) {
+      const currentProject = this.props.currentProject;
+      if (!isNil(currentProject) && !isPristineProject(currentProject)) {
         event.returnValue = i18n.t('workspace.confirmations.unload-unsaved');
       }
     }
@@ -409,7 +411,7 @@ class Workspace extends React.Component {
   }
 
   _renderEnvironment() {
-    if (this.props.currentProject === null) {
+    if (isNil(this.props.currentProject)) {
       return <PopThrobber message={i18n.t('workspace.loading')} />;
     }
 
