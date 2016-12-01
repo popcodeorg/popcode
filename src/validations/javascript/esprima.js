@@ -1,5 +1,6 @@
 import Validator from '../Validator';
 import find from 'lodash/find';
+import inRange from 'lodash/inRange';
 
 const UNEXPECTED_TOKEN_EXPR = /^Unexpected token (.+)$/;
 
@@ -66,11 +67,8 @@ const errorMap = {
 
 function findTokenForError(error, tokens) {
   return find(tokens, (token) => {
-    const startLocation = token.loc.start;
-    const endLocation = token.loc.end;
-    return startLocation.line === error.lineNumber &&
-      startLocation.column <= error.column - 1 &&
-      endLocation.column >= error.column - 1;
+    const [startLocation, endLocation] = token.range;
+    return inRange(error.index, startLocation, endLocation + 1);
   });
 }
 
@@ -85,7 +83,10 @@ class EsprimaValidator extends Validator {
         esprima.parse(this._source);
       } catch (error) {
         try {
-          const tokens = esprima.tokenize(this._source, {loc: true});
+          const tokens = esprima.tokenize(
+            this._source,
+            {range: true, comment: true}
+          );
           const token = findTokenForError(error, tokens);
           return [{error, token}];
         } catch (tokenizeError) {
