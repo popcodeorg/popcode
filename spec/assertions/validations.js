@@ -12,7 +12,7 @@ export function assertPassesValidation(validate, source, validatorArgs = []) {
 
 export function assertFailsValidationWith(validate, source, ...reasons) {
   return assert.eventually.sameMembers(
-    validate(source).then((errors) => map(errors, 'reason')),
+    validate(source, []).then((errors) => map(errors, 'reason')),
     reasons,
     `source fails validation with reasons: ${reasons.join(', ')}`
   );
