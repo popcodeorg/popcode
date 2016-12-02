@@ -80,6 +80,12 @@ function ui(stateIn, action) {
         )
       );
 
+    case 'RESET_WORKSPACE':
+      return state.setIn(
+        ['dashboard', 'activeSubmenu'],
+        null
+      );
+
     default:
       return state;
   }
