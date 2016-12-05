@@ -2,6 +2,7 @@ import Validator from '../Validator';
 import trim from 'lodash/trim';
 import startsWith from 'lodash/startsWith';
 import endsWith from 'lodash/endsWith';
+import importLinters from '../importLinters';
 
 const RADIAL_GRADIENT_EXPR =
   /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/;
@@ -121,7 +122,7 @@ class PrettyCssValidator extends Validator {
   }
 
   _getRawErrors() {
-    return System.import('../linters').then(({prettyCSS}) => {
+    return importLinters().then(({prettyCSS}) => {
       try {
         const result = prettyCSS.parse(this._source);
         return result.getProblems();

@@ -1,6 +1,8 @@
+import importLinters from './importLinters';
 import html from './html.js';
 import css from './css.js';
 import javascript from './javascript.js';
-System.import('./linters');
+
+importLinters();
 
 export default {html, css, javascript};

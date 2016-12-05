@@ -1,4 +1,5 @@
 import Validator from '../Validator';
+import importLinters from '../importLinters';
 
 const errorMap = {
   E001: (error) => {
@@ -115,7 +116,7 @@ class HtmllintValidator extends Validator {
   }
 
   _getRawErrors() {
-    return System.import('../linters').then(
+    return importLinters().then(
       ({htmllint}) => htmllint(this._source, htmlLintOptions).catch(() => [])
     );
   }
