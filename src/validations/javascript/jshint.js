@@ -7,6 +7,7 @@ import defaults from 'lodash/defaults';
 import find from 'lodash/find';
 import includes from 'lodash/includes';
 import libraries from '../../config/libraries';
+import importLinters from '../importLinters';
 
 const jshintrc = {
   browser: true,
@@ -157,7 +158,7 @@ class JsHintValidator extends Validator {
   }
 
   _getRawErrors() {
-    return System.import('../linters').then(({jshint}) => {
+    return importLinters().then(({jshint}) => {
       try {
         jshint(this._source, this._jshintOptions);
       } catch (e) {
