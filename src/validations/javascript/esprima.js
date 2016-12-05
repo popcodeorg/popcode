@@ -1,7 +1,6 @@
 import Validator from '../Validator';
 import find from 'lodash/find';
 import inRange from 'lodash/inRange';
-import importLinters from '../importLinters';
 
 const UNEXPECTED_TOKEN_EXPR = /^Unexpected token (.+)$/;
 
@@ -79,7 +78,7 @@ class EsprimaValidator extends Validator {
   }
 
   _getRawErrors() {
-    return importLinters().then(({esprima}) => {
+    return System.import('../linters').then(({esprima}) => {
       try {
         esprima.parse(this._source);
       } catch (error) {

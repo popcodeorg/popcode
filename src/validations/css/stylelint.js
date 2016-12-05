@@ -1,5 +1,4 @@
 import Validator from '../Validator';
-import importLinters from '../importLinters';
 
 const errorMap = {
   'syntaxError/Unclosed block': () => ({
@@ -21,7 +20,7 @@ class StyleLintValidator extends Validator {
   }
 
   _getRawErrors() {
-    return importLinters().then(
+    return System.import('../linters').then(
       ({stylelint}) => stylelint(
         this._source
       ).then(
