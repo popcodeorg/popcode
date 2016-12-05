@@ -1,5 +1,4 @@
 import Validator from '../Validator';
-import importLinters from '../importLinters';
 
 const errorMap = {
   'missing \'{\'': () => ({reason: 'missing-opening-curly'}),
@@ -23,7 +22,7 @@ class CssValidator extends Validator {
   }
 
   _getRawErrors() {
-    importLinters().then(({css}) =>
+    System.import('../linters').then(({css}) =>
       css.parse(this._source, {silent: true}).stylesheet.parsingErrors
     );
   }
