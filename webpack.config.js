@@ -145,21 +145,19 @@ module.exports = {
         loader: [
           'svg-react-loader',
           {
-            loader: 'image-webpack-loader',
+            loader: 'svgo-loader',
             query: {
-              svgo: {
-                plugins: [
-                  {
-                    removeXMLNS: true,
+              plugins: [
+                {
+                  removeXMLNS: true,
+                },
+                {
+                  removeAttrs: {
+                    active: true,
+                    attrs: 'svg:data-name',
                   },
-                  {
-                    removeAttrs: {
-                      active: true,
-                      attrs: 'svg:data-name',
-                    },
-                  },
-                ],
-              },
+                },
+              ],
             },
           },
         ],
