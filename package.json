@@ -84,12 +84,12 @@
     "npm": "3.10.7"
   },
   "scripts": {
-    "postinstall": "./node_modules/.bin/bower install",
-    "pretest": "npm run lint",
-    "test": "./node_modules/.bin/karma start --single-run --no-auto-watch",
-    "autotest": "./node_modules/.bin/karma start --no-single-run --auto-watch",
-    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --plugin react src",
-    "toc": "./node_modules/.bin/doctoc README.md --github --title '## Table of Contents'"
+    "postinstall": "bower install",
+    "pretest": "yarn run lint",
+    "test": "karma start --single-run --no-auto-watch",
+    "autotest": "karma start --no-single-run --auto-watch",
+    "lint": "eslint --ext .js,.jsx --plugin react src",
+    "toc": "doctoc README.md --github --title '## Table of Contents'"
   },
   "devDependencies": {
     "babel-core": "^6.14.0",
