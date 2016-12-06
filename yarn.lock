@@ -6961,7 +6961,7 @@ svgo-loader@^1.1.2:
   dependencies:
     loader-utils "^0.2.16"
 
-svgo@^0.7.0, svgo@^0.7.1:
+svgo@^0.7.0:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/svgo/-/svgo-0.7.1.tgz#287320fed972cb097e72c2bb1685f96fe08f8034"
   dependencies:
