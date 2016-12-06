@@ -1,6 +1,7 @@
 import last from 'lodash/last';
 import isNull from 'lodash/isNull';
 import {localizedArrayToSentence} from '../../util/arrayToSentence';
+import importLinters from '../importLinters';
 import Validator from '../Validator';
 
 const specialCases = {
@@ -50,7 +51,7 @@ class HtmlInspectorValidator extends Validator {
       return Promise.resolve([]);
     }
 
-    return System.import('../linters').then(({HTMLInspector}) =>
+    return importLinters().then(({HTMLInspector}) =>
       new Promise((resolve) => {
         HTMLInspector.inspect({
           domRoot: this._doc.documentElement,
