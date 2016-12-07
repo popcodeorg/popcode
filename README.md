@@ -141,10 +141,14 @@ work to do.
 
 ### Running locally ###
 
-Pretty easy. Just check out the code, then run:
+Pretty easy. Just check out the code. You’ll need [Yarn](https://yarnpkg.com/),
+which is the cool new NPM. It’s [easy to
+install](https://yarnpkg.com/en/docs/install).
+
+Once you’ve got it just run:
 
 ```bash
-$ npm install
+$ yarn
 ```
 
 That'll pull down the dependencies. Then run:
@@ -160,7 +164,7 @@ assets are recompiled incrementally and your browser automatically reloads.
 When you're done, lint and make sure tests pass before opening a pull request:
 
 ```bash
-$ npm test
+$ yarn test
 ```
 
 ### Developer Reference ###

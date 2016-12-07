@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- 4.2.3
+- 6.3.1
 env:
   matrix:
   - CXX=g++-4.8 LOG_REDUX_ACTIONS=false FIREBASE_APP=popcode BROWSER_STACK_USERNAME=matthewbrown17
@@ -9,23 +9,19 @@ env:
   - secure: SfrceTUdcPMC9Jk7T9eIFVxDGdoOC9sUUg6nQX+3GerJ+vefoVFjspx/StYPr5Jci7NWqFCGns/8Ctu7eOK7p9lFnHeleuNGxKhotsmV2dfF3DjzkusuTisVhFMNKclVCxSSuQYswBZJ8ZUCdxMYq3XIyl5kfxD7t8Tb09cdeYWPw1SUkSdjMYbVUkL+Q+tidb4FudhIH5hZQ+gAAtRYidxG1esNj0cB1ITyN5eM3UkGM59/TFqvIGfolJEBJFW7gyeqedKlgiavdXVaEOvBk4kqu+2q7waMTYbCMPLBFNBBH7bEdPt4OA5hU5qlVuCMH7y3CKHOikSDiIBzLEIcx1cy1xmHzvxuDya340vW0IK8PnvSV2jp/3uy4XWc0SXq+zWAZTfHwYFObx32byo0pBTnx8CVkxdhwNZYwfCU7KIPHJ++WVpxTyx/BrJT5BkqmTbnccsJrpr75DNfm/lrthWjz66Es2sdZVb5Knn/ezfHyKP92hcl1jNhddkX4YWH1rZt5UYA1paQrsMgolKnt9oRBsaN5/2A5X+2hHzwDRSV20XP7d7ZLwDtUCsUQf7aMo5B4P6p3ElRGpLyA04YRm/x/aegQujVMrgdIKxZ/u/TtM0gPkkoeFcbDSrQq3PVEiOGMiDxKPrKMEE4f0nYqs6mpeyoBn6lSyCXDWhXcAo=
 cache:
   apt: true
-  directories:
-  - node_modules
+  yarn: true
 addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
     packages:
     - g++-4.8
-before_install:
-- npm install -g npm@'3.10.7'
-- npm prune
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 script:
-- npm-shrinkwrap-check --v3 --dev --verbose
-- npm test
+- yarn check
+- yarn test
 - gulp build --production
 before_deploy:
 - gulp syncFirebase
