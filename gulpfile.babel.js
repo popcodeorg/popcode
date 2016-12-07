@@ -13,6 +13,7 @@ import postcss from 'gulp-postcss';
 import cssnext from 'postcss-cssnext';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
+import CloudFlare from 'cloudflare';
 import webpackConfiguration from './webpack.config';
 
 const browserSync = require('browser-sync').create();
@@ -148,3 +149,13 @@ gulp.task('browserSync', () => {
     },
   });
 });
+
+gulp.task('purgeCache', () =>
+  new CloudFlare({
+    email: process.env.CLOUDFLARE_EMAIL,
+    key: process.env.CLOUDFLARE_KEY,
+  }).deleteCache(
+    process.env.CLOUDFLARE_ZONE,
+    {purge_everything: true}
+  )
+);
