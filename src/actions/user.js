@@ -9,6 +9,10 @@ export const userAuthenticated = createAction(
   identity
 );
 
+const resetWorkspace = createAction('RESET_WORKSPACE');
+
+const userLoggedOut = createAction('USER_LOGGED_OUT');
+
 export function logIn(authData) {
   return (dispatch, getState) => {
     dispatch(userAuthenticated(authData));
@@ -22,8 +26,12 @@ export function logIn(authData) {
   };
 }
 
-function resetWorkspace() {
-  return {type: 'RESET_WORKSPACE'};
+export function logOut() {
+  return (dispatch) => {
+    dispatch(resetWorkspace());
+    dispatch(userLoggedOut());
+    dispatch(createProject());
+  };
 }
 
 function setCurrentProjectAfterLogin(authData) {

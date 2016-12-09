@@ -23,6 +23,7 @@ import {
 
 import {
   logIn,
+  logOut,
 } from './user';
 
 function getCurrentPersistor(state) {
@@ -154,22 +155,6 @@ function addRuntimeError(error) {
 function clearRuntimeErrors() {
   return {
     type: 'RUNTIME_ERRORS_CLEARED',
-  };
-}
-
-function resetWorkspace() {
-  return {type: 'RESET_WORKSPACE'};
-}
-
-function userLoggedOut() {
-  return {type: 'USER_LOGGED_OUT'};
-}
-
-function logOut() {
-  return (dispatch) => {
-    dispatch(resetWorkspace());
-    dispatch(userLoggedOut());
-    dispatch(createProject());
   };
 }
 

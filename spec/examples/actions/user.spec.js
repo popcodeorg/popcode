@@ -8,7 +8,7 @@ import dispatchAndWait from '../../helpers/dispatchAndWait';
 import buildProject from '../../helpers/buildProject';
 import createAndMutateProject from '../../helpers/createAndMutateProject';
 import {getCurrentProject} from '../../../src/util/projectUtils';
-import {bootstrap, logIn} from '../../../src/actions';
+import {bootstrap, logIn, logOut} from '../../../src/actions';
 import createApplicationStore from '../../../src/createApplicationStore';
 
 describe('user actions', () => {
@@ -24,18 +24,18 @@ describe('user actions', () => {
     sandbox.restore();
   });
 
-  describe('logIn', () => {
-    const userData = {
-      auth: {uid: '123', provider: 'github'},
-      github: {
-        accessToken: 'abc123',
-        displayName: 'Popcode User',
-        profileImageURL: 'https://camo.github.com/popcodeuser.jpg',
-        username: 'popcodeuser',
-      },
-      provider: 'github',
-    };
+  const userData = {
+    auth: {uid: '123', provider: 'github'},
+    github: {
+      accessToken: 'abc123',
+      displayName: 'Popcode User',
+      profileImageURL: 'https://camo.github.com/popcodeuser.jpg',
+      username: 'popcodeuser',
+    },
+    provider: 'github',
+  };
 
+  describe('logIn', () => {
     let storedProject;
 
     beforeEach(() => {
@@ -144,5 +144,34 @@ describe('user actions', () => {
         );
       });
     }
+  });
+
+  describe('logOut', () => {
+    let loggedInProjectKey;
+
+    beforeEach(() => {
+      mockFirebase.logIn(userData.uid);
+      mockFirebase.setCurrentProject(null);
+      return dispatchAndWait(store, bootstrap()).then(() => {
+        createAndMutateProject(store);
+        loggedInProjectKey = getCurrentProject(store.getState()).projectKey;
+        return dispatchAndWait(store, logOut());
+      });
+    });
+
+    it('should set authenticated to false', () => {
+      assert.isFalse(store.getState().user.get('authenticated'));
+    });
+
+    it('should set user id to null', () => {
+      assert.isUndefined(store.getState().user.get('id'));
+    });
+
+    it('should create a fresh project', () => {
+      assert.notEqual(
+        getCurrentProject(store.getState()).projectKey,
+        loggedInProjectKey
+      );
+    });
   });
 });
