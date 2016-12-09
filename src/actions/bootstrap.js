@@ -15,9 +15,9 @@ import {notificationTriggered} from './ui';
 export default function bootstrap(gistId) {
   return (dispatch) => {
     const promisedProjectFromStorage =
-      getCurrentUserState().then(({user, project}) => {
-        if (user) {
-          dispatch(userAuthenticated(user));
+      getCurrentUserState().then(({userData, project}) => {
+        if (userData) {
+          dispatch(userAuthenticated({userData}));
           dispatch(loadAllProjects());
         }
 
@@ -58,20 +58,20 @@ function retrieveGist(gistId) {
 }
 
 function getCurrentUserState() {
-  return oneAuth().then((authData) => {
-    if (authData === null) {
-      return {user: null, project: null};
+  return oneAuth().then((userData) => {
+    if (userData === null) {
+      return {userData: null, project: null};
     }
 
-    return new FirebasePersistor(authData.auth.uid).loadCurrentProject().
-      then((project) => ({user: authData, project}));
+    return new FirebasePersistor(userData.uid).loadCurrentProject().
+      then((project) => ({userData, project}));
   });
 }
 
 function oneAuth() {
   return new Promise((resolve) => {
-    function handleAuth(authData) {
-      resolve(authData);
+    function handleAuth(userData) {
+      resolve(userData);
       appFirebase.offAuth(handleAuth);
     }
     appFirebase.onAuth(handleAuth);

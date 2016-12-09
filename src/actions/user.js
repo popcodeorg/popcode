@@ -13,13 +13,13 @@ const resetWorkspace = createAction('RESET_WORKSPACE');
 
 const userLoggedOut = createAction('USER_LOGGED_OUT');
 
-export function logIn(authData) {
+export function logIn(userData) {
   return (dispatch, getState) => {
-    dispatch(userAuthenticated(authData));
+    dispatch(userAuthenticated({userData}));
 
     if (!saveCurrentProject(getState())) {
       dispatch(resetWorkspace());
-      dispatch(setCurrentProjectAfterLogin(authData));
+      dispatch(setCurrentProjectAfterLogin(userData.uid));
     }
 
     dispatch(loadAllProjects());
@@ -34,9 +34,9 @@ export function logOut() {
   };
 }
 
-function setCurrentProjectAfterLogin(authData) {
+function setCurrentProjectAfterLogin(uid) {
   return (dispatch) => {
-    const persistor = new FirebasePersistor(authData.auth.uid);
+    const persistor = new FirebasePersistor(uid);
     persistor.loadCurrentProject().then((project) => {
       if (project) {
         dispatch(loadCurrentProject(project));
