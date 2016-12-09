@@ -12,13 +12,13 @@ class Dashboard extends React.Component {
     const currentUser = this.props.currentUser;
 
     if (currentUser.authenticated) {
-      const name = currentUser.info.displayName || currentUser.info.username;
+      const name = currentUser.displayName || currentUser.username;
 
       return (
         <div className="dashboard__session">
           <img
             className="dashboard__avatar"
-            src={currentUser.info.profileImageURL}
+            src={currentUser.avatarUrl}
           />
           <span className="dashboard__username">{name}</span>
           <span

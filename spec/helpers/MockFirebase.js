@@ -1,6 +1,20 @@
 /* global sinon */
 
 import appFirebase from '../../src/services/appFirebase';
+import merge from 'lodash/merge';
+
+export function createUser(user) {
+  return merge({
+    github: {
+      accessToken: 'abc123',
+      displayName: 'Popcode User',
+      profileImageURL: 'https://camo.github.com/popcodeuser.jpg',
+      username: 'popcodeuser',
+    },
+    provider: 'github',
+    uid: '123',
+  }, user);
+}
 
 export default class MockFirebase {
   constructor(sandbox) {
@@ -11,7 +25,7 @@ export default class MockFirebase {
     this._userSpace = addChild(appFirebase, `workspaces/${uid}`);
     addChild(this._userSpace, 'currentProjectKey');
     addChild(this._userSpace, 'projects');
-    appFirebase.onAuth.yields({auth: {uid}});
+    appFirebase.onAuth.yields(createUser({uid}));
   }
 
   logOut() {

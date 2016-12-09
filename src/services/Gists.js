@@ -64,7 +64,7 @@ export function createGistFromProject(project) {
 
 function clientForUser(user) {
   if (user.authenticated && user.provider === 'github') {
-    return gitHub.withAccessToken(user.info.accessToken);
+    return gitHub.withAccessToken(user.accessTokens.github);
   }
 
   return gitHub.anonymous();
