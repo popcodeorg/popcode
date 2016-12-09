@@ -11,7 +11,6 @@ import {
 import {
   createProject,
   changeCurrentProject,
-  loadCurrentProject,
 } from './projects';
 
 import {
@@ -21,6 +20,11 @@ import {
   notificationTriggered,
   userDismissedNotification,
 } from './ui';
+
+import {
+  logIn,
+  logOut,
+} from './user';
 
 function getCurrentPersistor(state) {
   const currentUser = state.user;
@@ -82,19 +86,6 @@ export function validateAllSources(project) {
   };
 }
 
-function setCurrentProjectAfterLogin(authData) {
-  return (dispatch) => {
-    const persistor = new FirebasePersistor(authData.auth.uid);
-    persistor.loadCurrentProject().then((project) => {
-      if (project) {
-        dispatch(loadCurrentProject(project));
-      } else {
-        dispatch(createProject());
-      }
-    });
-  };
-}
-
 function updateProjectSource(projectKey, language, newValue) {
   return (dispatch, getState) => {
     dispatch({
@@ -136,7 +127,7 @@ function toggleLibrary(projectKey, libraryKey) {
   };
 }
 
-function loadAllProjects() {
+export function loadAllProjects() {
   return (dispatch, getState) => {
     const persistor = getCurrentPersistor(getState());
     if (persistor === null) {
@@ -167,39 +158,6 @@ function clearRuntimeErrors() {
   };
 }
 
-function resetWorkspace() {
-  return {type: 'RESET_WORKSPACE'};
-}
-
-function userAuthenticated(authData) {
-  return {type: 'USER_AUTHENTICATED', payload: authData};
-}
-
-function logIn(authData) {
-  return (dispatch, getState) => {
-    dispatch(userAuthenticated(authData));
-
-    if (!saveCurrentProject(getState())) {
-      dispatch(resetWorkspace());
-      dispatch(setCurrentProjectAfterLogin(authData));
-    }
-
-    dispatch(loadAllProjects());
-  };
-}
-
-function userLoggedOut() {
-  return {type: 'USER_LOGGED_OUT'};
-}
-
-function logOut() {
-  return (dispatch) => {
-    dispatch(resetWorkspace());
-    dispatch(userLoggedOut());
-    dispatch(createProject());
-  };
-}
-
 function minimizeComponent(componentName) {
   return {
     type: 'COMPONENT_MINIMIZED',
@@ -225,7 +183,6 @@ function toggleDashboardSubmenu(submenu) {
 export {
   createProject,
   changeCurrentProject,
-  loadAllProjects,
   updateProjectSource,
   toggleLibrary,
   logIn,
