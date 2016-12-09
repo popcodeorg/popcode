@@ -4,12 +4,12 @@
 import '../../helper';
 import {assert} from 'chai';
 
+import createAndMutateProject from '../../helpers/createAndMutateProject';
 import createApplicationStore from '../../../src/createApplicationStore';
 
 import {
   createProject,
   changeCurrentProject,
-  toggleLibrary,
 } from '../../../src/actions';
 
 import {
@@ -49,9 +49,9 @@ describe('projectActions', () => {
 
     beforeEach(() => {
       clock = sinon.useFakeTimers();
-      projectKey = createAndMutateProject();
+      projectKey = createAndMutateProject(store);
       clock.tick(1);
-      createAndMutateProject();
+      createAndMutateProject(store);
       store.dispatch(changeCurrentProject(projectKey));
     });
 
@@ -67,11 +67,4 @@ describe('projectActions', () => {
       assert.lengthOf(getProjectKeys(store.getState()), 2);
     });
   });
-
-  function createAndMutateProject() {
-    store.dispatch(createProject());
-    const projectKey = getCurrentProject(store.getState()).projectKey;
-    store.dispatch(toggleLibrary(projectKey, 'jquery'));
-    return projectKey;
-  }
 });
