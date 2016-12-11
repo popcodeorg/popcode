@@ -5,6 +5,10 @@ import {isPristineProject} from '../util/projectUtils';
 import bootstrap from './bootstrap';
 
 import {
+  analyzeSource,
+} from './analyzers';
+
+import {
   exportingGist,
 } from './clients';
 
@@ -57,23 +61,26 @@ export function saveCurrentProject(state) {
 
 function validateSource(language, source, enabledLibraries) {
   return (dispatch, getState) => {
+    const validationOverrides = getState().validationOverrides.get(language);
     const validate = validations[language];
-    validate(source, enabledLibraries.toJS()).then((errors) => {
-      const currentSource = getCurrentProject(getState()).
-        get('sources').get(language);
+    validate(source,
+      enabledLibraries.toJS(),
+      validationOverrides).then((errors) => {
+        const currentSource = getCurrentProject(getState()).
+          get('sources').get(language);
 
-      if (currentSource !== source) {
-        return;
-      }
+        if (currentSource !== source) {
+          return;
+        }
 
-      dispatch({
-        type: 'VALIDATED_SOURCE',
-        payload: {
-          language,
-          errors,
-        },
+        dispatch({
+          type: 'VALIDATED_SOURCE',
+          payload: {
+            language,
+            errors,
+          },
+        });
       });
-    });
   };
 }
 
@@ -100,6 +107,11 @@ function updateProjectSource(projectKey, language, newValue) {
 
     const state = getState();
     saveCurrentProject(state);
+
+    dispatch(analyzeSource(
+      language,
+      newValue
+    ));
 
     const currentProject = getCurrentProject(state);
     dispatch(validateSource(

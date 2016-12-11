@@ -139,9 +139,8 @@ const errorMap = {
 };
 
 class JsHintValidator extends Validator {
-  constructor(source, enabledLibraries) {
-    super(source, 'javascript', errorMap);
-
+  constructor(source, enabledLibraries, validationOverrides) {
+    super(source, 'javascript', errorMap, validationOverrides);
     this._jshintOptions = defaults(clone(jshintrc), {predef: []});
     enabledLibraries.forEach((libraryKey) => {
       if (!(libraryKey in libraries)) {
@@ -181,5 +180,9 @@ class JsHintValidator extends Validator {
   }
 }
 
-export default (source, enabledLibraries) =>
-  new JsHintValidator(source, enabledLibraries).getAnnotations();
+export default (source,
+    enabledLibraries,
+    validationOverrides) =>
+  new JsHintValidator(source,
+        enabledLibraries,
+        validationOverrides).getAnnotations();

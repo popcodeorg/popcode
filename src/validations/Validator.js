@@ -5,10 +5,11 @@ import compact from 'lodash/compact';
 import config from '../config';
 
 class Validator {
-  constructor(source, language, errorMap) {
+  constructor(source, language, errorMap, validationOverrides) {
     this._source = source;
     this._language = language;
     this._errorMap = errorMap;
+    this._validationOverrides = validationOverrides;
   }
 
   getAnnotations() {
@@ -22,6 +23,11 @@ class Validator {
 
   _mapError(rawError) {
     const key = this._keyForError(rawError);
+    if (this._validationOverrides &&
+        this._validationOverrides.get(key) &&
+        this._validationOverrides.get(key).get('enabled') === false) {
+      return null;
+    }
     if (this._errorMap.hasOwnProperty(key)) {
       return this._errorMap[key](rawError, this._source);
     }
