@@ -343,8 +343,6 @@ body {
 .environment {
   box-sizing: border-box;
   flex: 1 1 auto;
-  display: flex;
-  flex-direction: row;
   height: 100vh;
 }
 
@@ -360,6 +358,9 @@ body {
 }
 
 .editors {
+  float: left;
+  width: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   font-family: 'Inconsolata';
@@ -412,6 +413,8 @@ body {
 }
 
 .output {
+  width: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -486,6 +489,7 @@ body {
   margin: 0;
   padding: 0.5rem 1rem;
   background-color: var(--color-gray);
+  word-wrap: break-word;
 }
 
 .error-list__error {
