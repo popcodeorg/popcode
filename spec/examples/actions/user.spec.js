@@ -3,7 +3,7 @@
 
 import '../../helper';
 import MockFirebase from '../../helpers/MockFirebase';
-import {createUser} from '../../helpers/MockFirebase';
+import {createUser, createCredentials} from '../../helpers/MockFirebase';
 import {assert} from 'chai';
 import dispatchAndWait from '../../helpers/dispatchAndWait';
 import buildProject from '../../helpers/buildProject';
@@ -26,6 +26,7 @@ describe('user actions', () => {
   });
 
   const userData = createUser();
+  const credentials = createCredentials();
 
   describe('logIn', () => {
     let storedProject, localProjectKey;
@@ -45,7 +46,7 @@ describe('user actions', () => {
       context('with stored project', () => {
         beforeEach(() => {
           mockFirebase.setCurrentProject(storedProject);
-          return dispatchAndWait(store, logIn(userData));
+          return dispatchAndWait(store, logIn(userData, credentials));
         });
 
         itShouldLogUserIn();
@@ -61,7 +62,7 @@ describe('user actions', () => {
       context('without stored project', () => {
         beforeEach(() => {
           mockFirebase.setCurrentProject(null);
-          return dispatchAndWait(store, logIn(userData));
+          return dispatchAndWait(store, logIn(userData, credentials));
         });
 
         itShouldLogUserIn();
@@ -85,7 +86,7 @@ describe('user actions', () => {
       context('with stored project', () => {
         beforeEach(() => {
           mockFirebase.setCurrentProject(storedProject);
-          return dispatchAndWait(store, logIn(userData));
+          return dispatchAndWait(store, logIn(userData, credentials));
         });
 
         itShouldLogUserIn();
@@ -108,35 +109,24 @@ describe('user actions', () => {
         assert.equal(store.getState().getIn(['user', 'id']), userData.uid);
       });
 
-      it('should set provider to github', () => {
-        assert.equal(store.getState().getIn(['user', 'provider']), 'github');
-      });
-
       it('should set display name', () => {
         assert.equal(
           store.getState().getIn(['user', 'displayName']),
-          userData.github.displayName
-        );
-      });
-
-      it('should set username', () => {
-        assert.equal(
-          store.getState().getIn(['user', 'username']),
-          userData.github.username
+          userData.displayName
         );
       });
 
       it('should set avatarUrl', () => {
         assert.equal(
           store.getState().getIn(['user', 'avatarUrl']),
-          userData.github.profileImageURL
+          userData.photoURL
         );
       });
 
       it('should set auth token', () => {
         assert.equal(
-          store.getState().getIn(['user', 'accessTokens', 'github']),
-          userData.github.accessToken,
+          store.getState().getIn(['user', 'accessTokens', 'github.com']),
+          credentials.accessToken
         );
       });
     }

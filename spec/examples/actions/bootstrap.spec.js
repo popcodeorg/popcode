@@ -9,7 +9,7 @@ import MockFirebase from '../../helpers/MockFirebase';
 import MockGitHub from '../../helpers/MockGitHub';
 import buildProject from '../../helpers/buildProject';
 import buildGist from '../../helpers/buildGist';
-import promiseTicks from '../../helpers/promiseTicks';
+import waitForAsync from '../../helpers/waitForAsync';
 import {getCurrentProject} from '../../../src/util/projectUtils';
 import createApplicationStore from '../../../src/createApplicationStore';
 
@@ -266,6 +266,6 @@ describe('bootstrap', () => {
 
   function dispatchBootstrap(gistId) {
     store.dispatch(bootstrap(gistId));
-    return promiseTicks(20);
+    return waitForAsync();
   }
 });

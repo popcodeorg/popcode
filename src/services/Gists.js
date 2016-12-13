@@ -1,5 +1,6 @@
 import assign from 'lodash/assign';
 import isEmpty from 'lodash/isEmpty';
+import get from 'lodash/get';
 import trim from 'lodash/trim';
 import promiseRetry from 'promise-retry';
 import gitHub from './gitHub';
@@ -63,15 +64,20 @@ export function createGistFromProject(project) {
 }
 
 function clientForUser(user) {
-  if (user.authenticated && user.provider === 'github') {
-    return gitHub.withAccessToken(user.accessTokens.github);
+  const githubToken = getGithubToken(user);
+  if (githubToken) {
+    return gitHub.withAccessToken(githubToken);
   }
 
   return gitHub.anonymous();
 }
 
+function getGithubToken(user) {
+  return get(user, ['accessTokens', 'github.com']);
+}
+
 function canUpdateGist(user) {
-  return user.authenticated && user.provider === 'github';
+  return Boolean(getGithubToken(user));
 }
 
 function updateGistWithImportUrl(github, gistData) {

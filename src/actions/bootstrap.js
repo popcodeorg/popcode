@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import appFirebase from '../services/appFirebase';
+import {auth} from '../services/appFirebase';
 import Gists from '../services/Gists';
 import Bugsnag from '../util/Bugsnag';
 import {
@@ -51,10 +51,9 @@ function retrieveGist(gistId) {
 
 function oneAuth() {
   return new Promise((resolve) => {
-    function handleAuth(userData) {
+    const offAuth = auth.onAuthStateChanged((userData) => {
       resolve(userData);
-      appFirebase.offAuth(handleAuth);
-    }
-    appFirebase.onAuth(handleAuth);
+      offAuth();
+    });
   });
 }

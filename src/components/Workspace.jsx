@@ -17,7 +17,7 @@ import path from 'path';
 import base64 from 'base64-js';
 import {TextEncoder} from 'text-encoding';
 import Bugsnag from '../util/Bugsnag';
-import appFirebase from '../services/appFirebase';
+import {auth, githubAuthProvider} from '../services/appFirebase';
 import Gists from '../services/Gists';
 import {EmptyGistError} from '../services/Gists';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
@@ -279,12 +279,9 @@ class Workspace extends React.Component {
   }
 
   _handleStartLogIn() {
-    appFirebase.authWithOAuthPopup(
-      'github',
-      {remember: 'sessionOnly', scope: 'gist'}
-    ).then(
-      (authData) => {
-        this.props.dispatch(logIn(authData));
+    auth.signInWithPopup(githubAuthProvider).then(
+      ({user, credential}) => {
+        this.props.dispatch(logIn(user, credential));
       },
       (e) => {
         switch (e.code) {
@@ -310,7 +307,7 @@ class Workspace extends React.Component {
   }
 
   _handleLogOut() {
-    appFirebase.unauth().then(() => this.props.dispatch(logOut()));
+    auth.signOut().then(() => this.props.dispatch(logOut()));
   }
 
   _handleRequestedLineFocused() {

@@ -1,7 +1,7 @@
-import promiseTicks from './promiseTicks';
+import waitForAsync from './waitForAsync';
 
 export default function dispatchAndWait(store, action) {
   store.dispatch(action);
-  return promiseTicks(20);
+  return waitForAsync();
 }
 

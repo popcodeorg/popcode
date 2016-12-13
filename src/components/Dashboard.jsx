@@ -12,7 +12,7 @@ class Dashboard extends React.Component {
     const currentUser = this.props.currentUser;
 
     if (currentUser.authenticated) {
-      const name = currentUser.displayName || currentUser.username;
+      const name = currentUser.displayName;
 
       return (
         <div className="dashboard__session">

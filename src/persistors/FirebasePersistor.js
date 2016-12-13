@@ -1,46 +1,28 @@
 import values from 'lodash/values';
-import appFirebase from '../services/appFirebase';
+import {database} from '../services/appFirebase';
 
 class FirebasePersistor {
   constructor(uid) {
-    this.firebase = appFirebase.child(`workspaces/${uid}`);
+    this.firebase = database.ref(`workspaces/${uid}`);
   }
 
   getCurrentProjectKey() {
-    return new Promise((resolve) => {
-      this.firebase.child('currentProjectKey').once('value', (snapshot) => {
-        resolve(snapshot.val());
-      });
-    });
+    return this.firebase.child('currentProjectKey').once('value').
+      then((snapshot) => snapshot.val());
   }
 
   setCurrentProjectKey(projectKey) {
-    return new Promise((resolve, reject) => {
-      this.firebase.child('currentProjectKey').set(projectKey, (error) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve();
-        }
-      });
-    });
+    return this.firebase.child('currentProjectKey').set(projectKey);
   }
 
   all() {
-    return new Promise((resolve) => {
-      this.firebase.child('projects').once('value', (projects) => {
-        resolve(values(projects.val() || {}));
-      });
-    });
+    return this.firebase.child('projects').once('value').
+      then((projects) => values(projects.val() || {}));
   }
 
   load(projectKey) {
-    return new Promise((resolve) => {
-      this.firebase.child('projects').child(projectKey).
-        once('value', (snapshot) => {
-          resolve(snapshot.val());
-        });
-    });
+    return this.firebase.child('projects').child(projectKey).once('value').
+      then((snapshot) => snapshot.val());
   }
 
   loadCurrentProject() {
@@ -53,16 +35,8 @@ class FirebasePersistor {
   }
 
   save(project) {
-    return new Promise((resolve, reject) => {
-      this.firebase.child('projects').child(project.projectKey).
-        setWithPriority(project, -Date.now(), (error) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve();
-          }
-        });
-    });
+    return this.firebase.child('projects').child(project.projectKey).
+      setWithPriority(project, -Date.now());
   }
 
   saveCurrentProject(project) {
