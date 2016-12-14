@@ -154,7 +154,7 @@ $ yarn
 That'll pull down the dependencies. Then run:
 
 ```bash
-$ npm run dev
+$ yarn run dev
 ```
 
 This will start a local static server, and open it in your browser. The first
