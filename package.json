@@ -86,6 +86,7 @@
   "scripts": {
     "postinstall": "bower install",
     "pretest": "yarn run lint",
+    "dev": "yarn install && gulp dev",
     "test": "karma start --single-run --no-auto-watch",
     "autotest": "karma start --no-single-run --auto-watch",
     "lint": "eslint --ext .js,.jsx --plugin react src",

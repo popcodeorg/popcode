@@ -1,8 +1,8 @@
 # Popcode #
 
 [Popcode](https://popcode.org) is a simple HTML/CSS/JavaScript editing
-environment for use in the classroom. It's a lot like [JSBin](http://jsbin.com), 
-[JSFiddle](https://jsfiddle.net), or [CodePen](https://codepen.io), but it focuses on 
+environment for use in the classroom. It's a lot like [JSBin](http://jsbin.com),
+[JSFiddle](https://jsfiddle.net), or [CodePen](https://codepen.io), but it focuses on
 giving specific, immediate, human-friendly feedback when the code contains errors.
 
 [![](https://cl.ly/1W1e1h3w073u/popscreens.png)](https://popcode.org)
@@ -154,7 +154,7 @@ $ yarn
 That'll pull down the dependencies. Then run:
 
 ```bash
-$ gulp dev
+$ yarn run dev
 ```
 
 This will start a local static server, and open it in your browser. The first
