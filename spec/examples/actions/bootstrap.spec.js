@@ -58,15 +58,16 @@ describe('bootstrap', () => {
     context('when auth resolves logged in', () => {
       const uid = '123';
 
-      context('no current project in Firebase', () => {
+      context('no credential in sessionStorage', () => {
         beforeEach(() => {
           mockFirebase.logIn(uid);
+          mockFirebase._setValue(`authTokens/${uid}/github_com`, null);
           mockFirebase.setCurrentProject(null);
           return dispatchBootstrap();
         });
 
-        it('should log the user in', () => {
-          assert.isTrue(store.getState().getIn(['user', 'authenticated']));
+        it('should not log the user in', () => {
+          assert.isFalse(store.getState().getIn(['user', 'authenticated']));
         });
 
         it('should create a new current project', () =>
@@ -85,12 +86,52 @@ describe('bootstrap', () => {
           mockFirebase.setCurrentProject(project);
           return dispatchBootstrap();
         });
+      });
 
-        it('should create a new current project', () => {
-          assert.notEqual(
-            store.getState().getIn(['currentProject', 'projectKey']),
-            project.projectKey
+      context('credential in sessionStorage', () => {
+        let credential;
+
+        context('no current project in Firebase', () => {
+          beforeEach(() => {
+            credential = mockFirebase.logIn(uid).credential;
+            mockFirebase.setCurrentProject(null);
+            return dispatchBootstrap();
+          });
+
+          it('should log the user in', () => {
+            assert.isTrue(store.getState().getIn(['user', 'authenticated']));
+          });
+
+          it('should set credential', () => {
+            assert.equal(
+              store.getState().getIn(['user', 'accessTokens', 'github.com']),
+              credential.accessToken
+            );
+          });
+
+          it('should create a new current project', () =>
+            assert.eventually.isNotNull(Promise.resolve().then(() =>
+              store.getState().getIn(['currentProject', 'projectKey']))
+            )
           );
+        });
+
+        context('current project in Firebase', () => {
+          let project;
+
+          beforeEach(() => {
+            project = buildProject({sources: {html: 'bogus<'}});
+            credential = mockFirebase.logIn(uid).credential;
+            mockFirebase.setCurrentProject(project);
+            return dispatchBootstrap();
+          });
+
+          it('should create a new project', () => {
+            assert.notEqual(
+              store.getState().getIn(['currentProject', 'projectKey']),
+              project.projectKey
+            );
+          });
         });
       });
     });

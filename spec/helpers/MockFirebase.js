@@ -25,7 +25,7 @@ export function createUser(user) {
   }, user);
 }
 
-export function createCredentials() {
+export function createCredential() {
   return {
     accessToken: '0123456789abcdef',
     provider: 'github.com',
@@ -69,16 +69,25 @@ export default class MockFirebase {
     const rootRef = new MockRef(this._data);
     sandbox.stub(database, 'ref', (path) => rootRef.child(path));
     auth.onAuthStateChanged.returns(sinon.stub());
+    auth.signOut.returns(Promise.resolve());
   }
 
   logIn(uid) {
+    const user = createUser({uid});
+    const credential = createCredential();
     this._currentUid = uid;
-    auth.onAuthStateChanged.yieldsAsync(createUser({uid}));
+    this.setCurrentUserCredential();
+    auth.onAuthStateChanged.yieldsAsync(user);
+    return {user, credential};
   }
 
   logOut() {
     this._currentUid = null;
     auth.onAuthStateChanged.yieldsAsync(null);
+  }
+
+  setCurrentUserCredential(credential = createCredential()) {
+    this._setValue(`authTokens/${this._currentUid}/github_com`, credential);
   }
 
   setCurrentProject(currentProject) {

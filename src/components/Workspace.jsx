@@ -17,8 +17,13 @@ import path from 'path';
 import base64 from 'base64-js';
 import {TextEncoder} from 'text-encoding';
 import Bugsnag from '../util/Bugsnag';
-import {auth, githubAuthProvider} from '../services/appFirebase';
 import Gists from '../services/Gists';
+import {
+  onSignedIn,
+  onSignedOut,
+  signIn,
+  signOut,
+} from '../clients/firebaseAuth';
 import {EmptyGistError} from '../services/Gists';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 
@@ -116,6 +121,7 @@ class Workspace extends React.Component {
     }
     history.replaceState({}, '', location.pathname);
     this.props.dispatch(bootstrap(gistId));
+    this._listenForAuthChange();
   }
 
   componentDidMount() {
@@ -278,28 +284,29 @@ class Workspace extends React.Component {
     this.props.dispatch(toggleDashboard());
   }
 
+  _listenForAuthChange() {
+    onSignedIn(({user, credential}) =>
+      this.props.dispatch(logIn(user, credential))
+    );
+    onSignedOut(() => this.props.dispatch(logOut()));
+  }
+
   _handleStartLogIn() {
-    auth.signInWithPopup(githubAuthProvider).then(
-      ({user, credential}) => {
-        this.props.dispatch(logIn(user, credential));
-      },
-      (e) => {
-        switch (e.code) {
-          case 'USER_CANCELLED':
-            this.props.dispatch(
-              notificationTriggered('user-cancelled-auth')
-            );
-            break;
-          default:
-            this.props.dispatch(notificationTriggered('auth-error'));
-            if (isError(e)) {
-              Bugsnag.notifyException(e, e.code);
-            } else if (isString(e)) {
-              Bugsnag.notifyException(new Error(e));
-            }
-            break;
-        }
-      });
+    signIn().catch((e) => {
+      switch (e.code) {
+        case 'auth/popup-closed-by-user':
+          this.props.dispatch(notificationTriggered('user-cancelled-auth'));
+          break;
+        default:
+          this.props.dispatch(notificationTriggered('auth-error'));
+          if (isError(e)) {
+            Bugsnag.notifyException(e, e.code);
+          } else if (isString(e)) {
+            Bugsnag.notifyException(new Error(e));
+          }
+          break;
+      }
+    });
   }
 
   _handleNotificationDismissed(error) {
@@ -307,7 +314,7 @@ class Workspace extends React.Component {
   }
 
   _handleLogOut() {
-    auth.signOut().then(() => this.props.dispatch(logOut()));
+    signOut();
   }
 
   _handleRequestedLineFocused() {

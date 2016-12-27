@@ -1,7 +1,7 @@
 import get from 'lodash/get';
-import {auth} from '../services/appFirebase';
 import Gists from '../services/Gists';
 import Bugsnag from '../util/Bugsnag';
+import {getInitialUserState} from '../clients/firebaseAuth';
 import {
   createProject,
   initializeCurrentProjectFromGist,
@@ -12,12 +12,13 @@ import {notificationTriggered} from './ui';
 
 export default function bootstrap(gistId) {
   return (dispatch) => {
-    const userStateResolved = oneAuth().then((userData) => {
-      if (userData) {
-        dispatch(userAuthenticated({userData}));
-        dispatch(loadAllProjects());
-      }
-    });
+    const userStateResolved =
+      getInitialUserState().then((userCredential) => {
+        if (userCredential) {
+          dispatch(userAuthenticated(userCredential));
+          dispatch(loadAllProjects());
+        }
+      });
 
     const promisedGist = retrieveGist(gistId).catch((error) => {
       dispatch(notificationTriggered(error, 'error', {gistId}));
@@ -47,13 +48,4 @@ function retrieveGist(gistId) {
       Bugsnag.notify(error);
       return Promise.reject('gist-import-error');
     });
-}
-
-function oneAuth() {
-  return new Promise((resolve) => {
-    const offAuth = auth.onAuthStateChanged((userData) => {
-      resolve(userData);
-      offAuth();
-    });
-  });
 }

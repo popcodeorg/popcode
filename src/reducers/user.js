@@ -7,7 +7,7 @@ function user(stateIn, action) {
 
   switch (action.type) {
     case 'USER_AUTHENTICATED': {
-      const {userData, credentials} = action.payload;
+      const {user: userData, credential} = action.payload;
 
       return state.merge({
         authenticated: true,
@@ -15,8 +15,8 @@ function user(stateIn, action) {
         displayName: userData.displayName,
         avatarUrl: userData.photoURL,
         accessTokens: new Immutable.Map().set(
-          credentials.provider,
-          credentials.accessToken
+          credential.provider,
+          credential.accessToken
         ),
       });
     }
