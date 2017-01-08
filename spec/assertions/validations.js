@@ -16,7 +16,7 @@ export function assertFailsValidation(validate,
   ) {
   return assert.eventually.sameMembers(
     validate(source, ...options.validatorArgs).then(
-      (errors) => map(errors, 'reason')),
+      errors => map(errors, 'reason')),
       options.reasons,
       `source fails validation with reasons: ${options.reasons.join(', ')}`
   );
@@ -32,7 +32,7 @@ export function assertFailsValidationWith(validate, source, ...reasons) {
 
 export function assertFailsValidationAtLine(validate, source, line) {
   return assert.eventually.include(
-    validate(trim(source)).then((errors) => map(errors, 'row')),
+    validate(trim(source)).then(errors => map(errors, 'row')),
     line - 1,
     `source fails validation at line: ${line}`
   );

@@ -9,7 +9,7 @@ function ErrorSublist(props) {
     return false;
   }
 
-  const errors = map(props.errors.items, (error) => (
+  const errors = map(props.errors.items, error => (
     <ErrorItem
       {...error}
       key={[error.reason, error.row]}

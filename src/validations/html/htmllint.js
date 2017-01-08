@@ -31,7 +31,7 @@ const errorMap = {
 
   E002: () => ({reason: 'lower-case-attribute-name'}),
 
-  E005: (error) => ({
+  E005: error => ({
     reason: 'attribute-quotes',
     payload: {attribute: error.data.attribute},
   }),
@@ -42,11 +42,11 @@ const errorMap = {
 
   E008: () => ({reason: 'doctype'}),
 
-  E012: (error) => ({reason: 'duplicated-id', payload: {id: error.data.id}}),
+  E012: error => ({reason: 'duplicated-id', payload: {id: error.data.id}}),
 
   E014: () => ({reason: 'img-src'}),
 
-  E016: (error) => ({
+  E016: error => ({
     reason: `deprecated-tag.${error.data.tag.toLowerCase()}`,
   }),
 
@@ -132,4 +132,4 @@ class HtmllintValidator extends Validator {
   }
 }
 
-export default (source) => new HtmllintValidator(source).getAnnotations();
+export default source => new HtmllintValidator(source).getAnnotations();

@@ -125,7 +125,7 @@ describe('interfaceStateActions', () => {
     it('removes notifications of given type', () => {
       assert.notInclude(
         store.getState().getIn(['ui', 'notifications']).map(
-          (notification) => notification.get('type')
+          notification => notification.get('type')
         ),
         'some-error'
       );

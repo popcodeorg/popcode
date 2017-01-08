@@ -7,7 +7,7 @@ import gitHub from './gitHub';
 
 function performWithRetries(perform, options = {}) {
   return promiseRetry(
-    (retry) => perform().catch((error) => {
+    retry => perform().catch((error) => {
       if (error.message === 'Network Error') {
         return retry(error);
       }
@@ -88,7 +88,7 @@ function updateGistWithImportUrl(github, gistData) {
 
   const description = `${gistData.description} Click to import: ${uri.href}`;
   return performWithRetries(() => gist.update({description})).
-    then((response) => response.data);
+    then(response => response.data);
 }
 
 function createPopcodeJson(project) {
@@ -121,7 +121,7 @@ const Gists = {
     const github = clientForUser(user);
     const gist = github.getGist(gistId);
     return performWithRetries(() => gist.read(), {retries: 3}).
-      then((response) => response.data);
+      then(response => response.data);
   },
 };
 

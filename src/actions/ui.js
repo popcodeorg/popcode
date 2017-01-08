@@ -12,7 +12,7 @@ const userIsDoneTyping = createAction('USER_DONE_TYPING');
 const userIsDoneTypingWithDebounce = partial(
   identity,
   debounce(
-    (dispatch) => dispatch(userIsDoneTyping()),
+    dispatch => dispatch(userIsDoneTyping()),
     TYPING_DEBOUNCE_DELAY
   )
 );
@@ -40,5 +40,5 @@ export const notificationTriggered = createAction(
 
 export const userDismissedNotification = createAction(
   'USER_DISMISSED_NOTIFICATION',
-  (type) => ({type})
+  type => ({type})
 );

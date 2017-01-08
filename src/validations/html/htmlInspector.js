@@ -82,4 +82,4 @@ class HtmlInspectorValidator extends Validator {
   }
 }
 
-export default (source) => new HtmlInspectorValidator(source).getAnnotations();
+export default source => new HtmlInspectorValidator(source).getAnnotations();

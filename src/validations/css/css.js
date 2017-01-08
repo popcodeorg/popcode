@@ -39,4 +39,4 @@ class CssValidator extends Validator {
   }
 }
 
-export default (source) => new CssValidator(source).getAnnotations();
+export default source => new CssValidator(source).getAnnotations();

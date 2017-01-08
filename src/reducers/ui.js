@@ -27,7 +27,7 @@ function ui(stateIn, action) {
       return state.setIn(['editors', 'typing'], false);
 
     case 'DASHBOARD_TOGGLED':
-      return state.updateIn(['dashboard', 'isOpen'], (isOpen) => !isOpen).
+      return state.updateIn(['dashboard', 'isOpen'], isOpen => !isOpen).
         setIn(['dashboard', 'activeSubmenu'], null);
 
     case 'DASHBOARD_SUBMENU_TOGGLED':
@@ -43,13 +43,13 @@ function ui(stateIn, action) {
     case 'COMPONENT_MINIMIZED':
       return state.update(
         'minimizedComponents',
-        (components) => components.add(action.payload.componentName)
+        components => components.add(action.payload.componentName)
       );
 
     case 'COMPONENT_MAXIMIZED':
       return state.update(
         'minimizedComponents',
-        (components) => components.delete(action.payload.componentName)
+        components => components.delete(action.payload.componentName)
       );
 
     case 'USER_REQUESTED_FOCUSED_LINE':
@@ -67,7 +67,7 @@ function ui(stateIn, action) {
     case 'NOTIFICATION_TRIGGERED':
       return state.update(
         'notifications',
-        (errors) => errors.add(new Immutable.Map(
+        errors => errors.add(new Immutable.Map(
           pick(action.payload, ['type', 'severity', 'payload'])
         ))
       );
@@ -75,8 +75,8 @@ function ui(stateIn, action) {
     case 'USER_DISMISSED_NOTIFICATION':
       return state.update(
         'notifications',
-        (errors) => errors.filterNot(
-          (error) => error.get('type') === action.payload.type
+        errors => errors.filterNot(
+          error => error.get('type') === action.payload.type
         )
       );
 

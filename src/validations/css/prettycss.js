@@ -93,24 +93,24 @@ const errorMap = {
     };
   },
 
-  'require-value': (error) => ({
+  'require-value': error => ({
     reason: 'require-value',
     payload: {error: error.token.content},
   }),
 
-  'require-positive-value': (error) => ({
+  'require-positive-value': error => ({
     reason: 'invalid-negative-value',
     payload: {error: error.token.content},
   }),
 
-  'require-integer': (error) => ({
+  'require-integer': error => ({
     reason: 'invalid-fractional-value',
     payload: {error: error.token.content},
   }),
 
   'selector-expected': () => ({reason: 'selector-expected'}),
 
-  'unknown-property': (error) => ({
+  'unknown-property': error => ({
     reason: 'unknown-property',
     payload: {error: error.token.content},
   }),
@@ -144,4 +144,4 @@ class PrettyCssValidator extends Validator {
   }
 }
 
-export default (source) => new PrettyCssValidator(source).getAnnotations();
+export default source => new PrettyCssValidator(source).getAnnotations();

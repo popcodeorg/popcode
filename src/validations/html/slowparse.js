@@ -1,19 +1,19 @@
 import Validator from '../Validator';
 
 const errorMap = {
-  ATTRIBUTE_IN_CLOSING_TAG: (error) => ({
+  ATTRIBUTE_IN_CLOSING_TAG: error => ({
     reason: 'attribute-in-closing-tag',
     payload: {tag: error.closeTag.name},
   }),
 
-  CLOSE_TAG_FOR_VOID_ELEMENT: (error) => ({
+  CLOSE_TAG_FOR_VOID_ELEMENT: error => ({
     reason: 'close-tag-for-void-element',
     payload: {tag: error.closeTag.name},
   }),
 
   HTML_CODE_IN_CSS_BLOCK: () => ({reason: 'html-in-css-block'}),
 
-  INVALID_ATTR_NAME: (error) => ({
+  INVALID_ATTR_NAME: error => ({
     reason: 'invalid-attribute-name',
     payload: {attribute: error.attribute.name.value},
     suppresses: ['lower-case-attribute-name'],
@@ -39,13 +39,13 @@ const errorMap = {
     };
   },
 
-  UNSUPPORTED_ATTR_NAMESPACE: (error) => ({
+  UNSUPPORTED_ATTR_NAMESPACE: error => ({
     reason: 'invalid-attribute-name',
     payload: {attribute: error.attribute.name.value},
     suppresses: ['lower-case-attribute-name'],
   }),
 
-  MULTIPLE_ATTR_NAMESPACES: (error) => ({
+  MULTIPLE_ATTR_NAMESPACES: error => ({
     reason: 'invalid-attribute-name',
     payload: {attribute: error.attribute.name.value},
     suppresses: ['lower-case-attribute-name'],
@@ -67,34 +67,34 @@ const errorMap = {
     };
   },
 
-  SELF_CLOSING_NON_VOID_ELEMENT: (error) => ({
+  SELF_CLOSING_NON_VOID_ELEMENT: error => ({
     reason: 'self-closing-non-void-element',
     payload: {tag: error.name},
   }),
 
-  UNCLOSED_TAG: (error) => ({
+  UNCLOSED_TAG: error => ({
     reason: 'unclosed-tag',
     payload: {tag: error.openTag.name},
     suppresses: ['mismatched-close-tag'],
   }),
 
-  UNEXPECTED_CLOSE_TAG: (error) => ({
+  UNEXPECTED_CLOSE_TAG: error => ({
     reason: 'unexpected-close-tag',
     payload: {tag: error.closeTag.name},
   }),
 
-  UNTERMINATED_ATTR_VALUE: (error) => ({
+  UNTERMINATED_ATTR_VALUE: error => ({
     reason: 'unterminated-attribute-value',
     payload: {attribute: error.attribute.name.value, tag: error.openTag.name},
   }),
 
-  UNTERMINATED_OPEN_TAG: (error) => ({
+  UNTERMINATED_OPEN_TAG: error => ({
     reason: 'unterminated-open-tag',
     payload: {tag: error.openTag.name},
     suppresses: ['attribute-value', 'lower-case', 'lower-case-attribute-name'],
   }),
 
-  UNTERMINATED_CLOSE_TAG: (error) => ({
+  UNTERMINATED_CLOSE_TAG: error => ({
     reason: 'unterminated-close-tag',
     payload: {tag: error.closeTag.name},
     suppresses: ['unclosed-tag'],
@@ -102,7 +102,7 @@ const errorMap = {
 
   UNTERMINATED_COMMENT: () => ({reason: 'unterminated-comment'}),
 
-  UNBOUND_ATTRIBUTE_VALUE: (error) => ({
+  UNBOUND_ATTRIBUTE_VALUE: error => ({
     reason: 'unbound-attribute-value',
     payload: {value: error.value},
     suppresses: ['attribute-value', 'lower-case-attribute-name'],
@@ -143,4 +143,4 @@ class SlowparseValidator extends Validator {
   }
 }
 
-export default (source) => new SlowparseValidator(source).getAnnotations();
+export default source => new SlowparseValidator(source).getAnnotations();
