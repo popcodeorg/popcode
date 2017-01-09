@@ -10,6 +10,14 @@ export function assertPassesValidation(validate, source, validatorArgs = []) {
   );
 }
 
+export function assertFailsValidationWithValidatorArgs(validate, source, validatorArgs = [], ...reasons) {
+  return assert.eventually.sameMembers(
+    validate(source, ...validatorArgs).then((errors) => map(errors, 'reason')),
+    reasons,
+    `source fails validation with reasons: ${reasons.join(', ')}`
+  );
+}
+
 export function assertFailsValidationWith(validate, source, ...reasons) {
   return assert.eventually.sameMembers(
     validate(source, []).then((errors) => map(errors, 'reason')),

@@ -1,47 +1,14 @@
-import isNull from 'lodash/isNull';
-
-const DEFAULT_CONDITIONS = {
-  containsExternalScript: {
-    actionName: 'OVERRIDE_JSHINT_W117',
-    payload: {
-      enabled: true,
-    },
-  },
-};
-
-class CustomHtmlAnalyzer {
-  constructor(source) {
-    this._source = source;
-    this._doc = new DOMParser().parseFromString(this._source, 'text/html');
+class Analyzer {
+  constructor(project) {
+    this._project = project;
   }
 
-  getConditions() {
-    return Promise.resolve(this._checkConditions());
-  }
-
-  _checkConditions() {
-    if (isNull(this._doc.documentElement)) {
-      return Promise.resolve(DEFAULT_CONDITIONS);
-    }
-
-    const containsExternalScript = this._checkForExternalScript();
-
-    return Promise.resolve({
-      containsExternalScript,
-    });
-  }
-
-  _checkForExternalScript() {
-    return {
-      actionName: DEFAULT_CONDITIONS.containsExternalScript.actionName,
-      payload: {
-        enabled: !this._doc.documentElement.innerHTML.includes('</script>'),
-      },
-    };
+  containsExternalScript() {
+    const docElement = this._project.get('sources').get('html');
+    const doc = new DOMParser().parseFromString(docElement, 'text/html');
+    return doc.documentElement.innerHTML.includes('</script>');
   }
 
 }
 
-export default {
-  html: (source) => new CustomHtmlAnalyzer(source).getConditions(),
-};
+export default Analyzer;

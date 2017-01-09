@@ -21,6 +21,18 @@ const jshintrc = {
   undef: true,
 };
 
+const jshintrcExternalScript = {
+  browser: true,
+  curly: true,
+  devel: true,
+  eqeqeq: true,
+  latedef: true,
+  nonew: true,
+  predef: [],
+  shadow: 'outer',
+  undef: false,
+};
+
 const match = {
   '{': '}',
   '[': ']',
@@ -139,9 +151,10 @@ const errorMap = {
 };
 
 class JsHintValidator extends Validator {
-  constructor(source, enabledLibraries, validationOverrides) {
-    super(source, 'javascript', errorMap, validationOverrides);
-    this._jshintOptions = defaults(clone(jshintrc), {predef: []});
+  constructor(source, enabledLibraries, analyzer) {
+    super(source, 'javascript', errorMap, analyzer);
+    const jshintConfig = this._getConfig(analyzer);
+    this._jshintOptions = defaults(clone(jshintConfig), {predef: []});
     enabledLibraries.forEach((libraryKey) => {
       if (!(libraryKey in libraries)) {
         return;
@@ -154,6 +167,13 @@ class JsHintValidator extends Validator {
           concat(this._jshintOptions.predef, library.predefined);
       }
     });
+  }
+
+  _getConfig(analyzer) {
+    if (analyzer.containsExternalScript()) {
+      return jshintrcExternalScript;
+    }
+    return jshintrc;
   }
 
   _getRawErrors() {

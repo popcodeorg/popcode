@@ -5,10 +5,6 @@ import {isPristineProject} from '../util/projectUtils';
 import bootstrap from './bootstrap';
 
 import {
-  analyzeSource,
-} from './analyzers';
-
-import {
   exportingGist,
 } from './clients';
 
@@ -29,6 +25,8 @@ import {
   logIn,
   logOut,
 } from './user';
+
+import Analyzer from '../analyzers';
 
 function getCurrentPersistor(state) {
   const currentUser = state.user;
@@ -59,13 +57,12 @@ export function saveCurrentProject(state) {
   return false;
 }
 
-function validateSource(language, source, enabledLibraries) {
+function validateSource(language, source, enabledLibraries, analyzer) {
   return (dispatch, getState) => {
-    const validationOverrides = getState().validationOverrides.get(language);
     const validate = validations[language];
     validate(source,
       enabledLibraries.toJS(),
-      validationOverrides).then((errors) => {
+      analyzer).then((errors) => {
         const currentSource = getCurrentProject(getState()).
           get('sources').get(language);
 
@@ -87,8 +84,9 @@ function validateSource(language, source, enabledLibraries) {
 export function validateAllSources(project) {
   return (dispatch) => {
     const enabledLibraries = project.get('enabledLibraries');
+    const analyzer = new Analyzer(project);
     project.get('sources').forEach((source, language) => {
-      dispatch(validateSource(language, source, enabledLibraries));
+      dispatch(validateSource(language, source, enabledLibraries, analyzer));
     });
   };
 }
@@ -108,16 +106,13 @@ function updateProjectSource(projectKey, language, newValue) {
     const state = getState();
     saveCurrentProject(state);
 
-    dispatch(analyzeSource(
-      language,
-      newValue
-    ));
-
     const currentProject = getCurrentProject(state);
+    const analyzer = new Analyzer(currentProject);
     dispatch(validateSource(
       language,
       newValue,
-      currentProject.get('enabledLibraries')
+      currentProject.get('enabledLibraries'),
+      analyzer
     ));
   };
 }
