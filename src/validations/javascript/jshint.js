@@ -151,11 +151,11 @@ const errorMap = {
 };
 
 class JsHintValidator extends Validator {
-  constructor(source, enabledLibraries, analyzer) {
+  constructor(source, analyzer) {
     super(source, 'javascript', errorMap, analyzer);
     const jshintConfig = this._getConfig(analyzer);
     this._jshintOptions = defaults(clone(jshintConfig), {predef: []});
-    enabledLibraries.forEach((libraryKey) => {
+    analyzer.enabledLibraries.forEach((libraryKey) => {
       if (!(libraryKey in libraries)) {
         return;
       }
@@ -170,7 +170,7 @@ class JsHintValidator extends Validator {
   }
 
   _getConfig(analyzer) {
-    if (analyzer.containsExternalScript()) {
+    if (analyzer.containsExternalScript) {
       return jshintrcExternalScript;
     }
     return jshintrc;
@@ -200,9 +200,5 @@ class JsHintValidator extends Validator {
   }
 }
 
-export default (source,
-    enabledLibraries,
-    validationOverrides) =>
-  new JsHintValidator(source,
-        enabledLibraries,
-        validationOverrides).getAnnotations();
+export default (source, analyzer) =>
+  new JsHintValidator(source, analyzer).getAnnotations();

@@ -57,36 +57,33 @@ export function saveCurrentProject(state) {
   return false;
 }
 
-function validateSource(language, source, enabledLibraries, analyzer) {
+function validateSource(language, source, analyzer) {
   return (dispatch, getState) => {
     const validate = validations[language];
-    validate(source,
-      enabledLibraries.toJS(),
-      analyzer).then((errors) => {
-        const currentSource = getCurrentProject(getState()).
-          get('sources').get(language);
+    validate(source, analyzer).then((errors) => {
+      const currentSource = getCurrentProject(getState()).
+        get('sources').get(language);
 
-        if (currentSource !== source) {
-          return;
-        }
+      if (currentSource !== source) {
+        return;
+      }
 
-        dispatch({
-          type: 'VALIDATED_SOURCE',
-          payload: {
-            language,
-            errors,
-          },
-        });
+      dispatch({
+        type: 'VALIDATED_SOURCE',
+        payload: {
+          language,
+          errors,
+        },
       });
+    });
   };
 }
 
 export function validateAllSources(project) {
   return (dispatch) => {
-    const enabledLibraries = project.get('enabledLibraries');
     const analyzer = new Analyzer(project);
     project.get('sources').forEach((source, language) => {
-      dispatch(validateSource(language, source, enabledLibraries, analyzer));
+      dispatch(validateSource(language, source, analyzer));
     });
   };
 }
@@ -111,7 +108,6 @@ function updateProjectSource(projectKey, language, newValue) {
     dispatch(validateSource(
       language,
       newValue,
-      currentProject.get('enabledLibraries'),
       analyzer
     ));
   };

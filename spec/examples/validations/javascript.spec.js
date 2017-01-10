@@ -10,36 +10,38 @@ import javascript from '../../../src/validations/javascript';
 import assertPassesAcceptance from './assertPassesAcceptance';
 import Analyzer from '../../../src/analyzers';
 
-const currentProject = new Immutable.Map({
-  sources: new Immutable.Map({
-    html: ''
-  })
-});
-const analyzer = new Analyzer(currentProject);
+const analyzer = {
+  enabledLibraries: [],
+  containsExternalScript: false,
+};
+
+const analyzerWithjQuery = {
+  enabledLibraries: ['jquery'],
+  containsExternalScript: false
+};
+
+const analyzerWithExternalScript = {
+  enabledLibraries: [],
+  containsExternalScript: true,
+};
 
 describe('javascript', () => {
   it('should handle invalid LHS error followed by comment', () =>
     assertFailsValidationWithValidatorArgs(javascript, `alert(--"str"
 // comment`,
-      [[], analyzer],
+      [analyzer],
       'invalid-left-hand-string',
       'missing-token'
     )
   );
-  assertPassesAcceptance(javascript, 'javascript', ['jquery'], analyzer);
+  assertPassesAcceptance(javascript, 'javascript', analyzerWithjQuery);
 
   it('should fail invalid global when there is not <script> tag in the html', () => {
-  	assertFailsValidationWithValidatorArgs(javascript, `TinyTurtle.whatever();`, [[], analyzer], 'declare-variable');
+  	assertFailsValidationWithValidatorArgs(javascript, `TinyTurtle.whatever();`, [analyzer], 'declare-variable');
   });
 
   it('should pass invalid global when there W117 has been disabled because there is a <script> tag in the html', () => {
-    const projectWithScriptTag = new Immutable.Map({
-      sources: new Immutable.Map({
-        html: '<script src="whatever"></script>'
-      })
-    });
-    const analyzerWithScriptTag = new Analyzer(projectWithScriptTag);
-  	assertPassesValidation(javascript, `TinyTurtle.whatever();`, [ [], analyzerWithScriptTag]);
+  	assertPassesValidation(javascript, `TinyTurtle.whatever();`, [ analyzerWithExternalScript ]);
   });
 
 });

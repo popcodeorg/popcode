@@ -10,7 +10,7 @@ describe('Analyzer', () => {
       })
     });
     const analyzer = new Analyzer(currentProject);
-    assert.isFalse(analyzer.containsExternalScript());
+    assert.isFalse(analyzer.containsExternalScript);
   });
 
   it('containsExternalScript returns true if the html does contain a <script> tag', () => {
@@ -21,7 +21,7 @@ describe('Analyzer', () => {
       })
     });
     const analyzer = new Analyzer(currentProject);
-    assert.isTrue(analyzer.containsExternalScript());
+    assert.isTrue(analyzer.containsExternalScript);
   });
 
 });
