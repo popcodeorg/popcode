@@ -6,10 +6,13 @@ import Immutable from 'immutable';
 import installDevTools from 'immutable-devtools';
 import Application from './components/Application';
 import initI18n from './util/initI18n';
+import {init as initAnalytics, logPageview} from './clients/googleAnalytics';
 
 installDevTools(Immutable);
 
 initI18n();
+initAnalytics();
+logPageview();
 
 ReactDOM.render(
   React.createElement(Application),

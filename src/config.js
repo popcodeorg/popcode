@@ -14,4 +14,7 @@ export default {
   bugsnagApiKey: '400134511e506b91ae6c24ac962af962',
 
   gitRevision: process.env.GIT_REVISION,
+
+  googleAnalyticsTrackingId:
+    process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'UA-90316486-2',
 };
