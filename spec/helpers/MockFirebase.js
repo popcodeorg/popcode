@@ -9,6 +9,7 @@ import {
   database,
   githubAuthProvider,
 } from '../../src/services/appFirebase';
+import {setSessionUid} from '../../src/clients/firebaseAuth';
 
 export function createUser(user) {
   return merge({
@@ -77,13 +78,16 @@ export default class MockFirebase {
     const credential = createCredential();
     this._currentUid = uid;
     this.setCurrentUserCredential();
+    Reflect.defineProperty(auth, 'currentUser', {value: user});
     auth.onAuthStateChanged.yieldsAsync(user);
+    setSessionUid();
     return {user, credential};
   }
 
   logOut() {
     this._currentUid = null;
     auth.onAuthStateChanged.yieldsAsync(null);
+    Reflect.defineProperty(auth, 'currentUser', {value: null});
   }
 
   setCurrentUserCredential(credential = createCredential()) {

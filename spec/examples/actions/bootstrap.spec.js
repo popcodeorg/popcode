@@ -58,7 +58,7 @@ describe('bootstrap', () => {
     context('when auth resolves logged in', () => {
       const uid = '123';
 
-      context('no credential in sessionStorage', () => {
+      context('no credential in Firebase', () => {
         beforeEach(() => {
           mockFirebase.logIn(uid);
           mockFirebase._setValue(`authTokens/${uid}/github_com`, null);
@@ -77,18 +77,7 @@ describe('bootstrap', () => {
         );
       });
 
-      context('current project in Firebase', () => {
-        let project;
-
-        beforeEach(() => {
-          project = buildProject({sources: {html: 'bogus<'}});
-          mockFirebase.logIn(uid);
-          mockFirebase.setCurrentProject(project);
-          return dispatchBootstrap();
-        });
-      });
-
-      context('credential in sessionStorage', () => {
+      context('credential in Firebase', () => {
         let credential;
 
         context('no current project in Firebase', () => {

@@ -12,13 +12,12 @@ import {notificationTriggered} from './ui';
 
 export default function bootstrap(gistId) {
   return (dispatch) => {
-    const userStateResolved =
-      getInitialUserState().then((userCredential) => {
-        if (userCredential) {
-          dispatch(userAuthenticated(userCredential));
-          dispatch(loadAllProjects());
-        }
-      });
+    const userStateResolved = getInitialUserState().then((userCredential) => {
+      if (userCredential) {
+        dispatch(userAuthenticated(userCredential));
+        dispatch(loadAllProjects());
+      }
+    });
 
     const promisedGist = retrieveGist(gistId).catch((error) => {
       dispatch(notificationTriggered(error, 'error', {gistId}));

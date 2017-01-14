@@ -23,6 +23,7 @@ import {
   onSignedOut,
   signIn,
   signOut,
+  startSessionHeartbeat,
 } from '../clients/firebaseAuth';
 import {EmptyGistError} from '../services/Gists';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
@@ -122,6 +123,7 @@ class Workspace extends React.Component {
     history.replaceState({}, '', location.pathname);
     this.props.dispatch(bootstrap(gistId));
     this._listenForAuthChange();
+    startSessionHeartbeat();
   }
 
   componentDidMount() {

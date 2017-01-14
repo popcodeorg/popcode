@@ -1,7 +1,12 @@
+import get from 'lodash/get';
 import isNil from 'lodash/isNil';
 import isNull from 'lodash/isNull';
 import {Observable} from '../services/rxjs';
 import {auth, database, githubAuthProvider} from '../services/appFirebase';
+import Cookies from 'js-cookie';
+
+const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
+const SESSION_TTL_MS = 5 * 60 * 1000;
 
 const loginStateSource = Observable.create((observer) => {
   auth.onAuthStateChanged(observer.next.bind(observer));
@@ -29,8 +34,14 @@ function userCredentialForUserData(user) {
 
 export function getInitialUserState() {
   return oneAuth().then((userCredential) => {
-    if (!isNull(userCredential) && isNull(userCredential.credential)) {
-      return auth.signOut().then(() => null);
+    if (!isNull(userCredential)) {
+      if (isNull(userCredential.credential)) {
+        return auth.signOut().then(() => null);
+      }
+
+      if (userCredential.user.uid !== getSessionUid()) {
+        return auth.signOut().then(() => null);
+      }
     }
 
     return userCredential;
@@ -64,6 +75,22 @@ export function saveCredentials(uid, credential) {
     set(credential);
 }
 
+export function startSessionHeartbeat() {
+  setInterval(setSessionUid, 1000);
+}
+
 function oneAuth() {
   return loginStateSource.first().toPromise();
+}
+
+function getSessionUid() {
+  return Cookies.get(VALID_SESSION_UID_COOKIE);
+}
+
+export function setSessionUid() {
+  Cookies.set(
+    VALID_SESSION_UID_COOKIE,
+    get(auth, 'currentUser.uid'),
+    {expires: new Date(Date.now() + SESSION_TTL_MS)}
+  );
 }
