@@ -7,7 +7,7 @@ class Analyzer {
   }
 
   get containsExternalScript() {
-    return this._doc.querySelector('script');
+    return Boolean(this._doc.querySelector('script'));
   }
 
   get enabledLibraries() {
