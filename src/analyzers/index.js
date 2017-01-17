@@ -1,18 +1,18 @@
 class Analyzer {
   constructor(project) {
     this._project = project;
+    this._domParser = new DOMParser();
+    const htmlString = this._project.getIn(['sources', 'html']);
+    this._doc = this._domParser.parseFromString(htmlString, 'text/html');
   }
 
   get containsExternalScript() {
-    const docElement = this._project.get('sources').get('html');
-    const doc = new DOMParser().parseFromString(docElement, 'text/html');
-    return doc.documentElement.innerHTML.includes('</script>');
+    return this._doc.querySelector('script');
   }
 
   get enabledLibraries() {
     return this._project.get('enabledLibraries').toJS();
   }
-
 }
 
 export default Analyzer;

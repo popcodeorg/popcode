@@ -21,18 +21,6 @@ const jshintrc = {
   undef: true,
 };
 
-const jshintrcExternalScript = {
-  browser: true,
-  curly: true,
-  devel: true,
-  eqeqeq: true,
-  latedef: true,
-  nonew: true,
-  predef: [],
-  shadow: 'outer',
-  undef: false,
-};
-
 const match = {
   '{': '}',
   '[': ']',
@@ -153,9 +141,20 @@ const errorMap = {
 class JsHintValidator extends Validator {
   constructor(source, analyzer) {
     super(source, 'javascript', errorMap, analyzer);
-    const jshintConfig = this._getConfig(analyzer);
-    this._jshintOptions = defaults(clone(jshintConfig), {predef: []});
-    analyzer.enabledLibraries.forEach((libraryKey) => {
+    this._jshintOptions = this._getConfig(
+      analyzer.containsExternalScript,
+      analyzer.enabledLibraries
+    );
+  }
+
+  _getConfig(containsExternalScript, enabledLibraries) {
+    const options = defaults(clone(jshintrc), {predef: []});
+
+    if (containsExternalScript) {
+      options.undef = false;
+    }
+
+    enabledLibraries.forEach((libraryKey) => {
       if (!(libraryKey in libraries)) {
         return;
       }
@@ -163,17 +162,12 @@ class JsHintValidator extends Validator {
       const library = libraries[libraryKey];
 
       if (library.predefined) {
-        this._jshintOptions.predef =
-          concat(this._jshintOptions.predef, library.predefined);
+        options.predef =
+          concat(options.predef, library.predefined);
       }
     });
-  }
 
-  _getConfig(analyzer) {
-    if (analyzer.containsExternalScript) {
-      return jshintrcExternalScript;
-    }
-    return jshintrc;
+    return options;
   }
 
   _getRawErrors() {

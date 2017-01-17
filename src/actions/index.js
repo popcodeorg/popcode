@@ -57,10 +57,10 @@ export function saveCurrentProject(state) {
   return false;
 }
 
-function validateSource(language, source, analyzer) {
+function validateSource(language, source, projectAttributes) {
   return (dispatch, getState) => {
     const validate = validations[language];
-    validate(source, analyzer).then((errors) => {
+    validate(source, projectAttributes).then((errors) => {
       const currentSource = getCurrentProject(getState()).
         get('sources').get(language);
 
@@ -81,9 +81,9 @@ function validateSource(language, source, analyzer) {
 
 export function validateAllSources(project) {
   return (dispatch) => {
-    const analyzer = new Analyzer(project);
+    const projectAttributes = new Analyzer(project);
     project.get('sources').forEach((source, language) => {
-      dispatch(validateSource(language, source, analyzer));
+      dispatch(validateSource(language, source, projectAttributes));
     });
   };
 }
@@ -104,12 +104,8 @@ function updateProjectSource(projectKey, language, newValue) {
     saveCurrentProject(state);
 
     const currentProject = getCurrentProject(state);
-    const analyzer = new Analyzer(currentProject);
-    dispatch(validateSource(
-      language,
-      newValue,
-      analyzer
-    ));
+    const projectAttributes = new Analyzer(currentProject);
+    dispatch(validateSource(language, newValue, projectAttributes));
   };
 }
 
