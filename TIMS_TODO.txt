@@ -1,6 +1,0 @@
-1. Make PR on htmllint for rules for the following:
-    -No tags outside of <html>
-    -No tags outside of <head> or <body>
-    -No presentational tags outside of <body>
-
-    

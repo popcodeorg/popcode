@@ -94,6 +94,8 @@ const htmlLintOptions = {
   'indent-style': 'spaces',
   'indent-width': 4,
   'line-end-style': false,
+  'head-valid-content-model': true,
+  'html-valid-content-model': true,
   'tag-bans': [
     'b',
     'big',
