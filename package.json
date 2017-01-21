@@ -75,6 +75,7 @@
     "qs": "^6.1.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+    "react-ga": "^2.1.2",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "redux-actions": "^0.12.0",

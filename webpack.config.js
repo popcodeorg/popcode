@@ -171,6 +171,7 @@ module.exports = {
       'LOG_REDUX_ACTIONS',
       'NODE_ENV',
       'WARN_ON_DROPPED_ERRORS',
+      'GOOGLE_ANALYTICS_TRACKING_ID',
     ]),
   ],
   resolve: {
