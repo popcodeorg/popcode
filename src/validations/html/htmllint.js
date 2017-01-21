@@ -74,7 +74,7 @@ const errorMap = {
 
   E046: () => ({reason: 'head-before-body'}),
 
-  E047: () => ({reason: 'invalid-tag-in-head'})
+  E047: () => ({reason: 'invalid-tag-in-head'}),
 };
 
 const htmlLintOptions = {
