@@ -10,12 +10,24 @@ export function assertPassesValidation(validate, source, validatorArgs = []) {
   );
 }
 
-export function assertFailsValidationWith(validate, source, ...reasons) {
+export function assertFailsValidation(validate,
+    source,
+    options = {validatorArgs: [], reasons: []}
+  ) {
   return assert.eventually.sameMembers(
-    validate(source, []).then((errors) => map(errors, 'reason')),
-    reasons,
-    `source fails validation with reasons: ${reasons.join(', ')}`
+    validate(source, ...options.validatorArgs).then(
+      (errors) => map(errors, 'reason')),
+      options.reasons,
+      `source fails validation with reasons: ${options.reasons.join(', ')}`
   );
+}
+
+export function assertFailsValidationWith(validate, source, ...reasons) {
+  const options = {
+    reasons,
+    validatorArgs: [],
+  };
+  return assertFailsValidation(validate, source, options);
 }
 
 export function assertFailsValidationAtLine(validate, source, line) {

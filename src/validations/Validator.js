@@ -5,10 +5,11 @@ import compact from 'lodash/compact';
 import config from '../config';
 
 class Validator {
-  constructor(source, language, errorMap) {
+  constructor(source, language, errorMap, analyzer) {
     this._source = source;
     this._language = language;
     this._errorMap = errorMap;
+    this._analyzer = analyzer;
   }
 
   getAnnotations() {

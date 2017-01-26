@@ -26,6 +26,8 @@ import {
   logOut,
 } from './user';
 
+import Analyzer from '../analyzers';
+
 function getCurrentPersistor(state) {
   const currentUser = state.user;
   if (currentUser.get('authenticated')) {
@@ -55,10 +57,10 @@ export function saveCurrentProject(state) {
   return false;
 }
 
-function validateSource(language, source, enabledLibraries) {
+function validateSource(language, source, projectAttributes) {
   return (dispatch, getState) => {
     const validate = validations[language];
-    validate(source, enabledLibraries.toJS()).then((errors) => {
+    validate(source, projectAttributes).then((errors) => {
       const currentSource = getCurrentProject(getState()).
         get('sources').get(language);
 
@@ -79,9 +81,9 @@ function validateSource(language, source, enabledLibraries) {
 
 export function validateAllSources(project) {
   return (dispatch) => {
-    const enabledLibraries = project.get('enabledLibraries');
+    const projectAttributes = new Analyzer(project);
     project.get('sources').forEach((source, language) => {
-      dispatch(validateSource(language, source, enabledLibraries));
+      dispatch(validateSource(language, source, projectAttributes));
     });
   };
 }
@@ -102,11 +104,8 @@ function updateProjectSource(projectKey, language, newValue) {
     saveCurrentProject(state);
 
     const currentProject = getCurrentProject(state);
-    dispatch(validateSource(
-      language,
-      newValue,
-      currentProject.get('enabledLibraries')
-    ));
+    const projectAttributes = new Analyzer(currentProject);
+    dispatch(validateSource(language, newValue, projectAttributes));
   };
 }
 
