@@ -417,6 +417,10 @@ body {
   position: relative;
 }
 
+.output_hidden {
+  display: none;
+}
+
 .output__item {
   flex: 1 1 auto;
 }
