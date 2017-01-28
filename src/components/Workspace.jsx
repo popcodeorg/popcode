@@ -216,13 +216,10 @@ class Workspace extends React.Component {
   }
 
   _renderOutput() {
-    if (includes(this.props.ui.minimizedComponents, 'output')) {
-      return null;
-    }
-
     return (
       <Output
         errors={this.props.errors}
+        isHidden={includes(this.props.ui.minimizedComponents, 'output')}
         project={this.props.currentProject}
         runtimeErrors={this.props.runtimeErrors}
         validationState={this._getOverallValidationState()}

@@ -3,6 +3,7 @@ import i18n from 'i18next-client';
 import isEmpty from 'lodash/isEmpty';
 import ErrorList from './ErrorList';
 import Preview from './Preview';
+import classnames from 'classnames';
 
 class Output extends React.Component {
   _renderErrorList(props) {
@@ -59,7 +60,14 @@ class Output extends React.Component {
 
   render() {
     return (
-      <div className="environment__column output">
+      <div
+        className={
+          classnames(
+            'environment__column output',
+            {output_hidden: this.props.isHidden}
+          )
+        }
+      >
         <div
           className="environment__label label"
           onClick={this.props.onMinimize}
@@ -76,6 +84,7 @@ class Output extends React.Component {
 
 Output.propTypes = {
   errors: React.PropTypes.object.isRequired,
+  isHidden: React.PropTypes.bool.isRequired,
   project: React.PropTypes.object,
   runtimeErrors: React.PropTypes.array.isRequired,
   validationState: React.PropTypes.string,
