@@ -56,9 +56,6 @@ function errors(stateIn, action) {
       }
       return state.set(action.payload.language, passedLanguageErrors);
 
-    case 'RESET_WORKSPACE':
-      return emptyErrors;
-
     default:
       return state;
   }

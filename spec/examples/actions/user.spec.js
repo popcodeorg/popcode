@@ -163,8 +163,8 @@ describe('user actions', () => {
       assert.isUndefined(store.getState().getIn(['user', 'id']));
     });
 
-    it('should create a fresh project', () => {
-      assert.notEqual(
+    it('should retain current project', () => {
+      assert.equal(
         getCurrentProject(store.getState()).projectKey,
         loggedInProjectKey
       );
