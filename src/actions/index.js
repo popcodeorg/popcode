@@ -29,7 +29,7 @@ import {
 import Analyzer from '../analyzers';
 
 function getCurrentPersistor(state) {
-  const currentUser = state.user;
+  const currentUser = state.get('user');
   if (currentUser.get('authenticated')) {
     return new FirebasePersistor(currentUser.get('id'));
   }
@@ -37,9 +37,9 @@ function getCurrentPersistor(state) {
 }
 
 export function getCurrentProject(state) {
-  const projectKey = state.currentProject.get('projectKey');
+  const projectKey = state.getIn(['currentProject', 'projectKey']);
   if (projectKey) {
-    return state.projects.get(projectKey);
+    return state.getIn(['projects', projectKey]);
   }
 
   return null;

@@ -3636,7 +3636,7 @@ immutable-devtools@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/immutable-devtools/-/immutable-devtools-0.0.7.tgz#da0fbdd860c3a8a598967fc544bb0329ec3ad26e"
 
-immutable@3.8.1, immutable@^3.7.5, immutable@^3.7.6:
+immutable@3.8.1, immutable@^3.7.5, immutable@^3.7.6, immutable@^3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
 
@@ -6150,6 +6150,12 @@ redux-actions@^0.12.0:
   dependencies:
     lodash "^4.13.1"
     reduce-reducers "^0.1.0"
+
+redux-immutable@^3.0.11:
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/redux-immutable/-/redux-immutable-3.0.11.tgz#ba7b00361904f2034e7841741bd4a6be66eea1ac"
+  dependencies:
+    immutable "^3.8.1"
 
 redux-logger@^2.5.0:
   version "2.7.4"

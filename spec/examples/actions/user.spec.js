@@ -97,41 +97,41 @@ describe('user actions', () => {
 
     function itShouldLogUserIn() {
       it('should set user state to authenticated', () => {
-        assert.isTrue(store.getState().user.get('authenticated'));
+        assert.isTrue(store.getState().getIn(['user', 'authenticated']));
       });
 
       it('should set user id to uid', () => {
-        assert.equal(store.getState().user.get('id'), userData.uid);
+        assert.equal(store.getState().getIn(['user', 'id']), userData.uid);
       });
 
       it('should set provider to github', () => {
-        assert.equal(store.getState().user.get('provider'), 'github');
+        assert.equal(store.getState().getIn(['user', 'provider']), 'github');
       });
 
       it('should set display name', () => {
         assert.equal(
-          store.getState().user.get('displayName'),
+          store.getState().getIn(['user', 'displayName']),
           userData.github.displayName
         );
       });
 
       it('should set username', () => {
         assert.equal(
-          store.getState().user.get('username'),
+          store.getState().getIn(['user', 'username']),
           userData.github.username
         );
       });
 
       it('should set avatarUrl', () => {
         assert.equal(
-          store.getState().user.get('avatarUrl'),
+          store.getState().getIn(['user', 'avatarUrl']),
           userData.github.profileImageURL
         );
       });
 
       it('should set auth token', () => {
         assert.equal(
-          store.getState().user.getIn(['accessTokens', 'github']),
+          store.getState().getIn(['user', 'accessTokens', 'github']),
           userData.github.accessToken,
         );
       });
@@ -152,11 +152,11 @@ describe('user actions', () => {
     });
 
     it('should set authenticated to false', () => {
-      assert.isFalse(store.getState().user.get('authenticated'));
+      assert.isFalse(store.getState().getIn(['user', 'authenticated']));
     });
 
     it('should set user id to null', () => {
-      assert.isUndefined(store.getState().user.get('id'));
+      assert.isUndefined(store.getState().getIn(['user', 'id']));
     });
 
     it('should create a fresh project', () => {

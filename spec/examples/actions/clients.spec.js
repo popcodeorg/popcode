@@ -18,7 +18,7 @@ describe('clients', () => {
       const gistExportComplete = new Promise(() => {});
       store.dispatch(exportingGist(gistExportComplete));
       assert.isTrue(
-        store.getState().clients.getIn(['gists', 'exportInProgress'])
+        store.getState().getIn(['clients', 'gists', 'exportInProgress'])
       );
     });
 
@@ -26,8 +26,8 @@ describe('clients', () => {
       () => {
         const gistExportComplete = Promise.resolve();
         store.dispatch(exportingGist(gistExportComplete));
-        return assert.eventually.isFalse(gistExportComplete.then(
-          () => store.getState().clients.getIn(['gists', 'exportInProgress'])
+        return assert.eventually.isFalse(gistExportComplete.then(() =>
+          store.getState().getIn(['clients', 'gists', 'exportInProgress'])
         ));
       }
     );
@@ -36,8 +36,8 @@ describe('clients', () => {
       () => {
         const gistExportComplete = Promise.reject();
         store.dispatch(exportingGist(gistExportComplete));
-        return assert.eventually.isFalse(gistExportComplete.catch(
-          () => store.getState().clients.getIn(['gists', 'exportInProgress'])
+        return assert.eventually.isFalse(gistExportComplete.catch(() =>
+          store.getState().getIn(['clients', 'gists', 'exportInProgress'])
         ));
       }
     );

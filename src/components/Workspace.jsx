@@ -67,19 +67,19 @@ const spinnerPage = base64.fromByteArray(
 
 function mapStateToProps(state) {
   const projects = sortBy(
-    values(state.projects.toJS()),
+    values(state.get('projects').toJS()),
     (project) => -project.updatedAt
   );
 
   return {
     allProjects: projects,
     currentProject: getCurrentProject(state),
-    errors: state.errors.toJS(),
-    runtimeErrors: state.runtimeErrors.toJS(),
-    isUserTyping: state.ui.getIn(['editors', 'typing']),
-    currentUser: state.user.toJS(),
-    ui: state.ui.toJS(),
-    clients: state.clients.toJS(),
+    errors: state.get('errors').toJS(),
+    runtimeErrors: state.get('runtimeErrors').toJS(),
+    isUserTyping: state.getIn(['ui', 'editors', 'typing']),
+    currentUser: state.get('user').toJS(),
+    ui: state.get('ui').toJS(),
+    clients: state.get('clients').toJS(),
   };
 }
 
