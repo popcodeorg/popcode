@@ -1,3 +1,4 @@
+import Immutable from 'immutable';
 import {createStore, applyMiddleware} from 'redux';
 import reducers from './reducers';
 import thunkMiddleware from 'redux-thunk';
@@ -16,7 +17,7 @@ createStoreWithMiddleware =
   applyMiddleware(thunkMiddleware)(createStoreWithMiddleware);
 
 function createApplicationStore() {
-  return createStoreWithMiddleware(reducers);
+  return createStoreWithMiddleware(reducers, new Immutable.Map());
 }
 
 export default createApplicationStore;

@@ -1,4 +1,5 @@
 import 'bugsnag-js';
+import getCurrentProject from './projectUtils';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import config from '../config';
@@ -11,15 +12,15 @@ Bugsnag.appVersion = config.gitRevision;
 export function includeStoreInBugReports(store) {
   Bugsnag.beforeNotify = (payload) => {
     const state = store.getState();
-    if (state.user) {
-      payload.user = state.user.toJS();
+    if (state.get('user')) {
+      payload.user = state.get('user').toJS();
     } else {
       payload.user = {id: 'anonymous'};
     }
 
-    if (state.currentProject && state.currentProject.get('projectKey')) {
-      payload.metaData.currentProject =
-        state.projects.get(state.currentProject.get('projectKey')).toJS();
+    const currentProject = getCurrentProject(state);
+    if (currentProject) {
+      payload.metaData.currentProject = currentProject;
     }
   };
 }

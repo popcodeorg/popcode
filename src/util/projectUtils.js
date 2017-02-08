@@ -1,13 +1,13 @@
 import {Map} from 'immutable';
 
 export function getProjectKeys(state) {
-  return Array.from(state.projects.keys());
+  return Array.from(state.get('projects').keys());
 }
 
 export function getCurrentProject(state) {
-  const projectKey = state.currentProject.get('projectKey');
+  const projectKey = state.getIn(['currentProject', 'projectKey']);
   if (projectKey) {
-    return state.projects.get(projectKey).toJS();
+    return state.getIn(['projects', projectKey]).toJS();
   }
   return null;
 }

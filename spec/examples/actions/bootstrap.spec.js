@@ -32,7 +32,9 @@ describe('bootstrap', () => {
       beforeEach(() => dispatchBootstrap());
 
       it('should have no current project by default', () => {
-        assert.isNull(store.getState().currentProject.get('projectKey'));
+        assert.isNull(
+          store.getState().getIn(['currentProject', 'projectKey'])
+        );
       });
     });
 
@@ -43,11 +45,13 @@ describe('bootstrap', () => {
       });
 
       it('should create a new current project', () => {
-        assert.isNotNull(store.getState().currentProject.get('projectKey'));
+        assert.isNotNull(
+          store.getState().getIn(['currentProject', 'projectKey'])
+        );
       });
 
       it('should set user to logged out', () => {
-        assert.isNotTrue(store.getState().user.authenticated);
+        assert.isNotTrue(store.getState().getIn(['user', 'authenticated']));
       });
     });
 
@@ -62,12 +66,12 @@ describe('bootstrap', () => {
         });
 
         it('should log the user in', () => {
-          assert.isTrue(store.getState().user.get('authenticated'));
+          assert.isTrue(store.getState().getIn(['user', 'authenticated']));
         });
 
         it('should create a new current project', () =>
           assert.eventually.isNotNull(Promise.resolve().then(() =>
-            store.getState().currentProject.get('projectKey'))
+            store.getState().getIn(['currentProject', 'projectKey']))
           )
         );
       });
@@ -84,14 +88,14 @@ describe('bootstrap', () => {
 
         it('should set current project from Firebase', () => {
           assert.equal(
-            store.getState().currentProject.get('projectKey'),
+            store.getState().getIn(['currentProject', 'projectKey']),
             project.projectKey
           );
         });
 
         it('should validate the project', () => {
           assert.notEqual(
-            store.getState().errors.first().get('state'),
+            store.getState().get('errors').first().get('state'),
             'passed'
           );
         });
@@ -106,7 +110,9 @@ describe('bootstrap', () => {
       beforeEach(() => dispatchBootstrap(gistId));
 
       it('should have no current project', () => {
-        assert.isNull(store.getState().currentProject.get('projectKey'));
+        assert.isNull(
+          store.getState().getIn(['currentProject', 'projectKey'])
+        );
       });
     });
 
@@ -117,7 +123,9 @@ describe('bootstrap', () => {
       });
 
       it('should have no current project', () => {
-        assert.isNull(store.getState().currentProject.get('projectKey'));
+        assert.isNull(
+          store.getState().getIn(['currentProject', 'projectKey'])
+        );
       });
     });
 
@@ -128,7 +136,9 @@ describe('bootstrap', () => {
       });
 
       it('should have no current project', () => {
-        assert.isNull(store.getState().currentProject.get('projectKey'));
+        assert.isNull(
+          store.getState().getIn(['currentProject', 'projectKey'])
+        );
       });
     });
 
@@ -146,7 +156,9 @@ describe('bootstrap', () => {
         });
 
         it('should have a current project', () => {
-          assert.isNotNull(store.getState().currentProject.get('projectKey'));
+          assert.isNotNull(
+            store.getState().getIn(['currentProject', 'projectKey'])
+          );
         });
 
         it('should use the gist data in the current project', () => {
@@ -165,7 +177,9 @@ describe('bootstrap', () => {
         });
 
         it('should have a current project', () => {
-          assert.isNotNull(store.getState().currentProject.get('projectKey'));
+          assert.isNotNull(
+            store.getState().getIn(['currentProject', 'projectKey'])
+          );
         });
 
         it('should use the gist data in the current project', () => {
@@ -219,12 +233,14 @@ describe('bootstrap', () => {
         });
 
         it('should create a new project', () => {
-          assert.isNotNull(store.getState().currentProject.get('projectKey'));
+          assert.isNotNull(
+            store.getState().getIn(['currentProject', 'projectKey'])
+          );
         });
 
         it('should add a notification', () => {
           assert.include(
-            store.getState().ui.get('notifications').toJS().
+            store.getState().getIn(['ui', 'notifications']).toJS().
             map(property('type')),
             'gist-import-not-found'
           );
@@ -239,12 +255,14 @@ describe('bootstrap', () => {
         });
 
         it('should create a new project', () => {
-          assert.isNotNull(store.getState().currentProject.get('projectKey'));
+          assert.isNotNull(
+            store.getState().getIn(['currentProject', 'projectKey'])
+          );
         });
 
         it('should add a notification', () => {
           assert.include(
-            store.getState().ui.get('notifications').toJS().
+            store.getState().getIn(['ui', 'notifications']).toJS().
             map(property('type')),
             'gist-import-error'
           );
