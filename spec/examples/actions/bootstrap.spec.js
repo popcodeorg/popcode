@@ -86,17 +86,10 @@ describe('bootstrap', () => {
           return dispatchBootstrap();
         });
 
-        it('should set current project from Firebase', () => {
-          assert.equal(
+        it('should create a new current project', () => {
+          assert.notEqual(
             store.getState().getIn(['currentProject', 'projectKey']),
             project.projectKey
-          );
-        });
-
-        it('should validate the project', () => {
-          assert.notEqual(
-            store.getState().get('errors').first().get('state'),
-            'passed'
           );
         });
       });
