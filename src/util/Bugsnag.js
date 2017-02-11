@@ -1,5 +1,5 @@
 import 'bugsnag-js';
-import getCurrentProject from './projectUtils';
+import {getCurrentProject} from './projectUtils';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import config from '../config';
