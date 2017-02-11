@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
             className="dashboard__log-in-out"
             onClick={this.props.onLogOut}
           >
-            {i18n.t('dashboard.session.logOutPrompt')}
+            {i18n.t('dashboard.session.log-out-prompt')}
           </span>
         </div>
       );
@@ -33,13 +33,13 @@ class Dashboard extends React.Component {
     return (
       <div className="dashboard__session">
         <span className="dashboard__username">
-          {i18n.t('dashboard.session.notLoggedIn')}
+          {i18n.t('dashboard.session.not-logged-in')}
         </span>
         <span
           className="dashboard__log-in-out"
           onClick={this.props.onStartLogIn}
         >
-          {i18n.t('dashboard.session.logInPrompt')}
+          {i18n.t('dashboard.session.log-in-prompt')}
         </span>
       </div>
     );

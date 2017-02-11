@@ -1,9 +1,9 @@
 {
   "dashboard": {
     "session": {
-      "notLoggedIn": "Not logged in",
-      "logInPrompt": "Sign in",
-      "logOutPrompt": "Sign out"
+      "not-logged-in": "Not logged in",
+      "log-in-prompt": "Sign in",
+      "log-out-prompt": "Sign out"
     },
     "menu": {
       "new-project": "New Project",
@@ -14,7 +14,7 @@
     }
   },
   "editors": {
-    "helpText": "Type in your $t(languages.{{language}}) code here."
+    "help-text": "Type in your $t(languages.{{language}}) code here."
   },
   "bad-browser": {
     "message": "Popcode doesn’t work with your version of {{name}}.",
