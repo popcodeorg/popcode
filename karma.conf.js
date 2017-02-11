@@ -34,7 +34,6 @@ module.exports = function(config) {
     },
 
     webpack: assign({}, webpackConfiguration, {
-      entry: null,
       devtool: 'inline-source-map',
     }),
 

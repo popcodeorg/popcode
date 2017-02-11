@@ -1,6 +1,6 @@
 import partial from 'lodash/partial';
-import getPostcssResult from 'stylelint/dist/getPostcssResult';
-import lintSource from 'stylelint/dist/lintSource';
+import getPostcssResult from 'stylelint/lib/getPostcssResult';
+import lintSource from 'stylelint/lib/lintSource';
 
 const stylelint = {};
 
