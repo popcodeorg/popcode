@@ -15,8 +15,6 @@ function currentProject(stateIn, action) {
       return state.set('projectKey', action.payload.projectKey);
     case 'PROJECT_CREATED':
       return state.set('projectKey', action.payload.projectKey);
-    case 'RESET_WORKSPACE':
-      return noCurrentProject;
     default:
       return state;
   }

@@ -66,7 +66,10 @@ function projects(stateIn, action) {
       ));
 
     case 'RESET_WORKSPACE':
-      return emptyMap;
+      return new Immutable.Map().set(
+        action.payload.currentProjectKey,
+        state.get(action.payload.currentProjectKey)
+      );
 
     case 'PROJECT_LIBRARY_TOGGLED':
       return state.updateIn(
