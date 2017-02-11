@@ -112,14 +112,14 @@ describe('user actions', () => {
       it('should set display name', () => {
         assert.equal(
           store.getState().getIn(['user', 'displayName']),
-          user.displayName
+          user.providerData[0].displayName
         );
       });
 
       it('should set avatarUrl', () => {
         assert.equal(
           store.getState().getIn(['user', 'avatarUrl']),
-          user.photoURL
+          user.providerData[0].photoURL
         );
       });
 

@@ -13,8 +13,8 @@ import {setSessionUid} from '../../src/clients/firebaseAuth';
 
 export function createUser(user) {
   return merge({
-    displayName: 'Popcode User',
-    photoURL: 'https://camo.github.com/popcodeuser.jpg',
+    displayName: null,
+    photoURL: null,
     providerData: [{
       displayName: 'Popcode User',
       email: 'popcodeuser@example.com',
