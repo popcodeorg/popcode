@@ -39,8 +39,8 @@ parts that seem relevant to your code changes.
 
 ### Login
 
-* Open a fresh Popcode environment, and log in. Verify that the project that
-  appears is the last one you were working on while logged in.
+* Open a fresh Popcode environment, and log in. Verify that current project is
+  still a new, blank template.
 * Open a fresh Popcode environment, and add something to the HTML. Then log in.
   Verify that the code you were just working on is still on screen.
 * Log out, then log back in. Verify that after logging back in, the code on
