@@ -167,6 +167,7 @@ module.exports = {
   plugins: [
     new webpack.EnvironmentPlugin([
       'FIREBASE_APP',
+      'FIREBASE_API_KEY',
       'GIT_REVISION',
       'LOG_REDUX_ACTIONS',
       'NODE_ENV',
