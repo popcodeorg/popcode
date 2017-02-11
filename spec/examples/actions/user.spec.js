@@ -28,7 +28,7 @@ describe('user actions', () => {
   const userData = createUser();
 
   describe('logIn', () => {
-    let storedProject;
+    let storedProject, localProjectKey;
 
     beforeEach(() => {
       storedProject = buildProject({sources: {html: 'bogus<'}});
@@ -38,6 +38,7 @@ describe('user actions', () => {
 
     context('with locally pristine project', () => {
       beforeEach(() => {
+        localProjectKey = getCurrentProject(store.getState()).projectKey;
         mockFirebase.logIn(userData.uid);
       });
 
@@ -49,10 +50,10 @@ describe('user actions', () => {
 
         itShouldLogUserIn();
 
-        it('should set project to stored project', () => {
+        it('should keep pristine project in scope', () => {
           assert.equal(
             getCurrentProject(store.getState()).projectKey,
-            storedProject.projectKey
+            localProjectKey
           );
         });
       });
@@ -63,15 +64,18 @@ describe('user actions', () => {
           return dispatchAndWait(store, logIn(userData));
         });
 
-        it('should create fresh project', () => {
-          assert.isNotNull(getCurrentProject(store.getState()).projectKey);
+        itShouldLogUserIn();
+
+        it('should keep pristine project in scope', () => {
+          assert.equal(
+            getCurrentProject(store.getState()).projectKey,
+            localProjectKey
+          );
         });
       });
     });
 
     context('with locally modified project', () => {
-      let localProjectKey;
-
       beforeEach(() => {
         mockFirebase.logIn(userData.uid);
         createAndMutateProject(store);
@@ -86,7 +90,7 @@ describe('user actions', () => {
 
         itShouldLogUserIn();
 
-        it('should set project to stored project', () => {
+        it('should keep local project in scope', () => {
           assert.equal(
             getCurrentProject(store.getState()).projectKey,
             localProjectKey
