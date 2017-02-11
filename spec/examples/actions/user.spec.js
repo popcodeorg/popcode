@@ -3,7 +3,7 @@
 
 import '../../helper';
 import MockFirebase from '../../helpers/MockFirebase';
-import {createUser} from '../../helpers/MockFirebase';
+import {createUser, createCredential} from '../../helpers/MockFirebase';
 import {assert} from 'chai';
 import dispatchAndWait from '../../helpers/dispatchAndWait';
 import buildProject from '../../helpers/buildProject';
@@ -25,7 +25,8 @@ describe('user actions', () => {
     sandbox.restore();
   });
 
-  const userData = createUser();
+  const user = createUser();
+  const credential = createCredential();
 
   describe('logIn', () => {
     let storedProject, localProjectKey;
@@ -39,13 +40,13 @@ describe('user actions', () => {
     context('with locally pristine project', () => {
       beforeEach(() => {
         localProjectKey = getCurrentProject(store.getState()).projectKey;
-        mockFirebase.logIn(userData.uid);
+        mockFirebase.logIn(user.uid);
       });
 
       context('with stored project', () => {
         beforeEach(() => {
           mockFirebase.setCurrentProject(storedProject);
-          return dispatchAndWait(store, logIn(userData));
+          return dispatchAndWait(store, logIn(user, credential));
         });
 
         itShouldLogUserIn();
@@ -61,7 +62,7 @@ describe('user actions', () => {
       context('without stored project', () => {
         beforeEach(() => {
           mockFirebase.setCurrentProject(null);
-          return dispatchAndWait(store, logIn(userData));
+          return dispatchAndWait(store, logIn(user, credential));
         });
 
         itShouldLogUserIn();
@@ -77,7 +78,7 @@ describe('user actions', () => {
 
     context('with locally modified project', () => {
       beforeEach(() => {
-        mockFirebase.logIn(userData.uid);
+        mockFirebase.logIn(user.uid);
         createAndMutateProject(store);
         localProjectKey = getCurrentProject(store.getState()).projectKey;
       });
@@ -85,7 +86,7 @@ describe('user actions', () => {
       context('with stored project', () => {
         beforeEach(() => {
           mockFirebase.setCurrentProject(storedProject);
-          return dispatchAndWait(store, logIn(userData));
+          return dispatchAndWait(store, logIn(user, credential));
         });
 
         itShouldLogUserIn();
@@ -105,38 +106,27 @@ describe('user actions', () => {
       });
 
       it('should set user id to uid', () => {
-        assert.equal(store.getState().getIn(['user', 'id']), userData.uid);
-      });
-
-      it('should set provider to github', () => {
-        assert.equal(store.getState().getIn(['user', 'provider']), 'github');
+        assert.equal(store.getState().getIn(['user', 'id']), user.uid);
       });
 
       it('should set display name', () => {
         assert.equal(
           store.getState().getIn(['user', 'displayName']),
-          userData.github.displayName
-        );
-      });
-
-      it('should set username', () => {
-        assert.equal(
-          store.getState().getIn(['user', 'username']),
-          userData.github.username
+          user.displayName
         );
       });
 
       it('should set avatarUrl', () => {
         assert.equal(
           store.getState().getIn(['user', 'avatarUrl']),
-          userData.github.profileImageURL
+          user.photoURL
         );
       });
 
       it('should set auth token', () => {
         assert.equal(
-          store.getState().getIn(['user', 'accessTokens', 'github']),
-          userData.github.accessToken,
+          store.getState().getIn(['user', 'accessTokens', 'github.com']),
+          credential.accessToken
         );
       });
     }
@@ -146,7 +136,7 @@ describe('user actions', () => {
     let loggedInProjectKey;
 
     beforeEach(() => {
-      mockFirebase.logIn(userData.uid);
+      mockFirebase.logIn(user.uid);
       mockFirebase.setCurrentProject(null);
       return dispatchAndWait(store, bootstrap()).then(() => {
         createAndMutateProject(store);

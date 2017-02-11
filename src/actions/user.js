@@ -11,9 +11,9 @@ const resetWorkspace = createAction('RESET_WORKSPACE', identity);
 
 const userLoggedOut = createAction('USER_LOGGED_OUT');
 
-export function logIn(userData) {
+export function logIn(user, credential) {
   return (dispatch, getState) => {
-    dispatch(userAuthenticated({userData}));
+    dispatch(userAuthenticated({user, credential}));
     saveCurrentProject(getState());
     dispatch(loadAllProjects());
   };

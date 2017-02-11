@@ -1,65 +1,119 @@
 /* global sinon */
 
-import appFirebase from '../../src/services/appFirebase';
+import get from 'lodash/get';
 import merge from 'lodash/merge';
+import noop from 'lodash/noop';
+import setWith from 'lodash/setWith';
+import {
+  auth,
+  database,
+  githubAuthProvider,
+} from '../../src/services/appFirebase';
+import {setSessionUid} from '../../src/clients/firebaseAuth';
 
 export function createUser(user) {
   return merge({
-    github: {
-      accessToken: 'abc123',
+    displayName: 'Popcode User',
+    photoURL: 'https://camo.github.com/popcodeuser.jpg',
+    providerData: [{
       displayName: 'Popcode User',
-      profileImageURL: 'https://camo.github.com/popcodeuser.jpg',
-      username: 'popcodeuser',
-    },
-    provider: 'github',
-    uid: '123',
+      email: 'popcodeuser@example.com',
+      photoURL: 'https://camo.github.com/popcodeuser.jpg',
+      providerId: 'github.com',
+      uid: '345',
+    }],
+    uid: 'abc123',
   }, user);
+}
+
+export function createCredential() {
+  return {
+    accessToken: '0123456789abcdef',
+    provider: 'github.com',
+  };
+}
+
+class MockRef {
+  constructor(rootTree, path = []) {
+    this._rootTree = rootTree;
+    this._path = path;
+    Object.assign(this, {
+      set: sinon.mock(),
+      setWithPriority: sinon.mock(),
+    });
+  }
+
+  child(pathString) {
+    return new MockRef(
+      this._rootTree,
+      this._path.concat(pathString.split('/'))
+    );
+  }
+
+  once(event) {
+    if (event === 'value') {
+      return Promise.resolve({val: () => this._value});
+    }
+    return new Promise(noop);
+  }
+
+  get _value() {
+    return get(this._rootTree, this._path);
+  }
 }
 
 export default class MockFirebase {
   constructor(sandbox) {
-    sandbox.stub(appFirebase);
+    sandbox.stub(auth);
+    sandbox.stub(githubAuthProvider);
+    this._data = {};
+    const rootRef = new MockRef(this._data);
+    sandbox.stub(database, 'ref', (path) => rootRef.child(path));
+    auth.onAuthStateChanged.returns(sinon.stub());
+    auth.signOut.returns(Promise.resolve());
   }
 
   logIn(uid) {
-    this._userSpace = addChild(appFirebase, `workspaces/${uid}`);
-    addChild(this._userSpace, 'currentProjectKey');
-    addChild(this._userSpace, 'projects');
-    appFirebase.onAuth.yields(createUser({uid}));
+    const user = createUser({uid});
+    const credential = createCredential();
+    this._currentUid = uid;
+    this.setCurrentUserCredential();
+    Reflect.defineProperty(auth, 'currentUser', {value: user});
+    auth.onAuthStateChanged.yieldsAsync(user);
+    setSessionUid();
+    return {user, credential};
   }
 
   logOut() {
-    this._userSpace = null;
-    appFirebase.onAuth.yields(null);
+    this._currentUid = null;
+    auth.onAuthStateChanged.yieldsAsync(null);
+    Reflect.defineProperty(auth, 'currentUser', {value: null});
+  }
+
+  setCurrentUserCredential(credential = createCredential()) {
+    this._setValue(`authTokens/${this._currentUid}/github_com`, credential);
   }
 
   setCurrentProject(currentProject) {
+    let workspace;
     if (currentProject === null) {
-      yieldsValue(this._userSpace.child('currentProjectKey'), null);
-      return;
+      workspace = {
+        currentProjectKey: null,
+        projects: {},
+      };
+    } else {
+      workspace = {
+        currentProjectKey: currentProject.projectKey,
+        projects: {
+          [currentProject.projectKey]: currentProject,
+        },
+      };
     }
 
-    const storedProjectKey =
-      addChild(this._userSpace.child('projects'), currentProject.projectKey);
-
-    yieldsValue(
-      this._userSpace.child('currentProjectKey'),
-      currentProject.projectKey
-    );
-    yieldsValue(storedProjectKey, currentProject);
+    this._setValue(`workspaces/${this._currentUid}`, workspace);
   }
-}
 
-function addChild(firebaseKey, childName) {
-  const childKey = {
-    child: sinon.stub(),
-    once: sinon.stub(),
-  };
-  firebaseKey.child.withArgs(childName).returns(childKey);
-  return childKey;
-}
-
-function yieldsValue(firebaseKey, value) {
-  firebaseKey.once.withArgs('value').callsArgWith(1, {val: () => value});
-  return Promise.resolve(value);
+  _setValue(path, value) {
+    setWith(this._data, path.split('/'), value, Object);
+  }
 }
