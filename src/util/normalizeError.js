@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import keys from 'lodash/keys';
 import isEmpty from 'lodash/isEmpty';
 import assign from 'lodash/assign';
-import i18n from 'i18next-client';
+import i18n from 'i18next';
 
 const normalizers = {
   Chrome: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
-import i18n from 'i18next-client';
+import i18n from 'i18next';
 import normalizeError from '../util/normalizeError';
 import {sourceDelimiter} from '../util/generatePreview';
 

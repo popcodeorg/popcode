@@ -1,4 +1,4 @@
-import i18n from 'i18next-client';
+import i18n from 'i18next';
 import arrayToSentence from 'array-to-sentence';
 
 export function localizedArrayToSentence(array) {

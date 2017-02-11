@@ -1,5 +1,5 @@
 import React from 'react';
-import i18n from 'i18next-client';
+import i18n from 'i18next';
 
 function EditorContainer(props) {
   let helpText;
@@ -8,7 +8,7 @@ function EditorContainer(props) {
     helpText = (
       <div className="editors__help-text">
         {i18n.t(
-          'editors.helpText',
+          'editors.help-text',
           {language: props.language}
         )}
       </div>

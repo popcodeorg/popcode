@@ -1,5 +1,5 @@
 import React from 'react';
-import i18n from 'i18next-client';
+import i18n from 'i18next';
 import isEmpty from 'lodash/isEmpty';
 import ErrorList from './ErrorList';
 import Preview from './Preview';

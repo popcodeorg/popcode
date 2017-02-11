@@ -10,7 +10,7 @@ import sortBy from 'lodash/sortBy';
 import map from 'lodash/map';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
-import i18n from 'i18next-client';
+import i18n from 'i18next';
 import qs from 'qs';
 import fs from 'fs';
 import path from 'path';

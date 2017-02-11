@@ -1882,13 +1882,6 @@ css@2.2.1, css@2.X, css@^2.2.1:
     postcss-value-parser "^3.2.3"
     postcss-zindex "^2.0.1"
 
-csso@~2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/csso/-/csso-2.2.1.tgz#51fbb5347e50e81e6ed51668a48490ae6fe2afe2"
-  dependencies:
-    clap "^1.0.9"
-    source-map "^0.5.3"
-
 csso@~2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/csso/-/csso-2.3.1.tgz#4f8d91a156f2f1c2aebb40b8fb1b5eb83d94d3b9"
@@ -3646,9 +3639,16 @@ https-proxy-agent@1.0.0:
     debug "2"
     extend "3"
 
-i18next-client@^1.10.2:
-  version "1.11.5"
-  resolved "https://registry.yarnpkg.com/i18next-client/-/i18next-client-1.11.5.tgz#4d3e434929d7855d994296b9593849a1e1f1f7c3"
+i18next-resource-store-loader@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/i18next-resource-store-loader/-/i18next-resource-store-loader-0.1.1.tgz#6630ba3a95c10711973b0352c32823a77f3f805f"
+  dependencies:
+    loader-utils "^0.2.11"
+    lodash "^4.6.1"
+
+i18next@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-7.0.0.tgz#8944ec20a31244fe85fa464350f48373efea3103"
 
 iconv-lite@0.4.13, iconv-lite@^0.4.5, iconv-lite@~0.4.13:
   version "0.4.13"
@@ -4060,13 +4060,6 @@ js-tokens@^2.0.0:
 js-yaml@^3.4.2, js-yaml@^3.4.3, js-yaml@^3.5.1, js-yaml@~3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.7.0.tgz#5c967ddd837a9bfdca5f2de84253abe8a1c03b80"
-  dependencies:
-    argparse "^1.0.7"
-    esprima "^2.6.0"
-
-js-yaml@~3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.6.1.tgz#6e5fe67d8b205ce4d22fad05b7781e8dadcc4b30"
   dependencies:
     argparse "^1.0.7"
     esprima "^2.6.0"
@@ -4572,7 +4565,7 @@ lodash@3.7.x:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.7.0.tgz#3678bd8ab995057c07ade836ed2ef087da811d45"
 
-"lodash@4.6.1 || ^4.16.1", lodash@^4.0.0, lodash@^4.0.1, lodash@^4.1.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.5.1, lodash@^4.7.0:
+"lodash@4.6.1 || ^4.16.1", lodash@^4.0.0, lodash@^4.0.1, lodash@^4.1.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.5.1, lodash@^4.6.1, lodash@^4.7.0:
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -7185,19 +7178,7 @@ svgo-loader@^1.1.2:
   dependencies:
     loader-utils "^0.2.16"
 
-svgo@^0.7.0:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/svgo/-/svgo-0.7.1.tgz#287320fed972cb097e72c2bb1685f96fe08f8034"
-  dependencies:
-    coa "~1.0.1"
-    colors "~1.1.2"
-    csso "~2.2.1"
-    js-yaml "~3.6.1"
-    mkdirp "~0.5.1"
-    sax "~1.2.1"
-    whet.extend "~0.9.9"
-
-svgo@^0.7.2:
+svgo@^0.7.0, svgo@^0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/svgo/-/svgo-0.7.2.tgz#9f5772413952135c6fefbf40afe6a4faa88b4bb5"
   dependencies:

@@ -19,5 +19,5 @@
   "src/validations/*.js": {"type": "validation"},
   "src/static/*": {"type": "static"},
   "src/css/application.css": {"type": "stylesheet"},
-  "locales/*.json": {"type": "locale"}
+  "locales/*/translation.json": {"type": "locale"}
 }
