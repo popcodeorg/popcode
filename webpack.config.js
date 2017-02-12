@@ -67,7 +67,7 @@ module.exports = {
           path.resolve(__dirname, 'node_modules/postcss/lib/previous-map'),
           path.resolve(
             __dirname,
-            'node_modules/stylelint/dist/getPostcssResult'
+            'node_modules/stylelint/lib/getPostcssResult'
           ),
           matchModule('postcss/lib/previous-map'),
         ],
@@ -82,7 +82,7 @@ module.exports = {
         include: [
           path.resolve(
             __dirname,
-            'node_modules/stylelint/dist/utils/isAutoprefixable'
+            'node_modules/stylelint/lib/utils/isAutoprefixable'
           ),
         ],
         loader: 'substitute-loader',
@@ -94,6 +94,7 @@ module.exports = {
           matchModule('redux'),
           matchModule('lodash-es'),
           matchModule('github-api'),
+          matchModule('stylelint'),
         ],
         loader: 'babel-loader',
       },
@@ -128,7 +129,7 @@ module.exports = {
       {
         test: /\.js$/,
         include: directoryContentsExcept(
-          'node_modules/stylelint/dist/rules',
+          'node_modules/stylelint/lib/rules',
           [
             'index.js',
             'declaration-block-trailing-semicolon/index.js',
