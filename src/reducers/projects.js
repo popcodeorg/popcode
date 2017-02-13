@@ -1,5 +1,6 @@
 import Immutable from 'immutable';
 import {readFileSync} from 'fs';
+import isNil from 'lodash/isNil';
 import path from 'path';
 
 import {isPristineProject} from '../util/projectUtils';
@@ -66,6 +67,10 @@ function projects(stateIn, action) {
       ));
 
     case 'RESET_WORKSPACE':
+      if (isNil(action.payload.currentProjectKey)) {
+        return emptyMap;
+      }
+
       return new Immutable.Map().set(
         action.payload.currentProjectKey,
         state.get(action.payload.currentProjectKey)
