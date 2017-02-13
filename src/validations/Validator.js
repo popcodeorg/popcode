@@ -14,7 +14,7 @@ class Validator {
 
   getAnnotations() {
     return Promise.resolve(this._getRawErrors()).then(
-      (errors) => compact(map(
+      errors => compact(map(
         errors,
         this._convertErrorToAnnotation.bind(this)
       ))

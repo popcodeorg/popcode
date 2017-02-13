@@ -74,7 +74,7 @@ const spinnerPage = base64.fromByteArray(
 function mapStateToProps(state) {
   const projects = sortBy(
     values(state.get('projects').toJS()),
-    (project) => -project.updatedAt
+    project => -project.updatedAt
   );
 
   return {

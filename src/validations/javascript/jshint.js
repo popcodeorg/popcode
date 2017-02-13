@@ -30,34 +30,34 @@ const match = {
 };
 
 const errorMap = {
-  E019: (error) => ({
+  E019: error => ({
     reason: 'unmatched',
     payload: {openingSymbol: error.a, closingSymbol: match[error.a]},
     suppresses: ['end-of-input'],
   }),
 
-  E020: (error) => ({
+  E020: error => ({
     reason: 'closing-match',
     payload: {openingSymbol: error.b, closingSymbol: error.a},
   }),
 
-  E024: (error) => ({
+  E024: error => ({
     reason: 'unexpected',
     payload: {character: error.evidence},
     suppresses: ['tokenize-error'],
   }),
 
-  E030: (error) => ({
+  E030: error => ({
     reason: 'expected-identifier',
     payload: {token: error.a},
   }),
 
-  W003: (error) => ({
+  W003: error => ({
     reason: 'undefined-variable',
     payload: {variable: error.a},
   }),
 
-  W030: (error) => ({
+  W030: error => ({
     reason: 'unexpected-expression',
     payload: {expression: error.evidence},
   }),
@@ -68,7 +68,7 @@ const errorMap = {
 
   W033: () => ({reason: 'missing-semicolon'}),
 
-  W058: (error) => ({
+  W058: error => ({
     reason: 'missing-parentheses',
     payload: {object: error.a},
   }),
@@ -77,7 +77,7 @@ const errorMap = {
 
   W084: () => ({reason: 'strict-comparison-operator'}),
 
-  W098: (error) => ({
+  W098: error => ({
     reason: 'unused-variable',
     payload: {variable: error.a},
   }),
@@ -115,7 +115,7 @@ const errorMap = {
 
     const providingLibrary = find(
       libraries,
-      (library) =>
+      library =>
         library.predefined && includes(library.predefined, identifier)
     );
 
@@ -132,7 +132,7 @@ const errorMap = {
     };
   },
 
-  W123: (error) => ({
+  W123: error => ({
     reason: 'duplicated-declaration',
     payload: {variable: error.a},
   }),

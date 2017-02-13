@@ -127,4 +127,4 @@ class EsprimaValidator extends Validator {
   }
 }
 
-export default (source) => new EsprimaValidator(source).getAnnotations();
+export default source => new EsprimaValidator(source).getAnnotations();

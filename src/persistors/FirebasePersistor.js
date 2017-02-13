@@ -8,7 +8,7 @@ class FirebasePersistor {
 
   getCurrentProjectKey() {
     return this.firebase.child('currentProjectKey').once('value').
-      then((snapshot) => snapshot.val());
+      then(snapshot => snapshot.val());
   }
 
   setCurrentProjectKey(projectKey) {
@@ -17,12 +17,12 @@ class FirebasePersistor {
 
   all() {
     return this.firebase.child('projects').once('value').
-      then((projects) => values(projects.val() || {}));
+      then(projects => values(projects.val() || {}));
   }
 
   load(projectKey) {
     return this.firebase.child('projects').child(projectKey).once('value').
-      then((snapshot) => snapshot.val());
+      then(snapshot => snapshot.val());
   }
 
   loadCurrentProject() {

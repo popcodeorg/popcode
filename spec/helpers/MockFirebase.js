@@ -68,7 +68,7 @@ export default class MockFirebase {
     sandbox.stub(githubAuthProvider);
     this._data = {};
     const rootRef = new MockRef(this._data);
-    sandbox.stub(database, 'ref', (path) => rootRef.child(path));
+    sandbox.stub(database, 'ref', path => rootRef.child(path));
     auth.onAuthStateChanged.returns(sinon.stub());
     auth.signOut.returns(Promise.resolve());
   }

@@ -7,7 +7,7 @@ import WordmarkVertical from '../../static/images/wordmark-vertical.svg';
 class Sidebar extends React.Component {
   _renderMinimizedComponents() {
     const components = this.props.minimizedComponents.
-      map((componentName) => (
+      map(componentName => (
         <div
           className="sidebar__minimized-component"
           key={componentName}
