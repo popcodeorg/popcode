@@ -147,6 +147,14 @@ describe('css', function() {
     );
   });
 
+  context('potentially missing semicolon before first line', () => {
+    const stylesheet = `button{border:20px solid b;
+    }`;
+
+    it('gives extra tokens error', () =>
+      assertFailsValidationWith(css, stylesheet, 'extra-tokens-after-value'));
+  });
+
   context('thoroughly unparseable CSS', () => {
     const stylesheet = '<a href=\"http;.facebook.com>';
 
