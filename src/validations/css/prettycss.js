@@ -1,6 +1,5 @@
 import Validator from '../Validator';
 import trim from 'lodash/trim';
-import startsWith from 'lodash/startsWith';
 import endsWith from 'lodash/endsWith';
 import importLinters from '../importLinters';
 
@@ -61,7 +60,7 @@ const errorMap = {
       const thisLine = lines[lineNumber - 1];
 
       if (
-        startsWith(trim(thisLine), error.token.content) &&
+        error.token.charNum - 1 === /\S/.exec(thisLine).index &&
         !endsWith(trim(previousLine), ';')
       ) {
         return {
