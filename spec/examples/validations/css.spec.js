@@ -142,8 +142,28 @@ describe('css', function() {
       assertFailsValidationWith(css, stylesheet, 'extra-tokens-after-value')
     );
 
-    it('fails at the line missing the semicolon', () =>
+    it('fails at the line with the extra value', () =>
       assertFailsValidationAtLine(css, stylesheet, 2)
+    );
+  });
+
+  context('potentially missing semicolon before first line', () => {
+    const stylesheet = `button{border:20px solid b;
+    }`;
+
+    it('gives extra tokens error', () =>
+      assertFailsValidationWith(css, stylesheet, 'extra-tokens-after-value'));
+  });
+
+  context('extra token that is a prefix of the beginning of the line', () => {
+    const stylesheet = `
+      p {
+        border: 20px solid b;
+      }
+    `;
+
+    it('gives extra tokens error', () =>
+      assertFailsValidationWith(css, stylesheet, 'extra-tokens-after-value')
     );
   });
 

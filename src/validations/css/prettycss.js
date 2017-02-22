@@ -1,6 +1,5 @@
 import Validator from '../Validator';
 import trim from 'lodash/trim';
-import startsWith from 'lodash/startsWith';
 import endsWith from 'lodash/endsWith';
 import importLinters from '../importLinters';
 
@@ -54,19 +53,22 @@ const errorMap = {
 
   'extra-tokens-after-value': (error, source) => {
     const lineNumber = error.token.line;
-    const lines = source.split('\n');
-    const previousLine = lines[lineNumber - 2];
-    const thisLine = lines[lineNumber - 1];
 
-    if (
-      startsWith(trim(thisLine), error.token.content) &&
+    if (lineNumber > 1) {
+      const lines = source.split('\n');
+      const previousLine = lines[lineNumber - 2];
+      const thisLine = lines[lineNumber - 1];
+
+      if (
+        error.token.charNum - 1 === /\S/.exec(thisLine).index &&
         !endsWith(trim(previousLine), ';')
-    ) {
-      return {
-        reason: 'missing-semicolon',
-        row: lineNumber - 2,
-        column: previousLine.length - 1,
-      };
+      ) {
+        return {
+          reason: 'missing-semicolon',
+          row: lineNumber - 2,
+          column: previousLine.length - 1,
+        };
+      }
     }
 
     return ({
