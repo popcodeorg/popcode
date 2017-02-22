@@ -302,6 +302,8 @@ class Workspace extends React.Component {
         case 'auth/network-request-failed':
           this.props.dispatch(notificationTriggered('auth-network-error'));
           break;
+        case 'auth/cancelled-popup-request':
+          break;
         default:
           this.props.dispatch(notificationTriggered('auth-error'));
           if (isError(e)) {
