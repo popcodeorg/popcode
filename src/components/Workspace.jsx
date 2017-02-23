@@ -304,6 +304,11 @@ class Workspace extends React.Component {
           break;
         case 'auth/cancelled-popup-request':
           break;
+        case 'auth/web-storage-unsupported':
+          this.props.dispatch(
+            notificationTriggered('auth-third-party-cookies-disabled')
+          );
+          break;
         default:
           this.props.dispatch(notificationTriggered('auth-error'));
           if (isError(e)) {

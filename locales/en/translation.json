@@ -23,6 +23,7 @@
   "notifications": {
     "user-cancelled-auth": "Looks like you didn’t finish linking GitHub to Popcode. Try again, and be sure to click the green “Authorize application” button.",
     "auth-network-error": "Looks like you’re having some internet trouble. Try signing in again.",
+    "auth-third-party-cookies-disabled": "It looks like you have third-party cookies disabled. Please change your browser settings and try to log in again.",
     "auth-error": "Something went wrong trying to sign in. Please try again!",
     "empty-gist": "You need some code in your project to export a gist!",
     "gist-export-error": "Something went wrong trying to create that gist. Please try again.",
