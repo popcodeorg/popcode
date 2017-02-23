@@ -120,7 +120,7 @@
     "chai-immutable": "^1.6.0",
     "check-dependencies": "^1.0.1",
     "cloudflare": "^1.0.5",
-    "cssnano": "https://registry.npmjs.org/cssnano/-/cssnano-3.7.5.tgz",
+    "cssnano": "^3.10.0",
     "doctoc": "^1.2.0",
     "eslint": "^3.3.0",
     "eslint-plugin-react": "^6.1.0",
