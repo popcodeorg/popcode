@@ -1203,17 +1203,12 @@ bulk-require@^1.0.0:
   dependencies:
     glob "~3.2.7"
 
-bulk-require@~0.2.0:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/bulk-require/-/bulk-require-0.2.1.tgz#f118d7833118b0a1a20b465b136d9db513479d25"
+bulkify@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/bulkify/-/bulkify-1.4.2.tgz#7848f0f3ab97f12a41b923bf90e53e09eaafba4c"
   dependencies:
-    glob "~3.2.7"
-
-"bulkify@https://registry.npmjs.org/bulkify/-/bulkify-1.2.0.tgz":
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/bulkify/-/bulkify-1.2.0.tgz#16aa1dd92ab0034eaa77cfe354e73aee5816b236"
-  dependencies:
-    bulk-require "~0.2.0"
+    bulk-require "^1.0.0"
+    concat-stream "^1.4.5"
     static-module "^1.1.2"
     through2 "~0.4.1"
 
@@ -1630,7 +1625,7 @@ concat-stream@1.5.0:
     readable-stream "~2.0.0"
     typedarray "~0.0.5"
 
-concat-stream@^1.0.0, concat-stream@^1.4.6:
+concat-stream@^1.0.0, concat-stream@^1.4.5, concat-stream@^1.4.6:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.6.0.tgz#0aac662fd52be78964d5532f694784e70110acf7"
   dependencies:
@@ -5981,7 +5976,7 @@ postcss-zindex@^2.0.1:
     postcss "^5.0.4"
     uniqs "^2.0.0"
 
-postcss@^5.0.0, postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.18, postcss@^5.0.19, postcss@^5.0.2, postcss@^5.0.21, postcss@^5.0.3, postcss@^5.0.4, postcss@^5.0.5, postcss@^5.0.8, postcss@^5.1.1, postcss@^5.2.0, postcss@^5.2.10, postcss@^5.2.13, postcss@^5.2.15, postcss@^5.2.4:
+postcss@^5.0.0, postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0.16, postcss@^5.0.18, postcss@^5.0.19, postcss@^5.0.2, postcss@^5.0.21, postcss@^5.0.3, postcss@^5.0.4, postcss@^5.0.5, postcss@^5.0.8, postcss@^5.1.1, postcss@^5.2.0, postcss@^5.2.10, postcss@^5.2.13, postcss@^5.2.15, postcss@^5.2.4:
   version "5.2.15"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-5.2.15.tgz#a9e8685e50e06cc5b3fdea5297273246c26f5b30"
   dependencies:
@@ -5990,7 +5985,7 @@ postcss@^5.0.0, postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.
     source-map "^0.5.6"
     supports-color "^3.2.3"
 
-postcss@^5.0.20, "postcss@https://registry.npmjs.org/postcss/-/postcss-5.0.21.tgz":
+postcss@^5.0.14, postcss@^5.0.20, "postcss@https://registry.npmjs.org/postcss/-/postcss-5.0.21.tgz":
   version "5.0.21"
   resolved "https://registry.npmjs.org/postcss/-/postcss-5.0.21.tgz#d4cf6f19774648c492ac57c298f6afb3c04caefe"
   dependencies:
