@@ -51,6 +51,7 @@
   "dependencies": {
     "PrettyCSS": "git+https://github.com/popcodeorg/PrettyCSS#v0.3.12-unicodefix",
     "array-to-sentence": "^1.1.0",
+    "babel-preset-latest": "^6.22.0",
     "base64-js": "^1.0.2",
     "bowser": "^1.4.5",
     "brace": "^0.10.0",
@@ -107,7 +108,6 @@
     "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
     "babel-polyfill": "^6.6.1",
-    "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.5.0",
     "bower": "^1.7.9",
     "brfs": "^1.4.3",
