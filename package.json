@@ -105,7 +105,6 @@
   },
   "devDependencies": {
     "babel-core": "^6.14.0",
-    "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
     "babel-polyfill": "^6.6.1",
     "babel-preset-react": "^6.5.0",

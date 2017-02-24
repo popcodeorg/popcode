@@ -678,19 +678,21 @@
     },
     "env": {
         "browser": true,
-        "commonjs": true,
         "es6": true
     },
     "extends": "eslint:recommended",
-    "ecmaFeatures": {
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2017,
+      "ecmaFeatures": {
         "jsx": true,
         "experimentalObjectRestSpread": true
+      },
     },
     "globals": {
       "__dirname": true
     },
-    "parser": "babel-eslint",
     "plugins": [
-        "react"
+      "react"
     ]
 }
