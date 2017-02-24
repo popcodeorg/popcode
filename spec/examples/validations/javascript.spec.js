@@ -32,7 +32,7 @@ describe('javascript', () => {
         reasons: ['invalid-left-hand-string',
           'missing-token'],
       },
-    )
+    ),
   );
   assertPassesAcceptance(javascript, 'javascript', analyzerWithjQuery);
 

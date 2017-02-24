@@ -54,7 +54,7 @@ describe('user actions', () => {
         it('should keep pristine project in scope', () => {
           assert.equal(
             getCurrentProject(store.getState()).projectKey,
-            localProjectKey
+            localProjectKey,
           );
         });
       });
@@ -70,7 +70,7 @@ describe('user actions', () => {
         it('should keep pristine project in scope', () => {
           assert.equal(
             getCurrentProject(store.getState()).projectKey,
-            localProjectKey
+            localProjectKey,
           );
         });
       });
@@ -94,7 +94,7 @@ describe('user actions', () => {
         it('should keep local project in scope', () => {
           assert.equal(
             getCurrentProject(store.getState()).projectKey,
-            localProjectKey
+            localProjectKey,
           );
         });
       });
@@ -112,21 +112,21 @@ describe('user actions', () => {
       it('should set display name', () => {
         assert.equal(
           store.getState().getIn(['user', 'displayName']),
-          user.providerData[0].displayName
+          user.providerData[0].displayName,
         );
       });
 
       it('should set avatarUrl', () => {
         assert.equal(
           store.getState().getIn(['user', 'avatarUrl']),
-          user.providerData[0].photoURL
+          user.providerData[0].photoURL,
         );
       });
 
       it('should set auth token', () => {
         assert.equal(
           store.getState().getIn(['user', 'accessTokens', 'github.com']),
-          credential.accessToken
+          credential.accessToken,
         );
       });
     }
@@ -156,7 +156,7 @@ describe('user actions', () => {
     it('should retain current project', () => {
       assert.equal(
         getCurrentProject(store.getState()).projectKey,
-        loggedInProjectKey
+        loggedInProjectKey,
       );
     });
   });

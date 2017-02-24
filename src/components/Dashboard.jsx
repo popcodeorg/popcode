@@ -52,7 +52,7 @@ class Dashboard extends React.Component {
           'dashboard__menu-item',
           'dashboard__menu-item_grid',
           {'dashboard__menu-item_active':
-            this.props.activeSubmenu === submenu}
+            this.props.activeSubmenu === submenu},
         )}
         onClick={partial(this.props.onSubmenuToggled, submenu)}
       >
@@ -87,7 +87,10 @@ class Dashboard extends React.Component {
             classnames(
               'dashboard__menu-item',
               'dashboard__menu-item_grid',
-              {'dashboard__menu-item_spinner': this.props.gistExportInProgress}
+              {
+                'dashboard__menu-item_spinner':
+                this.props.gistExportInProgress
+              },
             )
           }
           onClick={this.props.onExportGist}
@@ -146,7 +149,7 @@ class Dashboard extends React.Component {
           {
             dashboard__pop_visible:
               this.props.validationState === validationState,
-          }
+          },
         )}
       >
         <Pop variant={variant} />
@@ -194,7 +197,7 @@ class Dashboard extends React.Component {
       {
         dashboard_yellow: this.props.validationState === 'validating',
         dashboard_red: this.props.validationState === 'failed',
-      }
+      },
     );
 
     return (

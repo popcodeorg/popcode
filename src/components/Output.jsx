@@ -64,7 +64,7 @@ class Output extends React.Component {
         className={
           classnames(
             'environment__column output',
-            {output_hidden: this.props.isHidden}
+            {output_hidden: this.props.isHidden},
           )
         }
       >

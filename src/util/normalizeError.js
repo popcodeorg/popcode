@@ -95,7 +95,7 @@ function attachMessage(normalizedError) {
   return assign(normalizedError, {
     message: i18n.t(
       `errors.javascriptRuntime.${normalizedError.type}`,
-      assign({context}, normalizedError.params)
+      assign({context}, normalizedError.params),
     ),
   });
 }

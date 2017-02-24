@@ -9,7 +9,7 @@ function EditorContainer(props) {
       <div className="editors__help-text">
         {i18n.t(
           'editors.help-text',
-          {language: props.language}
+          {language: props.language},
         )}
       </div>
     );

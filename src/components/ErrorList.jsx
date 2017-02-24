@@ -11,7 +11,7 @@ function ErrorList(props) {
       className={classnames(
         'error-list',
         'output__item',
-        {'error-list_docked': docked, output__item_shrink: docked}
+        {'error-list_docked': docked, output__item_shrink: docked},
       )}
     >
       <ErrorSublist

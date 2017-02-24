@@ -9,7 +9,7 @@ import BrowserError from './BrowserError';
 import {includeStoreInBugReports} from '../util/Bugsnag';
 
 const supportedBrowsers = JSON.parse(fs.readFileSync(
-  path.join(__dirname, '../../config/browsers.json')
+  path.join(__dirname, '../../config/browsers.json'),
 ));
 
 class Application extends React.Component {
@@ -24,7 +24,7 @@ class Application extends React.Component {
     return bowser.isUnsupportedBrowser(
       supportedBrowsers,
       true,
-      window.navigator.userAgent
+      window.navigator.userAgent,
     );
   }
 

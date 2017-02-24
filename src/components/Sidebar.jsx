@@ -30,7 +30,7 @@ class Sidebar extends React.Component {
       {
         sidebar_yellow: this.props.validationState === 'validating',
         sidebar_red: this.props.validationState === 'failed',
-      }
+      },
     );
 
     return (
@@ -44,7 +44,7 @@ class Sidebar extends React.Component {
             {
               sidebar__arrow_show: !this.props.dashboardIsOpen,
               sidebar__arrow_hide: this.props.dashboardIsOpen,
-            }
+            },
           )}
           onClick={this.props.onToggleDashboard}
         />

@@ -17,7 +17,7 @@ function ProjectList(props) {
         className={classnames(
           'project-preview',
           'dashboard__menu-item',
-          {'dashboard__menu-item_active': isSelected}
+          {'dashboard__menu-item_active': isSelected},
         )}
         key={project.projectKey}
         onClick={partial(props.onProjectSelected, project)}

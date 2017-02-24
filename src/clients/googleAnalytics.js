@@ -9,7 +9,7 @@ const cookieDomain =
 export function init() {
   ReactGA.initialize(
     config.googleAnalyticsTrackingId,
-    {gaOptions: {cookieDomain}}
+    {gaOptions: {cookieDomain}},
   );
 }
 

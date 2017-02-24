@@ -24,7 +24,7 @@ class CssValidator extends Validator {
 
   _getRawErrors() {
     importLinters().then(({css}) =>
-      css.parse(this._source, {silent: true}).stylesheet.parsingErrors
+      css.parse(this._source, {silent: true}).stylesheet.parsingErrors,
     );
   }
 

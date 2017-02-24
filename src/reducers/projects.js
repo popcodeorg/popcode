@@ -14,7 +14,7 @@ const newProject = Immutable.fromJS({
       '..',
       '..',
       'templates',
-      'new.html'
+      'new.html',
     ), 'utf8'),
     css: '',
     javascript: '',
@@ -25,7 +25,7 @@ const newProject = Immutable.fromJS({
 function projectToImmutable(project) {
   return Immutable.fromJS(project).set(
     'enabledLibraries',
-    new Immutable.Set(project.enabledLibraries)
+    new Immutable.Set(project.enabledLibraries),
   );
 }
 
@@ -49,16 +49,16 @@ function projects(stateIn, action) {
     case 'PROJECT_SOURCE_EDITED':
       return state.setIn(
         [action.payload.projectKey, 'sources', action.payload.language],
-        action.payload.newValue
+        action.payload.newValue,
       ).setIn(
         [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp
+        action.meta.timestamp,
       );
 
     case 'PROJECT_CREATED':
       return state.set(
         action.payload.projectKey,
-        newProject.set('projectKey', action.payload.projectKey)
+        newProject.set('projectKey', action.payload.projectKey),
       );
 
     case 'CURRENT_PROJECT_CHANGED':
@@ -73,7 +73,7 @@ function projects(stateIn, action) {
 
       return new Immutable.Map().set(
         action.payload.currentProjectKey,
-        state.get(action.payload.currentProjectKey)
+        state.get(action.payload.currentProjectKey),
       );
 
     case 'PROJECT_LIBRARY_TOGGLED':
@@ -85,10 +85,10 @@ function projects(stateIn, action) {
             return enabledLibraries.delete(libraryKey);
           }
           return enabledLibraries.add(libraryKey);
-        }
+        },
       ).setIn(
         [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp
+        action.meta.timestamp,
       );
 
     default:

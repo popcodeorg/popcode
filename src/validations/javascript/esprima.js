@@ -86,7 +86,7 @@ class EsprimaValidator extends Validator {
         try {
           const tokens = esprima.tokenize(
             this._source,
-            {range: true, comment: true}
+            {range: true, comment: true},
           );
           const token = findTokenForError(error, tokens);
           return [{error, token}];

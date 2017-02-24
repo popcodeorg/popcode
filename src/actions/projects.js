@@ -8,7 +8,7 @@ import {validateAllSources, getCurrentProject, saveCurrentProject} from '.';
 
 const createProjectWithKey = createAction(
   'PROJECT_CREATED',
-  projectKey => ({projectKey})
+  projectKey => ({projectKey}),
 );
 
 export function createProject() {

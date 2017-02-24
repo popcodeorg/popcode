@@ -15,14 +15,14 @@ function ErrorSublist(props) {
       key={[error.reason, error.row]}
       onClick={partial(
         props.onErrorClick,
-        props.language
+        props.language,
       )}
     />
   ));
 
   const errorMessage = i18n.t(
     'errors.notice',
-    {count: props.errors.items.length, language: props.language}
+    {count: props.errors.items.length, language: props.language},
   );
 
   return (

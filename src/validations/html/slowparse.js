@@ -23,7 +23,7 @@ const errorMap = {
     const tagName = error.openTag.name;
     if (tagName === '') {
       const tagMatch = /^<\s+([A-Za-z0-9\-]+)/.exec(
-        source.slice(error.openTag.start)
+        source.slice(error.openTag.start),
       );
       if (tagMatch) {
         return {

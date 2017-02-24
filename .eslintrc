@@ -36,7 +36,13 @@
         ],
         "comma-dangle": [
           2,
-          "always-multiline"
+          {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "imports": "always-multiline",
+            "exports": "always-multiline",
+            "functions": "always-multiline"
+          }
         ],
         "comma-spacing": [
             2,

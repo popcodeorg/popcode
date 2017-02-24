@@ -72,14 +72,14 @@ class PreviewGenerator {
     this._project = project;
     this.previewDocument = parser.parseFromString(
       project.sources.html,
-      'text/html'
+      'text/html',
     );
     this._previewHead = this._ensureElement('head');
     this.previewBody = this._ensureElement('body');
 
     this.previewText = (this.previewBody.innerText || '').trim();
     this._attachLibraries(
-      pick(options, ['nonBlockingAlertsAndPrompts', 'breakLoops'])
+      pick(options, ['nonBlockingAlertsAndPrompts', 'breakLoops']),
     );
 
     if (options.targetBaseTop) {

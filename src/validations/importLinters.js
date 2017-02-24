@@ -6,7 +6,7 @@ let promisedLinters;
 export default function importLinters() {
   if (isNil(promisedLinters)) {
     promisedLinters = promiseRetry(
-      retry => System.import('./linters').catch(retry)
+      retry => System.import('./linters').catch(retry),
     ).catch((error) => {
       promisedLinters = null;
       return Promise.reject(error);

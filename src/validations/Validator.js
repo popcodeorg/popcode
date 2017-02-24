@@ -16,8 +16,8 @@ class Validator {
     return Promise.resolve(this._getRawErrors()).then(
       errors => compact(map(
         errors,
-        this._convertErrorToAnnotation.bind(this)
-      ))
+        this._convertErrorToAnnotation.bind(this),
+      )),
     );
   }
 
@@ -42,7 +42,7 @@ class Validator {
 
     const message = i18n.t(
       `errors.${this._language}.${error.reason}`,
-      error.payload
+      error.payload,
     );
 
     const location = this._locationForError(rawError);

@@ -10,7 +10,7 @@ function filterErrors(errors) {
 
   const suppressedTypes = flatMap(
     flatten(values(groupedErrors)),
-    'suppresses'
+    'suppresses',
   );
 
   return flatten(values(omit(groupedErrors, suppressedTypes)));

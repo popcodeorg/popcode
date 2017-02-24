@@ -32,7 +32,7 @@ class Preview extends React.Component {
         propagateErrorsToParent: isLivePreview,
         breakLoops: isLivePreview,
         nonBlockingAlertsAndPrompts: isLivePreview,
-      }
+      },
     );
   }
 
@@ -55,7 +55,7 @@ class Preview extends React.Component {
         className={classnames(
           'preview',
           'output__item',
-          {u__hidden: !this.props.isValid}
+          {u__hidden: !this.props.isValid},
         )}
       >
         <div

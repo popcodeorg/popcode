@@ -58,7 +58,7 @@ class HtmlInspectorValidator extends Validator {
           useRules: ['validate-element-location'],
           onComplete: resolve,
         });
-      })
+      }),
     );
   }
 

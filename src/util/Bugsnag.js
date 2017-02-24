@@ -33,7 +33,7 @@ window.addEventListener('unhandledrejection', ({reason}) => {
   } else {
     Bugsnag.notify(
       'UnhandledRejection',
-      JSON.stringify(reason) || 'No reason given'
+      JSON.stringify(reason) || 'No reason given',
     );
   }
 });

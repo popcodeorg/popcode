@@ -117,7 +117,7 @@ class HtmllintValidator extends Validator {
 
   _getRawErrors() {
     return importLinters().then(
-      ({htmllint}) => htmllint(this._source, htmlLintOptions).catch(() => [])
+      ({htmllint}) => htmllint(this._source, htmlLintOptions).catch(() => []),
     );
   }
 

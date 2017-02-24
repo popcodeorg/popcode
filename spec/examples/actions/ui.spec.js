@@ -41,15 +41,15 @@ describe('interfaceStateActions', () => {
     it('keeps typing state true before timeout expires', () =>
       assert.eventually.isTrue(
         waitFor(TYPING_DEBOUNCE_DELAY / 2, clock).
-          then(() => store.getState().getIn(['ui', 'editors', 'typing']))
-      )
+          then(() => store.getState().getIn(['ui', 'editors', 'typing'])),
+      ),
     );
 
     it('sets typing state to false after timeout expires', () =>
       assert.eventually.isFalse(
         waitFor(TYPING_DEBOUNCE_DELAY, clock).
-          then(() => store.getState().getIn(['ui', 'editors', 'typing']))
-      )
+          then(() => store.getState().getIn(['ui', 'editors', 'typing'])),
+      ),
     );
 
     it('keeps typing state true if there are additional keystrokes', () =>
@@ -57,24 +57,24 @@ describe('interfaceStateActions', () => {
         waitFor(TYPING_DEBOUNCE_DELAY * 0.8, clock).then(() => {
           store.dispatch(userTyped());
           return waitFor(TYPING_DEBOUNCE_DELAY * 0.9, clock).then(() =>
-            store.getState().getIn(['ui', 'editors', 'typing'])
+            store.getState().getIn(['ui', 'editors', 'typing']),
           );
-        })
-      )
+        }),
+      ),
     );
   });
 
   describe('userRequestedFocusedLine', () => {
     beforeEach(
-      () => store.dispatch(userRequestedFocusedLine('javascript', 4, 2))
+      () => store.dispatch(userRequestedFocusedLine('javascript', 4, 2)),
     );
 
     it('sets requestedFocusedLine to given value', () => {
       assert.deepEqual(
         store.getState().getIn(
-          ['ui', 'editors', 'requestedFocusedLine']
+          ['ui', 'editors', 'requestedFocusedLine'],
         ).toJS(),
-        {language: 'javascript', line: 4, column: 2}
+        {language: 'javascript', line: 4, column: 2},
       );
     });
   });
@@ -106,7 +106,7 @@ describe('interfaceStateActions', () => {
   describe('notificationTriggered', () => {
     it('sets notifications to given type, severity, and payload', () => {
       store.dispatch(
-        notificationTriggered('some-error', 'error', {spooky: true})
+        notificationTriggered('some-error', 'error', {spooky: true}),
       );
 
       assert.include(
@@ -125,9 +125,9 @@ describe('interfaceStateActions', () => {
     it('removes notifications of given type', () => {
       assert.notInclude(
         store.getState().getIn(['ui', 'notifications']).map(
-          notification => notification.get('type')
+          notification => notification.get('type'),
         ),
-        'some-error'
+        'some-error',
       );
     });
   });

@@ -8,7 +8,7 @@ export default function assertPassesAcceptance(
 ) {
   acceptance[language].forEach(source =>
     it(`generates no errors for known good ${language} \n${source}`, () =>
-      assertPassesValidation(validator, source, validatorArgs)
-    )
+      assertPassesValidation(validator, source, validatorArgs),
+    ),
   );
 }

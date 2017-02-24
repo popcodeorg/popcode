@@ -65,16 +65,16 @@ const spinnerPage = base64.fromByteArray(
     fs.readFileSync(
       path.join(
         __dirname,
-        '../../templates/github-export.html'
-      )
-    )
-  )
+        '../../templates/github-export.html',
+      ),
+    ),
+  ),
 );
 
 function mapStateToProps(state) {
   const projects = sortBy(
     values(state.get('projects').toJS()),
-    project => -project.updatedAt
+    project => -project.updatedAt,
   );
 
   return {
@@ -110,7 +110,7 @@ class Workspace extends React.Component {
       '_handleToggleDashboard',
       '_handleRequestedLineFocused',
       '_handleNotificationDismissed',
-      '_handleExportGist'
+      '_handleExportGist',
     );
   }
 
@@ -172,8 +172,8 @@ class Workspace extends React.Component {
       updateProjectSource(
         this.props.currentProject.projectKey,
         language,
-        source
-      )
+        source,
+      ),
     );
   }
 
@@ -181,8 +181,8 @@ class Workspace extends React.Component {
     this.props.dispatch(
       toggleLibrary(
         this.props.currentProject.projectKey,
-        libraryKey
-      )
+        libraryKey,
+      ),
     );
   }
 
@@ -269,7 +269,7 @@ class Workspace extends React.Component {
             onInput={partial(this._handleEditorInput, language)}
             onRequestedLineFocused={this._handleRequestedLineFocused}
           />
-        </EditorContainer>
+        </EditorContainer>,
       );
     });
 
@@ -288,7 +288,7 @@ class Workspace extends React.Component {
 
   _listenForAuthChange() {
     onSignedIn(({user, credential}) =>
-      this.props.dispatch(logIn(user, credential))
+      this.props.dispatch(logIn(user, credential)),
     );
     onSignedOut(() => this.props.dispatch(logOut()));
   }
@@ -306,7 +306,7 @@ class Workspace extends React.Component {
           break;
         case 'auth/web-storage-unsupported':
           this.props.dispatch(
-            notificationTriggered('auth-third-party-cookies-disabled')
+            notificationTriggered('auth-third-party-cookies-disabled'),
           );
           break;
         default:
@@ -346,12 +346,12 @@ class Workspace extends React.Component {
     }
 
     const newWindow = openWindowWithWorkaroundForChromeClosingBug(
-      `data:text/html;base64,${spinnerPage}`
+      `data:text/html;base64,${spinnerPage}`,
     );
 
     const gistWillExport = Gists.createFromProject(
       this.props.currentProject,
-      this.props.currentUser
+      this.props.currentUser,
     );
     this.props.dispatch(exportingGist(gistWillExport));
 
@@ -361,8 +361,8 @@ class Workspace extends React.Component {
           notificationTriggered(
             'gist-export-complete',
             'notice',
-            {url: response.html_url}
-          )
+            {url: response.html_url},
+          ),
         );
       } else {
         newWindow.location.href = response.html_url;

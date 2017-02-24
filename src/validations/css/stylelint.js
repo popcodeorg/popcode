@@ -23,11 +23,11 @@ class StyleLintValidator extends Validator {
   _getRawErrors() {
     return importLinters().then(
       ({stylelint}) => stylelint(
-        this._source
+        this._source,
       ).then(
         result => result.messages,
-        syntaxError => [syntaxError]
-      )
+        syntaxError => [syntaxError],
+      ),
     );
   }
 

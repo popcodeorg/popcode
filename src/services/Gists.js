@@ -18,7 +18,7 @@ function performWithRetries(perform, options = {}) {
       factor: 2,
       minTimeout: 1000,
       maxTimeout: 10000,
-    }, options)
+    }, options),
   );
 }
 

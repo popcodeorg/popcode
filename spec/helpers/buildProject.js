@@ -12,6 +12,6 @@ export default function buildProject(project = {}) {
       },
       enabledLibraries: [],
     },
-    project
+    project,
   );
 }

@@ -70,7 +70,7 @@ class Editor extends React.Component {
 
     this._editor.moveCursorTo(
       requestedFocusedLine.line,
-      requestedFocusedLine.column
+      requestedFocusedLine.column,
     );
 
     this._scrollToLine(requestedFocusedLine.line);
@@ -91,7 +91,7 @@ class Editor extends React.Component {
       lineNumber,
       shouldCenterVertically,
       shouldAnimate,
-      noop
+      noop,
     );
   }
 

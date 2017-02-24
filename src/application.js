@@ -16,5 +16,5 @@ logPageview();
 
 ReactDOM.render(
   React.createElement(Application),
-  document.getElementById('main')
+  document.getElementById('main'),
 );
