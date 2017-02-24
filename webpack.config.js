@@ -93,7 +93,6 @@ module.exports = {
         include: [
           matchModule('redux'),
           matchModule('lodash-es'),
-          matchModule('github-api'),
           matchModule('stylelint'),
         ],
         loader: 'babel-loader',
@@ -183,8 +182,8 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      'github-api$': 'github-api/lib/GitHub.js',
-      'github-api': 'github-api/lib',
+      'github-api$': 'github-api/dist/components/GitHub.js',
+      'github-api': 'github-api/dist/components',
       'html-inspector$': 'html-inspector/html-inspector.js',
     },
     extensions: ['.js', '.jsx', '.json'],
