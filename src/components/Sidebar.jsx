@@ -1,5 +1,5 @@
 import React from 'react';
-import i18n from 'i18next';
+import {t} from 'i18next';
 import classnames from 'classnames';
 import partial from 'lodash/partial';
 import WordmarkVertical from '../../static/images/wordmark-vertical.svg';
@@ -13,7 +13,7 @@ class Sidebar extends React.Component {
           key={componentName}
           onClick={partial(this.props.onComponentMaximized, componentName)}
         >
-          {i18n.t(`workspace.components.${componentName}`)}
+          {t(`workspace.components.${componentName}`)}
         </div>
       ));
 
@@ -30,7 +30,7 @@ class Sidebar extends React.Component {
       {
         sidebar_yellow: this.props.validationState === 'validating',
         sidebar_red: this.props.validationState === 'failed',
-      }
+      },
     );
 
     return (
@@ -44,7 +44,7 @@ class Sidebar extends React.Component {
             {
               sidebar__arrow_show: !this.props.dashboardIsOpen,
               sidebar__arrow_hide: this.props.dashboardIsOpen,
-            }
+            },
           )}
           onClick={this.props.onToggleDashboard}
         />

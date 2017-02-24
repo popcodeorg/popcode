@@ -1,6 +1,6 @@
 /* eslint-env mocha */
-import Analyzer from '../../../src/analyzers';
 import {assert} from 'chai';
+import Analyzer from '../../../src/analyzers';
 import buildImmutableProject from '../../helpers/buildImmutableProject';
 
 describe('Analyzer', () => {

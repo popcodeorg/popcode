@@ -19,7 +19,7 @@ function user(stateIn, action) {
         avatarUrl: profileData.photoURL,
         accessTokens: new Immutable.Map().set(
           credential.provider,
-          credential.accessToken
+          credential.accessToken,
         ),
       });
     }

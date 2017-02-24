@@ -46,7 +46,7 @@ class MockRef {
   child(pathString) {
     return new MockRef(
       this._rootTree,
-      this._path.concat(pathString.split('/'))
+      this._path.concat(pathString.split('/')),
     );
   }
 

@@ -1,10 +1,10 @@
 /* eslint-env mocha */
 /* global sinon */
 
-import '../../helper';
-import MockFirebase from '../../helpers/MockFirebase';
-import {createUser, createCredential} from '../../helpers/MockFirebase';
 import {assert} from 'chai';
+import '../../helper';
+import MockFirebase,
+  {createUser, createCredential} from '../../helpers/MockFirebase';
 import dispatchAndWait from '../../helpers/dispatchAndWait';
 import buildProject from '../../helpers/buildProject';
 import createAndMutateProject from '../../helpers/createAndMutateProject';
@@ -54,7 +54,7 @@ describe('user actions', () => {
         it('should keep pristine project in scope', () => {
           assert.equal(
             getCurrentProject(store.getState()).projectKey,
-            localProjectKey
+            localProjectKey,
           );
         });
       });
@@ -70,7 +70,7 @@ describe('user actions', () => {
         it('should keep pristine project in scope', () => {
           assert.equal(
             getCurrentProject(store.getState()).projectKey,
-            localProjectKey
+            localProjectKey,
           );
         });
       });
@@ -94,7 +94,7 @@ describe('user actions', () => {
         it('should keep local project in scope', () => {
           assert.equal(
             getCurrentProject(store.getState()).projectKey,
-            localProjectKey
+            localProjectKey,
           );
         });
       });
@@ -112,21 +112,21 @@ describe('user actions', () => {
       it('should set display name', () => {
         assert.equal(
           store.getState().getIn(['user', 'displayName']),
-          user.providerData[0].displayName
+          user.providerData[0].displayName,
         );
       });
 
       it('should set avatarUrl', () => {
         assert.equal(
           store.getState().getIn(['user', 'avatarUrl']),
-          user.providerData[0].photoURL
+          user.providerData[0].photoURL,
         );
       });
 
       it('should set auth token', () => {
         assert.equal(
           store.getState().getIn(['user', 'accessTokens', 'github.com']),
-          credential.accessToken
+          credential.accessToken,
         );
       });
     }
@@ -135,14 +135,13 @@ describe('user actions', () => {
   describe('logOut', () => {
     let loggedInProjectKey;
 
-    beforeEach(() => {
+    beforeEach(async () => {
       mockFirebase.logIn(user.uid);
       mockFirebase.setCurrentProject(null);
-      return dispatchAndWait(store, bootstrap()).then(() => {
-        createAndMutateProject(store);
-        loggedInProjectKey = getCurrentProject(store.getState()).projectKey;
-        return dispatchAndWait(store, logOut());
-      });
+      await dispatchAndWait(store, bootstrap());
+      createAndMutateProject(store);
+      loggedInProjectKey = getCurrentProject(store.getState()).projectKey;
+      return dispatchAndWait(store, logOut());
     });
 
     it('should set authenticated to false', () => {
@@ -156,7 +155,7 @@ describe('user actions', () => {
     it('should retain current project', () => {
       assert.equal(
         getCurrentProject(store.getState()).projectKey,
-        loggedInProjectKey
+        loggedInProjectKey,
       );
     });
   });

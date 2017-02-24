@@ -1,12 +1,12 @@
 import React from 'react';
-import i18n from 'i18next';
+import {t} from 'i18next';
 
 export default function GistExportNotification(props) {
   return (
     <span>
-      {i18n.t('notifications.gist-export-complete')}{' '}
+      {t('notifications.gist-export-complete')}{' '}
       <a href={props.payload.url} target="_blank">
-        {i18n.t('notifications.gist-export-link')}
+        {t('notifications.gist-export-link')}
       </a>
     </span>
   );

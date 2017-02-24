@@ -3,10 +3,9 @@ import {TextEncoder} from 'text-encoding';
 import base64 from 'base64-js';
 import bindAll from 'lodash/bindAll';
 import classnames from 'classnames';
-
-import PreviewFrame from './PreviewFrame';
 import generatePreview from '../util/generatePreview';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
+import PreviewFrame from './PreviewFrame';
 
 class Preview extends React.Component {
   constructor() {
@@ -32,7 +31,7 @@ class Preview extends React.Component {
         propagateErrorsToParent: isLivePreview,
         breakLoops: isLivePreview,
         nonBlockingAlertsAndPrompts: isLivePreview,
-      }
+      },
     );
   }
 
@@ -55,7 +54,7 @@ class Preview extends React.Component {
         className={classnames(
           'preview',
           'output__item',
-          {u__hidden: !this.props.isValid}
+          {u__hidden: !this.props.isValid},
         )}
       >
         <div

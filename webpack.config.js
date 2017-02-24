@@ -1,3 +1,8 @@
+/* eslint-env node */
+/* eslint-disable import/unambiguous */
+/* eslint-disable import/no-commonjs */
+/* eslint-disable comma-dangle */
+
 const path = require('path');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
@@ -13,17 +18,17 @@ function matchModule(modulePath) {
     escapeRegExp(path.join('/node_modules', modulePath, 'node_modules'))
   );
 
-  return (filePath) =>
+  return filePath =>
     modulePattern.test(filePath) && !moduleDependencyPattern.test(filePath);
 }
 
 function directoryContentsExcept(directory, exceptions) {
   const fullExceptions = map(
     exceptions,
-    (exception) => path.resolve(directory, exception)
+    exception => path.resolve(directory, exception)
   );
 
-  return (filePath) =>
+  return filePath =>
     startsWith(filePath, path.resolve(directory)) &&
       !includes(fullExceptions, filePath);
 }

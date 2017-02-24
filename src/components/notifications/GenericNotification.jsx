@@ -1,9 +1,9 @@
 import React from 'react';
-import i18n from 'i18next';
+import {t} from 'i18next';
 
 export default function GenericNotification(props) {
   return (
-    <span>{i18n.t(`notifications.${props.type}`, props.payload)}</span>
+    <span>{t(`notifications.${props.type}`, props.payload)}</span>
   );
 }
 

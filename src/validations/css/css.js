@@ -22,10 +22,9 @@ class CssValidator extends Validator {
     super(source, 'css', errorMap);
   }
 
-  _getRawErrors() {
-    importLinters().then(({css}) =>
-      css.parse(this._source, {silent: true}).stylesheet.parsingErrors
-    );
+  async _getRawErrors() {
+    const {css} = await importLinters();
+    return css.parse(this._source, {silent: true}).stylesheet.parsingErrors;
   }
 
   _keyForError(error) {

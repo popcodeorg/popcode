@@ -1,23 +1,23 @@
+import fs from 'fs';
+import path from 'path';
 import React from 'react';
 import {connect} from 'react-redux';
 import values from 'lodash/values';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
 import isEmpty from 'lodash/isEmpty';
-import isNil from 'lodash/isNil';
+import isNull from 'lodash/isNull';
 import partial from 'lodash/partial';
 import sortBy from 'lodash/sortBy';
 import map from 'lodash/map';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
-import i18n from 'i18next';
+import {t} from 'i18next';
 import qs from 'qs';
-import fs from 'fs';
-import path from 'path';
 import base64 from 'base64-js';
 import {TextEncoder} from 'text-encoding';
 import Bugsnag from '../util/Bugsnag';
-import Gists from '../services/Gists';
+import Gists, {EmptyGistError} from '../services/Gists';
 import {
   onSignedIn,
   onSignedOut,
@@ -25,7 +25,6 @@ import {
   signOut,
   startSessionHeartbeat,
 } from '../clients/firebaseAuth';
-import {EmptyGistError} from '../services/Gists';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 
 import {
@@ -65,16 +64,16 @@ const spinnerPage = base64.fromByteArray(
     fs.readFileSync(
       path.join(
         __dirname,
-        '../../templates/github-export.html'
-      )
-    )
-  )
+        '../../templates/github-export.html',
+      ),
+    ),
+  ),
 );
 
 function mapStateToProps(state) {
   const projects = sortBy(
     values(state.get('projects').toJS()),
-    project => -project.updatedAt
+    project => -project.updatedAt,
   );
 
   return {
@@ -110,7 +109,7 @@ class Workspace extends React.Component {
       '_handleToggleDashboard',
       '_handleRequestedLineFocused',
       '_handleNotificationDismissed',
-      '_handleExportGist'
+      '_handleExportGist',
     );
   }
 
@@ -137,8 +136,8 @@ class Workspace extends React.Component {
   _confirmUnload(event) {
     if (!this.props.currentUser.authenticated) {
       const currentProject = this.props.currentProject;
-      if (!isNil(currentProject) && !isPristineProject(currentProject)) {
-        event.returnValue = i18n.t('workspace.confirmations.unload-unsaved');
+      if (!isNull(currentProject) && !isPristineProject(currentProject)) {
+        event.returnValue = t('workspace.confirmations.unload-unsaved');
       }
     }
   }
@@ -172,8 +171,8 @@ class Workspace extends React.Component {
       updateProjectSource(
         this.props.currentProject.projectKey,
         language,
-        source
-      )
+        source,
+      ),
     );
   }
 
@@ -181,8 +180,8 @@ class Workspace extends React.Component {
     this.props.dispatch(
       toggleLibrary(
         this.props.currentProject.projectKey,
-        libraryKey
-      )
+        libraryKey,
+      ),
     );
   }
 
@@ -269,7 +268,7 @@ class Workspace extends React.Component {
             onInput={partial(this._handleEditorInput, language)}
             onRequestedLineFocused={this._handleRequestedLineFocused}
           />
-        </EditorContainer>
+        </EditorContainer>,
       );
     });
 
@@ -288,7 +287,7 @@ class Workspace extends React.Component {
 
   _listenForAuthChange() {
     onSignedIn(({user, credential}) =>
-      this.props.dispatch(logIn(user, credential))
+      this.props.dispatch(logIn(user, credential)),
     );
     onSignedOut(() => this.props.dispatch(logOut()));
   }
@@ -306,7 +305,7 @@ class Workspace extends React.Component {
           break;
         case 'auth/web-storage-unsupported':
           this.props.dispatch(
-            notificationTriggered('auth-third-party-cookies-disabled')
+            notificationTriggered('auth-third-party-cookies-disabled'),
           );
           break;
         default:
@@ -333,54 +332,55 @@ class Workspace extends React.Component {
     this.props.dispatch(editorFocusedRequestedLine());
   }
 
-  _handleExportGist() {
+  async _handleExportGist() {
     if (this.props.clients.gists.exportInProgress) {
       return;
     }
 
     if (!this.props.currentUser.authenticated) {
       // eslint-disable-next-line no-alert
-      if (!confirm(i18n.t('workspace.confirmations.anonymous-gist-export'))) {
+      if (!confirm(t('workspace.confirmations.anonymous-gist-export'))) {
         return;
       }
     }
 
     const newWindow = openWindowWithWorkaroundForChromeClosingBug(
-      `data:text/html;base64,${spinnerPage}`
+      `data:text/html;base64,${spinnerPage}`,
     );
 
     const gistWillExport = Gists.createFromProject(
       this.props.currentProject,
-      this.props.currentUser
+      this.props.currentUser,
     );
     this.props.dispatch(exportingGist(gistWillExport));
 
-    gistWillExport.then((response) => {
+    try {
+      const response = await gistWillExport;
       if (newWindow.closed) {
         this.props.dispatch(
           notificationTriggered(
             'gist-export-complete',
             'notice',
-            {url: response.html_url}
-          )
+            {url: response.html_url},
+          ),
         );
       } else {
         newWindow.location.href = response.html_url;
       }
-    }, (error) => {
+    } catch (error) {
       if (error instanceof EmptyGistError) {
         this.props.dispatch(notificationTriggered('empty-gist'));
         if (!newWindow.closed) {
           newWindow.close();
         }
-        return Promise.resolve();
+        return;
       }
       this.props.dispatch(notificationTriggered('gist-export-error'));
       if (!newWindow.closed) {
         newWindow.close();
       }
-      return Promise.reject(error);
-    });
+      throw error;
+    }
   }
 
   _renderDashboard() {
@@ -424,8 +424,8 @@ class Workspace extends React.Component {
   }
 
   _renderEnvironment() {
-    if (isNil(this.props.currentProject)) {
-      return <PopThrobber message={i18n.t('workspace.loading')} />;
+    if (isNull(this.props.currentProject)) {
+      return <PopThrobber message={t('workspace.loading')} />;
     }
 
     return (
@@ -456,15 +456,20 @@ class Workspace extends React.Component {
 }
 
 Workspace.propTypes = {
-  allProjects: React.PropTypes.array,
-  clients: React.PropTypes.object,
+  allProjects: React.PropTypes.array.isRequired,
+  clients: React.PropTypes.object.isRequired,
   currentProject: React.PropTypes.object,
   currentUser: React.PropTypes.object.isRequired,
   dispatch: React.PropTypes.func.isRequired,
-  errors: React.PropTypes.object,
+  errors: React.PropTypes.object.isRequired,
   isUserTyping: React.PropTypes.bool,
-  runtimeErrors: React.PropTypes.array,
+  runtimeErrors: React.PropTypes.array.isRequired,
   ui: React.PropTypes.object.isRequired,
+};
+
+Workspace.defaultProps = {
+  currentProject: null,
+  isUserTyping: false,
 };
 
 export default connect(mapStateToProps)(Workspace);

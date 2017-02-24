@@ -23,7 +23,7 @@ const errorMap = {
     const tagName = error.openTag.name;
     if (tagName === '') {
       const tagMatch = /^<\s+([A-Za-z0-9\-]+)/.exec(
-        source.slice(error.openTag.start)
+        source.slice(error.openTag.start),
       );
       if (tagMatch) {
         return {
@@ -114,21 +114,20 @@ class SlowparseValidator extends Validator {
     super(source, 'html', errorMap);
   }
 
-  _getRawErrors() {
-    return System.import('../linters').then(({Slowparse}) => {
-      let error;
-      try {
-        error = Slowparse.HTML(document, this._source).error;
-      } catch (e) {
-        error = null;
-      }
+  async _getRawErrors() {
+    const {Slowparse} = await System.import('../linters');
+    let error;
+    try {
+      error = Slowparse.HTML(document, this._source).error;
+    } catch (e) {
+      error = null;
+    }
 
-      if (error !== null) {
-        return [error];
-      }
+    if (error !== null) {
+      return [error];
+    }
 
-      return [];
-    });
+    return [];
   }
 
   _keyForError(error) {

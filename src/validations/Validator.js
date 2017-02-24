@@ -1,4 +1,4 @@
-import i18n from 'i18next';
+import {t} from 'i18next';
 import assign from 'lodash/assign';
 import map from 'lodash/map';
 import compact from 'lodash/compact';
@@ -12,13 +12,12 @@ class Validator {
     this._analyzer = analyzer;
   }
 
-  getAnnotations() {
-    return Promise.resolve(this._getRawErrors()).then(
-      errors => compact(map(
-        errors,
-        this._convertErrorToAnnotation.bind(this)
-      ))
-    );
+  async getAnnotations() {
+    const errors = await this._getRawErrors();
+    return compact(map(
+      errors,
+      this._convertErrorToAnnotation.bind(this),
+    ));
   }
 
   _mapError(rawError) {
@@ -40,9 +39,9 @@ class Validator {
       return null;
     }
 
-    const message = i18n.t(
+    const message = t(
       `errors.${this._language}.${error.reason}`,
-      error.payload
+      error.payload,
     );
 
     const location = this._locationForError(rawError);

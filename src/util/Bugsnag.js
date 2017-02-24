@@ -1,8 +1,8 @@
 import 'bugsnag-js';
-import {getCurrentProject} from './projectUtils';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import config from '../config';
+import {getCurrentProject} from './projectUtils';
 
 const Bugsnag = window.Bugsnag.noConflict();
 Bugsnag.apiKey = config.bugsnagApiKey;
@@ -33,7 +33,7 @@ window.addEventListener('unhandledrejection', ({reason}) => {
   } else {
     Bugsnag.notify(
       'UnhandledRejection',
-      JSON.stringify(reason) || 'No reason given'
+      JSON.stringify(reason) || 'No reason given',
     );
   }
 });

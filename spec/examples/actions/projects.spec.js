@@ -31,7 +31,7 @@ describe('projectActions', () => {
       store.dispatch(createProject());
       assert.notInclude(
         previousKeys,
-        getCurrentProject(store.getState()).projectKey
+        getCurrentProject(store.getState()).projectKey,
       );
     });
 
@@ -39,7 +39,7 @@ describe('projectActions', () => {
       store.dispatch(createProject());
       assert(
         isPristineProject(getCurrentProject(store.getState())),
-        'project should be pristine'
+        'project should be pristine',
       );
     });
   });

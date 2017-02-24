@@ -1,22 +1,29 @@
 /* eslint-env node */
-import fs from 'fs';
-import https from 'https';
-import gulp from 'gulp';
-import concat from 'gulp-concat';
-import sourcemaps from 'gulp-sourcemaps';
-import cssnano from 'cssnano';
-import gutil from 'gulp-util';
-import forOwn from 'lodash/forOwn';
-import git from 'git-rev-sync';
-import config from './src/config';
-import postcss from 'gulp-postcss';
-import cssnext from 'postcss-cssnext';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import CloudFlare from 'cloudflare';
-import webpackConfiguration from './webpack.config';
+/* eslint-disable comma-dangle */
+/* eslint-disable import/unambiguous */
+/* eslint-disable import/no-commonjs */
+/* eslint-disable import/no-nodejs-modules */
 
-const browserSync = require('browser-sync').create();
+const fs = require('fs');
+const https = require('https');
+const gulp = require('gulp');
+const concat = require('gulp-concat');
+const sourcemaps = require('gulp-sourcemaps');
+const cssnano = require('cssnano');
+const gutil = require('gulp-util');
+const forOwn = require('lodash/forOwn');
+const git = require('git-rev-sync');
+const postcss = require('gulp-postcss');
+const cssnext = require('postcss-cssnext');
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const CloudFlare = require('cloudflare');
+const BrowserSync = require('browser-sync');
+const pify = require('pify');
+const config = require('./src/config');
+const webpackConfiguration = require('./webpack.config');
+
+const browserSync = BrowserSync.create();
 const srcDir = 'src';
 const baseDir = 'static';
 const distDir = `${baseDir}/compiled`;
@@ -81,35 +88,20 @@ gulp.task('js', ['env'], () => {
     })
   );
 
-  return new Promise((resolve, reject) => {
-    webpack(productionWebpackConfig, (err, stats) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-
-      gutil.log('[webpack:build]', stats.toString({
-        colors: true,
-      }));
-
-      resolve();
-    });
-  });
+  return pify(webpack)(productionWebpackConfig);
 });
 
 gulp.task('build', ['fonts', 'css', 'js']);
 
-gulp.task('syncFirebase', () => new Promise((resolve, reject) => {
-  fs.readFile(`${__dirname}/config/firebase-auth.json`, (err, data) => {
-    if (err) {
-      reject(err);
-    }
+gulp.task('syncFirebase', async () => {
+  const data =
+    await pify(fs).readFile(`${__dirname}/config/firebase-auth.json`);
+  const firebaseSecret = process.env.FIREBASE_SECRET;
+  if (!firebaseSecret) {
+    throw new Error('Missing environment variable FIREBASE_SECRET');
+  }
 
-    const firebaseSecret = process.env.FIREBASE_SECRET;
-    if (!firebaseSecret) {
-      reject('Missing environment variable FIREBASE_SECRET');
-    }
-
+  return new Promise((resolve, reject) => {
     const req = https.request({
       hostname: `${config.firebaseApp}.firebaseio.com`,
       path: `/.settings/rules.json?auth=${firebaseSecret}`,
@@ -125,7 +117,7 @@ gulp.task('syncFirebase', () => new Promise((resolve, reject) => {
     req.write(data);
     req.end();
   });
-}));
+});
 
 gulp.task('dev', ['browserSync', 'fonts', 'css'], () => {
   gulp.watch(`${stylesheetsDir}/**/*.css`, ['css']);

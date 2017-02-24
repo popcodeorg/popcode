@@ -1,9 +1,8 @@
 import React from 'react';
 import map from 'lodash/map';
 import partial from 'lodash/partial';
-
-import LibraryPickerItem from './LibraryPickerItem';
 import libraries from '../config/libraries';
+import LibraryPickerItem from './LibraryPickerItem';
 
 class LibraryPicker extends React.Component {
   _isLibraryEnabled(libraryKey) {

@@ -8,7 +8,7 @@ export default function buildGist(gistId, ...projectArgs) {
     gistData.files,
     (file, filename) => {
       file.filename = filename;
-    }
+    },
   );
   gistData.id = gistId;
   return gistData;

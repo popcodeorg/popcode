@@ -7,7 +7,7 @@ export default function NotificationContainer(props) {
       className={
         classnames(
           'notification-list__notification',
-          `notification-list__notification_${props.severity}`
+          `notification-list__notification_${props.severity}`,
         )
       }
     >

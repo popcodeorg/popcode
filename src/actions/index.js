@@ -1,6 +1,7 @@
 import FirebasePersistor from '../persistors/FirebasePersistor';
 import validations from '../validations';
 import {isPristineProject} from '../util/projectUtils';
+import Analyzer from '../analyzers';
 
 import bootstrap from './bootstrap';
 
@@ -25,8 +26,6 @@ import {
   logIn,
   logOut,
 } from './user';
-
-import Analyzer from '../analyzers';
 
 function getCurrentPersistor(state) {
   const currentUser = state.get('user');
@@ -58,23 +57,22 @@ export function saveCurrentProject(state) {
 }
 
 function validateSource(language, source, projectAttributes) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const validate = validations[language];
-    validate(source, projectAttributes).then((errors) => {
-      const currentSource = getCurrentProject(getState()).
-        get('sources').get(language);
+    const errors = await validate(source, projectAttributes);
+    const currentSource = getCurrentProject(getState()).
+      get('sources').get(language);
 
-      if (currentSource !== source) {
-        return;
-      }
+    if (currentSource !== source) {
+      return;
+    }
 
-      dispatch({
-        type: 'VALIDATED_SOURCE',
-        payload: {
-          language,
-          errors,
-        },
-      });
+    dispatch({
+      type: 'VALIDATED_SOURCE',
+      payload: {
+        language,
+        errors,
+      },
     });
   };
 }
@@ -127,18 +125,17 @@ function toggleLibrary(projectKey, libraryKey) {
 }
 
 export function loadAllProjects() {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const persistor = getCurrentPersistor(getState());
     if (persistor === null) {
       return;
     }
 
-    persistor.all().then((projects) => {
-      projects.forEach((project) => {
-        dispatch({
-          type: 'PROJECT_LOADED',
-          payload: {project},
-        });
+    const projects = await persistor.all();
+    projects.forEach((project) => {
+      dispatch({
+        type: 'PROJECT_LOADED',
+        payload: {project},
       });
     });
   };

@@ -4,7 +4,7 @@ import {loadAllProjects, saveCurrentProject} from '.';
 
 export const userAuthenticated = createAction(
   'USER_AUTHENTICATED',
-  identity
+  identity,
 );
 
 const resetWorkspace = createAction('RESET_WORKSPACE', identity);

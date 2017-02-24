@@ -51,7 +51,7 @@ function errors(stateIn, action) {
       if (action.payload.errors.length) {
         return state.set(
           action.payload.language,
-          buildFailedLanguageErrors(action.payload.errors)
+          buildFailedLanguageErrors(action.payload.errors),
         );
       }
       return state.set(action.payload.language, passedLanguageErrors);

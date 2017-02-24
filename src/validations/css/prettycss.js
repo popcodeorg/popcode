@@ -1,6 +1,6 @@
-import Validator from '../Validator';
 import trim from 'lodash/trim';
 import endsWith from 'lodash/endsWith';
+import Validator from '../Validator';
 import importLinters from '../importLinters';
 
 const RADIAL_GRADIENT_EXPR =
@@ -123,15 +123,14 @@ class PrettyCssValidator extends Validator {
     super(source, 'css', errorMap);
   }
 
-  _getRawErrors() {
-    return importLinters().then(({prettyCSS}) => {
-      try {
-        const result = prettyCSS.parse(this._source);
-        return result.getProblems();
-      } catch (_e) {
-        return [];
-      }
-    });
+  async _getRawErrors() {
+    const {prettyCSS} = await importLinters();
+    try {
+      const result = prettyCSS.parse(this._source);
+      return result.getProblems();
+    } catch (_e) {
+      return [];
+    }
   }
 
   _keyForError(error) {

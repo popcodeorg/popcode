@@ -1,4 +1,5 @@
 import merge from 'lodash/merge';
+
 let keyOffset = 0;
 
 export default function buildProject(project = {}) {
@@ -12,6 +13,6 @@ export default function buildProject(project = {}) {
       },
       enabledLibraries: [],
     },
-    project
+    project,
   );
 }

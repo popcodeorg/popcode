@@ -1,5 +1,5 @@
 import React from 'react';
-import i18n from 'i18next';
+import {t} from 'i18next';
 
 function getBrowserLink(browser) {
   if (browser.firefox) {
@@ -16,11 +16,11 @@ function BrowserError(props) {
 
   return (
     <div className="unsupported-browser">
-      <p>{i18n.t('bad-browser.message', {name: browserName})}</p>
+      <p>{t('bad-browser.message', {name: browserName})}</p>
 
       <p>
         <a href={getBrowserLink(props.browser)}>
-          {i18n.t('bad-browser.download')}
+          {t('bad-browser.download')}
         </a>
       </p>
     </div>

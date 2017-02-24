@@ -33,7 +33,7 @@ describe('bootstrap', () => {
 
       it('should have no current project by default', () => {
         assert.isNull(
-          store.getState().getIn(['currentProject', 'projectKey'])
+          store.getState().getIn(['currentProject', 'projectKey']),
         );
       });
     });
@@ -46,7 +46,7 @@ describe('bootstrap', () => {
 
       it('should create a new current project', () => {
         assert.isNotNull(
-          store.getState().getIn(['currentProject', 'projectKey'])
+          store.getState().getIn(['currentProject', 'projectKey']),
         );
       });
 
@@ -70,11 +70,12 @@ describe('bootstrap', () => {
           assert.isFalse(store.getState().getIn(['user', 'authenticated']));
         });
 
-        it('should create a new current project', () =>
-          assert.eventually.isNotNull(Promise.resolve().then(() =>
-            store.getState().getIn(['currentProject', 'projectKey']))
-          )
-        );
+        it('should create a new current project', async () => {
+          await Promise.resolve();
+          assert.isNotNull(
+            store.getState().getIn(['currentProject', 'projectKey']),
+          );
+        });
       });
 
       context('credential in Firebase', () => {
@@ -94,15 +95,16 @@ describe('bootstrap', () => {
           it('should set credential', () => {
             assert.equal(
               store.getState().getIn(['user', 'accessTokens', 'github.com']),
-              credential.accessToken
+              credential.accessToken,
             );
           });
 
-          it('should create a new current project', () =>
-            assert.eventually.isNotNull(Promise.resolve().then(() =>
-              store.getState().getIn(['currentProject', 'projectKey']))
-            )
-          );
+          it('should create a new current project', async () => {
+            await Promise.resolve();
+            assert.isNotNull(
+              store.getState().getIn(['currentProject', 'projectKey']),
+            );
+          });
         });
 
         context('current project in Firebase', () => {
@@ -118,7 +120,7 @@ describe('bootstrap', () => {
           it('should create a new project', () => {
             assert.notEqual(
               store.getState().getIn(['currentProject', 'projectKey']),
-              project.projectKey
+              project.projectKey,
             );
           });
         });
@@ -134,7 +136,7 @@ describe('bootstrap', () => {
 
       it('should have no current project', () => {
         assert.isNull(
-          store.getState().getIn(['currentProject', 'projectKey'])
+          store.getState().getIn(['currentProject', 'projectKey']),
         );
       });
     });
@@ -147,7 +149,7 @@ describe('bootstrap', () => {
 
       it('should have no current project', () => {
         assert.isNull(
-          store.getState().getIn(['currentProject', 'projectKey'])
+          store.getState().getIn(['currentProject', 'projectKey']),
         );
       });
     });
@@ -160,7 +162,7 @@ describe('bootstrap', () => {
 
       it('should have no current project', () => {
         assert.isNull(
-          store.getState().getIn(['currentProject', 'projectKey'])
+          store.getState().getIn(['currentProject', 'projectKey']),
         );
       });
     });
@@ -180,14 +182,14 @@ describe('bootstrap', () => {
 
         it('should have a current project', () => {
           assert.isNotNull(
-            store.getState().getIn(['currentProject', 'projectKey'])
+            store.getState().getIn(['currentProject', 'projectKey']),
           );
         });
 
         it('should use the gist data in the current project', () => {
           assert.equal(
             getCurrentProject(store.getState()).sources.javascript,
-            javascript
+            javascript,
           );
         });
       });
@@ -201,14 +203,14 @@ describe('bootstrap', () => {
 
         it('should have a current project', () => {
           assert.isNotNull(
-            store.getState().getIn(['currentProject', 'projectKey'])
+            store.getState().getIn(['currentProject', 'projectKey']),
           );
         });
 
         it('should use the gist data in the current project', () => {
           assert.equal(
             getCurrentProject(store.getState()).sources.javascript,
-            javascript
+            javascript,
           );
         });
       });
@@ -227,7 +229,7 @@ describe('bootstrap', () => {
         it('should add empty libraries by default', () => {
           assert.deepEqual(
             getCurrentProject(store.getState()).enabledLibraries,
-            []
+            [],
           );
         });
       });
@@ -243,7 +245,7 @@ describe('bootstrap', () => {
         it('should load libraries into project', () => {
           assert.include(
             getCurrentProject(store.getState()).enabledLibraries,
-            'jquery'
+            'jquery',
           );
         });
       });
@@ -257,7 +259,7 @@ describe('bootstrap', () => {
 
         it('should create a new project', () => {
           assert.isNotNull(
-            store.getState().getIn(['currentProject', 'projectKey'])
+            store.getState().getIn(['currentProject', 'projectKey']),
           );
         });
 
@@ -265,7 +267,7 @@ describe('bootstrap', () => {
           assert.include(
             store.getState().getIn(['ui', 'notifications']).toJS().
             map(property('type')),
-            'gist-import-not-found'
+            'gist-import-not-found',
           );
         });
       });
@@ -279,7 +281,7 @@ describe('bootstrap', () => {
 
         it('should create a new project', () => {
           assert.isNotNull(
-            store.getState().getIn(['currentProject', 'projectKey'])
+            store.getState().getIn(['currentProject', 'projectKey']),
           );
         });
 
@@ -287,7 +289,7 @@ describe('bootstrap', () => {
           assert.include(
             store.getState().getIn(['ui', 'notifications']).toJS().
             map(property('type')),
-            'gist-import-error'
+            'gist-import-error',
           );
         });
       });

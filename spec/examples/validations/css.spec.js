@@ -6,9 +6,9 @@ import {
   assertFailsValidationWith,
   assertFailsValidationAtLine,
 } from '../../assertions/validations';
+import css from '../../../src/validations/css';
 import assertPassesAcceptance from './assertPassesAcceptance';
 
-import css from '../../../src/validations/css';
 
 describe('css', function() {
   this.timeout(10000); // eslint-disable-line no-invalid-this
@@ -27,7 +27,7 @@ describe('css', function() {
         align-self: flex-end;
         order: 2;
       }
-    `)
+    `),
   );
 
   it('allows valid filter', () =>
@@ -35,23 +35,23 @@ describe('css', function() {
       img {
         filter: grayscale(100%);
       }
-    `)
+    `),
   );
 
   it('fails with bogus flex value', () =>
     assertFailsValidationWith(
       css,
       '.flex-item { flex: bogus; }',
-      'invalid-value'
-    )
+      'invalid-value',
+    ),
   );
 
   it('fails with bogus filter value', () =>
     assertFailsValidationWith(
       css,
       'img { filter: whitescale(100%); }',
-      'invalid-value'
-    )
+      'invalid-value',
+    ),
   );
 
   it('gives a useful error when there is no opening curly brace', () =>
@@ -59,8 +59,8 @@ describe('css', function() {
       css,
       `p
         display: block;`,
-      'block-expected'
-    )
+      'block-expected',
+    ),
   );
 
   it('gives a useful error with no opening curly brace and whitespace', () =>
@@ -69,8 +69,8 @@ describe('css', function() {
       `p
         display: block;
       `,
-      'block-expected'
-    )
+      'block-expected',
+    ),
   );
 
   it('gives a useful error when there is no closing curly brace', () =>
@@ -78,40 +78,40 @@ describe('css', function() {
       css,
       `p {
         display: block;`,
-      'missing-closing-curly'
-    )
+      'missing-closing-curly',
+    ),
   );
 
   it('gives a useful error when there is no semi-colon', () =>
     assertFailsValidationWith(
       css,
       'p { display: block }',
-      'missing-semicolon'
-    )
+      'missing-semicolon',
+    ),
   );
 
   it('gives a useful error when a bogus character is in selector', () =>
     assertFailsValidationWith(
       css,
       'p; div { display: block; }',
-      'invalid-token-in-selector'
-    )
+      'invalid-token-in-selector',
+    ),
   );
 
   it('gives a good error when an invalid negative value is given', () =>
     assertFailsValidationWith(
       css,
       'p { padding-left: -2px; }',
-      'invalid-negative-value'
-    )
+      'invalid-negative-value',
+    ),
   );
 
   it('gives a good error when invalid fractional value is given', () =>
     assertFailsValidationWith(
       css,
       'p { z-index: 2.4; }',
-      'invalid-fractional-value'
-    )
+      'invalid-fractional-value',
+    ),
   );
 
   context('missing semicolon', () => {
@@ -123,11 +123,11 @@ describe('css', function() {
     `;
 
     it('gives missing semicolon error', () =>
-      assertFailsValidationWith(css, stylesheet, 'missing-semicolon')
+      assertFailsValidationWith(css, stylesheet, 'missing-semicolon'),
     );
 
     it('fails at the line missing the semicolon', () =>
-      assertFailsValidationAtLine(css, stylesheet, 2)
+      assertFailsValidationAtLine(css, stylesheet, 2),
     );
   });
 
@@ -139,11 +139,11 @@ describe('css', function() {
     `;
 
     it('gives extra tokens error', () =>
-      assertFailsValidationWith(css, stylesheet, 'extra-tokens-after-value')
+      assertFailsValidationWith(css, stylesheet, 'extra-tokens-after-value'),
     );
 
     it('fails at the line with the extra value', () =>
-      assertFailsValidationAtLine(css, stylesheet, 2)
+      assertFailsValidationAtLine(css, stylesheet, 2),
     );
   });
 
@@ -163,7 +163,7 @@ describe('css', function() {
     `;
 
     it('gives extra tokens error', () =>
-      assertFailsValidationWith(css, stylesheet, 'extra-tokens-after-value')
+      assertFailsValidationWith(css, stylesheet, 'extra-tokens-after-value'),
     );
   });
 
@@ -171,7 +171,7 @@ describe('css', function() {
     const stylesheet = '<a href=\"http;.facebook.com>';
 
     it('fails at the first line', () =>
-      assertFailsValidationAtLine(css, stylesheet, 1)
+      assertFailsValidationAtLine(css, stylesheet, 1),
     );
   });
 

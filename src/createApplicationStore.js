@@ -1,8 +1,8 @@
 import Immutable from 'immutable';
-import {createStore, applyMiddleware} from 'redux';
-import reducers from './reducers';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
+import {createStore, applyMiddleware} from 'redux';
+import reducers from './reducers';
 import config from './config';
 
 let createStoreWithMiddleware = createStore;

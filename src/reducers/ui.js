@@ -10,7 +10,7 @@ const defaultState = new Immutable.Map().
     'dashboard',
     new Immutable.Map().
       set('isOpen', false).
-      set('activeSubmenu', null)
+      set('activeSubmenu', null),
   );
 
 function ui(stateIn, action) {
@@ -43,13 +43,13 @@ function ui(stateIn, action) {
     case 'COMPONENT_MINIMIZED':
       return state.update(
         'minimizedComponents',
-        components => components.add(action.payload.componentName)
+        components => components.add(action.payload.componentName),
       );
 
     case 'COMPONENT_MAXIMIZED':
       return state.update(
         'minimizedComponents',
-        components => components.delete(action.payload.componentName)
+        components => components.delete(action.payload.componentName),
       );
 
     case 'USER_REQUESTED_FOCUSED_LINE':
@@ -58,7 +58,7 @@ function ui(stateIn, action) {
         new Immutable.Map().
           set('language', action.payload.language).
           set('line', action.payload.line).
-          set('column', action.payload.column)
+          set('column', action.payload.column),
       );
 
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
@@ -68,22 +68,22 @@ function ui(stateIn, action) {
       return state.update(
         'notifications',
         errors => errors.add(new Immutable.Map(
-          pick(action.payload, ['type', 'severity', 'payload'])
-        ))
+          pick(action.payload, ['type', 'severity', 'payload']),
+        )),
       );
 
     case 'USER_DISMISSED_NOTIFICATION':
       return state.update(
         'notifications',
         errors => errors.filterNot(
-          error => error.get('type') === action.payload.type
-        )
+          error => error.get('type') === action.payload.type,
+        ),
       );
 
     case 'RESET_WORKSPACE':
       return state.setIn(
         ['dashboard', 'activeSubmenu'],
-        null
+        null,
       );
 
     default:

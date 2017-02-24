@@ -1,9 +1,10 @@
 import React from 'react';
-import i18n from 'i18next';
+import {t} from 'i18next';
 import isEmpty from 'lodash/isEmpty';
+import isNull from 'lodash/isNull';
+import classnames from 'classnames';
 import ErrorList from './ErrorList';
 import Preview from './Preview';
-import classnames from 'classnames';
 
 class Output extends React.Component {
   _renderErrorList(props) {
@@ -16,7 +17,7 @@ class Output extends React.Component {
   }
 
   _renderPreview() {
-    if (!this.props.project) {
+    if (isNull(this.props.project)) {
       return null;
     }
 
@@ -64,7 +65,7 @@ class Output extends React.Component {
         className={
           classnames(
             'environment__column output',
-            {output_hidden: this.props.isHidden}
+            {output_hidden: this.props.isHidden},
           )
         }
       >
@@ -72,7 +73,7 @@ class Output extends React.Component {
           className="environment__label label"
           onClick={this.props.onMinimize}
         >
-          {i18n.t('workspace.components.output')}
+          {t('workspace.components.output')}
         </div>
         {this._renderErrors()}
         {this._renderPreview()}
@@ -87,11 +88,15 @@ Output.propTypes = {
   isHidden: React.PropTypes.bool.isRequired,
   project: React.PropTypes.object,
   runtimeErrors: React.PropTypes.array.isRequired,
-  validationState: React.PropTypes.string,
+  validationState: React.PropTypes.string.isRequired,
   onClearRuntimeErrors: React.PropTypes.func.isRequired,
   onErrorClick: React.PropTypes.func.isRequired,
   onMinimize: React.PropTypes.func.isRequired,
   onRuntimeError: React.PropTypes.func.isRequired,
+};
+
+Output.defaultProps = {
+  project: null,
 };
 
 export default Output;

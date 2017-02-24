@@ -13,8 +13,8 @@ const userIsDoneTypingWithDebounce = partial(
   identity,
   debounce(
     dispatch => dispatch(userIsDoneTyping()),
-    TYPING_DEBOUNCE_DELAY
-  )
+    TYPING_DEBOUNCE_DELAY,
+  ),
 );
 
 export function userTyped() {
@@ -26,19 +26,19 @@ export function userTyped() {
 
 export const userRequestedFocusedLine = createAction(
   'USER_REQUESTED_FOCUSED_LINE',
-  (language, line, column) => ({language, line, column})
+  (language, line, column) => ({language, line, column}),
 );
 
 export const editorFocusedRequestedLine = createAction(
-  'EDITOR_FOCUSED_REQUESTED_LINE'
+  'EDITOR_FOCUSED_REQUESTED_LINE',
 );
 
 export const notificationTriggered = createAction(
   'NOTIFICATION_TRIGGERED',
-  (type, severity = 'error', payload = {}) => ({type, severity, payload})
+  (type, severity = 'error', payload = {}) => ({type, severity, payload}),
 );
 
 export const userDismissedNotification = createAction(
   'USER_DISMISSED_NOTIFICATION',
-  type => ({type})
+  type => ({type}),
 );

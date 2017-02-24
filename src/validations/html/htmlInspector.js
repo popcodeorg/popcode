@@ -46,20 +46,19 @@ class HtmlInspectorValidator extends Validator {
     this._doc = new DOMParser().parseFromString(this._source, 'text/html');
   }
 
-  _getRawErrors() {
+  async _getRawErrors() {
     if (isNull(this._doc.documentElement)) {
       return Promise.resolve([]);
     }
 
-    return importLinters().then(({HTMLInspector}) =>
-      new Promise((resolve) => {
-        HTMLInspector.inspect({
-          domRoot: this._doc.documentElement,
-          useRules: ['validate-element-location'],
-          onComplete: resolve,
-        });
-      })
-    );
+    const {HTMLInspector} = await importLinters();
+    return new Promise((resolve) => {
+      HTMLInspector.inspect({
+        domRoot: this._doc.documentElement,
+        useRules: ['validate-element-location'],
+        onComplete: resolve,
+      });
+    });
   }
 
   _keyForError(error) {

@@ -6,32 +6,33 @@ class FirebasePersistor {
     this.firebase = database.ref(`workspaces/${uid}`);
   }
 
-  getCurrentProjectKey() {
-    return this.firebase.child('currentProjectKey').once('value').
-      then(snapshot => snapshot.val());
+  async getCurrentProjectKey() {
+    const snapshot =
+      await this.firebase.child('currentProjectKey').once('value');
+    return snapshot.val();
   }
 
   setCurrentProjectKey(projectKey) {
     return this.firebase.child('currentProjectKey').set(projectKey);
   }
 
-  all() {
-    return this.firebase.child('projects').once('value').
-      then(projects => values(projects.val() || {}));
+  async all() {
+    const projects = await this.firebase.child('projects').once('value');
+    return values(projects.val() || {});
   }
 
-  load(projectKey) {
-    return this.firebase.child('projects').child(projectKey).once('value').
-      then(snapshot => snapshot.val());
+  async load(projectKey) {
+    const snapshot =
+      await this.firebase.child('projects').child(projectKey).once('value');
+    return snapshot.val();
   }
 
-  loadCurrentProject() {
-    return this.getCurrentProjectKey().then((projectKey) => {
-      if (projectKey) {
-        return this.load(projectKey);
-      }
-      return null;
-    });
+  async loadCurrentProject() {
+    const projectKey = await this.getCurrentProjectKey();
+    if (projectKey) {
+      return this.load(projectKey);
+    }
+    return null;
   }
 
   save(project) {

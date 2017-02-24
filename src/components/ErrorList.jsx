@@ -1,17 +1,14 @@
 import React from 'react';
 import classnames from 'classnames';
-import get from 'lodash/get';
 import ErrorSublist from './ErrorSublist';
 
 function ErrorList(props) {
-  const docked = get(props, 'docked', false);
-
   return (
     <div
       className={classnames(
         'error-list',
         'output__item',
-        {'error-list_docked': docked, output__item_shrink: docked}
+        {'error-list_docked': props.docked, output__item_shrink: props.docked},
       )}
     >
       <ErrorSublist
@@ -39,6 +36,10 @@ ErrorList.propTypes = {
   html: React.PropTypes.object.isRequired,
   javascript: React.PropTypes.object.isRequired,
   onErrorClick: React.PropTypes.func.isRequired,
+};
+
+ErrorList.defaultProps = {
+  docked: false,
 };
 
 export default ErrorList;

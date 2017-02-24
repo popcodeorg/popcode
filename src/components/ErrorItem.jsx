@@ -9,7 +9,7 @@ function ErrorItem(props) {
       onClick={partial(
         props.onClick,
         props.row,
-        props.column
+        props.column,
       )}
     >
       <div>{props.row + 1}</div>

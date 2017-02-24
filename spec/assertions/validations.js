@@ -6,19 +6,19 @@ export function assertPassesValidation(validate, source, validatorArgs = []) {
   return assert.eventually.deepEqual(
     validate(source, ...validatorArgs),
     [],
-    'source passes validation'
+    'source passes validation',
   );
 }
 
-export function assertFailsValidation(validate,
+export async function assertFailsValidation(validate,
     source,
-    options = {validatorArgs: [], reasons: []}
+    options = {validatorArgs: [], reasons: []},
   ) {
-  return assert.eventually.sameMembers(
-    validate(source, ...options.validatorArgs).then(
-      errors => map(errors, 'reason')),
-      options.reasons,
-      `source fails validation with reasons: ${options.reasons.join(', ')}`
+  const errors = await validate(source, ...options.validatorArgs);
+  assert.sameMembers(
+    map(errors, 'reason'),
+    options.reasons,
+    `source fails validation with reasons: ${options.reasons.join(', ')}`,
   );
 }
 
@@ -30,10 +30,11 @@ export function assertFailsValidationWith(validate, source, ...reasons) {
   return assertFailsValidation(validate, source, options);
 }
 
-export function assertFailsValidationAtLine(validate, source, line) {
-  return assert.eventually.include(
-    validate(trim(source)).then(errors => map(errors, 'row')),
+export async function assertFailsValidationAtLine(validate, source, line) {
+  const errors = await validate(trim(source));
+  assert.include(
+    map(errors, 'row'),
     line - 1,
-    `source fails validation at line: ${line}`
+    `source fails validation at line: ${line}`,
   );
 }

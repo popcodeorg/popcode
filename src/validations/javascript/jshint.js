@@ -1,4 +1,3 @@
-import Validator from '../Validator';
 import castArray from 'lodash/castArray';
 import concat from 'lodash/concat';
 import clone from 'lodash/clone';
@@ -8,6 +7,7 @@ import find from 'lodash/find';
 import includes from 'lodash/includes';
 import libraries from '../../config/libraries';
 import importLinters from '../importLinters';
+import Validator from '../Validator';
 
 const jshintrc = {
   browser: true,
@@ -116,7 +116,7 @@ const errorMap = {
     const providingLibrary = find(
       libraries,
       library =>
-        library.predefined && includes(library.predefined, identifier)
+        library.predefined && includes(library.predefined, identifier),
     );
 
     if (providingLibrary) {
@@ -143,7 +143,7 @@ class JsHintValidator extends Validator {
     super(source, 'javascript', errorMap, analyzer);
     this._jshintOptions = this._getConfig(
       analyzer.containsExternalScript,
-      analyzer.enabledLibraries
+      analyzer.enabledLibraries,
     );
   }
 
@@ -170,17 +170,16 @@ class JsHintValidator extends Validator {
     return options;
   }
 
-  _getRawErrors() {
-    return importLinters().then(({jshint}) => {
-      try {
-        jshint(this._source, this._jshintOptions);
-      } catch (e) {
-        return [];
-      }
+  async _getRawErrors() {
+    const {jshint} = await importLinters();
+    try {
+      jshint(this._source, this._jshintOptions);
+    } catch (e) {
+      return [];
+    }
 
-      const data = jshint.data();
-      return compact(castArray(data.errors));
-    });
+    const data = jshint.data();
+    return compact(castArray(data.errors));
   }
 
   _keyForError(error) {
