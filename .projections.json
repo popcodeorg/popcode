@@ -12,6 +12,9 @@
   "src/reducers/*.js": {
     "type": "reducer"
   },
+  "src/sagas/*.js": {
+    "type": "saga"
+  },
   "spec/examples/*.spec.js": {
     "type": "spec",
     "template": "/* eslint-env mocha */\n\nimport '../../helper';\nimport {open}assert{close} from 'chai';\n\nimport {basename} from '../../../src/{}';\n\ndescribe('{basename}', () => {open}\n{close});\n"

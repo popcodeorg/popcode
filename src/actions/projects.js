@@ -6,16 +6,12 @@ import values from 'lodash/values';
 import {createAction} from 'redux-actions';
 import {validateAllSources, getCurrentProject, saveCurrentProject} from '.';
 
-const createProjectWithKey = createAction(
+export const projectCreated = createAction(
   'PROJECT_CREATED',
   projectKey => ({projectKey}),
 );
 
-export function createProject() {
-  return (dispatch) => {
-    dispatch(createProjectWithKey(generateProjectKey()));
-  };
-}
+export const createProject = createAction('CREATE_PROJECT');
 
 export function changeCurrentProject(projectKey) {
   return (dispatch, getState) => {
