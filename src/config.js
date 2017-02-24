@@ -1,8 +1,11 @@
 /* global process */
+/* eslint-env commonjs */
+/* eslint-disable import/no-commonjs */
+/* eslint-disable import/unambiguous */
 
 const nodeEnv = (process.env.NODE_ENV || 'development');
 
-export default {
+module.exports = {
   nodeEnv,
   logReduxActions: () => process.env.LOG_REDUX_ACTIONS === 'true',
   warnOnDroppedErrors: process.env.WARN_ON_DROPPED_ERRORS === 'true',

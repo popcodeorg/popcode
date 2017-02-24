@@ -1,4 +1,4 @@
 {
-  "presets": ["react", "latest"],
+  "presets": ["react", ["latest", {"es2015": {"modules": false}}]],
   "compact": false
 }
