@@ -161,6 +161,7 @@
     "doctoc": "^1.2.0",
     "eslint": "^3.3.0",
     "eslint-import-resolver-webpack": "^0.8.1",
+    "eslint-loader": "^1.8.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-promise": "^3.4.2",
     "eslint-plugin-react": "^7.0.1",

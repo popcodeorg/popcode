@@ -76,7 +76,10 @@ module.exports = {
           path.resolve(__dirname, 'src'),
           path.resolve(__dirname, 'test'),
         ],
-        use: {loader: 'babel-loader', options: babelrc},
+        use: [
+          {loader: 'babel-loader', options: babelrc},
+          {loader: 'eslint-loader'},
+        ],
       },
       {
         test: /\.js$/,
