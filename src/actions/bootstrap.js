@@ -11,26 +11,27 @@ import {notificationTriggered} from './ui';
 import {loadAllProjects} from '.';
 
 export default function bootstrap(gistId) {
-  return (dispatch) => {
-    const userStateResolved = getInitialUserState().then((userCredential) => {
-      if (userCredential) {
-        dispatch(userAuthenticated(userCredential));
-        dispatch(loadAllProjects());
-      }
-    });
+  return async (dispatch) => {
+    const userStateResolved = getInitialUserState();
 
     const promisedGist = retrieveGist(gistId).catch((error) => {
       dispatch(notificationTriggered(error, 'error', {gistId}));
       return null;
     });
 
-    Promise.all([promisedGist, userStateResolved]).then(([gist]) => {
-      if (gist) {
-        dispatch(initializeCurrentProjectFromGist(gist));
-      } else {
-        dispatch(createProject());
-      }
-    });
+    const [gist, userCredential] =
+      await Promise.all([promisedGist, userStateResolved]);
+
+    if (userCredential) {
+      dispatch(userAuthenticated(userCredential));
+      dispatch(loadAllProjects());
+    }
+
+    if (gist) {
+      dispatch(initializeCurrentProjectFromGist(gist));
+    } else {
+      dispatch(createProject());
+    }
   };
 }
 

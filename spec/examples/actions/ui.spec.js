@@ -38,29 +38,24 @@ describe('interfaceStateActions', () => {
       assert.isTrue(store.getState().getIn(['ui', 'editors', 'typing']));
     });
 
-    it('keeps typing state true before timeout expires', () =>
-      assert.eventually.isTrue(
-        waitFor(TYPING_DEBOUNCE_DELAY / 2, clock).
-          then(() => store.getState().getIn(['ui', 'editors', 'typing'])),
-      ),
-    );
+    it('keeps typing state true before timeout expires', async () => {
+      await waitFor(TYPING_DEBOUNCE_DELAY / 2, clock);
+      assert.isTrue(store.getState().getIn(['ui', 'editors', 'typing']));
+    });
 
-    it('sets typing state to false after timeout expires', () =>
-      assert.eventually.isFalse(
-        waitFor(TYPING_DEBOUNCE_DELAY, clock).
-          then(() => store.getState().getIn(['ui', 'editors', 'typing'])),
-      ),
-    );
+    it('sets typing state to false after timeout expires', async () => {
+      await waitFor(TYPING_DEBOUNCE_DELAY, clock);
+      assert.isFalse(store.getState().getIn(['ui', 'editors', 'typing']));
+    });
 
-    it('keeps typing state true if there are additional keystrokes', () =>
-      assert.eventually.isTrue(
-        waitFor(TYPING_DEBOUNCE_DELAY * 0.8, clock).then(() => {
-          store.dispatch(userTyped());
-          return waitFor(TYPING_DEBOUNCE_DELAY * 0.9, clock).then(() =>
-            store.getState().getIn(['ui', 'editors', 'typing']),
-          );
-        }),
-      ),
+    it(
+      'keeps typing state true if there are additional keystrokes',
+      async () => {
+        await waitFor(TYPING_DEBOUNCE_DELAY * 0.8, clock);
+        store.dispatch(userTyped());
+        await waitFor(TYPING_DEBOUNCE_DELAY * 0.9, clock);
+        assert.isTrue(store.getState().getIn(['ui', 'editors', 'typing']));
+      },
     );
   });
 

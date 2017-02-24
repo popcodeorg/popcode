@@ -16,11 +16,10 @@ function filterErrors(errors) {
   return flatten(values(omit(groupedErrors, suppressedTypes)));
 }
 
-function mergeValidations(errors) {
-  return Promise.all(errors).then((results) => {
-    const filteredErrors = filterErrors(flatten(results));
-    return sortBy(filteredErrors, 'row');
-  });
+async function mergeValidations(errors) {
+  const results = await Promise.all(errors);
+  const filteredErrors = filterErrors(flatten(results));
+  return sortBy(filteredErrors, 'row');
 }
 
 export default mergeValidations;

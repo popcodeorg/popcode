@@ -20,32 +20,33 @@ const loginStateSource = Observable.create((observer) => {
 
 const [logOutSource, logInSource] = loginStateSource.skip(1).partition(isNull);
 
-function userCredentialForUserData(user) {
-  return database.ref(`authTokens/${user.uid}/github_com`).
-    once('value').then((snapshot) => {
-      const credential = snapshot.val();
-      if (isNil(credential)) {
-        return auth.signOut().then(() => null);
-      }
+async function userCredentialForUserData(user) {
+  const snapshot =
+    await database.ref(`authTokens/${user.uid}/github_com`).once('value');
+  const credential = snapshot.val();
+  if (isNil(credential)) {
+    await auth.signOut();
+    return null;
+  }
 
-      return {user, credential};
-    });
+  return {user, credential};
 }
 
-export function getInitialUserState() {
-  return oneAuth().then((userCredential) => {
-    if (!isNull(userCredential)) {
-      if (isNull(userCredential.credential)) {
-        return auth.signOut().then(() => null);
-      }
-
-      if (userCredential.user.uid !== getSessionUid()) {
-        return auth.signOut().then(() => null);
-      }
+export async function getInitialUserState() {
+  const userCredential = await oneAuth();
+  if (!isNull(userCredential)) {
+    if (isNull(userCredential.credential)) {
+      await auth.signOut();
+      return null;
     }
 
-    return userCredential;
-  });
+    if (userCredential.user.uid !== getSessionUid()) {
+      await auth.signOut();
+      return null;
+    }
+  }
+
+  return userCredential;
 }
 
 export function onSignedIn(handler) {
@@ -56,13 +57,10 @@ export function onSignedOut(handler) {
   logOutSource.subscribe(handler);
 }
 
-export function signIn() {
-  return auth.signInWithPopup(githubAuthProvider).then(
-    (userCredential) => {
-      saveCredentials(userCredential.user.uid, userCredential.credential);
-      return userCredential;
-    },
-  );
+export async function signIn() {
+  const userCredential = await auth.signInWithPopup(githubAuthProvider);
+  saveCredentials(userCredential.user.uid, userCredential.credential);
+  return userCredential;
 }
 
 export function signOut() {

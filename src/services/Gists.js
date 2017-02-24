@@ -80,15 +80,15 @@ function canUpdateGist(user) {
   return Boolean(getGithubToken(user));
 }
 
-function updateGistWithImportUrl(github, gistData) {
+async function updateGistWithImportUrl(github, gistData) {
   const gist = github.getGist(gistData.id);
   const uri = document.createElement('a');
   uri.setAttribute('href', '/');
   uri.search = `gist=${gistData.id}`;
 
   const description = `${gistData.description} Click to import: ${uri.href}`;
-  return performWithRetries(() => gist.update({description})).
-    then(response => response.data);
+  const response = await performWithRetries(() => gist.update({description}));
+  return response.data;
 }
 
 function createPopcodeJson(project) {
@@ -99,7 +99,7 @@ function createPopcodeJson(project) {
 }
 
 const Gists = {
-  createFromProject(project, user) {
+  async createFromProject(project, user) {
     const github = clientForUser(user);
 
     const gist = createGistFromProject(project);
@@ -107,21 +107,21 @@ const Gists = {
       return Promise.reject(new EmptyGistError());
     }
 
-    return performWithRetries(() => github.getGist().create(gist)).
-      then((response) => {
-        const gistData = response.data;
-        if (canUpdateGist(user)) {
-          return updateGistWithImportUrl(github, gistData);
-        }
-        return gistData;
-      });
+    const response =
+      await performWithRetries(() => github.getGist().create(gist));
+
+    const gistData = response.data;
+    if (canUpdateGist(user)) {
+      return updateGistWithImportUrl(github, gistData);
+    }
+    return gistData;
   },
 
-  loadFromId(gistId, user) {
+  async loadFromId(gistId, user) {
     const github = clientForUser(user);
     const gist = github.getGist(gistId);
-    return performWithRetries(() => gist.read(), {retries: 3}).
-      then(response => response.data);
+    const response = await performWithRetries(() => gist.read(), {retries: 3});
+    return response.data;
   },
 };
 

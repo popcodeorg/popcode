@@ -12,13 +12,12 @@ class Validator {
     this._analyzer = analyzer;
   }
 
-  getAnnotations() {
-    return Promise.resolve(this._getRawErrors()).then(
-      errors => compact(map(
-        errors,
-        this._convertErrorToAnnotation.bind(this),
-      )),
-    );
+  async getAnnotations() {
+    const errors = await this._getRawErrors();
+    return compact(map(
+      errors,
+      this._convertErrorToAnnotation.bind(this),
+    ));
   }
 
   _mapError(rawError) {

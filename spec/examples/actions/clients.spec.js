@@ -23,12 +23,13 @@ describe('clients', () => {
     });
 
     it('should set gists.exportInProgress to false after promise resolves',
-      () => {
+      async () => {
         const gistExportComplete = Promise.resolve();
         store.dispatch(exportingGist(gistExportComplete));
-        return assert.eventually.isFalse(gistExportComplete.then(() =>
+        await gistExportComplete;
+        assert.isFalse(
           store.getState().getIn(['clients', 'gists', 'exportInProgress']),
-        ));
+        );
       },
     );
 

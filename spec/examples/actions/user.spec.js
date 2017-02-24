@@ -135,14 +135,13 @@ describe('user actions', () => {
   describe('logOut', () => {
     let loggedInProjectKey;
 
-    beforeEach(() => {
+    beforeEach(async () => {
       mockFirebase.logIn(user.uid);
       mockFirebase.setCurrentProject(null);
-      return dispatchAndWait(store, bootstrap()).then(() => {
-        createAndMutateProject(store);
-        loggedInProjectKey = getCurrentProject(store.getState()).projectKey;
-        return dispatchAndWait(store, logOut());
-      });
+      await dispatchAndWait(store, bootstrap());
+      createAndMutateProject(store);
+      loggedInProjectKey = getCurrentProject(store.getState()).projectKey;
+      return dispatchAndWait(store, logOut());
     });
 
     it('should set authenticated to false', () => {

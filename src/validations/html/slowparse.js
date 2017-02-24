@@ -114,21 +114,20 @@ class SlowparseValidator extends Validator {
     super(source, 'html', errorMap);
   }
 
-  _getRawErrors() {
-    return System.import('../linters').then(({Slowparse}) => {
-      let error;
-      try {
-        error = Slowparse.HTML(document, this._source).error;
-      } catch (e) {
-        error = null;
-      }
+  async _getRawErrors() {
+    const {Slowparse} = await System.import('../linters');
+    let error;
+    try {
+      error = Slowparse.HTML(document, this._source).error;
+    } catch (e) {
+      error = null;
+    }
 
-      if (error !== null) {
-        return [error];
-      }
+    if (error !== null) {
+      return [error];
+    }
 
-      return [];
-    });
+    return [];
   }
 
   _keyForError(error) {

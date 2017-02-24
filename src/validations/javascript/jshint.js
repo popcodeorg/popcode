@@ -170,17 +170,16 @@ class JsHintValidator extends Validator {
     return options;
   }
 
-  _getRawErrors() {
-    return importLinters().then(({jshint}) => {
-      try {
-        jshint(this._source, this._jshintOptions);
-      } catch (e) {
-        return [];
-      }
+  async _getRawErrors() {
+    const {jshint} = await importLinters();
+    try {
+      jshint(this._source, this._jshintOptions);
+    } catch (e) {
+      return [];
+    }
 
-      const data = jshint.data();
-      return compact(castArray(data.errors));
-    });
+    const data = jshint.data();
+    return compact(castArray(data.errors));
   }
 
   _keyForError(error) {

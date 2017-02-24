@@ -332,7 +332,7 @@ class Workspace extends React.Component {
     this.props.dispatch(editorFocusedRequestedLine());
   }
 
-  _handleExportGist() {
+  async _handleExportGist() {
     if (this.props.clients.gists.exportInProgress) {
       return;
     }
@@ -354,7 +354,8 @@ class Workspace extends React.Component {
     );
     this.props.dispatch(exportingGist(gistWillExport));
 
-    gistWillExport.then((response) => {
+    try {
+      const response = await gistWillExport;
       if (newWindow.closed) {
         this.props.dispatch(
           notificationTriggered(
@@ -366,20 +367,20 @@ class Workspace extends React.Component {
       } else {
         newWindow.location.href = response.html_url;
       }
-    }, (error) => {
+    } catch (error) {
       if (error instanceof EmptyGistError) {
         this.props.dispatch(notificationTriggered('empty-gist'));
         if (!newWindow.closed) {
           newWindow.close();
         }
-        return Promise.resolve();
+        return;
       }
       this.props.dispatch(notificationTriggered('gist-export-error'));
       if (!newWindow.closed) {
         newWindow.close();
       }
-      return Promise.reject(error);
-    });
+      throw error;
+    }
   }
 
   _renderDashboard() {

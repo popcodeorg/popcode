@@ -123,15 +123,14 @@ class PrettyCssValidator extends Validator {
     super(source, 'css', errorMap);
   }
 
-  _getRawErrors() {
-    return importLinters().then(({prettyCSS}) => {
-      try {
-        const result = prettyCSS.parse(this._source);
-        return result.getProblems();
-      } catch (_e) {
-        return [];
-      }
-    });
+  async _getRawErrors() {
+    const {prettyCSS} = await importLinters();
+    try {
+      const result = prettyCSS.parse(this._source);
+      return result.getProblems();
+    } catch (_e) {
+      return [];
+    }
   }
 
   _keyForError(error) {

@@ -70,11 +70,12 @@ describe('bootstrap', () => {
           assert.isFalse(store.getState().getIn(['user', 'authenticated']));
         });
 
-        it('should create a new current project', () =>
-          assert.eventually.isNotNull(Promise.resolve().then(() =>
-            store.getState().getIn(['currentProject', 'projectKey'])),
-          ),
-        );
+        it('should create a new current project', async () => {
+          await Promise.resolve();
+          assert.isNotNull(
+            store.getState().getIn(['currentProject', 'projectKey']),
+          );
+        });
       });
 
       context('credential in Firebase', () => {
@@ -98,11 +99,12 @@ describe('bootstrap', () => {
             );
           });
 
-          it('should create a new current project', () =>
-            assert.eventually.isNotNull(Promise.resolve().then(() =>
-              store.getState().getIn(['currentProject', 'projectKey'])),
-            ),
-          );
+          it('should create a new current project', async () => {
+            await Promise.resolve();
+            assert.isNotNull(
+              store.getState().getIn(['currentProject', 'projectKey']),
+            );
+          });
         });
 
         context('current project in Firebase', () => {

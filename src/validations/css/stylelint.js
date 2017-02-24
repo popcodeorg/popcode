@@ -20,15 +20,15 @@ class StyleLintValidator extends Validator {
     super(source, 'css', errorMap);
   }
 
-  _getRawErrors() {
-    return importLinters().then(
-      ({stylelint}) => stylelint(
-        this._source,
-      ).then(
-        result => result.messages,
-        syntaxError => [syntaxError],
-      ),
-    );
+  async _getRawErrors() {
+    const {stylelint} = await importLinters();
+    let result;
+    try {
+      result = await stylelint(this._source);
+    } catch (syntaxError) {
+      return [syntaxError];
+    }
+    return result.messages;
   }
 
   _keyForError(error) {
