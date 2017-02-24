@@ -1,10 +1,10 @@
 /* eslint-env mocha */
 /* global sinon */
 
-import '../../helper';
-import MockFirebase from '../../helpers/MockFirebase';
-import {createUser, createCredential} from '../../helpers/MockFirebase';
 import {assert} from 'chai';
+import '../../helper';
+import MockFirebase,
+  {createUser, createCredential} from '../../helpers/MockFirebase';
 import dispatchAndWait from '../../helpers/dispatchAndWait';
 import buildProject from '../../helpers/buildProject';
 import createAndMutateProject from '../../helpers/createAndMutateProject';

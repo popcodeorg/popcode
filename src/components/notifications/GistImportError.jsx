@@ -1,5 +1,5 @@
 import React from 'react';
-import i18n from 'i18next';
+import {t} from 'i18next';
 
 function gistUrlFromId(gistId) {
   return `https://gist.github.com/${gistId}`;
@@ -8,9 +8,9 @@ function gistUrlFromId(gistId) {
 export default function GistImportError(props) {
   return (
     <span>
-      {i18n.t('notifications.gist-import-error')}{' '}
+      {t('notifications.gist-import-error')}{' '}
       <a href={gistUrlFromId(props.payload.gistId)} target="_blank">
-        {i18n.t('notifications.gist-import-link')}
+        {t('notifications.gist-import-link')}
       </a>
     </span>
   );

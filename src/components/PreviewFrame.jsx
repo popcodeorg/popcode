@@ -1,7 +1,7 @@
 import React from 'react';
 import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
-import i18n from 'i18next';
+import {t} from 'i18next';
 import normalizeError from '../util/normalizeError';
 import {sourceDelimiter} from '../util/generatePreview';
 
@@ -90,7 +90,7 @@ class PreviewFrame extends React.Component {
   }
 
   _handleInfiniteLoop(line) {
-    const message = i18n.t('errors.javascriptRuntime.infinite-loop');
+    const message = t('errors.javascriptRuntime.infinite-loop');
     this.props.onRuntimeError({
       reason: 'infinite-loop',
       text: message,

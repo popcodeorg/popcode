@@ -6,9 +6,9 @@ import {
   assertFailsValidationWith,
   assertFailsValidationAtLine,
 } from '../../assertions/validations';
+import css from '../../../src/validations/css';
 import assertPassesAcceptance from './assertPassesAcceptance';
 
-import css from '../../../src/validations/css';
 
 describe('css', function() {
   this.timeout(10000); // eslint-disable-line no-invalid-this

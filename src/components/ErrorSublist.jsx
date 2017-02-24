@@ -1,7 +1,7 @@
 import React from 'react';
 import map from 'lodash/map';
 import partial from 'lodash/partial';
-import i18n from 'i18next';
+import {t} from 'i18next';
 import ErrorItem from './ErrorItem';
 
 function ErrorSublist(props) {
@@ -20,7 +20,7 @@ function ErrorSublist(props) {
     />
   ));
 
-  const errorMessage = i18n.t(
+  const errorMessage = t(
     'errors.notice',
     {count: props.errors.items.length, language: props.language},
   );

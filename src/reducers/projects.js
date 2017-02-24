@@ -1,7 +1,7 @@
-import Immutable from 'immutable';
 import {readFileSync} from 'fs';
-import isNil from 'lodash/isNil';
 import path from 'path';
+import Immutable from 'immutable';
+import isNil from 'lodash/isNil';
 
 import {isPristineProject} from '../util/projectUtils';
 

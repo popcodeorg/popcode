@@ -1,11 +1,11 @@
 import React from 'react';
-import i18n from 'i18next';
+import {t} from 'i18next';
 import partial from 'lodash/partial';
 import classnames from 'classnames';
+import config from '../config';
 import ProjectList from './ProjectList';
 import LibraryPicker from './LibraryPicker';
 import Pop from './Pop';
-import config from '../config';
 
 class Dashboard extends React.Component {
   _renderLoginState() {
@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
             className="dashboard__log-in-out"
             onClick={this.props.onLogOut}
           >
-            {i18n.t('dashboard.session.log-out-prompt')}
+            {t('dashboard.session.log-out-prompt')}
           </span>
         </div>
       );
@@ -33,13 +33,13 @@ class Dashboard extends React.Component {
     return (
       <div className="dashboard__session">
         <span className="dashboard__username">
-          {i18n.t('dashboard.session.not-logged-in')}
+          {t('dashboard.session.not-logged-in')}
         </span>
         <span
           className="dashboard__log-in-out"
           onClick={this.props.onStartLogIn}
         >
-          {i18n.t('dashboard.session.log-in-prompt')}
+          {t('dashboard.session.log-in-prompt')}
         </span>
       </div>
     );
@@ -56,7 +56,7 @@ class Dashboard extends React.Component {
         )}
         onClick={partial(this.props.onSubmenuToggled, submenu)}
       >
-        {i18n.t(`dashboard.menu.${label}`)}
+        {t(`dashboard.menu.${label}`)}
       </div>
     );
   }
@@ -69,7 +69,7 @@ class Dashboard extends React.Component {
           className="dashboard__menu-item dashboard__menu-item_grid"
           onClick={this.props.onNewProject}
         >
-          {i18n.t('dashboard.menu.new-project')}
+          {t('dashboard.menu.new-project')}
         </div>
       );
 
@@ -89,20 +89,20 @@ class Dashboard extends React.Component {
               'dashboard__menu-item_grid',
               {
                 'dashboard__menu-item_spinner':
-                this.props.gistExportInProgress
+                  this.props.gistExportInProgress,
               },
             )
           }
           onClick={this.props.onExportGist}
         >
-          {i18n.t('dashboard.menu.export-gist')}
+          {t('dashboard.menu.export-gist')}
         </div>
         <a
           className="dashboard__menu-item dashboard__menu-item_grid"
           href={config.feedbackUrl}
           target="_blank"
         >
-          {i18n.t('dashboard.menu.send-feedback')}
+          {t('dashboard.menu.send-feedback')}
         </a>
       </div>
     );

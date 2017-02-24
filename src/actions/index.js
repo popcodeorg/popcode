@@ -1,6 +1,7 @@
 import FirebasePersistor from '../persistors/FirebasePersistor';
 import validations from '../validations';
 import {isPristineProject} from '../util/projectUtils';
+import Analyzer from '../analyzers';
 
 import bootstrap from './bootstrap';
 
@@ -25,8 +26,6 @@ import {
   logIn,
   logOut,
 } from './user';
-
-import Analyzer from '../analyzers';
 
 function getCurrentPersistor(state) {
   const currentUser = state.get('user');

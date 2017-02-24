@@ -1,8 +1,8 @@
 /* eslint-env mocha */
 
+import {assert} from 'chai';
 import '../../helper';
 import createApplicationStore from '../../../src/createApplicationStore';
-import {assert} from 'chai';
 
 import {exportingGist} from '../../../src/actions';
 

@@ -1,7 +1,7 @@
 import importLinters from './importLinters';
-import html from './html.js';
-import css from './css.js';
-import javascript from './javascript.js';
+import html from './html';
+import css from './css';
+import javascript from './javascript';
 
 importLinters();
 

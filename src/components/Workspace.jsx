@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import React from 'react';
 import {connect} from 'react-redux';
 import values from 'lodash/values';
@@ -10,14 +12,12 @@ import sortBy from 'lodash/sortBy';
 import map from 'lodash/map';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
-import i18n from 'i18next';
+import {t} from 'i18next';
 import qs from 'qs';
-import fs from 'fs';
-import path from 'path';
 import base64 from 'base64-js';
 import {TextEncoder} from 'text-encoding';
 import Bugsnag from '../util/Bugsnag';
-import Gists from '../services/Gists';
+import Gists, {EmptyGistError} from '../services/Gists';
 import {
   onSignedIn,
   onSignedOut,
@@ -25,7 +25,6 @@ import {
   signOut,
   startSessionHeartbeat,
 } from '../clients/firebaseAuth';
-import {EmptyGistError} from '../services/Gists';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 
 import {
@@ -138,7 +137,7 @@ class Workspace extends React.Component {
     if (!this.props.currentUser.authenticated) {
       const currentProject = this.props.currentProject;
       if (!isNil(currentProject) && !isPristineProject(currentProject)) {
-        event.returnValue = i18n.t('workspace.confirmations.unload-unsaved');
+        event.returnValue = t('workspace.confirmations.unload-unsaved');
       }
     }
   }
@@ -340,7 +339,7 @@ class Workspace extends React.Component {
 
     if (!this.props.currentUser.authenticated) {
       // eslint-disable-next-line no-alert
-      if (!confirm(i18n.t('workspace.confirmations.anonymous-gist-export'))) {
+      if (!confirm(t('workspace.confirmations.anonymous-gist-export'))) {
         return;
       }
     }
@@ -425,7 +424,7 @@ class Workspace extends React.Component {
 
   _renderEnvironment() {
     if (isNil(this.props.currentProject)) {
-      return <PopThrobber message={i18n.t('workspace.loading')} />;
+      return <PopThrobber message={t('workspace.loading')} />;
     }
 
     return (

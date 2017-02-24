@@ -6,9 +6,9 @@ import {
   createProject,
   initializeCurrentProjectFromGist,
 } from './projects';
-import {loadAllProjects} from '.';
 import {userAuthenticated} from './user';
 import {notificationTriggered} from './ui';
+import {loadAllProjects} from '.';
 
 export default function bootstrap(gistId) {
   return (dispatch) => {

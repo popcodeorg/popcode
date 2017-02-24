@@ -1,12 +1,12 @@
-import React from 'react';
 import fs from 'fs';
 import path from 'path';
+import React from 'react';
 import {Provider} from 'react-redux';
 import bowser from 'bowser';
 import createApplicationStore from '../createApplicationStore';
+import {includeStoreInBugReports} from '../util/Bugsnag';
 import Workspace from './Workspace';
 import BrowserError from './BrowserError';
-import {includeStoreInBugReports} from '../util/Bugsnag';
 
 const supportedBrowsers = JSON.parse(fs.readFileSync(
   path.join(__dirname, '../../config/browsers.json'),

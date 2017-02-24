@@ -1,4 +1,4 @@
-import i18n from 'i18next';
+import {t} from 'i18next';
 import assign from 'lodash/assign';
 import map from 'lodash/map';
 import compact from 'lodash/compact';
@@ -40,7 +40,7 @@ class Validator {
       return null;
     }
 
-    const message = i18n.t(
+    const message = t(
       `errors.${this._language}.${error.reason}`,
       error.payload,
     );

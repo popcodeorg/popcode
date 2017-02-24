@@ -1,6 +1,6 @@
-import Validator from '../Validator';
 import find from 'lodash/find';
 import inRange from 'lodash/inRange';
+import Validator from '../Validator';
 import importLinters from '../importLinters';
 
 const UNEXPECTED_TOKEN_EXPR = /^Unexpected token (.+)$/;

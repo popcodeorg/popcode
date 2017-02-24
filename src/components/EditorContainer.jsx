@@ -1,5 +1,5 @@
 import React from 'react';
-import i18n from 'i18next';
+import {t} from 'i18next';
 
 function EditorContainer(props) {
   let helpText;
@@ -7,7 +7,7 @@ function EditorContainer(props) {
   if (props.source === '') {
     helpText = (
       <div className="editors__help-text">
-        {i18n.t(
+        {t(
           'editors.help-text',
           {language: props.language},
         )}
@@ -21,7 +21,7 @@ function EditorContainer(props) {
         className="environment__label label"
         onClick={props.onMinimize}
       >
-        {i18n.t(`languages.${props.language}`)}
+        {t(`languages.${props.language}`)}
       </div>
       {helpText}
       {props.children}

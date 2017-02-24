@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
-import acceptance from './acceptance.json';
 import {assertPassesValidation} from '../../assertions/validations';
+import acceptance from './acceptance.json';
 
 export default function assertPassesAcceptance(
   validator, language, ...validatorArgs

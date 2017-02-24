@@ -5,9 +5,8 @@ import {
   assertPassesValidation,
   assertFailsValidationWith,
 } from '../../assertions/validations';
-import assertPassesAcceptance from './assertPassesAcceptance';
-
 import html from '../../../src/validations/html';
+import assertPassesAcceptance from './assertPassesAcceptance';
 
 function htmlWithBody(body) {
   return `<!doctype html>

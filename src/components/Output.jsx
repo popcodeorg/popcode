@@ -1,9 +1,9 @@
 import React from 'react';
-import i18n from 'i18next';
+import {t} from 'i18next';
 import isEmpty from 'lodash/isEmpty';
+import classnames from 'classnames';
 import ErrorList from './ErrorList';
 import Preview from './Preview';
-import classnames from 'classnames';
 
 class Output extends React.Component {
   _renderErrorList(props) {
@@ -72,7 +72,7 @@ class Output extends React.Component {
           className="environment__label label"
           onClick={this.props.onMinimize}
         >
-          {i18n.t('workspace.components.output')}
+          {t('workspace.components.output')}
         </div>
         {this._renderErrors()}
         {this._renderPreview()}

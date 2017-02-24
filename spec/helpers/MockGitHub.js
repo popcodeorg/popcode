@@ -1,7 +1,7 @@
 /* global sinon */
 
-import gitHub from '../../src/services/gitHub';
 import GitHub from 'github-api';
+import gitHub from '../../src/services/gitHub';
 
 export default class MockGitHub {
   constructor(sandbox) {

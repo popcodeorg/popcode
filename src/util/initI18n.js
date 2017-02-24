@@ -1,8 +1,8 @@
-import i18n from 'i18next';
+import {init} from 'i18next';
 import resources from '../../locales';
 
 export default function() {
-  i18n.init({
+  init({
     fallbackLng: 'en',
     resources,
   });

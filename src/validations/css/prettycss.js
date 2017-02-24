@@ -1,6 +1,6 @@
-import Validator from '../Validator';
 import trim from 'lodash/trim';
 import endsWith from 'lodash/endsWith';
+import Validator from '../Validator';
 import importLinters from '../importLinters';
 
 const RADIAL_GRADIENT_EXPR =

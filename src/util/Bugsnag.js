@@ -1,8 +1,8 @@
 import 'bugsnag-js';
-import {getCurrentProject} from './projectUtils';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import config from '../config';
+import {getCurrentProject} from './projectUtils';
 
 const Bugsnag = window.Bugsnag.noConflict();
 Bugsnag.apiKey = config.bugsnagApiKey;

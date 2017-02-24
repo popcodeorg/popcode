@@ -1,9 +1,9 @@
 import get from 'lodash/get';
 import isNil from 'lodash/isNil';
 import isNull from 'lodash/isNull';
+import Cookies from 'js-cookie';
 import {Observable} from '../services/rxjs';
 import {auth, database, githubAuthProvider} from '../services/appFirebase';
-import Cookies from 'js-cookie';
 
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
 const SESSION_TTL_MS = 5 * 60 * 1000;

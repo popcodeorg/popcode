@@ -1,4 +1,3 @@
-import Validator from '../Validator';
 import castArray from 'lodash/castArray';
 import concat from 'lodash/concat';
 import clone from 'lodash/clone';
@@ -8,6 +7,7 @@ import find from 'lodash/find';
 import includes from 'lodash/includes';
 import libraries from '../../config/libraries';
 import importLinters from '../importLinters';
+import Validator from '../Validator';
 
 const jshintrc = {
   browser: true,
