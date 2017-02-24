@@ -48,6 +48,6 @@ export default function NotificationList(props) {
 }
 
 NotificationList.propTypes = {
-  notifications: React.PropTypes.array,
-  onErrorDismissed: React.PropTypes.func,
+  notifications: React.PropTypes.array.isRequired,
+  onErrorDismissed: React.PropTypes.func.isRequired,
 };

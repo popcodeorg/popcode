@@ -150,4 +150,8 @@ Editor.propTypes = {
   onRequestedLineFocused: React.PropTypes.func.isRequired,
 };
 
+Editor.defaultProps = {
+  requestedFocusedLine: null,
+};
+
 export default Editor;

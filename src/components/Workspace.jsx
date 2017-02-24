@@ -6,7 +6,7 @@ import values from 'lodash/values';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
 import isEmpty from 'lodash/isEmpty';
-import isNil from 'lodash/isNil';
+import isNull from 'lodash/isNull';
 import partial from 'lodash/partial';
 import sortBy from 'lodash/sortBy';
 import map from 'lodash/map';
@@ -136,7 +136,7 @@ class Workspace extends React.Component {
   _confirmUnload(event) {
     if (!this.props.currentUser.authenticated) {
       const currentProject = this.props.currentProject;
-      if (!isNil(currentProject) && !isPristineProject(currentProject)) {
+      if (!isNull(currentProject) && !isPristineProject(currentProject)) {
         event.returnValue = t('workspace.confirmations.unload-unsaved');
       }
     }
@@ -424,7 +424,7 @@ class Workspace extends React.Component {
   }
 
   _renderEnvironment() {
-    if (isNil(this.props.currentProject)) {
+    if (isNull(this.props.currentProject)) {
       return <PopThrobber message={t('workspace.loading')} />;
     }
 
@@ -456,15 +456,20 @@ class Workspace extends React.Component {
 }
 
 Workspace.propTypes = {
-  allProjects: React.PropTypes.array,
-  clients: React.PropTypes.object,
+  allProjects: React.PropTypes.array.isRequired,
+  clients: React.PropTypes.object.isRequired,
   currentProject: React.PropTypes.object,
   currentUser: React.PropTypes.object.isRequired,
   dispatch: React.PropTypes.func.isRequired,
-  errors: React.PropTypes.object,
+  errors: React.PropTypes.object.isRequired,
   isUserTyping: React.PropTypes.bool,
-  runtimeErrors: React.PropTypes.array,
+  runtimeErrors: React.PropTypes.array.isRequired,
   ui: React.PropTypes.object.isRequired,
+};
+
+Workspace.defaultProps = {
+  currentProject: null,
+  isUserTyping: false,
 };
 
 export default connect(mapStateToProps)(Workspace);

@@ -15,7 +15,7 @@ function LibraryPickerItem(props) {
 }
 
 LibraryPickerItem.propTypes = {
-  enabled: React.PropTypes.bool,
+  enabled: React.PropTypes.bool.isRequired,
   library: React.PropTypes.object.isRequired,
   onLibraryToggled: React.PropTypes.func.isRequired,
 };

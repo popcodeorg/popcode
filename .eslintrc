@@ -570,6 +570,9 @@
         "react/display-name": [
             2
         ],
+        "react/forbid-foreign-prop-types": [
+          2
+        ],
         "react/jsx-boolean-value": [
             2,
             "never"
@@ -625,11 +628,28 @@
           2,
           "always"
         ],
+        "react/jsx-tag-spacing": [
+          2,
+          {
+            "closingSlash": "never",
+            "beforeSelfClosing": "always",
+            "afterOpening": "never"
+          }
+        ],
         "react/jsx-uses-react": [
             2
         ],
         "react/jsx-uses-vars": [
             2
+        ],
+        "react/jsx-wrap-multilines": [
+          2
+        ],
+        "react/no-array-index-key": [
+          2
+        ],
+        "react/no-children-prop": [
+          2
         ],
         "react/no-deprecated": [
           2
@@ -652,6 +672,9 @@
         "react/no-string-refs": [
           2
         ],
+        "react/no-unescaped-entities": [
+          2
+        ],
         "react/no-unknown-property": [
             2
         ],
@@ -660,13 +683,17 @@
           "always"
         ],
         "react/prefer-stateless-function": [
-          2
+          2,
+          {"ignorePureComponents": true}
         ],
         "react/prop-types": [
             2
         ],
         "react/react-in-jsx-scope": [
             2
+        ],
+        "react/require-default-props": [
+          2
         ],
         "react/require-render-return": [
           2
@@ -682,9 +709,6 @@
           {
             "callbacksLast": true
           }
-        ],
-        "react/jsx-wrap-multilines": [
-          2
         ],
         "require-yield": [
           2

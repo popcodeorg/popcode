@@ -1,6 +1,7 @@
 import React from 'react';
 import {t} from 'i18next';
 import partial from 'lodash/partial';
+import isNull from 'lodash/isNull';
 import classnames from 'classnames';
 import config from '../config';
 import ProjectList from './ProjectList';
@@ -129,7 +130,7 @@ class Dashboard extends React.Component {
   }
 
   _renderLibraryPicker() {
-    if (!this.props.currentProject) {
+    if (isNull(this.props.currentProject)) {
       return null;
     }
 
@@ -227,6 +228,11 @@ Dashboard.propTypes = {
   onProjectSelected: React.PropTypes.func.isRequired,
   onStartLogIn: React.PropTypes.func.isRequired,
   onSubmenuToggled: React.PropTypes.func.isRequired,
+};
+
+Dashboard.defaultProps = {
+  activeSubmenu: null,
+  currentProject: null,
 };
 
 export default Dashboard;
