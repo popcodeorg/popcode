@@ -4,7 +4,6 @@ import get from 'lodash/get';
 import map from 'lodash/map';
 import values from 'lodash/values';
 import {createAction} from 'redux-actions';
-import {validateAllSources, getCurrentProject, saveCurrentProject} from '.';
 
 export const projectCreated = createAction(
   'PROJECT_CREATED',
@@ -13,18 +12,10 @@ export const projectCreated = createAction(
 
 export const createProject = createAction('CREATE_PROJECT');
 
-export function changeCurrentProject(projectKey) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: 'CURRENT_PROJECT_CHANGED',
-      payload: {projectKey},
-    });
-
-    const state = getState();
-    saveCurrentProject(state);
-    dispatch(validateAllSources(getCurrentProject(state)));
-  };
-}
+export const changeCurrentProject = createAction(
+  'CHANGE_CURRENT_PROJECT',
+  projectKey => ({projectKey}),
+);
 
 export function initializeCurrentProjectFromGist(gistData) {
   return (dispatch) => {

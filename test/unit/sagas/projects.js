@@ -1,6 +1,18 @@
 import test from 'tape';
 import get from 'lodash/get';
-import {createProject} from '../../../src/sagas/projects';
+import {call} from 'redux-saga/effects';
+import {
+  createProject as createProjectSaga,
+  changeCurrentProject as changeCurrentProjectSaga,
+} from '../../../src/sagas/projects';
+import {
+  projectCreated,
+  changeCurrentProject,
+} from '../../../src/actions/projects';
+import {
+  saveCurrentProject,
+} from '../../../src/util/projectUtils';
+import reduce from '../../../src/reducers';
 
 test('createProject()', (assert) => {
   assert.plan(3);
@@ -14,6 +26,22 @@ test('createProject()', (assert) => {
   assert.notEqual(action1.payload.projectKey, action2.payload.projectKey);
 
   function createProjectAndGetAction() {
-    return get(createProject().next(), 'value.PUT.action');
+    return get(createProjectSaga().next(), 'value.PUT.action');
   }
+});
+
+test('changeCurrentProject()', (assert) => {
+  assert.plan(3);
+
+  const projectKey = '123456';
+  const state = reduce(undefined, projectCreated(projectKey));
+  const saga = changeCurrentProjectSaga(changeCurrentProject(projectKey));
+  const selectEffect = saga.next().value;
+  assert.ok(selectEffect.SELECT);
+
+  const {selector} = selectEffect.SELECT;
+  const callEffect = saga.next(selector(state)).value;
+  assert.deepEqual(callEffect, call(saveCurrentProject, state));
+
+  assert.ok(saga.next().done);
 });

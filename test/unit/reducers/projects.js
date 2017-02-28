@@ -1,6 +1,8 @@
 import test from 'tape';
 import reduceProjects from '../../../src/reducers/projects';
-import {projectCreated} from '../../../src/actions/projects';
+import {
+  projectCreated,
+} from '../../../src/actions/projects';
 
 test('projectCreated', (assert) => {
   assert.plan(2);

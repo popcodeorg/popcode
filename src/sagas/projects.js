@@ -1,12 +1,14 @@
-import {takeEvery, put} from 'redux-saga/effects';
+import {call, put, select, takeEvery} from 'redux-saga/effects';
 import {projectCreated} from '../actions/projects';
+import {saveCurrentProject} from '../util/projectUtils';
 
 export function* createProject() {
   yield put(projectCreated(generateProjectKey()));
 }
 
-function* watchCreateProject() {
-  yield takeEvery('CREATE_PROJECT', createProject);
+export function* changeCurrentProject() {
+  const state = yield select();
+  yield call(saveCurrentProject, state);
 }
 
 function generateProjectKey() {
@@ -16,6 +18,7 @@ function generateProjectKey() {
 
 export default function* watchProjects() {
   yield [
-    watchCreateProject(),
+    takeEvery('CREATE_PROJECT', createProject),
+    takeEvery('CHANGE_CURRENT_PROJECT', changeCurrentProject),
   ];
 }
