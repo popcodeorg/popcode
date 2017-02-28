@@ -49,6 +49,7 @@ module.exports = {
         include: [
           path.resolve(__dirname, 'src'),
           path.resolve(__dirname, 'spec'),
+          path.resolve(__dirname, 'test'),
         ],
         loaders: ['babel-loader', 'transform-loader/cacheable?brfs-babel'],
       },
