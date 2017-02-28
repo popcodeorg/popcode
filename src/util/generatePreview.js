@@ -54,7 +54,7 @@ const alertAndPromptReplacementScript = `(${(() => {
   Object.defineProperties(window, { // eslint-disable-line prefer-reflect
     alert: {
       value: (message) => {
-        _swal(message);
+        _swal(String(message));
       },
       configurable: true,
     },
