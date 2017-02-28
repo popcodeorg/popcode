@@ -3,16 +3,13 @@
 /* eslint-disable import/no-commonjs */
 /* eslint-disable import/unambiguous */
 
-const nodeEnv = (process.env.NODE_ENV || 'development');
-
 module.exports = {
-  nodeEnv,
+  nodeEnv: (process.env.NODE_ENV || 'development'),
   logReduxActions: () => process.env.LOG_REDUX_ACTIONS === 'true',
   warnOnDroppedErrors: process.env.WARN_ON_DROPPED_ERRORS === 'true',
 
-  firebaseApp: process.env.FIREBASE_APP || 'popcode-development',
-  firebaseApiKey: process.env.FIREBASE_API_KEY ||
-    'AIzaSyCHlo2RhOkRFFh48g779YSZrLwKjoyCcws',
+  firebaseApp: process.env.FIREBASE_APP,
+  firebaseApiKey: process.env.FIREBASE_API_KEY,
 
   feedbackUrl: 'https://gitreports.com/issue/popcodeorg/popcode',
 
@@ -20,6 +17,5 @@ module.exports = {
 
   gitRevision: process.env.GIT_REVISION,
 
-  googleAnalyticsTrackingId:
-    process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'UA-90316486-2',
+  googleAnalyticsTrackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID,
 };
