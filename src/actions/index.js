@@ -12,6 +12,7 @@ import {
 import {
   createProject,
   changeCurrentProject,
+  validatedSource,
 } from './projects';
 
 import {
@@ -67,13 +68,7 @@ function validateSource(language, source, projectAttributes) {
       return;
     }
 
-    dispatch({
-      type: 'VALIDATED_SOURCE',
-      payload: {
-        language,
-        errors,
-      },
-    });
+    dispatch(validatedSource(language, errors));
   };
 }
 

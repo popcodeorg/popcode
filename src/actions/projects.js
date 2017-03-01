@@ -17,6 +17,11 @@ export const changeCurrentProject = createAction(
   projectKey => ({projectKey}),
 );
 
+export const validatedSource = createAction(
+  'VALIDATED_SOURCE',
+  (language, errors) => ({language, errors}),
+);
+
 export function initializeCurrentProjectFromGist(gistData) {
   return (dispatch) => {
     const projectKey = generateProjectKey();
