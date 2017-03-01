@@ -1,5 +1,9 @@
 import test from 'tape';
-import {projectCreated, validatedSource} from '../../../src/actions/projects';
+import {
+  changeCurrentProject,
+  projectCreated,
+  validatedSource,
+} from '../../../src/actions/projects';
 import reduceErrors from '../../../src/reducers/errors';
 
 const sampleError = {reason: 'bad-code'};
@@ -45,5 +49,17 @@ test('projectCreated', (assert) => {
   assert.deepEqual(
     stateAfterNewProject.getIn(['css', 'items']).toJS(),
     [],
+  );
+});
+
+test('changeCurrentProject', (assert) => {
+  assert.plan(1);
+  const stateAfterProjectChange = reduceErrors(
+    stateWithErrors,
+    changeCurrentProject('12345'),
+  );
+  assert.equal(
+    stateAfterProjectChange.getIn(['css', 'state']),
+    'validating',
   );
 });

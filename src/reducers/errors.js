@@ -41,7 +41,7 @@ function errors(stateIn, action) {
     case 'PROJECT_CREATED':
       return emptyErrors;
 
-    case 'CURRENT_PROJECT_CHANGED':
+    case 'CHANGE_CURRENT_PROJECT':
       return validatingErrors;
 
     case 'PROJECT_SOURCE_EDITED':
