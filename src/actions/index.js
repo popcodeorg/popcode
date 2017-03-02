@@ -13,6 +13,7 @@ import {
   createProject,
   changeCurrentProject,
   validatedSource,
+  projectSourceEdited,
 } from './projects';
 
 import {
@@ -83,15 +84,7 @@ export function validateAllSources(project) {
 
 function updateProjectSource(projectKey, language, newValue) {
   return (dispatch, getState) => {
-    dispatch({
-      type: 'PROJECT_SOURCE_EDITED',
-      meta: {timestamp: Date.now()},
-      payload: {
-        projectKey,
-        language,
-        newValue,
-      },
-    });
+    dispatch(projectSourceEdited(projectKey, language, newValue, Date.now()));
 
     const state = getState();
     saveCurrentProject(state);

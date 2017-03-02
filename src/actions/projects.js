@@ -22,6 +22,12 @@ export const validatedSource = createAction(
   (language, errors) => ({language, errors}),
 );
 
+export const projectSourceEdited = createAction(
+  'PROJECT_SOURCE_EDITED',
+  (projectKey, language, newValue) => ({projectKey, language, newValue}),
+  (_projectKey, _language, _newValue, timestamp) => ({timestamp}),
+);
+
 export function initializeCurrentProjectFromGist(gistData) {
   return (dispatch) => {
     const projectKey = generateProjectKey();
