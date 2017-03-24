@@ -5,7 +5,6 @@ import loopProtect from 'loop-protect';
 import libraries from '../config/libraries';
 import previewFrameLibraries from '../config/previewFrameLibraries';
 
-const DOMParser = window.DOMParser;
 const parser = new DOMParser();
 
 const sourceDelimiter = '/*__POPCODESTART__*/';
