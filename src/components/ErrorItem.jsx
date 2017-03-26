@@ -12,7 +12,7 @@ function ErrorItem(props) {
         props.column,
       )}
     >
-      <div>{props.row + 1}</div>
+      <div>On line {props.row + 1}:</div>
       <div className="error-list__message">{props.text}</div>
     </li>
   );
