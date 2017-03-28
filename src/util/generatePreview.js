@@ -1,7 +1,7 @@
 import castArray from 'lodash/castArray';
 import pick from 'lodash/pick';
 import base64 from 'base64-js';
-import loopBreaker from 'loop-breaker';
+import loopProtect from 'loop-protect';
 import libraries from '../config/libraries';
 import previewFrameLibraries from '../config/previewFrameLibraries';
 
@@ -36,6 +36,15 @@ const errorHandlerScript = `(${(() => {
       },
     }), '*');
   };
+
+  if ('loopProtect' in window) {
+    window.loopProtect.hit = function(line) {
+      window.parent.postMessage(JSON.stringify({
+        type: 'org.popcode.infinite-loop',
+        line,
+      }), '*');
+    };
+  }
 }).toString()}());`;
 
 const alertAndPromptReplacementScript = `(${(() => {
@@ -69,7 +78,7 @@ class PreviewGenerator {
 
     this.previewText = (this.previewBody.innerText || '').trim();
     this._attachLibraries(
-      pick(options, ['nonBlockingAlertsAndPrompts']),
+      pick(options, ['nonBlockingAlertsAndPrompts', 'breakLoops']),
     );
 
     if (options.targetBaseTop) {
@@ -123,12 +132,17 @@ class PreviewGenerator {
   }
 
   _addJavascript({breakLoops = false}) {
-    let source = `\n${sourceDelimiter}\n${this._project.sources.javascript}`;
+    let source = this._project.sources.javascript;
     if (breakLoops) {
-      source = loopBreaker(source);
+      try {
+        source = loopProtect(source);
+      } catch (e) {
+        return '';
+      }
     }
     const scriptTag = this.previewDocument.createElement('script');
-    scriptTag.innerHTML = source;
+    scriptTag.innerHTML =
+      `\n${sourceDelimiter}\n${source}`;
     this.previewBody.appendChild(scriptTag);
 
     return this.previewDocument.documentElement.outerHTML;
@@ -146,7 +160,7 @@ class PreviewGenerator {
     this.previewBody.appendChild(scriptTag);
   }
 
-  _attachLibraries({nonBlockingAlertsAndPrompts = false}) {
+  _attachLibraries({nonBlockingAlertsAndPrompts = false, breakLoops = false}) {
     this._project.enabledLibraries.forEach((libraryKey) => {
       if (!(libraryKey in libraries)) {
         return;
@@ -158,6 +172,10 @@ class PreviewGenerator {
 
     if (nonBlockingAlertsAndPrompts) {
       this._attachLibrary(previewFrameLibraries.sweetalert);
+    }
+
+    if (breakLoops) {
+      this._attachLibrary(previewFrameLibraries.loopProtect);
     }
   }
 
