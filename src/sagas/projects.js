@@ -8,6 +8,7 @@ export function* createProject() {
 
 export function* changeCurrentProject() {
   const state = yield select();
+
   yield call(saveCurrentProject, state);
 }
 
@@ -16,7 +17,7 @@ function generateProjectKey() {
   return (date.getTime() * 1000 + date.getMilliseconds()).toString();
 }
 
-export default function* watchProjects() {
+export default function* () {
   yield [
     takeEvery('CREATE_PROJECT', createProject),
     takeEvery('CHANGE_CURRENT_PROJECT', changeCurrentProject),

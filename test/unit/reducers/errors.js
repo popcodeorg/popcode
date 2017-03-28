@@ -2,8 +2,10 @@ import test from 'tape';
 import {
   changeCurrentProject,
   projectCreated,
-  validatedSource,
 } from '../../../src/actions/projects';
+import {
+  validatedSource,
+} from '../../../src/actions/errors';
 import reduceErrors from '../../../src/reducers/errors';
 
 const sampleError = {reason: 'bad-code'};

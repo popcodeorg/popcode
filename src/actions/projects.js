@@ -17,11 +17,6 @@ export const changeCurrentProject = createAction(
   projectKey => ({projectKey}),
 );
 
-export const validatedSource = createAction(
-  'VALIDATED_SOURCE',
-  (language, errors) => ({language, errors}),
-);
-
 export const projectSourceEdited = createAction(
   'PROJECT_SOURCE_EDITED',
   (projectKey, language, newValue) => ({projectKey, language, newValue}),

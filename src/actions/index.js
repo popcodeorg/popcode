@@ -12,9 +12,12 @@ import {
 import {
   createProject,
   changeCurrentProject,
-  validatedSource,
   projectSourceEdited,
 } from './projects';
+
+import {
+  validatedSource,
+} from './errors';
 
 import {
   userTyped,

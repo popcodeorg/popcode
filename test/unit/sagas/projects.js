@@ -6,13 +6,12 @@ import {
   changeCurrentProject as changeCurrentProjectSaga,
 } from '../../../src/sagas/projects';
 import {
-  projectCreated,
   changeCurrentProject,
 } from '../../../src/actions/projects';
 import {
   saveCurrentProject,
 } from '../../../src/util/projectUtils';
-import reduce from '../../../src/reducers';
+import Scenario from '../../helpers/Scenario';
 
 test('createProject()', (assert) => {
   assert.plan(3);
@@ -20,10 +19,18 @@ test('createProject()', (assert) => {
   const action1 = createProjectAndGetAction();
   assert.ok(action1, 'generator yields action');
 
-  assert.equal(action1.type, 'PROJECT_CREATED');
+  assert.equal(
+    action1.type,
+    'PROJECT_CREATED',
+    'generator yields PROJECT_CREATED',
+  );
 
   const action2 = createProjectAndGetAction();
-  assert.notEqual(action1.payload.projectKey, action2.payload.projectKey);
+  assert.notEqual(
+    action1.payload.projectKey,
+    action2.payload.projectKey,
+    'projectKey is different for each successive action',
+  );
 
   function createProjectAndGetAction() {
     return get(createProjectSaga().next(), 'value.PUT.action');
@@ -33,15 +40,22 @@ test('createProject()', (assert) => {
 test('changeCurrentProject()', (assert) => {
   assert.plan(3);
 
-  const projectKey = '123456';
-  const state = reduce(undefined, projectCreated(projectKey));
-  const saga = changeCurrentProjectSaga(changeCurrentProject(projectKey));
+  const scenario = new Scenario();
+  const saga = changeCurrentProjectSaga(
+    changeCurrentProject(scenario.projectKey),
+  );
   const selectEffect = saga.next().value;
-  assert.ok(selectEffect.SELECT);
+  assert.ok(selectEffect.SELECT, 'invokes select effect');
 
   const {selector} = selectEffect.SELECT;
-  const callEffect = saga.next(selector(state)).value;
-  assert.deepEqual(callEffect, call(saveCurrentProject, state));
+  const callSaveCurrentProjectEffect =
+    saga.next(selector(scenario.state)).value;
 
-  assert.ok(saga.next().done);
+  assert.deepEqual(
+    callSaveCurrentProjectEffect,
+    call(saveCurrentProject, scenario.state),
+    'calls to save current project',
+  );
+
+  assert.ok(saga.next().done, 'generator completes');
 });
