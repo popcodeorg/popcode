@@ -60,12 +60,14 @@ class PreviewFrame extends React.Component {
       return;
     }
 
-    if (data.type === 'org.popcode.infinite-loop') {
-      this._handleInfiniteLoop(data.line);
+    if (data.type !== 'org.popcode.error') {
       return;
     }
 
-    if (data.type !== 'org.popcode.error') {
+    let line = data.error.line - this._runtimeErrorLineOffset();
+
+    if (data.error.message === 'Loop Broken!') {
+      this._handleInfiniteLoop(line);
       return;
     }
 
@@ -73,7 +75,6 @@ class PreviewFrame extends React.Component {
     const error = new ErrorConstructor(data.error.message);
 
     const normalizedError = normalizeError(error);
-    let line = data.error.line - this._runtimeErrorLineOffset();
 
     if (Bowser.safari) {
       line = 1;
