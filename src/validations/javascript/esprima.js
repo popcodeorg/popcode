@@ -116,7 +116,7 @@ class EsprimaValidator extends Validator {
       };
     }
 
-    return null;
+    return {reason: 'tokenize-error'};
   }
 
   _locationForError(error) {
