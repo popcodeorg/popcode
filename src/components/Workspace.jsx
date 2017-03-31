@@ -277,7 +277,9 @@ class Workspace extends React.Component {
     }
 
     return (
-      <div className="environment__column editors">{editors}</div>
+      <div className="environment__column">
+        <div className="environment__columnContents editors">{editors}</div>
+      </div>
     );
   }
 
