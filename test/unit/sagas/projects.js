@@ -2,15 +2,14 @@ import test from 'tape';
 import get from 'lodash/get';
 import {call} from 'redux-saga/effects';
 import {
+  applicationLoaded as applicationLoadedSaga,
   createProject as createProjectSaga,
   changeCurrentProject as changeCurrentProjectSaga,
+  importGist as importGistSaga,
 } from '../../../src/sagas/projects';
-import {
-  changeCurrentProject,
-} from '../../../src/actions/projects';
-import {
-  saveCurrentProject,
-} from '../../../src/util/projectUtils';
+import {changeCurrentProject} from '../../../src/actions/projects';
+import {saveCurrentProject} from '../../../src/util/projectUtils';
+import Gists from '../../../src/services/Gists';
 import Scenario from '../../helpers/Scenario';
 
 test('createProject()', (assert) => {
@@ -58,4 +57,65 @@ test('changeCurrentProject()', (assert) => {
   );
 
   assert.ok(saga.next().done, 'generator completes');
+});
+
+test('applicationLoaded()', (t) => {
+  t.test('with no gist ID', (assert) => {
+    assert.plan(2);
+    const saga = applicationLoadedSaga({gistId: null});
+    const callEffect = saga.next().value;
+    assert.deepEqual(
+      callEffect,
+      call(createProjectSaga),
+      'calls createProject',
+    );
+    assert.ok(saga.next().done);
+  });
+
+  t.test('with gist ID', (assert) => {
+    assert.plan(2);
+    const gistId = '123abc';
+    const saga = applicationLoadedSaga({gistId});
+    const callEffect = saga.next().value;
+    assert.deepEqual(
+      callEffect,
+      call(importGistSaga, gistId),
+      'calls importGist',
+    );
+    assert.ok(saga.next().done);
+  });
+});
+
+test('importGist()', (t) => {
+  t.test('with successful import', (assert) => {
+    const gistId = 'abc123';
+    const saga = importGistSaga(gistId);
+
+    const callEffect = saga.next().value;
+    assert.deepEqual(
+      callEffect,
+      call(Gists.loadFromId, gistId, {authenticated: false}),
+      'calls Gists client',
+    );
+
+    const gist = {files: [{language: 'HTML', content: ''}]};
+    const putEffect = saga.next(gist).value;
+    assert.ok(putEffect.PUT, 'yielded effect is a PUT');
+    assert.equal(
+      putEffect.PUT.action.type,
+      'GIST_IMPORTED',
+      'action is GIST_IMPORTED',
+    );
+    assert.ok(
+      putEffect.PUT.action.payload.projectKey,
+      'assigns a project key',
+    );
+    assert.deepEqual(
+      putEffect.PUT.action.payload.gistData,
+      gist,
+      'includes gist in action payload',
+    );
+
+    assert.end();
+  });
 });

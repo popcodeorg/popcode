@@ -23,6 +23,11 @@ export const projectSourceEdited = createAction(
   (_projectKey, _language, _newValue, timestamp) => ({timestamp}),
 );
 
+export const gistImported = createAction(
+  'GIST_IMPORTED',
+  (projectKey, gistData) => ({projectKey, gistData}),
+);
+
 export function initializeCurrentProjectFromGist(gistData) {
   return (dispatch) => {
     const projectKey = generateProjectKey();
