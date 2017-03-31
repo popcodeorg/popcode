@@ -62,22 +62,22 @@ class Output extends React.Component {
   render() {
     return (
       <div
-        className={
-          classnames(
-            'environment__column output',
-            {output_hidden: this.props.isHidden},
-          )
-        }
+        className={classnames(
+          'environment__column',
+          {u__hidden: this.props.isHidden},
+        )}
       >
-        <div
-          className="environment__label label"
-          onClick={this.props.onMinimize}
-        >
-          {t('workspace.components.output')}
+        <div className="environment__columnContents output">
+          <div
+            className="environment__label label"
+            onClick={this.props.onMinimize}
+          >
+            {t('workspace.components.output')}
+          </div>
+          {this._renderErrors()}
+          {this._renderPreview()}
+          {this._renderRuntimeErrorList()}
         </div>
-        {this._renderErrors()}
-        {this._renderPreview()}
-        {this._renderRuntimeErrorList()}
       </div>
     );
   }

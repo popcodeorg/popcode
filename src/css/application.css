@@ -349,7 +349,18 @@ body {
 }
 
 .environment__column {
-  flex: 1 1 0;
+  flex: 1 0 0;
+  position: relative;
+}
+
+.environment__columnContents {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .environment__label {
@@ -414,11 +425,6 @@ body {
 .output {
   display: flex;
   flex-direction: column;
-  position: relative;
-}
-
-.output_hidden {
-  display: none;
 }
 
 .output__item {
@@ -495,6 +501,7 @@ body {
 .error-list__error {
   padding: 0.5rem 0;
   cursor: pointer;
+  overflow-wrap: break-word;
 }
 
 .notification-list__notification {
