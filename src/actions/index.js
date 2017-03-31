@@ -12,7 +12,12 @@ import {
 import {
   createProject,
   changeCurrentProject,
+  projectSourceEdited,
 } from './projects';
+
+import {
+  validatedSource,
+} from './errors';
 
 import {
   userTyped,
@@ -67,13 +72,7 @@ function validateSource(language, source, projectAttributes) {
       return;
     }
 
-    dispatch({
-      type: 'VALIDATED_SOURCE',
-      payload: {
-        language,
-        errors,
-      },
-    });
+    dispatch(validatedSource(language, errors));
   };
 }
 
@@ -88,15 +87,7 @@ export function validateAllSources(project) {
 
 function updateProjectSource(projectKey, language, newValue) {
   return (dispatch, getState) => {
-    dispatch({
-      type: 'PROJECT_SOURCE_EDITED',
-      meta: {timestamp: Date.now()},
-      payload: {
-        projectKey,
-        language,
-        newValue,
-      },
-    });
+    dispatch(projectSourceEdited(projectKey, language, newValue, Date.now()));
 
     const state = getState();
     saveCurrentProject(state);

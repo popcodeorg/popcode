@@ -87,7 +87,11 @@
             "declaration"
         ],
         "generator-star-spacing": [
-          2
+          2,
+          {
+            "before": false,
+            "after": true
+          }
         ],
         "global-require": [
             2

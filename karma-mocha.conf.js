@@ -21,27 +21,33 @@ module.exports = function(config) {
     basePath: '',
 
     frameworks: [
-      'tap',
+      'mocha',
+      'chai-as-promised',
+      'sinon-chai',
     ],
 
     files: [
-      'test/index.js',
+      'spec/index.js',
     ],
 
     preprocessors: {
-      'test/index.js': ['webpack', 'sourcemap'],
+      'spec/index.js': ['webpack', 'sourcemap'],
     },
 
     webpack: assign({}, webpackConfiguration, {
       devtool: 'inline-source-map',
-      node: {fs: 'empty'},
     }),
 
     webpackMiddleware: {
       stats: 'errors-only',
     },
 
-    reporters: ['dots'],
+    mochaReporter: {
+      output: isCi ? 'mocha' : 'autowatch',
+      showDiff: true,
+    },
+
+    reporters: ['mocha'],
 
     port: 9876,
 
@@ -78,7 +84,7 @@ module.exports = function(config) {
 
       browsers: Reflect.getOwnPropertyNames(customLaunchers),
 
-      reporters: ['dots', 'BrowserStack'],
+      reporters: ['mocha', 'BrowserStack'],
     });
   } else if (isCi) {
     config.set({browsers: ['Firefox']});

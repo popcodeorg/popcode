@@ -33,6 +33,12 @@ function addProject(state, project) {
   return state.set(project.projectKey, projectToImmutable(project));
 }
 
+function removePristineExcept(state, keepProjectKey) {
+  return state.filter((project, projectKey) => (
+    projectKey === keepProjectKey || !isPristineProject(project)
+  ));
+}
+
 function projects(stateIn, action) {
   let state;
 
@@ -56,15 +62,13 @@ function projects(stateIn, action) {
       );
 
     case 'PROJECT_CREATED':
-      return state.set(
+      return removePristineExcept(state, action.payload.projectKey).set(
         action.payload.projectKey,
         newProject.set('projectKey', action.payload.projectKey),
       );
 
-    case 'CURRENT_PROJECT_CHANGED':
-      return state.filter((project, projectKey) => (
-        projectKey === action.payload.projectKey || !isPristineProject(project)
-      ));
+    case 'CHANGE_CURRENT_PROJECT':
+      return removePristineExcept(state, action.payload.projectKey);
 
     case 'RESET_WORKSPACE':
       if (isNil(action.payload.currentProjectKey)) {
