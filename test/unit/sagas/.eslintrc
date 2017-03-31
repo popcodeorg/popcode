@@ -1,0 +1,7 @@
+{
+    "rules": {
+        "prefer-reflect": [
+          0
+        ]
+    }
+}

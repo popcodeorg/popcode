@@ -1,13 +1,22 @@
+import isUndefined from 'lodash/isUndefined';
+
+const domParser = new DOMParser();
+
 class Analyzer {
   constructor(project) {
     this._project = project;
-    this._domParser = new DOMParser();
-    const htmlString = this._project.getIn(['sources', 'html']);
-    this._doc = this._domParser.parseFromString(htmlString, 'text/html');
+  }
+
+  get doc() {
+    if (isUndefined(this._doc)) {
+      const htmlString = this._project.getIn(['sources', 'html']);
+      this._doc = domParser.parseFromString(htmlString, 'text/html');
+    }
+    return this._doc;
   }
 
   get containsExternalScript() {
-    return Boolean(this._doc.querySelector('script'));
+    return Boolean(this.doc.querySelector('script'));
   }
 
   get enabledLibraries() {
