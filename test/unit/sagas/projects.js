@@ -19,6 +19,8 @@ import Scenario from '../../helpers/Scenario';
 test('createProject()', (assert) => {
   let firstProjectKey;
 
+  const clock = sinon.useFakeTimers();
+
   testSaga(createProjectSaga).
     next().inspect(({PUT: {action}}) => {
       firstProjectKey = action.payload.projectKey;
@@ -28,6 +30,8 @@ test('createProject()', (assert) => {
       );
     }).
     next().isDone();
+
+  clock.tick(10);
 
   testSaga(createProjectSaga).
     next().inspect(({PUT: {action}}) => {
@@ -40,6 +44,8 @@ test('createProject()', (assert) => {
       );
     }).
     next().isDone();
+
+  clock.restore();
 
   assert.end();
 });

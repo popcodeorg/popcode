@@ -22,6 +22,7 @@ module.exports = function(config) {
 
     frameworks: [
       'tap',
+      'sinon-chai',
     ],
 
     files: [
