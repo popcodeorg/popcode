@@ -16,6 +16,7 @@ import applicationLoaded from '../../../src/actions/applicationLoaded';
 import {saveCurrentProject} from '../../../src/util/projectUtils';
 import Gists from '../../../src/services/Gists';
 import Scenario from '../../helpers/Scenario';
+import {gistData} from '../../helpers/factory';
 
 test('createProject()', (assert) => {
   let firstProjectKey;
@@ -90,7 +91,7 @@ test('importGist()', (t) => {
 
     saga.next().call(Gists.loadFromId, gistId, {authenticated: false});
 
-    const gist = {files: [{language: 'HTML', content: ''}]};
+    const gist = gistData({html: '<!doctype html>test'});
     saga.next(gist).inspect((effect) => {
       assert.ok(effect.PUT, 'yielded effect is a PUT');
       assert.equal(

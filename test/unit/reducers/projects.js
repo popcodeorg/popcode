@@ -5,6 +5,7 @@ import defaults from 'lodash/defaults';
 import Immutable from 'immutable';
 import reducerTest from '../../helpers/reducerTest';
 import {projects as states} from '../../helpers/referenceStates';
+import {gistData} from '../../helpers/factory';
 import reducer from '../../../src/reducers/projects';
 import {
   changeCurrentProject,
@@ -80,12 +81,7 @@ test('gistImported', (t) => {
     partial(
       gistImported,
       projectKey,
-      {
-        files: [
-          {language: 'HTML', content: html},
-          {language: 'CSS', content: css},
-        ],
-      },
+      gistData({html, css}),
     ),
     new Immutable.Map({
       [projectKey]: buildProject(projectKey, {html, css, javascript: ''}),
@@ -98,11 +94,7 @@ test('gistImported', (t) => {
     partial(
       gistImported,
       projectKey,
-      {
-        files: [
-          {language: 'CSS', content: css},
-        ],
-      },
+      gistData({css}),
     ),
     new Immutable.Map({
       [projectKey]: buildProject(projectKey, {html: '', css, javascript: ''}),
@@ -115,17 +107,7 @@ test('gistImported', (t) => {
     partial(
       gistImported,
       projectKey,
-      {
-        files: [
-          {language: 'HTML', content: html},
-          {language: 'CSS', content: css},
-          {
-            language: 'JSON',
-            filename: 'popcode.json',
-            content: JSON.stringify({enabledLibraries: ['jquery']}),
-          },
-        ],
-      },
+      gistData({html, css, enabledLibraries: ['jquery']}),
     ),
     new Immutable.Map({
       [projectKey]: buildProject(

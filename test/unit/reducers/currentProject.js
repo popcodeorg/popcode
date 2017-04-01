@@ -8,6 +8,7 @@ import {
   projectCreated,
   gistImported,
 } from '../../../src/actions/projects';
+import {gistData} from '../../helpers/factory';
 
 const projectKey = '12345';
 const initialState = reducer(undefined, {type: null});
@@ -34,7 +35,7 @@ test('gistImported', reducerTest(
   partial(
     gistImported,
     projectKey,
-    {files: [{language: 'HTML', content: '<!doctype html>'}]},
+    gistData({html: '<!doctype html>'}),
   ),
   Immutable.fromJS({projectKey}),
 ));

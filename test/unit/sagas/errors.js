@@ -9,7 +9,7 @@ import {
   validateSource as validateSourceSaga,
 } from '../../../src/sagas/errors';
 
-test('validateProject()', (assert) => {
+test('validateCurrentProject()', (assert) => {
   const scenario = new Scenario();
   let selector;
   assert.ok(isEqual(scenario.analyzer, scenario.analyzer));
