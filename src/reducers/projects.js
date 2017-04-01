@@ -2,6 +2,11 @@ import {readFileSync} from 'fs';
 import path from 'path';
 import Immutable from 'immutable';
 import isNil from 'lodash/isNil';
+import filter from 'lodash/filter';
+import find from 'lodash/find';
+import get from 'lodash/get';
+import map from 'lodash/map';
+import values from 'lodash/values';
 
 import {isPristineProject} from '../util/projectUtils';
 
@@ -39,7 +44,27 @@ function removePristineExcept(state, keepProjectKey) {
   ));
 }
 
-function projects(stateIn, action) {
+function importGist(state, projectKey, gistData) {
+  const files = values(gistData.files);
+  const popcodeJsonFile = find(files, {filename: 'popcode.json'});
+  const popcodeJson = JSON.parse(get(popcodeJsonFile, 'content', '{}'));
+
+  return addProject(
+    state,
+    {
+      projectKey,
+      sources: {
+        html: get(find(files, {language: 'HTML'}), 'content', ''),
+        css: map(filter(files, {language: 'CSS'}), 'content').join('\n\n'),
+        javascript: map(filter(files, {language: 'JavaScript'}), 'content').
+        join('\n\n'),
+      },
+      enabledLibraries: popcodeJson.enabledLibraries || [],
+    },
+  );
+}
+
+export default function projects(stateIn, action) {
   let state;
 
   if (stateIn === undefined) {
@@ -80,6 +105,13 @@ function projects(stateIn, action) {
         state.get(action.payload.currentProjectKey),
       );
 
+    case 'GIST_IMPORTED':
+      return importGist(
+        state,
+        action.payload.projectKey,
+        action.payload.gistData,
+      );
+
     case 'PROJECT_LIBRARY_TOGGLED':
       return state.updateIn(
         [action.payload.projectKey, 'enabledLibraries'],
@@ -99,5 +131,3 @@ function projects(stateIn, action) {
       return state;
   }
 }
-
-export default projects;

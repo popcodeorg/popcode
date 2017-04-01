@@ -1,17 +1,23 @@
 import test from 'tape';
 import reduce from 'lodash/reduce';
 import partial from 'lodash/partial';
+import defaults from 'lodash/defaults';
+import Immutable from 'immutable';
 import reducerTest from '../../helpers/reducerTest';
 import {projects as states} from '../../helpers/referenceStates';
 import reducer from '../../../src/reducers/projects';
 import {
   changeCurrentProject,
+  gistImported,
   projectCreated,
   projectSourceEdited,
 } from '../../../src/actions/projects';
 
 const now = Date.now();
 const projectKey = '12345';
+
+const html = '<!doctype html>Hey';
+const css = 'p {}';
 
 test('projectCreated', (t) => {
   t.test('from pristine state', reducerTest(
@@ -29,8 +35,6 @@ test('projectCreated', (t) => {
     initProjects({1: true, 2: false, [projectKey]: false}),
   ));
 });
-
-const css = 'p {}';
 
 test('projectSourceEdited', reducerTest(
   reducer,
@@ -69,6 +73,70 @@ test('changeCurrentProject', (t) => {
   ));
 });
 
+test('gistImported', (t) => {
+  t.test('HTML and CSS, no JSON', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      gistImported,
+      projectKey,
+      {
+        files: [
+          {language: 'HTML', content: html},
+          {language: 'CSS', content: css},
+        ],
+      },
+    ),
+    new Immutable.Map({
+      [projectKey]: buildProject(projectKey, {html, css, javascript: ''}),
+    }),
+  ));
+
+  t.test('CSS, no JSON', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      gistImported,
+      projectKey,
+      {
+        files: [
+          {language: 'CSS', content: css},
+        ],
+      },
+    ),
+    new Immutable.Map({
+      [projectKey]: buildProject(projectKey, {html: '', css, javascript: ''}),
+    }),
+  ));
+
+  t.test('HTML, CSS, JSON', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      gistImported,
+      projectKey,
+      {
+        files: [
+          {language: 'HTML', content: html},
+          {language: 'CSS', content: css},
+          {
+            language: 'JSON',
+            filename: 'popcode.json',
+            content: JSON.stringify({enabledLibraries: ['jquery']}),
+          },
+        ],
+      },
+    ),
+    new Immutable.Map({
+      [projectKey]: buildProject(
+        projectKey,
+        {html, css, javascript: ''},
+        ['jquery'],
+      ),
+    }),
+  ));
+});
+
 function initProjects(map = {}) {
   return reduce(map, (projectsIn, modified, key) => {
     const projects = reducer(projectsIn, projectCreated(key));
@@ -80,4 +148,19 @@ function initProjects(map = {}) {
     }
     return projects;
   }, states.init);
+}
+
+function buildProject(key, sources, enabledLibraries = []) {
+  return Immutable.fromJS({
+    projectKey: key,
+    sources: defaults(
+      sources,
+      {
+        html: '<!doctype html><html></html>',
+        css: '',
+        javascript: '',
+      },
+    ),
+    enabledLibraries: new Immutable.Set(enabledLibraries),
+  });
 }
