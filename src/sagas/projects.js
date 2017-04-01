@@ -35,9 +35,9 @@ export function* importGist(gistId) {
     yield put(gistImported(generateProjectKey(), gistData));
   } catch (error) {
     if (get(error, 'response.status') === 404) {
-      yield put(gistNotFound);
+      yield put(gistNotFound(gistId));
     } else {
-      yield put(gistImportError);
+      yield put(gistImportError());
     }
   }
 }

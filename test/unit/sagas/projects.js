@@ -118,7 +118,7 @@ test('importGist()', (t) => {
       next().call(Gists.loadFromId, gistId, {authenticated: false}).
       throw(
         Object.create(new Error(), {response: {value: {status: 404}}}),
-      ).put(gistNotFound).
+      ).put(gistNotFound(gistId)).
       next().isDone();
     assert.end();
   });
@@ -126,7 +126,7 @@ test('importGist()', (t) => {
   t.test('with other error', (assert) => {
     testSaga(importGistSaga, gistId).
       next().call(Gists.loadFromId, gistId, {authenticated: false}).
-      throw(new Error()).put(gistImportError).
+      throw(new Error()).put(gistImportError()).
       next().isDone();
     assert.end();
   });

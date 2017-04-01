@@ -23,8 +23,15 @@ export const gistImported = createAction(
   (projectKey, gistData) => ({projectKey, gistData}),
 );
 
-export const gistNotFound = createAction('GIST_NOT_FOUND');
-export const gistImportError = createAction('GIST_IMPORT_ERROR');
+export const gistNotFound = createAction(
+  'GIST_NOT_FOUND',
+  gistId => ({gistId}),
+);
+
+export const gistImportError = createAction(
+  'GIST_IMPORT_ERROR',
+  gistId => ({gistId}),
+);
 
 const projectLoaded = createAction(
   'PROJECT_LOADED',
