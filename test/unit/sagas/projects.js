@@ -8,6 +8,10 @@ import {
   changeCurrentProject as changeCurrentProjectSaga,
   importGist as importGistSaga,
 } from '../../../src/sagas/projects';
+import {
+  gistImportError,
+  gistNotFound,
+} from '../../../src/actions/projects';
 import {saveCurrentProject} from '../../../src/util/projectUtils';
 import Gists from '../../../src/services/Gists';
 import Scenario from '../../helpers/Scenario';
@@ -72,8 +76,9 @@ test('applicationLoaded()', (t) => {
 });
 
 test('importGist()', (t) => {
+  const gistId = 'abc123';
+
   t.test('with successful import', (assert) => {
-    const gistId = 'abc123';
     const saga = testSaga(importGistSaga, gistId);
 
     saga.next().call(Gists.loadFromId, gistId, {authenticated: false});
@@ -99,6 +104,24 @@ test('importGist()', (t) => {
 
     saga.next().isDone();
 
+    assert.end();
+  });
+
+  t.test('with not found error', (assert) => {
+    testSaga(importGistSaga, gistId).
+      next().call(Gists.loadFromId, gistId, {authenticated: false}).
+      throw(
+        Object.create(new Error(), {response: {value: {status: 404}}}),
+      ).put(gistNotFound).
+      next().isDone();
+    assert.end();
+  });
+
+  t.test('with other error', (assert) => {
+    testSaga(importGistSaga, gistId).
+      next().call(Gists.loadFromId, gistId, {authenticated: false}).
+      throw(new Error()).put(gistImportError).
+      next().isDone();
     assert.end();
   });
 });

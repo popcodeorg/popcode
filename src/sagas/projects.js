@@ -1,6 +1,12 @@
 import {call, put, select, takeEvery} from 'redux-saga/effects';
 import isNull from 'lodash/isNull';
-import {gistImported, projectCreated} from '../actions/projects';
+import get from 'lodash/get';
+import {
+  gistImported,
+  gistImportError,
+  gistNotFound,
+  projectCreated,
+} from '../actions/projects';
 import {saveCurrentProject} from '../util/projectUtils';
 import Gists from '../services/Gists';
 
@@ -23,9 +29,17 @@ export function* changeCurrentProject() {
 }
 
 export function* importGist(gistId) {
-  const gistData =
-    yield call(Gists.loadFromId, gistId, {authenticated: false});
-  yield put(gistImported(generateProjectKey(), gistData));
+  try {
+    const gistData =
+      yield call(Gists.loadFromId, gistId, {authenticated: false});
+    yield put(gistImported(generateProjectKey(), gistData));
+  } catch (error) {
+    if (get(error, 'response.status') === 404) {
+      yield put(gistNotFound);
+    } else {
+      yield put(gistImportError);
+    }
+  }
 }
 
 function generateProjectKey() {

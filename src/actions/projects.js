@@ -28,6 +28,9 @@ export const gistImported = createAction(
   (projectKey, gistData) => ({projectKey, gistData}),
 );
 
+export const gistNotFound = createAction('GIST_NOT_FOUND');
+export const gistImportError = createAction('GIST_IMPORT_ERROR');
+
 export function initializeCurrentProjectFromGist(gistData) {
   return (dispatch) => {
     const projectKey = generateProjectKey();
