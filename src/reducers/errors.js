@@ -44,6 +44,9 @@ function errors(stateIn, action) {
     case 'CHANGE_CURRENT_PROJECT':
       return validatingErrors;
 
+    case 'GIST_IMPORTED':
+      return validatingErrors;
+
     case 'PROJECT_SOURCE_EDITED':
       return state.set(action.payload.language, validatingLanguageErrors);
 

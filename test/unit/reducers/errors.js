@@ -2,9 +2,11 @@ import test from 'tape';
 import partial from 'lodash/partial';
 import reducerTest from '../../helpers/reducerTest';
 import {errors as states} from '../../helpers/referenceStates';
+import {gistData} from '../../helpers/factory';
 import {
   changeCurrentProject,
   projectCreated,
+  gistImported,
 } from '../../../src/actions/projects';
 import {
   validatedSource,
@@ -44,5 +46,12 @@ test('changeCurrentProject', reducerTest(
   reducer,
   states.errors,
   partial(changeCurrentProject, '12345'),
+  states.validating,
+));
+
+test('gistImported', reducerTest(
+  reducer,
+  states.noErrors,
+  partial(gistImported, '12345', gistData({html: ''})),
   states.validating,
 ));
