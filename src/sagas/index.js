@@ -1,9 +1,11 @@
-import watchProjects from './projects';
 import watchErrors from './errors';
+import watchProjects from './projects';
+import watchUser from './user';
 
 export default function* rootSaga() {
   yield [
-    watchProjects(),
     watchErrors(),
+    watchProjects(),
+    watchUser(),
   ];
 }
