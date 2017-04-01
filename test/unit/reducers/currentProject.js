@@ -6,6 +6,7 @@ import reducer from '../../../src/reducers/currentProject';
 import {
   changeCurrentProject,
   projectCreated,
+  gistImported,
 } from '../../../src/actions/projects';
 
 const projectKey = '12345';
@@ -25,4 +26,15 @@ test('changeCurrentProject', reducerTest(
   partial(changeCurrentProject, projectKey),
   new Immutable.Map().set('projectKey', projectKey),
   'sets projectKey to current project key',
+));
+
+test('gistImported', reducerTest(
+  reducer,
+  initialState,
+  partial(
+    gistImported,
+    projectKey,
+    {files: [{language: 'HTML', content: '<!doctype html>'}]},
+  ),
+  Immutable.fromJS({projectKey}),
 ));
