@@ -2,6 +2,10 @@ import Immutable from 'immutable';
 
 const sampleError = {reason: 'bad-code'};
 
+export const user = {
+  initial: Immutable.fromJS({authenticated: false}),
+};
+
 export const projects = {
   initial: new Immutable.Map(),
 };

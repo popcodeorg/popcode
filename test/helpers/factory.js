@@ -1,5 +1,6 @@
 import isNil from 'lodash/isNil';
 import isEmpty from 'lodash/isEmpty';
+import merge from 'lodash/merge';
 
 export function gistData({html, css, javascript, enabledLibraries = []} = {}) {
   const files = [];
@@ -24,4 +25,33 @@ export function gistData({html, css, javascript, enabledLibraries = []} = {}) {
     });
   }
   return {files};
+}
+
+export function userCredential({user: userIn, credential: credentialIn} = {}) {
+  return {
+    user: user(userIn),
+    credential: credential(credentialIn),
+  };
+}
+
+export function user(userIn) {
+  return merge({
+    displayName: null,
+    photoURL: null,
+    providerData: [{
+      displayName: 'Popcode User',
+      email: 'popcodeuser@example.com',
+      photoURL: 'https://camo.github.com/popcodeuser.jpg',
+      providerId: 'github.com',
+      uid: '345',
+    }],
+    uid: 'abc123',
+  }, userIn);
+}
+
+export function credential(credentialIn) {
+  return merge({
+    accessToken: '0123456789abcdef',
+    provider: 'github.com',
+  }, credentialIn);
 }
