@@ -10,7 +10,7 @@ import {
 import {saveCurrentProject} from '../util/projectUtils';
 import Gists from '../services/Gists';
 
-export function* applicationLoaded({gistId}) {
+export function* applicationLoaded({payload: {gistId}}) {
   if (isNull(gistId)) {
     yield call(createProject);
   } else {

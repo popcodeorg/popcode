@@ -12,6 +12,7 @@ import {
   gistImportError,
   gistNotFound,
 } from '../../../src/actions/projects';
+import applicationLoaded from '../../../src/actions/applicationLoaded';
 import {saveCurrentProject} from '../../../src/util/projectUtils';
 import Gists from '../../../src/services/Gists';
 import Scenario from '../../helpers/Scenario';
@@ -64,7 +65,7 @@ test('changeCurrentProject()', (assert) => {
 
 test('applicationLoaded()', (t) => {
   t.test('with no gist ID', (assert) => {
-    testSaga(applicationLoadedSaga, {gistId: null}).
+    testSaga(applicationLoadedSaga, applicationLoaded(null)).
       next().call(createProjectSaga).
       next().isDone();
 
@@ -73,7 +74,7 @@ test('applicationLoaded()', (t) => {
 
   t.test('with gist ID', (assert) => {
     const gistId = '123abc';
-    testSaga(applicationLoadedSaga, {gistId}).
+    testSaga(applicationLoadedSaga, applicationLoaded(gistId)).
       next().call(importGistSaga, gistId).
       next().isDone();
 
