@@ -80,7 +80,7 @@ test('applicationLoaded()', (t) => {
   t.test('with gist ID', (assert) => {
     const gistId = '123abc';
     testSaga(applicationLoadedSaga, applicationLoaded(gistId)).
-      next().call(importGistSaga, gistId).
+      next().call(importGistSaga, applicationLoaded(gistId)).
       next().isDone();
 
     assert.end();
@@ -91,7 +91,7 @@ test('importGist()', (t) => {
   const gistId = 'abc123';
 
   t.test('with successful import', (assert) => {
-    const saga = testSaga(importGistSaga, gistId);
+    const saga = testSaga(importGistSaga, applicationLoaded(gistId));
 
     saga.next().call(Gists.loadFromId, gistId, {authenticated: false});
 
@@ -120,7 +120,7 @@ test('importGist()', (t) => {
   });
 
   t.test('with not found error', (assert) => {
-    testSaga(importGistSaga, gistId).
+    testSaga(importGistSaga, applicationLoaded(gistId)).
       next().call(Gists.loadFromId, gistId, {authenticated: false}).
       throw(
         Object.create(new Error(), {response: {value: {status: 404}}}),
@@ -130,7 +130,7 @@ test('importGist()', (t) => {
   });
 
   t.test('with other error', (assert) => {
-    testSaga(importGistSaga, gistId).
+    testSaga(importGistSaga, applicationLoaded(gistId)).
       next().call(Gists.loadFromId, gistId, {authenticated: false}).
       throw(new Error()).put(gistImportError()).
       next().isDone();

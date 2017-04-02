@@ -12,11 +12,11 @@ import {saveCurrentProject} from '../util/projectUtils';
 import Gists from '../services/Gists';
 import FirebasePersistor from '../persistors/FirebasePersistor';
 
-export function* applicationLoaded({payload: {gistId}}) {
-  if (isNull(gistId)) {
+export function* applicationLoaded(action) {
+  if (isNull(action.payload.gistId)) {
     yield call(createProject);
   } else {
-    yield call(importGist, gistId);
+    yield call(importGist, action);
   }
 }
 
@@ -30,7 +30,7 @@ export function* changeCurrentProject() {
   yield call(saveCurrentProject, state);
 }
 
-export function* importGist(gistId) {
+export function* importGist({payload: {gistId}}) {
   try {
     const gistData =
       yield call(Gists.loadFromId, gistId, {authenticated: false});
