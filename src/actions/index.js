@@ -4,6 +4,7 @@ import {isPristineProject} from '../util/projectUtils';
 import Analyzer from '../analyzers';
 
 import bootstrap from './bootstrap';
+import applicationLoaded from './applicationLoaded';
 
 import {
   exportingGist,
@@ -187,4 +188,5 @@ export {
   userDismissedNotification,
   exportingGist,
   bootstrap,
+  applicationLoaded,
 };
