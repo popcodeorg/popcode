@@ -1,9 +1,16 @@
 import values from 'lodash/values';
 import {database} from '../services/appFirebase';
 
-class FirebasePersistor {
+export default class FirebasePersistor {
   constructor(uid) {
     this.firebase = database.ref(`workspaces/${uid}`);
+  }
+
+  static forUser(user) {
+    if (user.get('authenticated')) {
+      return new this(user.get('id'));
+    }
+    return null;
   }
 
   async getCurrentProjectKey() {
@@ -47,5 +54,3 @@ class FirebasePersistor {
     ]);
   }
 }
-
-export default FirebasePersistor;

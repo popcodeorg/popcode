@@ -1,4 +1,4 @@
-import {call, put, select, takeEvery} from 'redux-saga/effects';
+import {apply, call, fork, put, select, takeEvery} from 'redux-saga/effects';
 import isNull from 'lodash/isNull';
 import get from 'lodash/get';
 import {
@@ -6,9 +6,11 @@ import {
   gistImportError,
   gistNotFound,
   projectCreated,
+  projectLoaded,
 } from '../actions/projects';
 import {saveCurrentProject} from '../util/projectUtils';
 import Gists from '../services/Gists';
+import FirebasePersistor from '../persistors/FirebasePersistor';
 
 export function* applicationLoaded({payload: {gistId}}) {
   if (isNull(gistId)) {
@@ -42,6 +44,22 @@ export function* importGist(gistId) {
   }
 }
 
+export function* userAuthenticated() {
+  const state = yield select();
+  yield fork(saveCurrentProject, state);
+
+  const persistor = yield apply(
+    FirebasePersistor,
+    FirebasePersistor.forUser,
+    [state.get('user')],
+  );
+
+  const projects = yield apply(persistor, persistor.all);
+  for (const project of projects) {
+    yield put(projectLoaded(project));
+  }
+}
+
 function generateProjectKey() {
   const date = new Date();
   return (date.getTime() * 1000 + date.getMilliseconds()).toString();
@@ -52,5 +70,6 @@ export default function* () {
     takeEvery('APPLICATION_LOADED', applicationLoaded),
     takeEvery('CREATE_PROJECT', createProject),
     takeEvery('CHANGE_CURRENT_PROJECT', changeCurrentProject),
+    takeEvery('USER_AUTHENTICATED', userAuthenticated),
   ];
 }

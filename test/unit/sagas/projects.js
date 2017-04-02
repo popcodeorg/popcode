@@ -7,16 +7,20 @@ import {
   createProject as createProjectSaga,
   changeCurrentProject as changeCurrentProjectSaga,
   importGist as importGistSaga,
+  userAuthenticated as userAuthenticatedSaga,
 } from '../../../src/sagas/projects';
 import {
   gistImportError,
   gistNotFound,
+  projectLoaded,
 } from '../../../src/actions/projects';
+import {userAuthenticated} from '../../../src/actions/user';
 import applicationLoaded from '../../../src/actions/applicationLoaded';
 import {saveCurrentProject} from '../../../src/util/projectUtils';
 import Gists from '../../../src/services/Gists';
+import FirebasePersistor from '../../../src/persistors/FirebasePersistor';
 import Scenario from '../../helpers/Scenario';
-import {gistData} from '../../helpers/factory';
+import {gistData, project, userCredential} from '../../helpers/factory';
 
 test('createProject()', (assert) => {
   let firstProjectKey;
@@ -132,4 +136,23 @@ test('importGist()', (t) => {
       next().isDone();
     assert.end();
   });
+});
+
+test('userAuthenticated', (assert) => {
+  const scenario = new Scenario().logIn();
+  const mockPersistor = {
+    all() { },
+  };
+  const projects = [project()];
+  testSaga(userAuthenticatedSaga, userAuthenticated(userCredential())).
+    next().inspect(effect => assert.ok(effect.SELECT)).
+    next(scenario.state).fork(saveCurrentProject, scenario.state).
+    next().apply(
+      FirebasePersistor,
+      FirebasePersistor.forUser,
+      [scenario.state.get('user')],
+    ).
+    next(mockPersistor).apply(mockPersistor, mockPersistor.all).
+    next(projects).put(projectLoaded(projects[0]));
+  assert.end();
 });

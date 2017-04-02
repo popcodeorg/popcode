@@ -1,3 +1,4 @@
+import defaultsDeep from 'lodash/defaultsDeep';
 import isNil from 'lodash/isNil';
 import isEmpty from 'lodash/isEmpty';
 import merge from 'lodash/merge';
@@ -47,6 +48,18 @@ export function user(userIn) {
     }],
     uid: 'abc123',
   }, userIn);
+}
+
+export function project(projectIn) {
+  return defaultsDeep({}, projectIn, {
+    sources: {
+      html: '<!doctype html>My Website',
+      css: 'p { }',
+      javascript: 'alert("Hi")',
+    },
+    enabledLibraries: [],
+    updatedAt: Date.now(),
+  });
 }
 
 export function credential(credentialIn) {

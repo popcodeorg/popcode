@@ -33,7 +33,7 @@ export const gistImportError = createAction(
   gistId => ({gistId}),
 );
 
-const projectLoaded = createAction(
+export const projectLoaded = createAction(
   'PROJECT_LOADED',
   project => ({project}),
 );
