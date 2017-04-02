@@ -9,7 +9,7 @@ import dispatchAndWait from '../../helpers/dispatchAndWait';
 import buildProject from '../../helpers/buildProject';
 import createAndMutateProject from '../../helpers/createAndMutateProject';
 import {getCurrentProject} from '../../../src/util/projectUtils';
-import {bootstrap, logIn, logOut} from '../../../src/actions';
+import {applicationLoaded, logIn, logOut} from '../../../src/actions';
 import createApplicationStore from '../../../src/createApplicationStore';
 
 describe('user actions', () => {
@@ -34,7 +34,7 @@ describe('user actions', () => {
     beforeEach(() => {
       storedProject = buildProject({sources: {html: 'bogus<'}});
       mockFirebase.logOut();
-      return dispatchAndWait(store, bootstrap());
+      return dispatchAndWait(store, applicationLoaded());
     });
 
     context('with locally pristine project', () => {
@@ -138,7 +138,7 @@ describe('user actions', () => {
     beforeEach(async () => {
       mockFirebase.logIn(user.uid);
       mockFirebase.setCurrentProject(null);
-      await dispatchAndWait(store, bootstrap());
+      await dispatchAndWait(store, applicationLoaded());
       createAndMutateProject(store);
       loggedInProjectKey = getCurrentProject(store.getState()).projectKey;
       return dispatchAndWait(store, logOut());

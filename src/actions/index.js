@@ -3,7 +3,6 @@ import validations from '../validations';
 import {isPristineProject} from '../util/projectUtils';
 import Analyzer from '../analyzers';
 
-import bootstrap from './bootstrap';
 import applicationLoaded from './applicationLoaded';
 
 import {
@@ -187,6 +186,5 @@ export {
   notificationTriggered,
   userDismissedNotification,
   exportingGist,
-  bootstrap,
   applicationLoaded,
 };
