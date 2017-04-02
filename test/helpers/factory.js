@@ -52,6 +52,7 @@ export function user(userIn) {
 
 export function project(projectIn) {
   return defaultsDeep({}, projectIn, {
+    projectKey: Date.now().toString(),
     sources: {
       html: '<!doctype html>My Website',
       css: 'p { }',

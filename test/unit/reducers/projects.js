@@ -1,16 +1,18 @@
 import test from 'tape';
 import reduce from 'lodash/reduce';
+import tap from 'lodash/tap';
 import partial from 'lodash/partial';
 import defaults from 'lodash/defaults';
 import Immutable from 'immutable';
 import reducerTest from '../../helpers/reducerTest';
 import {projects as states} from '../../helpers/referenceStates';
-import {gistData} from '../../helpers/factory';
+import {gistData, project} from '../../helpers/factory';
 import reducer from '../../../src/reducers/projects';
 import {
   changeCurrentProject,
   gistImported,
   projectCreated,
+  projectLoaded,
   projectSourceEdited,
 } from '../../../src/actions/projects';
 
@@ -44,7 +46,7 @@ test('projectSourceEdited', reducerTest(
   initProjects({[projectKey]: true}).
     update(
       projectKey,
-      project => project.setIn(['sources', 'css'], css),
+      editedProject => editedProject.setIn(['sources', 'css'], css),
     ),
 ));
 
@@ -118,6 +120,21 @@ test('gistImported', (t) => {
     }),
   ));
 });
+
+tap(project(), projectIn =>
+  test('loadProject', reducerTest(
+    reducer,
+    states.initial,
+    partial(projectLoaded, projectIn),
+    new Immutable.Map().set(
+      projectIn.projectKey,
+      buildProject(
+        projectIn.projectKey,
+        projectIn.sources,
+      ).set('updatedAt', projectIn.updatedAt),
+    ),
+  )),
+);
 
 function initProjects(map = {}) {
   return reduce(map, (projectsIn, modified, key) => {
