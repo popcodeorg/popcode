@@ -28,7 +28,7 @@ import {
 } from './ui';
 
 import {
-  logIn,
+  userAuthenticated,
   logOut,
 } from './user';
 
@@ -172,7 +172,7 @@ export {
   changeCurrentProject,
   updateProjectSource,
   toggleLibrary,
-  logIn,
+  userAuthenticated,
   logOut,
   addRuntimeError,
   clearRuntimeErrors,

@@ -33,7 +33,7 @@ import {
   clearRuntimeErrors,
   createProject,
   updateProjectSource,
-  logIn,
+  userAuthenticated,
   logOut,
   toggleLibrary,
   minimizeComponent,
@@ -288,8 +288,8 @@ class Workspace extends React.Component {
   }
 
   _listenForAuthChange() {
-    onSignedIn(({user, credential}) =>
-      this.props.dispatch(logIn(user, credential)),
+    onSignedIn(userCredential =>
+      this.props.dispatch(userAuthenticated(userCredential)),
     );
     onSignedOut(() => this.props.dispatch(logOut()));
   }
