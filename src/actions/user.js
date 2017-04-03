@@ -8,7 +8,7 @@ export const userAuthenticated = createAction(
 
 const resetWorkspace = createAction('RESET_WORKSPACE', identity);
 
-const userLoggedOut = createAction('USER_LOGGED_OUT');
+export const userLoggedOut = createAction('USER_LOGGED_OUT');
 
 export function logOut() {
   return (dispatch, getState) => {

@@ -64,7 +64,29 @@ function importGist(state, projectKey, gistData) {
   );
 }
 
-export default function projects(stateIn, action) {
+export function reduceRoot(stateIn, action) {
+  return stateIn.update('projects', (projects) => {
+    switch (action.type) {
+      case 'USER_LOGGED_OUT':
+        {
+          const currentProjectKey =
+            stateIn.getIn(['currentProject', 'projectKey']);
+
+          if (isNil(currentProjectKey)) {
+            return new Immutable.Map();
+          }
+
+          return new Immutable.Map().set(
+            currentProjectKey,
+            projects.get(currentProjectKey),
+          );
+        }
+    }
+    return projects;
+  });
+}
+
+export default function reduceProjects(stateIn, action) {
   let state;
 
   if (stateIn === undefined) {
@@ -94,16 +116,6 @@ export default function projects(stateIn, action) {
 
     case 'CHANGE_CURRENT_PROJECT':
       return removePristineExcept(state, action.payload.projectKey);
-
-    case 'RESET_WORKSPACE':
-      if (isNil(action.payload.currentProjectKey)) {
-        return emptyMap;
-      }
-
-      return new Immutable.Map().set(
-        action.payload.currentProjectKey,
-        state.get(action.payload.currentProjectKey),
-      );
 
     case 'GIST_IMPORTED':
       return importGist(

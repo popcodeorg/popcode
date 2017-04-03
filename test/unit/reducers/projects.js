@@ -7,7 +7,9 @@ import Immutable from 'immutable';
 import reducerTest from '../../helpers/reducerTest';
 import {projects as states} from '../../helpers/referenceStates';
 import {gistData, project} from '../../helpers/factory';
-import reducer from '../../../src/reducers/projects';
+import reducer, {
+  reduceRoot as rootReducer,
+} from '../../../src/reducers/projects';
 import {
   changeCurrentProject,
   gistImported,
@@ -15,6 +17,7 @@ import {
   projectLoaded,
   projectSourceEdited,
 } from '../../../src/actions/projects';
+import {userLoggedOut} from '../../../src/actions/user';
 
 const now = Date.now();
 const projectKey = '12345';
@@ -133,6 +136,18 @@ tap(project(), projectIn =>
         projectIn.sources,
       ).set('updatedAt', projectIn.updatedAt),
     ),
+  )),
+);
+
+tap(initProjects({1: true, 2: true}), projects =>
+  test('userLoggedOut', reducerTest(
+    rootReducer,
+    Immutable.fromJS({currentProject: {projectKey: '1'}, projects}),
+    userLoggedOut,
+    Immutable.fromJS({
+      currentProject: {projectKey: '1'},
+      projects: projects.take(1),
+    }),
   )),
 );
 
