@@ -29,7 +29,7 @@ import {
 
 import {
   userAuthenticated,
-  logOut,
+  userLoggedOut,
 } from './user';
 
 function getCurrentPersistor(state) {
@@ -173,7 +173,7 @@ export {
   updateProjectSource,
   toggleLibrary,
   userAuthenticated,
-  logOut,
+  userLoggedOut,
   addRuntimeError,
   clearRuntimeErrors,
   minimizeComponent,

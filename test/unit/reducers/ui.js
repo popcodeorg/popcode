@@ -7,7 +7,7 @@ import {
   gistNotFound,
   gistImportError,
 } from '../../../src/actions/projects';
-
+import {userLoggedOut} from '../../../src/actions/user';
 
 const initialState = Immutable.fromJS({
   editors: {typing: false},
@@ -49,3 +49,26 @@ test('gistImportError', reducerTest(
     })),
   ),
 ));
+
+test('userLoggedOut', (t) => {
+  const libraryPickerOpen = initialState.setIn(
+    ['dashboard', 'activeSubmenu'],
+    'libraryPicker',
+  );
+  t.test('with active submenu that is not projects', reducerTest(
+    reducer,
+    libraryPickerOpen,
+    userLoggedOut,
+    libraryPickerOpen,
+  ));
+
+  t.test('with projectList active submenu', reducerTest(
+    reducer,
+    initialState.setIn(
+      ['dashboard', 'activeSubmenu'],
+      'projectList',
+    ),
+    userLoggedOut,
+    initialState,
+  ));
+});
