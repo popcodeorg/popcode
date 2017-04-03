@@ -1,61 +1,158 @@
+/* eslint-disable prefer-reflect */
+
 import test from 'tape';
-import get from 'lodash/get';
-import {call} from 'redux-saga/effects';
+import {testSaga} from 'redux-saga-test-plan';
 import {
+  applicationLoaded as applicationLoadedSaga,
   createProject as createProjectSaga,
   changeCurrentProject as changeCurrentProjectSaga,
+  importGist as importGistSaga,
+  userAuthenticated as userAuthenticatedSaga,
 } from '../../../src/sagas/projects';
 import {
-  changeCurrentProject,
+  gistImportError,
+  gistNotFound,
+  projectLoaded,
 } from '../../../src/actions/projects';
-import {
-  saveCurrentProject,
-} from '../../../src/util/projectUtils';
+import {userAuthenticated} from '../../../src/actions/user';
+import applicationLoaded from '../../../src/actions/applicationLoaded';
+import {saveCurrentProject} from '../../../src/util/projectUtils';
+import Gists from '../../../src/services/Gists';
+import FirebasePersistor from '../../../src/persistors/FirebasePersistor';
 import Scenario from '../../helpers/Scenario';
+import {gistData, project, userCredential} from '../../helpers/factory';
 
 test('createProject()', (assert) => {
-  assert.plan(3);
+  let firstProjectKey;
 
-  const action1 = createProjectAndGetAction();
-  assert.ok(action1, 'generator yields action');
+  const clock = sinon.useFakeTimers();
 
-  assert.equal(
-    action1.type,
-    'PROJECT_CREATED',
-    'generator yields PROJECT_CREATED',
-  );
+  testSaga(createProjectSaga).
+    next().inspect(({PUT: {action}}) => {
+      firstProjectKey = action.payload.projectKey;
+      assert.ok(
+        firstProjectKey,
+        'generator yields PUT action with project key',
+      );
+    }).
+    next().isDone();
 
-  const action2 = createProjectAndGetAction();
-  assert.notEqual(
-    action1.payload.projectKey,
-    action2.payload.projectKey,
-    'projectKey is different for each successive action',
-  );
+  clock.tick(10);
 
-  function createProjectAndGetAction() {
-    return get(createProjectSaga().next(), 'value.PUT.action');
-  }
+  testSaga(createProjectSaga).
+    next().inspect(({PUT: {action}}) => {
+      const secondProjectKey = action.payload.projectKey;
+      assert.ok(secondProjectKey, 'generator yields action with project key');
+      assert.notEqual(
+        secondProjectKey,
+        firstProjectKey,
+        'subsequent calls yield different project keys',
+      );
+    }).
+    next().isDone();
+
+  clock.restore();
+
+  assert.end();
 });
 
 test('changeCurrentProject()', (assert) => {
-  assert.plan(3);
-
   const scenario = new Scenario();
-  const saga = changeCurrentProjectSaga(
-    changeCurrentProject(scenario.projectKey),
-  );
-  const selectEffect = saga.next().value;
-  assert.ok(selectEffect.SELECT, 'invokes select effect');
+  testSaga(changeCurrentProjectSaga).
+    next().inspect((effect) => {
+      assert.ok(effect.SELECT, 'invokes select effect');
+    }).
+    next(scenario.state).call(saveCurrentProject, scenario.state).
+    next().isDone();
 
-  const {selector} = selectEffect.SELECT;
-  const callSaveCurrentProjectEffect =
-    saga.next(selector(scenario.state)).value;
+  assert.end();
+});
 
-  assert.deepEqual(
-    callSaveCurrentProjectEffect,
-    call(saveCurrentProject, scenario.state),
-    'calls to save current project',
-  );
+test('applicationLoaded()', (t) => {
+  t.test('with no gist ID', (assert) => {
+    testSaga(applicationLoadedSaga, applicationLoaded(null)).
+      next().call(createProjectSaga).
+      next().isDone();
 
-  assert.ok(saga.next().done, 'generator completes');
+    assert.end();
+  });
+
+  t.test('with gist ID', (assert) => {
+    const gistId = '123abc';
+    testSaga(applicationLoadedSaga, applicationLoaded(gistId)).
+      next().call(importGistSaga, applicationLoaded(gistId)).
+      next().isDone();
+
+    assert.end();
+  });
+});
+
+test('importGist()', (t) => {
+  const gistId = 'abc123';
+
+  t.test('with successful import', (assert) => {
+    const saga = testSaga(importGistSaga, applicationLoaded(gistId));
+
+    saga.next().call(Gists.loadFromId, gistId, {authenticated: false});
+
+    const gist = gistData({html: '<!doctype html>test'});
+    saga.next(gist).inspect((effect) => {
+      assert.ok(effect.PUT, 'yielded effect is a PUT');
+      assert.equal(
+        effect.PUT.action.type,
+        'GIST_IMPORTED',
+        'action is GIST_IMPORTED',
+      );
+      assert.ok(
+        effect.PUT.action.payload.projectKey,
+        'assigns a project key',
+      );
+      assert.deepEqual(
+        effect.PUT.action.payload.gistData,
+        gist,
+        'includes gist in action payload',
+      );
+    });
+
+    saga.next().isDone();
+
+    assert.end();
+  });
+
+  t.test('with not found error', (assert) => {
+    testSaga(importGistSaga, applicationLoaded(gistId)).
+      next().call(Gists.loadFromId, gistId, {authenticated: false}).
+      throw(
+        Object.create(new Error(), {response: {value: {status: 404}}}),
+      ).put(gistNotFound(gistId)).
+      next().isDone();
+    assert.end();
+  });
+
+  t.test('with other error', (assert) => {
+    testSaga(importGistSaga, applicationLoaded(gistId)).
+      next().call(Gists.loadFromId, gistId, {authenticated: false}).
+      throw(new Error()).put(gistImportError()).
+      next().isDone();
+    assert.end();
+  });
+});
+
+test('userAuthenticated', (assert) => {
+  const scenario = new Scenario().logIn();
+  const mockPersistor = {
+    all() { },
+  };
+  const projects = [project()];
+  testSaga(userAuthenticatedSaga, userAuthenticated(userCredential())).
+    next().inspect(effect => assert.ok(effect.SELECT)).
+    next(scenario.state).fork(saveCurrentProject, scenario.state).
+    next().apply(
+      FirebasePersistor,
+      FirebasePersistor.forUser,
+      [scenario.state.get('user')],
+    ).
+    next(mockPersistor).apply(mockPersistor, mockPersistor.all).
+    next(projects).put(projectLoaded(projects[0]));
+  assert.end();
 });

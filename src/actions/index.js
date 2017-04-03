@@ -3,7 +3,7 @@ import validations from '../validations';
 import {isPristineProject} from '../util/projectUtils';
 import Analyzer from '../analyzers';
 
-import bootstrap from './bootstrap';
+import applicationLoaded from './applicationLoaded';
 
 import {
   exportingGist,
@@ -28,7 +28,7 @@ import {
 } from './ui';
 
 import {
-  logIn,
+  userAuthenticated,
   logOut,
 } from './user';
 
@@ -172,7 +172,7 @@ export {
   changeCurrentProject,
   updateProjectSource,
   toggleLibrary,
-  logIn,
+  userAuthenticated,
   logOut,
   addRuntimeError,
   clearRuntimeErrors,
@@ -186,5 +186,5 @@ export {
   notificationTriggered,
   userDismissedNotification,
   exportingGist,
-  bootstrap,
+  applicationLoaded,
 };

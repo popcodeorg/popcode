@@ -23,5 +23,6 @@ export function* validateCurrentProject() {
 export default function* () {
   yield [
     takeEvery('CHANGE_CURRENT_PROJECT', validateCurrentProject),
+    takeEvery('GIST_IMPORTED', validateCurrentProject),
   ];
 }

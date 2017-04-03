@@ -1,84 +1,165 @@
 import test from 'tape';
 import reduce from 'lodash/reduce';
+import tap from 'lodash/tap';
+import partial from 'lodash/partial';
+import defaults from 'lodash/defaults';
+import Immutable from 'immutable';
+import reducerTest from '../../helpers/reducerTest';
+import {projects as states} from '../../helpers/referenceStates';
+import {gistData, project} from '../../helpers/factory';
 import reducer from '../../../src/reducers/projects';
 import {
   changeCurrentProject,
+  gistImported,
   projectCreated,
+  projectLoaded,
   projectSourceEdited,
 } from '../../../src/actions/projects';
-import {
-  isPristineProject,
-} from '../../../src/util/projectUtils';
 
-const defaultProjects = reducer(undefined, {type: null});
+const now = Date.now();
+const projectKey = '12345';
+
+const html = '<!doctype html>Hey';
+const css = 'p {}';
 
 test('projectCreated', (t) => {
-  t.test('from pristine state', (assert) => {
-    assert.plan(2);
+  t.test('from pristine state', reducerTest(
+    reducer,
+    states.initial,
+    partial(projectCreated, projectKey),
+    initProjects({[projectKey]: false}),
+    'creates one project',
+  ));
 
-    const projectKey = '12345';
-    const projects =
-      reducer(initProjects(), projectCreated(projectKey));
-    assert.deepEqual(Array.from(projects.keys()), [projectKey]);
-
-    const project = projects.get(projectKey);
-    assert.equal(project.getIn(['sources', 'css']), '');
-  });
-
-  t.test('with existing projects', (assert) => {
-    assert.plan(2);
-
-    let projects = initProjects({1: true, 2: false});
-    assert.deepEqual(Array.from(projects.keys()).sort(), ['1', '2']);
-
-    projects = reducer(projects, projectCreated('3'));
-    assert.deepEqual(Array.from(projects.keys()).sort(), ['1', '3']);
-  });
+  t.test('with existing projects', reducerTest(
+    reducer,
+    initProjects({1: true, 2: false}),
+    partial(projectCreated, projectKey),
+    initProjects({1: true, 2: false, [projectKey]: false}),
+  ));
 });
 
-test('projectSourceEdited', (assert) => {
-  assert.plan(3);
+test('projectSourceEdited', reducerTest(
+  reducer,
+  initProjects({[projectKey]: false}),
+  partial(projectSourceEdited, projectKey, 'css', css, now),
+  initProjects({[projectKey]: true}).
+    update(
+      projectKey,
+      editedProject => editedProject.setIn(['sources', 'css'], css),
+    ),
+));
 
-  const projectKey = '12345';
-  const css = 'p {}';
-  const timestamp = Date.now();
-  let projects = initProjects({[projectKey]: false});
-  assert.ok(isPristineProject(projects.get(projectKey)));
+test('changeCurrentProject', (t) => {
+  t.test('from modified to pristine', reducerTest(
+    reducer,
+    initProjects({1: true, 2: false}),
+    partial(changeCurrentProject, '2'),
+    initProjects({1: true, 2: false}),
+    'keeps previous project in store',
+  ));
 
-  projects = reducer(
-    projects,
-    projectSourceEdited(projectKey, 'css', css, timestamp),
-  );
-  assert.notOk(isPristineProject(projects.get(projectKey)));
+  t.test('from pristine to modified', reducerTest(
+    reducer,
+    initProjects({1: false, 2: true}),
+    partial(changeCurrentProject, '2'),
+    initProjects({2: true}),
+    'drops pristine project',
+  ));
 
-  assert.equal(projects.getIn([projectKey, 'sources', 'css']), css);
+  t.test('from modified to modified', reducerTest(
+    reducer,
+    initProjects({1: true, 2: true}),
+    partial(changeCurrentProject, '2'),
+    initProjects({1: true, 2: true}),
+    'keeps previous project in store',
+  ));
 });
 
-test('changeCurrentProject', (assert) => {
-  assert.plan(4);
+test('gistImported', (t) => {
+  t.test('HTML and CSS, no JSON', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      gistImported,
+      projectKey,
+      gistData({html, css}),
+    ),
+    new Immutable.Map({
+      [projectKey]: buildProject(projectKey, {html, css, javascript: ''}),
+    }),
+  ));
 
-  let projects = initProjects({1: true, 2: true, 3: false});
-  assert.deepEqual(Array.from(projects.keys()).sort(), ['1', '2', '3']);
+  t.test('CSS, no JSON', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      gistImported,
+      projectKey,
+      gistData({css}),
+    ),
+    new Immutable.Map({
+      [projectKey]: buildProject(projectKey, {html: '', css, javascript: ''}),
+    }),
+  ));
 
-  projects = reducer(projects, changeCurrentProject('3'));
-  assert.deepEqual(Array.from(projects.keys()).sort(), ['1', '2', '3']);
-
-  projects = reducer(projects, changeCurrentProject('2'));
-  assert.deepEqual(Array.from(projects.keys()).sort(), ['1', '2']);
-
-  projects = reducer(projects, changeCurrentProject('1'));
-  assert.deepEqual(Array.from(projects.keys()).sort(), ['1', '2']);
+  t.test('HTML, CSS, JSON', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      gistImported,
+      projectKey,
+      gistData({html, css, enabledLibraries: ['jquery']}),
+    ),
+    new Immutable.Map({
+      [projectKey]: buildProject(
+        projectKey,
+        {html, css, javascript: ''},
+        ['jquery'],
+      ),
+    }),
+  ));
 });
+
+tap(project(), projectIn =>
+  test('loadProject', reducerTest(
+    reducer,
+    states.initial,
+    partial(projectLoaded, projectIn),
+    new Immutable.Map().set(
+      projectIn.projectKey,
+      buildProject(
+        projectIn.projectKey,
+        projectIn.sources,
+      ).set('updatedAt', projectIn.updatedAt),
+    ),
+  )),
+);
 
 function initProjects(map = {}) {
-  return reduce(map, (projectsIn, modified, projectKey) => {
-    const projects = reducer(projectsIn, projectCreated(projectKey));
+  return reduce(map, (projectsIn, modified, key) => {
+    const projects = reducer(projectsIn, projectCreated(key));
     if (modified) {
       return reducer(
         projects,
-        projectSourceEdited(projectKey, 'css', '', Date.now()),
+        projectSourceEdited(key, 'css', '', now),
       );
     }
     return projects;
-  }, defaultProjects);
+  }, states.init);
+}
+
+function buildProject(key, sources, enabledLibraries = []) {
+  return Immutable.fromJS({
+    projectKey: key,
+    sources: defaults(
+      sources,
+      {
+        html: '<!doctype html><html></html>',
+        css: '',
+        javascript: '',
+      },
+    ),
+    enabledLibraries: new Immutable.Set(enabledLibraries),
+  });
 }

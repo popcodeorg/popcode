@@ -13,6 +13,18 @@ const defaultState = new Immutable.Map().
       set('activeSubmenu', null),
   );
 
+function addNotification(state, type, severity, payload = {}) {
+  return state.update('notifications', notifications =>
+    notifications.add(
+      new Immutable.Map().
+      set('type', type).
+      set('severity', severity).
+      set('payload', Immutable.fromJS(payload)),
+    ),
+  );
+}
+
+
 function ui(stateIn, action) {
   let state = stateIn;
   if (state === undefined) {
@@ -63,6 +75,22 @@ function ui(stateIn, action) {
 
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.setIn(['editors', 'requestedFocusedLine'], null);
+
+    case 'GIST_NOT_FOUND':
+      return addNotification(
+        state,
+        'gist-import-not-found',
+        'error',
+        {gistId: action.payload.gistId},
+      );
+
+    case 'GIST_IMPORT_ERROR':
+      return addNotification(
+        state,
+        'gist-import-error',
+        'error',
+        {gistId: action.payload.gistId},
+      );
 
     case 'NOTIFICATION_TRIGGERED':
       return state.update(

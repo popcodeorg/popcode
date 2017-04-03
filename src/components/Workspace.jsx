@@ -33,7 +33,7 @@ import {
   clearRuntimeErrors,
   createProject,
   updateProjectSource,
-  logIn,
+  userAuthenticated,
   logOut,
   toggleLibrary,
   minimizeComponent,
@@ -46,7 +46,7 @@ import {
   notificationTriggered,
   userDismissedNotification,
   exportingGist,
-  bootstrap,
+  applicationLoaded,
 } from '../actions';
 
 import {getCurrentProject, isPristineProject} from '../util/projectUtils';
@@ -120,7 +120,7 @@ class Workspace extends React.Component {
       gistId = query.gist;
     }
     history.replaceState({}, '', location.pathname);
-    this.props.dispatch(bootstrap(gistId));
+    this.props.dispatch(applicationLoaded(gistId));
     this._listenForAuthChange();
     startSessionHeartbeat();
   }
@@ -288,8 +288,8 @@ class Workspace extends React.Component {
   }
 
   _listenForAuthChange() {
-    onSignedIn(({user, credential}) =>
-      this.props.dispatch(logIn(user, credential)),
+    onSignedIn(userCredential =>
+      this.props.dispatch(userAuthenticated(userCredential)),
     );
     onSignedOut(() => this.props.dispatch(logOut()));
   }

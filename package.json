@@ -170,6 +170,7 @@
     "postcss": "^5.2.15",
     "postcss-cssnext": "^2.8.0",
     "raw-loader": "^0.5.1",
+    "redux-saga-test-plan": "^2.3.0",
     "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0",
     "string-replace-loader": "^1.0.5",

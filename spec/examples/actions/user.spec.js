@@ -4,12 +4,11 @@
 import {assert} from 'chai';
 import '../../helper';
 import MockFirebase,
-  {createUser, createCredential} from '../../helpers/MockFirebase';
+  {createUser} from '../../helpers/MockFirebase';
 import dispatchAndWait from '../../helpers/dispatchAndWait';
-import buildProject from '../../helpers/buildProject';
 import createAndMutateProject from '../../helpers/createAndMutateProject';
 import {getCurrentProject} from '../../../src/util/projectUtils';
-import {bootstrap, logIn, logOut} from '../../../src/actions';
+import {applicationLoaded, logOut} from '../../../src/actions';
 import createApplicationStore from '../../../src/createApplicationStore';
 
 describe('user actions', () => {
@@ -26,111 +25,6 @@ describe('user actions', () => {
   });
 
   const user = createUser();
-  const credential = createCredential();
-
-  describe('logIn', () => {
-    let storedProject, localProjectKey;
-
-    beforeEach(() => {
-      storedProject = buildProject({sources: {html: 'bogus<'}});
-      mockFirebase.logOut();
-      return dispatchAndWait(store, bootstrap());
-    });
-
-    context('with locally pristine project', () => {
-      beforeEach(() => {
-        localProjectKey = getCurrentProject(store.getState()).projectKey;
-        mockFirebase.logIn(user.uid);
-      });
-
-      context('with stored project', () => {
-        beforeEach(() => {
-          mockFirebase.setCurrentProject(storedProject);
-          return dispatchAndWait(store, logIn(user, credential));
-        });
-
-        itShouldLogUserIn();
-
-        it('should keep pristine project in scope', () => {
-          assert.equal(
-            getCurrentProject(store.getState()).projectKey,
-            localProjectKey,
-          );
-        });
-      });
-
-      context('without stored project', () => {
-        beforeEach(() => {
-          mockFirebase.setCurrentProject(null);
-          return dispatchAndWait(store, logIn(user, credential));
-        });
-
-        itShouldLogUserIn();
-
-        it('should keep pristine project in scope', () => {
-          assert.equal(
-            getCurrentProject(store.getState()).projectKey,
-            localProjectKey,
-          );
-        });
-      });
-    });
-
-    context('with locally modified project', () => {
-      beforeEach(() => {
-        mockFirebase.logIn(user.uid);
-        createAndMutateProject(store);
-        localProjectKey = getCurrentProject(store.getState()).projectKey;
-      });
-
-      context('with stored project', () => {
-        beforeEach(() => {
-          mockFirebase.setCurrentProject(storedProject);
-          return dispatchAndWait(store, logIn(user, credential));
-        });
-
-        itShouldLogUserIn();
-
-        it('should keep local project in scope', () => {
-          assert.equal(
-            getCurrentProject(store.getState()).projectKey,
-            localProjectKey,
-          );
-        });
-      });
-    });
-
-    function itShouldLogUserIn() {
-      it('should set user state to authenticated', () => {
-        assert.isTrue(store.getState().getIn(['user', 'authenticated']));
-      });
-
-      it('should set user id to uid', () => {
-        assert.equal(store.getState().getIn(['user', 'id']), user.uid);
-      });
-
-      it('should set display name', () => {
-        assert.equal(
-          store.getState().getIn(['user', 'displayName']),
-          user.providerData[0].displayName,
-        );
-      });
-
-      it('should set avatarUrl', () => {
-        assert.equal(
-          store.getState().getIn(['user', 'avatarUrl']),
-          user.providerData[0].photoURL,
-        );
-      });
-
-      it('should set auth token', () => {
-        assert.equal(
-          store.getState().getIn(['user', 'accessTokens', 'github.com']),
-          credential.accessToken,
-        );
-      });
-    }
-  });
 
   describe('logOut', () => {
     let loggedInProjectKey;
@@ -138,7 +32,7 @@ describe('user actions', () => {
     beforeEach(async () => {
       mockFirebase.logIn(user.uid);
       mockFirebase.setCurrentProject(null);
-      await dispatchAndWait(store, bootstrap());
+      await dispatchAndWait(store, applicationLoaded());
       createAndMutateProject(store);
       loggedInProjectKey = getCurrentProject(store.getState()).projectKey;
       return dispatchAndWait(store, logOut());

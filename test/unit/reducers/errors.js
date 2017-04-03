@@ -1,67 +1,57 @@
 import test from 'tape';
+import partial from 'lodash/partial';
+import reducerTest from '../../helpers/reducerTest';
+import {errors as states} from '../../helpers/referenceStates';
+import {gistData} from '../../helpers/factory';
 import {
   changeCurrentProject,
   projectCreated,
+  gistImported,
 } from '../../../src/actions/projects';
 import {
   validatedSource,
 } from '../../../src/actions/errors';
-import reduceErrors from '../../../src/reducers/errors';
-
-const sampleError = {reason: 'bad-code'};
-
-const initialState = reduceErrors(undefined, {type: null});
-const stateWithErrors = reduceErrors(
-  initialState,
-  validatedSource('css', [sampleError]),
-);
-const stateWithNoErrors = reduceErrors(
-  initialState,
-  validatedSource('css', []),
-);
+import reducer from '../../../src/reducers/errors';
 
 test('validatedSource', (t) => {
-  t.test('with errors', (assert) => {
-    assert.plan(2);
-    assert.equal(stateWithErrors.getIn(['css', 'state']), 'failed');
-    assert.deepEqual(
-      stateWithErrors.getIn(['css', 'items']).toJS(),
-      [sampleError],
-    );
-  });
+  t.test('with errors', reducerTest(
+    reducer,
+    states.noErrors,
+    partial(
+      validatedSource,
+      'css',
+      states.errors.getIn(['css', 'items']).toJS(),
+    ),
+    states.errors,
+    'sets state to failed with errors',
+  ));
 
-  t.test('with no errors', (assert) => {
-    assert.plan(2);
-
-    assert.equal(stateWithNoErrors.getIn(['css', 'state']), 'passed');
-    assert.deepEqual(stateWithNoErrors.getIn(['css', 'items']).toJS(), []);
-  });
+  t.test('with no errors', reducerTest(
+    reducer,
+    states.errors,
+    partial(validatedSource, 'css', []),
+    states.noErrors,
+    'sets state to passed with empty errors',
+  ));
 });
 
-test('projectCreated', (assert) => {
-  assert.plan(2);
-  const stateAfterNewProject = reduceErrors(
-    stateWithErrors,
-    projectCreated('12345'),
-  );
-  assert.equal(
-    stateAfterNewProject.getIn(['css', 'state']),
-    'passed',
-  );
-  assert.deepEqual(
-    stateAfterNewProject.getIn(['css', 'items']).toJS(),
-    [],
-  );
-});
+test('projectCreated', reducerTest(
+  reducer,
+  states.errors,
+  partial(projectCreated, '12345'),
+  states.noErrors,
+));
 
-test('changeCurrentProject', (assert) => {
-  assert.plan(1);
-  const stateAfterProjectChange = reduceErrors(
-    stateWithErrors,
-    changeCurrentProject('12345'),
-  );
-  assert.equal(
-    stateAfterProjectChange.getIn(['css', 'state']),
-    'validating',
-  );
-});
+test('changeCurrentProject', reducerTest(
+  reducer,
+  states.errors,
+  partial(changeCurrentProject, '12345'),
+  states.validating,
+));
+
+test('gistImported', reducerTest(
+  reducer,
+  states.noErrors,
+  partial(gistImported, '12345', gistData({html: ''})),
+  states.validating,
+));
