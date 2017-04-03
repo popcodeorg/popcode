@@ -34,7 +34,7 @@ import {
   createProject,
   updateProjectSource,
   userAuthenticated,
-  logOut,
+  userLoggedOut,
   toggleLibrary,
   minimizeComponent,
   maximizeComponent,
@@ -291,7 +291,7 @@ class Workspace extends React.Component {
     onSignedIn(userCredential =>
       this.props.dispatch(userAuthenticated(userCredential)),
     );
-    onSignedOut(() => this.props.dispatch(logOut()));
+    onSignedOut(() => this.props.dispatch(userLoggedOut()));
   }
 
   _handleStartLogIn() {
