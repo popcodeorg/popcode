@@ -108,11 +108,14 @@ function ui(stateIn, action) {
         ),
       );
 
-    case 'RESET_WORKSPACE':
-      return state.setIn(
-        ['dashboard', 'activeSubmenu'],
-        null,
-      );
+    case 'USER_LOGGED_OUT':
+      if (state.getIn(['dashboard', 'activeSubmenu']) === 'projectList') {
+        return state.setIn(
+          ['dashboard', 'activeSubmenu'],
+          null,
+        );
+      }
+      return state;
 
     default:
       return state;
