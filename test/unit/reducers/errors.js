@@ -5,8 +5,9 @@ import {errors as states} from '../../helpers/referenceStates';
 import {gistData} from '../../helpers/factory';
 import {
   changeCurrentProject,
-  projectCreated,
   gistImported,
+  projectCreated,
+  projectSourceEdited,
 } from '../../../src/actions/projects';
 import {
   validatedSource,
@@ -54,4 +55,11 @@ test('gistImported', reducerTest(
   states.noErrors,
   partial(gistImported, '12345', gistData({html: ''})),
   states.validating,
+));
+
+test('projectSourceEdited', reducerTest(
+  reducer,
+  states.noErrors,
+  partial(projectSourceEdited, '12345', 'css', 'bogus', Date.now()),
+  states.noErrors.setIn(['css', 'state'], 'validating'),
 ));
