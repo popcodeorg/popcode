@@ -40,7 +40,6 @@ import {
   maximizeComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
-  userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
   notificationTriggered,
@@ -165,8 +164,6 @@ class Workspace extends React.Component {
   }
 
   _handleEditorInput(language, source) {
-    this.props.dispatch(userTyped());
-
     this.props.dispatch(
       updateProjectSource(
         this.props.currentProject.projectKey,
