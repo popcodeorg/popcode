@@ -99,7 +99,7 @@ export default function reduceProjects(stateIn, action) {
     case 'PROJECT_LOADED':
       return addProject(state, action.payload.project);
 
-    case 'PROJECT_SOURCE_EDITED':
+    case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(
         [action.payload.projectKey, 'sources', action.payload.language],
         action.payload.newValue,

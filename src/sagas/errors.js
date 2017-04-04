@@ -1,28 +1,67 @@
-import {call, fork, put, select, takeEvery} from 'redux-saga/effects';
+import {
+  call,
+  cancel,
+  fork,
+  join,
+  put,
+  select,
+  takeEvery,
+} from 'redux-saga/effects';
 import Analyzer from '../analyzers';
 import validations from '../validations';
 import {validatedSource} from '../actions/errors';
 
-export function* validateSource(language, source, projectAttributes) {
-  const errors = yield call(validations[language], source, projectAttributes);
-  yield put(validatedSource(language, errors));
+function getCurrentProject(state) {
+  return state.getIn([
+    'projects',
+    state.getIn(['currentProject', 'projectKey']),
+  ]);
 }
 
-export function* validateCurrentProject() {
+export function* updateProjectSource(tasks, {payload: {language, newValue}}) {
   const state = yield select();
-  const currentProject = state.getIn(
-    ['projects', state.getIn(['currentProject', 'projectKey'])],
+  const analyzer = new Analyzer(getCurrentProject(state));
+  yield call(
+    validateSource,
+    tasks,
+    {payload: {language, source: newValue, projectAttributes: analyzer}},
   );
+}
+
+export function* validateCurrentProject(tasks) {
+  const state = yield select();
+  const currentProject = getCurrentProject(state);
   const analyzer = new Analyzer(currentProject);
 
   for (const [language, source] of currentProject.get('sources')) {
-    yield fork(validateSource, language, source, analyzer);
+    yield fork(
+      validateSource,
+      tasks,
+      {payload: {language, source, projectAttributes: analyzer}},
+    );
   }
 }
 
+export function* validateSource(
+  tasks,
+  {payload: {language, source, projectAttributes}},
+) {
+  if (tasks.has(language)) {
+    yield cancel(tasks.get(language));
+  }
+  const task = yield fork(validations[language], source, projectAttributes);
+  tasks.set(language, task);
+  const errors = yield join(task);
+  tasks.delete(language);
+  yield put(validatedSource(language, errors));
+}
+
 export default function* () {
+  const tasks = new Map();
+
   yield [
-    takeEvery('CHANGE_CURRENT_PROJECT', validateCurrentProject),
-    takeEvery('GIST_IMPORTED', validateCurrentProject),
+    takeEvery('CHANGE_CURRENT_PROJECT', validateCurrentProject, tasks),
+    takeEvery('GIST_IMPORTED', validateCurrentProject, tasks),
+    takeEvery('UPDATE_PROJECT_SOURCE', updateProjectSource, tasks),
   ];
 }

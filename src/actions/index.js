@@ -12,7 +12,7 @@ import {
 import {
   createProject,
   changeCurrentProject,
-  projectSourceEdited,
+  updateProjectSource,
 } from './projects';
 
 import {
@@ -82,19 +82,6 @@ export function validateAllSources(project) {
     project.get('sources').forEach((source, language) => {
       dispatch(validateSource(language, source, projectAttributes));
     });
-  };
-}
-
-function updateProjectSource(projectKey, language, newValue) {
-  return (dispatch, getState) => {
-    dispatch(projectSourceEdited(projectKey, language, newValue, Date.now()));
-
-    const state = getState();
-    saveCurrentProject(state);
-
-    const currentProject = getCurrentProject(state);
-    const projectAttributes = new Analyzer(currentProject);
-    dispatch(validateSource(language, newValue, projectAttributes));
   };
 }
 

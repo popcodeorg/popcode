@@ -8,11 +8,13 @@ import {
   changeCurrentProject as changeCurrentProjectSaga,
   importGist as importGistSaga,
   userAuthenticated as userAuthenticatedSaga,
+  updateProjectSource as updateProjectSourceSaga,
 } from '../../../src/sagas/projects';
 import {
   gistImportError,
   gistNotFound,
   projectLoaded,
+  updateProjectSource,
 } from '../../../src/actions/projects';
 import {userAuthenticated} from '../../../src/actions/user';
 import applicationLoaded from '../../../src/actions/applicationLoaded';
@@ -154,5 +156,17 @@ test('userAuthenticated', (assert) => {
     ).
     next(mockPersistor).apply(mockPersistor, mockPersistor.all).
     next(projects).put(projectLoaded(projects[0]));
+  assert.end();
+});
+
+test('updateProjectSource', (assert) => {
+  const scenario = new Scenario();
+  testSaga(
+    updateProjectSourceSaga,
+    updateProjectSource(scenario.projectKey, 'css', 'p {}'),
+  ).
+    next().select().
+    next(scenario.state).call(saveCurrentProject, scenario.state).
+    next().isDone();
   assert.end();
 });
