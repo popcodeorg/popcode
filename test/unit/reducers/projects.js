@@ -15,7 +15,7 @@ import {
   gistImported,
   projectCreated,
   projectLoaded,
-  projectSourceEdited,
+  updateProjectSource,
 } from '../../../src/actions/projects';
 import {userLoggedOut} from '../../../src/actions/user';
 
@@ -42,10 +42,10 @@ test('projectCreated', (t) => {
   ));
 });
 
-test('projectSourceEdited', reducerTest(
+test('updateProjectSource', reducerTest(
   reducer,
   initProjects({[projectKey]: false}),
-  partial(projectSourceEdited, projectKey, 'css', css, now),
+  partial(updateProjectSource, projectKey, 'css', css, now),
   initProjects({[projectKey]: true}).
     update(
       projectKey,
@@ -157,7 +157,7 @@ function initProjects(map = {}) {
     if (modified) {
       return reducer(
         projects,
-        projectSourceEdited(key, 'css', '', now),
+        updateProjectSource(key, 'css', '', now),
       );
     }
     return projects;

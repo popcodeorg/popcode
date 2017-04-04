@@ -12,10 +12,10 @@ export const changeCurrentProject = createAction(
   projectKey => ({projectKey}),
 );
 
-export const projectSourceEdited = createAction(
-  'PROJECT_SOURCE_EDITED',
+export const updateProjectSource = createAction(
+  'UPDATE_PROJECT_SOURCE',
   (projectKey, language, newValue) => ({projectKey, language, newValue}),
-  (_projectKey, _language, _newValue, timestamp) => ({timestamp}),
+  (_projectKey, _language, _newValue, timestamp = Date.now()) => ({timestamp}),
 );
 
 export const gistImported = createAction(

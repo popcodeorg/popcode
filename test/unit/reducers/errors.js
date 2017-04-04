@@ -7,7 +7,7 @@ import {
   changeCurrentProject,
   gistImported,
   projectCreated,
-  projectSourceEdited,
+  updateProjectSource,
 } from '../../../src/actions/projects';
 import {
   validatedSource,
@@ -57,9 +57,9 @@ test('gistImported', reducerTest(
   states.validating,
 ));
 
-test('projectSourceEdited', reducerTest(
+test('updateProjectSource', reducerTest(
   reducer,
   states.noErrors,
-  partial(projectSourceEdited, '12345', 'css', 'bogus', Date.now()),
+  partial(updateProjectSource, '12345', 'css', 'bogus', Date.now()),
   states.noErrors.setIn(['css', 'state'], 'validating'),
 ));
