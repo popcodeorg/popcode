@@ -3,7 +3,9 @@ import Analyzer from '../analyzers';
 import validations from '../validations';
 import {validatedSource} from '../actions/errors';
 
-export function* validateSource(language, source, projectAttributes) {
+export function* validateSource({
+  payload: {language, source, projectAttributes},
+}) {
   const errors = yield call(validations[language], source, projectAttributes);
   yield put(validatedSource(language, errors));
 }
@@ -16,7 +18,10 @@ export function* validateCurrentProject() {
   const analyzer = new Analyzer(currentProject);
 
   for (const [language, source] of currentProject.get('sources')) {
-    yield fork(validateSource, language, source, analyzer);
+    yield fork(
+      validateSource,
+      {payload: {language, source, projectAttributes: analyzer}},
+    );
   }
 }
 

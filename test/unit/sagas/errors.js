@@ -23,9 +23,13 @@ test('validateCurrentProject()', (assert) => {
   for (const language of ['html', 'css', 'javascript']) {
     saga.next(args.shift()).fork(
       validateSourceSaga,
-      language,
-      scenario.project.getIn(['sources', language]),
-      scenario.analyzer,
+      {
+        payload: {
+          language,
+          source: scenario.project.getIn(['sources', language]),
+          projectAttributes: scenario.analyzer,
+        },
+      },
     );
   }
   saga.next().isDone();
@@ -38,7 +42,10 @@ test('validateSource()', (assert) => {
   const language = 'javascript';
   const source = 'alert("hi");';
   const errors = [{error: 'test'}];
-  testSaga(validateSourceSaga, language, source, projectAttributes).
+  testSaga(
+    validateSourceSaga,
+    {payload: {language, source, projectAttributes}},
+  ).
     next().call(validations.javascript, source, projectAttributes).
     next(errors).put(validatedSource(language, errors)).
     next().isDone();
