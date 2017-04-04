@@ -101,6 +101,7 @@ module.exports = {
           matchModule('redux'),
           matchModule('lodash-es'),
           matchModule('stylelint'),
+          matchModule('redux-saga-debounce-effect'),
         ],
         loader: 'babel-loader',
       },

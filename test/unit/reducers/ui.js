@@ -6,7 +6,9 @@ import reducer from '../../../src/reducers/ui';
 import {
   gistNotFound,
   gistImportError,
+  updateProjectSource,
 } from '../../../src/actions/projects';
+import {userDoneTyping} from '../../../src/actions/ui';
 import {userLoggedOut} from '../../../src/actions/user';
 
 const initialState = Immutable.fromJS({
@@ -48,6 +50,20 @@ test('gistImportError', reducerTest(
       payload: {gistId},
     })),
   ),
+));
+
+test('updateProjectSource', reducerTest(
+  reducer,
+  initialState,
+  updateProjectSource,
+  initialState.setIn(['editors', 'typing'], true),
+));
+
+test('userDoneTyping', reducerTest(
+  reducer,
+  initialState.setIn(['editors', 'typing'], true),
+  userDoneTyping,
+  initialState,
 ));
 
 test('userLoggedOut', (t) => {

@@ -4,13 +4,9 @@
 import '../../helper';
 import {assert} from 'chai';
 import createApplicationStore from '../../../src/createApplicationStore';
-import waitFor from '../../helpers/waitFor';
-
-import {TYPING_DEBOUNCE_DELAY} from '../../../src/actions/ui';
 
 import {
   editorFocusedRequestedLine,
-  userTyped,
   userRequestedFocusedLine,
   notificationTriggered,
   userDismissedNotification,
@@ -29,34 +25,6 @@ describe('interfaceStateActions', () => {
   afterEach(() => {
     clock.tick(timeInterval);
     clock.restore();
-  });
-
-  describe('userTyped', () => {
-    beforeEach(() => store.dispatch(userTyped()));
-
-    it('sets typing state to true', () => {
-      assert.isTrue(store.getState().getIn(['ui', 'editors', 'typing']));
-    });
-
-    it('keeps typing state true before timeout expires', async () => {
-      await waitFor(TYPING_DEBOUNCE_DELAY / 2, clock);
-      assert.isTrue(store.getState().getIn(['ui', 'editors', 'typing']));
-    });
-
-    it('sets typing state to false after timeout expires', async () => {
-      await waitFor(TYPING_DEBOUNCE_DELAY, clock);
-      assert.isFalse(store.getState().getIn(['ui', 'editors', 'typing']));
-    });
-
-    it(
-      'keeps typing state true if there are additional keystrokes',
-      async () => {
-        await waitFor(TYPING_DEBOUNCE_DELAY * 0.8, clock);
-        store.dispatch(userTyped());
-        await waitFor(TYPING_DEBOUNCE_DELAY * 0.9, clock);
-        assert.isTrue(store.getState().getIn(['ui', 'editors', 'typing']));
-      },
-    );
   });
 
   describe('userRequestedFocusedLine', () => {

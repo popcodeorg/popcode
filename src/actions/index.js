@@ -20,7 +20,6 @@ import {
 } from './errors';
 
 import {
-  userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
   notificationTriggered,
@@ -167,7 +166,6 @@ export {
   maximizeComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
-  userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
   notificationTriggered,
