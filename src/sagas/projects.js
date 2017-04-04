@@ -44,6 +44,11 @@ export function* importGist({payload: {gistId}}) {
   }
 }
 
+export function* updateProjectSource() {
+  const state = yield select();
+  yield call(saveCurrentProject, state);
+}
+
 export function* userAuthenticated() {
   const state = yield select();
   yield fork(saveCurrentProject, state);
@@ -70,6 +75,7 @@ export default function* () {
     takeEvery('APPLICATION_LOADED', applicationLoaded),
     takeEvery('CREATE_PROJECT', createProject),
     takeEvery('CHANGE_CURRENT_PROJECT', changeCurrentProject),
+    takeEvery('UPDATE_PROJECT_SOURCE', updateProjectSource),
     takeEvery('USER_AUTHENTICATED', userAuthenticated),
   ];
 }
