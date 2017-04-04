@@ -32,7 +32,7 @@ function ui(stateIn, action) {
   }
 
   switch (action.type) {
-    case 'USER_TYPING':
+    case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(['editors', 'typing'], true);
 
     case 'USER_DONE_TYPING':
