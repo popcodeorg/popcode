@@ -3,7 +3,13 @@ import classnames from 'classnames';
 
 function LibraryPickerItem(props) {
   const unicodeCheckMark = '\u2713';
-  const libraryNameLine = props.enabled ? `${unicodeCheckMark} ${props.library.name}` : props.library.name
+  let libraryNameLine = '';
+  if (props.enabled) {
+    libraryNameLine = `${unicodeCheckMark} ${props.library.name}`;
+  } else {
+    libraryNameLine = props.library.name;
+  }
+
   return (
     <div
       className={classnames(
@@ -11,7 +17,7 @@ function LibraryPickerItem(props) {
         {'dashboard__menu-item_active': props.enabled},
       )} onClick={props.onLibraryToggled}
     >
-     {libraryNameLine}
+      {libraryNameLine}
     </div>
   );
 }
