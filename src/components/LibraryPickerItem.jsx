@@ -2,6 +2,8 @@ import React from 'react';
 import classnames from 'classnames';
 
 function LibraryPickerItem(props) {
+  const unicodeCheckMark = '\u2713';
+  const libraryNameLine = props.enabled ? `${unicodeCheckMark} ${props.library.name}` : props.library.name
   return (
     <div
       className={classnames(
@@ -9,7 +11,7 @@ function LibraryPickerItem(props) {
         {'dashboard__menu-item_active': props.enabled},
       )} onClick={props.onLibraryToggled}
     >
-      {props.library.name}
+     {libraryNameLine}
     </div>
   );
 }

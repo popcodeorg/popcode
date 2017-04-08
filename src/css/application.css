@@ -266,6 +266,10 @@ body {
   background-color: var(--color-gray);
 }
 
+.dashboard__menu-item:not(.dashboard__menu-item_active) {
+  padding-left: 1.3rem;
+}
+
 .dashboard__menu-item_spinner:hover {
   background-color: white;
 }
