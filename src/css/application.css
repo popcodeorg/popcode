@@ -266,7 +266,20 @@ body {
   background-color: var(--color-gray);
 }
 
-.dashboard__menu-item:not(.dashboard__menu-item_active) {
+.librarypicker__item.dashboard__menu-item_active::before {
+    content: '';
+    position: absolute;
+    border-color: #000;
+    border-style: solid;
+    border-width: 0 0.15rem 0.15rem 0;
+    height: .7rem;
+    left: 0.6em;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 0.3rem;
+}
+
+.dashboard__menu-item {
   padding-left: 1.3rem;
 }
 
