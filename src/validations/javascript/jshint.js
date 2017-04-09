@@ -14,7 +14,7 @@ const jshintrc = {
   curly: true,
   devel: true,
   eqeqeq: true,
-  latedef: true,
+  latedef: 'nofunc',
   nonew: true,
   predef: [],
   shadow: 'outer',
