@@ -47,4 +47,13 @@ describe('javascript', () => {
       'TinyTurtle.whatever();',
       [analyzerWithExternalScript]);
   });
+
+  it('should pass when a function is used before it is declared', () => {
+    assertPassesValidation(javascript,
+        `myFunction();
+        function myFunction() {
+            return true;   
+        }`,
+      [analyzer]);
+  });
 });
