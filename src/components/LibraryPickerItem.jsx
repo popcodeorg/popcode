@@ -4,9 +4,10 @@ import classnames from 'classnames';
 function LibraryPickerItem(props) {
   return (
     <div
-      className={classnames('librarypicker__item',
-        'dashboard__menu-item',
+      className={classnames('dashboard__menu-item',
         {'dashboard__menu-item_active': props.enabled},
+        {'dashboard__menu-item_checked': props.enabled},
+        {'dashboard__menu-item_unchecked': !props.enabled}
       )} onClick={props.onLibraryToggled}
     >
       {props.library.name}
