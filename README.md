@@ -204,7 +204,7 @@ for all the sordid details.
 * [Jeremy Schrader](http://www.pattern-factory.com/)
 * [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
 * Logo design, "Pop" concept, and UI by the team at
-  [http://redpeakgroup.com](Red Peak): Andrew Haug, Aya Kawabata, Jieun Lee,
+  [Red Peak](http://redpeakgroup.com): Andrew Haug, Aya Kawabata, Jieun Lee,
   Achu Fones, Iwona Waluk, Stewart Devlin, and Katie Conneally
 
 ## Thanks to ##
