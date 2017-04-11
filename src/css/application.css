@@ -266,6 +266,20 @@ body {
   background-color: var(--color-gray);
 }
 
+.dashboard__menu-item_unchecked{
+  padding-left: 1.3rem;
+}
+
+.dashboard__menu-item_checked{
+  padding-left: 1.3rem;  
+}
+
+.dashboard__menu-item_checked::before {
+  content: '\2714';
+  position: absolute;
+  left: .5rem;
+}
+
 .dashboard__menu-item_spinner:hover {
   background-color: white;
 }
