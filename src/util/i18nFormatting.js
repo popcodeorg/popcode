@@ -15,7 +15,6 @@ lng: the language used for the formatting
 NOTE: lng is available but is not currently used, so I've removed
 it from the arguments list.
 */
-
 export default function(value, format) {
   let newVal = value;
   const formatFlags = format.split('|');
