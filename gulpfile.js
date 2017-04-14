@@ -135,7 +135,7 @@ gulp.task('browserSync', () => {
         {
           lazy: false,
           stats: 'errors-only',
-          publicPath: webpackConfiguration.output.publicPath,
+          publicPath: `/${webpackConfiguration.output.publicPath}`,
         }
       )],
     },
