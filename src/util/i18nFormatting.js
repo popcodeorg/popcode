@@ -7,13 +7,13 @@ function getVariationOfAOrAn(value) {
 /*
 Arguments:
 value:   The value of the variable that is being passed
-  in to be interpolated into the localized string
+  in to be interpolated
 format:  the pipe-delimited list of formatting flags,
   it will run the formatting functions sequentially
   based on the sequence of the flags passed in.
 lng: the language used for the formatting
-NOTE: lng is available but is not currently used, so I've removed
-it from the arguments list.
+NOTE: lng is available(from i18Next in this function) but is not
+currently used, so I've removed it from the arguments list.
 */
 export default function(value, format) {
   let newVal = value;

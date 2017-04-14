@@ -1,5 +1,5 @@
 {
-  "simple-key": "test string 1",
+  "simple-key": "test string",
   "key-with-an-format": "string with {{tag, en-handle-an}} {{tag}}",
   "key-with-capitalize-format": "{{tag, capitalize}}",
   "key-with-multiple-formats": "string with {{tag, en-handle-an|capitalize}} {{tag}}"   
