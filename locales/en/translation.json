@@ -18,6 +18,7 @@
   },
   "bad-browser": {
     "message": "Popcode doesn’t work with your version of {{name}}.",
+    "ie-message": "Popcode doesn’t work with Internet Explorer or IE Edge. Please use another browser.",
     "download": "Click here to download a new version."
   },
   "notifications": {

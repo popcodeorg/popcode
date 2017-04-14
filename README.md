@@ -201,9 +201,12 @@ for all the sordid details.
 * [Jesse Wang](https://github.com/jwang1919)
 * [Eric Lewis](http://www.ericandrewlewis.com/)
 * [Razzi Abuissa](https://razzi.abuissa.net/)
+* [Jeremy Schrader](http://www.pattern-factory.com/)
+* [Leo McLay](https://github.com/leo-alexander)
+* [Frederic Brodbeck](http://www.freder.io/)
 * [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
 * Logo design, "Pop" concept, and UI by the team at
-  [http://redpeakgroup.com](Red Peak): Andrew Haug, Aya Kawabata, Jieun Lee,
+  [Red Peak](http://redpeakgroup.com): Andrew Haug, Aya Kawabata, Jieun Lee,
   Achu Fones, Iwona Waluk, Stewart Devlin, and Katie Conneally
 
 ## Thanks to ##
@@ -231,3 +234,5 @@ src="https://cloud.githubusercontent.com/assets/14214/19059115/428a80f4-89ab-11e
 ## Contact ##
 
 Feel free to email me at [mat.a.brown@gmail.com](mailto:mat.a.brown@gmail.com) if you have any questions.
+
+You can find our Slack team, including our #dev channel, [here](https://slack.popcode.org). 

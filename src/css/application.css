@@ -3,9 +3,9 @@
   font-style: normal;
   font-weight: 400;
   src: local('Roboto'),
-    url('/compiled/fonts/Roboto-Regular-webfont.woff') format('woff'),
-    url('/compiled/fonts/Roboto-Regular-webfont.ttf') format('ttf'),
-    url('/compiled/fonts/Roboto-Regular-webfont.eot') format('eot');
+    url('fonts/Roboto-Regular-webfont.woff') format('woff'),
+    url('fonts/Roboto-Regular-webfont.ttf') format('ttf'),
+    url('fonts/Roboto-Regular-webfont.eot') format('eot');
 }
 
 @font-face {
@@ -13,9 +13,9 @@
   font-style: bold;
   font-weight: 700;
   src: local('Roboto'),
-    url('/compiled/fonts/Roboto-Bold-webfont.woff') format('woff'),
-    url('/compiled/fonts/Roboto-Bold-webfont.ttf') format('ttf'),
-    url('/compiled/fonts/Roboto-Bold-webfont.eot') format('eot');
+    url('fonts/Roboto-Bold-webfont.woff') format('woff'),
+    url('fonts/Roboto-Bold-webfont.ttf') format('ttf'),
+    url('fonts/Roboto-Bold-webfont.eot') format('eot');
 }
 
 @font-face {
@@ -23,10 +23,10 @@
   font-style: normal;
   font-weight: 400;
   src: local('Inconsolata'),
-    url('/compiled/fonts/inconsolata-regular.woff2') format('woff2'),
-    url('/compiled/fonts/inconsolata-regular.woff') format('woff'),
-    url('/compiled/fonts/inconsolata-regular.ttf') format('ttf'),
-    url('/compiled/fonts/inconsolata-regular.eot') format('eot');
+    url('fonts/inconsolata-regular.woff2') format('woff2'),
+    url('fonts/inconsolata-regular.woff') format('woff'),
+    url('fonts/inconsolata-regular.ttf') format('ttf'),
+    url('fonts/inconsolata-regular.eot') format('eot');
 }
 
 @font-face {
@@ -34,10 +34,10 @@
   font-style: normal;
   font-weight: 400;
   src: local('FontAwesome'),
-    url('/compiled/fonts/fontawesome-webfont.woff2') format('woff2'),
-    url('/compiled/fonts/fontawesome-webfont.woff') format('woff'),
-    url('/compiled/fonts/fontawesome-webfont.ttf') format('ttf'),
-    url('/compiled/fonts/fontawesome-webfont.eot') format('eot');
+    url('fonts/fontawesome-webfont.woff2') format('woff2'),
+    url('fonts/fontawesome-webfont.woff') format('woff'),
+    url('fonts/fontawesome-webfont.ttf') format('ttf'),
+    url('fonts/fontawesome-webfont.eot') format('eot');
 }
 
 @keyframes pulsing {
@@ -255,7 +255,7 @@ body {
 
 .dashboard__menu-item_spinner {
   color: transparent;
-  background-image: url('/images/spinner.gif');
+  background-image: url('../images/spinner.gif');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -264,6 +264,20 @@ body {
 
 .dashboard__menu-item:hover, .dashboard__menu-item_active {
   background-color: var(--color-gray);
+}
+
+.dashboard__menu-item_unchecked{
+  padding-left: 1.3rem;
+}
+
+.dashboard__menu-item_checked{
+  padding-left: 1.3rem;  
+}
+
+.dashboard__menu-item_checked::before {
+  content: '\2714';
+  position: absolute;
+  left: .5rem;
 }
 
 .dashboard__menu-item_spinner:hover {
@@ -443,7 +457,7 @@ body {
   right: 0;
   z-index: 1;
   background-color: black;
-  background: white url(/images/large-spinner.gif) no-repeat center center;
+  background: white url(../images/large-spinner.gif) no-repeat center center;
   opacity: 0.2;
 }
 
@@ -459,7 +473,7 @@ body {
 }
 
 .preview__pop-out-button {
-  background: url(/images/popout.png);
+  background: url(../images/popout.png);
   width: 16px;
   height: 18px;
   position: absolute;

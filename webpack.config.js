@@ -38,7 +38,7 @@ module.exports = {
   entry: './src/application.js',
   output: {
     path: path.resolve(__dirname, './static/compiled'),
-    publicPath: '/compiled/',
+    publicPath: 'compiled/',
     filename: 'application.js',
     sourceMapFilename: 'application.js.map',
   },
