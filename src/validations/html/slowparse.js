@@ -11,6 +11,11 @@ const errorMap = {
     payload: {tag: error.closeTag.name},
   }),
 
+  EMPTY_TITLE_ELEMENT: () => ({
+    reason: 'empty-title-element',
+    suppresses: ['missing-title'],
+  }),
+
   HTML_CODE_IN_CSS_BLOCK: () => ({reason: 'html-in-css-block'}),
 
   INVALID_ATTR_NAME: error => ({
@@ -109,6 +114,26 @@ const errorMap = {
   }),
 };
 
+function findChildNode({childNodes}, nodeName) {
+  for (const node of childNodes) {
+    if (node.nodeName === nodeName) {
+      return node;
+    }
+  }
+  return null;
+}
+
+function emptyTitleElementDetector(_, root) {
+  const html = findChildNode(root, 'HTML');
+  const head = html ? findChildNode(html, 'HEAD') : null;
+  const title = head ? findChildNode(head, 'TITLE') : null;
+  return (title && !title.childNodes.length) ?
+    {type: 'EMPTY_TITLE_ELEMENT', cursor: title.parseInfo.openTag.end} :
+    null;
+}
+
+const errorDetectors = [emptyTitleElementDetector];
+
 class SlowparseValidator extends Validator {
   constructor(source) {
     super(source, 'html', errorMap);
@@ -118,7 +143,7 @@ class SlowparseValidator extends Validator {
     const {Slowparse} = await System.import('../linters');
     let error;
     try {
-      error = Slowparse.HTML(document, this._source).error;
+      error = Slowparse.HTML(document, this._source, {errorDetectors}).error;
     } catch (e) {
       error = null;
     }

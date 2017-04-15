@@ -96,6 +96,7 @@
       "duplicated-title": "You have more than one <title> tag in your document; you should only have one",
       "attribute-in-closing-tag": "You have an attribute in your closing </{{tag}}> tag. Attributes always belong in the opening <{{tag}}> tag.",
       "close-tag-for-void-element": "You don’t need a closing </{{tag}}> tag. The <{{tag}}> tag closes itself.",
+      "empty-title-element": "You have an empty <title> tag. A <title> tag should always contain text.",
       "html-in-css-block": "It looks like you typed some HTML code inside a <style> tag. Remember that only CSS code can go inside a <style> tag.",
       "invalid-attribute-name": "{{attribute}} isn’t allowed as an attribute name.",
       "mismatched-close-tag": "Your <{{open}}> tag needs a closing tag, but instead there’s a </{{close}}> tag where the </{{open}}> tag should be.",
