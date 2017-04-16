@@ -416,6 +416,8 @@ body {
   margin: -1rem 0 0 -5.5rem;
   opacity: 0.4;
   font-family: Roboto;
+  user-select: none;
+  pointer-events: none;
 }
 
 .label {
