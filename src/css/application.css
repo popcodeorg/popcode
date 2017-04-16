@@ -254,11 +254,8 @@ body {
 }
 
 .dashboard__menu-item_spinner {
+  background: url('../images/spinner.gif') center/contain no-repeat;
   color: transparent;
-  background-image: url('../images/spinner.gif');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
   cursor: not-allowed;
 }
 
@@ -603,4 +600,11 @@ body {
 
 .u__hidden {
   display: none;
+}
+
+.loading {
+  background: url('../images/large-spinner.gif') center/20vh no-repeat;
+  cursor: not-allowed;
+  height: 100vh;
+  width: 100%;
 }
