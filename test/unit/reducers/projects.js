@@ -15,6 +15,7 @@ import {
   gistImported,
   projectCreated,
   projectLoaded,
+  toggleLibrary,
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {userLoggedOut} from '../../../src/actions/user';
@@ -148,6 +149,18 @@ tap(initProjects({1: true, 2: true}), projects =>
       currentProject: {projectKey: '1'},
       projects: projects.take(1),
     }),
+  )),
+);
+
+tap(initProjects({1: false}), projects =>
+  test('toggleLibrary', reducerTest(
+    reducer,
+    projects,
+    partial(toggleLibrary, '1', 'jquery', now),
+    projects.update('1', projectIn =>
+      projectIn.set('enabledLibraries', new Immutable.Set(['jquery'])).
+        set('updatedAt', now),
+    ),
   )),
 );
 

@@ -7,6 +7,7 @@ import {
   createProject as createProjectSaga,
   changeCurrentProject as changeCurrentProjectSaga,
   importGist as importGistSaga,
+  toggleLibrary as toggleLibrarySaga,
   userAuthenticated as userAuthenticatedSaga,
   updateProjectSource as updateProjectSourceSaga,
 } from '../../../src/sagas/projects';
@@ -14,6 +15,7 @@ import {
   gistImportError,
   gistNotFound,
   projectLoaded,
+  toggleLibrary,
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {userAuthenticated} from '../../../src/actions/user';
@@ -164,6 +166,18 @@ test('updateProjectSource', (assert) => {
   testSaga(
     updateProjectSourceSaga,
     updateProjectSource(scenario.projectKey, 'css', 'p {}'),
+  ).
+    next().select().
+    next(scenario.state).call(saveCurrentProject, scenario.state).
+    next().isDone();
+  assert.end();
+});
+
+test('toggleLibrary', (assert) => {
+  const scenario = new Scenario();
+  testSaga(
+    toggleLibrarySaga,
+    toggleLibrary(scenario.projectKey, 'jquery'),
   ).
     next().select().
     next(scenario.state).call(saveCurrentProject, scenario.state).

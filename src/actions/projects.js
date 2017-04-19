@@ -18,6 +18,12 @@ export const updateProjectSource = createAction(
   (_projectKey, _language, _newValue, timestamp = Date.now()) => ({timestamp}),
 );
 
+export const toggleLibrary = createAction(
+  'TOGGLE_LIBRARY',
+  (projectKey, libraryKey) => ({projectKey, libraryKey}),
+  (_projectKey, _libraryKey, timestamp = Date.now()) => ({timestamp}),
+);
+
 export const gistImported = createAction(
   'GIST_IMPORTED',
   (projectKey, gistData) => ({projectKey, gistData}),
@@ -37,10 +43,3 @@ export const projectLoaded = createAction(
   'PROJECT_LOADED',
   project => ({project}),
 );
-
-export function loadCurrentProject(project) {
-  return (dispatch) => {
-    dispatch(projectLoaded(project));
-    dispatch(changeCurrentProject(project.projectKey));
-  };
-}

@@ -18,6 +18,10 @@ function getCurrentProject(state) {
   ]);
 }
 
+export function* toggleLibrary(tasks) {
+  yield call(validateCurrentProject, tasks);
+}
+
 export function* updateProjectSource(tasks, {payload: {language, newValue}}) {
   const state = yield select();
   const analyzer = new Analyzer(getCurrentProject(state));
@@ -63,5 +67,6 @@ export default function* () {
     takeEvery('CHANGE_CURRENT_PROJECT', validateCurrentProject, tasks),
     takeEvery('GIST_IMPORTED', validateCurrentProject, tasks),
     takeEvery('UPDATE_PROJECT_SOURCE', updateProjectSource, tasks),
+    takeEvery('TOGGLE_LIBRARY', toggleLibrary, tasks),
   ];
 }

@@ -12,6 +12,7 @@ import {
 import {
   createProject,
   changeCurrentProject,
+  toggleLibrary,
   updateProjectSource,
 } from './projects';
 
@@ -81,23 +82,6 @@ export function validateAllSources(project) {
     project.get('sources').forEach((source, language) => {
       dispatch(validateSource(language, source, projectAttributes));
     });
-  };
-}
-
-function toggleLibrary(projectKey, libraryKey) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: 'PROJECT_LIBRARY_TOGGLED',
-      meta: {timestamp: Date.now()},
-      payload: {
-        projectKey,
-        libraryKey,
-      },
-    });
-
-    const state = getState();
-    dispatch(validateAllSources(getCurrentProject(state)));
-    saveCurrentProject(state);
   };
 }
 
