@@ -65,7 +65,7 @@ test('updateProjectSource', reducerTest(
   states.noErrors.setIn(['css', 'state'], 'validating'),
 ));
 
-test('updateProjectSource', reducerTest(
+test('toggleLibrary', reducerTest(
   reducer,
   states.noErrors,
   partial(toggleLibrary, '12345', 'jquery'),
