@@ -47,6 +47,9 @@ function errors(stateIn, action) {
     case 'GIST_IMPORTED':
       return validatingErrors;
 
+    case 'TOGGLE_LIBRARY':
+      return validatingErrors;
+
     case 'UPDATE_PROJECT_SOURCE':
       return state.set(action.payload.language, validatingLanguageErrors);
 
