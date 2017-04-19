@@ -69,7 +69,7 @@ process.
 
 ### Feature roadmap ###
 
-Check out the [Project Board](https://github.com/popcodeorg/popcode/projects/2).
+Check out the [Project Board](https://github.com/popcodeorg/popcode/projects/3).
 
 ## Technical details ##
 
@@ -122,22 +122,11 @@ beginners](https://github.com/popcodeorg/popcode/issues?q=is%3Aopen+is%3Aissue+l
 
 Everyone is welcome to submit pull requests that implement a new feature or fix
 a bug that you’re particularly passionate about. But if you just want to help
-out and you’re looking for ideas, you’ve got lots of options. You might check
-out some of the
-[enhancements](https://github.com/popcodeorg/popcode/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
-that have been proposed, or maybe fix a
-[bug](https://github.com/popcodeorg/popcode/issues?q=is%3Aopen+is%3Aissue+label%3Abug).
-There’s also plenty of
-[UX](https://github.com/popcodeorg/popcode/issues?utf8=%E2%9C%93&q=is%3Aopen%20is%3Aissue%20label%3Aux)
-and
-[design](https://github.com/popcodeorg/popcode/issues?utf8=%E2%9C%93&q=is%3Aopen%20is%3Aissue%20label%3Adesign%20)
-work to do, if that’s more your speed. Or, if you’re more about tinkering with
-the guts, there’s lots of [development
-tooling](https://github.com/popcodeorg/popcode/issues?utf8=%E2%9C%93&q=is%3Aopen%20is%3Aissue%20label%3Adevelopment-tooling),
-[deployment](https://github.com/popcodeorg/popcode/issues?utf8=%E2%9C%93&q=is%3Aopen%20is%3Aissue%20label%3Adeployment),
-and
-[performance](https://github.com/popcodeorg/popcode/issues?utf8=%E2%9C%93&q=is%3Aopen%20is%3Aissue%20label%3Aperformance)
-work to do.
+out and you’re looking for ideas, I recommend checking out the [ScriptEd
+Program Managers’ Roadmap](https://github.com/popcodeorg/popcode/projects/3),
+which lists the features and enhancements that the ScriptEd PMs have identified
+as most beneficial based on observation of hundreds of student users and
+feedback from dozens of instructors.
 
 ### Running locally ###
 
