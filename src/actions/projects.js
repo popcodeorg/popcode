@@ -43,10 +43,3 @@ export const projectLoaded = createAction(
   'PROJECT_LOADED',
   project => ({project}),
 );
-
-export function loadCurrentProject(project) {
-  return (dispatch) => {
-    dispatch(projectLoaded(project));
-    dispatch(changeCurrentProject(project.projectKey));
-  };
-}
