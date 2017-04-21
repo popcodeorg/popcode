@@ -1,24 +1,16 @@
-const formatFlags = {
-  EN_HANDLE_AN: 'en-handle-an',
-  CAPITALIZE: 'capitalize'
-}
+import capitalize from 'lodash/capitalize';
+
+const vowelishLetters = new Set(['a', 'e', 'i', 'o', 'u', 'h']);
+
+const formatters = {
+  'en-handle-an': val => getVariationOfAOrAn(val, false),
+  capitalize: val => capitalize(val),
+};
 
 function getVariationOfAOrAn(value) {
-  const vowelishLetters = ['a', 'e', 'i', 'o', 'u', 'h'];
-  const isVowelish = vowelishLetters.find(l => value.substring(0, 1) === l);
-  return isVowelish ? 'an' : 'a';
+  return vowelishLetters.has(value.substring(0, 1)) ? 'an' : 'a';
 }
 
-// eslint-disable-next-line no-unused-vars
-export default function(value, format, lng) {
-  let newVal = value;
-  const inputFlags = format.split('|');
-  inputFlags.forEach((flag) => {
-    if (flag === formatFlags.EN_HANDLE_AN) {
-      newVal = getVariationOfAOrAn(newVal, false);
-    } else if (flag === formatFlags.CAPITALIZE) {
-      newVal = newVal.charAt(0).toUpperCase() + newVal.slice(1);
-    }
-  });
-  return newVal;
+export default function applyCustomI18nFormatters(value, format) {
+  return format.split('|').reduce((acc, val) => formatters[val](acc), value);
 }

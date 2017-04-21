@@ -1,5 +1,5 @@
-import {init} from 'i18next';
-import formatFunc from '../../../src/util/i18nFormatting';
+import {createInstance} from 'i18next';
+import applyCustomI18nFormatters from '../../src/util/i18nFormatting';
 
 const enTestResourceData = {
   "simple-key": "test string",
@@ -8,7 +8,7 @@ const enTestResourceData = {
   "key-with-multiple-formats": "string with {{tag, en-handle-an|capitalize}} {{tag}}"   
 }
 
-export default function() {
+export default function getI18nInstance() {
   const namespacedLocaleObject = {
     en: {
       translation: enTestResourceData,
@@ -20,9 +20,9 @@ export default function() {
     lng: 'en',
     fallbackLng: 'en',
     interpolation: {
-      format: formatFunc,
+      format: applyCustomI18nFormatters,
     },
   };
 
-  init(options);
+  return createInstance(options).init();
 }

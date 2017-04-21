@@ -1,58 +1,46 @@
-import {t} from 'i18next';
-import initTestI18n from './initTestI18n';
+import getI18nInstance from '../../helpers/i18nFactory';
 import test from 'tape';
+import localizationTest from '../../helpers/localizationTest';
 
-initTestI18n();
+const instance = getI18nInstance();
 
-test('i18n-should return the localized phrase when key is passed in', (p) => {    
-    const key = 'simple-key';
-    const expected = 'test string';
-    const result = t(key);
+test('i18n', (t) => {
+  t.test('simple key', localizationTest(
+    instance, 
+    'simple-key', 
+    {},
+    'test string',
+  ));
 
-    p.equal(expected, result);
-    p.end();
-});
+  t.test('en-handle-an formatter with non-vowelish value', 
+    localizationTest(
+    instance, 
+    'key-with-an-format', 
+    {tag: 'section'},
+    'string with a section',
+  ));
+  
+  t.test('en-handle-an formatter with vowelish value', 
+    localizationTest(
+    instance, 
+    'key-with-an-format', 
+    {tag: 'h1'},
+    'string with an h1',
+  ));
 
-test(`i18n-should transform variable into "a"
-  when the first letter of the passed variable is non-vowelish`, (p) => {
-    const key = 'key-with-an-format';
-    const options = {tag: 'section'};
-    const expected = 'string with a section';
-    const result = t(key, options);
+  t.test('capitalize formatter', 
+    localizationTest(
+    instance, 
+    'key-with-capitalize-format', 
+    {tag: 'section'},
+    'Section',
+  ));
 
-    p.equal(expected, result);
-    p.end();
-});
-
-test(`i18n-should transform variable into "an" 
-  when the first letter of the passed variable is vowelish`, (p) => {
-    const key = 'key-with-an-format';
-    const options = {tag: 'h1'};
-    const expected = 'string with an h1';
-    const result = t(key, options);
-
-    p.equal(expected, result);
-    p.end();
-});
-
-test(`i18n-should capitalize the passed variable 
-  when it is passed in with a capitalize format flag`, (p) => {
-    const key = 'key-with-capitalize-format';
-    const options = {tag: 'section'};
-    const expected = 'Section';
-    const result = t(key, options);
-
-    p.equal(expected, result);
-    p.end();
-});
-
-test(`i18n-should do a/an replace and capitalize the passed variable 
-  when it is passed in with 2 flags`, (p) => {
-    const key = 'key-with-multiple-formats';
-    const options = {tag: 'section'};
-    const expected = 'string with A section';
-    const result = t(key, options);
-
-    p.equal(expected, result);
-    p.end();
+  t.test('compose formatters', 
+    localizationTest(
+    instance, 
+    'key-with-multiple-formats', 
+    {tag: 'section'},
+    'string with A section',
+  ));
 });
