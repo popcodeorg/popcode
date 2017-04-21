@@ -5,6 +5,7 @@ import get from 'lodash/get';
 import throttle from 'lodash/throttle';
 import noop from 'lodash/noop';
 
+import 'brace/ext/searchbox';
 import 'brace/mode/html';
 import 'brace/mode/css';
 import 'brace/mode/javascript';

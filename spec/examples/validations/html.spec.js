@@ -18,6 +18,15 @@ function htmlWithBody(body) {
 `;
 }
 
+function htmlWithHead(head) {
+  return `<!DOCTYPE html>
+<html>
+  <head>
+    ${head}
+  </head>
+</html>`;
+}
+
 describe('html', () => {
   it('allows valid HTML', () =>
     assertPassesValidation(html, htmlWithBody('')),
@@ -171,6 +180,38 @@ describe('html', () => {
   it('produces an error for a malformed DOCTYPE that doesn’t parse', () =>
     assertFailsValidationWith(html, '<!DOCT\n', 'doctype'),
   );
+
+  describe('title', () => {
+    it('generates specific error when empty', () =>
+      assertFailsValidationWith(
+        html,
+        htmlWithHead(''),
+        'missing-title',
+      ),
+    );
+
+    it('generates specific error when missing', () =>
+      assertFailsValidationWith(
+        html,
+        htmlWithHead('<title></title>'),
+        'empty-title-element',
+      ),
+    );
+
+    it('allows with text', () =>
+      assertPassesValidation(
+        html,
+        htmlWithHead('<title>test</title>'),
+      ),
+    );
+
+    it('allows with child elements', () =>
+      assertPassesValidation(
+        html,
+        htmlWithHead('<title><span></span></title>'),
+      ),
+    );
+  });
 
   assertPassesAcceptance(html, 'html');
 });

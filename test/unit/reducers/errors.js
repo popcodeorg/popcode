@@ -7,6 +7,7 @@ import {
   changeCurrentProject,
   gistImported,
   projectCreated,
+  toggleLibrary,
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {
@@ -62,4 +63,11 @@ test('updateProjectSource', reducerTest(
   states.noErrors,
   partial(updateProjectSource, '12345', 'css', 'bogus', Date.now()),
   states.noErrors.setIn(['css', 'state'], 'validating'),
+));
+
+test('toggleLibrary', reducerTest(
+  reducer,
+  states.noErrors,
+  partial(toggleLibrary, '12345', 'jquery'),
+  states.validating,
 ));

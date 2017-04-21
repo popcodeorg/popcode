@@ -4,9 +4,13 @@ import {createMockTask} from 'redux-saga/utils';
 import {testSaga} from 'redux-saga-test-plan';
 import Scenario from '../../helpers/Scenario';
 import validations from '../../../src/validations';
-import {updateProjectSource} from '../../../src/actions/projects';
+import {
+  updateProjectSource,
+  toggleLibrary,
+} from '../../../src/actions/projects';
 import {validatedSource} from '../../../src/actions/errors';
 import {
+  toggleLibrary as toggleLibrarySaga,
   updateProjectSource as updateProjectSourceSaga,
   validateCurrentProject as validateCurrentProjectSaga,
   validateSource as validateSourceSaga,
@@ -95,6 +99,20 @@ test('updateProjectSource()', (assert) => {
       tasks,
       {payload: {language, source, projectAttributes: scenario.analyzer}},
     ).
+    next().isDone();
+
+  assert.end();
+});
+
+test('toggleLibrary()', (assert) => {
+  const tasks = new Map();
+  const scenario = new Scenario();
+  testSaga(
+    toggleLibrarySaga,
+    tasks,
+    toggleLibrary(scenario.projectKey, 'jquery'),
+  ).
+    next().call(validateCurrentProjectSaga, tasks).
     next().isDone();
 
   assert.end();
