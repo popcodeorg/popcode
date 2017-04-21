@@ -566,7 +566,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  height: 20%;
+  height: 50%;
   width: 20%;
   margin-left: -10%;
   margin-top: -10%;
@@ -580,6 +580,11 @@ body {
   font-size: 1.5vw;
   padding-left: 1em;
   color: var(--color-dark-gray);
+}
+
+.pop-throbber__image {
+  background: url('../images/pop/thinking.svg') center no-repeat;
+  height: 100%;
 }
 
 .pop-throbber path {
@@ -608,11 +613,4 @@ body {
 
 .u__hidden {
   display: none;
-}
-
-.loading {
-  background: url('../images/large-spinner.gif') center/20vh no-repeat;
-  cursor: not-allowed;
-  height: 100vh;
-  width: 100%;
 }

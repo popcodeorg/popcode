@@ -127,7 +127,7 @@
     "spec": "karma start karma-mocha.conf.js --single-run --no-auto-watch",
     "autotest": "karma start --no-single-run --auto-watch",
     "autospec": "karma start karma-mocha.conf.js --no-single-run --auto-watch",
-    "lint": "eslint --ext .js,.jsx --plugin react src spec && stylelint src/**/*.css",
+    "lint": "eslint --ext .js,.jsx --plugin react src spec test && stylelint src/**/*.css",
     "fixlint": "eslint --ext .js,.jsx --plugin react --fix src spec",
     "toc": "doctoc README.md --github --title '## Table of Contents'",
     "preview": "rm -rvf static/compiled && gulp build --production && static static"
