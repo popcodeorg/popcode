@@ -1,4 +1,4 @@
-export default (instance, key, options, expected, description) => 
+export default (instance, key, options, expected, description) =>
   (assert) => {
     const actual = instance.t(key, options);
     let message = `Expected:\n"${expected}",\n\nActual:\n"${actual}"`;

@@ -1,45 +1,46 @@
-import getI18nInstance from '../../helpers/i18nFactory';
 import test from 'tape';
+import getI18nInstance from '../../helpers/i18nFactory';
 import localizationTest from '../../helpers/localizationTest';
 
 const instance = getI18nInstance();
 
 test('i18n', (t) => {
-  t.test('simple key', localizationTest(
-    instance, 
-    'simple-key', 
+  t.test('simple key',
+    localizationTest(
+    instance,
+    'simple-key',
     {},
     'test string',
   ));
 
-  t.test('en-handle-an formatter with non-vowelish value', 
+  t.test('en-handle-an formatter with non-vowelish value',
     localizationTest(
-    instance, 
-    'key-with-an-format', 
+    instance,
+    'key-with-an-format',
     {tag: 'section'},
     'string with a section',
   ));
-  
-  t.test('en-handle-an formatter with vowelish value', 
+
+  t.test('en-handle-an formatter with vowelish value',
     localizationTest(
-    instance, 
-    'key-with-an-format', 
+    instance,
+    'key-with-an-format',
     {tag: 'h1'},
     'string with an h1',
   ));
 
-  t.test('capitalize formatter', 
+  t.test('capitalize formatter',
     localizationTest(
-    instance, 
-    'key-with-capitalize-format', 
+    instance,
+    'key-with-capitalize-format',
     {tag: 'section'},
     'Section',
   ));
 
-  t.test('compose formatters', 
+  t.test('compose formatters',
     localizationTest(
-    instance, 
-    'key-with-multiple-formats', 
+    instance,
+    'key-with-multiple-formats',
     {tag: 'section'},
     'string with A section',
   ));

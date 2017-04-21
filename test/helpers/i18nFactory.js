@@ -2,11 +2,12 @@ import {createInstance} from 'i18next';
 import applyCustomI18nFormatters from '../../src/util/i18nFormatting';
 
 const enTestResourceData = {
-  "simple-key": "test string",
-  "key-with-an-format": "string with {{tag, en-handle-an}} {{tag}}",
-  "key-with-capitalize-format": "{{tag, capitalize}}",
-  "key-with-multiple-formats": "string with {{tag, en-handle-an|capitalize}} {{tag}}"   
-}
+  'simple-key': 'test string',
+  'key-with-an-format': 'string with {{tag, en-handle-an}} {{tag}}',
+  'key-with-capitalize-format': '{{tag, capitalize}}',
+  'key-with-multiple-formats':
+  'string with {{tag, en-handle-an|capitalize}} {{tag}}',
+};
 
 export default function getI18nInstance() {
   const namespacedLocaleObject = {
