@@ -48,6 +48,23 @@
       "name": "Razzi Abuissa",
       "email": "razzi53@gmail.com",
       "url": "https://razzi.abuissa.net/"
+    },
+    {
+      "name": "Jeremy Schrader",
+      "email": "schraj@gmail.com",
+      "url": "http://www.pattern-factory.com/"
+    },
+    {
+      "name": "Leo McLay",
+      "url": "https://github.com/leo-alexander"
+    },
+    {
+      "name": "Frederic Brodbeck",
+      "url": "http://www.freder.io/"
+    },
+    {
+      "name": "Ben Yelsey",
+      "url": "https://github.com/inlinestyle"
     }
   ],
   "keywords": "code editor education learning",
@@ -75,7 +92,7 @@
     "jshint": "^2.9.3",
     "keymirror": "^0.1.1",
     "lodash": "^4.15.0",
-    "loop-protect": "git+https://github.com/jsbin/loop-protect.git#v1.0.1",
+    "loop-breaker": "^0.1.0-alpha.7",
     "moment": "^2.14.1",
     "pify": "^2.3.0",
     "promise-retry": "^1.1.1",
@@ -84,10 +101,13 @@
     "react-dom": "^15.4.1",
     "react-ga": "^2.1.2",
     "react-redux": "^5.0.3",
+    "reduce-reducers": "^0.1.2",
     "redux": "^3.6.0",
     "redux-actions": "^1.2.1",
     "redux-immutable": "^3.0.11",
     "redux-logger": "^2.5.0",
+    "redux-saga": "^0.14.3",
+    "redux-saga-debounce-effect": "https://github.com/madewithlove/redux-saga-debounce-effect.git#v0.2.2",
     "redux-thunk": "^2.1.0",
     "rxjs": "^5.0.2",
     "slowparse": "^1.1.4",
@@ -102,9 +122,12 @@
     "postinstall": "bower install",
     "pretest": "yarn run lint",
     "dev": "yarn install && gulp dev",
-    "test": "karma start --single-run --no-auto-watch",
+    "test": "yarn run unittest && yarn run spec",
+    "unittest": "karma start --single-run --no-auto-watch",
+    "spec": "karma start karma-mocha.conf.js --single-run --no-auto-watch",
     "autotest": "karma start --no-single-run --auto-watch",
-    "lint": "eslint --ext .js,.jsx --plugin react src spec",
+    "autospec": "karma start karma-mocha.conf.js --no-single-run --auto-watch",
+    "lint": "eslint --ext .js,.jsx --plugin react src spec test && stylelint src/**/*.css",
     "fixlint": "eslint --ext .js,.jsx --plugin react --fix src spec",
     "toc": "doctoc README.md --github --title '## Table of Contents'",
     "preview": "rm -rvf static/compiled && gulp build --production && static static"
@@ -115,6 +138,7 @@
     "babel-loader": "^6.2.4",
     "babel-polyfill": "^6.6.1",
     "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.22.0",
     "bower": "^1.7.9",
     "brfs": "^1.4.3",
     "brfs-babel": "^1.0.0",
@@ -156,6 +180,7 @@
     "karma-safari-launcher": "^1.0.0",
     "karma-sinon-chai": "^1.2.2",
     "karma-sourcemap-loader": "^0.3.7",
+    "karma-tap": "^3.1.1",
     "karma-webpack": "^1.8.0",
     "mocha": "^3.2.0",
     "node-static": "^0.7.9",
@@ -165,6 +190,7 @@
     "postcss": "^5.2.15",
     "postcss-cssnext": "^2.8.0",
     "raw-loader": "^0.5.1",
+    "redux-saga-test-plan": "^2.3.0",
     "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0",
     "string-replace-loader": "^1.0.5",
@@ -172,6 +198,7 @@
     "svg-react-loader": "^0.4.0-beta.2",
     "svgo": "^0.7.2",
     "svgo-loader": "^1.1.2",
+    "tape": "^4.6.3",
     "transform-loader": "^0.2.3",
     "webpack": "^2.1.0-beta.25",
     "webpack-dev-middleware": "^1.8.2",

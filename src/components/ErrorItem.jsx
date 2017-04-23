@@ -2,6 +2,10 @@ import React from 'react';
 import partial from 'lodash/partial';
 
 function ErrorItem(props) {
+  const lineLabel = props.row >= 0 ?
+    <div>On line {props.row + 1}:</div> :
+    null;
+
   return (
     <li
       className="error-list__error"
@@ -12,7 +16,7 @@ function ErrorItem(props) {
         props.column,
       )}
     >
-      <div>{props.row + 1}</div>
+      {lineLabel}
       <div className="error-list__message">{props.text}</div>
     </li>
   );

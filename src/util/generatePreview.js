@@ -1,11 +1,10 @@
 import castArray from 'lodash/castArray';
 import pick from 'lodash/pick';
 import base64 from 'base64-js';
-import loopProtect from 'loop-protect';
+import loopBreaker from 'loop-breaker';
 import libraries from '../config/libraries';
 import previewFrameLibraries from '../config/previewFrameLibraries';
 
-const DOMParser = window.DOMParser;
 const parser = new DOMParser();
 
 const sourceDelimiter = '/*__POPCODESTART__*/';
@@ -37,15 +36,6 @@ const errorHandlerScript = `(${(() => {
       },
     }), '*');
   };
-
-  if ('loopProtect' in window) {
-    window.loopProtect.hit = function(line) {
-      window.parent.postMessage(JSON.stringify({
-        type: 'org.popcode.infinite-loop',
-        line,
-      }), '*');
-    };
-  }
 }).toString()}());`;
 
 const alertAndPromptReplacementScript = `(${(() => {
@@ -79,7 +69,7 @@ class PreviewGenerator {
 
     this.previewText = (this.previewBody.innerText || '').trim();
     this._attachLibraries(
-      pick(options, ['nonBlockingAlertsAndPrompts', 'breakLoops']),
+      pick(options, ['nonBlockingAlertsAndPrompts']),
     );
 
     if (options.targetBaseTop) {
@@ -133,17 +123,12 @@ class PreviewGenerator {
   }
 
   _addJavascript({breakLoops = false}) {
-    let source = this._project.sources.javascript;
+    let source = `\n${sourceDelimiter}\n${this._project.sources.javascript}`;
     if (breakLoops) {
-      try {
-        source = loopProtect(source);
-      } catch (e) {
-        return '';
-      }
+      source = loopBreaker(source);
     }
     const scriptTag = this.previewDocument.createElement('script');
-    scriptTag.innerHTML =
-      `\n${sourceDelimiter}\n${source}`;
+    scriptTag.innerHTML = source;
     this.previewBody.appendChild(scriptTag);
 
     return this.previewDocument.documentElement.outerHTML;
@@ -161,7 +146,7 @@ class PreviewGenerator {
     this.previewBody.appendChild(scriptTag);
   }
 
-  _attachLibraries({nonBlockingAlertsAndPrompts = false, breakLoops = false}) {
+  _attachLibraries({nonBlockingAlertsAndPrompts = false}) {
     this._project.enabledLibraries.forEach((libraryKey) => {
       if (!(libraryKey in libraries)) {
         return;
@@ -173,10 +158,6 @@ class PreviewGenerator {
 
     if (nonBlockingAlertsAndPrompts) {
       this._attachLibrary(previewFrameLibraries.sweetalert);
-    }
-
-    if (breakLoops) {
-      this._attachLibrary(previewFrameLibraries.loopProtect);
     }
   }
 

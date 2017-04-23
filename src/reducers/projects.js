@@ -2,6 +2,11 @@ import {readFileSync} from 'fs';
 import path from 'path';
 import Immutable from 'immutable';
 import isNil from 'lodash/isNil';
+import filter from 'lodash/filter';
+import find from 'lodash/find';
+import get from 'lodash/get';
+import map from 'lodash/map';
+import values from 'lodash/values';
 
 import {isPristineProject} from '../util/projectUtils';
 
@@ -33,7 +38,55 @@ function addProject(state, project) {
   return state.set(project.projectKey, projectToImmutable(project));
 }
 
-function projects(stateIn, action) {
+function removePristineExcept(state, keepProjectKey) {
+  return state.filter((project, projectKey) => (
+    projectKey === keepProjectKey || !isPristineProject(project)
+  ));
+}
+
+function importGist(state, projectKey, gistData) {
+  const files = values(gistData.files);
+  const popcodeJsonFile = find(files, {filename: 'popcode.json'});
+  const popcodeJson = JSON.parse(get(popcodeJsonFile, 'content', '{}'));
+
+  return addProject(
+    state,
+    {
+      projectKey,
+      sources: {
+        html: get(find(files, {language: 'HTML'}), 'content', ''),
+        css: map(filter(files, {language: 'CSS'}), 'content').join('\n\n'),
+        javascript: map(filter(files, {language: 'JavaScript'}), 'content').
+        join('\n\n'),
+      },
+      enabledLibraries: popcodeJson.enabledLibraries || [],
+    },
+  );
+}
+
+export function reduceRoot(stateIn, action) {
+  return stateIn.update('projects', (projects) => {
+    switch (action.type) {
+      case 'USER_LOGGED_OUT':
+        {
+          const currentProjectKey =
+            stateIn.getIn(['currentProject', 'projectKey']);
+
+          if (isNil(currentProjectKey)) {
+            return new Immutable.Map();
+          }
+
+          return new Immutable.Map().set(
+            currentProjectKey,
+            projects.get(currentProjectKey),
+          );
+        }
+    }
+    return projects;
+  });
+}
+
+export default function reduceProjects(stateIn, action) {
   let state;
 
   if (stateIn === undefined) {
@@ -46,7 +99,7 @@ function projects(stateIn, action) {
     case 'PROJECT_LOADED':
       return addProject(state, action.payload.project);
 
-    case 'PROJECT_SOURCE_EDITED':
+    case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(
         [action.payload.projectKey, 'sources', action.payload.language],
         action.payload.newValue,
@@ -56,27 +109,22 @@ function projects(stateIn, action) {
       );
 
     case 'PROJECT_CREATED':
-      return state.set(
+      return removePristineExcept(state, action.payload.projectKey).set(
         action.payload.projectKey,
         newProject.set('projectKey', action.payload.projectKey),
       );
 
-    case 'CURRENT_PROJECT_CHANGED':
-      return state.filter((project, projectKey) => (
-        projectKey === action.payload.projectKey || !isPristineProject(project)
-      ));
+    case 'CHANGE_CURRENT_PROJECT':
+      return removePristineExcept(state, action.payload.projectKey);
 
-    case 'RESET_WORKSPACE':
-      if (isNil(action.payload.currentProjectKey)) {
-        return emptyMap;
-      }
-
-      return new Immutable.Map().set(
-        action.payload.currentProjectKey,
-        state.get(action.payload.currentProjectKey),
+    case 'GIST_IMPORTED':
+      return importGist(
+        state,
+        action.payload.projectKey,
+        action.payload.gistData,
       );
 
-    case 'PROJECT_LIBRARY_TOGGLED':
+    case 'TOGGLE_LIBRARY':
       return state.updateIn(
         [action.payload.projectKey, 'enabledLibraries'],
         (enabledLibraries) => {
@@ -95,5 +143,3 @@ function projects(stateIn, action) {
       return state;
   }
 }
-
-export default projects;

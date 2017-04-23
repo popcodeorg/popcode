@@ -11,9 +11,11 @@ function currentProject(stateIn, action) {
   }
 
   switch (action.type) {
-    case 'CURRENT_PROJECT_CHANGED':
+    case 'CHANGE_CURRENT_PROJECT':
       return state.set('projectKey', action.payload.projectKey);
     case 'PROJECT_CREATED':
+      return state.set('projectKey', action.payload.projectKey);
+    case 'GIST_IMPORTED':
       return state.set('projectKey', action.payload.projectKey);
     default:
       return state;

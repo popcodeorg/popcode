@@ -9,6 +9,7 @@ const escapeRegExp = require('lodash/escapeRegExp');
 const startsWith = require('lodash/startsWith');
 const map = require('lodash/map');
 const includes = require('lodash/includes');
+const git = require('git-rev-sync');
 
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
@@ -37,7 +38,7 @@ module.exports = {
   entry: './src/application.js',
   output: {
     path: path.resolve(__dirname, './static/compiled'),
-    publicPath: '/compiled/',
+    publicPath: 'compiled/',
     filename: 'application.js',
     sourceMapFilename: 'application.js.map',
   },
@@ -48,6 +49,7 @@ module.exports = {
         include: [
           path.resolve(__dirname, 'src'),
           path.resolve(__dirname, 'spec'),
+          path.resolve(__dirname, 'test'),
         ],
         loaders: ['babel-loader', 'transform-loader/cacheable?brfs-babel'],
       },
@@ -99,15 +101,9 @@ module.exports = {
           matchModule('redux'),
           matchModule('lodash-es'),
           matchModule('stylelint'),
+          matchModule('redux-saga-debounce-effect'),
         ],
         loader: 'babel-loader',
-      },
-      {
-        test: /\.js$/,
-        include: [
-          path.resolve(__dirname, 'node_modules/loop-protect'),
-        ],
-        loader: 'imports-loader?define=>false',
       },
       {
         include: [
@@ -175,15 +171,15 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.EnvironmentPlugin([
-      'FIREBASE_APP',
-      'FIREBASE_API_KEY',
-      'GIT_REVISION',
-      'LOG_REDUX_ACTIONS',
-      'NODE_ENV',
-      'WARN_ON_DROPPED_ERRORS',
-      'GOOGLE_ANALYTICS_TRACKING_ID',
-    ]),
+    new webpack.EnvironmentPlugin({
+      FIREBASE_APP: 'popcode-development',
+      FIREBASE_API_KEY: 'AIzaSyCHlo2RhOkRFFh48g779YSZrLwKjoyCcws',
+      GIT_REVISION: git.short(),
+      LOG_REDUX_ACTIONS: 'false',
+      NODE_ENV: 'development',
+      WARN_ON_DROPPED_ERRORS: 'false',
+      GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2'
+    }),
   ],
   resolve: {
     alias: {

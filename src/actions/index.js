@@ -3,7 +3,7 @@ import validations from '../validations';
 import {isPristineProject} from '../util/projectUtils';
 import Analyzer from '../analyzers';
 
-import bootstrap from './bootstrap';
+import applicationLoaded from './applicationLoaded';
 
 import {
   exportingGist,
@@ -12,10 +12,15 @@ import {
 import {
   createProject,
   changeCurrentProject,
+  toggleLibrary,
+  updateProjectSource,
 } from './projects';
 
 import {
-  userTyped,
+  validatedSource,
+} from './errors';
+
+import {
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
   notificationTriggered,
@@ -23,8 +28,8 @@ import {
 } from './ui';
 
 import {
-  logIn,
-  logOut,
+  userAuthenticated,
+  userLoggedOut,
 } from './user';
 
 function getCurrentPersistor(state) {
@@ -67,13 +72,7 @@ function validateSource(language, source, projectAttributes) {
       return;
     }
 
-    dispatch({
-      type: 'VALIDATED_SOURCE',
-      payload: {
-        language,
-        errors,
-      },
-    });
+    dispatch(validatedSource(language, errors));
   };
 }
 
@@ -83,44 +82,6 @@ export function validateAllSources(project) {
     project.get('sources').forEach((source, language) => {
       dispatch(validateSource(language, source, projectAttributes));
     });
-  };
-}
-
-function updateProjectSource(projectKey, language, newValue) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: 'PROJECT_SOURCE_EDITED',
-      meta: {timestamp: Date.now()},
-      payload: {
-        projectKey,
-        language,
-        newValue,
-      },
-    });
-
-    const state = getState();
-    saveCurrentProject(state);
-
-    const currentProject = getCurrentProject(state);
-    const projectAttributes = new Analyzer(currentProject);
-    dispatch(validateSource(language, newValue, projectAttributes));
-  };
-}
-
-function toggleLibrary(projectKey, libraryKey) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: 'PROJECT_LIBRARY_TOGGLED',
-      meta: {timestamp: Date.now()},
-      payload: {
-        projectKey,
-        libraryKey,
-      },
-    });
-
-    const state = getState();
-    dispatch(validateAllSources(getCurrentProject(state)));
-    saveCurrentProject(state);
   };
 }
 
@@ -181,19 +142,18 @@ export {
   changeCurrentProject,
   updateProjectSource,
   toggleLibrary,
-  logIn,
-  logOut,
+  userAuthenticated,
+  userLoggedOut,
   addRuntimeError,
   clearRuntimeErrors,
   minimizeComponent,
   maximizeComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
-  userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
   notificationTriggered,
   userDismissedNotification,
   exportingGist,
-  bootstrap,
+  applicationLoaded,
 };

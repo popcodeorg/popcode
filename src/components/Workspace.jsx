@@ -33,20 +33,19 @@ import {
   clearRuntimeErrors,
   createProject,
   updateProjectSource,
-  logIn,
-  logOut,
+  userAuthenticated,
+  userLoggedOut,
   toggleLibrary,
   minimizeComponent,
   maximizeComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
-  userTyped,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
   notificationTriggered,
   userDismissedNotification,
   exportingGist,
-  bootstrap,
+  applicationLoaded,
 } from '../actions';
 
 import {getCurrentProject, isPristineProject} from '../util/projectUtils';
@@ -120,7 +119,7 @@ class Workspace extends React.Component {
       gistId = query.gist;
     }
     history.replaceState({}, '', location.pathname);
-    this.props.dispatch(bootstrap(gistId));
+    this.props.dispatch(applicationLoaded(gistId));
     this._listenForAuthChange();
     startSessionHeartbeat();
   }
@@ -165,8 +164,6 @@ class Workspace extends React.Component {
   }
 
   _handleEditorInput(language, source) {
-    this.props.dispatch(userTyped());
-
     this.props.dispatch(
       updateProjectSource(
         this.props.currentProject.projectKey,
@@ -277,7 +274,9 @@ class Workspace extends React.Component {
     }
 
     return (
-      <div className="environment__column editors">{editors}</div>
+      <div className="environment__column">
+        <div className="environment__columnContents editors">{editors}</div>
+      </div>
     );
   }
 
@@ -286,10 +285,10 @@ class Workspace extends React.Component {
   }
 
   _listenForAuthChange() {
-    onSignedIn(({user, credential}) =>
-      this.props.dispatch(logIn(user, credential)),
+    onSignedIn(userCredential =>
+      this.props.dispatch(userAuthenticated(userCredential)),
     );
-    onSignedOut(() => this.props.dispatch(logOut()));
+    onSignedOut(() => this.props.dispatch(userLoggedOut()));
   }
 
   _handleStartLogIn() {
