@@ -67,7 +67,7 @@ class PreviewGenerator {
     this._previewHead = this._ensureElement('head');
     this.previewBody = this._ensureElement('body');
 
-    this.previewText = (this.previewBody.innerText || '').trim();
+    this.previewText = (this._previewHead.innerText || '').trim();
     this._attachLibraries(
       pick(options, ['nonBlockingAlertsAndPrompts']),
     );
