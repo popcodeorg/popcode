@@ -44,4 +44,20 @@ test('i18n', (t) => {
     {tag: 'section'},
     'string with A section',
   ));
+
+  t.test('invalid formatter',
+    localizationTest(
+    instance,
+    'key-invalid-formatter',
+    {tag: 'section'},
+    'section',
+  ));
+
+  t.test('invalid and valid formatter',
+    localizationTest(
+    instance,
+    'key-invalid-and-valid-formatter',
+    {tag: 'Section'},
+    'Section',
+  ));
 });
