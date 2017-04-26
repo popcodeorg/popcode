@@ -17,7 +17,6 @@ import qs from 'qs';
 import base64 from 'base64-js';
 import {TextEncoder} from 'text-encoding';
 import Bugsnag from '../util/Bugsnag';
-import Gists, {EmptyGistError} from '../services/Gists';
 import {
   onSignedIn,
   onSignedOut,
@@ -45,7 +44,7 @@ import {
   editorsUpdateVerticalFlex,
   notificationTriggered,
   userDismissedNotification,
-  exportingGist,
+  exportGist,
   applicationLoaded,
 } from '../actions';
 
@@ -297,55 +296,12 @@ class Workspace extends React.Component {
     this.props.dispatch(editorFocusedRequestedLine());
   }
 
-  async _handleExportGist() {
-    if (this.props.clients.gists.exportInProgress) {
-      return;
-    }
-
-    if (!this.props.currentUser.authenticated) {
-      // eslint-disable-next-line no-alert
-      if (!confirm(t('workspace.confirmations.anonymous-gist-export'))) {
-        return;
-      }
-    }
-
-    const newWindow = openWindowWithWorkaroundForChromeClosingBug(
+  _handleExportGist() {
+    this._gistExportWindow = openWindowWithWorkaroundForChromeClosingBug(
       `data:text/html;base64,${spinnerPage}`,
     );
 
-    const gistWillExport = Gists.createFromProject(
-      this.props.currentProject,
-      this.props.currentUser,
-    );
-    this.props.dispatch(exportingGist(gistWillExport));
-
-    try {
-      const response = await gistWillExport;
-      if (newWindow.closed) {
-        this.props.dispatch(
-          notificationTriggered(
-            'gist-export-complete',
-            'notice',
-            {url: response.html_url},
-          ),
-        );
-      } else {
-        newWindow.location.href = response.html_url;
-      }
-    } catch (error) {
-      if (error instanceof EmptyGistError) {
-        this.props.dispatch(notificationTriggered('empty-gist'));
-        if (!newWindow.closed) {
-          newWindow.close();
-        }
-        return;
-      }
-      this.props.dispatch(notificationTriggered('gist-export-error'));
-      if (!newWindow.closed) {
-        newWindow.close();
-      }
-      throw error;
-    }
+    this.props.dispatch(exportGist());
   }
 
   _renderDashboard() {
