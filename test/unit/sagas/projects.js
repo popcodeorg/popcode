@@ -21,7 +21,7 @@ import {
 import {userAuthenticated} from '../../../src/actions/user';
 import applicationLoaded from '../../../src/actions/applicationLoaded';
 import {saveCurrentProject} from '../../../src/util/projectUtils';
-import Gists from '../../../src/services/Gists';
+import Gists from '../../../src/clients/Gists';
 import FirebasePersistor from '../../../src/persistors/FirebasePersistor';
 import Scenario from '../../helpers/Scenario';
 import {gistData, project, userCredential} from '../../helpers/factory';

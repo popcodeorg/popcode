@@ -24,6 +24,10 @@ export default class Scenario {
     return this.state.getIn(['projects', this.projectKey]);
   }
 
+  get user() {
+    return this.state.get('user');
+  }
+
   get analyzer() {
     return new Analyzer(this.project);
   }

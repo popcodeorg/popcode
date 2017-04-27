@@ -1,5 +1,5 @@
 import each from 'lodash/each';
-import {createGistFromProject} from '../../src/services/Gists';
+import {createGistFromProject} from '../../src/clients/Gists';
 import buildProject from './buildProject';
 
 export default function buildGist(gistId, ...projectArgs) {

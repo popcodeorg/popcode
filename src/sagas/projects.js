@@ -9,7 +9,7 @@ import {
   projectLoaded,
 } from '../actions/projects';
 import {saveCurrentProject} from '../util/projectUtils';
-import Gists from '../services/Gists';
+import Gists from '../clients/Gists';
 import FirebasePersistor from '../persistors/FirebasePersistor';
 
 export function* applicationLoaded(action) {

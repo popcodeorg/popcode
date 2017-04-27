@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
 import trim from 'lodash/trim';
 import promiseRetry from 'promise-retry';
-import gitHub from './gitHub';
+import gitHub from '../services/gitHub';
 
 function performWithRetries(perform, options = {}) {
   return promiseRetry(
