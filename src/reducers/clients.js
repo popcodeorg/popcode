@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 
 const defaultState = new Immutable.Map({
-  gists: new Immutable.Map({exportInProgress: false}),
+  gists: new Immutable.Map({lastExport: null}),
 });
 
 export default function clients(stateIn, action) {
@@ -11,14 +11,23 @@ export default function clients(stateIn, action) {
   }
 
   switch (action.type) {
-    case 'GIST_EXPORT_STARTED':
-      return state.setIn(['gists', 'exportInProgress'], true);
+    case 'EXPORT_GIST':
+      return state.setIn(
+        ['gists', 'lastExport'],
+        new Immutable.Map({status: 'waiting'}),
+      );
 
-    case 'GIST_EXPORT_COMPLETE':
-      return state.setIn(['gists', 'exportInProgress'], false);
+    case 'GIST_EXPORTED':
+      return state.setIn(
+        ['gists', 'lastExport'],
+        new Immutable.Map({status: 'ready', url: action.payload}),
+      );
 
-    case 'GIST_EXPORT_FAILED':
-      return state.setIn(['gists', 'exportInProgress'], false);
+    case 'GIST_EXPORT_ERROR':
+      return state.setIn(
+        ['gists', 'lastExport'],
+        new Immutable.Map({status: 'error', error: action.payload}),
+      );
   }
 
   return state;

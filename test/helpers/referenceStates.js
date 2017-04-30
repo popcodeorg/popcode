@@ -29,3 +29,8 @@ export const errors = {
     javascript: {items: [], state: 'validating'},
   }),
 };
+
+export const clients = {
+  initial: Immutable.fromJS({gists: {lastExport: null}}),
+  waiting: Immutable.fromJS({gists: {lastExport: {status: 'waiting'}}}),
+};
