@@ -16,6 +16,8 @@ import {
   projectCreated,
   projectLoaded,
   toggleLibrary,
+  minimizeComponent,
+  maximizeComponent,
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {userLoggedOut} from '../../../src/actions/user';
@@ -45,7 +47,7 @@ test('projectCreated', (t) => {
 
 test('updateProjectSource', reducerTest(
   reducer,
-  initProjects({[projectKey]: false}),
+  initProjects({[projectKey]: true}),
   partial(updateProjectSource, projectKey, 'css', css, now),
   initProjects({[projectKey]: true}).
     update(
@@ -113,13 +115,19 @@ test('gistImported', (t) => {
     partial(
       gistImported,
       projectKey,
-      gistData({html, css, enabledLibraries: ['jquery']}),
+      gistData({
+        html,
+        css,
+        enabledLibraries: ['jquery'],
+        minimizedComponents: ['output'],
+      }),
     ),
     new Immutable.Map({
       [projectKey]: buildProject(
         projectKey,
         {html, css, javascript: ''},
         ['jquery'],
+        ['output'],
       ),
     }),
   ));
@@ -164,20 +172,44 @@ tap(initProjects({1: false}), projects =>
   )),
 );
 
+tap(initProjects({1: false}), projects =>
+  test('minimizeComponent', reducerTest(
+    reducer,
+    projects,
+    partial(minimizeComponent, '1', 'output', now),
+    projects.update('1', projectIn =>
+      projectIn.set('minimizedComponents', new Immutable.Set(['output'])).
+        set('updatedAt', now),
+    ),
+  )),
+);
+
+tap(initProjects({1: true}), projects =>
+  test('maximizeComponent', reducerTest(
+    reducer,
+    projects,
+    partial(maximizeComponent, '1', 'output', now),
+    projects.update('1', projectIn =>
+      projectIn.set('minimizedComponents', new Immutable.Set()).
+        set('updatedAt', now),
+    ),
+  )),
+);
+
 function initProjects(map = {}) {
   return reduce(map, (projectsIn, modified, key) => {
-    const projects = reducer(projectsIn, projectCreated(key));
+    let projects = reducer(projectsIn, projectCreated(key));
     if (modified) {
-      return reducer(
-        projects,
-        updateProjectSource(key, 'css', '', now),
-      );
+      projects = reducer(projects, updateProjectSource(key, 'css', '', now));
+      projects = reducer(projects, minimizeComponent(key, 'output', now));
     }
     return projects;
-  }, states.init);
+  }, states.initial);
 }
 
-function buildProject(key, sources, enabledLibraries = []) {
+function buildProject(
+  key, sources, enabledLibraries = [], minimizedComponents = [],
+) {
   return Immutable.fromJS({
     projectKey: key,
     sources: defaults(
@@ -189,5 +221,6 @@ function buildProject(key, sources, enabledLibraries = []) {
       },
     ),
     enabledLibraries: new Immutable.Set(enabledLibraries),
+    minimizedComponents: new Immutable.Set(minimizedComponents),
   });
 }

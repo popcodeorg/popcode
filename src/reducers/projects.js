@@ -144,9 +144,8 @@ export default function reduceProjects(stateIn, action) {
     case 'MINIMIZE_COMPONENT':
       return state.updateIn(
         [action.payload.projectKey, 'minimizedComponents'],
-        (minimizedComponents) => {
-          return minimizedComponents.add(action.payload.componentName);
-        },
+        minimizedComponents =>
+          minimizedComponents.add(action.payload.componentName),
       ).setIn(
         [action.payload.projectKey, 'updatedAt'],
         action.meta.timestamp,
@@ -155,9 +154,8 @@ export default function reduceProjects(stateIn, action) {
     case 'MAXIMIZE_COMPONENT':
       return state.updateIn(
         [action.payload.projectKey, 'minimizedComponents'],
-        (minimizedComponents) => {
-          return minimizedComponents.delete(action.payload.componentName);
-        },
+        minimizedComponents =>
+          minimizedComponents.delete(action.payload.componentName),
       ).setIn(
         [action.payload.projectKey, 'updatedAt'],
         action.meta.timestamp,
