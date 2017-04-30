@@ -29,7 +29,23 @@ function addNotification(state, type, severity, payload = {}) {
   );
 }
 
-function ui(stateIn, action) {
+export function reduceRoot(rootState, action) {
+  return rootState.update('ui', (state) => {
+    switch (action.type) {
+      case 'GIST_EXPORT_NOT_DISPLAYED':
+        return addNotification(
+          state,
+          'gist-export-complete',
+          'notice',
+          {url: rootState.getIn(['clients', 'gists', 'lastExport', 'url'])},
+        );
+      default:
+        return state;
+    }
+  });
+}
+
+export default function ui(stateIn, action) {
   let state = stateIn;
   if (state === undefined) {
     state = defaultState;
@@ -124,9 +140,13 @@ function ui(stateIn, action) {
       }
       return state;
 
+    case 'GIST_EXPORT_ERROR':
+      if (action.payload.name === 'EmptyGistError') {
+        return addNotification(state, 'empty-gist', 'error');
+      }
+      return addNotification(state, 'gist-export-error', 'error');
+
     default:
       return state;
   }
 }
-
-export default ui;

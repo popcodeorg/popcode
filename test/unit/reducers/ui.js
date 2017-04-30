@@ -1,8 +1,12 @@
 import test from 'tape';
 import Immutable from 'immutable';
+import tap from 'lodash/tap';
 import partial from 'lodash/partial';
 import reducerTest from '../../helpers/reducerTest';
-import reducer, {DEFAULT_VERTICAL_FLEX} from '../../../src/reducers/ui';
+import reducer, {
+  reduceRoot as rootReducer,
+  DEFAULT_VERTICAL_FLEX,
+} from '../../../src/reducers/ui';
 import {
   gistNotFound,
   gistImportError,
@@ -12,6 +16,11 @@ import {
   editorsUpdateVerticalFlex,
   userDoneTyping,
 } from '../../../src/actions/ui';
+import {
+  gistExportNotDisplayed,
+  gistExportError,
+} from '../../../src/actions/clients';
+import {EmptyGistError} from '../../../src/clients/gists';
 import {userLoggedOut} from '../../../src/actions/user';
 
 const initialState = Immutable.fromJS({
@@ -23,6 +32,17 @@ const initialState = Immutable.fromJS({
     activeSubmenu: null,
   },
 });
+
+function withNotification(type, severity, payload = {}) {
+  return initialState.update(
+    'notifications',
+    notifications => notifications.add(Immutable.fromJS({
+      type,
+      severity,
+      payload,
+    })),
+  );
+}
 
 const gistId = '12345';
 
@@ -79,28 +99,14 @@ test('gistNotFound', reducerTest(
   reducer,
   initialState,
   partial(gistNotFound, gistId),
-  initialState.update(
-    'notifications',
-    notifications => notifications.add(Immutable.fromJS({
-      type: 'gist-import-not-found',
-      severity: 'error',
-      payload: {gistId},
-    })),
-  ),
+  withNotification('gist-import-not-found', 'error', {gistId}),
 ));
 
 test('gistImportError', reducerTest(
   reducer,
   initialState,
   partial(gistImportError, gistId),
-  initialState.update(
-    'notifications',
-    notifications => notifications.add(Immutable.fromJS({
-      type: 'gist-import-error',
-      severity: 'error',
-      payload: {gistId},
-    })),
-  ),
+  withNotification('gist-import-error', 'error', {gistId}),
 ));
 
 test('updateProjectSource', reducerTest(
@@ -137,5 +143,39 @@ test('userLoggedOut', (t) => {
     ),
     userLoggedOut,
     initialState,
+  ));
+});
+
+tap('https://gists.github.com/12345abc', (url) => {
+  const clientState = Immutable.fromJS({
+    gists: {lastExport: {status: 'ready', url}},
+  });
+  test('gistExportNotDisplayed', reducerTest(
+    rootReducer,
+    new Immutable.Map({
+      ui: initialState,
+      clients: clientState,
+    }),
+    gistExportNotDisplayed,
+    new Immutable.Map({
+      ui: withNotification('gist-export-complete', 'notice', {url}),
+      clients: clientState,
+    }),
+  ));
+});
+
+test('gistExportError', (t) => {
+  t.test('with generic error', reducerTest(
+    reducer,
+    initialState,
+    partial(gistExportError, new Error()),
+    withNotification('gist-export-error', 'error'),
+  ));
+
+  t.test('with generic error', reducerTest(
+    reducer,
+    initialState,
+    partial(gistExportError, new EmptyGistError()),
+    withNotification('empty-gist', 'error'),
   ));
 });
