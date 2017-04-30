@@ -24,7 +24,7 @@ export default function EditorsColumn({
 }) {
   const editors = [];
   ['html', 'css', 'javascript'].forEach((language) => {
-    if (includes(ui.minimizedComponents, `editor.${language}`)) {
+    if (includes(currentProject.minimizedComponents, `editor.${language}`)) {
       return;
     }
 

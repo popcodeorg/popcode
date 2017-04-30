@@ -4,7 +4,6 @@ import pick from 'lodash/pick';
 const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({typing: false})).
   set('requestedLine', null).
-  set('minimizedComponents', new Immutable.Set()).
   set('notifications', new Immutable.Set()).
   set(
     'dashboard',
@@ -51,18 +50,6 @@ function ui(stateIn, action) {
 
         return newSubmenu;
       });
-
-    case 'COMPONENT_MINIMIZED':
-      return state.update(
-        'minimizedComponents',
-        components => components.add(action.payload.componentName),
-      );
-
-    case 'COMPONENT_MAXIMIZED':
-      return state.update(
-        'minimizedComponents',
-        components => components.delete(action.payload.componentName),
-      );
 
     case 'USER_REQUESTED_FOCUSED_LINE':
       return state.setIn(

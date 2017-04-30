@@ -13,6 +13,8 @@ import {
   createProject,
   changeCurrentProject,
   toggleLibrary,
+  minimizeComponent,
+  maximizeComponent,
   updateProjectSource,
 } from './projects';
 
@@ -112,20 +114,6 @@ function addRuntimeError(error) {
 function clearRuntimeErrors() {
   return {
     type: 'RUNTIME_ERRORS_CLEARED',
-  };
-}
-
-function minimizeComponent(componentName) {
-  return {
-    type: 'COMPONENT_MINIMIZED',
-    payload: {componentName},
-  };
-}
-
-function maximizeComponent(componentName) {
-  return {
-    type: 'COMPONENT_MAXIMIZED',
-    payload: {componentName},
   };
 }
 

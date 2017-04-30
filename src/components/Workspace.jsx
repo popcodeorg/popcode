@@ -140,11 +140,21 @@ class Workspace extends React.Component {
   }
 
   _handleComponentMinimized(componentName) {
-    this.props.dispatch(minimizeComponent(componentName));
+    this.props.dispatch(
+      minimizeComponent(
+        this.props.currentProject.projectKey,
+        componentName,
+      ),
+    );
   }
 
   _handleComponentMaximized(componentName) {
-    this.props.dispatch(maximizeComponent(componentName));
+    this.props.dispatch(
+      maximizeComponent(
+        this.props.currentProject.projectKey,
+        componentName,
+      ),
+    );
   }
 
   _handleErrorClick(language, line, column) {
@@ -209,10 +219,11 @@ class Workspace extends React.Component {
   }
 
   _renderOutput() {
+    const minimizedComponents = this.props.currentProject.minimizedComponents;
     return (
       <Output
         errors={this.props.errors}
-        isHidden={includes(this.props.ui.minimizedComponents, 'output')}
+        isHidden={includes(minimizedComponents, 'output')}
         project={this.props.currentProject}
         runtimeErrors={this.props.runtimeErrors}
         validationState={this._getOverallValidationState()}
@@ -356,11 +367,15 @@ class Workspace extends React.Component {
   }
 
   _renderSidebar() {
+    let minimizedComponents = [];
+    if (!isNull(this.props.currentProject)) {
+      minimizedComponents = this.props.currentProject.minimizedComponents;
+    }
     return (
       <div className="layout__sidebar">
         <Sidebar
           dashboardIsOpen={this.props.ui.dashboard.isOpen}
-          minimizedComponents={this.props.ui.minimizedComponents}
+          minimizedComponents={minimizedComponents}
           validationState={this._getOverallValidationState()}
           onComponentMaximized={this._handleComponentMaximized}
           onToggleDashboard={this._handleToggleDashboard}

@@ -24,6 +24,18 @@ export const toggleLibrary = createAction(
   (_projectKey, _libraryKey, timestamp = Date.now()) => ({timestamp}),
 );
 
+export const minimizeComponent = createAction(
+  'MINIMIZE_COMPONENT',
+  (projectKey, componentName) => ({projectKey, componentName}),
+  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+);
+
+export const maximizeComponent = createAction(
+  'MAXIMIZE_COMPONENT',
+  (projectKey, componentName) => ({projectKey, componentName}),
+  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+);
+
 export const gistImported = createAction(
   'GIST_IMPORTED',
   (projectKey, gistData) => ({projectKey, gistData}),
