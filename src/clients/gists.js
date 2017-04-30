@@ -29,7 +29,7 @@ export function EmptyGistError(message) {
 }
 EmptyGistError.prototype = Object.create(Error.prototype);
 
-export function createGistFromProject(project) {
+function buildGistFromProject(project) {
   const files = {};
   if (trim(project.sources.html)) {
     files['index.html'] = {
@@ -102,31 +102,27 @@ function createPopcodeJson(project) {
   return JSON.stringify(json);
 }
 
-const Gists = {
-  async createFromProject(project, user) {
-    const github = clientForUser(user);
+export async function createFromProject(project, user) {
+  const github = clientForUser(user);
 
-    const gist = createGistFromProject(project);
-    if (isEmpty(gist.files)) {
-      return Promise.reject(new EmptyGistError());
-    }
+  const gist = buildGistFromProject(project);
+  if (isEmpty(gist.files)) {
+    return Promise.reject(new EmptyGistError());
+  }
 
-    const response =
-      await performWithRetries(() => github.getGist().create(gist));
+  const response =
+    await performWithRetries(() => github.getGist().create(gist));
 
-    const gistData = response.data;
-    if (canUpdateGist(user)) {
-      return updateGistWithImportUrl(github, gistData);
-    }
-    return gistData;
-  },
+  const gistData = response.data;
+  if (canUpdateGist(user)) {
+    return updateGistWithImportUrl(github, gistData);
+  }
+  return gistData;
+}
 
-  async loadFromId(gistId, user) {
-    const github = clientForUser(user);
-    const gist = github.getGist(gistId);
-    const response = await performWithRetries(() => gist.read(), {retries: 3});
-    return response.data;
-  },
-};
-
-export default Gists;
+export async function loadFromId(gistId, user) {
+  const github = clientForUser(user);
+  const gist = github.getGist(gistId);
+  const response = await performWithRetries(() => gist.read(), {retries: 3});
+  return response.data;
+}

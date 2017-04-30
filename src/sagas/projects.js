@@ -9,7 +9,7 @@ import {
   projectLoaded,
 } from '../actions/projects';
 import {saveCurrentProject} from '../util/projectUtils';
-import Gists from '../clients/Gists';
+import {loadFromId} from '../clients/gists';
 import FirebasePersistor from '../persistors/FirebasePersistor';
 
 export function* applicationLoaded(action) {
@@ -33,7 +33,7 @@ export function* changeCurrentProject() {
 export function* importGist({payload: {gistId}}) {
   try {
     const gistData =
-      yield call(Gists.loadFromId, gistId, {authenticated: false});
+      yield call(loadFromId, gistId, {authenticated: false});
     yield put(gistImported(generateProjectKey(), gistData));
   } catch (error) {
     if (get(error, 'response.status') === 404) {

@@ -21,7 +21,7 @@ import {
 import {userAuthenticated} from '../../../src/actions/user';
 import applicationLoaded from '../../../src/actions/applicationLoaded';
 import {saveCurrentProject} from '../../../src/util/projectUtils';
-import Gists from '../../../src/clients/Gists';
+import {loadFromId} from '../../../src/clients/gists';
 import FirebasePersistor from '../../../src/persistors/FirebasePersistor';
 import Scenario from '../../helpers/Scenario';
 import {gistData, project, userCredential} from '../../helpers/factory';
@@ -97,7 +97,7 @@ test('importGist()', (t) => {
   t.test('with successful import', (assert) => {
     const saga = testSaga(importGistSaga, applicationLoaded(gistId));
 
-    saga.next().call(Gists.loadFromId, gistId, {authenticated: false});
+    saga.next().call(loadFromId, gistId, {authenticated: false});
 
     const gist = gistData({html: '<!doctype html>test'});
     saga.next(gist).inspect((effect) => {
@@ -125,7 +125,7 @@ test('importGist()', (t) => {
 
   t.test('with not found error', (assert) => {
     testSaga(importGistSaga, applicationLoaded(gistId)).
-      next().call(Gists.loadFromId, gistId, {authenticated: false}).
+      next().call(loadFromId, gistId, {authenticated: false}).
       throw(
         Object.create(new Error(), {response: {value: {status: 404}}}),
       ).put(gistNotFound(gistId)).
@@ -135,7 +135,7 @@ test('importGist()', (t) => {
 
   t.test('with other error', (assert) => {
     testSaga(importGistSaga, applicationLoaded(gistId)).
-      next().call(Gists.loadFromId, gistId, {authenticated: false}).
+      next().call(loadFromId, gistId, {authenticated: false}).
       throw(new Error()).put(gistImportError()).
       next().isDone();
     assert.end();
