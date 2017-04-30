@@ -7,6 +7,8 @@ import applicationLoaded from './applicationLoaded';
 
 import {
   exportGist,
+  gistExportDisplayed,
+  gistExportNotDisplayed,
 } from './clients';
 
 import {
@@ -145,5 +147,7 @@ export {
   notificationTriggered,
   userDismissedNotification,
   exportGist,
+  gistExportDisplayed,
+  gistExportNotDisplayed,
   applicationLoaded,
 };

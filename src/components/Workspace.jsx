@@ -3,9 +3,11 @@ import path from 'path';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import get from 'lodash/get';
 import values from 'lodash/values';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
+import isNil from 'lodash/isNil';
 import isNull from 'lodash/isNull';
 import partial from 'lodash/partial';
 import sortBy from 'lodash/sortBy';
@@ -45,6 +47,8 @@ import {
   notificationTriggered,
   userDismissedNotification,
   exportGist,
+  gistExportDisplayed,
+  gistExportNotDisplayed,
   applicationLoaded,
 } from '../actions';
 
@@ -127,6 +131,24 @@ class Workspace extends React.Component {
 
   componentDidMount() {
     addEventListener('beforeunload', this._confirmUnload);
+  }
+
+  componentDidUpdate(prevProps) {
+    const previousExportStatus = get(
+      prevProps,
+      'clients.gists.lastExport.status',
+    );
+    const lastExportStatus = get(
+      this.props,
+      'clients.gists.lastExport.status',
+    );
+    if (previousExportStatus !== lastExportStatus) {
+      if (lastExportStatus === 'ready') {
+        this._loadExportedGist();
+      } else if (lastExportStatus === 'error') {
+        this._cleanUpGistExport();
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -304,6 +326,27 @@ class Workspace extends React.Component {
     this.props.dispatch(exportGist());
   }
 
+  _loadExportedGist() {
+    if (isNil(this._gistExportWindow) || this._gistExportWindow.closed) {
+      this.props.dispatch(gistExportNotDisplayed());
+    } else {
+      this._gistExportWindow.location.href =
+        this.props.clients.gists.lastExport.url;
+      this.props.dispatch(gistExportDisplayed());
+    }
+  }
+
+  _cleanUpGistExport() {
+    if (isNil(this._gistExportWindow)) {
+      return;
+    }
+
+    if (!this._gistExportWindow.closed) {
+      this._gistExportWindow.close();
+    }
+    Reflect.deleteProperty(this, '_gistExportWindow');
+  }
+
   _renderDashboard() {
     if (!this.props.ui.dashboard.isOpen) {
       return null;
@@ -316,7 +359,9 @@ class Workspace extends React.Component {
           allProjects={this.props.allProjects}
           currentProject={this.props.currentProject}
           currentUser={this.props.currentUser}
-          gistExportInProgress={this.props.clients.gists.exportInProgress}
+          gistExportInProgress={
+            get(this.props, 'clients.gists.lastExport.status') === 'waiting'
+          }
           validationState={this._getOverallValidationState()}
           onExportGist={this._handleExportGist}
           onLibraryToggled={this._handleLibraryToggled}
