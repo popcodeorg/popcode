@@ -49,7 +49,7 @@ export function createGistFromProject(project) {
       language: 'JavaScript',
     };
   }
-  if (project.enabledLibraries.length) {
+  if (project.enabledLibraries.length || project.minimizedComponents.length) {
     files['popcode.json'] = {
       content: createPopcodeJson(project),
       language: 'JSON',
@@ -92,9 +92,13 @@ async function updateGistWithImportUrl(github, gistData) {
 }
 
 function createPopcodeJson(project) {
-  const json = {
-    enabledLibraries: project.enabledLibraries,
-  };
+  const json = {};
+  if (project.enabledLibraries.length) {
+    json.enabledLibraries = project.enabledLibraries;
+  }
+  if (project.minimizedComponents.length) {
+    json.minimizedComponents = project.minimizedComponents;
+  }
   return JSON.stringify(json);
 }
 
