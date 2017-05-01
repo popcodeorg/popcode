@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import values from 'lodash/values';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
-import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import partial from 'lodash/partial';
 import sortBy from 'lodash/sortBy';
@@ -50,8 +49,7 @@ import {
 
 import {getCurrentProject, isPristineProject} from '../util/projectUtils';
 
-import EditorContainer from './EditorContainer';
-import Editor from './Editor';
+import EditorsColumn from './EditorsColumn';
 import Output from './Output';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
@@ -141,15 +139,6 @@ class Workspace extends React.Component {
     }
   }
 
-  _allErrorsFor(language) {
-    if (language === 'javascript') {
-      return this.props.errors.javascript.items.
-        concat(this.props.runtimeErrors);
-    }
-
-    return this.props.errors[language].items;
-  }
-
   _handleComponentMinimized(componentName) {
     this.props.dispatch(minimizeComponent(componentName));
   }
@@ -235,48 +224,6 @@ class Workspace extends React.Component {
         }
         onRuntimeError={this._handleRuntimeError}
       />
-    );
-  }
-
-  _renderEditors() {
-    const editors = [];
-    ['html', 'css', 'javascript'].forEach((language) => {
-      if (includes(this.props.ui.minimizedComponents, `editor.${language}`)) {
-        return;
-      }
-
-      editors.push(
-        <EditorContainer
-          key={language}
-          language={language}
-          source={this.props.currentProject.sources[language]}
-          onMinimize={
-            partial(this._handleComponentMinimized, `editor.${language}`)
-          }
-        >
-          <Editor
-            errors={this._allErrorsFor(language)}
-            key={language}
-            language={language}
-            percentageOfHeight={1 / editors.length}
-            projectKey={this.props.currentProject.projectKey}
-            requestedFocusedLine={this.props.ui.editors.requestedFocusedLine}
-            source={this.props.currentProject.sources[language]}
-            onInput={partial(this._handleEditorInput, language)}
-            onRequestedLineFocused={this._handleRequestedLineFocused}
-          />
-        </EditorContainer>,
-      );
-    });
-
-    if (isEmpty(editors)) {
-      return null;
-    }
-
-    return (
-      <div className="environment__column">
-        <div className="environment__columnContents editors">{editors}</div>
-      </div>
     );
   }
 
@@ -423,13 +370,22 @@ class Workspace extends React.Component {
   }
 
   _renderEnvironment() {
-    if (isNull(this.props.currentProject)) {
+    const {currentProject} = this.props;
+    if (isNull(currentProject)) {
       return <PopThrobber message={t('workspace.loading')} />;
     }
 
     return (
       <div className="environment">
-        {this._renderEditors()}
+        <EditorsColumn
+          currentProject={currentProject}
+          errors={this.props.errors}
+          runtimeErrors={this.props.runtimeErrors}
+          ui={this.props.ui}
+          onComponentMinimize={this._handleComponentMinimized}
+          onEditorInput={this._handleEditorInput}
+          onRequestedLineFocused={this._handleRequestedLineFocused}
+        />
         {this._renderOutput()}
       </div>
     );
