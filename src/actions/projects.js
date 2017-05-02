@@ -24,14 +24,14 @@ export const toggleLibrary = createAction(
   (_projectKey, _libraryKey, timestamp = Date.now()) => ({timestamp}),
 );
 
-export const minimizeComponent = createAction(
-  'MINIMIZE_COMPONENT',
+export const hideComponent = createAction(
+  'HIDE_COMPONENT',
   (projectKey, componentName) => ({projectKey, componentName}),
   (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
 );
 
-export const maximizeComponent = createAction(
-  'MAXIMIZE_COMPONENT',
+export const unhideComponent = createAction(
+  'UNHIDE_COMPONENT',
   (projectKey, componentName) => ({projectKey, componentName}),
   (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
 );

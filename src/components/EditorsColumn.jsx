@@ -16,7 +16,7 @@ function allErrorsFor(language, errors, runtimeErrors) {
 export default function EditorsColumn({
   currentProject,
   errors,
-  onComponentMinimize,
+  onComponentHide,
   onEditorInput,
   onRequestedLineFocused,
   runtimeErrors,
@@ -33,8 +33,8 @@ export default function EditorsColumn({
         key={language}
         language={language}
         source={currentProject.sources[language]}
-        onMinimize={
-          partial(onComponentMinimize, `editor.${language}`)
+        onHide={
+          partial(onComponentHide, `editor.${language}`)
         }
       >
         <Editor
@@ -70,7 +70,7 @@ EditorsColumn.propTypes = {
   ui: React.PropTypes.shape({
     editors: React.PropTypes.object.isRequired,
   }).isRequired,
-  onComponentMinimize: React.PropTypes.func.isRequired,
+  onComponentHide: React.PropTypes.func.isRequired,
   onEditorInput: React.PropTypes.func.isRequired,
   onRequestedLineFocused: React.PropTypes.func.isRequired,
 };

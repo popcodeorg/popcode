@@ -14,7 +14,6 @@ import {userLoggedOut} from '../../../src/actions/user';
 const initialState = Immutable.fromJS({
   editors: {typing: false},
   requestedLine: null,
-  minimizedComponents: new Immutable.Set(),
   notifications: new Immutable.Set(),
   dashboard: {
     isOpen: false,

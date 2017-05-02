@@ -141,7 +141,7 @@ export default function reduceProjects(stateIn, action) {
         action.meta.timestamp,
       );
 
-    case 'MINIMIZE_COMPONENT':
+    case 'HIDE_COMPONENT':
       return state.updateIn(
         [action.payload.projectKey, 'hiddenUIComponents'],
         hiddenUIComponents =>
@@ -151,7 +151,7 @@ export default function reduceProjects(stateIn, action) {
         action.meta.timestamp,
       );
 
-    case 'MAXIMIZE_COMPONENT':
+    case 'UNHIDE_COMPONENT':
       return state.updateIn(
         [action.payload.projectKey, 'hiddenUIComponents'],
         hiddenUIComponents =>

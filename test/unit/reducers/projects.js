@@ -16,8 +16,8 @@ import {
   projectCreated,
   projectLoaded,
   toggleLibrary,
-  minimizeComponent,
-  maximizeComponent,
+  hideComponent,
+  unhideComponent,
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {userLoggedOut} from '../../../src/actions/user';
@@ -173,10 +173,10 @@ tap(initProjects({1: false}), projects =>
 );
 
 tap(initProjects({1: false}), projects =>
-  test('minimizeComponent', reducerTest(
+  test('hideComponent', reducerTest(
     reducer,
     projects,
-    partial(minimizeComponent, '1', 'output', now),
+    partial(hideComponent, '1', 'output', now),
     projects.update('1', projectIn =>
       projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])).
         set('updatedAt', now),
@@ -185,10 +185,10 @@ tap(initProjects({1: false}), projects =>
 );
 
 tap(initProjects({1: true}), projects =>
-  test('maximizeComponent', reducerTest(
+  test('unhideComponent', reducerTest(
     reducer,
     projects,
-    partial(maximizeComponent, '1', 'output', now),
+    partial(unhideComponent, '1', 'output', now),
     projects.update('1', projectIn =>
       projectIn.set('hiddenUIComponents', new Immutable.Set()).
         set('updatedAt', now),
@@ -201,7 +201,7 @@ function initProjects(map = {}) {
     let projects = reducer(projectsIn, projectCreated(key));
     if (modified) {
       projects = reducer(projects, updateProjectSource(key, 'css', '', now));
-      projects = reducer(projects, minimizeComponent(key, 'output', now));
+      projects = reducer(projects, hideComponent(key, 'output', now));
     }
     return projects;
   }, states.initial);

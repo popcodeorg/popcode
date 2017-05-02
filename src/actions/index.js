@@ -13,8 +13,8 @@ import {
   createProject,
   changeCurrentProject,
   toggleLibrary,
-  minimizeComponent,
-  maximizeComponent,
+  hideComponent,
+  unhideComponent,
   updateProjectSource,
 } from './projects';
 
@@ -134,8 +134,8 @@ export {
   userLoggedOut,
   addRuntimeError,
   clearRuntimeErrors,
-  minimizeComponent,
-  maximizeComponent,
+  hideComponent,
+  unhideComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
   userRequestedFocusedLine,

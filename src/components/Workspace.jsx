@@ -35,8 +35,8 @@ import {
   userAuthenticated,
   userLoggedOut,
   toggleLibrary,
-  minimizeComponent,
-  maximizeComponent,
+  hideComponent,
+  unhideComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
   userRequestedFocusedLine,
@@ -92,8 +92,8 @@ class Workspace extends React.Component {
       this,
       '_confirmUnload',
       '_handleClearRuntimeErrors',
-      '_handleComponentMaximized',
-      '_handleComponentMinimized',
+      '_handleComponentUnhide',
+      '_handleComponentHide',
       '_handleDashboardSubmenuToggled',
       '_handleEditorInput',
       '_handleErrorClick',
@@ -139,18 +139,18 @@ class Workspace extends React.Component {
     }
   }
 
-  _handleComponentMinimized(componentName) {
+  _handleComponentHide(componentName) {
     this.props.dispatch(
-      minimizeComponent(
+      hideComponent(
         this.props.currentProject.projectKey,
         componentName,
       ),
     );
   }
 
-  _handleComponentMaximized(componentName) {
+  _handleComponentUnhide(componentName) {
     this.props.dispatch(
-      maximizeComponent(
+      unhideComponent(
         this.props.currentProject.projectKey,
         componentName,
       ),
@@ -158,7 +158,7 @@ class Workspace extends React.Component {
   }
 
   _handleErrorClick(language, line, column) {
-    this.props.dispatch(maximizeComponent(`editor.${language}`));
+    this.props.dispatch(unhideComponent(`editor.${language}`));
     this.props.dispatch(userRequestedFocusedLine(language, line, column));
   }
 
@@ -229,8 +229,8 @@ class Workspace extends React.Component {
         validationState={this._getOverallValidationState()}
         onClearRuntimeErrors={this._handleClearRuntimeErrors}
         onErrorClick={this._handleErrorClick}
-        onMinimize={
-          partial(this._handleComponentMinimized,
+        onHide={
+          partial(this._handleComponentHide,
             'output')
         }
         onRuntimeError={this._handleRuntimeError}
@@ -367,17 +367,17 @@ class Workspace extends React.Component {
   }
 
   _renderSidebar() {
-    let minimizedComponents = [];
+    let hiddenComponents = [];
     if (!isNull(this.props.currentProject)) {
-      minimizedComponents = this.props.currentProject.hiddenUIComponents;
+      hiddenComponents = this.props.currentProject.hiddenUIComponents;
     }
     return (
       <div className="layout__sidebar">
         <Sidebar
           dashboardIsOpen={this.props.ui.dashboard.isOpen}
-          minimizedComponents={minimizedComponents}
+          hiddenComponents={hiddenComponents}
           validationState={this._getOverallValidationState()}
-          onComponentMaximized={this._handleComponentMaximized}
+          onComponentUnhide={this._handleComponentUnhide}
           onToggleDashboard={this._handleToggleDashboard}
         />
       </div>
@@ -397,7 +397,7 @@ class Workspace extends React.Component {
           errors={this.props.errors}
           runtimeErrors={this.props.runtimeErrors}
           ui={this.props.ui}
-          onComponentMinimize={this._handleComponentMinimized}
+          onComponentHide={this._handleComponentHide}
           onEditorInput={this._handleEditorInput}
           onRequestedLineFocused={this._handleRequestedLineFocused}
         />

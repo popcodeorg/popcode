@@ -70,7 +70,7 @@ class Output extends React.Component {
         <div className="environment__columnContents output">
           <div
             className="environment__label label"
-            onClick={this.props.onMinimize}
+            onClick={this.props.onHide}
           >
             {t('workspace.components.output')}
           </div>
@@ -91,7 +91,7 @@ Output.propTypes = {
   validationState: React.PropTypes.string.isRequired,
   onClearRuntimeErrors: React.PropTypes.func.isRequired,
   onErrorClick: React.PropTypes.func.isRequired,
-  onMinimize: React.PropTypes.func.isRequired,
+  onHide: React.PropTypes.func.isRequired,
   onRuntimeError: React.PropTypes.func.isRequired,
 };
 
