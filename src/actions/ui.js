@@ -11,6 +11,10 @@ export const editorFocusedRequestedLine = createAction(
   'EDITOR_FOCUSED_REQUESTED_LINE',
 );
 
+export const editorsUpdateVerticalFlex = createAction(
+  'EDITORS_UPDATE_VERTICAL_FLEX',
+);
+
 export const notificationTriggered = createAction(
   'NOTIFICATION_TRIGGERED',
   (type, severity = 'error', payload = {}) => ({type, severity, payload}),

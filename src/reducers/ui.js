@@ -1,8 +1,14 @@
 import Immutable from 'immutable';
 import pick from 'lodash/pick';
+import {updateVerticalFlex} from '../util/resize';
+
+export const DEFAULT_VERTICAL_FLEX = new Immutable.List(['1', '1', '1']);
 
 const defaultState = new Immutable.Map().
-  set('editors', new Immutable.Map({typing: false})).
+  set('editors', new Immutable.Map({
+    typing: false,
+    verticalFlex: DEFAULT_VERTICAL_FLEX,
+  })).
   set('requestedLine', null).
   set('notifications', new Immutable.Set()).
   set(
@@ -23,7 +29,6 @@ function addNotification(state, type, severity, payload = {}) {
   );
 }
 
-
 function ui(stateIn, action) {
   let state = stateIn;
   if (state === undefined) {
@@ -31,6 +36,15 @@ function ui(stateIn, action) {
   }
 
   switch (action.type) {
+    case 'CHANGE_CURRENT_PROJECT':
+    case 'HIDE_COMPONENT':
+    case 'PROJECT_CREATED':
+    case 'UNHIDE_COMPONENT':
+      return state.setIn(
+        ['editors', 'verticalFlex'],
+        DEFAULT_VERTICAL_FLEX,
+      );
+
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(['editors', 'typing'], true);
 
@@ -62,6 +76,12 @@ function ui(stateIn, action) {
 
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.setIn(['editors', 'requestedFocusedLine'], null);
+
+    case 'EDITORS_UPDATE_VERTICAL_FLEX':
+      return state.updateIn(['editors', 'verticalFlex'], (prevFlex) => {
+        const newFlex = updateVerticalFlex(action.payload);
+        return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
+      });
 
     case 'GIST_NOT_FOUND':
       return addNotification(

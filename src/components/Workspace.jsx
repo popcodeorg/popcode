@@ -41,6 +41,7 @@ import {
   toggleDashboardSubmenu,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
+  editorsUpdateVerticalFlex,
   notificationTriggered,
   userDismissedNotification,
   exportingGist,
@@ -79,6 +80,7 @@ function mapStateToProps(state) {
     errors: state.get('errors').toJS(),
     runtimeErrors: state.get('runtimeErrors').toJS(),
     isUserTyping: state.getIn(['ui', 'editors', 'typing']),
+    editorsFlex: state.getIn(['ui', 'editors', 'verticalFlex']).toJS(),
     currentUser: state.get('user').toJS(),
     ui: state.get('ui').toJS(),
     clients: state.get('clients').toJS(),
@@ -96,6 +98,7 @@ class Workspace extends React.Component {
       '_handleComponentHide',
       '_handleDashboardSubmenuToggled',
       '_handleEditorInput',
+      '_handleEditorsUpdateVerticalFlex',
       '_handleErrorClick',
       '_handleLibraryToggled',
       '_handleLogOut',
@@ -240,6 +243,10 @@ class Workspace extends React.Component {
 
   _handleToggleDashboard() {
     this.props.dispatch(toggleDashboard());
+  }
+
+  _handleEditorsUpdateVerticalFlex(data) {
+    this.props.dispatch(editorsUpdateVerticalFlex(data));
   }
 
   _listenForAuthChange() {
@@ -394,12 +401,14 @@ class Workspace extends React.Component {
       <div className="environment">
         <EditorsColumn
           currentProject={currentProject}
+          editorsFlex={this.props.editorsFlex}
           errors={this.props.errors}
           runtimeErrors={this.props.runtimeErrors}
           ui={this.props.ui}
           onComponentHide={this._handleComponentHide}
           onEditorInput={this._handleEditorInput}
           onRequestedLineFocused={this._handleRequestedLineFocused}
+          onUpdateFlex={this._handleEditorsUpdateVerticalFlex}
         />
         {this._renderOutput()}
       </div>
@@ -431,6 +440,7 @@ Workspace.propTypes = {
   currentProject: React.PropTypes.object,
   currentUser: React.PropTypes.object.isRequired,
   dispatch: React.PropTypes.func.isRequired,
+  editorsFlex: React.PropTypes.array.isRequired,
   errors: React.PropTypes.object.isRequired,
   isUserTyping: React.PropTypes.bool,
   runtimeErrors: React.PropTypes.array.isRequired,
