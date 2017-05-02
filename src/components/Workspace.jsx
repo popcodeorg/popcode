@@ -219,11 +219,11 @@ class Workspace extends React.Component {
   }
 
   _renderOutput() {
-    const minimizedComponents = this.props.currentProject.minimizedComponents;
+    const {hiddenUIComponents} = this.props.currentProject;
     return (
       <Output
         errors={this.props.errors}
-        isHidden={includes(minimizedComponents, 'output')}
+        isHidden={includes(hiddenUIComponents, 'output')}
         project={this.props.currentProject}
         runtimeErrors={this.props.runtimeErrors}
         validationState={this._getOverallValidationState()}
@@ -369,7 +369,7 @@ class Workspace extends React.Component {
   _renderSidebar() {
     let minimizedComponents = [];
     if (!isNull(this.props.currentProject)) {
-      minimizedComponents = this.props.currentProject.minimizedComponents;
+      minimizedComponents = this.props.currentProject.hiddenUIComponents;
     }
     return (
       <div className="layout__sidebar">

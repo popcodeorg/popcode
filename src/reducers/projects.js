@@ -25,13 +25,13 @@ const newProject = Immutable.fromJS({
     javascript: '',
   },
   enabledLibraries: new Immutable.Set(),
-  minimizedComponents: new Immutable.Set(),
+  hiddenUIComponents: new Immutable.Set(),
 });
 
 function projectToImmutable(project) {
   return Immutable.fromJS(project).merge({
     enabledLibraries: new Immutable.Set(project.enabledLibraries),
-    minimizedComponents: new Immutable.Set(project.minimizedComponents),
+    hiddenUIComponents: new Immutable.Set(project.hiddenUIComponents),
   });
 }
 
@@ -61,7 +61,7 @@ function importGist(state, projectKey, gistData) {
         join('\n\n'),
       },
       enabledLibraries: popcodeJson.enabledLibraries || [],
-      minimizedComponents: popcodeJson.minimizedComponents || [],
+      hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
     },
   );
 }
@@ -143,9 +143,9 @@ export default function reduceProjects(stateIn, action) {
 
     case 'MINIMIZE_COMPONENT':
       return state.updateIn(
-        [action.payload.projectKey, 'minimizedComponents'],
-        minimizedComponents =>
-          minimizedComponents.add(action.payload.componentName),
+        [action.payload.projectKey, 'hiddenUIComponents'],
+        hiddenUIComponents =>
+          hiddenUIComponents.add(action.payload.componentName),
       ).setIn(
         [action.payload.projectKey, 'updatedAt'],
         action.meta.timestamp,
@@ -153,9 +153,9 @@ export default function reduceProjects(stateIn, action) {
 
     case 'MAXIMIZE_COMPONENT':
       return state.updateIn(
-        [action.payload.projectKey, 'minimizedComponents'],
-        minimizedComponents =>
-          minimizedComponents.delete(action.payload.componentName),
+        [action.payload.projectKey, 'hiddenUIComponents'],
+        hiddenUIComponents =>
+          hiddenUIComponents.delete(action.payload.componentName),
       ).setIn(
         [action.payload.projectKey, 'updatedAt'],
         action.meta.timestamp,

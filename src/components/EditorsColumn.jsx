@@ -24,7 +24,7 @@ export default function EditorsColumn({
 }) {
   const editors = [];
   ['html', 'css', 'javascript'].forEach((language) => {
-    if (includes(currentProject.minimizedComponents, `editor.${language}`)) {
+    if (includes(currentProject.hiddenUIComponents, `editor.${language}`)) {
       return;
     }
 
@@ -69,7 +69,6 @@ EditorsColumn.propTypes = {
   runtimeErrors: React.PropTypes.array.isRequired,
   ui: React.PropTypes.shape({
     editors: React.PropTypes.object.isRequired,
-    minimizedComponents: React.PropTypes.array.isRequired,
   }).isRequired,
   onComponentMinimize: React.PropTypes.func.isRequired,
   onEditorInput: React.PropTypes.func.isRequired,

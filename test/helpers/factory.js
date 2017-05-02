@@ -3,7 +3,7 @@ import isNil from 'lodash/isNil';
 import merge from 'lodash/merge';
 
 export function gistData({
-  html, css, javascript, enabledLibraries, minimizedComponents,
+  html, css, javascript, enabledLibraries, hiddenUIComponents,
 } = {}) {
   const files = [];
   if (!isNil(html)) {
@@ -19,11 +19,11 @@ export function gistData({
       content: javascript,
     });
   }
-  if (enabledLibraries || minimizedComponents) {
+  if (enabledLibraries || hiddenUIComponents) {
     files.push({
       language: 'JSON',
       filename: 'popcode.json',
-      content: JSON.stringify({enabledLibraries, minimizedComponents}),
+      content: JSON.stringify({enabledLibraries, hiddenUIComponents}),
     });
   }
   return {files};
@@ -60,7 +60,7 @@ export function project(projectIn) {
       javascript: 'alert("Hi")',
     },
     enabledLibraries: [],
-    minimizedComponents: [],
+    hiddenUIComponents: [],
     updatedAt: Date.now(),
   });
 }

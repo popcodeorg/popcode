@@ -49,7 +49,7 @@ export function createGistFromProject(project) {
       language: 'JavaScript',
     };
   }
-  if (project.enabledLibraries.length || project.minimizedComponents.length) {
+  if (project.enabledLibraries.length || project.hiddenUIComponents.length) {
     files['popcode.json'] = {
       content: createPopcodeJson(project),
       language: 'JSON',
@@ -96,8 +96,8 @@ function createPopcodeJson(project) {
   if (project.enabledLibraries.length) {
     json.enabledLibraries = project.enabledLibraries;
   }
-  if (project.minimizedComponents.length) {
-    json.minimizedComponents = project.minimizedComponents;
+  if (project.hiddenUIComponents.length) {
+    json.hiddenUIComponents = project.hiddenUIComponents;
   }
   return JSON.stringify(json);
 }

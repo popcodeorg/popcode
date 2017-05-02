@@ -119,7 +119,7 @@ test('gistImported', (t) => {
         html,
         css,
         enabledLibraries: ['jquery'],
-        minimizedComponents: ['output'],
+        hiddenUIComponents: ['output'],
       }),
     ),
     new Immutable.Map({
@@ -178,7 +178,7 @@ tap(initProjects({1: false}), projects =>
     projects,
     partial(minimizeComponent, '1', 'output', now),
     projects.update('1', projectIn =>
-      projectIn.set('minimizedComponents', new Immutable.Set(['output'])).
+      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])).
         set('updatedAt', now),
     ),
   )),
@@ -190,7 +190,7 @@ tap(initProjects({1: true}), projects =>
     projects,
     partial(maximizeComponent, '1', 'output', now),
     projects.update('1', projectIn =>
-      projectIn.set('minimizedComponents', new Immutable.Set()).
+      projectIn.set('hiddenUIComponents', new Immutable.Set()).
         set('updatedAt', now),
     ),
   )),
@@ -208,7 +208,7 @@ function initProjects(map = {}) {
 }
 
 function buildProject(
-  key, sources, enabledLibraries = [], minimizedComponents = [],
+  key, sources, enabledLibraries = [], hiddenUIComponents = [],
 ) {
   return Immutable.fromJS({
     projectKey: key,
@@ -221,6 +221,6 @@ function buildProject(
       },
     ),
     enabledLibraries: new Immutable.Set(enabledLibraries),
-    minimizedComponents: new Immutable.Set(minimizedComponents),
+    hiddenUIComponents: new Immutable.Set(hiddenUIComponents),
   });
 }
