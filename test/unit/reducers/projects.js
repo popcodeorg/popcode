@@ -47,7 +47,7 @@ test('projectCreated', (t) => {
 
 test('updateProjectSource', reducerTest(
   reducer,
-  initProjects({[projectKey]: true}),
+  initProjects({[projectKey]: false}),
   partial(updateProjectSource, projectKey, 'css', css, now),
   initProjects({[projectKey]: true}).
     update(
@@ -187,21 +187,23 @@ tap(initProjects({1: false}), projects =>
 tap(initProjects({1: true}), projects =>
   test('unhideComponent', reducerTest(
     reducer,
-    projects,
-    partial(unhideComponent, '1', 'output', now),
     projects.update('1', projectIn =>
-      projectIn.set('hiddenUIComponents', new Immutable.Set()).
+      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])).
         set('updatedAt', now),
     ),
+    partial(unhideComponent, '1', 'output', now),
+    projects,
   )),
 );
 
 function initProjects(map = {}) {
   return reduce(map, (projectsIn, modified, key) => {
-    let projects = reducer(projectsIn, projectCreated(key));
+    const projects = reducer(projectsIn, projectCreated(key));
     if (modified) {
-      projects = reducer(projects, updateProjectSource(key, 'css', '', now));
-      projects = reducer(projects, hideComponent(key, 'output', now));
+      return reducer(
+        projects,
+        updateProjectSource(key, 'css', '', now),
+      );
     }
     return projects;
   }, states.initial);
