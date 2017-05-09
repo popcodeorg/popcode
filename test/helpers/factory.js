@@ -1,9 +1,10 @@
 import defaultsDeep from 'lodash/defaultsDeep';
 import isNil from 'lodash/isNil';
-import isEmpty from 'lodash/isEmpty';
 import merge from 'lodash/merge';
 
-export function gistData({html, css, javascript, enabledLibraries = []} = {}) {
+export function gistData({
+  html, css, javascript, enabledLibraries, hiddenUIComponents,
+} = {}) {
   const files = [];
   if (!isNil(html)) {
     files.push({language: 'HTML', filename: 'index.html', content: html});
@@ -18,11 +19,11 @@ export function gistData({html, css, javascript, enabledLibraries = []} = {}) {
       content: javascript,
     });
   }
-  if (!isEmpty(enabledLibraries)) {
+  if (enabledLibraries || hiddenUIComponents) {
     files.push({
       language: 'JSON',
       filename: 'popcode.json',
-      content: JSON.stringify({enabledLibraries}),
+      content: JSON.stringify({enabledLibraries, hiddenUIComponents}),
     });
   }
   return {files};
@@ -59,6 +60,7 @@ export function project(projectIn) {
       javascript: 'alert("Hi")',
     },
     enabledLibraries: [],
+    hiddenUIComponents: [],
     updatedAt: Date.now(),
   });
 }

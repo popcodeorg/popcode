@@ -19,7 +19,7 @@ function EditorContainer(props) {
     <div className="editors__editor-container">
       <div
         className="environment__label label"
-        onClick={props.onMinimize}
+        onClick={props.onHide}
       >
         {t(`languages.${props.language}`)}
       </div>
@@ -33,7 +33,7 @@ EditorContainer.propTypes = {
   children: React.PropTypes.node.isRequired,
   language: React.PropTypes.string.isRequired,
   source: React.PropTypes.string.isRequired,
-  onMinimize: React.PropTypes.func.isRequired,
+  onHide: React.PropTypes.func.isRequired,
 };
 
 export default EditorContainer;

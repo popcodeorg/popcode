@@ -24,6 +24,18 @@ export const toggleLibrary = createAction(
   (_projectKey, _libraryKey, timestamp = Date.now()) => ({timestamp}),
 );
 
+export const hideComponent = createAction(
+  'HIDE_COMPONENT',
+  (projectKey, componentName) => ({projectKey, componentName}),
+  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+);
+
+export const unhideComponent = createAction(
+  'UNHIDE_COMPONENT',
+  (projectKey, componentName) => ({projectKey, componentName}),
+  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+);
+
 export const gistImported = createAction(
   'GIST_IMPORTED',
   (projectKey, gistData) => ({projectKey, gistData}),

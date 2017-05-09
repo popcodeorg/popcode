@@ -5,13 +5,13 @@ import partial from 'lodash/partial';
 import WordmarkVertical from '../../static/images/wordmark-vertical.svg';
 
 class Sidebar extends React.Component {
-  _renderMinimizedComponents() {
-    const components = this.props.minimizedComponents.
+  _renderHiddenComponents() {
+    const components = this.props.hiddenComponents.
       map(componentName => (
         <div
           className="sidebar__minimized-component"
           key={componentName}
-          onClick={partial(this.props.onComponentMaximized, componentName)}
+          onClick={partial(this.props.onComponentUnhide, componentName)}
         >
           {t(`workspace.components.${componentName}`)}
         </div>
@@ -48,7 +48,7 @@ class Sidebar extends React.Component {
           )}
           onClick={this.props.onToggleDashboard}
         />
-        {this._renderMinimizedComponents()}
+        {this._renderHiddenComponents()}
       </div>
     );
   }
@@ -56,9 +56,9 @@ class Sidebar extends React.Component {
 
 Sidebar.propTypes = {
   dashboardIsOpen: React.PropTypes.bool.isRequired,
-  minimizedComponents: React.PropTypes.array.isRequired,
+  hiddenComponents: React.PropTypes.array.isRequired,
   validationState: React.PropTypes.string.isRequired,
-  onComponentMaximized: React.PropTypes.func.isRequired,
+  onComponentUnhide: React.PropTypes.func.isRequired,
   onToggleDashboard: React.PropTypes.func.isRequired,
 };
 

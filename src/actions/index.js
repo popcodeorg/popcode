@@ -13,6 +13,8 @@ import {
   createProject,
   changeCurrentProject,
   toggleLibrary,
+  hideComponent,
+  unhideComponent,
   updateProjectSource,
 } from './projects';
 
@@ -115,20 +117,6 @@ function clearRuntimeErrors() {
   };
 }
 
-function minimizeComponent(componentName) {
-  return {
-    type: 'COMPONENT_MINIMIZED',
-    payload: {componentName},
-  };
-}
-
-function maximizeComponent(componentName) {
-  return {
-    type: 'COMPONENT_MAXIMIZED',
-    payload: {componentName},
-  };
-}
-
 function toggleDashboard() {
   return {type: 'DASHBOARD_TOGGLED'};
 }
@@ -146,8 +134,8 @@ export {
   userLoggedOut,
   addRuntimeError,
   clearRuntimeErrors,
-  minimizeComponent,
-  maximizeComponent,
+  hideComponent,
+  unhideComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
   userRequestedFocusedLine,

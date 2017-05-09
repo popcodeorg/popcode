@@ -25,13 +25,14 @@ const newProject = Immutable.fromJS({
     javascript: '',
   },
   enabledLibraries: new Immutable.Set(),
+  hiddenUIComponents: new Immutable.Set(),
 });
 
 function projectToImmutable(project) {
-  return Immutable.fromJS(project).set(
-    'enabledLibraries',
-    new Immutable.Set(project.enabledLibraries),
-  );
+  return Immutable.fromJS(project).merge({
+    enabledLibraries: new Immutable.Set(project.enabledLibraries),
+    hiddenUIComponents: new Immutable.Set(project.hiddenUIComponents),
+  });
 }
 
 function addProject(state, project) {
@@ -60,6 +61,7 @@ function importGist(state, projectKey, gistData) {
         join('\n\n'),
       },
       enabledLibraries: popcodeJson.enabledLibraries || [],
+      hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
     },
   );
 }
@@ -134,6 +136,26 @@ export default function reduceProjects(stateIn, action) {
           }
           return enabledLibraries.add(libraryKey);
         },
+      ).setIn(
+        [action.payload.projectKey, 'updatedAt'],
+        action.meta.timestamp,
+      );
+
+    case 'HIDE_COMPONENT':
+      return state.updateIn(
+        [action.payload.projectKey, 'hiddenUIComponents'],
+        hiddenUIComponents =>
+          hiddenUIComponents.add(action.payload.componentName),
+      ).setIn(
+        [action.payload.projectKey, 'updatedAt'],
+        action.meta.timestamp,
+      );
+
+    case 'UNHIDE_COMPONENT':
+      return state.updateIn(
+        [action.payload.projectKey, 'hiddenUIComponents'],
+        hiddenUIComponents =>
+          hiddenUIComponents.delete(action.payload.componentName),
       ).setIn(
         [action.payload.projectKey, 'updatedAt'],
         action.meta.timestamp,

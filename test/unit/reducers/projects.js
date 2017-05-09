@@ -16,6 +16,8 @@ import {
   projectCreated,
   projectLoaded,
   toggleLibrary,
+  hideComponent,
+  unhideComponent,
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {userLoggedOut} from '../../../src/actions/user';
@@ -113,13 +115,19 @@ test('gistImported', (t) => {
     partial(
       gistImported,
       projectKey,
-      gistData({html, css, enabledLibraries: ['jquery']}),
+      gistData({
+        html,
+        css,
+        enabledLibraries: ['jquery'],
+        hiddenUIComponents: ['output'],
+      }),
     ),
     new Immutable.Map({
       [projectKey]: buildProject(
         projectKey,
         {html, css, javascript: ''},
         ['jquery'],
+        ['output'],
       ),
     }),
   ));
@@ -164,6 +172,28 @@ tap(initProjects({1: false}), projects =>
   )),
 );
 
+tap(initProjects({1: true}), projects =>
+  test('hideComponent', reducerTest(
+    reducer,
+    projects,
+    partial(hideComponent, '1', 'output', now),
+    projects.update('1', projectIn =>
+      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    ),
+  )),
+);
+
+tap(initProjects({1: true}), projects =>
+  test('unhideComponent', reducerTest(
+    reducer,
+    projects.update('1', projectIn =>
+      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    ),
+    partial(unhideComponent, '1', 'output', now),
+    projects,
+  )),
+);
+
 function initProjects(map = {}) {
   return reduce(map, (projectsIn, modified, key) => {
     const projects = reducer(projectsIn, projectCreated(key));
@@ -174,10 +204,12 @@ function initProjects(map = {}) {
       );
     }
     return projects;
-  }, states.init);
+  }, states.initial);
 }
 
-function buildProject(key, sources, enabledLibraries = []) {
+function buildProject(
+  key, sources, enabledLibraries = [], hiddenUIComponents = [],
+) {
   return Immutable.fromJS({
     projectKey: key,
     sources: defaults(
@@ -189,5 +221,6 @@ function buildProject(key, sources, enabledLibraries = []) {
       },
     ),
     enabledLibraries: new Immutable.Set(enabledLibraries),
+    hiddenUIComponents: new Immutable.Set(hiddenUIComponents),
   });
 }

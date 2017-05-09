@@ -16,7 +16,7 @@ function allErrorsFor(language, errors, runtimeErrors) {
 export default function EditorsColumn({
   currentProject,
   errors,
-  onComponentMinimize,
+  onComponentHide,
   onEditorInput,
   onRequestedLineFocused,
   runtimeErrors,
@@ -24,7 +24,7 @@ export default function EditorsColumn({
 }) {
   const editors = [];
   ['html', 'css', 'javascript'].forEach((language) => {
-    if (includes(ui.minimizedComponents, `editor.${language}`)) {
+    if (includes(currentProject.hiddenUIComponents, `editor.${language}`)) {
       return;
     }
 
@@ -33,8 +33,8 @@ export default function EditorsColumn({
         key={language}
         language={language}
         source={currentProject.sources[language]}
-        onMinimize={
-          partial(onComponentMinimize, `editor.${language}`)
+        onHide={
+          partial(onComponentHide, `editor.${language}`)
         }
       >
         <Editor
@@ -69,9 +69,8 @@ EditorsColumn.propTypes = {
   runtimeErrors: React.PropTypes.array.isRequired,
   ui: React.PropTypes.shape({
     editors: React.PropTypes.object.isRequired,
-    minimizedComponents: React.PropTypes.array.isRequired,
   }).isRequired,
-  onComponentMinimize: React.PropTypes.func.isRequired,
+  onComponentHide: React.PropTypes.func.isRequired,
   onEditorInput: React.PropTypes.func.isRequired,
   onRequestedLineFocused: React.PropTypes.func.isRequired,
 };
