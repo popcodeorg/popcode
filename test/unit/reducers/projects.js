@@ -172,14 +172,13 @@ tap(initProjects({1: false}), projects =>
   )),
 );
 
-tap(initProjects({1: false}), projects =>
+tap(initProjects({1: true}), projects =>
   test('hideComponent', reducerTest(
     reducer,
     projects,
     partial(hideComponent, '1', 'output', now),
     projects.update('1', projectIn =>
-      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])).
-        set('updatedAt', now),
+      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
     ),
   )),
 );
@@ -188,8 +187,7 @@ tap(initProjects({1: true}), projects =>
   test('unhideComponent', reducerTest(
     reducer,
     projects.update('1', projectIn =>
-      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])).
-        set('updatedAt', now),
+      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
     ),
     partial(unhideComponent, '1', 'output', now),
     projects,
