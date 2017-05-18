@@ -377,6 +377,7 @@ body {
 .environment__column {
   flex: 1 0 0;
   position: relative;
+  min-width: 300px;
 }
 
 .environment__columnContents {
@@ -406,7 +407,6 @@ body {
 
 .editors__editor-container {
   box-sizing: border-box;
-  border-right: 4px solid var(--color-dark-gray);
   position: relative;
   z-index: 0;
   display: flex;
@@ -419,7 +419,13 @@ body {
   flex: 1;
 }
 
-.editors__divider {
+.editors__column-divider {
+  background-color: var(--color-dark-gray);
+  cursor: ew-resize;
+  min-width: 4px;
+}
+
+.editors__row-divider {
   background-color: var(--color-dark-gray);
   cursor: ns-resize;
   min-height: 4px;

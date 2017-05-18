@@ -1,14 +1,24 @@
 import Immutable from 'immutable';
-import {updateVerticalFlex} from '../util/resize';
+import {
+  updateEditorColumnFlex,
+  updateWorkspaceRowFlex,
+} from '../util/resize';
 
-export const DEFAULT_VERTICAL_FLEX = new Immutable.List(['1', '1', '1']);
+
+const DEFAULT_COLUMN_FLEX = new Immutable.List(['1', '1', '1']);
+const DEFAULT_ROW_FLEX = new Immutable.List(['1', '1']);
+export const DEFAULT_WORKSPACE = new Immutable.Map({
+  columnFlex: DEFAULT_COLUMN_FLEX,
+  rowFlex: DEFAULT_ROW_FLEX,
+  isDraggingColumnDivider: false,
+});
 
 const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({
     typing: false,
-    verticalFlex: DEFAULT_VERTICAL_FLEX,
     requestedFocusedLine: null,
   })).
+  set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Set()).
   set(
     'dashboard',
@@ -36,13 +46,15 @@ export default function ui(stateIn, action) {
 
   switch (action.type) {
     case 'CHANGE_CURRENT_PROJECT':
-    case 'HIDE_COMPONENT':
     case 'PROJECT_CREATED':
+      return state.set('workspace', DEFAULT_WORKSPACE);
+
+    case 'HIDE_COMPONENT':
     case 'UNHIDE_COMPONENT':
-      return state.setIn(
-        ['editors', 'verticalFlex'],
-        DEFAULT_VERTICAL_FLEX,
-      );
+      if (action.payload.componentName === 'output') {
+        return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
+      }
+      return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
 
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(['editors', 'typing'], true);
@@ -76,11 +88,23 @@ export default function ui(stateIn, action) {
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.setIn(['editors', 'requestedFocusedLine'], null);
 
-    case 'EDITORS_UPDATE_VERTICAL_FLEX':
-      return state.updateIn(['editors', 'verticalFlex'], (prevFlex) => {
-        const newFlex = updateVerticalFlex(action.payload);
+    case 'DRAG_ROW_DIVIDER':
+      return state.updateIn(['workspace', 'columnFlex'], (prevFlex) => {
+        const newFlex = updateEditorColumnFlex(action.payload);
         return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
       });
+
+    case 'DRAG_COLUMN_DIVIDER':
+      return state.updateIn(['workspace', 'rowFlex'], (prevFlex) => {
+        const newFlex = updateWorkspaceRowFlex(action.payload);
+        return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
+      });
+
+    case 'START_DRAG_COLUMN_DIVIDER':
+      return state.setIn(['workspace', 'isDraggingColumnDivider'], true);
+
+    case 'STOP_DRAG_COLUMN_DIVIDER':
+      return state.setIn(['workspace', 'isDraggingColumnDivider'], false);
 
     case 'GIST_NOT_FOUND':
       return addNotification(

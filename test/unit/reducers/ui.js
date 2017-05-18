@@ -3,14 +3,15 @@ import Immutable from 'immutable';
 import tap from 'lodash/tap';
 import partial from 'lodash/partial';
 import reducerTest from '../../helpers/reducerTest';
-import reducer, {DEFAULT_VERTICAL_FLEX} from '../../../src/reducers/ui';
+import reducer, {DEFAULT_WORKSPACE} from '../../../src/reducers/ui';
 import {
   gistNotFound,
   gistImportError,
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {
-  editorsUpdateVerticalFlex,
+  dragColumnDivider,
+  dragRowDivider,
   userDoneTyping,
   focusLine,
   editorFocusedRequestedLine,
@@ -28,8 +29,8 @@ const initialState = Immutable.fromJS({
   editors: {
     typing: false,
     requestedFocusedLine: null,
-    verticalFlex: DEFAULT_VERTICAL_FLEX,
   },
+  workspace: DEFAULT_WORKSPACE,
   notifications: new Immutable.Set(),
   dashboard: {
     isOpen: false,
@@ -50,12 +51,31 @@ function withNotification(type, severity, payload = {}) {
 
 const gistId = '12345';
 
-test('editorsUpdateVerticalFlex', (t) => {
+test('dragColumnDivider', reducerTest(
+  reducer,
+  initialState,
+  partial(dragColumnDivider, {
+    dividerWidth: {minWidth: 4},
+    columnWidths: [
+      {width: 400, minWidth: 300},
+      {width: 400, minWidth: 300},
+    ],
+    deltaX: 5,
+    lastX: 400,
+    x: 405,
+  }),
+  initialState.setIn(
+    ['workspace', 'rowFlex'],
+    new Immutable.List(['0 1 405px', '1', '1']),
+  ),
+));
+
+test('dragRowDivider', (t) => {
   t.test('dragging first divider down', reducerTest(
     reducer,
     initialState,
-    partial(editorsUpdateVerticalFlex, {
-      deltaY: 5,
+    partial(dragRowDivider, {
+      index: 0,
       dividerHeights: [
         {minHeight: 4},
         {minHeight: 4},
@@ -65,20 +85,20 @@ test('editorsUpdateVerticalFlex', (t) => {
         {height: 100, minHeight: 85},
         {height: 100, minHeight: 85},
       ],
-      index: 0,
+      deltaY: 5,
       lastY: 100,
       y: 105,
     }),
     initialState.setIn(
-      ['editors', 'verticalFlex'],
+      ['workspace', 'columnFlex'],
       new Immutable.List(['0 1 105px', '1', '0 1 100px']),
     ),
   ));
   t.test('dragging second divider down', reducerTest(
     reducer,
     initialState,
-    partial(editorsUpdateVerticalFlex, {
-      deltaY: 5,
+    partial(dragRowDivider, {
+      index: 1,
       dividerHeights: [
         {minHeight: 4},
         {minHeight: 4},
@@ -88,12 +108,12 @@ test('editorsUpdateVerticalFlex', (t) => {
         {height: 100, minHeight: 85},
         {height: 100, minHeight: 85},
       ],
-      index: 1,
+      deltaY: 5,
       lastY: 204,
       y: 209,
     }),
     initialState.setIn(
-      ['editors', 'verticalFlex'],
+      ['workspace', 'columnFlex'],
       new Immutable.List(['0 1 100px', '0 1 105px', '1']),
     ),
   ));

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {DraggableCore} from 'react-draggable';
 import {connect} from 'react-redux';
 import get from 'lodash/get';
 import values from 'lodash/values';
@@ -13,6 +14,7 @@ import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import {t} from 'i18next';
 import qs from 'qs';
+import {getNodeWidth, getNodeWidths} from '../util/resize';
 import Bugsnag from '../util/Bugsnag';
 import {
   onSignedIn,
@@ -37,7 +39,10 @@ import {
   toggleDashboardSubmenu,
   focusLine,
   editorFocusedRequestedLine,
-  editorsUpdateVerticalFlex,
+  dragRowDivider,
+  dragColumnDivider,
+  startDragColumnDivider,
+  stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
   exportGist,
@@ -64,8 +69,12 @@ function mapStateToProps(state) {
     currentProject: getCurrentProject(state),
     errors: state.get('errors').toJS(),
     runtimeErrors: state.get('runtimeErrors').toJS(),
+    isDraggingColumnDivider: state.getIn(
+      ['ui', 'workspace', 'isDraggingColumnDivider'],
+    ),
     isUserTyping: state.getIn(['ui', 'editors', 'typing']),
-    editorsFlex: state.getIn(['ui', 'editors', 'verticalFlex']).toJS(),
+    editorsFlex: state.getIn(['ui', 'workspace', 'columnFlex']).toJS(),
+    rowsFlex: state.getIn(['ui', 'workspace', 'rowFlex']).toJS(),
     currentUser: state.get('user').toJS(),
     ui: state.get('ui').toJS(),
     clients: state.get('clients').toJS(),
@@ -82,8 +91,11 @@ class Workspace extends React.Component {
       '_handleComponentUnhide',
       '_handleComponentHide',
       '_handleDashboardSubmenuToggled',
+      '_handleDividerDrag',
+      '_handleDividerStart',
+      '_handleDividerStop',
       '_handleEditorInput',
-      '_handleEditorsUpdateVerticalFlex',
+      '_handleEditorsDividerDrag',
       '_handleErrorClick',
       '_handleLibraryToggled',
       '_handleLogOut',
@@ -95,7 +107,10 @@ class Workspace extends React.Component {
       '_handleRequestedLineFocused',
       '_handleNotificationDismissed',
       '_handleExportGist',
+      '_storeDividerRef',
+      '_storeColumnRef',
     );
+    this.columnRefs = [null, null];
   }
 
   componentWillMount() {
@@ -206,13 +221,22 @@ class Workspace extends React.Component {
   }
 
   _renderOutput() {
-    const {hiddenUIComponents} = this.props.currentProject;
+    const {
+      currentProject,
+      currentProject: {hiddenUIComponents},
+      errors,
+      isDraggingColumnDivider,
+      rowsFlex,
+      runtimeErrors,
+    } = this.props;
     return (
       <Output
-        errors={this.props.errors}
+        errors={errors}
+        isDraggingColumnDivider={isDraggingColumnDivider}
         isHidden={includes(hiddenUIComponents, 'output')}
-        project={this.props.currentProject}
-        runtimeErrors={this.props.runtimeErrors}
+        project={currentProject}
+        runtimeErrors={runtimeErrors}
+        style={{flex: rowsFlex[1]}}
         validationState={this._getOverallValidationState()}
         onClearRuntimeErrors={this._handleClearRuntimeErrors}
         onErrorClick={this._handleErrorClick}
@@ -220,6 +244,7 @@ class Workspace extends React.Component {
           partial(this._handleComponentHide,
             'output')
         }
+        onRef={partial(this._storeColumnRef, 1)}
         onRuntimeError={this._handleRuntimeError}
       />
     );
@@ -229,8 +254,8 @@ class Workspace extends React.Component {
     this.props.dispatch(toggleDashboard());
   }
 
-  _handleEditorsUpdateVerticalFlex(data) {
-    this.props.dispatch(editorsUpdateVerticalFlex(data));
+  _handleEditorsDividerDrag(data) {
+    this.props.dispatch(dragRowDivider(data));
   }
 
   _listenForAuthChange() {
@@ -330,8 +355,41 @@ class Workspace extends React.Component {
     );
   }
 
+  _storeColumnRef(index, column) {
+    this.columnRefs[index] = column;
+  }
+
+  _storeDividerRef(divider) {
+    this.dividerRef = divider;
+  }
+
+  _handleDividerStart() {
+    this.props.dispatch(startDragColumnDivider());
+  }
+
+  _handleDividerStop() {
+    this.props.dispatch(stopDragColumnDivider());
+  }
+
+  _handleDividerDrag(_, {deltaX, lastX, x}) {
+    this.props.dispatch(dragColumnDivider({
+      columnWidths: getNodeWidths(this.columnRefs),
+      dividerWidth: getNodeWidth(this.dividerRef),
+      deltaX,
+      lastX,
+      x,
+    }));
+  }
+
   _renderEnvironment() {
-    const {currentProject} = this.props;
+    const {
+      currentProject,
+      editorsFlex,
+      errors,
+      rowsFlex,
+      runtimeErrors,
+      ui,
+    } = this.props;
     if (isNull(currentProject)) {
       return <PopThrobber message={t('workspace.loading')} />;
     }
@@ -340,15 +398,27 @@ class Workspace extends React.Component {
       <div className="environment">
         <EditorsColumn
           currentProject={currentProject}
-          editorsFlex={this.props.editorsFlex}
-          errors={this.props.errors}
-          runtimeErrors={this.props.runtimeErrors}
-          ui={this.props.ui}
+          editorsFlex={editorsFlex}
+          errors={errors}
+          runtimeErrors={runtimeErrors}
+          style={{flex: rowsFlex[0]}}
+          ui={ui}
           onComponentHide={this._handleComponentHide}
+          onDividerDrag={this._handleEditorsDividerDrag}
           onEditorInput={this._handleEditorInput}
+          onRef={partial(this._storeColumnRef, 0)}
           onRequestedLineFocused={this._handleRequestedLineFocused}
-          onUpdateFlex={this._handleEditorsUpdateVerticalFlex}
         />
+        <DraggableCore
+          onDrag={this._handleDividerDrag}
+          onStart={this._handleDividerStart}
+          onStop={this._handleDividerStop}
+        >
+          <div
+            className="editors__column-divider"
+            ref={this._storeDividerRef}
+          />
+        </DraggableCore>
         {this._renderOutput()}
       </div>
     );
@@ -381,7 +451,9 @@ Workspace.propTypes = {
   dispatch: PropTypes.func.isRequired,
   editorsFlex: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
+  isDraggingColumnDivider: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool,
+  rowsFlex: PropTypes.array.isRequired,
   runtimeErrors: PropTypes.array.isRequired,
   ui: PropTypes.object.isRequired,
 };

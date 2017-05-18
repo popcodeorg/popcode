@@ -18,7 +18,10 @@ import {
 import {
   focusLine,
   editorFocusedRequestedLine,
-  editorsUpdateVerticalFlex,
+  dragRowDivider,
+  dragColumnDivider,
+  startDragColumnDivider,
+  stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
 } from './ui';
@@ -64,7 +67,10 @@ export {
   toggleDashboardSubmenu,
   focusLine,
   editorFocusedRequestedLine,
-  editorsUpdateVerticalFlex,
+  dragRowDivider,
+  dragColumnDivider,
+  startDragColumnDivider,
+  stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
   exportGist,
