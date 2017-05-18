@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -7,7 +5,6 @@ import get from 'lodash/get';
 import values from 'lodash/values';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
-import isNil from 'lodash/isNil';
 import isNull from 'lodash/isNull';
 import partial from 'lodash/partial';
 import sortBy from 'lodash/sortBy';
@@ -16,8 +13,6 @@ import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import {t} from 'i18next';
 import qs from 'qs';
-import base64 from 'base64-js';
-import {TextEncoder} from 'text-encoding';
 import Bugsnag from '../util/Bugsnag';
 import {
   onSignedIn,
@@ -26,7 +21,6 @@ import {
   signOut,
   startSessionHeartbeat,
 } from '../clients/firebaseAuth';
-import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 
 import {
   addRuntimeError,
@@ -47,8 +41,6 @@ import {
   notificationTriggered,
   userDismissedNotification,
   exportGist,
-  gistExportDisplayed,
-  gistExportNotDisplayed,
   applicationLoaded,
 } from '../actions';
 
@@ -60,17 +52,6 @@ import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 import NotificationList from './NotificationList';
 import PopThrobber from './PopThrobber';
-
-const spinnerPage = base64.fromByteArray(
-  new TextEncoder('utf-8').encode(
-    fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../templates/github-export.html',
-      ),
-    ),
-  ),
-);
 
 function mapStateToProps(state) {
   const projects = sortBy(
@@ -131,24 +112,6 @@ class Workspace extends React.Component {
 
   componentDidMount() {
     addEventListener('beforeunload', this._confirmUnload);
-  }
-
-  componentDidUpdate(prevProps) {
-    const previousExportStatus = get(
-      prevProps,
-      'clients.gists.lastExport.status',
-    );
-    const lastExportStatus = get(
-      this.props,
-      'clients.gists.lastExport.status',
-    );
-    if (previousExportStatus !== lastExportStatus) {
-      if (lastExportStatus === 'ready') {
-        this._loadExportedGist();
-      } else if (lastExportStatus === 'error') {
-        this._cleanUpGistExport();
-      }
-    }
   }
 
   componentWillUnmount() {
@@ -319,32 +282,7 @@ class Workspace extends React.Component {
   }
 
   _handleExportGist() {
-    this._gistExportWindow = openWindowWithWorkaroundForChromeClosingBug(
-      `data:text/html;base64,${spinnerPage}`,
-    );
-
     this.props.dispatch(exportGist());
-  }
-
-  _loadExportedGist() {
-    if (isNil(this._gistExportWindow) || this._gistExportWindow.closed) {
-      this.props.dispatch(gistExportNotDisplayed());
-    } else {
-      this._gistExportWindow.location.href =
-        this.props.clients.gists.lastExport.url;
-      this.props.dispatch(gistExportDisplayed());
-    }
-  }
-
-  _cleanUpGistExport() {
-    if (isNil(this._gistExportWindow)) {
-      return;
-    }
-
-    if (!this._gistExportWindow.closed) {
-      this._gistExportWindow.close();
-    }
-    Reflect.deleteProperty(this, '_gistExportWindow');
   }
 
   _renderDashboard() {

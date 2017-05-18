@@ -5,7 +5,7 @@ import projects, {reduceRoot as reduceRootForProjects} from './projects';
 import currentProject from './currentProject';
 import errors from './errors';
 import runtimeErrors from './runtimeErrors';
-import ui, {reduceRoot as reduceRootForUi} from './ui';
+import ui from './ui';
 import clients from './clients';
 
 const reduceRoot = combineReducers({
@@ -21,5 +21,4 @@ const reduceRoot = combineReducers({
 export default reduceReducers(
   reduceRoot,
   reduceRootForProjects,
-  reduceRootForUi,
 );

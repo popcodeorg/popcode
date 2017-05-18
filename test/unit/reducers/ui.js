@@ -3,10 +3,7 @@ import Immutable from 'immutable';
 import tap from 'lodash/tap';
 import partial from 'lodash/partial';
 import reducerTest from '../../helpers/reducerTest';
-import reducer, {
-  reduceRoot as rootReducer,
-  DEFAULT_VERTICAL_FLEX,
-} from '../../../src/reducers/ui';
+import reducer, {DEFAULT_VERTICAL_FLEX} from '../../../src/reducers/ui';
 import {
   gistNotFound,
   gistImportError,
@@ -147,20 +144,11 @@ test('userLoggedOut', (t) => {
 });
 
 tap('https://gists.github.com/12345abc', (url) => {
-  const clientState = Immutable.fromJS({
-    gists: {lastExport: {status: 'ready', url}},
-  });
   test('gistExportNotDisplayed', reducerTest(
-    rootReducer,
-    new Immutable.Map({
-      ui: initialState,
-      clients: clientState,
-    }),
-    gistExportNotDisplayed,
-    new Immutable.Map({
-      ui: withNotification('gist-export-complete', 'notice', {url}),
-      clients: clientState,
-    }),
+    reducer,
+    initialState,
+    partial(gistExportNotDisplayed, url),
+    withNotification('gist-export-complete', 'notice', {url}),
   ));
 });
 

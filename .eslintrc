@@ -50,7 +50,7 @@
         ],
         "complexity": [
           2,
-          {"max": 21}
+          {"max": 22}
         ],
         "computed-property-spacing": [
             2,
