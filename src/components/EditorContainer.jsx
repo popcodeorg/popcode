@@ -16,7 +16,11 @@ function EditorContainer(props) {
   }
 
   return (
-    <div className="editors__editor-container">
+    <div
+      className="editors__editor-container"
+      ref={props.onRef}
+      style={props.style}
+    >
       <div
         className="environment__label label"
         onClick={props.onHide}
@@ -33,7 +37,9 @@ EditorContainer.propTypes = {
   children: React.PropTypes.node.isRequired,
   language: React.PropTypes.string.isRequired,
   source: React.PropTypes.string.isRequired,
+  style: React.PropTypes.object.isRequired,
   onHide: React.PropTypes.func.isRequired,
+  onRef: React.PropTypes.func.isRequired,
 };
 
 export default EditorContainer;

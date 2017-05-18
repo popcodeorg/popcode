@@ -25,6 +25,7 @@ import {
 import {
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
+  editorsUpdateVerticalFlex,
   notificationTriggered,
   userDismissedNotification,
 } from './ui';
@@ -140,6 +141,7 @@ export {
   toggleDashboardSubmenu,
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
+  editorsUpdateVerticalFlex,
   notificationTriggered,
   userDismissedNotification,
   exportingGist,
