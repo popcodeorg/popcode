@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import classnames from 'classnames';
 import partial from 'lodash/partial';
@@ -40,9 +41,9 @@ function ProjectList(props) {
 }
 
 ProjectList.propTypes = {
-  currentProject: React.PropTypes.object.isRequired,
-  projects: React.PropTypes.array.isRequired,
-  onProjectSelected: React.PropTypes.func.isRequired,
+  currentProject: PropTypes.object.isRequired,
+  projects: PropTypes.array.isRequired,
+  onProjectSelected: PropTypes.func.isRequired,
 };
 
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
 import {t} from 'i18next';
@@ -122,9 +123,9 @@ class PreviewFrame extends React.Component {
 }
 
 PreviewFrame.propTypes = {
-  src: React.PropTypes.string.isRequired,
-  onFrameWillRefresh: React.PropTypes.func.isRequired,
-  onRuntimeError: React.PropTypes.func.isRequired,
+  src: PropTypes.string.isRequired,
+  onFrameWillRefresh: PropTypes.func.isRequired,
+  onRuntimeError: PropTypes.func.isRequired,
 };
 
 

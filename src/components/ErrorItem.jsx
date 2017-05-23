@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import partial from 'lodash/partial';
 
 function ErrorItem(props) {
@@ -23,11 +24,11 @@ function ErrorItem(props) {
 }
 
 ErrorItem.propTypes = {
-  column: React.PropTypes.number.isRequired,
-  reason: React.PropTypes.string.isRequired,
-  row: React.PropTypes.number.isRequired,
-  text: React.PropTypes.string.isRequired,
-  onClick: React.PropTypes.func.isRequired,
+  column: PropTypes.number.isRequired,
+  reason: PropTypes.string.isRequired,
+  row: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default ErrorItem;

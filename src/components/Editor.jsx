@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ACE from 'brace';
 import bindAll from 'lodash/bindAll';
 import get from 'lodash/get';
@@ -141,14 +142,14 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  errors: React.PropTypes.array.isRequired,
-  language: React.PropTypes.string.isRequired,
-  percentageOfHeight: React.PropTypes.number.isRequired,
-  projectKey: React.PropTypes.string.isRequired,
-  requestedFocusedLine: React.PropTypes.object,
-  source: React.PropTypes.string.isRequired,
-  onInput: React.PropTypes.func.isRequired,
-  onRequestedLineFocused: React.PropTypes.func.isRequired,
+  errors: PropTypes.array.isRequired,
+  language: PropTypes.string.isRequired,
+  percentageOfHeight: PropTypes.number.isRequired,
+  projectKey: PropTypes.string.isRequired,
+  requestedFocusedLine: PropTypes.object,
+  source: PropTypes.string.isRequired,
+  onInput: PropTypes.func.isRequired,
+  onRequestedLineFocused: PropTypes.func.isRequired,
 };
 
 Editor.defaultProps = {

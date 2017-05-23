@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {t} from 'i18next';
 import classnames from 'classnames';
 import partial from 'lodash/partial';
@@ -55,11 +56,11 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
-  dashboardIsOpen: React.PropTypes.bool.isRequired,
-  hiddenComponents: React.PropTypes.array.isRequired,
-  validationState: React.PropTypes.string.isRequired,
-  onComponentUnhide: React.PropTypes.func.isRequired,
-  onToggleDashboard: React.PropTypes.func.isRequired,
+  dashboardIsOpen: PropTypes.bool.isRequired,
+  hiddenComponents: PropTypes.array.isRequired,
+  validationState: PropTypes.string.isRequired,
+  onComponentUnhide: PropTypes.func.isRequired,
+  onToggleDashboard: PropTypes.func.isRequired,
 };
 
 export default Sidebar;
