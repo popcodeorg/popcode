@@ -2,9 +2,6 @@
     "rules": {
         "import/order": [
             0
-        ],
-        "prefer-reflect": [
-          0
         ]
     }
 }
