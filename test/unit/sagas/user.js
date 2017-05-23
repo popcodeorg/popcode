@@ -6,6 +6,7 @@ import {
   applicationLoaded as applicationLoadedSaga,
 } from '../../../src/sagas/user';
 import {getInitialUserState} from '../../../src/clients/firebaseAuth';
+import {userCredential as createUserCredential} from '../../helpers/factory';
 
 test('applicationLoaded', (t) => {
   t.test('with no logged in user', (assert) => {
@@ -17,10 +18,7 @@ test('applicationLoaded', (t) => {
   });
 
   t.test('with logged in user', (assert) => {
-    const userCredential = {
-      user: {uid: 'student1'},
-      credential: {provider: 'github.com'},
-    };
+    const userCredential = createUserCredential();
     testSaga(applicationLoadedSaga, applicationLoaded({})).
       next().call(getInitialUserState).
       next(userCredential).put(userAuthenticated(userCredential)).

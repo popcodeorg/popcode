@@ -69,7 +69,7 @@ export function signOut() {
 
 export function saveCredentials(uid, credential) {
   database.
-    ref(`authTokens/${uid}/${credential.provider.replace('.', '_')}`).
+    ref(`authTokens/${uid}/${credential.providerId.replace('.', '_')}`).
     set(credential);
 }
 
