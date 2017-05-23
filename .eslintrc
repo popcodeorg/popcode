@@ -615,8 +615,14 @@
         "react/jsx-no-bind": [
           2
         ],
+        "react/jsx-no-comment-textnodes": [
+          2
+        ],
         "react/jsx-no-duplicate-props": [
             2
+        ],
+        "react/jsx-no-target-blank": [
+          2
         ],
         "react/jsx-no-undef": [
             2
@@ -653,6 +659,9 @@
           2
         ],
         "react/no-children-prop": [
+          2
+        ],
+        "react/no-danger-with-children": [
           2
         ],
         "react/no-deprecated": [

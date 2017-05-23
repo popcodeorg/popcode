@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {t} from 'i18next';
 
 function EditorContainer(props) {
@@ -34,12 +35,12 @@ function EditorContainer(props) {
 }
 
 EditorContainer.propTypes = {
-  children: React.PropTypes.node.isRequired,
-  language: React.PropTypes.string.isRequired,
-  source: React.PropTypes.string.isRequired,
-  style: React.PropTypes.object.isRequired,
-  onHide: React.PropTypes.func.isRequired,
-  onRef: React.PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  language: PropTypes.string.isRequired,
+  source: PropTypes.string.isRequired,
+  style: PropTypes.object.isRequired,
+  onHide: PropTypes.func.isRequired,
+  onRef: PropTypes.func.isRequired,
 };
 
 export default EditorContainer;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {TextEncoder} from 'text-encoding';
 import base64 from 'base64-js';
 import bindAll from 'lodash/bindAll';
@@ -72,10 +73,10 @@ class Preview extends React.Component {
 }
 
 Preview.propTypes = {
-  isValid: React.PropTypes.bool.isRequired,
-  project: React.PropTypes.object.isRequired,
-  onClearRuntimeErrors: React.PropTypes.func.isRequired,
-  onRuntimeError: React.PropTypes.func.isRequired,
+  isValid: PropTypes.bool.isRequired,
+  project: PropTypes.object.isRequired,
+  onClearRuntimeErrors: PropTypes.func.isRequired,
+  onRuntimeError: PropTypes.func.isRequired,
 };
 
 export default Preview;

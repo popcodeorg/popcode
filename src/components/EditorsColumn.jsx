@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {DraggableCore} from 'react-draggable';
 import bindAll from 'lodash/bindAll';
 import isEmpty from 'lodash/isEmpty';
@@ -123,15 +124,15 @@ export default class EditorsColumn extends React.Component {
 }
 
 EditorsColumn.propTypes = {
-  currentProject: React.PropTypes.object.isRequired,
-  editorsFlex: React.PropTypes.array.isRequired,
-  errors: React.PropTypes.object.isRequired,
-  runtimeErrors: React.PropTypes.array.isRequired,
-  ui: React.PropTypes.shape({
-    editors: React.PropTypes.object.isRequired,
+  currentProject: PropTypes.object.isRequired,
+  editorsFlex: PropTypes.array.isRequired,
+  errors: PropTypes.object.isRequired,
+  runtimeErrors: PropTypes.array.isRequired,
+  ui: PropTypes.shape({
+    editors: PropTypes.object.isRequired,
   }).isRequired,
-  onComponentHide: React.PropTypes.func.isRequired,
-  onEditorInput: React.PropTypes.func.isRequired,
-  onRequestedLineFocused: React.PropTypes.func.isRequired,
-  onUpdateFlex: React.PropTypes.func.isRequired,
+  onComponentHide: PropTypes.func.isRequired,
+  onEditorInput: PropTypes.func.isRequired,
+  onRequestedLineFocused: PropTypes.func.isRequired,
+  onUpdateFlex: PropTypes.func.isRequired,
 };

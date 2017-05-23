@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import ErrorSublist from './ErrorSublist';
 
@@ -31,11 +32,11 @@ function ErrorList(props) {
 }
 
 ErrorList.propTypes = {
-  css: React.PropTypes.object.isRequired,
-  docked: React.PropTypes.bool,
-  html: React.PropTypes.object.isRequired,
-  javascript: React.PropTypes.object.isRequired,
-  onErrorClick: React.PropTypes.func.isRequired,
+  css: PropTypes.object.isRequired,
+  docked: PropTypes.bool,
+  html: PropTypes.object.isRequired,
+  javascript: PropTypes.object.isRequired,
+  onErrorClick: PropTypes.func.isRequired,
 };
 
 ErrorList.defaultProps = {

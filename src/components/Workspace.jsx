@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import values from 'lodash/values';
 import bindAll from 'lodash/bindAll';
@@ -435,16 +436,16 @@ class Workspace extends React.Component {
 }
 
 Workspace.propTypes = {
-  allProjects: React.PropTypes.array.isRequired,
-  clients: React.PropTypes.object.isRequired,
-  currentProject: React.PropTypes.object,
-  currentUser: React.PropTypes.object.isRequired,
-  dispatch: React.PropTypes.func.isRequired,
-  editorsFlex: React.PropTypes.array.isRequired,
-  errors: React.PropTypes.object.isRequired,
-  isUserTyping: React.PropTypes.bool,
-  runtimeErrors: React.PropTypes.array.isRequired,
-  ui: React.PropTypes.object.isRequired,
+  allProjects: PropTypes.array.isRequired,
+  clients: PropTypes.object.isRequired,
+  currentProject: PropTypes.object,
+  currentUser: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  editorsFlex: PropTypes.array.isRequired,
+  errors: PropTypes.object.isRequired,
+  isUserTyping: PropTypes.bool,
+  runtimeErrors: PropTypes.array.isRequired,
+  ui: PropTypes.object.isRequired,
 };
 
 Workspace.defaultProps = {

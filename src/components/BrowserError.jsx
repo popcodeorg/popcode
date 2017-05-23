@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {t} from 'i18next';
 
 function getBrowserLink(browser) {
@@ -28,7 +29,7 @@ function BrowserError(props) {
 }
 
 BrowserError.propTypes = {
-  browser: React.PropTypes.object.isRequired,
+  browser: PropTypes.object.isRequired,
 };
 
 export default BrowserError;

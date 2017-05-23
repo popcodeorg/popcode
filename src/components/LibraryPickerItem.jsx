@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 function LibraryPickerItem(props) {
@@ -16,9 +17,9 @@ function LibraryPickerItem(props) {
 }
 
 LibraryPickerItem.propTypes = {
-  enabled: React.PropTypes.bool.isRequired,
-  library: React.PropTypes.object.isRequired,
-  onLibraryToggled: React.PropTypes.func.isRequired,
+  enabled: PropTypes.bool.isRequired,
+  library: PropTypes.object.isRequired,
+  onLibraryToggled: PropTypes.func.isRequired,
 };
 
 export default LibraryPickerItem;

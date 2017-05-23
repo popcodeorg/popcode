@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {t} from 'i18next';
 import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
@@ -84,15 +85,15 @@ class Output extends React.Component {
 }
 
 Output.propTypes = {
-  errors: React.PropTypes.object.isRequired,
-  isHidden: React.PropTypes.bool.isRequired,
-  project: React.PropTypes.object,
-  runtimeErrors: React.PropTypes.array.isRequired,
-  validationState: React.PropTypes.string.isRequired,
-  onClearRuntimeErrors: React.PropTypes.func.isRequired,
-  onErrorClick: React.PropTypes.func.isRequired,
-  onHide: React.PropTypes.func.isRequired,
-  onRuntimeError: React.PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  isHidden: PropTypes.bool.isRequired,
+  project: PropTypes.object,
+  runtimeErrors: PropTypes.array.isRequired,
+  validationState: PropTypes.string.isRequired,
+  onClearRuntimeErrors: PropTypes.func.isRequired,
+  onErrorClick: PropTypes.func.isRequired,
+  onHide: PropTypes.func.isRequired,
+  onRuntimeError: PropTypes.func.isRequired,
 };
 
 Output.defaultProps = {

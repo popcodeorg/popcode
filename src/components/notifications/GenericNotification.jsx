@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {t} from 'i18next';
 
 export default function GenericNotification(props) {
@@ -8,6 +9,6 @@ export default function GenericNotification(props) {
 }
 
 GenericNotification.propTypes = {
-  payload: React.PropTypes.object.isRequired,
-  type: React.PropTypes.string.isRequired,
+  payload: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
 };
