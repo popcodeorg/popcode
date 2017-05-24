@@ -29,7 +29,7 @@ function addNotification(state, type, severity, payload = {}) {
   );
 }
 
-function ui(stateIn, action) {
+export default function ui(stateIn, action) {
   let state = stateIn;
   if (state === undefined) {
     state = defaultState;
@@ -124,9 +124,21 @@ function ui(stateIn, action) {
       }
       return state;
 
+    case 'GIST_EXPORT_NOT_DISPLAYED':
+      return addNotification(
+        state,
+        'gist-export-complete',
+        'notice',
+        {url: action.payload},
+      );
+
+    case 'GIST_EXPORT_ERROR':
+      if (action.payload.name === 'EmptyGistError') {
+        return addNotification(state, 'empty-gist', 'error');
+      }
+      return addNotification(state, 'gist-export-error', 'error');
+
     default:
       return state;
   }
 }
-
-export default ui;

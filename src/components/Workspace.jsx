@@ -1,8 +1,7 @@
-import fs from 'fs';
-import path from 'path';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import get from 'lodash/get';
 import values from 'lodash/values';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
@@ -14,10 +13,7 @@ import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import {t} from 'i18next';
 import qs from 'qs';
-import base64 from 'base64-js';
-import {TextEncoder} from 'text-encoding';
 import Bugsnag from '../util/Bugsnag';
-import Gists, {EmptyGistError} from '../services/Gists';
 import {
   onSignedIn,
   onSignedOut,
@@ -25,7 +21,6 @@ import {
   signOut,
   startSessionHeartbeat,
 } from '../clients/firebaseAuth';
-import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 
 import {
   addRuntimeError,
@@ -45,7 +40,7 @@ import {
   editorsUpdateVerticalFlex,
   notificationTriggered,
   userDismissedNotification,
-  exportingGist,
+  exportGist,
   applicationLoaded,
 } from '../actions';
 
@@ -57,17 +52,6 @@ import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 import NotificationList from './NotificationList';
 import PopThrobber from './PopThrobber';
-
-const spinnerPage = base64.fromByteArray(
-  new TextEncoder('utf-8').encode(
-    fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../templates/github-export.html',
-      ),
-    ),
-  ),
-);
 
 function mapStateToProps(state) {
   const projects = sortBy(
@@ -297,55 +281,8 @@ class Workspace extends React.Component {
     this.props.dispatch(editorFocusedRequestedLine());
   }
 
-  async _handleExportGist() {
-    if (this.props.clients.gists.exportInProgress) {
-      return;
-    }
-
-    if (!this.props.currentUser.authenticated) {
-      // eslint-disable-next-line no-alert
-      if (!confirm(t('workspace.confirmations.anonymous-gist-export'))) {
-        return;
-      }
-    }
-
-    const newWindow = openWindowWithWorkaroundForChromeClosingBug(
-      `data:text/html;base64,${spinnerPage}`,
-    );
-
-    const gistWillExport = Gists.createFromProject(
-      this.props.currentProject,
-      this.props.currentUser,
-    );
-    this.props.dispatch(exportingGist(gistWillExport));
-
-    try {
-      const response = await gistWillExport;
-      if (newWindow.closed) {
-        this.props.dispatch(
-          notificationTriggered(
-            'gist-export-complete',
-            'notice',
-            {url: response.html_url},
-          ),
-        );
-      } else {
-        newWindow.location.href = response.html_url;
-      }
-    } catch (error) {
-      if (error instanceof EmptyGistError) {
-        this.props.dispatch(notificationTriggered('empty-gist'));
-        if (!newWindow.closed) {
-          newWindow.close();
-        }
-        return;
-      }
-      this.props.dispatch(notificationTriggered('gist-export-error'));
-      if (!newWindow.closed) {
-        newWindow.close();
-      }
-      throw error;
-    }
+  _handleExportGist() {
+    this.props.dispatch(exportGist());
   }
 
   _renderDashboard() {
@@ -360,7 +297,9 @@ class Workspace extends React.Component {
           allProjects={this.props.allProjects}
           currentProject={this.props.currentProject}
           currentUser={this.props.currentUser}
-          gistExportInProgress={this.props.clients.gists.exportInProgress}
+          gistExportInProgress={
+            get(this.props, 'clients.gists.lastExport.status') === 'waiting'
+          }
           validationState={this._getOverallValidationState()}
           onExportGist={this._handleExportGist}
           onLibraryToggled={this._handleLibraryToggled}

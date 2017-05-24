@@ -15,6 +15,9 @@
   "src/sagas/*.js": {
     "type": "saga"
   },
+  "src/clients/*.js": {
+    "type": "client"
+  },
   "test/unit/*.js": {
     "type": "test",
     "template": "import test from 'tape';\n\ntest('{}', (assert) => {open}\n{close});"

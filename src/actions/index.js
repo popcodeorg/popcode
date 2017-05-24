@@ -6,7 +6,9 @@ import Analyzer from '../analyzers';
 import applicationLoaded from './applicationLoaded';
 
 import {
-  exportingGist,
+  exportGist,
+  gistExportDisplayed,
+  gistExportNotDisplayed,
 } from './clients';
 
 import {
@@ -144,6 +146,8 @@ export {
   editorsUpdateVerticalFlex,
   notificationTriggered,
   userDismissedNotification,
-  exportingGist,
+  exportGist,
+  gistExportDisplayed,
+  gistExportNotDisplayed,
   applicationLoaded,
 };
