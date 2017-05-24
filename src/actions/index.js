@@ -1,8 +1,3 @@
-import FirebasePersistor from '../persistors/FirebasePersistor';
-import validations from '../validations';
-import {isPristineProject} from '../util/projectUtils';
-import Analyzer from '../analyzers';
-
 import applicationLoaded from './applicationLoaded';
 
 import {
@@ -21,10 +16,6 @@ import {
 } from './projects';
 
 import {
-  validatedSource,
-} from './errors';
-
-import {
   userRequestedFocusedLine,
   editorFocusedRequestedLine,
   editorsUpdateVerticalFlex,
@@ -36,76 +27,6 @@ import {
   userAuthenticated,
   userLoggedOut,
 } from './user';
-
-function getCurrentPersistor(state) {
-  const currentUser = state.get('user');
-  if (currentUser.get('authenticated')) {
-    return new FirebasePersistor(currentUser.get('id'));
-  }
-  return null;
-}
-
-export function getCurrentProject(state) {
-  const projectKey = state.getIn(['currentProject', 'projectKey']);
-  if (projectKey) {
-    return state.getIn(['projects', projectKey]);
-  }
-
-  return null;
-}
-
-export function saveCurrentProject(state) {
-  const currentProject = getCurrentProject(state);
-  const persistor = getCurrentPersistor(state);
-
-  if (persistor && currentProject && !isPristineProject(currentProject)) {
-    persistor.saveCurrentProject(currentProject.toJS());
-    return true;
-  }
-
-  return false;
-}
-
-function validateSource(language, source, projectAttributes) {
-  return async (dispatch, getState) => {
-    const validate = validations[language];
-    const errors = await validate(source, projectAttributes);
-    const currentSource = getCurrentProject(getState()).
-      get('sources').get(language);
-
-    if (currentSource !== source) {
-      return;
-    }
-
-    dispatch(validatedSource(language, errors));
-  };
-}
-
-export function validateAllSources(project) {
-  return (dispatch) => {
-    const projectAttributes = new Analyzer(project);
-    project.get('sources').forEach((source, language) => {
-      dispatch(validateSource(language, source, projectAttributes));
-    });
-  };
-}
-
-export function loadAllProjects() {
-  return async (dispatch, getState) => {
-    const persistor = getCurrentPersistor(getState());
-    if (persistor === null) {
-      return;
-    }
-
-    const projects = await persistor.all();
-    projects.forEach((project) => {
-      dispatch({
-        type: 'PROJECT_LOADED',
-        payload: {project},
-      });
-    });
-  };
-}
 
 function addRuntimeError(error) {
   return {
