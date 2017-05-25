@@ -45,6 +45,13 @@ function removePristineExcept(state, keepProjectKey) {
   ));
 }
 
+function unhideComponent(state, projectKey, component, timestamp) {
+  return state.updateIn(
+    [projectKey, 'hiddenUIComponents'],
+    hiddenUIComponents => hiddenUIComponents.delete(component),
+  ).setIn([projectKey, 'updatedAt'], timestamp);
+}
+
 function importGist(state, projectKey, gistData) {
   const files = values(gistData.files);
   const popcodeJsonFile = find(files, {filename: 'popcode.json'});
@@ -83,6 +90,13 @@ export function reduceRoot(stateIn, action) {
             projects.get(currentProjectKey),
           );
         }
+      case 'USER_REQUESTED_FOCUSED_LINE':
+        return unhideComponent(
+          projects,
+          stateIn.getIn(['currentProject', 'projectKey']),
+          `editor.${action.payload.language}`,
+          action.meta.timestamp,
+        );
     }
     return projects;
   });
@@ -152,12 +166,10 @@ export default function reduceProjects(stateIn, action) {
       );
 
     case 'UNHIDE_COMPONENT':
-      return state.updateIn(
-        [action.payload.projectKey, 'hiddenUIComponents'],
-        hiddenUIComponents =>
-          hiddenUIComponents.delete(action.payload.componentName),
-      ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
+      return unhideComponent(
+        state,
+        action.payload.projectKey,
+        action.payload.componentName,
         action.meta.timestamp,
       );
 

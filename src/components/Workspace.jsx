@@ -146,7 +146,6 @@ class Workspace extends React.Component {
   }
 
   _handleErrorClick(language, line, column) {
-    this.props.dispatch(unhideComponent(`editor.${language}`));
     this.props.dispatch(userRequestedFocusedLine(language, line, column));
   }
 

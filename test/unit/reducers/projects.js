@@ -20,6 +20,9 @@ import {
   unhideComponent,
   updateProjectSource,
 } from '../../../src/actions/projects';
+import {
+  userRequestedFocusedLine,
+} from '../../../src/actions/ui';
 import {userLoggedOut} from '../../../src/actions/user';
 
 const now = Date.now();
@@ -193,6 +196,25 @@ tap(initProjects({1: true}), projects =>
     projects,
   )),
 );
+
+tap(initProjects({1: true}), (projects) => {
+  const timestamp = Date.now();
+  test('userRequestedFocusedLine', reducerTest(
+    rootReducer,
+    Immutable.fromJS({
+      projects: projects.setIn(
+        ['1', 'hiddenUIComponents'],
+        new Immutable.Set(['editor.javascript']),
+      ),
+      currentProject: {projectKey: '1'},
+    }),
+    partial(userRequestedFocusedLine, 'javascript', 1, 1, timestamp),
+    Immutable.fromJS({
+      projects: projects.setIn(['1', 'updatedAt'], timestamp),
+      currentProject: {projectKey: '1'},
+    }),
+  ));
+});
 
 function initProjects(map = {}) {
   return reduce(map, (projectsIn, modified, key) => {
