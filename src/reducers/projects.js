@@ -90,7 +90,7 @@ export function reduceRoot(stateIn, action) {
             projects.get(currentProjectKey),
           );
         }
-      case 'USER_REQUESTED_FOCUSED_LINE':
+      case 'FOCUS_LINE':
         return unhideComponent(
           projects,
           stateIn.getIn(['currentProject', 'projectKey']),

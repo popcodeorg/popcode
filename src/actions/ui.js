@@ -2,8 +2,8 @@ import {createAction} from 'redux-actions';
 
 export const userDoneTyping = createAction('USER_DONE_TYPING');
 
-export const userRequestedFocusedLine = createAction(
-  'USER_REQUESTED_FOCUSED_LINE',
+export const focusLine = createAction(
+  'FOCUS_LINE',
   (language, line, column) => ({language, line, column}),
   (_language, _line, _column, timestamp = Date.now()) => ({timestamp}),
 );

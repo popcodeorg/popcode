@@ -65,7 +65,7 @@ export default function ui(stateIn, action) {
         return newSubmenu;
       });
 
-    case 'USER_REQUESTED_FOCUSED_LINE':
+    case 'FOCUS_LINE':
       return state.setIn(
         ['editors', 'requestedFocusedLine'],
         new Immutable.Map().

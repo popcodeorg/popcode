@@ -21,7 +21,7 @@ import {
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {
-  userRequestedFocusedLine,
+  focusLine,
 } from '../../../src/actions/ui';
 import {userLoggedOut} from '../../../src/actions/user';
 
@@ -199,7 +199,7 @@ tap(initProjects({1: true}), projects =>
 
 tap(initProjects({1: true}), (projects) => {
   const timestamp = Date.now();
-  test('userRequestedFocusedLine', reducerTest(
+  test('focusLine', reducerTest(
     rootReducer,
     Immutable.fromJS({
       projects: projects.setIn(
@@ -208,7 +208,7 @@ tap(initProjects({1: true}), (projects) => {
       ),
       currentProject: {projectKey: '1'},
     }),
-    partial(userRequestedFocusedLine, 'javascript', 1, 1, timestamp),
+    partial(focusLine, 'javascript', 1, 1, timestamp),
     Immutable.fromJS({
       projects: projects.setIn(['1', 'updatedAt'], timestamp),
       currentProject: {projectKey: '1'},

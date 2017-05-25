@@ -7,7 +7,7 @@ import createApplicationStore from '../../../src/createApplicationStore';
 
 import {
   editorFocusedRequestedLine,
-  userRequestedFocusedLine,
+  focusLine,
   notificationTriggered,
   userDismissedNotification,
 } from '../../../src/actions';
@@ -27,9 +27,9 @@ describe('interfaceStateActions', () => {
     clock.restore();
   });
 
-  describe('userRequestedFocusedLine', () => {
+  describe('focusLine', () => {
     beforeEach(
-      () => store.dispatch(userRequestedFocusedLine('javascript', 4, 2)),
+      () => store.dispatch(focusLine('javascript', 4, 2)),
     );
 
     it('sets requestedFocusedLine to given value', () => {
@@ -44,7 +44,7 @@ describe('interfaceStateActions', () => {
 
   describe('editorFocusedRequestedLine', () => {
     beforeEach(() => {
-      store.dispatch(userRequestedFocusedLine('javascript', 4, 2));
+      store.dispatch(focusLine('javascript', 4, 2));
       store.dispatch(editorFocusedRequestedLine());
     });
 
