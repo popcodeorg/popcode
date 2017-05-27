@@ -12,6 +12,8 @@ import {
 import {
   editorsUpdateVerticalFlex,
   userDoneTyping,
+  focusLine,
+  editorFocusedRequestedLine,
 } from '../../../src/actions/ui';
 import {
   gistExportNotDisplayed,
@@ -21,8 +23,11 @@ import {EmptyGistError} from '../../../src/clients/gists';
 import {userLoggedOut} from '../../../src/actions/user';
 
 const initialState = Immutable.fromJS({
-  editors: {typing: false, verticalFlex: DEFAULT_VERTICAL_FLEX},
-  requestedLine: null,
+  editors: {
+    typing: false,
+    requestedFocusedLine: null,
+    verticalFlex: DEFAULT_VERTICAL_FLEX,
+  },
   notifications: new Immutable.Set(),
   dashboard: {
     isOpen: false,
@@ -167,3 +172,23 @@ test('gistExportError', (t) => {
     withNotification('empty-gist', 'error'),
   ));
 });
+
+test('focusLine', reducerTest(
+  reducer,
+  initialState,
+  partial(focusLine, 'javascript', 4, 2),
+  initialState.setIn(
+    ['editors', 'requestedFocusedLine'],
+    new Immutable.Map({language: 'javascript', line: 4, column: 2}),
+  ),
+));
+
+test('editorFocusedRequestedLine', reducerTest(
+  reducer,
+  initialState.setIn(
+    ['editors', 'requestedFocusedLine'],
+    new Immutable.Map({language: 'javascript', line: 4, column: 2}),
+  ),
+  editorFocusedRequestedLine,
+  initialState,
+));

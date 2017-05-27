@@ -8,8 +8,8 @@ const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({
     typing: false,
     verticalFlex: DEFAULT_VERTICAL_FLEX,
+    requestedFocusedLine: null,
   })).
-  set('requestedLine', null).
   set('notifications', new Immutable.Set()).
   set(
     'dashboard',

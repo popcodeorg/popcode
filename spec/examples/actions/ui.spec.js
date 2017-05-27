@@ -6,8 +6,6 @@ import {assert} from 'chai';
 import createApplicationStore from '../../../src/createApplicationStore';
 
 import {
-  editorFocusedRequestedLine,
-  focusLine,
   notificationTriggered,
   userDismissedNotification,
 } from '../../../src/actions';
@@ -25,34 +23,6 @@ describe('interfaceStateActions', () => {
   afterEach(() => {
     clock.tick(timeInterval);
     clock.restore();
-  });
-
-  describe('focusLine', () => {
-    beforeEach(
-      () => store.dispatch(focusLine('javascript', 4, 2)),
-    );
-
-    it('sets requestedFocusedLine to given value', () => {
-      assert.deepEqual(
-        store.getState().getIn(
-          ['ui', 'editors', 'requestedFocusedLine'],
-        ).toJS(),
-        {language: 'javascript', line: 4, column: 2},
-      );
-    });
-  });
-
-  describe('editorFocusedRequestedLine', () => {
-    beforeEach(() => {
-      store.dispatch(focusLine('javascript', 4, 2));
-      store.dispatch(editorFocusedRequestedLine());
-    });
-
-    it('sets requestedFocusedLine to null', () => {
-      assert.isNull(
-        store.getState().getIn(['ui', 'editors', 'requestedFocusedLine']),
-      );
-    });
   });
 
   describe('notificationTriggered', () => {
