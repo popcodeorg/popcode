@@ -16,7 +16,7 @@ import {
 } from './projects';
 
 import {
-  userRequestedFocusedLine,
+  focusLine,
   editorFocusedRequestedLine,
   editorsUpdateVerticalFlex,
   notificationTriggered,
@@ -62,7 +62,7 @@ export {
   unhideComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
-  userRequestedFocusedLine,
+  focusLine,
   editorFocusedRequestedLine,
   editorsUpdateVerticalFlex,
   notificationTriggered,

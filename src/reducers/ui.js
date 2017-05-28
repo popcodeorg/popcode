@@ -8,8 +8,8 @@ const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({
     typing: false,
     verticalFlex: DEFAULT_VERTICAL_FLEX,
+    requestedFocusedLine: null,
   })).
-  set('requestedLine', null).
   set('notifications', new Immutable.Set()).
   set(
     'dashboard',
@@ -65,7 +65,7 @@ export default function ui(stateIn, action) {
         return newSubmenu;
       });
 
-    case 'USER_REQUESTED_FOCUSED_LINE':
+    case 'FOCUS_LINE':
       return state.setIn(
         ['editors', 'requestedFocusedLine'],
         new Immutable.Map().

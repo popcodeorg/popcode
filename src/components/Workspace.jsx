@@ -35,7 +35,7 @@ import {
   unhideComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
-  userRequestedFocusedLine,
+  focusLine,
   editorFocusedRequestedLine,
   editorsUpdateVerticalFlex,
   notificationTriggered,
@@ -146,8 +146,7 @@ class Workspace extends React.Component {
   }
 
   _handleErrorClick(language, line, column) {
-    this.props.dispatch(unhideComponent(`editor.${language}`));
-    this.props.dispatch(userRequestedFocusedLine(language, line, column));
+    this.props.dispatch(focusLine(language, line, column));
   }
 
   _handleEditorInput(language, source) {
