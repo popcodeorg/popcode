@@ -1,5 +1,4 @@
 import Immutable from 'immutable';
-import pick from 'lodash/pick';
 import {updateVerticalFlex} from '../util/resize';
 
 export const DEFAULT_VERTICAL_FLEX = new Immutable.List(['1', '1', '1']);
@@ -100,11 +99,11 @@ export default function ui(stateIn, action) {
       );
 
     case 'NOTIFICATION_TRIGGERED':
-      return state.update(
-        'notifications',
-        errors => errors.add(new Immutable.Map(
-          pick(action.payload, ['type', 'severity', 'payload']),
-        )),
+      return addNotification(
+        state,
+        action.payload.type,
+        action.payload.severity,
+        action.payload.payload,
       );
 
     case 'USER_DISMISSED_NOTIFICATION':
