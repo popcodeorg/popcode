@@ -53,6 +53,10 @@ module.exports = function(config) {
     browsers: ['Chrome'],
 
     concurrency: Infinity,
+
+    browserConsoleLogOptions: {
+      level: config.LOG_WARN,
+    },
   });
 
   if (browserStackAvailable) {
