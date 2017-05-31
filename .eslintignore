@@ -1,1 +1,1 @@
-spec/data/**/*.js
+test/data/**/*.js

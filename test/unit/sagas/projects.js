@@ -1,5 +1,3 @@
-/* eslint-disable prefer-reflect */
-
 import test from 'tape';
 import {testSaga} from 'redux-saga-test-plan';
 import {

@@ -14,6 +14,8 @@ import {
   userDoneTyping,
   focusLine,
   editorFocusedRequestedLine,
+  notificationTriggered,
+  userDismissedNotification,
 } from '../../../src/actions/ui';
 import {
   gistExportNotDisplayed,
@@ -190,5 +192,28 @@ test('editorFocusedRequestedLine', reducerTest(
     new Immutable.Map({language: 'javascript', line: 4, column: 2}),
   ),
   editorFocusedRequestedLine,
+  initialState,
+));
+
+test('notificationTriggered', (t) => {
+  t.test('with no payload', reducerTest(
+    reducer,
+    initialState,
+    partial(notificationTriggered, 'some-error', 'error'),
+    withNotification('some-error', 'error'),
+  ));
+
+  t.test('with payload', reducerTest(
+    reducer,
+    initialState,
+    partial(notificationTriggered, 'some-error', 'error', {goofy: true}),
+    withNotification('some-error', 'error', {goofy: true}),
+  ));
+});
+
+test('userDismissedNotification', reducerTest(
+  reducer,
+  withNotification('some-error', 'error'),
+  partial(userDismissedNotification, 'some-error'),
   initialState,
 ));
