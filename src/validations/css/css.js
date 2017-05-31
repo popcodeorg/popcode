@@ -4,8 +4,6 @@ import importLinters from '../importLinters';
 const errorMap = {
   'missing \'{\'': () => ({reason: 'missing-opening-curly'}),
 
-  'missing \'}\'': () => ({reason: 'missing-closing-curly'}),
-
   'property missing \':\'': () => ({
     reason: 'property-missing-colon',
     suppresses: ['invalid-token', 'missing-closing-curly'],

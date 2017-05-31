@@ -82,7 +82,14 @@ const errorMap = {
     suppresses: ['block-expected'],
   }),
 
-  'invalid-token': () => ({reason: 'invalid-token'}),
+  'invalid-token': () => ({
+    reason: 'invalid-token',
+    suppresses: [
+      'illegal-token-after-combinator',
+      'invalid-token-in-selector',
+      'missing-opening-curly',
+    ],
+  }),
 
   'invalid-value': (error) => {
     if (isIncorrectlyRejectedValue(error.token.content)) {
