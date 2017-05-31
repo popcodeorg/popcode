@@ -22,10 +22,6 @@
     "type": "test",
     "template": "import test from 'tape';\n\ntest('{}', (assert) => {open}\n{close});"
   },
-  "spec/examples/*.spec.js": {
-    "type": "spec",
-    "template": "/* eslint-env mocha */\n\nimport '../../helper';\nimport {open}assert{close} from 'chai';\n\nimport {basename} from '../../../src/{}';\n\ndescribe('{basename}', () => {open}\n{close});\n"
-  },
   "src/validations/*.js": {"type": "validation"},
   "src/static/*": {"type": "static"},
   "src/css/application.css": {"type": "stylesheet"},

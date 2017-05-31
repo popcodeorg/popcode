@@ -170,10 +170,7 @@ on the major tools:
   provides a convention for organizing DOM classes
 * [Webpack](https://webpack.github.io/docs/configuration.html) builds the
   JavaScript
-* [Mocha](https://mochajs.org/#assertions), [Chai
-  assertions](http://chaijs.com/api/assert/),
-  [Karma](https://karma-runner.github.io/1.0/config/configuration-file.html),
-  and [Sinon](http://sinonjs.org/docs/) provide the test framework
+* [Tape](https://github.com/substack/tape) provides the test harness
 
 ## License ##
 

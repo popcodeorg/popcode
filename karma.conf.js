@@ -20,10 +20,7 @@ module.exports = function(config) {
   config.set({
     basePath: '',
 
-    frameworks: [
-      'tap',
-      'sinon-chai',
-    ],
+    frameworks: ['tap', 'sinon'],
 
     files: [
       'test/index.js',
