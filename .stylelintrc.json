@@ -1,4 +1,6 @@
 {
+  "plugins": ["stylelint-selector-bem-pattern"],
+
   "rules": {
     "at-rule-empty-line-before": ["always", {
       "except": [
@@ -124,6 +126,12 @@
     "value-list-comma-newline-after": "always-multi-line",
     "value-list-comma-space-after": "always-single-line",
     "value-list-comma-space-before": "never",
-    "value-list-max-empty-lines": 0
+    "value-list-max-empty-lines": 0,
+
+    "plugin/selector-bem-pattern": {
+      "preset": "bem",
+      "utilitySelectors": "u",
+      "ignoreSelectors": "\\b(svg|path)\\b"
+    }
   }
 }

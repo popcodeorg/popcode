@@ -174,19 +174,19 @@ class Dashboard extends React.Component {
     return (
       <div className="dashboard__links">
         <a
-          className="dashboard__link fontawesome"
+          className="dashboard__link u__fontawesome"
           href="https://github.com/popcodeorg/popcode"
           rel="noopener noreferrer"
           target="_blank"
         >&#xf09b;</a>
         <a
-          className="dashboard__link fontawesome"
+          className="dashboard__link u__fontawesome"
           href="https://twitter.com/popcodeorg"
           rel="noopener noreferrer"
           target="_blank"
         >&#xf099;</a>
         <a
-          className="dashboard__link fontawesome"
+          className="dashboard__link u__fontawesome"
           href="https://slack.popcode.org/"
           rel="noopener noreferrer"
           target="_blank"
