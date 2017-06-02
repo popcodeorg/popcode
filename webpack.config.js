@@ -165,7 +165,7 @@ module.exports = {
       {
         include: path.resolve(__dirname, 'locales'),
         loader: 'i18next-resource-store-loader',
-        query: {include: '\\.json$'},
+        query: 'include=\\.json$',
       },
     ],
   },
