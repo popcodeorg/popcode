@@ -7,6 +7,7 @@
 const fs = require('fs');
 const https = require('https');
 const gulp = require('gulp');
+const yargs = require('yargs');
 const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
 const cssnano = require('cssnano');
@@ -43,7 +44,7 @@ forOwn(supportedBrowsers, (version, browser) => {
 
 gulp.task('env', () => {
   process.env.GIT_REVISION = git.short();
-  if (gulp.env.production) {
+  if (yargs.argv.production) {
     process.env.NODE_ENV = 'production';
   }
 });

@@ -86,6 +86,17 @@ module.exports = {
       {
         test: /\.js$/,
         include: [
+          matchModule('htmllint'),
+        ],
+        loader: 'string-replace-loader',
+        query: {
+          search: 'require(plugin)',
+          replace: 'undefined',
+        },
+      },
+      {
+        test: /\.js$/,
+        include: [
           path.resolve(
             __dirname,
             'node_modules/stylelint/lib/utils/isAutoprefixable'
@@ -122,6 +133,8 @@ module.exports = {
           matchModule('postcss-scss'),
           matchModule('postcss-less'),
           matchModule('sugarss'),
+          matchModule('stylelint/lib/dynamicRequire'),
+          matchModule('css/lib/stringify/source-map-support'),
         ],
         loader: 'null-loader',
       },
@@ -165,7 +178,7 @@ module.exports = {
       {
         include: path.resolve(__dirname, 'locales'),
         loader: 'i18next-resource-store-loader',
-        query: {include: '\\.json$'},
+        query: 'include=\\.json$',
       },
     ],
   },
