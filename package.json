@@ -116,12 +116,12 @@
     "redux-saga-debounce-effect": "https://github.com/madewithlove/redux-saga-debounce-effect.git#v0.2.2",
     "rxjs": "^5.0.2",
     "slowparse": "^1.1.4",
-    "stylelint": "^7.5.0",
+    "stylelint": "^7.10.1",
     "text-encoding": "^0.6.0"
   },
   "engines": {
     "node": "7.6.0",
-    "yarn": "0.20.3"
+    "yarn": "0.24.6"
   },
   "scripts": {
     "postinstall": "bower install",
@@ -185,6 +185,7 @@
     "redux-saga-test-plan": "^3.0.2",
     "sinon": "^2.3.1",
     "string-replace-loader": "^1.0.5",
+    "stylelint-selector-bem-pattern": "^1.0.0",
     "substitute-loader": "^1.0.0",
     "svg-react-loader": "^0.4.0-beta.2",
     "svgo": "^0.7.2",
