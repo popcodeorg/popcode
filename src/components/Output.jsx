@@ -61,17 +61,28 @@ class Output extends React.Component {
   }
 
   render() {
+    const {
+      isDraggingColumnDivider,
+      isHidden,
+      style,
+      onHide,
+      onRef,
+    } = this.props;
     return (
       <div
         className={classnames(
           'environment__column',
-          {u__hidden: this.props.isHidden},
+          {u__hidden: isHidden},
         )}
+        ref={onRef}
+        style={Object.assign({}, style, {
+          pointerEvents: isDraggingColumnDivider ? 'none' : 'all',
+        })}
       >
         <div className="environment__columnContents output">
           <div
             className="environment__label label"
-            onClick={this.props.onHide}
+            onClick={onHide}
           >
             {t('workspace.components.output')}
           </div>
@@ -86,13 +97,16 @@ class Output extends React.Component {
 
 Output.propTypes = {
   errors: PropTypes.object.isRequired,
+  isDraggingColumnDivider: PropTypes.bool.isRequired,
   isHidden: PropTypes.bool.isRequired,
   project: PropTypes.object,
   runtimeErrors: PropTypes.array.isRequired,
+  style: PropTypes.object.isRequired,
   validationState: PropTypes.string.isRequired,
   onClearRuntimeErrors: PropTypes.func.isRequired,
   onErrorClick: PropTypes.func.isRequired,
   onHide: PropTypes.func.isRequired,
+  onRef: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
 };
 

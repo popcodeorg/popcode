@@ -5,6 +5,7 @@ import bindAll from 'lodash/bindAll';
 import isEmpty from 'lodash/isEmpty';
 import includes from 'lodash/includes';
 import partial from 'lodash/partial';
+import {getNodeHeights} from '../util/resize';
 
 import EditorContainer from './EditorContainer';
 import Editor from './Editor';
@@ -16,24 +17,11 @@ function allErrorsFor(language, errors, runtimeErrors) {
   return errors[language].items;
 }
 
-function getNodeHeights(refs) {
-  return Array.from(refs).sort().map(([, node]) => {
-    if (node) {
-      const minHeight = window.getComputedStyle(node).minHeight;
-      return {
-        height: node.offsetHeight,
-        minHeight: parseInt(minHeight.replace('px', ''), 10),
-      };
-    }
-    return {};
-  });
-}
-
 export default class EditorsColumn extends React.Component {
   constructor(props) {
     super(props);
-    this.dividerRefs = new Map([[1, null], [2, null], [3, null]]);
-    this.editorRefs = new Map([[1, null], [2, null], [3, null]]);
+    this.dividerRefs = [null, null];
+    this.editorRefs = [null, null, null];
     bindAll(
       this,
       '_storeDividerRef',
@@ -43,18 +31,22 @@ export default class EditorsColumn extends React.Component {
   }
 
   _storeEditorRef(index, editor) {
-    this.editorRefs.set(index, editor);
+    this.editorRefs[index] = editor;
   }
 
   _storeDividerRef(index, divider) {
-    this.dividerRefs.set(index, divider);
+    this.dividerRefs[index] = divider;
   }
 
   _handleEditorDividerDrag(index, _, {deltaY, lastY, y}) {
-    const {onUpdateFlex} = this.props;
-    const editorHeights = getNodeHeights(this.editorRefs);
-    const dividerHeights = getNodeHeights(this.dividerRefs);
-    onUpdateFlex({deltaY, dividerHeights, editorHeights, index, lastY, y});
+    this.props.onDividerDrag({
+      index,
+      dividerHeights: getNodeHeights(this.dividerRefs),
+      editorHeights: getNodeHeights(this.editorRefs),
+      deltaY,
+      lastY,
+      y,
+    });
   }
 
   render() {
@@ -64,8 +56,10 @@ export default class EditorsColumn extends React.Component {
       errors,
       onComponentHide,
       onEditorInput,
+      onRef,
       onRequestedLineFocused,
       runtimeErrors,
+      style,
       ui,
     } = this.props;
 
@@ -103,7 +97,7 @@ export default class EditorsColumn extends React.Component {
             onDrag={partial(this._handleEditorDividerDrag, index)}
           >
             <div
-              className="editors__divider"
+              className="editors__row-divider"
               ref={partial(this._storeDividerRef, index)}
             />
           </DraggableCore>,
@@ -116,7 +110,7 @@ export default class EditorsColumn extends React.Component {
     }
 
     return (
-      <div className="environment__column">
+      <div className="environment__column" ref={onRef} style={style}>
         <div className="environment__columnContents editors">{children}</div>
       </div>
     );
@@ -128,11 +122,13 @@ EditorsColumn.propTypes = {
   editorsFlex: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
   runtimeErrors: PropTypes.array.isRequired,
+  style: PropTypes.object.isRequired,
   ui: PropTypes.shape({
     editors: PropTypes.object.isRequired,
   }).isRequired,
   onComponentHide: PropTypes.func.isRequired,
+  onDividerDrag: PropTypes.func.isRequired,
   onEditorInput: PropTypes.func.isRequired,
+  onRef: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
-  onUpdateFlex: PropTypes.func.isRequired,
 };

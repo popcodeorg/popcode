@@ -12,8 +12,20 @@ export const editorFocusedRequestedLine = createAction(
   'EDITOR_FOCUSED_REQUESTED_LINE',
 );
 
-export const editorsUpdateVerticalFlex = createAction(
-  'EDITORS_UPDATE_VERTICAL_FLEX',
+export const dragRowDivider = createAction(
+  'DRAG_ROW_DIVIDER',
+);
+
+export const dragColumnDivider = createAction(
+  'DRAG_COLUMN_DIVIDER',
+);
+
+export const startDragColumnDivider = createAction(
+  'START_DRAG_COLUMN_DIVIDER',
+);
+
+export const stopDragColumnDivider = createAction(
+  'STOP_DRAG_COLUMN_DIVIDER',
 );
 
 export const notificationTriggered = createAction(
