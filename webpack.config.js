@@ -3,6 +3,7 @@
 /* eslint-disable import/no-commonjs */
 /* eslint-disable comma-dangle */
 
+const OfflinePlugin = require('offline-plugin');
 const path = require('path');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
@@ -191,6 +192,19 @@ module.exports = {
       NODE_ENV: 'development',
       WARN_ON_DROPPED_ERRORS: 'false',
       GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2'
+    }),
+    // it's always better if OfflinePlugin is the last plugin added https://github.com/NekR/offline-plugin#setup
+    new OfflinePlugin({
+      publicPath: '/compiled/',
+      relativePaths: false,
+      responseStrategy: 'network-first',
+      externals: [
+        '/',
+        '/compiled/application.css',
+      ],
+      ServiceWorker: {
+        navigateFallbackURL: '/',
+      },
     }),
   ],
   resolve: {
