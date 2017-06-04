@@ -5,11 +5,12 @@ import loopBreaker from 'loop-breaker';
 import libraries from '../config/libraries';
 import previewFrameLibraries from '../config/previewFrameLibraries';
 
+const textEncoder = new TextEncoder('utf-8');
 const parser = new DOMParser();
 
 const sourceDelimiter = '/*__POPCODESTART__*/';
 
-const errorHandlerScript = `(${(() => {
+const errorHandlerScript = `(${function() {
   window.onerror = (fullMessage, _file, line, column, error) => {
     let name, message;
     if (error) {
@@ -36,9 +37,9 @@ const errorHandlerScript = `(${(() => {
       },
     }), '*');
   };
-}).toString()}());`;
+}.toString()}());`;
 
-const alertAndPromptReplacementScript = `(${(() => {
+const alertAndPromptReplacementScript = `(${function() {
   const _swal = window.swal;
 
   Object.defineProperties(window, { // eslint-disable-line prefer-reflect
@@ -55,7 +56,7 @@ const alertAndPromptReplacementScript = `(${(() => {
   });
 
   delete window.swal; // eslint-disable-line prefer-reflect
-}).toString()}());`;
+}.toString()}());`;
 
 class PreviewGenerator {
   constructor(project, options = {}) {
@@ -177,14 +178,14 @@ class PreviewGenerator {
     const linkTag = this.previewDocument.createElement('link');
     linkTag.rel = 'stylesheet';
 
-    const base64encoded = base64.fromByteArray(css);
+    const base64encoded = base64.fromByteArray(textEncoder.encode(css));
     linkTag.href = `data:text/css;charset=utf-8;base64,${base64encoded}`;
     this._previewHead.appendChild(linkTag);
   }
 
   _attachJavascriptLibrary(javascript) {
     const scriptTag = this.previewDocument.createElement('script');
-    const base64encoded = base64.fromByteArray(javascript);
+    const base64encoded = base64.fromByteArray(textEncoder.encode(javascript));
     scriptTag.src =
       `data:text/javascript;charset=utf-8;base64,${base64encoded}`;
     this.previewBody.appendChild(scriptTag);
