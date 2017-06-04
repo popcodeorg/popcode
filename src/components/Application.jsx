@@ -1,15 +1,16 @@
-import React from 'react';
 import fs from 'fs';
 import path from 'path';
+import React from 'react';
 import {Provider} from 'react-redux';
 import bowser from 'bowser';
 import createApplicationStore from '../createApplicationStore';
+import {includeStoreInBugReports} from '../util/Bugsnag';
 import Workspace from './Workspace';
 import BrowserError from './BrowserError';
-import {includeStoreInBugReports} from '../util/Bugsnag';
+import IEBrowserError from './IEBrowserError';
 
 const supportedBrowsers = JSON.parse(fs.readFileSync(
-  path.join(__dirname, '../../config/browsers.json')
+  path.join(__dirname, '../../config/browsers.json'),
 ));
 
 class Application extends React.Component {
@@ -20,15 +21,23 @@ class Application extends React.Component {
     includeStoreInBugReports(store);
   }
 
+  _isIEOrEdge() {
+    return (bowser.msie || bowser.msedge);
+  }
+
   _isUnsupportedBrowser() {
     return bowser.isUnsupportedBrowser(
       supportedBrowsers,
       true,
-      window.navigator.userAgent
+      window.navigator.userAgent,
     );
   }
 
   render() {
+    if (this._isIEOrEdge()) {
+      return <IEBrowserError />;
+    }
+
     if (this._isUnsupportedBrowser()) {
       return <BrowserError browser={bowser} />;
     }

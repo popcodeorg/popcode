@@ -1,16 +1,8 @@
 import {createAction} from 'redux-actions';
 
-const gistExportStarted = createAction('GIST_EXPORT_STARTED');
-const gistExportComplete = createAction('GIST_EXPORT_COMPLETE');
-const gistExportFailed = createAction('GIST_EXPORT_FAILED');
-
-export function exportingGist(exportWillComplete) {
-  return (dispatch) => {
-    dispatch(gistExportStarted());
-    exportWillComplete.then(() => {
-      dispatch(gistExportComplete());
-    }, () => {
-      dispatch(gistExportFailed());
-    });
-  };
-}
+export const exportGist = createAction('EXPORT_GIST');
+export const gistExported = createAction('GIST_EXPORTED');
+export const gistExportError = createAction('GIST_EXPORT_ERROR');
+export const gistExportDisplayed = createAction('GIST_EXPORT_DISPLAYED');
+export const gistExportNotDisplayed =
+  createAction('GIST_EXPORT_NOT_DISPLAYED');

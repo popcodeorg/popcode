@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import keys from 'lodash/keys';
 import isEmpty from 'lodash/isEmpty';
 import assign from 'lodash/assign';
-import i18n from 'i18next-client';
+import {t} from 'i18next';
 
 const normalizers = {
   Chrome: {
@@ -93,9 +93,9 @@ function attachMessage(normalizedError) {
   }
 
   return assign(normalizedError, {
-    message: i18n.t(
+    message: t(
       `errors.javascriptRuntime.${normalizedError.type}`,
-      assign({context}, normalizedError.params)
+      assign({context}, normalizedError.params),
     ),
   });
 }

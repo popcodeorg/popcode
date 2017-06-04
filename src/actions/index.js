@@ -1,149 +1,35 @@
-import FirebasePersistor from '../persistors/FirebasePersistor';
-import validations from '../validations';
-import {isPristineProject} from '../util/projectUtils';
-
-import bootstrap from './bootstrap';
+import applicationLoaded from './applicationLoaded';
 
 import {
-  exportingGist,
+  exportGist,
+  gistExportDisplayed,
+  gistExportNotDisplayed,
 } from './clients';
 
 import {
   createProject,
   changeCurrentProject,
+  toggleLibrary,
+  hideComponent,
+  unhideComponent,
+  updateProjectSource,
 } from './projects';
 
 import {
-  userTyped,
-  userRequestedFocusedLine,
+  focusLine,
   editorFocusedRequestedLine,
+  dragRowDivider,
+  dragColumnDivider,
+  startDragColumnDivider,
+  stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
 } from './ui';
 
 import {
-  logIn,
-  logOut,
+  userAuthenticated,
+  userLoggedOut,
 } from './user';
-
-function getCurrentPersistor(state) {
-  const currentUser = state.user;
-  if (currentUser.get('authenticated')) {
-    return new FirebasePersistor(currentUser.get('id'));
-  }
-  return null;
-}
-
-export function getCurrentProject(state) {
-  const projectKey = state.currentProject.get('projectKey');
-  if (projectKey) {
-    return state.projects.get(projectKey);
-  }
-
-  return null;
-}
-
-export function saveCurrentProject(state) {
-  const currentProject = getCurrentProject(state);
-  const persistor = getCurrentPersistor(state);
-
-  if (persistor && currentProject && !isPristineProject(currentProject)) {
-    persistor.saveCurrentProject(currentProject.toJS());
-    return true;
-  }
-
-  return false;
-}
-
-function validateSource(language, source, enabledLibraries) {
-  return (dispatch, getState) => {
-    const validate = validations[language];
-    validate(source, enabledLibraries.toJS()).then((errors) => {
-      const currentSource = getCurrentProject(getState()).
-        get('sources').get(language);
-
-      if (currentSource !== source) {
-        return;
-      }
-
-      dispatch({
-        type: 'VALIDATED_SOURCE',
-        payload: {
-          language,
-          errors,
-        },
-      });
-    });
-  };
-}
-
-export function validateAllSources(project) {
-  return (dispatch) => {
-    const enabledLibraries = project.get('enabledLibraries');
-    project.get('sources').forEach((source, language) => {
-      dispatch(validateSource(language, source, enabledLibraries));
-    });
-  };
-}
-
-function updateProjectSource(projectKey, language, newValue) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: 'PROJECT_SOURCE_EDITED',
-      meta: {timestamp: Date.now()},
-      payload: {
-        projectKey,
-        language,
-        newValue,
-      },
-    });
-
-    const state = getState();
-    saveCurrentProject(state);
-
-    const currentProject = getCurrentProject(state);
-    dispatch(validateSource(
-      language,
-      newValue,
-      currentProject.get('enabledLibraries')
-    ));
-  };
-}
-
-function toggleLibrary(projectKey, libraryKey) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: 'PROJECT_LIBRARY_TOGGLED',
-      meta: {timestamp: Date.now()},
-      payload: {
-        projectKey,
-        libraryKey,
-      },
-    });
-
-    const state = getState();
-    dispatch(validateAllSources(getCurrentProject(state)));
-    saveCurrentProject(state);
-  };
-}
-
-export function loadAllProjects() {
-  return (dispatch, getState) => {
-    const persistor = getCurrentPersistor(getState());
-    if (persistor === null) {
-      return;
-    }
-
-    persistor.all().then((projects) => {
-      projects.forEach((project) => {
-        dispatch({
-          type: 'PROJECT_LOADED',
-          payload: {project},
-        });
-      });
-    });
-  };
-}
 
 function addRuntimeError(error) {
   return {
@@ -155,20 +41,6 @@ function addRuntimeError(error) {
 function clearRuntimeErrors() {
   return {
     type: 'RUNTIME_ERRORS_CLEARED',
-  };
-}
-
-function minimizeComponent(componentName) {
-  return {
-    type: 'COMPONENT_MINIMIZED',
-    payload: {componentName},
-  };
-}
-
-function maximizeComponent(componentName) {
-  return {
-    type: 'COMPONENT_MAXIMIZED',
-    payload: {componentName},
   };
 }
 
@@ -185,19 +57,24 @@ export {
   changeCurrentProject,
   updateProjectSource,
   toggleLibrary,
-  logIn,
-  logOut,
+  userAuthenticated,
+  userLoggedOut,
   addRuntimeError,
   clearRuntimeErrors,
-  minimizeComponent,
-  maximizeComponent,
+  hideComponent,
+  unhideComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
-  userTyped,
-  userRequestedFocusedLine,
+  focusLine,
   editorFocusedRequestedLine,
+  dragRowDivider,
+  dragColumnDivider,
+  startDragColumnDivider,
+  stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
-  exportingGist,
-  bootstrap,
+  exportGist,
+  gistExportDisplayed,
+  gistExportNotDisplayed,
+  applicationLoaded,
 };

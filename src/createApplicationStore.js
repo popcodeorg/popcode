@@ -1,8 +1,10 @@
-import {createStore, applyMiddleware} from 'redux';
-import reducers from './reducers';
-import thunkMiddleware from 'redux-thunk';
+import Immutable from 'immutable';
 import createLogger from 'redux-logger';
+import {createStore, applyMiddleware} from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import reducers from './reducers';
 import config from './config';
+import rootSaga from './sagas';
 
 let createStoreWithMiddleware = createStore;
 
@@ -12,11 +14,14 @@ if (config.logReduxActions()) {
     applyMiddleware(logger)(createStoreWithMiddleware);
 }
 
+const sagaMiddleware = createSagaMiddleware();
 createStoreWithMiddleware =
-  applyMiddleware(thunkMiddleware)(createStoreWithMiddleware);
+  applyMiddleware(sagaMiddleware)(createStoreWithMiddleware);
 
 function createApplicationStore() {
-  return createStoreWithMiddleware(reducers);
+  const store = createStoreWithMiddleware(reducers, new Immutable.Map());
+  sagaMiddleware.run(rootSaga);
+  return store;
 }
 
 export default createApplicationStore;

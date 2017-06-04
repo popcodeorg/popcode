@@ -1,4 +1,3 @@
-import Validator from '../Validator';
 import castArray from 'lodash/castArray';
 import concat from 'lodash/concat';
 import clone from 'lodash/clone';
@@ -8,13 +7,14 @@ import find from 'lodash/find';
 import includes from 'lodash/includes';
 import libraries from '../../config/libraries';
 import importLinters from '../importLinters';
+import Validator from '../Validator';
 
 const jshintrc = {
   browser: true,
   curly: true,
   devel: true,
   eqeqeq: true,
-  latedef: true,
+  latedef: 'nofunc',
   nonew: true,
   predef: [],
   shadow: 'outer',
@@ -30,34 +30,34 @@ const match = {
 };
 
 const errorMap = {
-  E019: (error) => ({
+  E019: error => ({
     reason: 'unmatched',
     payload: {openingSymbol: error.a, closingSymbol: match[error.a]},
     suppresses: ['end-of-input'],
   }),
 
-  E020: (error) => ({
+  E020: error => ({
     reason: 'closing-match',
     payload: {openingSymbol: error.b, closingSymbol: error.a},
   }),
 
-  E024: (error) => ({
+  E024: error => ({
     reason: 'unexpected',
     payload: {character: error.evidence},
     suppresses: ['tokenize-error'],
   }),
 
-  E030: (error) => ({
+  E030: error => ({
     reason: 'expected-identifier',
     payload: {token: error.a},
   }),
 
-  W003: (error) => ({
+  W003: error => ({
     reason: 'undefined-variable',
     payload: {variable: error.a},
   }),
 
-  W030: (error) => ({
+  W030: error => ({
     reason: 'unexpected-expression',
     payload: {expression: error.evidence},
   }),
@@ -68,7 +68,7 @@ const errorMap = {
 
   W033: () => ({reason: 'missing-semicolon'}),
 
-  W058: (error) => ({
+  W058: error => ({
     reason: 'missing-parentheses',
     payload: {object: error.a},
   }),
@@ -77,7 +77,7 @@ const errorMap = {
 
   W084: () => ({reason: 'strict-comparison-operator'}),
 
-  W098: (error) => ({
+  W098: error => ({
     reason: 'unused-variable',
     payload: {variable: error.a},
   }),
@@ -115,8 +115,8 @@ const errorMap = {
 
     const providingLibrary = find(
       libraries,
-      (library) =>
-        library.predefined && includes(library.predefined, identifier)
+      library =>
+        library.predefined && includes(library.predefined, identifier),
     );
 
     if (providingLibrary) {
@@ -132,17 +132,28 @@ const errorMap = {
     };
   },
 
-  W123: (error) => ({
+  W123: error => ({
     reason: 'duplicated-declaration',
     payload: {variable: error.a},
   }),
 };
 
 class JsHintValidator extends Validator {
-  constructor(source, enabledLibraries) {
-    super(source, 'javascript', errorMap);
+  constructor(source, analyzer) {
+    super(source, 'javascript', errorMap, analyzer);
+    this._jshintOptions = this._getConfig(
+      analyzer.containsExternalScript,
+      analyzer.enabledLibraries,
+    );
+  }
 
-    this._jshintOptions = defaults(clone(jshintrc), {predef: []});
+  _getConfig(containsExternalScript, enabledLibraries) {
+    const options = defaults(clone(jshintrc), {predef: []});
+
+    if (containsExternalScript) {
+      options.undef = false;
+    }
+
     enabledLibraries.forEach((libraryKey) => {
       if (!(libraryKey in libraries)) {
         return;
@@ -151,23 +162,24 @@ class JsHintValidator extends Validator {
       const library = libraries[libraryKey];
 
       if (library.predefined) {
-        this._jshintOptions.predef =
-          concat(this._jshintOptions.predef, library.predefined);
+        options.predef =
+          concat(options.predef, library.predefined);
       }
     });
+
+    return options;
   }
 
-  _getRawErrors() {
-    return importLinters().then(({jshint}) => {
-      try {
-        jshint(this._source, this._jshintOptions);
-      } catch (e) {
-        return [];
-      }
+  async _getRawErrors() {
+    const {jshint} = await importLinters();
+    try {
+      jshint(this._source, this._jshintOptions);
+    } catch (e) {
+      return [];
+    }
 
-      const data = jshint.data();
-      return compact(castArray(data.errors));
-    });
+    const data = jshint.data();
+    return compact(castArray(data.errors));
   }
 
   _keyForError(error) {
@@ -181,5 +193,5 @@ class JsHintValidator extends Validator {
   }
 }
 
-export default (source, enabledLibraries) =>
-  new JsHintValidator(source, enabledLibraries).getAnnotations();
+export default (source, analyzer) =>
+  new JsHintValidator(source, analyzer).getAnnotations();

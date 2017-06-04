@@ -1,19 +1,13 @@
-import i18n from 'i18next-client';
+import {init} from 'i18next';
+import resources from '../../locales';
+import applyCustomI18nFormatters from './i18nFormatting';
 
-import EN from '../../locales/en.json';
-
-const translations = {
-  en: {
-    translation: EN,
-  },
-};
-
-function initI18n() {
-  i18n.init({
+export default function() {
+  init({
     fallbackLng: 'en',
-    debug: true,
-    resStore: translations,
+    resources,
+    interpolation: {
+      format: applyCustomI18nFormatters,
+    },
   });
 }
-
-export default initI18n;

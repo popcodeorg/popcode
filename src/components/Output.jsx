@@ -1,6 +1,9 @@
 import React from 'react';
-import i18n from 'i18next-client';
+import PropTypes from 'prop-types';
+import {t} from 'i18next';
 import isEmpty from 'lodash/isEmpty';
+import isNull from 'lodash/isNull';
+import classnames from 'classnames';
 import ErrorList from './ErrorList';
 import Preview from './Preview';
 
@@ -15,7 +18,7 @@ class Output extends React.Component {
   }
 
   _renderPreview() {
-    if (!this.props.project) {
+    if (isNull(this.props.project)) {
       return null;
     }
 
@@ -58,31 +61,57 @@ class Output extends React.Component {
   }
 
   render() {
+    const {
+      isDraggingColumnDivider,
+      isHidden,
+      style,
+      onHide,
+      onRef,
+    } = this.props;
     return (
-      <div className="environment__column output">
-        <div
-          className="environment__label label"
-          onClick={this.props.onMinimize}
-        >
-          {i18n.t('workspace.components.output')}
+      <div
+        className={classnames(
+          'environment__column',
+          {u__hidden: isHidden},
+        )}
+        ref={onRef}
+        style={Object.assign({}, style, {
+          pointerEvents: isDraggingColumnDivider ? 'none' : 'all',
+        })}
+      >
+        <div className="environment__columnContents output">
+          <div
+            className="environment__label label"
+            onClick={onHide}
+          >
+            {t('workspace.components.output')}
+          </div>
+          {this._renderErrors()}
+          {this._renderPreview()}
+          {this._renderRuntimeErrorList()}
         </div>
-        {this._renderErrors()}
-        {this._renderPreview()}
-        {this._renderRuntimeErrorList()}
       </div>
     );
   }
 }
 
 Output.propTypes = {
-  errors: React.PropTypes.object.isRequired,
-  project: React.PropTypes.object,
-  runtimeErrors: React.PropTypes.array.isRequired,
-  validationState: React.PropTypes.string,
-  onClearRuntimeErrors: React.PropTypes.func.isRequired,
-  onErrorClick: React.PropTypes.func.isRequired,
-  onMinimize: React.PropTypes.func.isRequired,
-  onRuntimeError: React.PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  isDraggingColumnDivider: PropTypes.bool.isRequired,
+  isHidden: PropTypes.bool.isRequired,
+  project: PropTypes.object,
+  runtimeErrors: PropTypes.array.isRequired,
+  style: PropTypes.object.isRequired,
+  validationState: PropTypes.string.isRequired,
+  onClearRuntimeErrors: PropTypes.func.isRequired,
+  onErrorClick: PropTypes.func.isRequired,
+  onHide: PropTypes.func.isRequired,
+  onRef: PropTypes.func.isRequired,
+  onRuntimeError: PropTypes.func.isRequired,
+};
+
+Output.defaultProps = {
+  project: null,
 };
 
 export default Output;

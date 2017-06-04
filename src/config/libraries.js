@@ -5,14 +5,14 @@ const libraries = {
   jquery: {
     name: 'jQuery',
     javascript: fs.readFileSync(
-      path.join(__dirname, '../../bower_components/jquery/dist/jquery.min.js')
+      path.join(__dirname, '../../bower_components/jquery/dist/jquery.min.js'),
     ),
     predefined: ['$', 'jQuery'],
   },
   lodash: {
     name: 'lodash',
     javascript: fs.readFileSync(
-      path.join(__dirname, '../../bower_components/lodash/dist/lodash.min.js')
+      path.join(__dirname, '../../bower_components/lodash/dist/lodash.min.js'),
     ),
     predefined: ['_'],
   },
@@ -21,8 +21,8 @@ const libraries = {
     javascript: fs.readFileSync(
       path.join(
         __dirname,
-        '../../bower_components/mustache.js/mustache.js'
-      )
+        '../../bower_components/mustache.js/mustache.js',
+      ),
     ),
     predefined: ['Mustache'],
   },
@@ -31,14 +31,14 @@ const libraries = {
     css: fs.readFileSync(
       path.join(
         __dirname,
-        '../../bower_components/bootstrap/dist/css/bootstrap.min.css'
-      )
+        '../../bower_components/bootstrap/dist/css/bootstrap.min.css',
+      ),
     ),
     javascript: fs.readFileSync(
       path.join(
         __dirname,
-        '../../bower_components/bootstrap/dist/js/bootstrap.min.js'
-      )
+        '../../bower_components/bootstrap/dist/js/bootstrap.min.js',
+      ),
     ),
   },
 };

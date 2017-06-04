@@ -1,8 +1,17 @@
-import Firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 import config from '../config';
 
-const appFirebase = new Firebase(
-  `https://${config.firebaseApp}.firebaseio.com`
-);
+const appFirebase = firebase.initializeApp({
+  apiKey: config.firebaseApiKey,
+  authDomain: `${config.firebaseApp}.firebaseapp.com`,
+  databaseURL: `https://${config.firebaseApp}.firebaseio.com`,
+});
 
-export default appFirebase;
+const auth = firebase.auth(appFirebase);
+const database = firebase.database(appFirebase);
+const githubAuthProvider = new firebase.auth.GithubAuthProvider();
+githubAuthProvider.addScope('gist');
+
+export {auth, database, githubAuthProvider};

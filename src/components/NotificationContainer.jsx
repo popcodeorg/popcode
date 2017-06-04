@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 export default function NotificationContainer(props) {
@@ -7,7 +8,7 @@ export default function NotificationContainer(props) {
       className={
         classnames(
           'notification-list__notification',
-          `notification-list__notification_${props.severity}`
+          `notification-list__notification_${props.severity}`,
         )
       }
     >
@@ -21,7 +22,7 @@ export default function NotificationContainer(props) {
 }
 
 NotificationContainer.propTypes = {
-  children: React.PropTypes.node.isRequired,
-  severity: React.PropTypes.string.isRequired,
-  onErrorDismissed: React.PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  severity: PropTypes.string.isRequired,
+  onErrorDismissed: PropTypes.func.isRequired,
 };

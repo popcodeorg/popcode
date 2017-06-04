@@ -1,19 +1,20 @@
 import React from 'react';
-import i18n from 'i18next-client';
+import PropTypes from 'prop-types';
+import {t} from 'i18next';
 import classnames from 'classnames';
 import partial from 'lodash/partial';
 import WordmarkVertical from '../../static/images/wordmark-vertical.svg';
 
 class Sidebar extends React.Component {
-  _renderMinimizedComponents() {
-    const components = this.props.minimizedComponents.
-      map((componentName) => (
+  _renderHiddenComponents() {
+    const components = this.props.hiddenComponents.
+      map(componentName => (
         <div
           className="sidebar__minimized-component"
           key={componentName}
-          onClick={partial(this.props.onComponentMaximized, componentName)}
+          onClick={partial(this.props.onComponentUnhide, componentName)}
         >
-          {i18n.t(`workspace.components.${componentName}`)}
+          {t(`workspace.components.${componentName}`)}
         </div>
       ));
 
@@ -30,7 +31,7 @@ class Sidebar extends React.Component {
       {
         sidebar_yellow: this.props.validationState === 'validating',
         sidebar_red: this.props.validationState === 'failed',
-      }
+      },
     );
 
     return (
@@ -44,22 +45,22 @@ class Sidebar extends React.Component {
             {
               sidebar__arrow_show: !this.props.dashboardIsOpen,
               sidebar__arrow_hide: this.props.dashboardIsOpen,
-            }
+            },
           )}
           onClick={this.props.onToggleDashboard}
         />
-        {this._renderMinimizedComponents()}
+        {this._renderHiddenComponents()}
       </div>
     );
   }
 }
 
 Sidebar.propTypes = {
-  dashboardIsOpen: React.PropTypes.bool.isRequired,
-  minimizedComponents: React.PropTypes.array.isRequired,
-  validationState: React.PropTypes.string.isRequired,
-  onComponentMaximized: React.PropTypes.func.isRequired,
-  onToggleDashboard: React.PropTypes.func.isRequired,
+  dashboardIsOpen: PropTypes.bool.isRequired,
+  hiddenComponents: PropTypes.array.isRequired,
+  validationState: PropTypes.string.isRequired,
+  onComponentUnhide: PropTypes.func.isRequired,
+  onToggleDashboard: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

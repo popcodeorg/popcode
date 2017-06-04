@@ -4,8 +4,6 @@ import importLinters from '../importLinters';
 const errorMap = {
   'missing \'{\'': () => ({reason: 'missing-opening-curly'}),
 
-  'missing \'}\'': () => ({reason: 'missing-closing-curly'}),
-
   'property missing \':\'': () => ({
     reason: 'property-missing-colon',
     suppresses: ['invalid-token', 'missing-closing-curly'],
@@ -22,10 +20,9 @@ class CssValidator extends Validator {
     super(source, 'css', errorMap);
   }
 
-  _getRawErrors() {
-    importLinters().then(({css}) =>
-      css.parse(this._source, {silent: true}).stylesheet.parsingErrors
-    );
+  async _getRawErrors() {
+    const {css} = await importLinters();
+    return css.parse(this._source, {silent: true}).stylesheet.parsingErrors;
   }
 
   _keyForError(error) {
@@ -39,4 +36,4 @@ class CssValidator extends Validator {
   }
 }
 
-export default (source) => new CssValidator(source).getAnnotations();
+export default source => new CssValidator(source).getAnnotations();

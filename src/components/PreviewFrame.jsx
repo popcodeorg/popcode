@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
-import i18n from 'i18next-client';
+import {t} from 'i18next';
 import normalizeError from '../util/normalizeError';
 import {sourceDelimiter} from '../util/generatePreview';
 
@@ -60,12 +61,14 @@ class PreviewFrame extends React.Component {
       return;
     }
 
-    if (data.type === 'org.popcode.infinite-loop') {
-      this._handleInfiniteLoop(data.line);
+    if (data.type !== 'org.popcode.error') {
       return;
     }
 
-    if (data.type !== 'org.popcode.error') {
+    let line = data.error.line - this._runtimeErrorLineOffset();
+
+    if (data.error.message === 'Loop Broken!') {
+      this._handleInfiniteLoop(line);
       return;
     }
 
@@ -73,7 +76,6 @@ class PreviewFrame extends React.Component {
     const error = new ErrorConstructor(data.error.message);
 
     const normalizedError = normalizeError(error);
-    let line = data.error.line - this._runtimeErrorLineOffset();
 
     if (Bowser.safari) {
       line = 1;
@@ -90,7 +92,7 @@ class PreviewFrame extends React.Component {
   }
 
   _handleInfiniteLoop(line) {
-    const message = i18n.t('errors.javascriptRuntime.infinite-loop');
+    const message = t('errors.javascriptRuntime.infinite-loop');
     this.props.onRuntimeError({
       reason: 'infinite-loop',
       text: message,
@@ -121,9 +123,9 @@ class PreviewFrame extends React.Component {
 }
 
 PreviewFrame.propTypes = {
-  src: React.PropTypes.string.isRequired,
-  onFrameWillRefresh: React.PropTypes.func.isRequired,
-  onRuntimeError: React.PropTypes.func.isRequired,
+  src: PropTypes.string.isRequired,
+  onFrameWillRefresh: PropTypes.func.isRequired,
+  onRuntimeError: PropTypes.func.isRequired,
 };
 
 

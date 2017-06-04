@@ -1,18 +1,19 @@
 import React from 'react';
-import i18n from 'i18next-client';
+import PropTypes from 'prop-types';
+import {t} from 'i18next';
 
 export default function GistExportNotification(props) {
   return (
     <span>
-      {i18n.t('notifications.gist-export-complete')}{' '}
-      <a href={props.payload.url} target="_blank">
-        {i18n.t('notifications.gist-export-link')}
+      {t('notifications.gist-export-complete')}{' '}
+      <a href={props.payload.url} rel="noopener noreferrer" target="_blank">
+        {t('notifications.gist-export-link')}
       </a>
     </span>
   );
 }
 
 GistExportNotification.propTypes = {
-  payload: React.PropTypes.object.isRequired,
-  type: React.PropTypes.string.isRequired,
+  payload: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
 };

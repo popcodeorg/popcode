@@ -41,23 +41,26 @@ function errors(stateIn, action) {
     case 'PROJECT_CREATED':
       return emptyErrors;
 
-    case 'CURRENT_PROJECT_CHANGED':
+    case 'CHANGE_CURRENT_PROJECT':
       return validatingErrors;
 
-    case 'PROJECT_SOURCE_EDITED':
+    case 'GIST_IMPORTED':
+      return validatingErrors;
+
+    case 'TOGGLE_LIBRARY':
+      return validatingErrors;
+
+    case 'UPDATE_PROJECT_SOURCE':
       return state.set(action.payload.language, validatingLanguageErrors);
 
     case 'VALIDATED_SOURCE':
       if (action.payload.errors.length) {
         return state.set(
           action.payload.language,
-          buildFailedLanguageErrors(action.payload.errors)
+          buildFailedLanguageErrors(action.payload.errors),
         );
       }
       return state.set(action.payload.language, passedLanguageErrors);
-
-    case 'RESET_WORKSPACE':
-      return emptyErrors;
 
     default:
       return state;

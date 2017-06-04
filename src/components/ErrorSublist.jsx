@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import map from 'lodash/map';
 import partial from 'lodash/partial';
-import i18n from 'i18next-client';
+import {t} from 'i18next';
 import ErrorItem from './ErrorItem';
 
 function ErrorSublist(props) {
@@ -9,20 +10,20 @@ function ErrorSublist(props) {
     return false;
   }
 
-  const errors = map(props.errors.items, (error) => (
+  const errors = map(props.errors.items, error => (
     <ErrorItem
       {...error}
       key={[error.reason, error.row]}
       onClick={partial(
         props.onErrorClick,
-        props.language
+        props.language,
       )}
     />
   ));
 
-  const errorMessage = i18n.t(
+  const errorMessage = t(
     'errors.notice',
-    {count: props.errors.items.length, language: props.language}
+    {count: props.errors.items.length, language: props.language},
   );
 
   return (
@@ -38,9 +39,9 @@ function ErrorSublist(props) {
 }
 
 ErrorSublist.propTypes = {
-  errors: React.PropTypes.object.isRequired,
-  language: React.PropTypes.oneOf(['html', 'css', 'javascript']).isRequired,
-  onErrorClick: React.PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  language: PropTypes.oneOf(['html', 'css', 'javascript']).isRequired,
+  onErrorClick: PropTypes.func.isRequired,
 };
 
 export default ErrorSublist;

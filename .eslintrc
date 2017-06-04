@@ -13,7 +13,8 @@
         ],
         "arrow-parens": [
             2,
-            "always"
+            "as-needed",
+            {"requireForBlockBody": true}
         ],
         "arrow-spacing": [
           2
@@ -35,14 +36,21 @@
         ],
         "comma-dangle": [
           2,
-          "always-multiline"
+          {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "imports": "always-multiline",
+            "exports": "always-multiline",
+            "functions": "always-multiline"
+          }
         ],
         "comma-spacing": [
             2,
             {"before": false, "after": true}
         ],
         "complexity": [
-          2
+          2,
+          {"max": 26}
         ],
         "computed-property-spacing": [
             2,
@@ -80,7 +88,11 @@
             "declaration"
         ],
         "generator-star-spacing": [
-          2
+          2,
+          {
+            "before": false,
+            "after": true
+          }
         ],
         "global-require": [
             2
@@ -90,6 +102,72 @@
         ],
         "id-length": [
             0
+        ],
+        "import/default": [
+          2
+        ],
+        "import/export": [
+          2
+        ],
+        "import/extensions": [
+          2,
+          "always",
+          {
+            "js": "never",
+            "jsx": "never"
+          }
+        ],
+        "import/first": [
+          2
+        ],
+        "import/named": [
+          2
+        ],
+        "import/newline-after-import": [
+          2
+        ],
+        "import/no-absolute-path": [
+          2
+        ],
+        "import/no-amd": [
+          2
+        ],
+        "import/no-commonjs": [
+          2
+        ],
+        "import/no-duplicates": [
+          2
+        ],
+        "import/no-mutable-exports": [
+          2
+        ],
+        "import/no-named-as-default": [
+          2
+        ],
+        "import/no-named-as-default-member": [
+          2
+        ],
+        "import/no-named-default": [
+          2
+        ],
+        "import/no-namespace": [
+          2
+        ],
+        "import/no-nodejs-modules": [
+          2,
+          {"allow": ["fs", "path"]}
+        ],
+        "import/no-unresolved": [
+          2
+        ],
+        "import/no-webpack-loader-syntax": [
+          2
+        ],
+        "import/order": [
+          2
+        ],
+        "import/unambiguous": [
+          2
         ],
         "indent": [
             2,
@@ -476,11 +554,29 @@
         "prefer-template": [
           2
         ],
+        "promise/no-callback-in-promise": [
+          2
+        ],
+        "promise/no-promise-in-callback": [
+          2
+        ],
+        "promise/param-names": [
+          2
+        ],
+        "promise/prefer-await-to-callbacks": [
+          2
+        ],
+        "promise/prefer-await-to-then": [
+          2
+        ],
         "radix": [
             2
         ],
         "react/display-name": [
             2
+        ],
+        "react/forbid-foreign-prop-types": [
+          2
         ],
         "react/jsx-boolean-value": [
             2,
@@ -520,8 +616,14 @@
         "react/jsx-no-bind": [
           2
         ],
+        "react/jsx-no-comment-textnodes": [
+          2
+        ],
         "react/jsx-no-duplicate-props": [
             2
+        ],
+        "react/jsx-no-target-blank": [
+          2
         ],
         "react/jsx-no-undef": [
             2
@@ -537,11 +639,31 @@
           2,
           "always"
         ],
+        "react/jsx-tag-spacing": [
+          2,
+          {
+            "closingSlash": "never",
+            "beforeSelfClosing": "always",
+            "afterOpening": "never"
+          }
+        ],
         "react/jsx-uses-react": [
             2
         ],
         "react/jsx-uses-vars": [
             2
+        ],
+        "react/jsx-wrap-multilines": [
+          2
+        ],
+        "react/no-array-index-key": [
+          2
+        ],
+        "react/no-children-prop": [
+          2
+        ],
+        "react/no-danger-with-children": [
+          2
         ],
         "react/no-deprecated": [
           2
@@ -564,6 +686,9 @@
         "react/no-string-refs": [
           2
         ],
+        "react/no-unescaped-entities": [
+          2
+        ],
         "react/no-unknown-property": [
             2
         ],
@@ -572,7 +697,8 @@
           "always"
         ],
         "react/prefer-stateless-function": [
-          2
+          2,
+          {"ignorePureComponents": true}
         ],
         "react/prop-types": [
             2
@@ -580,8 +706,8 @@
         "react/react-in-jsx-scope": [
             2
         ],
-        "react/require-extension": [
-            2
+        "react/require-default-props": [
+          2
         ],
         "react/require-render-return": [
           2
@@ -597,9 +723,6 @@
           {
             "callbacksLast": true
           }
-        ],
-        "react/wrap-multilines": [
-          2
         ],
         "require-yield": [
           2
@@ -677,19 +800,26 @@
     },
     "env": {
         "browser": true,
-        "commonjs": true,
         "es6": true
     },
     "extends": "eslint:recommended",
-    "ecmaFeatures": {
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2017,
+      "ecmaFeatures": {
         "jsx": true,
         "experimentalObjectRestSpread": true
+      },
     },
     "globals": {
       "__dirname": true
     },
-    "parser": "babel-eslint",
     "plugins": [
-        "react"
-    ]
+      "import",
+      "react",
+      "promise"
+    ],
+    "settings": {
+      "import/resolver": "webpack"
+    }
 }

@@ -1,11 +1,12 @@
 language: node_js
 node_js:
-- 6.3.1
+- 7.6.0
 env:
   global:
   - CXX=g++-4.8
   - LOG_REDUX_ACTIONS=false
   - FIREBASE_APP=popcode
+  - FIREBASE_API_KEY=AIzaSyAga2AZz56-dAjl1fsswFfvs3HRBbfKZJg
   - BROWSER_STACK_USERNAME=matthewbrown17
   - CLOUDFLARE_ZONE=d3f68763e9e100672fc0e1800282ddbe
   - GOOGLE_ANALYTICS_TRACKING_ID=UA-90316486-1

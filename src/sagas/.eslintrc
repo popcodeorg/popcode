@@ -1,0 +1,7 @@
+{
+    "rules": {
+        "import/order": [
+            0
+        ]
+    }
+}

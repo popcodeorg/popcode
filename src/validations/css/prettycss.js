@@ -1,7 +1,6 @@
-import Validator from '../Validator';
 import trim from 'lodash/trim';
-import startsWith from 'lodash/startsWith';
 import endsWith from 'lodash/endsWith';
+import Validator from '../Validator';
 import importLinters from '../importLinters';
 
 const RADIAL_GRADIENT_EXPR =
@@ -54,19 +53,22 @@ const errorMap = {
 
   'extra-tokens-after-value': (error, source) => {
     const lineNumber = error.token.line;
-    const lines = source.split('\n');
-    const previousLine = lines[lineNumber - 2];
-    const thisLine = lines[lineNumber - 1];
 
-    if (
-      startsWith(trim(thisLine), error.token.content) &&
+    if (lineNumber > 1) {
+      const lines = source.split('\n');
+      const previousLine = lines[lineNumber - 2];
+      const thisLine = lines[lineNumber - 1];
+
+      if (
+        error.token.charNum - 1 === /\S/.exec(thisLine).index &&
         !endsWith(trim(previousLine), ';')
-    ) {
-      return {
-        reason: 'missing-semicolon',
-        row: lineNumber - 2,
-        column: previousLine.length - 1,
-      };
+      ) {
+        return {
+          reason: 'missing-semicolon',
+          row: lineNumber - 2,
+          column: previousLine.length - 1,
+        };
+      }
     }
 
     return ({
@@ -80,7 +82,14 @@ const errorMap = {
     suppresses: ['block-expected'],
   }),
 
-  'invalid-token': () => ({reason: 'invalid-token'}),
+  'invalid-token': () => ({
+    reason: 'invalid-token',
+    suppresses: [
+      'illegal-token-after-combinator',
+      'invalid-token-in-selector',
+      'missing-opening-curly',
+    ],
+  }),
 
   'invalid-value': (error) => {
     if (isIncorrectlyRejectedValue(error.token.content)) {
@@ -93,24 +102,24 @@ const errorMap = {
     };
   },
 
-  'require-value': (error) => ({
+  'require-value': error => ({
     reason: 'require-value',
     payload: {error: error.token.content},
   }),
 
-  'require-positive-value': (error) => ({
+  'require-positive-value': error => ({
     reason: 'invalid-negative-value',
     payload: {error: error.token.content},
   }),
 
-  'require-integer': (error) => ({
+  'require-integer': error => ({
     reason: 'invalid-fractional-value',
     payload: {error: error.token.content},
   }),
 
   'selector-expected': () => ({reason: 'selector-expected'}),
 
-  'unknown-property': (error) => ({
+  'unknown-property': error => ({
     reason: 'unknown-property',
     payload: {error: error.token.content},
   }),
@@ -121,15 +130,14 @@ class PrettyCssValidator extends Validator {
     super(source, 'css', errorMap);
   }
 
-  _getRawErrors() {
-    return importLinters().then(({prettyCSS}) => {
-      try {
-        const result = prettyCSS.parse(this._source);
-        return result.getProblems();
-      } catch (_e) {
-        return [];
-      }
-    });
+  async _getRawErrors() {
+    const {prettyCSS} = await importLinters();
+    try {
+      const result = prettyCSS.parse(this._source);
+      return result.getProblems();
+    } catch (_e) {
+      return [];
+    }
   }
 
   _keyForError(error) {
@@ -144,4 +152,4 @@ class PrettyCssValidator extends Validator {
   }
 }
 
-export default (source) => new PrettyCssValidator(source).getAnnotations();
+export default source => new PrettyCssValidator(source).getAnnotations();

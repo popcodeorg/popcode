@@ -1,5 +1,6 @@
 import React from 'react';
-import i18n from 'i18next-client';
+import PropTypes from 'prop-types';
+import {t} from 'i18next';
 
 function EditorContainer(props) {
   let helpText;
@@ -7,21 +8,25 @@ function EditorContainer(props) {
   if (props.source === '') {
     helpText = (
       <div className="editors__help-text">
-        {i18n.t(
-          'editors.helpText',
-          {language: props.language}
+        {t(
+          'editors.help-text',
+          {language: props.language},
         )}
       </div>
     );
   }
 
   return (
-    <div className="editors__editor-container">
+    <div
+      className="editors__editor-container"
+      ref={props.onRef}
+      style={props.style}
+    >
       <div
         className="environment__label label"
-        onClick={props.onMinimize}
+        onClick={props.onHide}
       >
-        {i18n.t(`languages.${props.language}`)}
+        {t(`languages.${props.language}`)}
       </div>
       {helpText}
       {props.children}
@@ -30,10 +35,12 @@ function EditorContainer(props) {
 }
 
 EditorContainer.propTypes = {
-  children: React.PropTypes.node.isRequired,
-  language: React.PropTypes.string.isRequired,
-  source: React.PropTypes.string.isRequired,
-  onMinimize: React.PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  language: PropTypes.string.isRequired,
+  source: PropTypes.string.isRequired,
+  style: PropTypes.object.isRequired,
+  onHide: PropTypes.func.isRequired,
+  onRef: PropTypes.func.isRequired,
 };
 
 export default EditorContainer;

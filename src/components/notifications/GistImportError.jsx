@@ -1,5 +1,6 @@
 import React from 'react';
-import i18n from 'i18next-client';
+import PropTypes from 'prop-types';
+import {t} from 'i18next';
 
 function gistUrlFromId(gistId) {
   return `https://gist.github.com/${gistId}`;
@@ -8,15 +9,19 @@ function gistUrlFromId(gistId) {
 export default function GistImportError(props) {
   return (
     <span>
-      {i18n.t('notifications.gist-import-error')}{' '}
-      <a href={gistUrlFromId(props.payload.gistId)} target="_blank">
-        {i18n.t('notifications.gist-import-link')}
+      {t('notifications.gist-import-error')}{' '}
+      <a
+        href={gistUrlFromId(props.payload.gistId)}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {t('notifications.gist-import-link')}
       </a>
     </span>
   );
 }
 
 GistImportError.propTypes = {
-  payload: React.PropTypes.object.isRequired,
-  type: React.PropTypes.string.isRequired,
+  payload: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
 };

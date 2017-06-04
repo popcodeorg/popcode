@@ -39,13 +39,16 @@ parts that seem relevant to your code changes.
 
 ### Login
 
-* Open a fresh Popcode environment, and log in. Verify that the project that
-  appears is the last one you were working on while logged in.
+* Open a fresh Popcode environment, and log in. Verify that current project is
+  still a new, blank template.
 * Open a fresh Popcode environment, and add something to the HTML. Then log in.
   Verify that the code you were just working on is still on screen.
-* Log out, then log back in. Verify that after logging back in, the code on
-  screen is as you left it.
-* Create a new project. Verify that the code on screen is now the defaults.
+* Open a second Popcode tab. Verify that you are are logged in, and looking at
+  a fresh project.
+* Modify the project, and then log out. Verify that you are logged out in both
+  tabs, and both tabs still have the same project as before.
+* Log back in. Create a new project. Verify that the code on screen is now the
+  defaults.
 * Click on “Load Project”, and verify that you can go back to the project you
   were working on before you clicked “New Project”
 

@@ -1,12 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {TextEncoder} from 'text-encoding';
 import base64 from 'base64-js';
 import bindAll from 'lodash/bindAll';
 import classnames from 'classnames';
-
-import PreviewFrame from './PreviewFrame';
 import generatePreview from '../util/generatePreview';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
+import PreviewFrame from './PreviewFrame';
 
 class Preview extends React.Component {
   constructor() {
@@ -32,7 +32,7 @@ class Preview extends React.Component {
         propagateErrorsToParent: isLivePreview,
         breakLoops: isLivePreview,
         nonBlockingAlertsAndPrompts: isLivePreview,
-      }
+      },
     );
   }
 
@@ -55,7 +55,7 @@ class Preview extends React.Component {
         className={classnames(
           'preview',
           'output__item',
-          {u__hidden: !this.props.isValid}
+          {u__hidden: !this.props.isValid},
         )}
       >
         <div
@@ -73,10 +73,10 @@ class Preview extends React.Component {
 }
 
 Preview.propTypes = {
-  isValid: React.PropTypes.bool.isRequired,
-  project: React.PropTypes.object.isRequired,
-  onClearRuntimeErrors: React.PropTypes.func.isRequired,
-  onRuntimeError: React.PropTypes.func.isRequired,
+  isValid: PropTypes.bool.isRequired,
+  project: PropTypes.object.isRequired,
+  onClearRuntimeErrors: PropTypes.func.isRequired,
+  onRuntimeError: PropTypes.func.isRequired,
 };
 
 export default Preview;

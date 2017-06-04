@@ -1,26 +1,28 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {DraggableCore} from 'react-draggable';
 import {connect} from 'react-redux';
+import get from 'lodash/get';
 import values from 'lodash/values';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
-import isEmpty from 'lodash/isEmpty';
-import isNil from 'lodash/isNil';
+import isNull from 'lodash/isNull';
 import partial from 'lodash/partial';
 import sortBy from 'lodash/sortBy';
 import map from 'lodash/map';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
-import i18n from 'i18next-client';
+import {t} from 'i18next';
 import qs from 'qs';
-import fs from 'fs';
-import path from 'path';
-import base64 from 'base64-js';
-import {TextEncoder} from 'text-encoding';
+import {getNodeWidth, getNodeWidths} from '../util/resize';
 import Bugsnag from '../util/Bugsnag';
-import appFirebase from '../services/appFirebase';
-import Gists from '../services/Gists';
-import {EmptyGistError} from '../services/Gists';
-import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
+import {
+  onSignedIn,
+  onSignedOut,
+  signIn,
+  signOut,
+  startSessionHeartbeat,
+} from '../clients/firebaseAuth';
 
 import {
   addRuntimeError,
@@ -28,58 +30,54 @@ import {
   clearRuntimeErrors,
   createProject,
   updateProjectSource,
-  logIn,
-  logOut,
+  userAuthenticated,
+  userLoggedOut,
   toggleLibrary,
-  minimizeComponent,
-  maximizeComponent,
+  hideComponent,
+  unhideComponent,
   toggleDashboard,
   toggleDashboardSubmenu,
-  userTyped,
-  userRequestedFocusedLine,
+  focusLine,
   editorFocusedRequestedLine,
+  dragRowDivider,
+  dragColumnDivider,
+  startDragColumnDivider,
+  stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
-  exportingGist,
-  bootstrap,
+  exportGist,
+  applicationLoaded,
 } from '../actions';
 
 import {getCurrentProject, isPristineProject} from '../util/projectUtils';
 
-import EditorContainer from './EditorContainer';
-import Editor from './Editor';
+import EditorsColumn from './EditorsColumn';
 import Output from './Output';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 import NotificationList from './NotificationList';
 import PopThrobber from './PopThrobber';
 
-const spinnerPage = base64.fromByteArray(
-  new TextEncoder('utf-8').encode(
-    fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../templates/github-export.html'
-      )
-    )
-  )
-);
-
 function mapStateToProps(state) {
   const projects = sortBy(
-    values(state.projects.toJS()),
-    (project) => -project.updatedAt
+    values(state.get('projects').toJS()),
+    project => -project.updatedAt,
   );
 
   return {
     allProjects: projects,
     currentProject: getCurrentProject(state),
-    errors: state.errors.toJS(),
-    runtimeErrors: state.runtimeErrors.toJS(),
-    isUserTyping: state.ui.getIn(['editors', 'typing']),
-    currentUser: state.user.toJS(),
-    ui: state.ui.toJS(),
-    clients: state.clients.toJS(),
+    errors: state.get('errors').toJS(),
+    runtimeErrors: state.get('runtimeErrors').toJS(),
+    isDraggingColumnDivider: state.getIn(
+      ['ui', 'workspace', 'isDraggingColumnDivider'],
+    ),
+    isUserTyping: state.getIn(['ui', 'editors', 'typing']),
+    editorsFlex: state.getIn(['ui', 'workspace', 'columnFlex']).toJS(),
+    rowsFlex: state.getIn(['ui', 'workspace', 'rowFlex']).toJS(),
+    currentUser: state.get('user').toJS(),
+    ui: state.get('ui').toJS(),
+    clients: state.get('clients').toJS(),
   };
 }
 
@@ -90,10 +88,14 @@ class Workspace extends React.Component {
       this,
       '_confirmUnload',
       '_handleClearRuntimeErrors',
-      '_handleComponentMaximized',
-      '_handleComponentMinimized',
+      '_handleComponentUnhide',
+      '_handleComponentHide',
       '_handleDashboardSubmenuToggled',
+      '_handleDividerDrag',
+      '_handleDividerStart',
+      '_handleDividerStop',
       '_handleEditorInput',
+      '_handleEditorsDividerDrag',
       '_handleErrorClick',
       '_handleLibraryToggled',
       '_handleLogOut',
@@ -104,8 +106,11 @@ class Workspace extends React.Component {
       '_handleToggleDashboard',
       '_handleRequestedLineFocused',
       '_handleNotificationDismissed',
-      '_handleExportGist'
+      '_handleExportGist',
+      '_storeDividerRef',
+      '_storeColumnRef',
     );
+    this.columnRefs = [null, null];
   }
 
   componentWillMount() {
@@ -115,7 +120,9 @@ class Workspace extends React.Component {
       gistId = query.gist;
     }
     history.replaceState({}, '', location.pathname);
-    this.props.dispatch(bootstrap(gistId));
+    this.props.dispatch(applicationLoaded(gistId));
+    this._listenForAuthChange();
+    startSessionHeartbeat();
   }
 
   componentDidMount() {
@@ -129,43 +136,41 @@ class Workspace extends React.Component {
   _confirmUnload(event) {
     if (!this.props.currentUser.authenticated) {
       const currentProject = this.props.currentProject;
-      if (!isNil(currentProject) && !isPristineProject(currentProject)) {
-        event.returnValue = i18n.t('workspace.confirmations.unload-unsaved');
+      if (!isNull(currentProject) && !isPristineProject(currentProject)) {
+        event.returnValue = t('workspace.confirmations.unload-unsaved');
       }
     }
   }
 
-  _allErrorsFor(language) {
-    if (language === 'javascript') {
-      return this.props.errors.javascript.items.
-        concat(this.props.runtimeErrors);
-    }
-
-    return this.props.errors[language].items;
+  _handleComponentHide(componentName) {
+    this.props.dispatch(
+      hideComponent(
+        this.props.currentProject.projectKey,
+        componentName,
+      ),
+    );
   }
 
-  _handleComponentMinimized(componentName) {
-    this.props.dispatch(minimizeComponent(componentName));
-  }
-
-  _handleComponentMaximized(componentName) {
-    this.props.dispatch(maximizeComponent(componentName));
+  _handleComponentUnhide(componentName) {
+    this.props.dispatch(
+      unhideComponent(
+        this.props.currentProject.projectKey,
+        componentName,
+      ),
+    );
   }
 
   _handleErrorClick(language, line, column) {
-    this.props.dispatch(maximizeComponent(`editor.${language}`));
-    this.props.dispatch(userRequestedFocusedLine(language, line, column));
+    this.props.dispatch(focusLine(language, line, column));
   }
 
   _handleEditorInput(language, source) {
-    this.props.dispatch(userTyped());
-
     this.props.dispatch(
       updateProjectSource(
         this.props.currentProject.projectKey,
         language,
-        source
-      )
+        source,
+      ),
     );
   }
 
@@ -173,8 +178,8 @@ class Workspace extends React.Component {
     this.props.dispatch(
       toggleLibrary(
         this.props.currentProject.projectKey,
-        libraryKey
-      )
+        libraryKey,
+      ),
     );
   }
 
@@ -216,64 +221,32 @@ class Workspace extends React.Component {
   }
 
   _renderOutput() {
-    if (includes(this.props.ui.minimizedComponents, 'output')) {
-      return null;
-    }
-
+    const {
+      currentProject,
+      currentProject: {hiddenUIComponents},
+      errors,
+      isDraggingColumnDivider,
+      rowsFlex,
+      runtimeErrors,
+    } = this.props;
     return (
       <Output
-        errors={this.props.errors}
-        project={this.props.currentProject}
-        runtimeErrors={this.props.runtimeErrors}
+        errors={errors}
+        isDraggingColumnDivider={isDraggingColumnDivider}
+        isHidden={includes(hiddenUIComponents, 'output')}
+        project={currentProject}
+        runtimeErrors={runtimeErrors}
+        style={{flex: rowsFlex[1]}}
         validationState={this._getOverallValidationState()}
         onClearRuntimeErrors={this._handleClearRuntimeErrors}
         onErrorClick={this._handleErrorClick}
-        onMinimize={
-          partial(this._handleComponentMinimized,
+        onHide={
+          partial(this._handleComponentHide,
             'output')
         }
+        onRef={partial(this._storeColumnRef, 1)}
         onRuntimeError={this._handleRuntimeError}
       />
-    );
-  }
-
-  _renderEditors() {
-    const editors = [];
-    ['html', 'css', 'javascript'].forEach((language) => {
-      if (includes(this.props.ui.minimizedComponents, `editor.${language}`)) {
-        return;
-      }
-
-      editors.push(
-        <EditorContainer
-          key={language}
-          language={language}
-          source={this.props.currentProject.sources[language]}
-          onMinimize={
-            partial(this._handleComponentMinimized, `editor.${language}`)
-          }
-        >
-          <Editor
-            errors={this._allErrorsFor(language)}
-            key={language}
-            language={language}
-            percentageOfHeight={1 / editors.length}
-            projectKey={this.props.currentProject.projectKey}
-            requestedFocusedLine={this.props.ui.editors.requestedFocusedLine}
-            source={this.props.currentProject.sources[language]}
-            onInput={partial(this._handleEditorInput, language)}
-            onRequestedLineFocused={this._handleRequestedLineFocused}
-          />
-        </EditorContainer>
-      );
-    });
-
-    if (isEmpty(editors)) {
-      return null;
-    }
-
-    return (
-      <div className="environment__column editors">{editors}</div>
     );
   }
 
@@ -281,31 +254,43 @@ class Workspace extends React.Component {
     this.props.dispatch(toggleDashboard());
   }
 
+  _handleEditorsDividerDrag(data) {
+    this.props.dispatch(dragRowDivider(data));
+  }
+
+  _listenForAuthChange() {
+    onSignedIn(userCredential =>
+      this.props.dispatch(userAuthenticated(userCredential)),
+    );
+    onSignedOut(() => this.props.dispatch(userLoggedOut()));
+  }
+
   _handleStartLogIn() {
-    appFirebase.authWithOAuthPopup(
-      'github',
-      {remember: 'sessionOnly', scope: 'gist'}
-    ).then(
-      (authData) => {
-        this.props.dispatch(logIn(authData));
-      },
-      (e) => {
-        switch (e.code) {
-          case 'USER_CANCELLED':
-            this.props.dispatch(
-              notificationTriggered('user-cancelled-auth')
-            );
-            break;
-          default:
-            this.props.dispatch(notificationTriggered('auth-error'));
-            if (isError(e)) {
-              Bugsnag.notifyException(e, e.code);
-            } else if (isString(e)) {
-              Bugsnag.notifyException(new Error(e));
-            }
-            break;
-        }
-      });
+    signIn().catch((e) => {
+      switch (e.code) {
+        case 'auth/popup-closed-by-user':
+          this.props.dispatch(notificationTriggered('user-cancelled-auth'));
+          break;
+        case 'auth/network-request-failed':
+          this.props.dispatch(notificationTriggered('auth-network-error'));
+          break;
+        case 'auth/cancelled-popup-request':
+          break;
+        case 'auth/web-storage-unsupported':
+          this.props.dispatch(
+            notificationTriggered('auth-third-party-cookies-disabled'),
+          );
+          break;
+        default:
+          this.props.dispatch(notificationTriggered('auth-error'));
+          if (isError(e)) {
+            Bugsnag.notifyException(e, e.code);
+          } else if (isString(e)) {
+            Bugsnag.notifyException(new Error(e));
+          }
+          break;
+      }
+    });
   }
 
   _handleNotificationDismissed(error) {
@@ -313,7 +298,7 @@ class Workspace extends React.Component {
   }
 
   _handleLogOut() {
-    appFirebase.unauth().then(() => this.props.dispatch(logOut()));
+    signOut();
   }
 
   _handleRequestedLineFocused() {
@@ -321,53 +306,7 @@ class Workspace extends React.Component {
   }
 
   _handleExportGist() {
-    if (this.props.clients.gists.exportInProgress) {
-      return;
-    }
-
-    if (!this.props.currentUser.authenticated) {
-      // eslint-disable-next-line no-alert
-      if (!confirm(i18n.t('workspace.confirmations.anonymous-gist-export'))) {
-        return;
-      }
-    }
-
-    const newWindow = openWindowWithWorkaroundForChromeClosingBug(
-      `data:text/html;base64,${spinnerPage}`
-    );
-
-    const gistWillExport = Gists.createFromProject(
-      this.props.currentProject,
-      this.props.currentUser
-    );
-    this.props.dispatch(exportingGist(gistWillExport));
-
-    gistWillExport.then((response) => {
-      if (newWindow.closed) {
-        this.props.dispatch(
-          notificationTriggered(
-            'gist-export-complete',
-            'notice',
-            {url: response.html_url}
-          )
-        );
-      } else {
-        newWindow.location.href = response.html_url;
-      }
-    }, (error) => {
-      if (error instanceof EmptyGistError) {
-        this.props.dispatch(notificationTriggered('empty-gist'));
-        if (!newWindow.closed) {
-          newWindow.close();
-        }
-        return Promise.resolve();
-      }
-      this.props.dispatch(notificationTriggered('gist-export-error'));
-      if (!newWindow.closed) {
-        newWindow.close();
-      }
-      return Promise.reject(error);
-    });
+    this.props.dispatch(exportGist());
   }
 
   _renderDashboard() {
@@ -382,7 +321,9 @@ class Workspace extends React.Component {
           allProjects={this.props.allProjects}
           currentProject={this.props.currentProject}
           currentUser={this.props.currentUser}
-          gistExportInProgress={this.props.clients.gists.exportInProgress}
+          gistExportInProgress={
+            get(this.props, 'clients.gists.lastExport.status') === 'waiting'
+          }
           validationState={this._getOverallValidationState()}
           onExportGist={this._handleExportGist}
           onLibraryToggled={this._handleLibraryToggled}
@@ -397,27 +338,87 @@ class Workspace extends React.Component {
   }
 
   _renderSidebar() {
+    let hiddenComponents = [];
+    if (!isNull(this.props.currentProject)) {
+      hiddenComponents = this.props.currentProject.hiddenUIComponents;
+    }
     return (
       <div className="layout__sidebar">
         <Sidebar
           dashboardIsOpen={this.props.ui.dashboard.isOpen}
-          minimizedComponents={this.props.ui.minimizedComponents}
+          hiddenComponents={hiddenComponents}
           validationState={this._getOverallValidationState()}
-          onComponentMaximized={this._handleComponentMaximized}
+          onComponentUnhide={this._handleComponentUnhide}
           onToggleDashboard={this._handleToggleDashboard}
         />
       </div>
     );
   }
 
+  _storeColumnRef(index, column) {
+    this.columnRefs[index] = column;
+  }
+
+  _storeDividerRef(divider) {
+    this.dividerRef = divider;
+  }
+
+  _handleDividerStart() {
+    this.props.dispatch(startDragColumnDivider());
+  }
+
+  _handleDividerStop() {
+    this.props.dispatch(stopDragColumnDivider());
+  }
+
+  _handleDividerDrag(_, {deltaX, lastX, x}) {
+    this.props.dispatch(dragColumnDivider({
+      columnWidths: getNodeWidths(this.columnRefs),
+      dividerWidth: getNodeWidth(this.dividerRef),
+      deltaX,
+      lastX,
+      x,
+    }));
+  }
+
   _renderEnvironment() {
-    if (isNil(this.props.currentProject)) {
-      return <PopThrobber message={i18n.t('workspace.loading')} />;
+    const {
+      currentProject,
+      editorsFlex,
+      errors,
+      rowsFlex,
+      runtimeErrors,
+      ui,
+    } = this.props;
+    if (isNull(currentProject)) {
+      return <PopThrobber message={t('workspace.loading')} />;
     }
 
     return (
       <div className="environment">
-        {this._renderEditors()}
+        <EditorsColumn
+          currentProject={currentProject}
+          editorsFlex={editorsFlex}
+          errors={errors}
+          runtimeErrors={runtimeErrors}
+          style={{flex: rowsFlex[0]}}
+          ui={ui}
+          onComponentHide={this._handleComponentHide}
+          onDividerDrag={this._handleEditorsDividerDrag}
+          onEditorInput={this._handleEditorInput}
+          onRef={partial(this._storeColumnRef, 0)}
+          onRequestedLineFocused={this._handleRequestedLineFocused}
+        />
+        <DraggableCore
+          onDrag={this._handleDividerDrag}
+          onStart={this._handleDividerStart}
+          onStop={this._handleDividerStop}
+        >
+          <div
+            className="editors__column-divider"
+            ref={this._storeDividerRef}
+          />
+        </DraggableCore>
         {this._renderOutput()}
       </div>
     );
@@ -443,15 +444,23 @@ class Workspace extends React.Component {
 }
 
 Workspace.propTypes = {
-  allProjects: React.PropTypes.array,
-  clients: React.PropTypes.object,
-  currentProject: React.PropTypes.object,
-  currentUser: React.PropTypes.object.isRequired,
-  dispatch: React.PropTypes.func.isRequired,
-  errors: React.PropTypes.object,
-  isUserTyping: React.PropTypes.bool,
-  runtimeErrors: React.PropTypes.array,
-  ui: React.PropTypes.object.isRequired,
+  allProjects: PropTypes.array.isRequired,
+  clients: PropTypes.object.isRequired,
+  currentProject: PropTypes.object,
+  currentUser: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  editorsFlex: PropTypes.array.isRequired,
+  errors: PropTypes.object.isRequired,
+  isDraggingColumnDivider: PropTypes.bool.isRequired,
+  isUserTyping: PropTypes.bool,
+  rowsFlex: PropTypes.array.isRequired,
+  runtimeErrors: PropTypes.array.isRequired,
+  ui: PropTypes.object.isRequired,
+};
+
+Workspace.defaultProps = {
+  currentProject: null,
+  isUserTyping: false,
 };
 
 export default connect(mapStateToProps)(Workspace);

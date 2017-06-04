@@ -1,18 +1,20 @@
 import React from 'react';
-import i18n from 'i18next-client';
+import PropTypes from 'prop-types';
+import {t} from 'i18next';
 import partial from 'lodash/partial';
+import isNull from 'lodash/isNull';
 import classnames from 'classnames';
+import config from '../config';
 import ProjectList from './ProjectList';
 import LibraryPicker from './LibraryPicker';
 import Pop from './Pop';
-import config from '../config';
 
 class Dashboard extends React.Component {
   _renderLoginState() {
     const currentUser = this.props.currentUser;
 
     if (currentUser.authenticated) {
-      const name = currentUser.displayName || currentUser.username;
+      const name = currentUser.displayName;
 
       return (
         <div className="dashboard__session">
@@ -25,7 +27,7 @@ class Dashboard extends React.Component {
             className="dashboard__log-in-out"
             onClick={this.props.onLogOut}
           >
-            {i18n.t('dashboard.session.logOutPrompt')}
+            {t('dashboard.session.log-out-prompt')}
           </span>
         </div>
       );
@@ -33,13 +35,13 @@ class Dashboard extends React.Component {
     return (
       <div className="dashboard__session">
         <span className="dashboard__username">
-          {i18n.t('dashboard.session.notLoggedIn')}
+          {t('dashboard.session.not-logged-in')}
         </span>
         <span
           className="dashboard__log-in-out"
           onClick={this.props.onStartLogIn}
         >
-          {i18n.t('dashboard.session.logInPrompt')}
+          {t('dashboard.session.log-in-prompt')}
         </span>
       </div>
     );
@@ -52,11 +54,11 @@ class Dashboard extends React.Component {
           'dashboard__menu-item',
           'dashboard__menu-item_grid',
           {'dashboard__menu-item_active':
-            this.props.activeSubmenu === submenu}
+            this.props.activeSubmenu === submenu},
         )}
         onClick={partial(this.props.onSubmenuToggled, submenu)}
       >
-        {i18n.t(`dashboard.menu.${label}`)}
+        {t(`dashboard.menu.${label}`)}
       </div>
     );
   }
@@ -69,7 +71,7 @@ class Dashboard extends React.Component {
           className="dashboard__menu-item dashboard__menu-item_grid"
           onClick={this.props.onNewProject}
         >
-          {i18n.t('dashboard.menu.new-project')}
+          {t('dashboard.menu.new-project')}
         </div>
       );
 
@@ -87,19 +89,23 @@ class Dashboard extends React.Component {
             classnames(
               'dashboard__menu-item',
               'dashboard__menu-item_grid',
-              {'dashboard__menu-item_spinner': this.props.gistExportInProgress}
+              {
+                'dashboard__menu-item_spinner':
+                  this.props.gistExportInProgress,
+              },
             )
           }
           onClick={this.props.onExportGist}
         >
-          {i18n.t('dashboard.menu.export-gist')}
+          {t('dashboard.menu.export-gist')}
         </div>
         <a
           className="dashboard__menu-item dashboard__menu-item_grid"
           href={config.feedbackUrl}
+          rel="noopener noreferrer"
           target="_blank"
         >
-          {i18n.t('dashboard.menu.send-feedback')}
+          {t('dashboard.menu.send-feedback')}
         </a>
       </div>
     );
@@ -126,7 +132,7 @@ class Dashboard extends React.Component {
   }
 
   _renderLibraryPicker() {
-    if (!this.props.currentProject) {
+    if (isNull(this.props.currentProject)) {
       return null;
     }
 
@@ -146,7 +152,7 @@ class Dashboard extends React.Component {
           {
             dashboard__pop_visible:
               this.props.validationState === validationState,
-          }
+          },
         )}
       >
         <Pop variant={variant} />
@@ -168,18 +174,21 @@ class Dashboard extends React.Component {
     return (
       <div className="dashboard__links">
         <a
-          className="dashboard__link fontawesome"
+          className="dashboard__link u__fontawesome"
           href="https://github.com/popcodeorg/popcode"
+          rel="noopener noreferrer"
           target="_blank"
         >&#xf09b;</a>
         <a
-          className="dashboard__link fontawesome"
+          className="dashboard__link u__fontawesome"
           href="https://twitter.com/popcodeorg"
+          rel="noopener noreferrer"
           target="_blank"
         >&#xf099;</a>
         <a
-          className="dashboard__link fontawesome"
+          className="dashboard__link u__fontawesome"
           href="https://slack.popcode.org/"
+          rel="noopener noreferrer"
           target="_blank"
         >&#xf198;</a>
       </div>
@@ -194,7 +203,7 @@ class Dashboard extends React.Component {
       {
         dashboard_yellow: this.props.validationState === 'validating',
         dashboard_red: this.props.validationState === 'failed',
-      }
+      },
     );
 
     return (
@@ -211,19 +220,24 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  activeSubmenu: React.PropTypes.string,
-  allProjects: React.PropTypes.array.isRequired,
-  currentProject: React.PropTypes.object,
-  currentUser: React.PropTypes.object.isRequired,
-  gistExportInProgress: React.PropTypes.bool.isRequired,
-  validationState: React.PropTypes.string.isRequired,
-  onExportGist: React.PropTypes.func.isRequired,
-  onLibraryToggled: React.PropTypes.func.isRequired,
-  onLogOut: React.PropTypes.func.isRequired,
-  onNewProject: React.PropTypes.func.isRequired,
-  onProjectSelected: React.PropTypes.func.isRequired,
-  onStartLogIn: React.PropTypes.func.isRequired,
-  onSubmenuToggled: React.PropTypes.func.isRequired,
+  activeSubmenu: PropTypes.string,
+  allProjects: PropTypes.array.isRequired,
+  currentProject: PropTypes.object,
+  currentUser: PropTypes.object.isRequired,
+  gistExportInProgress: PropTypes.bool.isRequired,
+  validationState: PropTypes.string.isRequired,
+  onExportGist: PropTypes.func.isRequired,
+  onLibraryToggled: PropTypes.func.isRequired,
+  onLogOut: PropTypes.func.isRequired,
+  onNewProject: PropTypes.func.isRequired,
+  onProjectSelected: PropTypes.func.isRequired,
+  onStartLogIn: PropTypes.func.isRequired,
+  onSubmenuToggled: PropTypes.func.isRequired,
+};
+
+Dashboard.defaultProps = {
+  activeSubmenu: null,
+  currentProject: null,
 };
 
 export default Dashboard;

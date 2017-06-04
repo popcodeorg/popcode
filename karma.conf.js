@@ -1,13 +1,14 @@
 /* eslint-env node */
-/* eslint-disable no-var, object-shorthand, prefer-template */
-/* eslint-disable prefer-arrow-callback, prefer-reflect */
+/* eslint-disable import/unambiguous */
+/* eslint-disable import/no-commonjs */
 
-var assign = require('lodash/assign');
-var webpackConfiguration = require('./webpack.config.js');
-var isCi = Boolean(process.env.TRAVIS);
-var browserStackAvailable = Boolean(process.env.BROWSER_STACK_ACCESS_TOKEN);
+const assign = require('lodash/assign');
+const webpackConfiguration = require('./webpack.config.js');
 
-var allBrowsers = [
+const isCi = Boolean(process.env.TRAVIS);
+const browserStackAvailable = Boolean(process.env.BROWSER_STACK_ACCESS_TOKEN);
+
+const allBrowsers = [
   ['Chrome', '53', 'Windows', '10'],
   ['Firefox', '48', 'Windows', '10'],
   ['IE', '11', 'Windows', '10'],
@@ -19,35 +20,26 @@ module.exports = function(config) {
   config.set({
     basePath: '',
 
-    frameworks: [
-      'mocha',
-      'chai-as-promised',
-      'sinon-chai',
-    ],
+    frameworks: ['tap', 'sinon'],
 
     files: [
-      'spec/index.js',
+      'test/index.js',
     ],
 
     preprocessors: {
-      'spec/index.js': ['webpack', 'sourcemap'],
+      'test/index.js': ['webpack', 'sourcemap'],
     },
 
     webpack: assign({}, webpackConfiguration, {
-      entry: null,
       devtool: 'inline-source-map',
+      node: {fs: 'empty'},
     }),
 
     webpackMiddleware: {
       stats: 'errors-only',
     },
 
-    mochaReporter: {
-      output: isCi ? 'mocha' : 'autowatch',
-      showDiff: true,
-    },
-
-    reporters: ['mocha'],
+    reporters: ['dots'],
 
     port: 9876,
 
@@ -58,12 +50,16 @@ module.exports = function(config) {
     browsers: ['Chrome'],
 
     concurrency: Infinity,
+
+    browserConsoleLogOptions: {
+      level: config.LOG_WARN,
+    },
   });
 
   if (browserStackAvailable) {
-    var customLaunchers = {};
-    allBrowsers.forEach(function(browser) {
-      customLaunchers['browserStack' + browser[0] + browser[2]] = {
+    const customLaunchers = {};
+    allBrowsers.forEach((browser) => {
+      customLaunchers[`browserStack${browser[0]}${browser[2]}`] = {
         base: 'BrowserStack',
         browser: browser[0],
         browser_version: browser[1], // eslint-disable-line camelcase
@@ -80,11 +76,11 @@ module.exports = function(config) {
 
       browserNoActivityTimeout: 60000,
 
-      customLaunchers: customLaunchers,
+      customLaunchers,
 
-      browsers: Object.getOwnPropertyNames(customLaunchers),
+      browsers: Reflect.getOwnPropertyNames(customLaunchers),
 
-      reporters: ['mocha', 'BrowserStack'],
+      reporters: ['dots', 'BrowserStack'],
     });
   } else if (isCi) {
     config.set({browsers: ['Firefox']});

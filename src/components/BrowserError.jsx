@@ -1,5 +1,6 @@
 import React from 'react';
-import i18n from 'i18next-client';
+import PropTypes from 'prop-types';
+import {t} from 'i18next';
 
 function getBrowserLink(browser) {
   if (browser.firefox) {
@@ -16,11 +17,11 @@ function BrowserError(props) {
 
   return (
     <div className="unsupported-browser">
-      <p>{i18n.t('bad-browser.message', {name: browserName})}</p>
+      <p>{t('bad-browser.message', {name: browserName})}</p>
 
       <p>
         <a href={getBrowserLink(props.browser)}>
-          {i18n.t('bad-browser.download')}
+          {t('bad-browser.download')}
         </a>
       </p>
     </div>
@@ -28,7 +29,7 @@ function BrowserError(props) {
 }
 
 BrowserError.propTypes = {
-  browser: React.PropTypes.object.isRequired,
+  browser: PropTypes.object.isRequired,
 };
 
 export default BrowserError;

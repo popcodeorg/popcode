@@ -1,9 +1,15 @@
+/* eslint-env node */
+/* eslint-disable import/unambiguous */
+/* eslint-disable import/no-commonjs */
+/* eslint-disable comma-dangle */
+
 const path = require('path');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
 const startsWith = require('lodash/startsWith');
 const map = require('lodash/map');
 const includes = require('lodash/includes');
+const git = require('git-rev-sync');
 
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
@@ -13,17 +19,17 @@ function matchModule(modulePath) {
     escapeRegExp(path.join('/node_modules', modulePath, 'node_modules'))
   );
 
-  return (filePath) =>
+  return filePath =>
     modulePattern.test(filePath) && !moduleDependencyPattern.test(filePath);
 }
 
 function directoryContentsExcept(directory, exceptions) {
   const fullExceptions = map(
     exceptions,
-    (exception) => path.resolve(directory, exception)
+    exception => path.resolve(directory, exception)
   );
 
-  return (filePath) =>
+  return filePath =>
     startsWith(filePath, path.resolve(directory)) &&
       !includes(fullExceptions, filePath);
 }
@@ -32,7 +38,7 @@ module.exports = {
   entry: './src/application.js',
   output: {
     path: path.resolve(__dirname, './static/compiled'),
-    publicPath: '/compiled/',
+    publicPath: 'compiled/',
     filename: 'application.js',
     sourceMapFilename: 'application.js.map',
   },
@@ -42,7 +48,7 @@ module.exports = {
         test: /\.jsx?$/,
         include: [
           path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'spec'),
+          path.resolve(__dirname, 'test'),
         ],
         loaders: ['babel-loader', 'transform-loader/cacheable?brfs-babel'],
       },
@@ -67,7 +73,7 @@ module.exports = {
           path.resolve(__dirname, 'node_modules/postcss/lib/previous-map'),
           path.resolve(
             __dirname,
-            'node_modules/stylelint/dist/getPostcssResult'
+            'node_modules/stylelint/lib/getPostcssResult'
           ),
           matchModule('postcss/lib/previous-map'),
         ],
@@ -80,9 +86,20 @@ module.exports = {
       {
         test: /\.js$/,
         include: [
+          matchModule('htmllint'),
+        ],
+        loader: 'string-replace-loader',
+        query: {
+          search: 'require(plugin)',
+          replace: 'undefined',
+        },
+      },
+      {
+        test: /\.js$/,
+        include: [
           path.resolve(
             __dirname,
-            'node_modules/stylelint/dist/utils/isAutoprefixable'
+            'node_modules/stylelint/lib/utils/isAutoprefixable'
           ),
         ],
         loader: 'substitute-loader',
@@ -93,16 +110,10 @@ module.exports = {
         include: [
           matchModule('redux'),
           matchModule('lodash-es'),
-          matchModule('github-api'),
+          matchModule('stylelint'),
+          matchModule('redux-saga-debounce-effect'),
         ],
         loader: 'babel-loader',
-      },
-      {
-        test: /\.js$/,
-        include: [
-          path.resolve(__dirname, 'node_modules/loop-protect'),
-        ],
-        loader: 'imports-loader?define=>false',
       },
       {
         include: [
@@ -122,13 +133,15 @@ module.exports = {
           matchModule('postcss-scss'),
           matchModule('postcss-less'),
           matchModule('sugarss'),
+          matchModule('stylelint/lib/dynamicRequire'),
+          matchModule('css/lib/stringify/source-map-support'),
         ],
         loader: 'null-loader',
       },
       {
         test: /\.js$/,
         include: directoryContentsExcept(
-          'node_modules/stylelint/dist/rules',
+          'node_modules/stylelint/lib/rules',
           [
             'index.js',
             'declaration-block-trailing-semicolon/index.js',
@@ -162,22 +175,28 @@ module.exports = {
           },
         ],
       },
+      {
+        include: path.resolve(__dirname, 'locales'),
+        loader: 'i18next-resource-store-loader',
+        query: 'include=\\.json$',
+      },
     ],
   },
   plugins: [
-    new webpack.EnvironmentPlugin([
-      'FIREBASE_APP',
-      'GIT_REVISION',
-      'LOG_REDUX_ACTIONS',
-      'NODE_ENV',
-      'WARN_ON_DROPPED_ERRORS',
-      'GOOGLE_ANALYTICS_TRACKING_ID',
-    ]),
+    new webpack.EnvironmentPlugin({
+      FIREBASE_APP: 'popcode-development',
+      FIREBASE_API_KEY: 'AIzaSyCHlo2RhOkRFFh48g779YSZrLwKjoyCcws',
+      GIT_REVISION: git.short(),
+      LOG_REDUX_ACTIONS: 'false',
+      NODE_ENV: 'development',
+      WARN_ON_DROPPED_ERRORS: 'false',
+      GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2'
+    }),
   ],
   resolve: {
     alias: {
-      'github-api$': 'github-api/lib/GitHub.js',
-      'github-api': 'github-api/lib',
+      'github-api$': 'github-api/dist/components/GitHub.js',
+      'github-api': 'github-api/dist/components',
       'html-inspector$': 'html-inspector/html-inspector.js',
     },
     extensions: ['.js', '.jsx', '.json'],

@@ -2,68 +2,76 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto'),
-    url('/compiled/fonts/Roboto-Regular-webfont.woff') format('woff'),
-    url('/compiled/fonts/Roboto-Regular-webfont.ttf') format('ttf'),
-    url('/compiled/fonts/Roboto-Regular-webfont.eot') format('eot');
+  src:
+    local('Roboto'),
+    url('fonts/Roboto-Regular-webfont.woff') format('woff'),
+    url('fonts/Roboto-Regular-webfont.ttf') format('ttf'),
+    url('fonts/Roboto-Regular-webfont.eot') format('eot');
 }
 
 @font-face {
   font-family: 'Roboto';
   font-style: bold;
   font-weight: 700;
-  src: local('Roboto'),
-    url('/compiled/fonts/Roboto-Bold-webfont.woff') format('woff'),
-    url('/compiled/fonts/Roboto-Bold-webfont.ttf') format('ttf'),
-    url('/compiled/fonts/Roboto-Bold-webfont.eot') format('eot');
+  src:
+    local('Roboto'),
+    url('fonts/Roboto-Bold-webfont.woff') format('woff'),
+    url('fonts/Roboto-Bold-webfont.ttf') format('ttf'),
+    url('fonts/Roboto-Bold-webfont.eot') format('eot');
 }
 
 @font-face {
   font-family: 'Inconsolata';
   font-style: normal;
   font-weight: 400;
-  src: local('Inconsolata'),
-    url('/compiled/fonts/inconsolata-regular.woff2') format('woff2'),
-    url('/compiled/fonts/inconsolata-regular.woff') format('woff'),
-    url('/compiled/fonts/inconsolata-regular.ttf') format('ttf'),
-    url('/compiled/fonts/inconsolata-regular.eot') format('eot');
+  src:
+    local('Inconsolata'),
+    url('fonts/inconsolata-regular.woff2') format('woff2'),
+    url('fonts/inconsolata-regular.woff') format('woff'),
+    url('fonts/inconsolata-regular.ttf') format('ttf'),
+    url('fonts/inconsolata-regular.eot') format('eot');
 }
 
 @font-face {
   font-family: 'FontAwesome';
   font-style: normal;
   font-weight: 400;
-  src: local('FontAwesome'),
-    url('/compiled/fonts/fontawesome-webfont.woff2') format('woff2'),
-    url('/compiled/fonts/fontawesome-webfont.woff') format('woff'),
-    url('/compiled/fonts/fontawesome-webfont.ttf') format('ttf'),
-    url('/compiled/fonts/fontawesome-webfont.eot') format('eot');
+  src:
+    local('FontAwesome'),
+    url('fonts/fontawesome-webfont.woff2') format('woff2'),
+    url('fonts/fontawesome-webfont.woff') format('woff'),
+    url('fonts/fontawesome-webfont.ttf') format('ttf'),
+    url('fonts/fontawesome-webfont.eot') format('eot');
 }
 
 @keyframes pulsing {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.2);
   }
+
   100% {
     transform: scale(1);
   }
 }
 
 :root {
-  --color-gray: #eeeeee;
-  --color-dark-gray: #aaaaaa;
+  --color-gray: #eee;
+  --color-dark-gray: #aaa;
   --color-green: #00ff85;
   --color-yellow: #ffd100;
   --color-red: #ff5e4f;
-  --color-purple: #ff00ff;
+  --color-purple: #f0f;
 }
 
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+/** @define layout */
 
 .layout {
   display: flex;
@@ -76,6 +84,17 @@ body {
   border-right: 1px solid var(--color-gray);
   display: flex;
 }
+
+.layout__main {
+  flex: 1 1 100%;
+  position: relative;
+}
+
+.layout__dashboard {
+  flex: 1 0 20%;
+}
+
+/** @define sidebar */
 
 .sidebar {
   background-color: var(--color-green);
@@ -123,7 +142,7 @@ body {
   cursor: pointer;
 }
 
-.sidebar__minimized-component:before {
+.sidebar__minimized-component::before {
   display: block;
   position: absolute;
   width: 1em;
@@ -174,6 +193,8 @@ body {
   transform: rotate(-45deg);
   transform-origin: right 50%;
 }
+
+/** @define dashboard */
 
 .dashboard {
   background-color: var(--color-green);
@@ -248,22 +269,34 @@ body {
 .dashboard__menu-item_grid {
   flex: 0 0 calc(50% - 1px);
   white-space: nowrap;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.5rem;
   padding: 1rem 0.5rem;
   text-align: center;
 }
 
 .dashboard__menu-item_spinner {
+  background: url('../images/spinner.gif') center/contain no-repeat;
   color: transparent;
-  background-image: url('/images/spinner.gif');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
   cursor: not-allowed;
 }
 
-.dashboard__menu-item:hover, .dashboard__menu-item_active {
+.dashboard__menu-item:hover,
+.dashboard__menu-item_active {
   background-color: var(--color-gray);
+}
+
+.dashboard__menu-item_unchecked {
+  padding-left: 1.3rem;
+}
+
+.dashboard__menu-item_checked {
+  padding-left: 1.3rem;
+}
+
+.dashboard__menu-item_checked::before {
+  content: '\2714';
+  position: absolute;
+  left: 0.5rem;
 }
 
 .dashboard__menu-item_spinner:hover {
@@ -314,9 +347,7 @@ body {
   font-size: 1.5rem;
 }
 
-.fontawesome {
-  font-family: 'FontAwesome';
-}
+/** @define project-preview */
 
 .project-preview__timestamp {
   text-align: right;
@@ -325,10 +356,7 @@ body {
   font-weight: normal;
 }
 
-.layout__main {
-  flex: 1 1 100%;
-  position: relative;
-}
+/** @define workspace */
 
 .workspace {
   display: flex;
@@ -336,9 +364,7 @@ body {
   height: 100%;
 }
 
-.layout__dashboard {
-  flex: 1 0 20%;
-}
+/** @define environment */
 
 .environment {
   box-sizing: border-box;
@@ -349,7 +375,19 @@ body {
 }
 
 .environment__column {
-  flex: 1 1 0;
+  flex: 1 0 0;
+  position: relative;
+  min-width: 300px;
+}
+
+.environment__columnContents {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .environment__label {
@@ -359,6 +397,8 @@ body {
   z-index: 1;
 }
 
+/** @define editors */
+
 .editors {
   display: flex;
   flex-direction: column;
@@ -367,21 +407,28 @@ body {
 
 .editors__editor-container {
   box-sizing: border-box;
-  flex: 0 1 100vh;
-  border-right: 2px solid var(--color-gray);
-  border-bottom: 2px solid var(--color-gray);
   position: relative;
   z-index: 0;
   display: flex;
-}
-
-.editors__editor-container:last-child {
-  border-bottom: 0;
+  flex-direction: column;
+  min-height: 85px;
 }
 
 .editors__editor {
   z-index: 0;
-  flex: 1 0 100%;
+  flex: 1;
+}
+
+.editors__column-divider {
+  background-color: var(--color-dark-gray);
+  cursor: ew-resize;
+  min-width: 4px;
+}
+
+.editors__row-divider {
+  background-color: var(--color-dark-gray);
+  cursor: ns-resize;
+  min-height: 4px;
 }
 
 .editors__help-text {
@@ -394,7 +441,11 @@ body {
   margin: -1rem 0 0 -5.5rem;
   opacity: 0.4;
   font-family: Roboto;
+  user-select: none;
+  pointer-events: none;
 }
+
+/** @define label */
 
 .label {
   background-color: black;
@@ -411,10 +462,11 @@ body {
   opacity: 0.5;
 }
 
+/** @define output */
+
 .output {
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 
 .output__item {
@@ -432,10 +484,11 @@ body {
   left: 0;
   right: 0;
   z-index: 1;
-  background-color: black;
-  background: white url(/images/large-spinner.gif) no-repeat center center;
+  background: white url(../images/large-spinner.gif) no-repeat center center;
   opacity: 0.2;
 }
+
+/** @define preview */
 
 .preview {
   position: relative;
@@ -449,7 +502,7 @@ body {
 }
 
 .preview__pop-out-button {
-  background: url(/images/popout.png);
+  background: url(../images/popout.png);
   width: 16px;
   height: 18px;
   position: absolute;
@@ -463,6 +516,8 @@ body {
 .preview__pop-out-button:hover {
   opacity: 0.5;
 }
+
+/** @define error-list */
 
 .error-list {
   position: relative;
@@ -491,7 +546,10 @@ body {
 .error-list__error {
   padding: 0.5rem 0;
   cursor: pointer;
+  overflow-wrap: break-word;
 }
+
+/** @define notification-list */
 
 .notification-list__notification {
   text-align: center;
@@ -499,6 +557,7 @@ body {
   padding: 0.2rem 0;
 }
 
+/* postcss-bem-linter: ignore */
 .notification-list__notification a {
   color: inherit;
   text-align: center;
@@ -522,21 +581,26 @@ body {
   cursor: pointer;
 }
 
+/** @define unsupported-browser */
+
 .unsupported-browser {
   font-size: 1.5rem;
   margin-top: 5rem;
   text-align: center;
 
+  /* postcss-bem-linter: ignore */
   & a {
     color: inherit;
   }
 }
 
+/** @define pop-throbber */
+
 .pop-throbber {
   position: absolute;
   top: 50%;
   left: 50%;
-  height: 20%;
+  height: 50%;
   width: 20%;
   margin-left: -10%;
   margin-top: -10%;
@@ -552,9 +616,16 @@ body {
   color: var(--color-dark-gray);
 }
 
+.pop-throbber__image {
+  background: url('../images/pop/thinking.svg') center no-repeat;
+  height: 100%;
+}
+
 .pop-throbber path {
   fill: var(--color-gray) !important;
 }
+
+/** @define utilities */
 
 .u__flex-container {
   display: flex;
@@ -578,4 +649,8 @@ body {
 
 .u__hidden {
   display: none;
+}
+
+.u__fontawesome {
+  font-family: 'FontAwesome';
 }

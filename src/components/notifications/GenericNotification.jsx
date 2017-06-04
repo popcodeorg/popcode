@@ -1,13 +1,14 @@
 import React from 'react';
-import i18n from 'i18next-client';
+import PropTypes from 'prop-types';
+import {t} from 'i18next';
 
 export default function GenericNotification(props) {
   return (
-    <span>{i18n.t(`notifications.${props.type}`, props.payload)}</span>
+    <span>{t(`notifications.${props.type}`, props.payload)}</span>
   );
 }
 
 GenericNotification.propTypes = {
-  payload: React.PropTypes.object.isRequired,
-  type: React.PropTypes.string.isRequired,
+  payload: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
 };

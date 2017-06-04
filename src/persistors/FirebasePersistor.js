@@ -1,68 +1,50 @@
 import values from 'lodash/values';
-import appFirebase from '../services/appFirebase';
+import {database} from '../services/appFirebase';
 
-class FirebasePersistor {
+export default class FirebasePersistor {
   constructor(uid) {
-    this.firebase = appFirebase.child(`workspaces/${uid}`);
+    this.firebase = database.ref(`workspaces/${uid}`);
   }
 
-  getCurrentProjectKey() {
-    return new Promise((resolve) => {
-      this.firebase.child('currentProjectKey').once('value', (snapshot) => {
-        resolve(snapshot.val());
-      });
-    });
+  static forUser(user) {
+    if (user.get('authenticated')) {
+      return new this(user.get('id'));
+    }
+    return null;
+  }
+
+  async getCurrentProjectKey() {
+    const snapshot =
+      await this.firebase.child('currentProjectKey').once('value');
+    return snapshot.val();
   }
 
   setCurrentProjectKey(projectKey) {
-    return new Promise((resolve, reject) => {
-      this.firebase.child('currentProjectKey').set(projectKey, (error) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve();
-        }
-      });
-    });
+    return this.firebase.child('currentProjectKey').set(projectKey);
   }
 
-  all() {
-    return new Promise((resolve) => {
-      this.firebase.child('projects').once('value', (projects) => {
-        resolve(values(projects.val() || {}));
-      });
-    });
+  async all() {
+    const projects = await this.firebase.child('projects').once('value');
+    return values(projects.val() || {});
   }
 
-  load(projectKey) {
-    return new Promise((resolve) => {
-      this.firebase.child('projects').child(projectKey).
-        once('value', (snapshot) => {
-          resolve(snapshot.val());
-        });
-    });
+  async load(projectKey) {
+    const snapshot =
+      await this.firebase.child('projects').child(projectKey).once('value');
+    return snapshot.val();
   }
 
-  loadCurrentProject() {
-    return this.getCurrentProjectKey().then((projectKey) => {
-      if (projectKey) {
-        return this.load(projectKey);
-      }
-      return null;
-    });
+  async loadCurrentProject() {
+    const projectKey = await this.getCurrentProjectKey();
+    if (projectKey) {
+      return this.load(projectKey);
+    }
+    return null;
   }
 
   save(project) {
-    return new Promise((resolve, reject) => {
-      this.firebase.child('projects').child(project.projectKey).
-        setWithPriority(project, -Date.now(), (error) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve();
-          }
-        });
-    });
+    return this.firebase.child('projects').child(project.projectKey).
+      setWithPriority(project, -Date.now());
   }
 
   saveCurrentProject(project) {
@@ -72,5 +54,3 @@ class FirebasePersistor {
     ]);
   }
 }
-
-export default FirebasePersistor;

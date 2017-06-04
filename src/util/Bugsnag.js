@@ -2,6 +2,7 @@ import 'bugsnag-js';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import config from '../config';
+import {getCurrentProject} from './projectUtils';
 
 const Bugsnag = window.Bugsnag.noConflict();
 Bugsnag.apiKey = config.bugsnagApiKey;
@@ -11,15 +12,15 @@ Bugsnag.appVersion = config.gitRevision;
 export function includeStoreInBugReports(store) {
   Bugsnag.beforeNotify = (payload) => {
     const state = store.getState();
-    if (state.user) {
-      payload.user = state.user.toJS();
+    if (state.get('user')) {
+      payload.user = state.get('user').toJS();
     } else {
       payload.user = {id: 'anonymous'};
     }
 
-    if (state.currentProject && state.currentProject.get('projectKey')) {
-      payload.metaData.currentProject =
-        state.projects.get(state.currentProject.get('projectKey')).toJS();
+    const currentProject = getCurrentProject(state);
+    if (currentProject) {
+      payload.metaData.currentProject = currentProject;
     }
   };
 }
@@ -32,8 +33,7 @@ window.addEventListener('unhandledrejection', ({reason}) => {
   } else {
     Bugsnag.notify(
       'UnhandledRejection',
-      'Unhandled rejection in promise',
-      reason
+      JSON.stringify(reason) || 'No reason given',
     );
   }
 });

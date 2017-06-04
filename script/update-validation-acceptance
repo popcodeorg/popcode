@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+/* eslint-disable import/no-commonjs, import/unambiguous */
+/* eslint-env node */
 
 const fs = require('fs');
 const path = require('path');
@@ -6,18 +8,18 @@ const path = require('path');
 const output = {};
 
 ['html', 'css', 'javascript'].forEach((language) => {
-  const dir = `./spec/data/acceptance/${language}`;
+  const dir = `./test/data/acceptance/${language}`;
 
   output[language] = [];
 
   fs.readdirSync(dir).forEach((file) => {
     output[language].push(
-      fs.readFileSync(path.join(dir, file), {encoding: 'utf8'})
+      fs.readFileSync(path.join(dir, file), {encoding: 'utf8'}),
     );
   });
 });
 
 fs.writeFile(
-  './spec/examples/validations/acceptance.json',
-  JSON.stringify(output, null, 2)
+  './test/data/acceptance.json',
+  JSON.stringify(output, null, 2),
 );

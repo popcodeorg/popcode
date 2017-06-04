@@ -1,80 +1,57 @@
-import filter from 'lodash/filter';
-import find from 'lodash/find';
-import get from 'lodash/get';
-import map from 'lodash/map';
-import values from 'lodash/values';
 import {createAction} from 'redux-actions';
-import {validateAllSources, getCurrentProject, saveCurrentProject} from '.';
 
-const createProjectWithKey = createAction(
+export const projectCreated = createAction(
   'PROJECT_CREATED',
-  (projectKey) => ({projectKey})
+  projectKey => ({projectKey}),
 );
 
-export function createProject() {
-  return (dispatch) => {
-    dispatch(createProjectWithKey(generateProjectKey()));
-  };
-}
+export const createProject = createAction('CREATE_PROJECT');
 
-export function changeCurrentProject(projectKey) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: 'CURRENT_PROJECT_CHANGED',
-      payload: {projectKey},
-    });
+export const changeCurrentProject = createAction(
+  'CHANGE_CURRENT_PROJECT',
+  projectKey => ({projectKey}),
+);
 
-    const state = getState();
-    saveCurrentProject(state);
-    dispatch(validateAllSources(getCurrentProject(state)));
-  };
-}
+export const updateProjectSource = createAction(
+  'UPDATE_PROJECT_SOURCE',
+  (projectKey, language, newValue) => ({projectKey, language, newValue}),
+  (_projectKey, _language, _newValue, timestamp = Date.now()) => ({timestamp}),
+);
 
-export function initializeCurrentProjectFromGist(gistData) {
-  return (dispatch) => {
-    const projectKey = generateProjectKey();
-    const project = createProjectFromGist(projectKey, gistData);
-    dispatch(loadCurrentProject(project));
-  };
-}
+export const toggleLibrary = createAction(
+  'TOGGLE_LIBRARY',
+  (projectKey, libraryKey) => ({projectKey, libraryKey}),
+  (_projectKey, _libraryKey, timestamp = Date.now()) => ({timestamp}),
+);
 
-const projectLoaded = createAction(
+export const hideComponent = createAction(
+  'HIDE_COMPONENT',
+  (projectKey, componentName) => ({projectKey, componentName}),
+  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+);
+
+export const unhideComponent = createAction(
+  'UNHIDE_COMPONENT',
+  (projectKey, componentName) => ({projectKey, componentName}),
+  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+);
+
+export const gistImported = createAction(
+  'GIST_IMPORTED',
+  (projectKey, gistData) => ({projectKey, gistData}),
+);
+
+export const gistNotFound = createAction(
+  'GIST_NOT_FOUND',
+  gistId => ({gistId}),
+);
+
+export const gistImportError = createAction(
+  'GIST_IMPORT_ERROR',
+  gistId => ({gistId}),
+);
+
+export const projectLoaded = createAction(
   'PROJECT_LOADED',
-  (project) => ({project}),
+  project => ({project}),
 );
-
-export function loadCurrentProject(project) {
-  return (dispatch) => {
-    dispatch(projectLoaded(project));
-    dispatch(changeCurrentProject(project.projectKey));
-  };
-}
-
-function createProjectFromGist(projectKey, gistData) {
-  const files = values(gistData.files);
-  const popcodeJson = parsePopcodeJson(files);
-  return {
-    projectKey,
-    sources: {
-      html: get(find(files, {language: 'HTML'}), 'content', ''),
-      css: map(filter(files, {language: 'CSS'}), 'content').join('\n\n'),
-      javascript: map(filter(files, {language: 'JavaScript'}), 'content').
-        join('\n\n'),
-    },
-    enabledLibraries: popcodeJson.enabledLibraries || [],
-    updatedAt: Date.now(),
-  };
-}
-
-function parsePopcodeJson(files) {
-  const popcodeJsonFile = find(files, {filename: 'popcode.json'});
-  if (!popcodeJsonFile) {
-    return {};
-  }
-  return JSON.parse(get(popcodeJsonFile, 'content', '{}'));
-}
-
-function generateProjectKey() {
-  const date = new Date();
-  return (date.getTime() * 1000 + date.getMilliseconds()).toString();
-}

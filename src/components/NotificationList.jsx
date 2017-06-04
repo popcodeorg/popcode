@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import partial from 'lodash/partial';
 import NotificationContainer from './NotificationContainer';
 import {
@@ -48,6 +49,6 @@ export default function NotificationList(props) {
 }
 
 NotificationList.propTypes = {
-  notifications: React.PropTypes.array,
-  onErrorDismissed: React.PropTypes.func,
+  notifications: PropTypes.array.isRequired,
+  onErrorDismissed: PropTypes.func.isRequired,
 };

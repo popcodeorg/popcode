@@ -1,9 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import map from 'lodash/map';
 import partial from 'lodash/partial';
-
-import LibraryPickerItem from './LibraryPickerItem';
 import libraries from '../config/libraries';
+import LibraryPickerItem from './LibraryPickerItem';
 
 class LibraryPicker extends React.Component {
   _isLibraryEnabled(libraryKey) {
@@ -25,8 +25,8 @@ class LibraryPicker extends React.Component {
 }
 
 LibraryPicker.propTypes = {
-  enabledLibraries: React.PropTypes.array.isRequired,
-  onLibraryToggled: React.PropTypes.func.isRequired,
+  enabledLibraries: PropTypes.array.isRequired,
+  onLibraryToggled: PropTypes.func.isRequired,
 };
 
 export default LibraryPicker;

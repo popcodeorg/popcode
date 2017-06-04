@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import classnames from 'classnames';
 import partial from 'lodash/partial';
@@ -17,7 +18,7 @@ function ProjectList(props) {
         className={classnames(
           'project-preview',
           'dashboard__menu-item',
-          {'dashboard__menu-item_active': isSelected}
+          {'dashboard__menu-item_active': isSelected},
         )}
         key={project.projectKey}
         onClick={partial(props.onProjectSelected, project)}
@@ -40,9 +41,9 @@ function ProjectList(props) {
 }
 
 ProjectList.propTypes = {
-  currentProject: React.PropTypes.object.isRequired,
-  projects: React.PropTypes.array.isRequired,
-  onProjectSelected: React.PropTypes.func.isRequired,
+  currentProject: PropTypes.object.isRequired,
+  projects: PropTypes.array.isRequired,
+  onProjectSelected: PropTypes.func.isRequired,
 };
 
 

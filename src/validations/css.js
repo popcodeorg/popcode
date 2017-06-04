@@ -1,9 +1,9 @@
 import mergeValidations from './mergeValidations';
-import validateWithCss from './css/css.js';
-import validateWithPrettyCSS from './css/prettycss.js';
-import validateWithStyleLint from './css/stylelint.js';
+import validateWithCss from './css/css';
+import validateWithPrettyCSS from './css/prettycss';
+import validateWithStyleLint from './css/stylelint';
 
-export default (source) => mergeValidations([
+export default source => mergeValidations([
   validateWithCss(source),
   validateWithPrettyCSS(source),
   validateWithStyleLint(source),

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Pop from './Pop';
 
 function PopThrobber(props) {
@@ -11,7 +12,7 @@ function PopThrobber(props) {
 }
 
 PopThrobber.propTypes = {
-  message: React.PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
 };
 
 export default PopThrobber;
