@@ -9,9 +9,12 @@ import assertPassesAcceptance from './assertPassesAcceptance';
 
 import html from '../../../src/validations/html';
 
-function htmlWithBody(body) {
+function htmlWithBody(body, head) {
   return `<!doctype html>
 <html>
+<head>
+  ${head || '<title>Title</title>'}
+</head>
 <body>
   ${body}
 </body>
@@ -88,10 +91,12 @@ describe('html', () => {
     )
   );
 
+  console.log(htmlWithBody('<div id="first">Content</div>'));
+
   it('allows lowercase attributes', () =>
     assertPassesValidation(
       html,
-      htmlWithBody('<div id="first">Content</div>')
+      htmlWithBody('<div id="first">Content</div>'),
     )
   );
 
@@ -170,8 +175,43 @@ describe('html', () => {
   );
 
   it('produces an error for a malformed DOCTYPE that doesn’t parse', () =>
-    assertFailsValidationWith(html, '<!DOCT\n', 'doctype')
+    assertFailsValidationWith(html, '<!DOCT\n', 'invalid-tag-name')
   );
+
+  it('fails with two heads', () => 
+    assertFailsValidationWith(
+      html, 
+      '<!doctype html><html><head></head><head></head></html>',
+      'only-one-head-and-body'
+    )
+  );
+
+  it('fails with div in head', () =>
+    assertFailsValidationWith(
+      html,
+      htmlWithBody('', '<title></title><div></div>'),
+      'invalid-tag-in-head'
+    )
+  );
+
+  it('fails with div outside of body', () => 
+    assertFailsValidationWith(
+      html,
+      '<!doctype html><html><head><title></title></head><div></div><body></body></html>',
+      'only-head-body-in-html'
+    )
+  );
+
+  it('fails with div outside of body', () => 
+    assertFailsValidationWith(
+      html,
+      '<!doctype html><html><body></body><head></head></html>',
+      'head-before-body'
+    )
+  );
+
+
+
 
   assertPassesAcceptance(html, 'html');
 });
