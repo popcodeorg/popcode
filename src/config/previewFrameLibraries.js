@@ -1,21 +1,15 @@
-import fs from 'fs';
-import path from 'path';
+/* eslint-disable import/extensions */
+
+import SWEETALERT_JS from
+  '../../bower_components/sweetalert/dist/sweetalert.min.js';
+import SWEETALERT_CSS from
+  '../../bower_components/sweetalert/dist/sweetalert.css';
 
 const previewFrameLibraries = {
   sweetalert: {
     name: 'sweetalert',
-    javascript: fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../bower_components/sweetalert/dist/sweetalert.min.js',
-      ),
-    ),
-    css: fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../bower_components/sweetalert/dist/sweetalert.css',
-      ),
-    ),
+    javascript: SWEETALERT_JS,
+    css: SWEETALERT_CSS,
   },
 };
 
