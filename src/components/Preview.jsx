@@ -7,14 +7,18 @@ import classnames from 'classnames';
 import generatePreview from '../util/generatePreview';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 import PreviewFrame from './PreviewFrame';
+import {
+  setRefreshTimestamp
+} from '../actions';
 
 class Preview extends React.Component {
   constructor() {
     super();
     bindAll(this, '_handlePopOutClick');
+    bindAll(this, '_handleRefreshClick');
   }
 
-  _generateDocument(isLivePreview = false) {
+  _generateDocument(isLivePreview = false, timestamp = this.props.lastRefreshTimestamp) {
     if (!this.props.isValid) {
       return '';
     }
@@ -32,6 +36,7 @@ class Preview extends React.Component {
         propagateErrorsToParent: isLivePreview,
         breakLoops: isLivePreview,
         nonBlockingAlertsAndPrompts: isLivePreview,
+        refreshTimestamp: timestamp,
       },
     );
   }
@@ -49,6 +54,15 @@ class Preview extends React.Component {
     openWindowWithWorkaroundForChromeClosingBug(url);
   }
 
+  _handleRefreshClick() {
+    this.props.dispatch(setRefreshTimestamp(Date.now()));
+  }
+
+  // _refresh() {
+  //   const currentTimestamp = Date.now();
+  //   this._generateDocument(true, currentTimestamp);
+  // }
+
   render() {
     return (
       <div
@@ -58,6 +72,10 @@ class Preview extends React.Component {
           {u__hidden: !this.props.isValid},
         )}
       >
+      <div
+        className="preview__reset-button"
+        onClick={this._handleRefreshClick}
+      />
         <div
           className="preview__pop-out-button"
           onClick={this._handlePopOutClick}

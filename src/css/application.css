@@ -517,6 +517,22 @@ body {
   opacity: 0.5;
 }
 
+.preview__reset-button {
+  background: url(../images/popout.png);
+  width: 16px;
+  height: 18px;
+  position: absolute;
+  right: 35px;
+  top: 10px;
+  cursor: pointer;
+  opacity: 0.25;
+  z-index: 1;
+}
+
+.preview__reset-button:hover {
+  opacity: 0.5;
+}
+
 /** @define error-list */
 
 .error-list {

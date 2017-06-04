@@ -84,6 +84,8 @@ class PreviewGenerator {
       this._addAlertAndPromptHandling();
     }
 
+    this._addRefreshTimestamp(options.refreshTimestamp);
+
     this._addJavascript(pick(options, 'breakLoops'));
   }
 
@@ -122,6 +124,12 @@ class PreviewGenerator {
     this._previewHead.appendChild(styleTag);
   }
 
+  _addRefreshTimestamp(timestamp) {
+    const comment = this.previewDocument.createComment(`Last refresh on: ${String(new Date(timestamp))}`);
+    console.log(comment);
+    this.previewBody.prepend(comment);
+  }
+
   _addJavascript({breakLoops = false}) {
     let source = `\n${sourceDelimiter}\n${this._project.sources.javascript}`;
     if (breakLoops) {
@@ -130,7 +138,6 @@ class PreviewGenerator {
     const scriptTag = this.previewDocument.createElement('script');
     scriptTag.innerHTML = source;
     this.previewBody.appendChild(scriptTag);
-
     return this.previewDocument.documentElement.outerHTML;
   }
 

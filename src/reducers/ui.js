@@ -25,7 +25,8 @@ const defaultState = new Immutable.Map().
     new Immutable.Map().
       set('isOpen', false).
       set('activeSubmenu', null),
-  );
+  ).
+  set('lastRefreshTimestamp', null);
 
 function addNotification(state, type, severity, payload = {}) {
   return state.update('notifications', notifications =>
@@ -160,6 +161,9 @@ export default function ui(stateIn, action) {
         return addNotification(state, 'empty-gist', 'error');
       }
       return addNotification(state, 'gist-export-error', 'error');
+
+    case 'SET_REFRESH_TIMESTAMP':
+      console.log(action.payload);
 
     default:
       return state;
