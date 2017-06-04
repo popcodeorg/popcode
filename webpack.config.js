@@ -3,6 +3,7 @@
 /* eslint-disable import/no-commonjs */
 /* eslint-disable comma-dangle */
 
+const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
@@ -10,6 +11,31 @@ const startsWith = require('lodash/startsWith');
 const map = require('lodash/map');
 const includes = require('lodash/includes');
 const git = require('git-rev-sync');
+const babel = require('babel-core');
+const babelLoaderVersion =
+  require('./node_modules/babel-loader/package.json').version;
+
+let targets;
+if (process.env.DEBUG === 'true') {
+  targets = {browsers: 'last 1 Chrome version'};
+} else {
+  targets = JSON.parse(fs.readFileSync('./config/browsers.json'));
+}
+const babelrc = {
+  presets: [
+    'react',
+    ['env', {targets, modules: false}]
+  ],
+  compact: false,
+  cacheDirectory: true,
+  cacheIdentifier: JSON.stringify({
+    babel: babel.version,
+    'babel-loader': babelLoaderVersion,
+    debug: process.env.DEBUG,
+    env: process.env.NODE_ENV || 'development',
+  }),
+};
+
 
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
@@ -50,7 +76,7 @@ module.exports = {
           path.resolve(__dirname, 'src'),
           path.resolve(__dirname, 'test'),
         ],
-        loaders: ['babel-loader', 'transform-loader/cacheable?brfs-babel'],
+        use: {loader: 'babel-loader', options: babelrc},
       },
       {
         test: /\.js$/,
@@ -113,7 +139,7 @@ module.exports = {
           matchModule('stylelint'),
           matchModule('redux-saga-debounce-effect'),
         ],
-        loader: 'babel-loader',
+        use: {loader: 'babel-loader', options: babelrc},
       },
       {
         include: [
@@ -152,6 +178,13 @@ module.exports = {
       {
         test: /\.json$/,
         loader: 'json-loader',
+      },
+      {
+        include: [
+          path.resolve(__dirname, 'bower_components'),
+          path.resolve(__dirname, 'templates'),
+        ],
+        use: {loader: 'raw-loader'},
       },
       {
         test: /\.svg$/,
