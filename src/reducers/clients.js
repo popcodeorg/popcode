@@ -28,6 +28,25 @@ export default function clients(stateIn, action) {
         ['gists', 'lastExport'],
         new Immutable.Map({status: 'error', error: action.payload}),
       );
+
+    case 'EXPORT_REPO':
+      return state.setIn(
+        ['repos', 'lastExport'],
+        new Immutable.Map({status: 'waiting'}),
+      );
+
+    case 'REPO_EXPORTED':
+      return state.setIn(
+        ['repos', 'lastExport'],
+        new Immutable.Map({status: 'ready', url: action.payload}),
+      );
+
+    case 'REPO_EXPORT_ERROR':
+      return state.setIn(
+        ['repos', 'lastExport'],
+        new Immutable.Map({status: 'error', error: action.payload}),
+      );
+
   }
 
   return state;

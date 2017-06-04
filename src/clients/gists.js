@@ -1,25 +1,10 @@
-import assign from 'lodash/assign';
 import isEmpty from 'lodash/isEmpty';
-import get from 'lodash/get';
 import trim from 'lodash/trim';
-import promiseRetry from 'promise-retry';
+import performWithRetries from '../util/performWithRetries';
 import gitHub from '../services/gitHub';
 
-function performWithRetries(perform, options = {}) {
-  return promiseRetry(
-    retry => perform().catch((error) => {
-      if (error.message === 'Network Error') {
-        return retry(error);
-      }
-      return Promise.reject(error);
-    }),
-    assign({
-      retries: 5,
-      factor: 2,
-      minTimeout: 1000,
-      maxTimeout: 10000,
-    }, options),
-  );
+function gistPerformWithRetries(perform, options = {}) {
+  return performWithRetries(perform, ['Network Error'], options);
 }
 
 export function EmptyGistError(message) {
@@ -63,23 +48,6 @@ function buildGistFromProject(project) {
   };
 }
 
-function clientForUser(user) {
-  const githubToken = getGithubToken(user);
-  if (githubToken) {
-    return gitHub.withAccessToken(githubToken);
-  }
-
-  return gitHub.anonymous();
-}
-
-function getGithubToken(user) {
-  return get(user, ['accessTokens', 'github.com']);
-}
-
-function canUpdateGist(user) {
-  return Boolean(getGithubToken(user));
-}
-
 async function updateGistWithImportUrl(github, gistData) {
   const gist = github.getGist(gistData.id);
   const uri = document.createElement('a');
@@ -87,7 +55,8 @@ async function updateGistWithImportUrl(github, gistData) {
   uri.search = `gist=${gistData.id}`;
 
   const description = `${gistData.description} Click to import: ${uri.href}`;
-  const response = await performWithRetries(() => gist.update({description}));
+  const response =
+    await gistPerformWithRetries(() => gist.update({description}));
   return response.data;
 }
 
@@ -103,7 +72,7 @@ function createPopcodeJson(project) {
 }
 
 export async function createFromProject(project, user) {
-  const github = clientForUser(user);
+  const github = gitHub.clientForUser(user);
 
   const gist = buildGistFromProject(project);
   if (isEmpty(gist.files)) {
@@ -111,18 +80,19 @@ export async function createFromProject(project, user) {
   }
 
   const response =
-    await performWithRetries(() => github.getGist().create(gist));
+    await gistPerformWithRetries(() => github.getGist().create(gist));
 
   const gistData = response.data;
-  if (canUpdateGist(user)) {
+  if (gitHub.canUpdateGist(user)) {
     return updateGistWithImportUrl(github, gistData);
   }
   return gistData;
 }
 
 export async function loadFromId(gistId, user) {
-  const github = clientForUser(user);
+  const github = gitHub.clientForUser(user);
   const gist = github.getGist(gistId);
-  const response = await performWithRetries(() => gist.read(), {retries: 3});
+  const response =
+    await gistPerformWithRetries(() => gist.read(), {retries: 3});
   return response.data;
 }

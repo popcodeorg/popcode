@@ -10,7 +10,8 @@
       "load-project": "Load Project",
       "libraries": "Libraries",
       "export-gist": "Export Gist",
-      "send-feedback": "Send Feedback"
+      "send-feedback": "Send Feedback",
+      "export-repo": "Export Repo"
     }
   },
   "editors": {
@@ -32,7 +33,9 @@
     "gist-export-link": "Click here to open it",
     "gist-import-not-found": "Looks like that gist doesn’t exist. Check the URL and try again.",
     "gist-import-error": "There was a problem importing that gist.",
-    "gist-import-link": "Click here to open it"
+    "gist-import-link": "Click here to open it",
+    "repo-export-error": "Something went wrong trying to create that repo. Please try again.",
+    "repo-export-complete": "Your repo export is ready!"
   },
   "languages": {
     "html": "HTML",

@@ -31,6 +31,8 @@ import {
   startDragColumnDivider,
   stopDragColumnDivider,
   userDismissedNotification,
+  exportGist,
+  exportRepo,
   applicationLoaded,
 } from '../actions';
 
@@ -76,6 +78,8 @@ class Workspace extends React.Component {
       '_handleToggleDashboard',
       '_handleRequestedLineFocused',
       '_handleNotificationDismissed',
+      '_handleExportGist',
+      '_handleExportRepo',
       '_storeDividerRef',
       '_storeColumnRef',
     );
@@ -209,6 +213,43 @@ class Workspace extends React.Component {
 
   _handleRequestedLineFocused() {
     this.props.dispatch(editorFocusedRequestedLine());
+  }
+
+  _handleExportGist() {
+    this.props.dispatch(exportGist());
+  }
+
+  _handleExportRepo() {
+    this.props.dispatch(exportRepo());
+  }
+
+  _renderDashboard() {
+    if (!this.props.ui.dashboard.isOpen) {
+      return null;
+    }
+
+    return (
+      <div className="layout__dashboard">
+        <Dashboard
+          activeSubmenu={this.props.ui.dashboard.activeSubmenu}
+          allProjects={this.props.allProjects}
+          currentProject={this.props.currentProject}
+          currentUser={this.props.currentUser}
+          gistExportInProgress={
+            get(this.props, 'clients.gists.lastExport.status') === 'waiting'
+          }
+          validationState={this._getOverallValidationState()}
+          onExportGist={this._handleExportGist}
+          onExportRepo={this._handleExportRepo}
+          onLibraryToggled={this._handleLibraryToggled}
+          onLogOut={this._handleLogOut}
+          onNewProject={this._handleNewProject}
+          onProjectSelected={this._handleProjectSelected}
+          onStartLogIn={this._handleStartLogIn}
+          onSubmenuToggled={this._handleDashboardSubmenuToggled}
+        />
+      </div>
+    );
   }
 
   _renderSidebar() {

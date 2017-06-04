@@ -22,6 +22,8 @@ import {
 import {
   gistExportNotDisplayed,
   gistExportError,
+  repoExportNotDisplayed,
+  repoExportError,
 } from '../../../src/actions/clients';
 import {EmptyGistError} from '../../../src/clients/gists';
 import {userLoggedOut} from '../../../src/actions/user';
@@ -195,6 +197,24 @@ test('gistExportError', (t) => {
     initialState,
     partial(gistExportError, new EmptyGistError()),
     withNotification('empty-gist', 'error'),
+  ));
+});
+
+tap('https://popcode-mat.github.io/my-popcode-repo', (url) => {
+  test('repoExportNotDisplayed', reducerTest(
+    reducer,
+    initialState,
+    partial(repoExportNotDisplayed, url),
+    withNotification('repo-export-complete', 'notice', {url}),
+  ));
+});
+
+test('repoExportError', (t) => {
+  t.test('with generic error', reducerTest(
+    reducer,
+    initialState,
+    partial(repoExportError, new Error()),
+    withNotification('repo-export-error', 'error'),
   ));
 });
 

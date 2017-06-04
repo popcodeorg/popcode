@@ -6,11 +6,13 @@ import {
   GenericNotification,
   GistExportNotification,
   GistImportError,
+  RepoExportNotification,
 } from './notifications';
 
 const NOTIFICATION_COMPONENTS = {
   'gist-export-complete': GistExportNotification,
   'gist-import-error': GistImportError,
+  'repo-export-complete': RepoExportNotification,
 };
 
 function chooseNotificationComponent(notification) {

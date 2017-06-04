@@ -65,7 +65,7 @@ class Dashboard extends React.Component {
   }
 
   _renderMenu() {
-    let newProjectButton, loadProjectButton;
+    let newProjectButton, loadProjectButton, exportRepoButton;
     if (this.props.currentUser.authenticated) {
       newProjectButton = (
         <div
@@ -73,6 +73,15 @@ class Dashboard extends React.Component {
           onClick={this.props.onNewProject}
         >
           {t('dashboard.menu.new-project')}
+        </div>
+      );
+
+      exportRepoButton = (
+        <div
+          className="dashboard__menu-item dashboard__menu-item_grid"
+          onClick={this.props.onExportRepo}
+        >
+          {t('dashboard.menu.export-repo')}
         </div>
       );
 
@@ -108,6 +117,7 @@ class Dashboard extends React.Component {
         >
           {t('dashboard.menu.send-feedback')}
         </a>
+        {exportRepoButton}
       </div>
     );
   }
@@ -241,6 +251,7 @@ Dashboard.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
   onExportGist: PropTypes.func.isRequired,
+  onExportRepo: PropTypes.func.isRequired,
   onLibraryToggled: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onNewProject: PropTypes.func.isRequired,

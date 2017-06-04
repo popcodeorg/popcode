@@ -6,6 +6,7 @@ import {
   userDoneTyping as userDoneTypingSaga,
   exportGist as exportGistSaga,
   popOutProject as popOutProjectSaga,
+  exportRepo as exportRepoSaga,
 } from '../../../src/sagas/ui';
 import {userDoneTyping, popOutProject} from '../../../src/actions/ui';
 import {
@@ -13,6 +14,10 @@ import {
   gistExportDisplayed,
   gistExportError,
   gistExportNotDisplayed,
+  repoExported,
+  repoExportDisplayed,
+  repoExportError,
+  repoExportNotDisplayed,
 } from '../../../src/actions/clients';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../../../src/util';
 import {spinnerPage} from '../../../src/templates';
@@ -76,6 +81,7 @@ test('exportGist', (t) => {
   });
 });
 
+
 test('popOutProject', (assert) => {
   const mockWindow = {closed: false, close() { }};
   const project = {};
@@ -90,4 +96,54 @@ test('popOutProject', (assert) => {
     ).
     next(mockWindow).isDone();
   assert.end();
+});
+
+test('exportRepo', (t) => {
+  t.test('with window still open', (assert) => {
+    const mockWindow = {closed: false, location: {}};
+    const url = 'https://popcode-mat.github.io/my-popcode-repo';
+    testSaga(exportRepoSaga).
+      next().call(
+        openWindowWithWorkaroundForChromeClosingBug,
+        `data:text/html;base64,${spinnerPage}`,
+      ).
+      next(mockWindow).take(['REPO_EXPORTED', 'REPO_EXPORT_ERROR']).
+      next(repoExported(url)).put(repoExportDisplayed()).
+      next().isDone();
+
+    assert.equal(mockWindow.location.href, url);
+
+    assert.end();
+  });
+
+  t.test('with window closed', (assert) => {
+    const mockWindow = {closed: true, location: {}};
+    const url = 'https://popcode-mat.github.io/my-popcode-repo';
+    testSaga(exportRepoSaga).
+      next().call(
+        openWindowWithWorkaroundForChromeClosingBug,
+        `data:text/html;base64,${spinnerPage}`,
+      ).
+      next(mockWindow).take(['REPO_EXPORTED', 'REPO_EXPORT_ERROR']).
+      next(repoExported(url)).put(repoExportNotDisplayed(url)).
+      next().isDone();
+
+    assert.notOk(mockWindow.location.href);
+
+    assert.end();
+  });
+
+  t.test('with repo export error', (assert) => {
+    const mockWindow = {closed: false, close() { }};
+    testSaga(exportRepoSaga).
+      next().call(
+        openWindowWithWorkaroundForChromeClosingBug,
+        `data:text/html;base64,${spinnerPage}`,
+      ).
+      next(mockWindow).take(['REPO_EXPORTED', 'REPO_EXPORT_ERROR']).
+      next(repoExportError(new Error())).call([mockWindow, 'close']).
+      next().isDone();
+
+    assert.end();
+  });
 });
