@@ -1,4 +1,12 @@
-import {apply, call, fork, put, select, takeEvery} from 'redux-saga/effects';
+import {
+  apply,
+  call,
+  fork,
+  put,
+  select,
+  takeEvery,
+  throttle,
+} from 'redux-saga/effects';
 import isNull from 'lodash/isNull';
 import get from 'lodash/get';
 import {
@@ -81,7 +89,7 @@ export default function* () {
     takeEvery('APPLICATION_LOADED', applicationLoaded),
     takeEvery('CREATE_PROJECT', createProject),
     takeEvery('CHANGE_CURRENT_PROJECT', changeCurrentProject),
-    takeEvery('UPDATE_PROJECT_SOURCE', updateProjectSource),
+    throttle(500, 'UPDATE_PROJECT_SOURCE', updateProjectSource),
     takeEvery('USER_AUTHENTICATED', userAuthenticated),
     takeEvery('TOGGLE_LIBRARY', toggleLibrary),
   ];
