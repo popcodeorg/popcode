@@ -114,8 +114,11 @@
     "redux-logger": "^2.5.0",
     "redux-saga": "^0.15.3",
     "redux-saga-debounce-effect": "https://github.com/madewithlove/redux-saga-debounce-effect.git#v0.2.2",
+    "remark": "^7.0.1",
+    "remark-html": "^6.0.0",
     "rxjs": "^5.0.2",
     "slowparse": "^1.1.4",
+    "strip-markdown": "^3.0.0",
     "stylelint": "^7.10.1",
     "text-encoding": "^0.6.0"
   },
