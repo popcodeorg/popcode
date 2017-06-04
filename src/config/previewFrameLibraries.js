@@ -5,8 +5,6 @@ import SWEETALERT_JS from
 import SWEETALERT_CSS from
   '../../bower_components/sweetalert/dist/sweetalert.css';
 
-console.debug(SWEETALERT_JS);
-
 const previewFrameLibraries = {
   sweetalert: {
     name: 'sweetalert',
