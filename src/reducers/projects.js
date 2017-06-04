@@ -1,5 +1,3 @@
-import {readFileSync} from 'fs';
-import path from 'path';
 import Immutable from 'immutable';
 import isNil from 'lodash/isNil';
 import filter from 'lodash/filter';
@@ -9,18 +7,13 @@ import map from 'lodash/map';
 import values from 'lodash/values';
 
 import {isPristineProject} from '../util/projectUtils';
+import HTML_TEMPLATE from '../../templates/new.html';
 
 const emptyMap = new Immutable.Map();
 
 const newProject = Immutable.fromJS({
   sources: {
-    html: readFileSync(path.join(
-      __dirname,
-      '..',
-      '..',
-      'templates',
-      'new.html',
-    ), 'utf8'),
+    html: HTML_TEMPLATE,
     css: '',
     javascript: '',
   },
