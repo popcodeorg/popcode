@@ -181,7 +181,8 @@ class PreviewGenerator {
 
   _attachJavascriptLibrary(javascript) {
     const scriptTag = this.previewDocument.createElement('script');
-    scriptTag.innerHTML = javascript;
+    const javascriptText = String(javascript);
+    scriptTag.innerHTML = javascriptText.replace(/<\/script>/g, '<\\/script>');
     this._previewHead.insertBefore(scriptTag, this._previewHead.firstChild);
   }
 }
