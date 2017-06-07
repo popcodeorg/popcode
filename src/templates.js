@@ -1,15 +1,7 @@
-import fs from 'fs';
-import path from 'path';
 import base64 from 'base64-js';
 import {TextEncoder} from 'text-encoding';
+import spinnerPageHtml from '../templates/github-export.html';
 
 export const spinnerPage = base64.fromByteArray(
-  new TextEncoder('utf-8').encode(
-    fs.readFileSync(
-      path.join(
-        __dirname,
-        '../templates/github-export.html',
-      ),
-    ),
-  ),
+  new TextEncoder('utf-8').encode(spinnerPageHtml),
 );
