@@ -204,6 +204,8 @@ for all the sordid details.
 * [Frederic Brodbeck](http://www.freder.io/)
 * [Ben Yelsey](https://github.com/inlinestyle)
 * [Aaron Greenberg](https://github.com/ajgreenb)
+* [Peter Jablonski](https://github.com/pwjablonski)
+* [Ten-Young Guh](https://github.com/tenyoung795)
 * [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
 * Logo design, "Pop" concept, and UI by the team at
   [Red Peak](http://redpeakgroup.com): Andrew Haug, Aya Kawabata, Jieun Lee,
