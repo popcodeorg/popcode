@@ -10,6 +10,9 @@
   "src/selectors/*.js": {
     "type": "selector",
     "template": "import {open}createSelector{close} from 'reselect';\n\nexport default createSelector(\n  [],\n  () => {open}\n  {close},\n);"
+  "src/records/*.js": {
+    "type": "record",
+    "template": "import {open}Record{close} from 'immutable';\n\nexport default new Record({open}\n{close}, '{}');"
   },
   "src/store.js": {
     "type": "store"
