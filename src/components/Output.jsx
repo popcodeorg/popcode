@@ -3,19 +3,9 @@ import PropTypes from 'prop-types';
 import {t} from 'i18next';
 import isEmpty from 'lodash/isEmpty';
 import classnames from 'classnames';
-import {Preview} from '../containers';
-import ErrorList from './ErrorList';
+import {ErrorReport, Preview} from '../containers';
 
 class Output extends React.Component {
-  _renderErrorList(props) {
-    return (
-      <ErrorList
-        {...props}
-        onErrorClick={this.props.onErrorClick}
-      />
-    );
-  }
-
   _renderRuntimeErrorList() {
     if (!isEmpty(this.props.runtimeErrors)) {
       return this._renderErrorList({
@@ -38,7 +28,7 @@ class Output extends React.Component {
     }
 
     if (this.props.validationState === 'failed') {
-      return this._renderErrorList(this.props.errors);
+      return <ErrorReport />;
     }
 
     return null;
@@ -80,13 +70,11 @@ class Output extends React.Component {
 }
 
 Output.propTypes = {
-  errors: PropTypes.object.isRequired,
   isDraggingColumnDivider: PropTypes.bool.isRequired,
   isHidden: PropTypes.bool.isRequired,
   runtimeErrors: PropTypes.array.isRequired,
   style: PropTypes.object.isRequired,
   validationState: PropTypes.string.isRequired,
-  onErrorClick: PropTypes.func.isRequired,
   onHide: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
 };

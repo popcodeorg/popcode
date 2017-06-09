@@ -1,46 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import ErrorSublist from './ErrorSublist';
+import map from 'lodash/map';
+import partial from 'lodash/partial';
+import {t} from 'i18next';
+import ErrorItem from './ErrorItem';
 
-function ErrorList(props) {
-  return (
-    <div
-      className={classnames(
-        'error-list',
-        'output__item',
-        {'error-list_docked': props.docked, output__item_shrink: props.docked},
+function ErrorList({errors, onErrorClick, language}) {
+  if (errors.state === 'passed') {
+    return false;
+  }
+
+  const errorItems = map(errors.items, error => (
+    <ErrorItem
+      {...error}
+      key={[error.reason, error.row]}
+      onClick={partial(
+        onErrorClick,
+        language,
       )}
-    >
-      <ErrorSublist
-        errors={props.html}
-        language="html"
-        onErrorClick={props.onErrorClick}
-      />
-      <ErrorSublist
-        errors={props.css}
-        language="css"
-        onErrorClick={props.onErrorClick}
-      />
-      <ErrorSublist
-        errors={props.javascript}
-        language="javascript"
-        onErrorClick={props.onErrorClick}
-      />
+    />
+  ));
+
+  const errorMessage = t(
+    'errors.notice',
+    {count: errors.items.length, language},
+  );
+
+  return (
+    <div>
+      <h2 className="error-list__header">
+        {errorMessage}
+      </h2>
+      <ul className="error-list__errors">
+        {errorItems}
+      </ul>
     </div>
   );
 }
 
 ErrorList.propTypes = {
-  css: PropTypes.object.isRequired,
-  docked: PropTypes.bool,
-  html: PropTypes.object.isRequired,
-  javascript: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  language: PropTypes.oneOf(['html', 'css', 'javascript']).isRequired,
   onErrorClick: PropTypes.func.isRequired,
-};
-
-ErrorList.defaultProps = {
-  docked: false,
 };
 
 export default ErrorList;

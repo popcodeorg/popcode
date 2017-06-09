@@ -228,7 +228,6 @@ class Workspace extends React.Component {
         runtimeErrors={runtimeErrors}
         style={{flex: rowsFlex[1]}}
         validationState={this._getOverallValidationState()}
-        onErrorClick={this._handleErrorClick}
         onHide={
           partial(this._handleComponentHide,
             'output')
