@@ -25,9 +25,7 @@ import {
 } from '../clients/firebaseAuth';
 
 import {
-  addRuntimeError,
   changeCurrentProject,
-  clearRuntimeErrors,
   createProject,
   updateProjectSource,
   userAuthenticated,
@@ -47,7 +45,6 @@ import {
   userDismissedNotification,
   exportGist,
   applicationLoaded,
-  refreshPreview,
 } from '../actions';
 
 import {getCurrentProject, isPristineProject} from '../util/projectUtils';
@@ -88,7 +85,6 @@ class Workspace extends React.Component {
     bindAll(
       this,
       '_confirmUnload',
-      '_handleClearRuntimeErrors',
       '_handleComponentUnhide',
       '_handleComponentHide',
       '_handleDashboardSubmenuToggled',
@@ -102,7 +98,6 @@ class Workspace extends React.Component {
       '_handleLogOut',
       '_handleNewProject',
       '_handleProjectSelected',
-      '_handleRuntimeError',
       '_handleStartLogIn',
       '_handleToggleDashboard',
       '_handleRequestedLineFocused',
@@ -110,7 +105,6 @@ class Workspace extends React.Component {
       '_handleExportGist',
       '_storeDividerRef',
       '_storeColumnRef',
-      '_handleRefreshClick',
     );
     this.columnRefs = [null, null];
   }
@@ -201,18 +195,6 @@ class Workspace extends React.Component {
     this.props.dispatch(toggleDashboardSubmenu(submenu));
   }
 
-  _handleRuntimeError(error) {
-    this.props.dispatch(addRuntimeError(error));
-  }
-
-  _handleClearRuntimeErrors() {
-    this.props.dispatch(clearRuntimeErrors());
-  }
-
-  _handleRefreshClick() {
-    this.props.dispatch(refreshPreview(Date.now()));
-  }
-
   _getOverallValidationState() {
     const errorStates = map(values(this.props.errors), 'state');
 
@@ -232,7 +214,6 @@ class Workspace extends React.Component {
 
   _renderOutput() {
     const {
-      currentProject,
       currentProject: {hiddenUIComponents},
       errors,
       isDraggingColumnDivider,
@@ -244,20 +225,15 @@ class Workspace extends React.Component {
         errors={errors}
         isDraggingColumnDivider={isDraggingColumnDivider}
         isHidden={includes(hiddenUIComponents, 'output')}
-        lastRefreshTimestamp={this.props.ui.lastRefreshTimestamp}
-        project={currentProject}
         runtimeErrors={runtimeErrors}
         style={{flex: rowsFlex[1]}}
         validationState={this._getOverallValidationState()}
-        onClearRuntimeErrors={this._handleClearRuntimeErrors}
         onErrorClick={this._handleErrorClick}
         onHide={
           partial(this._handleComponentHide,
             'output')
         }
         onRef={partial(this._storeColumnRef, 1)}
-        onRefreshClick={this._handleRefreshClick}
-        onRuntimeError={this._handleRuntimeError}
       />
     );
   }

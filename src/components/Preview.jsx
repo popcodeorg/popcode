@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {TextEncoder} from 'text-encoding';
 import base64 from 'base64-js';
 import bindAll from 'lodash/bindAll';
+import isNil from 'lodash/isNil';
 import classnames from 'classnames';
 import generatePreview from '../util/generatePreview';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
@@ -15,12 +16,12 @@ class Preview extends React.Component {
   }
 
   _generateDocument(isLivePreview = false) {
-    if (!this.props.isValid) {
+    const {isValid, project} = this.props;
+    if (!isValid) {
       return '';
     }
-    const project = this.props.project;
 
-    if (project === undefined) {
+    if (isNil(project)) {
       return '';
     }
 
@@ -50,12 +51,14 @@ class Preview extends React.Component {
   }
 
   render() {
+    const {isValid, onClearRuntimeErrors, onRuntimeError} = this.props;
+
     return (
       <div
         className={classnames(
           'preview',
           'output__item',
-          {u__hidden: !this.props.isValid},
+          {u__hidden: !isValid},
         )}
       >
         <span
@@ -68,8 +71,8 @@ class Preview extends React.Component {
         >&#xf08e;</span>
         <PreviewFrame
           src={this._generateDocument(true)}
-          onFrameWillRefresh={this.props.onClearRuntimeErrors}
-          onRuntimeError={this.props.onRuntimeError}
+          onFrameWillRefresh={onClearRuntimeErrors}
+          onRuntimeError={onRuntimeError}
         />
       </div>
     );
@@ -79,7 +82,14 @@ class Preview extends React.Component {
 Preview.propTypes = {
   isValid: PropTypes.bool.isRequired,
   lastRefreshTimestamp: PropTypes.number,
-  project: PropTypes.object.isRequired,
+  project: PropTypes.shape({
+    sources: PropTypes.shape({
+      html: PropTypes.string.isRequired,
+      css: PropTypes.string.isRequired,
+      javascript: PropTypes.string.isRequired,
+    }).isRequired,
+    enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
   onClearRuntimeErrors: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,

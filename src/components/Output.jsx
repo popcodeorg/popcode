@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
 import isEmpty from 'lodash/isEmpty';
-import isNull from 'lodash/isNull';
 import classnames from 'classnames';
+import {Preview} from '../containers';
 import ErrorList from './ErrorList';
-import Preview from './Preview';
 
 class Output extends React.Component {
   _renderErrorList(props) {
@@ -13,23 +12,6 @@ class Output extends React.Component {
       <ErrorList
         {...props}
         onErrorClick={this.props.onErrorClick}
-      />
-    );
-  }
-
-  _renderPreview() {
-    if (isNull(this.props.project)) {
-      return null;
-    }
-
-    return (
-      <Preview
-        isValid={this.props.validationState === 'passed'}
-        lastRefreshTimestamp={this.props.lastRefreshTimestamp}
-        project={this.props.project}
-        onClearRuntimeErrors={this.props.onClearRuntimeErrors}
-        onRefreshClick={this.props.onRefreshClick}
-        onRuntimeError={this.props.onRuntimeError}
       />
     );
   }
@@ -89,7 +71,7 @@ class Output extends React.Component {
             {t('workspace.components.output')}
           </div>
           {this._renderErrors()}
-          {this._renderPreview()}
+          <Preview />
           {this._renderRuntimeErrorList()}
         </div>
       </div>
@@ -101,17 +83,12 @@ Output.propTypes = {
   errors: PropTypes.object.isRequired,
   isDraggingColumnDivider: PropTypes.bool.isRequired,
   isHidden: PropTypes.bool.isRequired,
-  lastRefreshTimestamp: PropTypes.number,
-  project: PropTypes.object,
   runtimeErrors: PropTypes.array.isRequired,
   style: PropTypes.object.isRequired,
   validationState: PropTypes.string.isRequired,
-  onClearRuntimeErrors: PropTypes.func.isRequired,
   onErrorClick: PropTypes.func.isRequired,
   onHide: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
-  onRefreshClick: PropTypes.func.isRequired,
-  onRuntimeError: PropTypes.func.isRequired,
 };
 
 Output.defaultProps = {
