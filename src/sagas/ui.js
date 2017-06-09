@@ -1,8 +1,11 @@
 import {call, put, take, takeEvery} from 'redux-saga/effects';
 import debounceFor from 'redux-saga-debounce-effect/src/debounceFor';
+import {TextEncoder} from 'text-encoding';
+import base64 from 'base64-js';
 import {userDoneTyping as userDoneTypingAction} from '../actions/ui';
 import {gistExportDisplayed, gistExportNotDisplayed} from '../actions/clients';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
+import generatePreview from '../util/generatePreview';
 import {spinnerPage} from '../templates';
 
 export function* userDoneTyping() {
@@ -12,7 +15,7 @@ export function* userDoneTyping() {
 export function* exportGist() {
   const exportWindow = yield call(
     openWindowWithWorkaroundForChromeClosingBug,
-    `data:text/html;base64,${spinnerPage}`,
+    `data:text/html;charset=utf-8;base64,${spinnerPage}`,
   );
   const {type, payload: url} =
     yield take(['GIST_EXPORTED', 'GIST_EXPORT_ERROR']);
@@ -29,9 +32,18 @@ export function* exportGist() {
   }
 }
 
+export function* popOutProject({payload: project}) {
+  const preview = yield call(generatePreview, project);
+  const uint8array = new TextEncoder('utf-8').encode(preview);
+  const base64encoded = base64.fromByteArray(uint8array);
+  const url = `data:text/html;charset=utf-8;base64,${base64encoded}`;
+  yield call(openWindowWithWorkaroundForChromeClosingBug, url);
+}
+
 export default function* () {
   yield [
     debounceFor('UPDATE_PROJECT_SOURCE', userDoneTyping, 1000),
     takeEvery('EXPORT_GIST', exportGist),
+    takeEvery('POP_OUT_PROJECT', popOutProject),
   ];
 }

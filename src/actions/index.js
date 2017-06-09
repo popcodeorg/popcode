@@ -25,6 +25,7 @@ import {
   notificationTriggered,
   userDismissedNotification,
   refreshPreview,
+  popOutProject,
 } from './ui';
 
 import {
@@ -77,6 +78,7 @@ export {
   exportGist,
   gistExportDisplayed,
   gistExportNotDisplayed,
+  popOutProject,
   applicationLoaded,
   refreshPreview,
 };

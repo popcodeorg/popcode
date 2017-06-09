@@ -1,6 +1,11 @@
 import {connect} from 'react-redux';
 import {Preview} from '../components';
-import {addRuntimeError, clearRuntimeErrors, refreshPreview} from '../actions';
+import {
+  addRuntimeError,
+  clearRuntimeErrors,
+  popOutProject,
+  refreshPreview,
+} from '../actions';
 import {getCurrentProject} from '../util/projectUtils';
 
 function mapStateToProps(state) {
@@ -17,6 +22,10 @@ function mapDispatchToProps(dispatch) {
   return {
     onClearRuntimeErrors() {
       dispatch(clearRuntimeErrors());
+    },
+
+    onPopOutProject(project) {
+      dispatch(popOutProject(project));
     },
 
     onRuntimeError(error) {
