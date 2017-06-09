@@ -1,7 +1,11 @@
 {
   "src/components/*.jsx": {
     "type": "component",
-    "template": "import React from 'react';\n\nclass {camelcase|capitalize} extends React.Component {open}\n  render() {open}\n  {close}\n{close};\n\nexport default {camelcase|capitalize};"
+    "template": "import React from 'react';\nimport PropTypes from 'prop-types';\n\nexport default function {camelcase|capitalize}() {open}\n{close}\n\n{camelcase|capitalize}.propTypes = {open}\n{close};"
+  },
+  "src/containers/*.js": {
+    "type": "container",
+    "template": "import {open}connect{close} from 'react-redux';\nimport {open}{camelcase|capitalize}{close} from '../components';\nimport {open}{close} from '../actions';\n\nfunction mapStateToProps(state) {open}\n  return {open}\n  {close};\n{close}\n\nfunction mapDispatchToProps(dispatch) {open}\n  return {open}\n  {close};\n{close}\n\nexport default connect(\n  mapStateToProps,\n  mapDispatchToProps,\n)({camelcase|capitalize});\n"
   },
   "src/store.js": {
     "type": "store"
