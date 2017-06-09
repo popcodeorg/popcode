@@ -322,19 +322,27 @@ class Workspace extends React.Component {
   }
 
   _renderDashboard() {
-    if (!this.props.ui.dashboard.isOpen) {
+    const {
+      allProjects,
+      clients,
+      currentProject,
+      currentUser,
+      ui,
+    } = this.props;
+
+    if (!ui.dashboard.isOpen) {
       return null;
     }
 
     return (
       <div className="layout__dashboard">
         <Dashboard
-          activeSubmenu={this.props.ui.dashboard.activeSubmenu}
-          allProjects={this.props.allProjects}
-          currentProject={this.props.currentProject}
-          currentUser={this.props.currentUser}
+          activeSubmenu={ui.dashboard.activeSubmenu}
+          allProjects={allProjects}
+          currentProject={currentProject}
+          currentUser={currentUser}
           gistExportInProgress={
-            get(this.props, 'clients.gists.lastExport.status') === 'waiting'
+            get(clients, 'gists.lastExport.status') === 'waiting'
           }
           validationState={this._getOverallValidationState()}
           onExportGist={this._handleExportGist}

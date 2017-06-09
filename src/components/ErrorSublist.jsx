@@ -5,25 +5,25 @@ import partial from 'lodash/partial';
 import {t} from 'i18next';
 import ErrorItem from './ErrorItem';
 
-function ErrorSublist(props) {
-  if (props.errors.state === 'passed') {
+function ErrorSublist({errors, onErrorClick, language}) {
+  if (errors.state === 'passed') {
     return false;
   }
 
-  const errors = map(props.errors.items, error => (
+  const errorItems = map(errors.items, error => (
     <ErrorItem
       {...error}
       key={[error.reason, error.row]}
       onClick={partial(
-        props.onErrorClick,
-        props.language,
+        onErrorClick,
+        language,
       )}
     />
   ));
 
   const errorMessage = t(
     'errors.notice',
-    {count: props.errors.items.length, language: props.language},
+    {count: errors.items.length, language},
   );
 
   return (
@@ -32,7 +32,7 @@ function ErrorSublist(props) {
         {errorMessage}
       </h2>
       <ul className="error-list__errors">
-        {errors}
+        {errorItems}
       </ul>
     </div>
   );
