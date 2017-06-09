@@ -6,30 +6,13 @@ import get from 'lodash/get';
 import map from 'lodash/map';
 import values from 'lodash/values';
 
+import {Project} from '../records';
 import {isPristineProject} from '../util/projectUtils';
-import HTML_TEMPLATE from '../../templates/new.html';
 
 const emptyMap = new Immutable.Map();
 
-const newProject = Immutable.fromJS({
-  sources: {
-    html: HTML_TEMPLATE,
-    css: '',
-    javascript: '',
-  },
-  enabledLibraries: new Immutable.Set(),
-  hiddenUIComponents: new Immutable.Set(),
-});
-
-function projectToImmutable(project) {
-  return Immutable.fromJS(project).merge({
-    enabledLibraries: new Immutable.Set(project.enabledLibraries),
-    hiddenUIComponents: new Immutable.Set(project.hiddenUIComponents),
-  });
-}
-
 function addProject(state, project) {
-  return state.set(project.projectKey, projectToImmutable(project));
+  return state.set(project.projectKey, Project.fromJS(project));
 }
 
 function removePristineExcept(state, keepProjectKey) {
@@ -119,7 +102,7 @@ export default function reduceProjects(stateIn, action) {
     case 'PROJECT_CREATED':
       return removePristineExcept(state, action.payload.projectKey).set(
         action.payload.projectKey,
-        newProject.set('projectKey', action.payload.projectKey),
+        new Project({projectKey: action.payload.projectKey}),
       );
 
     case 'CHANGE_CURRENT_PROJECT':

@@ -8,9 +8,9 @@ export function getProjectKeys(state) {
 
 export function isPristineProject(project) {
   if (Map.isMap(project)) {
-    return !project.has('updatedAt');
+    return !project.get('updatedAt');
   }
-  return !('updatedAt' in project);
+  return !project.updatedAt;
 }
 
 export function saveCurrentProject(state) {
