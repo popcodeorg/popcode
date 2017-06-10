@@ -4,7 +4,16 @@ import classnames from 'classnames';
 import find from 'lodash/find';
 import ErrorList from './ErrorList';
 
-function ErrorReport({errors, onErrorClick}) {
+function ErrorReport({errors, isValidating, onErrorClick}) {
+  if (isValidating) {
+    return <div className="output__delayed-error-overlay" />;
+  }
+
+  const hasErrors = Boolean(find(errors, list => list.items.length));
+  if (!hasErrors) {
+    return null;
+  }
+
   const isDocked = Boolean(find(errors, {state: 'runtime-error'}));
   const {html, css, javascript} = errors;
 
@@ -41,6 +50,7 @@ ErrorReport.propTypes = {
     html: PropTypes.object.isRequired,
     javascript: PropTypes.object.isRequired,
   }).isRequired,
+  isValidating: PropTypes.bool.isRequired,
   onErrorClick: PropTypes.func.isRequired,
 };
 

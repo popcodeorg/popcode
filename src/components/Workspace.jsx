@@ -228,7 +228,6 @@ class Workspace extends React.Component {
         isDraggingColumnDivider={isDraggingColumnDivider}
         isHidden={includes(hiddenUIComponents, 'output')}
         style={{flex: rowsFlex[1]}}
-        validationState={this._getOverallValidationState()}
         onHide={
           partial(this._handleComponentHide,
             'output')

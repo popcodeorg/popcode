@@ -4,21 +4,7 @@ import {t} from 'i18next';
 import classnames from 'classnames';
 import {ErrorReport, Preview} from '../containers';
 
-const errorStates = new Set(['validation-error', 'runtime-error']);
-
 class Output extends React.Component {
-  _renderErrors() {
-    if (this.props.validationState === 'validating') {
-      return <div className="output__delayed-error-overlay" />;
-    }
-
-    if (errorStates.has(this.props.validationState)) {
-      return <ErrorReport />;
-    }
-
-    return null;
-  }
-
   render() {
     const {
       isDraggingColumnDivider,
@@ -46,7 +32,7 @@ class Output extends React.Component {
             {t('workspace.components.output')}
           </div>
           <Preview />
-          {this._renderErrors()}
+          <ErrorReport />
         </div>
       </div>
     );
@@ -57,7 +43,6 @@ Output.propTypes = {
   isDraggingColumnDivider: PropTypes.bool.isRequired,
   isHidden: PropTypes.bool.isRequired,
   style: PropTypes.object.isRequired,
-  validationState: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
 };
