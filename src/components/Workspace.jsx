@@ -66,7 +66,6 @@ function mapStateToProps(state) {
     allProjects: projects,
     currentProject: getCurrentProject(state),
     errors: state.get('errors').toJS(),
-    runtimeErrors: state.get('runtimeErrors').toJS(),
     isDraggingColumnDivider: state.getIn(
       ['ui', 'workspace', 'isDraggingColumnDivider'],
     ),
@@ -198,15 +197,19 @@ class Workspace extends React.Component {
   _getOverallValidationState() {
     const errorStates = map(values(this.props.errors), 'state');
 
-    if (includes(errorStates, 'failed')) {
+    if (includes(errorStates, 'validation-error')) {
       if (this.props.isUserTyping) {
         return 'validating';
       }
-      return 'failed';
+      return 'validation-error';
     }
 
     if (includes(errorStates, 'validating')) {
       return 'validating';
+    }
+
+    if (includes(errorStates, 'runtime-error')) {
+      return 'runtime-error';
     }
 
     return 'passed';
@@ -218,14 +221,12 @@ class Workspace extends React.Component {
       errors,
       isDraggingColumnDivider,
       rowsFlex,
-      runtimeErrors,
     } = this.props;
     return (
       <Output
         errors={errors}
         isDraggingColumnDivider={isDraggingColumnDivider}
         isHidden={includes(hiddenUIComponents, 'output')}
-        runtimeErrors={runtimeErrors}
         style={{flex: rowsFlex[1]}}
         validationState={this._getOverallValidationState()}
         onHide={
@@ -382,7 +383,6 @@ class Workspace extends React.Component {
       editorsFlex,
       errors,
       rowsFlex,
-      runtimeErrors,
       ui,
     } = this.props;
     if (isNull(currentProject)) {
@@ -395,7 +395,6 @@ class Workspace extends React.Component {
           currentProject={currentProject}
           editorsFlex={editorsFlex}
           errors={errors}
-          runtimeErrors={runtimeErrors}
           style={{flex: rowsFlex[0]}}
           ui={ui}
           onComponentHide={this._handleComponentHide}
@@ -449,7 +448,6 @@ Workspace.propTypes = {
   isDraggingColumnDivider: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool,
   rowsFlex: PropTypes.array.isRequired,
-  runtimeErrors: PropTypes.array.isRequired,
   ui: PropTypes.object.isRequired,
 };
 

@@ -29,22 +29,13 @@ import {
 } from './ui';
 
 import {
+  addRuntimeError,
+} from './errors';
+
+import {
   userAuthenticated,
   userLoggedOut,
 } from './user';
-
-function addRuntimeError(error) {
-  return {
-    type: 'RUNTIME_ERROR_ADDED',
-    payload: {error},
-  };
-}
-
-function clearRuntimeErrors() {
-  return {
-    type: 'RUNTIME_ERRORS_CLEARED',
-  };
-}
 
 function toggleDashboard() {
   return {type: 'DASHBOARD_TOGGLED'};
@@ -62,7 +53,6 @@ export {
   userAuthenticated,
   userLoggedOut,
   addRuntimeError,
-  clearRuntimeErrors,
   hideComponent,
   unhideComponent,
   toggleDashboard,

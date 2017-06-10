@@ -6,7 +6,15 @@ import classnames from 'classnames';
 import generatePreview from '../util/generatePreview';
 import PreviewFrame from './PreviewFrame';
 
-function generateDocument(project, lastRefreshTimestamp) {
+function generateFrameSrc(
+  project,
+  isSyntacticallyValid,
+  lastRefreshTimestamp,
+) {
+  if (isNil(project) || !isSyntacticallyValid) {
+    return '';
+  }
+
   return generatePreview(
     project,
     {
@@ -20,24 +28,19 @@ function generateDocument(project, lastRefreshTimestamp) {
 }
 
 export default function Preview({
-  isValid,
+  isSyntacticallyValid,
   lastRefreshTimestamp,
   project,
-  onClearRuntimeErrors,
   onPopOutProject,
   onRefreshClick,
   onRuntimeError,
 }) {
-  const preview = isNil(project) || !isValid ?
-    '' :
-    generateDocument(project, lastRefreshTimestamp);
-
   return (
     <div
       className={classnames(
         'preview',
         'output__item',
-        {u__hidden: !isValid},
+        {u__hidden: !isSyntacticallyValid},
       )}
     >
       <span
@@ -49,8 +52,9 @@ export default function Preview({
         onClick={partial(onPopOutProject, project)}
       >&#xf08e;</span>
       <PreviewFrame
-        src={preview}
-        onFrameWillRefresh={onClearRuntimeErrors}
+        src={
+          generateFrameSrc(project, isSyntacticallyValid, lastRefreshTimestamp)
+        }
         onRuntimeError={onRuntimeError}
       />
     </div>
@@ -58,7 +62,7 @@ export default function Preview({
 }
 
 Preview.propTypes = {
-  isValid: PropTypes.bool.isRequired,
+  isSyntacticallyValid: PropTypes.bool.isRequired,
   lastRefreshTimestamp: PropTypes.number,
   project: PropTypes.shape({
     sources: PropTypes.shape({
@@ -68,7 +72,6 @@ Preview.propTypes = {
     }).isRequired,
     enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
-  onClearRuntimeErrors: PropTypes.func.isRequired,
   onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,

@@ -2,16 +2,17 @@ import {connect} from 'react-redux';
 import {Preview} from '../components';
 import {
   addRuntimeError,
-  clearRuntimeErrors,
   popOutProject,
   refreshPreview,
 } from '../actions';
 import {getCurrentProject} from '../util/projectUtils';
 
+const syntacticallyValidStates = new Set(['passed', 'runtime-error']);
+
 function mapStateToProps(state) {
   return {
-    isValid: !state.get('errors').find(
-      error => error.get('state') !== 'passed',
+    isSyntacticallyValid: !state.get('errors').find(
+      error => !syntacticallyValidStates.has(error.get('state')),
     ),
     lastRefreshTimestamp: state.getIn(['ui', 'lastRefreshTimestamp']),
     project: getCurrentProject(state),
@@ -20,16 +21,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onClearRuntimeErrors() {
-      dispatch(clearRuntimeErrors());
-    },
-
     onPopOutProject(project) {
       dispatch(popOutProject(project));
     },
 
-    onRuntimeError(error) {
-      dispatch(addRuntimeError(error));
+    onRuntimeError(language, error) {
+      dispatch(addRuntimeError(language, error));
     },
 
     onRefreshClick() {

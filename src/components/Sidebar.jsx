@@ -30,7 +30,8 @@ class Sidebar extends React.Component {
       'sidebar',
       {
         sidebar_yellow: this.props.validationState === 'validating',
-        sidebar_red: this.props.validationState === 'failed',
+        sidebar_red: this.props.validationState === 'validation-error' ||
+          this.props.validationState === 'runtime-error',
       },
     );
 

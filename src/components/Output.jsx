@@ -1,33 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
-import isEmpty from 'lodash/isEmpty';
 import classnames from 'classnames';
 import {ErrorReport, Preview} from '../containers';
 
+const errorStates = new Set(['validation-error', 'runtime-error']);
+
 class Output extends React.Component {
-  _renderRuntimeErrorList() {
-    if (!isEmpty(this.props.runtimeErrors)) {
-      return this._renderErrorList({
-        html: {items: [], state: 'passed'},
-        css: {items: [], state: 'passed'},
-        javascript: {
-          items: this.props.runtimeErrors,
-          state: this.props.runtimeErrors.length ? 'failed' : 'passed',
-        },
-        docked: true,
-      });
-    }
-
-    return null;
-  }
-
   _renderErrors() {
     if (this.props.validationState === 'validating') {
       return <div className="output__delayed-error-overlay" />;
     }
 
-    if (this.props.validationState === 'failed') {
+    if (errorStates.has(this.props.validationState)) {
       return <ErrorReport />;
     }
 
@@ -60,9 +45,8 @@ class Output extends React.Component {
           >
             {t('workspace.components.output')}
           </div>
-          {this._renderErrors()}
           <Preview />
-          {this._renderRuntimeErrorList()}
+          {this._renderErrors()}
         </div>
       </div>
     );
@@ -72,7 +56,6 @@ class Output extends React.Component {
 Output.propTypes = {
   isDraggingColumnDivider: PropTypes.bool.isRequired,
   isHidden: PropTypes.bool.isRequired,
-  runtimeErrors: PropTypes.array.isRequired,
   style: PropTypes.object.isRequired,
   validationState: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
