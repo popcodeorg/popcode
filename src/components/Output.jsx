@@ -110,6 +110,8 @@ Output.propTypes = {
   onHide: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
+  onRefreshClick: PropTypes.func.isRequired,
+  lastRefreshTimestamp: PropTypes.number,
 };
 
 Output.defaultProps = {

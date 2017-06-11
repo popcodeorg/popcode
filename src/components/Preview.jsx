@@ -81,6 +81,8 @@ Preview.propTypes = {
   project: PropTypes.object.isRequired,
   onClearRuntimeErrors: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
+  onRefreshClick: PropTypes.func.isRequired,
+  lastRefreshTimestamp: PropTypes.number,
 };
 
 export default Preview;
