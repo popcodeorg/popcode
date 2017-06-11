@@ -162,7 +162,7 @@ export default function ui(stateIn, action) {
       }
       return addNotification(state, 'gist-export-error', 'error');
 
-    case 'SET_REFRESH_TIMESTAMP':
+    case 'REFRESH_PREVIEW':
       console.log(action.payload);
 
     default:

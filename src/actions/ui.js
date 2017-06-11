@@ -38,7 +38,7 @@ export const userDismissedNotification = createAction(
   type => ({type}),
 );
 
-export const setRefreshTimestamp = createAction(
-  'SET_REFRESH_TIMESTAMP',
+export const refreshPreview = createAction(
+  'REFRESH_PREVIEW',
   (timestamp = Date.now()) => ({timestamp})
 );

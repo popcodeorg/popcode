@@ -8,7 +8,7 @@ import generatePreview from '../util/generatePreview';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 import PreviewFrame from './PreviewFrame';
 import {
-  setRefreshTimestamp
+  refreshPreview
 } from '../actions';
 
 class Preview extends React.Component {
@@ -55,7 +55,7 @@ class Preview extends React.Component {
   }
 
   _handleRefreshClick() {
-    this.props.dispatch(setRefreshTimestamp(Date.now()));
+    this.props.dispatch(refreshPreview(Date.now()));
   }
 
   // _refresh() {
