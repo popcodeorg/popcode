@@ -502,12 +502,12 @@ body {
 }
 
 .preview__pop-out-button {
-  background: url(../images/popout.png);
+  font-family: 'FontAwesome';
   width: 16px;
   height: 18px;
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 11px;
   cursor: pointer;
   opacity: 0.25;
   z-index: 1;
@@ -518,7 +518,7 @@ body {
 }
 
 .preview__reset-button {
-  background: url(../images/popout.png);
+  font-family: 'FontAwesome';
   width: 16px;
   height: 18px;
   position: absolute;

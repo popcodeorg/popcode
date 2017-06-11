@@ -58,14 +58,14 @@ class Preview extends React.Component {
           {u__hidden: !this.props.isValid},
         )}
       >
-      <div
+      <span
         className="preview__reset-button"
         onClick={this.props.onRefreshClick}
-      />
-        <div
+      >&#xf021;</span>
+        <span
           className="preview__pop-out-button"
           onClick={this._handlePopOutClick}
-        />
+        >&#xf08e;</span>
         <PreviewFrame
           src={this._generateDocument(true)}
           onFrameWillRefresh={this.props.onClearRuntimeErrors}
