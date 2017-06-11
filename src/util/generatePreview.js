@@ -83,8 +83,9 @@ class PreviewGenerator {
     if (options.nonBlockingAlertsAndPrompts) {
       this._addAlertAndPromptHandling();
     }
-
-    this._addRefreshTimestamp(options.lastRefreshTimestamp);
+    if (options.lastRefreshTimestamp) {
+      this._addRefreshTimestamp(options.lastRefreshTimestamp);
+    }
 
     this._addJavascript(pick(options, 'breakLoops'));
   }

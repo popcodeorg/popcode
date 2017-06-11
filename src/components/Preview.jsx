@@ -31,7 +31,7 @@ class Preview extends React.Component {
         propagateErrorsToParent: isLivePreview,
         breakLoops: isLivePreview,
         nonBlockingAlertsAndPrompts: isLivePreview,
-        lastRefreshTimestamp: this.props.lastRefreshTimestamp,
+        lastRefreshTimestamp: isLivePreview && this.props.lastRefreshTimestamp,
       },
     );
   }
