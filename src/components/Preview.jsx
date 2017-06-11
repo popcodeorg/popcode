@@ -58,10 +58,10 @@ class Preview extends React.Component {
           {u__hidden: !this.props.isValid},
         )}
       >
-      <span
-        className="preview__reset-button"
-        onClick={this.props.onRefreshClick}
-      >&#xf021;</span>
+        <span
+          className="preview__reset-button"
+          onClick={this.props.onRefreshClick}
+        >&#xf021;</span>
         <span
           className="preview__pop-out-button"
           onClick={this._handlePopOutClick}
@@ -78,11 +78,15 @@ class Preview extends React.Component {
 
 Preview.propTypes = {
   isValid: PropTypes.bool.isRequired,
+  lastRefreshTimestamp: PropTypes.number,
   project: PropTypes.object.isRequired,
   onClearRuntimeErrors: PropTypes.func.isRequired,
-  onRuntimeError: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
-  lastRefreshTimestamp: PropTypes.number,
+  onRuntimeError: PropTypes.func.isRequired,
+};
+
+Preview.defaultProps = {
+  lastRefreshTimestamp: null,
 };
 
 export default Preview;

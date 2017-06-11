@@ -240,6 +240,7 @@ class Workspace extends React.Component {
         errors={errors}
         isDraggingColumnDivider={isDraggingColumnDivider}
         isHidden={includes(hiddenUIComponents, 'output')}
+        lastRefreshTimestamp={this.props.ui.lastRefreshTimestamp}
         project={currentProject}
         runtimeErrors={runtimeErrors}
         style={{flex: rowsFlex[1]}}
@@ -251,9 +252,8 @@ class Workspace extends React.Component {
             'output')
         }
         onRef={partial(this._storeColumnRef, 1)}
-        onRuntimeError={this._handleRuntimeError}
         onRefreshClick={this._handleRefreshClick}
-        lastRefreshTimestamp={this.props.ui.lastRefreshTimestamp}
+        onRuntimeError={this._handleRuntimeError}
       />
     );
   }

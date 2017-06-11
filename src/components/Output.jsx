@@ -25,11 +25,11 @@ class Output extends React.Component {
     return (
       <Preview
         isValid={this.props.validationState === 'passed'}
+        lastRefreshTimestamp={this.props.lastRefreshTimestamp}
         project={this.props.project}
         onClearRuntimeErrors={this.props.onClearRuntimeErrors}
-        onRuntimeError={this.props.onRuntimeError}
         onRefreshClick={this.props.onRefreshClick}
-        lastRefreshTimestamp={this.props.lastRefreshTimestamp}
+        onRuntimeError={this.props.onRuntimeError}
       />
     );
   }
@@ -101,6 +101,7 @@ Output.propTypes = {
   errors: PropTypes.object.isRequired,
   isDraggingColumnDivider: PropTypes.bool.isRequired,
   isHidden: PropTypes.bool.isRequired,
+  lastRefreshTimestamp: PropTypes.number,
   project: PropTypes.object,
   runtimeErrors: PropTypes.array.isRequired,
   style: PropTypes.object.isRequired,
@@ -109,12 +110,12 @@ Output.propTypes = {
   onErrorClick: PropTypes.func.isRequired,
   onHide: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
-  onRuntimeError: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
-  lastRefreshTimestamp: PropTypes.number,
+  onRuntimeError: PropTypes.func.isRequired,
 };
 
 Output.defaultProps = {
+  lastRefreshTimestamp: null,
   project: null,
 };
 
