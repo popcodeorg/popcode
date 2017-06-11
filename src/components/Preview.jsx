@@ -7,22 +7,17 @@ import classnames from 'classnames';
 import generatePreview from '../util/generatePreview';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 import PreviewFrame from './PreviewFrame';
-import {
-  refreshPreview
-} from '../actions';
 
 class Preview extends React.Component {
   constructor() {
     super();
     bindAll(this, '_handlePopOutClick');
-    bindAll(this, '_handleRefreshClick');
   }
 
-  _generateDocument(isLivePreview = false, timestamp = this.props.lastRefreshTimestamp) {
+  _generateDocument(isLivePreview = false) {
     if (!this.props.isValid) {
       return '';
     }
-
     const project = this.props.project;
 
     if (project === undefined) {
@@ -36,7 +31,7 @@ class Preview extends React.Component {
         propagateErrorsToParent: isLivePreview,
         breakLoops: isLivePreview,
         nonBlockingAlertsAndPrompts: isLivePreview,
-        refreshTimestamp: timestamp,
+        lastRefreshTimestamp: this.props.lastRefreshTimestamp,
       },
     );
   }
@@ -54,15 +49,6 @@ class Preview extends React.Component {
     openWindowWithWorkaroundForChromeClosingBug(url);
   }
 
-  _handleRefreshClick() {
-    this.props.dispatch(refreshPreview(Date.now()));
-  }
-
-  // _refresh() {
-  //   const currentTimestamp = Date.now();
-  //   this._generateDocument(true, currentTimestamp);
-  // }
-
   render() {
     return (
       <div
@@ -74,7 +60,7 @@ class Preview extends React.Component {
       >
       <div
         className="preview__reset-button"
-        onClick={this._handleRefreshClick}
+        onClick={this.props.onRefreshClick}
       />
         <div
           className="preview__pop-out-button"

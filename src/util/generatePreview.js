@@ -84,7 +84,7 @@ class PreviewGenerator {
       this._addAlertAndPromptHandling();
     }
 
-    this._addRefreshTimestamp(options.refreshTimestamp);
+    this._addRefreshTimestamp(options.lastRefreshTimestamp);
 
     this._addJavascript(pick(options, 'breakLoops'));
   }
@@ -126,8 +126,7 @@ class PreviewGenerator {
 
   _addRefreshTimestamp(timestamp) {
     const comment = this.previewDocument.createComment(`Last refresh on: ${String(new Date(timestamp))}`);
-    console.log(comment);
-    this.previewBody.prepend(comment);
+    this.previewBody.append(comment);
   }
 
   _addJavascript({breakLoops = false}) {

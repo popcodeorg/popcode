@@ -40,5 +40,5 @@ export const userDismissedNotification = createAction(
 
 export const refreshPreview = createAction(
   'REFRESH_PREVIEW',
-  (timestamp = Date.now()) => ({timestamp})
+  timestamp => ({timestamp}),
 );

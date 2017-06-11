@@ -28,6 +28,8 @@ class Output extends React.Component {
         project={this.props.project}
         onClearRuntimeErrors={this.props.onClearRuntimeErrors}
         onRuntimeError={this.props.onRuntimeError}
+        onRefreshClick={this.props.onRefreshClick}
+        lastRefreshTimestamp={this.props.lastRefreshTimestamp}
       />
     );
   }
