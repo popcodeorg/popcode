@@ -102,7 +102,6 @@
       "empty-title-element": "You have an empty <title> tag. A <title> tag should always contain text.",
       "html-in-css-block": "It looks like you typed some HTML code inside a <style> tag. Remember that only CSS code can go inside a <style> tag.",
       "invalid-attribute-name": "{{attribute}} isn’t allowed as an attribute name.",
-      "mismatched-close-tag": "Your <{{open}}> tag needs a closing tag, but instead there’s a </{{close}}> tag where the </{{open}}> tag should be.",
       "self-closing-non-void-element": "{{tag, en-handle-an|capitalize}} <{{tag}}> tag always needs a closing </{{tag}}> tag. Writing <{{tag}}/> is not allowed.",
       "unclosed-tag": "Your <{{tag}}> tag needs to be closed by an </{{tag}}> tag.",
       "unexpected-close-tag": "You have a closing </{{tag}}> tag that doesn’t match any opening <{{tag}}> tag.",
