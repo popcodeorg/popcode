@@ -160,6 +160,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.22.0",
+    "blendid": "^4.1.1",
     "bower": "^1.7.9",
     "brfs": "^1.4.3",
     "browser-sync": "^2.14.3",
