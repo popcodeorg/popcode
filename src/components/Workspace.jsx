@@ -47,7 +47,8 @@ import {
   applicationLoaded,
 } from '../actions';
 
-import {getCurrentProject, isPristineProject} from '../util/projectUtils';
+import {isPristineProject} from '../util/projectUtils';
+import {getCurrentProject} from '../selectors';
 
 import EditorsColumn from './EditorsColumn';
 import Output from './Output';

@@ -131,6 +131,7 @@
     "redux-logger": "^2.5.0",
     "redux-saga": "^0.15.3",
     "redux-saga-debounce-effect": "https://github.com/madewithlove/redux-saga-debounce-effect.git#v0.2.2",
+    "reselect": "^3.0.1",
     "rxjs": "^5.0.2",
     "slowparse": "^1.1.4",
     "stylelint": "^7.10.1",

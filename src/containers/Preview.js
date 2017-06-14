@@ -5,7 +5,7 @@ import {
   popOutProject,
   refreshPreview,
 } from '../actions';
-import {getCurrentProject} from '../util/projectUtils';
+import {getCurrentProject} from '../selectors';
 
 const syntacticallyValidStates = new Set(['passed', 'runtime-error']);
 
