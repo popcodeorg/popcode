@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {generateTextPreview} from '../util/generatePreview';
-import ProjectPreview from './ProjectPreview';
+import {ProjectPreview} from '../containers';
 
-function ProjectList({currentProject, projects, onProjectSelected}) {
-  const projectPreviews = projects.map(project => (
+function ProjectList({projectKeys}) {
+  const projectPreviews = projectKeys.map(projectKey => (
     <ProjectPreview
-      isSelected={project.projectKey === currentProject.projectKey}
-      key={project.projectKey}
-      preview={generateTextPreview(project)}
-      project={project}
-      onProjectSelected={onProjectSelected}
+      key={projectKey}
+      projectKey={projectKey}
     />
   ));
 
@@ -22,9 +18,7 @@ function ProjectList({currentProject, projects, onProjectSelected}) {
 }
 
 ProjectList.propTypes = {
-  currentProject: PropTypes.object.isRequired,
-  projects: PropTypes.array.isRequired,
-  onProjectSelected: PropTypes.func.isRequired,
+  projectKeys: PropTypes.array.isRequired,
 };
 
 

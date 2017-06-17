@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import moment from 'moment';
-import partial from 'lodash/partial';
 
 const MAX_LENGTH = 50;
 
@@ -20,7 +19,7 @@ export default function ProjectPreview({
         {'dashboard__menu-item_active': isSelected},
       )}
       key={project.projectKey}
-      onClick={partial(onProjectSelected, project)}
+      onClick={onProjectSelected}
     >
       <div className="project-preview__timestamp">
         {moment(project.updatedAt).fromNow()}

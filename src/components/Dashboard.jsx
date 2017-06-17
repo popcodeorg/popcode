@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
 import partial from 'lodash/partial';
-import isNull from 'lodash/isNull';
 import classnames from 'classnames';
 import config from '../config';
 import ProjectList from './ProjectList';
@@ -35,7 +34,6 @@ class Dashboard extends React.Component {
           {t('dashboard.menu.new-project')}
         </div>
       );
-
       loadProjectButton =
         this._renderSubmenuToggleButton('projectList', 'load-project');
     }
@@ -91,15 +89,9 @@ class Dashboard extends React.Component {
   }
 
   _renderProjects() {
-    if (isNull(this.props.currentProject)) {
-      return null;
-    }
-
     return (
       <ProjectList
-        currentProject={this.props.currentProject}
-        projects={this.props.allProjects}
-        onProjectSelected={this.props.onProjectSelected}
+        projectKeys={this.props.projectKeys}
       />
     );
   }
@@ -154,16 +146,14 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   activeSubmenu: PropTypes.string,
-  allProjects: PropTypes.array.isRequired,
-  currentProject: PropTypes.object,
   currentUser: PropTypes.object.isRequired,
   gistExportInProgress: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  projectKeys: PropTypes.array.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onNewProject: PropTypes.func.isRequired,
-  onProjectSelected: PropTypes.func.isRequired,
   onSubmenuToggled: PropTypes.func.isRequired,
 };
 

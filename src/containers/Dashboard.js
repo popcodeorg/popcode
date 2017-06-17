@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 import {Dashboard} from '../components';
 import {
-  changeCurrentProject,
   createProject,
   exportGist,
   exportRepo,
@@ -9,7 +8,7 @@ import {
 } from '../actions';
 import {
   getActiveSubmenu,
-  getAllProjects,
+  getAllProjectKeys,
   getCurrentProject,
   getCurrentUser,
   isDashboardOpen,
@@ -20,12 +19,12 @@ import {
 function mapStateToProps(state) {
   return {
     activeSubmenu: getActiveSubmenu(state),
-    allProjects: getAllProjects(state),
     currentProject: getCurrentProject(state),
     currentUser: getCurrentUser(state),
     gistExportInProgress: isGistExportInProgress(state),
     isExperimental: isExperimental(state),
     isOpen: isDashboardOpen(state),
+    projectKeys: getAllProjectKeys(state),
   };
 }
 
@@ -41,10 +40,6 @@ function mapDispatchToProps(dispatch) {
 
     onNewProject() {
       dispatch(createProject());
-    },
-
-    onProjectSelected(project) {
-      dispatch(changeCurrentProject(project.projectKey));
     },
 
     onSubmenuToggled(submenu) {

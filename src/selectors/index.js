@@ -1,4 +1,5 @@
 import getActiveSubmenu from './getActiveSubmenu';
+import getAllProjectKeys from './getAllProjectKeys';
 import getAllProjects from './getAllProjects';
 import getCurrentProject from './getCurrentProject';
 import getCurrentProjectKey from './getCurrentProjectKey';
@@ -10,6 +11,7 @@ import getErrors from './getErrors';
 import getLastRefreshTimestamp from './getLastRefreshTimestamp';
 import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
+import getProject from './getProject';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
   from './isCurrentProjectSyntacticallyValid';
@@ -19,9 +21,11 @@ import isGistExportInProgress from './isGistExportInProgress';
 import isSnapshotInProgress from './isSnapshotInProgress';
 import isTextSizeLarge from './isTextSizeLarge';
 import isUserTyping from './isUserTyping';
+import makeGetProjectPreview from './makeGetProjectPreview';
 
 export {
   getActiveSubmenu,
+  getAllProjectKeys,
   getAllProjects,
   getCurrentProject,
   getCurrentProjectKey,
@@ -33,6 +37,7 @@ export {
   getLastRefreshTimestamp,
   getNotifications,
   getOpenTopBarMenu,
+  getProject,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isDashboardOpen,
@@ -41,4 +46,5 @@ export {
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserTyping,
+  makeGetProjectPreview,
 };
