@@ -1,10 +1,11 @@
 import {connect} from 'react-redux';
 import {ErrorReport} from '../components';
 import {focusLine} from '../actions';
+import {getErrors} from '../selectors';
 
 function mapStateToProps(state) {
   return {
-    errors: state.get('errors').toJS(),
+    errors: getErrors(state),
     isValidating: Boolean(
       state.getIn(['ui', 'editors', 'typing']) &&
       state.get('errors').find(
