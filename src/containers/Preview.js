@@ -5,16 +5,16 @@ import {
   popOutProject,
   refreshPreview,
 } from '../actions';
-import {getCurrentProject} from '../selectors';
-
-const syntacticallyValidStates = new Set(['passed', 'runtime-error']);
+import {
+  getCurrentProject,
+  getLastRefreshTimestamp,
+  isCurrentProjectSyntacticallyValid,
+} from '../selectors';
 
 function mapStateToProps(state) {
   return {
-    isSyntacticallyValid: !state.get('errors').find(
-      error => !syntacticallyValidStates.has(error.get('state')),
-    ),
-    lastRefreshTimestamp: state.getIn(['ui', 'lastRefreshTimestamp']),
+    isSyntacticallyValid: isCurrentProjectSyntacticallyValid(state),
+    lastRefreshTimestamp: getLastRefreshTimestamp(state),
     project: getCurrentProject(state),
   };
 }

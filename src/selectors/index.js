@@ -1,3 +1,10 @@
 import getCurrentProject from './getCurrentProject';
+import getLastRefreshTimestamp from './getLastRefreshTimestamp';
+import isCurrentProjectSyntacticallyValid
+  from './isCurrentProjectSyntacticallyValid';
 
-export {getCurrentProject};
+export {
+  getCurrentProject,
+  getLastRefreshTimestamp,
+  isCurrentProjectSyntacticallyValid,
+};
