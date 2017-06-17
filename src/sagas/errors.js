@@ -8,15 +8,9 @@ import {
   takeEvery,
 } from 'redux-saga/effects';
 import Analyzer from '../analyzers';
+import {getCurrentProject} from '../selectors';
 import validations from '../validations';
 import {validatedSource} from '../actions/errors';
-
-function getCurrentProject(state) {
-  return state.getIn([
-    'projects',
-    state.getIn(['currentProject', 'projectKey']),
-  ]);
-}
 
 export function* toggleLibrary(tasks) {
   yield call(validateCurrentProject, tasks);
@@ -37,7 +31,8 @@ export function* validateCurrentProject(tasks) {
   const currentProject = getCurrentProject(state);
   const analyzer = new Analyzer(currentProject);
 
-  for (const [language, source] of currentProject.get('sources')) {
+  for (const language of Reflect.ownKeys(currentProject.sources)) {
+    const source = currentProject.sources[language];
     yield fork(
       validateSource,
       tasks,
