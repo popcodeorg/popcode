@@ -105,6 +105,7 @@
     "bugsnag-js": "^3.0.1",
     "classnames": "^2.1.5",
     "css": "^2.2.1",
+    "enumify": "^1.0.4",
     "es6-set": "^0.1.4",
     "esprima": "^3.0.0",
     "firebase": "^4.1.3",
