@@ -165,6 +165,12 @@ export default function ui(stateIn, action) {
     case 'REFRESH_PREVIEW':
       return state.set('lastRefreshTimestamp', action.payload.timestamp);
 
+    case 'APPLICATION_LOADED':
+      if (action.payload.isExperimental) {
+        return state.set('experimental', true);
+      }
+      return state.set('experimental', false);
+
     default:
       return state;
   }
