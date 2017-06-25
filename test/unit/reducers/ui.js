@@ -17,6 +17,7 @@ import {
   editorFocusedRequestedLine,
   notificationTriggered,
   userDismissedNotification,
+  refreshPreview,
 } from '../../../src/actions/ui';
 import {
   gistExportNotDisplayed,
@@ -36,6 +37,7 @@ const initialState = Immutable.fromJS({
     isOpen: false,
     activeSubmenu: null,
   },
+  lastRefreshTimestamp: null,
 });
 
 function withNotification(type, severity, payload = {}) {
@@ -236,4 +238,11 @@ test('userDismissedNotification', reducerTest(
   withNotification('some-error', 'error'),
   partial(userDismissedNotification, 'some-error'),
   initialState,
+));
+
+test('refreshPreview', reducerTest(
+  reducer,
+  initialState,
+  partial(refreshPreview, 1),
+  initialState.set('lastRefreshTimestamp', 1),
 ));
