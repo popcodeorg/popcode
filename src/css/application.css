@@ -501,20 +501,28 @@ body {
   flex: 1 0 100%;
 }
 
-.preview__pop-out-button {
-  background: url(../images/popout.png);
+.preview__button {
+  font-family: 'FontAwesome';
   width: 16px;
   height: 18px;
   position: absolute;
-  right: 10px;
-  top: 10px;
   cursor: pointer;
   opacity: 0.25;
   z-index: 1;
 }
 
-.preview__pop-out-button:hover {
+.preview__button:hover {
   opacity: 0.5;
+}
+
+.preview__button_pop-out {
+  right: 10px;
+  top: 11px;
+}
+
+.preview__button_reset {
+  right: 35px;
+  top: 10px;
 }
 
 /** @define error-list */

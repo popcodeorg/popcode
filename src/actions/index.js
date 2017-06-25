@@ -24,6 +24,7 @@ import {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
+  refreshPreview,
 } from './ui';
 
 import {
@@ -77,4 +78,5 @@ export {
   gistExportDisplayed,
   gistExportNotDisplayed,
   applicationLoaded,
+  refreshPreview,
 };
