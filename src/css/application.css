@@ -502,18 +502,34 @@ body {
 }
 
 .preview__pop-out-button {
-  background: url(../images/popout.png);
+  font-family: 'FontAwesome';
   width: 16px;
   height: 18px;
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 11px;
   cursor: pointer;
   opacity: 0.25;
   z-index: 1;
 }
 
 .preview__pop-out-button:hover {
+  opacity: 0.5;
+}
+
+.preview__reset-button {
+  font-family: 'FontAwesome';
+  width: 16px;
+  height: 18px;
+  position: absolute;
+  right: 35px;
+  top: 10px;
+  cursor: pointer;
+  opacity: 0.25;
+  z-index: 1;
+}
+
+.preview__reset-button:hover {
   opacity: 0.5;
 }
 

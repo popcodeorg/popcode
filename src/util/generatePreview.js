@@ -82,6 +82,9 @@ class PreviewGenerator {
     if (options.nonBlockingAlertsAndPrompts) {
       this._addAlertAndPromptHandling();
     }
+    if (options.lastRefreshTimestamp) {
+      this._addRefreshTimestamp(options.lastRefreshTimestamp);
+    }
 
     this._addJavascript(pick(options, 'breakLoops'));
   }
@@ -121,6 +124,12 @@ class PreviewGenerator {
     this._previewHead.appendChild(styleTag);
   }
 
+  _addRefreshTimestamp(timestamp) {
+    const dateString = `Last refresh on: ${String(new Date(timestamp))}`;
+    const comment = this.previewDocument.createComment(dateString);
+    this.previewBody.append(comment);
+  }
+
   _addJavascript({breakLoops = false}) {
     let source = `\n${sourceDelimiter}\n${this._project.sources.javascript}`;
     if (breakLoops) {
@@ -129,7 +138,6 @@ class PreviewGenerator {
     const scriptTag = this.previewDocument.createElement('script');
     scriptTag.innerHTML = source;
     this.previewBody.appendChild(scriptTag);
-
     return this.previewDocument.documentElement.outerHTML;
   }
 

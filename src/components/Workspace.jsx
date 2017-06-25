@@ -47,6 +47,7 @@ import {
   userDismissedNotification,
   exportGist,
   applicationLoaded,
+  refreshPreview,
 } from '../actions';
 
 import {getCurrentProject, isPristineProject} from '../util/projectUtils';
@@ -109,6 +110,7 @@ class Workspace extends React.Component {
       '_handleExportGist',
       '_storeDividerRef',
       '_storeColumnRef',
+      '_handleRefreshClick',
     );
     this.columnRefs = [null, null];
   }
@@ -203,6 +205,10 @@ class Workspace extends React.Component {
     this.props.dispatch(clearRuntimeErrors());
   }
 
+  _handleRefreshClick() {
+    this.props.dispatch(refreshPreview(Date.now()));
+  }
+
   _getOverallValidationState() {
     const errorStates = map(values(this.props.errors), 'state');
 
@@ -234,6 +240,7 @@ class Workspace extends React.Component {
         errors={errors}
         isDraggingColumnDivider={isDraggingColumnDivider}
         isHidden={includes(hiddenUIComponents, 'output')}
+        lastRefreshTimestamp={this.props.ui.lastRefreshTimestamp}
         project={currentProject}
         runtimeErrors={runtimeErrors}
         style={{flex: rowsFlex[1]}}
@@ -245,6 +252,7 @@ class Workspace extends React.Component {
             'output')
         }
         onRef={partial(this._storeColumnRef, 1)}
+        onRefreshClick={this._handleRefreshClick}
         onRuntimeError={this._handleRuntimeError}
       />
     );

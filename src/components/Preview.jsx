@@ -18,7 +18,6 @@ class Preview extends React.Component {
     if (!this.props.isValid) {
       return '';
     }
-
     const project = this.props.project;
 
     if (project === undefined) {
@@ -32,6 +31,7 @@ class Preview extends React.Component {
         propagateErrorsToParent: isLivePreview,
         breakLoops: isLivePreview,
         nonBlockingAlertsAndPrompts: isLivePreview,
+        lastRefreshTimestamp: isLivePreview && this.props.lastRefreshTimestamp,
       },
     );
   }
@@ -58,10 +58,14 @@ class Preview extends React.Component {
           {u__hidden: !this.props.isValid},
         )}
       >
-        <div
+        <span
+          className="preview__reset-button"
+          onClick={this.props.onRefreshClick}
+        >&#xf021;</span>
+        <span
           className="preview__pop-out-button"
           onClick={this._handlePopOutClick}
-        />
+        >&#xf08e;</span>
         <PreviewFrame
           src={this._generateDocument(true)}
           onFrameWillRefresh={this.props.onClearRuntimeErrors}
@@ -74,9 +78,15 @@ class Preview extends React.Component {
 
 Preview.propTypes = {
   isValid: PropTypes.bool.isRequired,
+  lastRefreshTimestamp: PropTypes.number,
   project: PropTypes.object.isRequired,
   onClearRuntimeErrors: PropTypes.func.isRequired,
+  onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
+};
+
+Preview.defaultProps = {
+  lastRefreshTimestamp: null,
 };
 
 export default Preview;
