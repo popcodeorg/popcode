@@ -137,7 +137,7 @@
     "text-encoding": "^0.6.0"
   },
   "engines": {
-    "node": "7.6.0",
+    "node": "7.10.0",
     "yarn": "0.24.6"
   },
   "scripts": {

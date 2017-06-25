@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {t} from 'i18next';
 import classnames from 'classnames';
 import partial from 'lodash/partial';
-import WordmarkVertical from '../../static/images/wordmark-vertical.svg';
+import WordmarkVertical from '../static/images/wordmark-vertical.svg';
 
 class Sidebar extends React.Component {
   _renderHiddenComponents() {

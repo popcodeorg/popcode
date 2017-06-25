@@ -1,4 +1,4 @@
-static/compiled
+public
 node_modules
 npm-debug.log
 bower_components
