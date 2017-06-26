@@ -28,6 +28,12 @@ function EditorContainer(props) {
       >
         {t(`languages.${props.language}`)}
       </div>
+      <div
+        className="environment__label_toggleTextSize label"
+        onClick={props.onToggleEditorTextSize}
+      >
+        Aa
+      </div>
       {helpText}
       {props.children}
     </div>
@@ -41,6 +47,7 @@ EditorContainer.propTypes = {
   style: PropTypes.object.isRequired,
   onHide: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
+  onToggleEditorTextSize: PropTypes.func.isRequired,
 };
 
 export default EditorContainer;

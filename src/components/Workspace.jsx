@@ -48,6 +48,7 @@ import {
   exportGist,
   applicationLoaded,
   refreshPreview,
+  toggleEditorTextSize,
 } from '../actions';
 
 import {getCurrentProject, isPristineProject} from '../util/projectUtils';
@@ -111,6 +112,7 @@ class Workspace extends React.Component {
       '_storeDividerRef',
       '_storeColumnRef',
       '_handleRefreshClick',
+      '_handleEditorTextSizeToggled',
     );
     this.columnRefs = [null, null];
   }
@@ -389,6 +391,10 @@ class Workspace extends React.Component {
     }));
   }
 
+  _handleEditorTextSizeToggled(componentName) {
+    this.props.dispatch(toggleEditorTextSize(componentName));
+  }
+
   _renderEnvironment() {
     const {
       currentProject,
@@ -416,6 +422,7 @@ class Workspace extends React.Component {
           onEditorInput={this._handleEditorInput}
           onRef={partial(this._storeColumnRef, 0)}
           onRequestedLineFocused={this._handleRequestedLineFocused}
+          onToggleEditorTextSize={this._handleEditorTextSizeToggled}
         />
         <DraggableCore
           onDrag={this._handleDividerDrag}
