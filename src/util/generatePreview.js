@@ -1,9 +1,11 @@
 import castArray from 'lodash/castArray';
 import pick from 'lodash/pick';
+import base64 from 'base64-js';
 import loopBreaker from 'loop-breaker';
 import libraries from '../config/libraries';
 import previewFrameLibraries from '../config/previewFrameLibraries';
 
+const textEncoder = new TextEncoder('utf-8');
 const parser = new DOMParser();
 
 const sourceDelimiter = '/*__POPCODESTART__*/';
@@ -183,15 +185,18 @@ class PreviewGenerator {
   _attachCssLibrary(css) {
     const linkTag = this.previewDocument.createElement('link');
     linkTag.rel = 'stylesheet';
-    linkTag.innerHTML = css;
-    this._previewHead.insertBefore(linkTag, this._previewHead.firstChild);
+
+    const base64encoded = base64.fromByteArray(textEncoder.encode(css));
+    linkTag.href = `data:text/css;charset=utf-8;base64,${base64encoded}`;
+    this._previewHead.appendChild(linkTag);
   }
 
   _attachJavascriptLibrary(javascript) {
     const scriptTag = this.previewDocument.createElement('script');
-    const javascriptText = String(javascript);
-    scriptTag.innerHTML = javascriptText.replace(/<\/script>/g, '<\\/script>');
-    this._previewHead.insertBefore(scriptTag, this._previewHead.firstChild);
+    const base64encoded = base64.fromByteArray(textEncoder.encode(javascript));
+    scriptTag.src =
+      `data:text/javascript;charset=utf-8;base64,${base64encoded}`;
+    this.previewBody.appendChild(scriptTag);
   }
 }
 
