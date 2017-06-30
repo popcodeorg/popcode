@@ -9,7 +9,7 @@ import {getInitialUserState} from '../../../src/clients/firebaseAuth';
 
 test('applicationLoaded', (t) => {
   t.test('with no logged in user', (assert) => {
-    testSaga(applicationLoadedSaga, applicationLoaded()).
+    testSaga(applicationLoadedSaga, applicationLoaded({})).
       next().call(getInitialUserState).
       next(null).isDone();
 
@@ -21,7 +21,7 @@ test('applicationLoaded', (t) => {
       user: {uid: 'student1'},
       credential: {provider: 'github.com'},
     };
-    testSaga(applicationLoadedSaga, applicationLoaded()).
+    testSaga(applicationLoadedSaga, applicationLoaded({})).
       next().call(getInitialUserState).
       next(userCredential).put(userAuthenticated(userCredential)).
       next().isDone();

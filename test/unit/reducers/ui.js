@@ -252,14 +252,14 @@ test('applicationLoaded', (t) => {
   t.test('isExperimental = true', reducerTest(
     reducer,
     initialState,
-    partial(applicationLoaded, null, true),
+    partial(applicationLoaded, {gistId: null, isExperimental: true}),
     initialState.set('experimental', true),
   ));
 
   t.test('isExperimental = false', reducerTest(
     reducer,
     initialState,
-    partial(applicationLoaded, null, false),
+    partial(applicationLoaded, {gistId: null, isExperimental: false}),
     initialState.set('experimental', false),
   ));
 });

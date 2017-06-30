@@ -116,15 +116,17 @@ class Workspace extends React.Component {
   }
 
   componentWillMount() {
-    let gistId;
+    let gistId = null;
     let isExperimental = false;
     if (location.search) {
       const query = qs.parse(location.search.slice(1));
-      gistId = query.gist;
+      if (query.gist) {
+        gistId = query.gist;
+      }
       isExperimental = Object.keys(query).includes('experimental');
     }
     history.replaceState({}, '', location.pathname);
-    this.props.dispatch(applicationLoaded(gistId, isExperimental));
+    this.props.dispatch(applicationLoaded({gistId, isExperimental}));
     this._listenForAuthChange();
     startSessionHeartbeat();
   }
