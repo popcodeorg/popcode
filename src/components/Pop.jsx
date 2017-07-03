@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Neutral from '../../static/images/pop/neutral.svg';
-import Thinking from '../../static/images/pop/thinking.svg';
-import Horns from '../../static/images/pop/horns.svg';
+import Neutral from '../static/images/pop/neutral.svg';
+import Thinking from '../static/images/pop/thinking.svg';
+import Horns from '../static/images/pop/horns.svg';
 
 const variants = {
   neutral: Neutral,
