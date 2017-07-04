@@ -19,7 +19,7 @@ export const errors = {
 
   errors: Immutable.fromJS({
     html: {items: [], state: 'passed'},
-    css: {items: [sampleError], state: 'failed'},
+    css: {items: [sampleError], state: 'validation-error'},
     javascript: {items: [], state: 'passed'},
   }),
 

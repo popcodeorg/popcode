@@ -28,6 +28,10 @@ export const stopDragColumnDivider = createAction(
   'STOP_DRAG_COLUMN_DIVIDER',
 );
 
+export const popOutProject = createAction(
+  'POP_OUT_PROJECT',
+);
+
 export const notificationTriggered = createAction(
   'NOTIFICATION_TRIGGERED',
   (type, severity = 'error', payload = {}) => ({type, severity, payload}),
