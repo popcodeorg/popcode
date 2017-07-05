@@ -60,7 +60,8 @@
 
 :root {
   --color-gray: #eee;
-  --color-dark-gray: #aaa;
+  --color-dark-gray: #666;
+  --color-darker-hover-gray: #444;
   --color-green: #00ff85;
   --color-yellow: #ffd100;
   --color-red: #ff5e4f;
@@ -420,13 +421,13 @@ body {
 }
 
 .editors__column-divider {
-  background-color: var(--color-dark-gray);
+  background-color: #aaa;
   cursor: ew-resize;
   min-width: 4px;
 }
 
 .editors__row-divider {
-  background-color: var(--color-dark-gray);
+  background-color: #aaa;
   cursor: ns-resize;
   min-height: 4px;
 }
@@ -439,7 +440,7 @@ body {
   top: 50%;
   left: 50%;
   margin: -1rem 0 0 -5.5rem;
-  opacity: 0.4;
+  color: var(--color-dark-gray);
   font-family: Roboto;
   user-select: none;
   pointer-events: none;
@@ -448,18 +449,17 @@ body {
 /** @define label */
 
 .label {
-  background-color: black;
+  background-color: var(--color-dark-gray);
   border-radius: 4px;
   color: white;
   cursor: pointer;
   font-family: 'Inconsolata';
   font-size: 0.8rem;
-  opacity: 0.2;
   padding: 0.2rem;
 }
 
 .label:hover {
-  opacity: 0.5;
+  background-color: var(--color-darker-hover-gray);
 }
 
 /** @define output */
@@ -507,12 +507,12 @@ body {
   height: 18px;
   position: absolute;
   cursor: pointer;
-  opacity: 0.25;
+  color: var(--color-dark-gray);
   z-index: 1;
 }
 
 .preview__button:hover {
-  opacity: 0.5;
+  color: var(--color-darker-hover-gray);
 }
 
 .preview__button_pop-out {
