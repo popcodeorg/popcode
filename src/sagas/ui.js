@@ -1,4 +1,4 @@
-import {call, put, take, takeEvery} from 'redux-saga/effects';
+import {all, call, put, take, takeEvery} from 'redux-saga/effects';
 import debounceFor from 'redux-saga-debounce-effect/src/debounceFor';
 import {TextEncoder} from 'text-encoding';
 import base64 from 'base64-js';
@@ -41,9 +41,9 @@ export function* popOutProject({payload: project}) {
 }
 
 export default function* () {
-  yield [
+  yield all([
     debounceFor('UPDATE_PROJECT_SOURCE', userDoneTyping, 1000),
     takeEvery('EXPORT_GIST', exportGist),
     takeEvery('POP_OUT_PROJECT', popOutProject),
-  ];
+  ]);
 }
