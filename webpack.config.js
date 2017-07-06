@@ -65,8 +65,7 @@ function directoryContentsExcept(directory, exceptions) {
 module.exports = {
   entry: './src/application.js',
   output: {
-    path: path.resolve(__dirname, './static/compiled'),
-    publicPath: 'compiled/',
+    path: path.resolve(__dirname, './dist'),
     filename: 'application.js',
     sourceMapFilename: 'application.js.map',
   },

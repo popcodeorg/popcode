@@ -25,9 +25,7 @@ import {
 } from '../clients/firebaseAuth';
 
 import {
-  addRuntimeError,
   changeCurrentProject,
-  clearRuntimeErrors,
   createProject,
   updateProjectSource,
   userAuthenticated,
@@ -47,7 +45,6 @@ import {
   userDismissedNotification,
   exportGist,
   applicationLoaded,
-  refreshPreview,
 } from '../actions';
 
 import {getCurrentProject, isPristineProject} from '../util/projectUtils';
@@ -69,7 +66,6 @@ function mapStateToProps(state) {
     allProjects: projects,
     currentProject: getCurrentProject(state),
     errors: state.get('errors').toJS(),
-    runtimeErrors: state.get('runtimeErrors').toJS(),
     isDraggingColumnDivider: state.getIn(
       ['ui', 'workspace', 'isDraggingColumnDivider'],
     ),
@@ -88,7 +84,6 @@ class Workspace extends React.Component {
     bindAll(
       this,
       '_confirmUnload',
-      '_handleClearRuntimeErrors',
       '_handleComponentUnhide',
       '_handleComponentHide',
       '_handleDashboardSubmenuToggled',
@@ -102,7 +97,6 @@ class Workspace extends React.Component {
       '_handleLogOut',
       '_handleNewProject',
       '_handleProjectSelected',
-      '_handleRuntimeError',
       '_handleStartLogIn',
       '_handleToggleDashboard',
       '_handleRequestedLineFocused',
@@ -110,7 +104,6 @@ class Workspace extends React.Component {
       '_handleExportGist',
       '_storeDividerRef',
       '_storeColumnRef',
-      '_handleRefreshClick',
     );
     this.columnRefs = [null, null];
   }
@@ -201,30 +194,22 @@ class Workspace extends React.Component {
     this.props.dispatch(toggleDashboardSubmenu(submenu));
   }
 
-  _handleRuntimeError(error) {
-    this.props.dispatch(addRuntimeError(error));
-  }
-
-  _handleClearRuntimeErrors() {
-    this.props.dispatch(clearRuntimeErrors());
-  }
-
-  _handleRefreshClick() {
-    this.props.dispatch(refreshPreview(Date.now()));
-  }
-
   _getOverallValidationState() {
     const errorStates = map(values(this.props.errors), 'state');
 
-    if (includes(errorStates, 'failed')) {
+    if (includes(errorStates, 'validation-error')) {
       if (this.props.isUserTyping) {
         return 'validating';
       }
-      return 'failed';
+      return 'validation-error';
     }
 
     if (includes(errorStates, 'validating')) {
       return 'validating';
+    }
+
+    if (includes(errorStates, 'runtime-error')) {
+      return 'runtime-error';
     }
 
     return 'passed';
@@ -232,32 +217,20 @@ class Workspace extends React.Component {
 
   _renderOutput() {
     const {
-      currentProject,
       currentProject: {hiddenUIComponents},
-      errors,
       isDraggingColumnDivider,
       rowsFlex,
-      runtimeErrors,
     } = this.props;
     return (
       <Output
-        errors={errors}
         isDraggingColumnDivider={isDraggingColumnDivider}
         isHidden={includes(hiddenUIComponents, 'output')}
-        lastRefreshTimestamp={this.props.ui.lastRefreshTimestamp}
-        project={currentProject}
-        runtimeErrors={runtimeErrors}
         style={{flex: rowsFlex[1]}}
-        validationState={this._getOverallValidationState()}
-        onClearRuntimeErrors={this._handleClearRuntimeErrors}
-        onErrorClick={this._handleErrorClick}
         onHide={
           partial(this._handleComponentHide,
             'output')
         }
         onRef={partial(this._storeColumnRef, 1)}
-        onRefreshClick={this._handleRefreshClick}
-        onRuntimeError={this._handleRuntimeError}
       />
     );
   }
@@ -322,19 +295,27 @@ class Workspace extends React.Component {
   }
 
   _renderDashboard() {
-    if (!this.props.ui.dashboard.isOpen) {
+    const {
+      allProjects,
+      clients,
+      currentProject,
+      currentUser,
+      ui,
+    } = this.props;
+
+    if (!ui.dashboard.isOpen) {
       return null;
     }
 
     return (
       <div className="layout__dashboard">
         <Dashboard
-          activeSubmenu={this.props.ui.dashboard.activeSubmenu}
-          allProjects={this.props.allProjects}
-          currentProject={this.props.currentProject}
-          currentUser={this.props.currentUser}
+          activeSubmenu={ui.dashboard.activeSubmenu}
+          allProjects={allProjects}
+          currentProject={currentProject}
+          currentUser={currentUser}
           gistExportInProgress={
-            get(this.props, 'clients.gists.lastExport.status') === 'waiting'
+            get(clients, 'gists.lastExport.status') === 'waiting'
           }
           validationState={this._getOverallValidationState()}
           onExportGist={this._handleExportGist}
@@ -399,7 +380,6 @@ class Workspace extends React.Component {
       editorsFlex,
       errors,
       rowsFlex,
-      runtimeErrors,
       ui,
     } = this.props;
     if (isNull(currentProject)) {
@@ -412,7 +392,6 @@ class Workspace extends React.Component {
           currentProject={currentProject}
           editorsFlex={editorsFlex}
           errors={errors}
-          runtimeErrors={runtimeErrors}
           style={{flex: rowsFlex[0]}}
           ui={ui}
           onComponentHide={this._handleComponentHide}
@@ -466,7 +445,6 @@ Workspace.propTypes = {
   isDraggingColumnDivider: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool,
   rowsFlex: PropTypes.array.isRequired,
-  runtimeErrors: PropTypes.array.isRequired,
   ui: PropTypes.object.isRequired,
 };
 

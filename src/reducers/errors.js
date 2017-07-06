@@ -15,7 +15,7 @@ const validatingLanguageErrors = new Immutable.Map({
 function buildFailedLanguageErrors(errorList) {
   return Immutable.fromJS({
     items: errorList,
-    state: 'failed',
+    state: 'validation-error',
   });
 }
 
@@ -52,6 +52,15 @@ function errors(stateIn, action) {
 
     case 'UPDATE_PROJECT_SOURCE':
       return state.set(action.payload.language, validatingLanguageErrors);
+
+    case 'ADD_RUNTIME_ERROR':
+      return state.update(
+        action.payload.language,
+        list => list.update(
+          'items',
+          items => items.push(Immutable.fromJS(action.payload.error)).
+            sortBy(error => error.get('row')),
+        ).set('state', 'runtime-error'));
 
     case 'VALIDATED_SOURCE':
       if (action.payload.errors.length) {
