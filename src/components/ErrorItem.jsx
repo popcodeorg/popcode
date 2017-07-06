@@ -18,16 +18,18 @@ function ErrorItem(props) {
       )}
     >
       {lineLabel}
-      <div className="error-list__message">{props.text}</div>
+      <div className="error-list__message">
+        <div dangerouslySetInnerHTML={{__html: props.raw}} />
+      </div>
     </li>
   );
 }
 
 ErrorItem.propTypes = {
   column: PropTypes.number.isRequired,
+  raw: PropTypes.string.isRequired,
   reason: PropTypes.string.isRequired,
   row: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

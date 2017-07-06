@@ -557,6 +557,14 @@ body {
   overflow-wrap: break-word;
 }
 
+.error-list__message code {
+  font-weight: bold;
+}
+
+.error-list__message p {
+  margin: 0;
+}
+
 /** @define notification-list */
 
 .notification-list__notification {
