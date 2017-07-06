@@ -140,7 +140,10 @@ class Dashboard extends React.Component {
     return (
       <LibraryPicker
         enabledLibraries={this.props.currentProject.enabledLibraries}
-        onLibraryToggled={this.props.onLibraryToggled}
+        onLibraryToggled={partial(
+          this.props.onLibraryToggled,
+          this.props.currentProject.projectKey,
+        )}
       />
     );
   }
@@ -197,6 +200,10 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    if (!this.props.isOpen) {
+      return null;
+    }
+
     const sidebarClassnames = classnames(
       'dashboard',
       'u__flex-container',
@@ -227,6 +234,7 @@ Dashboard.propTypes = {
   currentProject: PropTypes.object,
   currentUser: PropTypes.object.isRequired,
   gistExportInProgress: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onLibraryToggled: PropTypes.func.isRequired,
