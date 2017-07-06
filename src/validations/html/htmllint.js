@@ -67,6 +67,14 @@ const errorMap = {
       suppresses: ['mismatched-close-tag'],
     };
   },
+
+  E044: () => ({reason: 'only-head-body-in-html'}),
+
+  E045: () => ({reason: 'only-one-head-and-body'}),
+
+  E046: () => ({reason: 'head-before-body'}),
+
+  E047: () => ({reason: 'invalid-tag-in-head'}),
 };
 
 const htmlLintOptions = {
@@ -94,6 +102,8 @@ const htmlLintOptions = {
   'indent-style': 'spaces',
   'indent-width': 4,
   'line-end-style': false,
+  'head-valid-content-model': true,
+  'html-valid-content-model': true,
   'tag-bans': [
     'b',
     'big',

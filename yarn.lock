@@ -2385,7 +2385,7 @@ domain-browser@^1.1.1:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.1.7.tgz#867aa4b093faa05f1de08c06f4d7b21fdf8698bc"
 
-domelementtype@1, domelementtype@^1.3.0:
+domelementtype@1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-1.3.0.tgz#b17aed82e8ab59e52dd9c19b1756e0fc187204c2"
 
@@ -2399,9 +2399,15 @@ domhandler@2.3:
   dependencies:
     domelementtype "1"
 
+<<<<<<< HEAD
+domhandler@2.3:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-2.3.0.tgz#2de59a0822d5027fabff6f032c2b25a2a8abe738"
+=======
 domhandler@^2.3.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-2.4.1.tgz#892e47000a99be55bbf3774ffea0561d8879c259"
+>>>>>>> upstream/master
   dependencies:
     domelementtype "1"
 
@@ -2615,7 +2621,7 @@ entities@1.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.0.0.tgz#b2987aa3821347fcde642b24fdfc9e4fb712bf26"
 
-entities@^1.1.1, entities@~1.1.1:
+entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
@@ -3880,16 +3886,22 @@ html-tags@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/html-tags/-/html-tags-1.1.1.tgz#869f43859f12d9bdc3892419e494a628aa1b204e"
 
+<<<<<<< HEAD
+htmllint@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/htmllint/-/htmllint-0.6.0.tgz#dbb006676dd66d767cb1b6bb875f08840b91998d"
+=======
 htmllint@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/htmllint/-/htmllint-0.5.0.tgz#4ba7c89907d9b990f7f6a88100fc1ca630b5a6e4"
+>>>>>>> upstream/master
   dependencies:
     bulk-require "^1.0.0"
     htmlparser2 "^3.7.3"
     lodash "^4.3.0"
     promise "^7.1.1"
 
-htmlparser2@3.8.x:
+htmlparser2@3.8.x, htmlparser2@^3.7.3:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.8.3.tgz#996c28b191516a8be86501a7d79757e5c70c1068"
   dependencies:
@@ -3899,6 +3911,26 @@ htmlparser2@3.8.x:
     entities "1.0"
     readable-stream "1.1"
 
+<<<<<<< HEAD
+htmlparser2@~3.7.1:
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.7.3.tgz#6a64c77637c08c6f30ec2a8157a53333be7cb05e"
+  dependencies:
+    domelementtype "1"
+    domhandler "2.2"
+    domutils "1.5"
+    entities "1.0"
+    readable-stream "1.1"
+
+http-browserify@^1.3.2:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/http-browserify/-/http-browserify-1.7.0.tgz#33795ade72df88acfbfd36773cefeda764735b20"
+  dependencies:
+    Base64 "~0.2.0"
+    inherits "~2.0.1"
+
+http-deceiver@^1.2.4:
+=======
 htmlparser2@^3.7.3, htmlparser2@~3.9.2:
   version "3.9.2"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.9.2.tgz#1bdf87acca0f3f9e53fa4fcceb0f4b4cbb00b338"
@@ -3911,6 +3943,7 @@ htmlparser2@^3.7.3, htmlparser2@~3.9.2:
     readable-stream "^2.0.2"
 
 http-deceiver@^1.2.7:
+>>>>>>> upstream/master
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/http-deceiver/-/http-deceiver-1.2.7.tgz#fa7168944ab9a519d337cb0bec7284dc3e723d87"
 
@@ -6684,16 +6717,39 @@ readable-stream@1.1, readable-stream@^1.0.33, readable-stream@~1.1.9:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
+<<<<<<< HEAD
+readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@~2.1.4:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.1.5.tgz#66fa8b720e1438b364681f2ad1a63c618448c9d0"
+  dependencies:
+    buffer-shims "^1.0.0"
+=======
 readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.2, readable-stream@^2.2.6, readable-stream@^2.2.9:
   version "2.2.9"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.9.tgz#cf78ec6f4a6d1eb43d26488cac97f042e74b7fc8"
   dependencies:
     buffer-shims "~1.0.0"
+>>>>>>> upstream/master
     core-util-is "~1.0.0"
     inherits "~2.0.1"
     isarray "~1.0.0"
     process-nextick-args "~1.0.6"
+<<<<<<< HEAD
+    string_decoder "~0.10.x"
+    util-deprecate "~1.0.1"
+
+readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@~2.0.0, readable-stream@~2.0.5:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.0.6.tgz#8f90341e68a53ccc928788dacfcd11b36eb9b78e"
+  dependencies:
+    core-util-is "~1.0.0"
+    inherits "~2.0.1"
+    isarray "~1.0.0"
+    process-nextick-args "~1.0.6"
+    string_decoder "~0.10.x"
+=======
     string_decoder "~1.0.0"
+>>>>>>> upstream/master
     util-deprecate "~1.0.1"
 
 readdirp@^2.0.0:
