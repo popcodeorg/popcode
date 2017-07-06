@@ -1,4 +1,5 @@
 import {
+  all,
   call,
   cancel,
   fork,
@@ -58,10 +59,10 @@ export function* validateSource(
 export default function* () {
   const tasks = new Map();
 
-  yield [
+  yield all([
     takeEvery('CHANGE_CURRENT_PROJECT', validateCurrentProject, tasks),
     takeEvery('GIST_IMPORTED', validateCurrentProject, tasks),
     takeEvery('UPDATE_PROJECT_SOURCE', updateProjectSource, tasks),
     takeEvery('TOGGLE_LIBRARY', toggleLibrary, tasks),
-  ];
+  ]);
 }

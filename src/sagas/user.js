@@ -1,4 +1,4 @@
-import {call, put, takeEvery} from 'redux-saga/effects';
+import {all, call, put, takeEvery} from 'redux-saga/effects';
 import isNull from 'lodash/isNull';
 import {userAuthenticated} from '../actions/user';
 import {getInitialUserState} from '../clients/firebaseAuth';
@@ -11,7 +11,7 @@ export function* applicationLoaded() {
 }
 
 export default function* () {
-  yield [
+  yield all([
     takeEvery('APPLICATION_LOADED', applicationLoaded),
-  ];
+  ]);
 }
