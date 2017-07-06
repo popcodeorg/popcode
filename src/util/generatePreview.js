@@ -193,10 +193,9 @@ class PreviewGenerator {
 
   _attachJavascriptLibrary(javascript) {
     const scriptTag = this.previewDocument.createElement('script');
-    const base64encoded = base64.fromByteArray(textEncoder.encode(javascript));
-    scriptTag.src =
-      `data:text/javascript;charset=utf-8;base64,${base64encoded}`;
-    this.previewBody.appendChild(scriptTag);
+    const javascriptText = String(javascript);
+    scriptTag.innerHTML = javascriptText.replace(/<\/script>/g, '<\\/script>');
+    this._previewHead.insertBefore(scriptTag, this._previewHead.firstChild);
   }
 }
 
