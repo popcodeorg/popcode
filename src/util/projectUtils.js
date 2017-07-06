@@ -1,16 +1,9 @@
 import {Map} from 'immutable';
 import FirebasePersistor from '../persistors/FirebasePersistor';
+import {getCurrentProject} from '../selectors';
 
 export function getProjectKeys(state) {
   return Array.from(state.get('projects').keys());
-}
-
-export function getCurrentProject(state) {
-  const projectKey = state.getIn(['currentProject', 'projectKey']);
-  if (projectKey) {
-    return state.getIn(['projects', projectKey]).toJS();
-  }
-  return null;
 }
 
 export function isPristineProject(project) {
