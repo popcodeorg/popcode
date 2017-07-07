@@ -174,7 +174,7 @@ export default function ui(stateIn, action) {
 
     case 'INCREMENT_TEXT_SIZE':
       return state.updateIn(['editors', 'textSize'], (textSize) => {
-        if (textSize <= 20) {
+        if (textSize <= 25) {
           return textSize + 1;
         }
         return textSize;
