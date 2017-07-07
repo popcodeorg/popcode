@@ -36,7 +36,6 @@ class Editor extends React.Component {
 
   componentDidMount() {
     this._focusRequestedLine(this.props.requestedFocusedLine);
-    this._toggleEditorTextSize(this.props.editorTextSizeIsLarge);
     window.addEventListener('resize', this._handleWindowResize);
   }
 
@@ -49,7 +48,7 @@ class Editor extends React.Component {
     }
 
     this._focusRequestedLine(nextProps.requestedFocusedLine);
-    this._toggleEditorTextSize(nextProps.editorTextSizeIsLarge);
+    this._updateTextSize(nextProps.textSize);
 
     if (nextProps.percentageOfHeight !== this.props.percentageOfHeight) {
       requestAnimationFrame(this._resizeEditor);
@@ -116,12 +115,8 @@ class Editor extends React.Component {
     }
   }
 
-  _toggleEditorTextSize(editorTextSizeIsLarge) {
-    if (editorTextSizeIsLarge === true) {
-      this._editor.setFontSize('18px');
-    } else {
-      this._editor.setFontSize('14px');
-    }
+  _updateTextSize(textSize) {
+    this._editor.setFontSize(textSize);
   }
 
   _disableAutoClosing() {
@@ -152,20 +147,19 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  editorTextSizeIsLarge: PropTypes.bool.isRequired,
   errors: PropTypes.array.isRequired,
   language: PropTypes.string.isRequired,
   percentageOfHeight: PropTypes.number.isRequired,
   projectKey: PropTypes.string.isRequired,
   requestedFocusedLine: PropTypes.object,
   source: PropTypes.string.isRequired,
+  textSize: PropTypes.number.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };
 
 Editor.defaultProps = {
   requestedFocusedLine: null,
-  editorTextSizeIsLarge: false,
 };
 
 export default Editor;

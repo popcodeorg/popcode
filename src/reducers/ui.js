@@ -17,7 +17,7 @@ const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({
     typing: false,
     requestedFocusedLine: null,
-    enlargedEditors: new Immutable.Set(),
+    textSize: 14,
   })).
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Set()).
@@ -166,17 +166,22 @@ export default function ui(stateIn, action) {
     case 'REFRESH_PREVIEW':
       return state.set('lastRefreshTimestamp', action.payload.timestamp);
 
-    case 'TOGGLE_EDITOR_TEXT_SIZE':
-      return state.updateIn(
-        ['editors', 'enlargedEditors'],
-        (enlargedEditors) => {
-          const componentName = action.payload.componentName;
-          if (enlargedEditors.has(componentName)) {
-            return enlargedEditors.delete(componentName);
-          }
-          return enlargedEditors.add(componentName);
-        },
-      );
+    case 'INCREMENT_TEXT_SIZE':
+      return state.updateIn(['editors', 'textSize'], (textSize) => {
+        if (textSize <= 20) {
+          return textSize + 1;
+        }
+        return textSize;
+      });
+
+    case 'DECREMENT_TEXT_SIZE':
+      return state.updateIn(['editors', 'textSize'], (textSize) => {
+        if (textSize >= 10) {
+          return textSize - 1;
+        }
+        return textSize;
+      });
+
     default:
       return state;
   }

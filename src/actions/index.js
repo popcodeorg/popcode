@@ -25,7 +25,8 @@ import {
   notificationTriggered,
   userDismissedNotification,
   refreshPreview,
-  toggleEditorTextSize,
+  incrementTextSize,
+  decrementTextSize,
 } from './ui';
 
 import {
@@ -80,5 +81,6 @@ export {
   gistExportNotDisplayed,
   applicationLoaded,
   refreshPreview,
-  toggleEditorTextSize,
+  incrementTextSize,
+  decrementTextSize,
 };

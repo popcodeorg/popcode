@@ -194,6 +194,14 @@ body {
   transform-origin: right 50%;
 }
 
+.sidebar__change-textSize {
+  font-family: 'FontAwesome';
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+}
+
+
 /** @define dashboard */
 
 .dashboard {
@@ -393,13 +401,6 @@ body {
 .environment__label {
   position: absolute;
   bottom: 1em;
-  right: 1em;
-  z-index: 1;
-}
-
-.environment__label_toggleTextSize {
-  position: absolute;
-  bottom: 3em;
   right: 1em;
   z-index: 1;
 }

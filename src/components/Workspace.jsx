@@ -48,7 +48,8 @@ import {
   exportGist,
   applicationLoaded,
   refreshPreview,
-  toggleEditorTextSize,
+  incrementTextSize,
+  decrementTextSize,
 } from '../actions';
 
 import {getCurrentProject, isPristineProject} from '../util/projectUtils';
@@ -112,7 +113,8 @@ class Workspace extends React.Component {
       '_storeDividerRef',
       '_storeColumnRef',
       '_handleRefreshClick',
-      '_handleEditorTextSizeToggled',
+      '_handleIncrementTextSize',
+      '_handleDecrementTextSize',
     );
     this.columnRefs = [null, null];
   }
@@ -359,6 +361,8 @@ class Workspace extends React.Component {
           hiddenComponents={hiddenComponents}
           validationState={this._getOverallValidationState()}
           onComponentUnhide={this._handleComponentUnhide}
+          onDecrementTextSize={this._handleDecrementTextSize}
+          onIncrementTextSize={this._handleIncrementTextSize}
           onToggleDashboard={this._handleToggleDashboard}
         />
       </div>
@@ -391,8 +395,12 @@ class Workspace extends React.Component {
     }));
   }
 
-  _handleEditorTextSizeToggled(componentName) {
-    this.props.dispatch(toggleEditorTextSize(componentName));
+  _handleIncrementTextSize() {
+    this.props.dispatch(incrementTextSize());
+  }
+
+  _handleDecrementTextSize() {
+    this.props.dispatch(decrementTextSize());
   }
 
   _renderEnvironment() {
@@ -422,7 +430,6 @@ class Workspace extends React.Component {
           onEditorInput={this._handleEditorInput}
           onRef={partial(this._storeColumnRef, 0)}
           onRequestedLineFocused={this._handleRequestedLineFocused}
-          onToggleEditorTextSize={this._handleEditorTextSizeToggled}
         />
         <DraggableCore
           onDrag={this._handleDividerDrag}

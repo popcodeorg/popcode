@@ -43,7 +43,10 @@ export const refreshPreview = createAction(
   timestamp => ({timestamp}),
 );
 
-export const toggleEditorTextSize = createAction(
-  'TOGGLE_EDITOR_TEXT_SIZE',
-  componentName => ({componentName}),
+export const incrementTextSize = createAction(
+  'INCREMENT_TEXT_SIZE',
+);
+
+export const decrementTextSize = createAction(
+  'DECREMENT_TEXT_SIZE',
 );
