@@ -194,6 +194,18 @@ body {
   transform-origin: right 50%;
 }
 
+.sidebar__component {
+  text-align: center;
+  padding-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.sidebar__plusMinus {
+  font-family: 'FontAwesome';
+  position: relative;
+  margin: auto;
+}
+
 /** @define dashboard */
 
 .dashboard {
@@ -402,10 +414,6 @@ body {
   bottom: 3em;
   right: 1em;
   z-index: 1;
-}
-
-.environment__label__toggleTextSize_plusMinus{
-  font-family: 'FontAwesome';
 }
 
 /** @define editors */

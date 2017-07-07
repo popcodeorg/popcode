@@ -49,5 +49,4 @@ export const refreshPreview = createAction(
 
 export const toggleEditorTextSize = createAction(
   'TOGGLE_EDITOR_TEXT_SIZE',
-  componentName => ({componentName}),
 );

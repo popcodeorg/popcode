@@ -17,7 +17,7 @@ const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({
     typing: false,
     requestedFocusedLine: null,
-    enlargedEditors: new Immutable.Set(),
+    textSizeIsLarge: false,
   })).
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Set()).
@@ -173,15 +173,8 @@ export default function ui(stateIn, action) {
       return state.set('experimental', false);
 
     case 'TOGGLE_EDITOR_TEXT_SIZE':
-      return state.updateIn(
-        ['editors', 'enlargedEditors'],
-        (enlargedEditors) => {
-          const componentName = action.payload.componentName;
-          if (enlargedEditors.has(componentName)) {
-            return enlargedEditors.delete(componentName);
-          }
-          return enlargedEditors.add(componentName);
-        },
+      return state.updateIn(['editors', 'textSizeIsLarge'],
+        textSizeIsLarge => !textSizeIsLarge,
       );
 
     default:

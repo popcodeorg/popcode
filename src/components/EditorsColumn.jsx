@@ -49,7 +49,6 @@ export default class EditorsColumn extends React.Component {
       errors,
       onComponentHide,
       onEditorInput,
-      onToggleEditorTextSize,
       onRef,
       onRequestedLineFocused,
       style,
@@ -67,16 +66,10 @@ export default class EditorsColumn extends React.Component {
           language={language}
           source={currentProject.sources[language]}
           style={{flex: editorsFlex[index]}}
-          textSizeIsLarge={includes(ui.editors.enlargedEditors,
-              `editor.${language}`)}
           onHide={partial(onComponentHide, `editor.${language}`)}
           onRef={partial(this._storeEditorRef, index)}
-          onToggleEditorTextSize={partial(onToggleEditorTextSize,
-           `editor.${language}`)}
         >
           <Editor
-            textSizeIsLarge={includes(ui.editors.enlargedEditors,
-              `editor.${language}`)}
             errors={errors[language].items}
             key={language}
             language={language}
@@ -84,6 +77,7 @@ export default class EditorsColumn extends React.Component {
             projectKey={currentProject.projectKey}
             requestedFocusedLine={ui.editors.requestedFocusedLine}
             source={currentProject.sources[language]}
+            textSizeIsLarge={ui.editors.textSizeIsLarge}
             onInput={partial(onEditorInput, language)}
             onRequestedLineFocused={onRequestedLineFocused}
           />
@@ -129,5 +123,4 @@ EditorsColumn.propTypes = {
   onEditorInput: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
-  onToggleEditorTextSize: PropTypes.func.isRequired,
 };

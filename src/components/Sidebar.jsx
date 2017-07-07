@@ -35,6 +35,13 @@ class Sidebar extends React.Component {
       },
     );
 
+    let plusMinus;
+    if (this.props.textSizeIsLarge) {
+      plusMinus = <span className="sidebar__plusMinus">&#xf010;</span>;
+    } else {
+      plusMinus = <span className="sidebar__plusMinus">&#xf00e;</span>;
+    }
+
     return (
       <div className={sidebarClassnames}>
         <div className="sidebar__wordmark-container">
@@ -50,6 +57,12 @@ class Sidebar extends React.Component {
           )}
           onClick={this.props.onToggleDashboard}
         />
+        <div
+          className="sidebar__component"
+          onClick={this.props.onToggleEditorTextSize}
+        >
+          {plusMinus}
+        </div>
         {this._renderHiddenComponents()}
       </div>
     );
@@ -59,9 +72,11 @@ class Sidebar extends React.Component {
 Sidebar.propTypes = {
   dashboardIsOpen: PropTypes.bool.isRequired,
   hiddenComponents: PropTypes.array.isRequired,
+  textSizeIsLarge: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
   onComponentUnhide: PropTypes.func.isRequired,
   onToggleDashboard: PropTypes.func.isRequired,
+  onToggleEditorTextSize: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

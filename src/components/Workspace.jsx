@@ -32,7 +32,6 @@ import {
   stopDragColumnDivider,
   userDismissedNotification,
   applicationLoaded,
-  refreshPreview,
   toggleEditorTextSize,
 
 } from '../actions';
@@ -81,7 +80,6 @@ class Workspace extends React.Component {
       '_handleNotificationDismissed',
       '_storeDividerRef',
       '_storeColumnRef',
-      '_handleRefreshClick',
       '_handleEditorTextSizeToggled',
     );
     this.columnRefs = [null, null];
@@ -216,6 +214,10 @@ class Workspace extends React.Component {
     this.props.dispatch(editorFocusedRequestedLine());
   }
 
+  _handleEditorTextSizeToggled() {
+    this.props.dispatch(toggleEditorTextSize());
+  }
+
   _renderSidebar() {
     let hiddenComponents = [];
     if (!isNull(this.props.currentProject)) {
@@ -226,9 +228,11 @@ class Workspace extends React.Component {
         <Sidebar
           dashboardIsOpen={this.props.ui.dashboard.isOpen}
           hiddenComponents={hiddenComponents}
+          textSizeIsLarge={this.props.ui.editors.textSizeIsLarge}
           validationState={this._getOverallValidationState()}
           onComponentUnhide={this._handleComponentUnhide}
           onToggleDashboard={this._handleToggleDashboard}
+          onToggleEditorTextSize={this._handleEditorTextSizeToggled}
         />
       </div>
     );
@@ -260,10 +264,6 @@ class Workspace extends React.Component {
     }));
   }
 
-  _handleEditorTextSizeToggled(componentName) {
-    this.props.dispatch(toggleEditorTextSize(componentName));
-  }
-
   _renderEnvironment() {
     const {
       currentProject,
@@ -289,7 +289,6 @@ class Workspace extends React.Component {
           onEditorInput={this._handleEditorInput}
           onRef={partial(this._storeColumnRef, 0)}
           onRequestedLineFocused={this._handleRequestedLineFocused}
-          onToggleEditorTextSize={this._handleEditorTextSizeToggled}
         />
         <DraggableCore
           onDrag={this._handleDividerDrag}
