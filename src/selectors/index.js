@@ -9,6 +9,7 @@ import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
   from './isCurrentProjectSyntacticallyValid';
 import isDashboardOpen from './isDashboardOpen';
+import isExperimental from './isExperimental';
 import isGistExportInProgress from './isGistExportInProgress';
 import isUserTyping from './isUserTyping';
 
@@ -23,6 +24,7 @@ export {
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isDashboardOpen,
+  isExperimental,
   isGistExportInProgress,
   isUserTyping,
 };

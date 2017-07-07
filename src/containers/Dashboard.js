@@ -19,6 +19,7 @@ import {
   getCurrentUser,
   getCurrentValidationState,
   isDashboardOpen,
+  isExperimental,
   isGistExportInProgress,
   isUserTyping,
 } from '../selectors';
@@ -42,6 +43,7 @@ function mapStateToProps(state) {
     currentProject: getCurrentProject(state),
     currentUser: getCurrentUser(state),
     gistExportInProgress: isGistExportInProgress(state),
+    isExperimental: isExperimental(state),
     isOpen: isDashboardOpen(state),
     validationState: getValidationStateForDashboard(state),
   };

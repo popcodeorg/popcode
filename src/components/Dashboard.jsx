@@ -76,6 +76,11 @@ class Dashboard extends React.Component {
         </div>
       );
 
+      loadProjectButton =
+        this._renderSubmenuToggleButton('projectList', 'load-project');
+    }
+
+    if (this.props.isExperimental) {
       exportRepoButton = (
         <div
           className="dashboard__menu-item dashboard__menu-item_grid"
@@ -84,9 +89,6 @@ class Dashboard extends React.Component {
           {t('dashboard.menu.export-repo')}
         </div>
       );
-
-      loadProjectButton =
-        this._renderSubmenuToggleButton('projectList', 'load-project');
     }
 
     return (
