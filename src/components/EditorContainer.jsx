@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {t} from 'i18next';
 
 function EditorContainer(props) {
-  let helpText;
+  let helpText, plusMinus;
 
   if (props.source === '') {
     helpText = (
@@ -16,11 +16,22 @@ function EditorContainer(props) {
     );
   }
 
-  let plusMinus;
   if (props.textSizeIsLarge) {
-      plusMinus = <span className="environment__label__toggleTextSize_plusMinus">&#xf068;</span>;
+    plusMinus = (
+      <span
+        className="environment__toggleTextSize_plusMinus"
+      >
+        &#xf068;
+      </span>
+    );
   } else {
-      plusMinus = <span className="environment__label__toggleTextSize_plusMinus">&#xf067;</span>;
+    plusMinus = (
+      <span
+        className="environment__toggleTextSize_plusMinus"
+      >
+        &#xf067;
+      </span>
+    );
   }
 
   return (
@@ -39,7 +50,7 @@ function EditorContainer(props) {
         className="environment__label_toggleTextSize label"
         onClick={props.onToggleEditorTextSize}
       >
-          {plusMinus}
+        {plusMinus}
       </div>
       {helpText}
       {props.children}
