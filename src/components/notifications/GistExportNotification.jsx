@@ -6,9 +6,8 @@ import GenericNotificationWithURL from './GenericNotificationWithURL';
 export default function GistExportNotification({payload: {url}}) {
   return (
     <GenericNotificationWithURL
-      payload={props.payload}
       text={t('notifications.gist-export-complete')}
-      type={props.type}
+      url={url}
       urlText={t('notifications.gist-export-link')}
     />
   );

@@ -7,7 +7,7 @@ import {
   repoExported,
   repoExportError,
   } from '../actions/clients';
-import {getCurrentProject} from '../util/projectUtils';
+import {getCurrentProject} from '../selectors/';
 
 export function* exportGist() {
   const state = yield select();
@@ -37,5 +37,5 @@ export default function* () {
   yield all([
     takeEvery('EXPORT_GIST', exportGist),
     takeEvery('EXPORT_REPO', exportRepo),
-  ];
+  ]);
 }

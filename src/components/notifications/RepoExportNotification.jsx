@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import {t} from 'i18next';
 import GenericNotificationWithURL from './GenericNotificationWithURL';
 
-export default function RepoExportNotification(props) {
+export default function RepoExportNotification({payload: {url}}) {
   return (
     <GenericNotificationWithURL
-      payload={props.payload}
       text={t('notifications.repo-export-complete')}
-      type={props.type}
+      url={url}
       urlText={t('notifications.gist-export-link')}
     />
   );
@@ -16,5 +15,4 @@ export default function RepoExportNotification(props) {
 
 RepoExportNotification.propTypes = {
   payload: PropTypes.object.isRequired,
-  type: PropTypes.string.isRequired,
 };

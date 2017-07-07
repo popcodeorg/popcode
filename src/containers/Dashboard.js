@@ -7,6 +7,7 @@ import {
   changeCurrentProject,
   createProject,
   exportGist,
+  exportRepo,
   notificationTriggered,
   toggleDashboardSubmenu,
   toggleLibrary,
@@ -50,6 +51,10 @@ function mapDispatchToProps(dispatch) {
   return {
     onExportGist() {
       dispatch(exportGist());
+    },
+
+    onExportRepo() {
+      this.props.dispatch(exportRepo());
     },
 
     onLibraryToggled(projectKey, libraryKey) {

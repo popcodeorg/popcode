@@ -5,7 +5,7 @@ export default function GenericNotificationWithURL(props) {
   return (
     <span>
       {props.text} {' '}
-      <a href={props.payload.url} rel="noopener noreferrer" target="_blank">
+      <a href={props.url} rel="noopener noreferrer" target="_blank">
         {props.urlText}
       </a>
     </span>
@@ -13,8 +13,7 @@ export default function GenericNotificationWithURL(props) {
 }
 
 GenericNotificationWithURL.propTypes = {
-  payload: PropTypes.object.isRequired,
   text: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   urlText: PropTypes.string.isRequired,
 };

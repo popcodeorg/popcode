@@ -70,5 +70,5 @@ export default function* () {
     takeEvery('EXPORT_GIST', exportGist),
     takeEvery('POP_OUT_PROJECT', popOutProject),
     takeEvery('EXPORT_REPO', exportRepo),
-  ];
+  ]);
 }
