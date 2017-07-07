@@ -9,7 +9,7 @@ class Analyzer {
 
   get doc() {
     if (isUndefined(this._doc)) {
-      const htmlString = this._project.getIn(['sources', 'html']);
+      const htmlString = this._project.sources.html;
       this._doc = domParser.parseFromString(htmlString, 'text/html');
     }
     return this._doc;
@@ -20,7 +20,7 @@ class Analyzer {
   }
 
   get enabledLibraries() {
-    return this._project.get('enabledLibraries').toJS();
+    return this._project.enabledLibraries;
   }
 }
 

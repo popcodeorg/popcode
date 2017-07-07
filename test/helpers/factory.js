@@ -68,6 +68,6 @@ export function project(projectIn) {
 export function credential(credentialIn) {
   return merge({
     accessToken: '0123456789abcdef',
-    provider: 'github.com',
+    providerId: 'github.com',
   }, credentialIn);
 }

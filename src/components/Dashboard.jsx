@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
 import partial from 'lodash/partial';
+import includes from 'lodash/includes';
 import isNull from 'lodash/isNull';
 import classnames from 'classnames';
 import config from '../config';
@@ -139,19 +140,22 @@ class Dashboard extends React.Component {
     return (
       <LibraryPicker
         enabledLibraries={this.props.currentProject.enabledLibraries}
-        onLibraryToggled={this.props.onLibraryToggled}
+        onLibraryToggled={partial(
+          this.props.onLibraryToggled,
+          this.props.currentProject.projectKey,
+        )}
       />
     );
   }
 
-  _renderPopSvg(variant, validationState) {
+  _renderPopSvg(variant, ...validationStates) {
     return (
       <div
         className={classnames(
           'dashboard__pop',
           {
             dashboard__pop_visible:
-              this.props.validationState === validationState,
+              includes(validationStates, this.props.validationState),
           },
         )}
       >
@@ -165,7 +169,7 @@ class Dashboard extends React.Component {
       <div className="dashboard__pop-container">
         {this._renderPopSvg('neutral', 'passed')}
         {this._renderPopSvg('thinking', 'validating')}
-        {this._renderPopSvg('horns', 'failed')}
+        {this._renderPopSvg('horns', 'validation-error', 'runtime-error')}
       </div>
     );
   }
@@ -196,13 +200,18 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    if (!this.props.isOpen) {
+      return null;
+    }
+
     const sidebarClassnames = classnames(
       'dashboard',
       'u__flex-container',
       'u__flex-container_column',
       {
         dashboard_yellow: this.props.validationState === 'validating',
-        dashboard_red: this.props.validationState === 'failed',
+        dashboard_red: this.props.validationState === 'validation-error' ||
+          this.props.validationState === 'runtime-error',
       },
     );
 
@@ -225,6 +234,7 @@ Dashboard.propTypes = {
   currentProject: PropTypes.object,
   currentUser: PropTypes.object.isRequired,
   gistExportInProgress: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onLibraryToggled: PropTypes.func.isRequired,

@@ -25,6 +25,7 @@ import {
 } from '../../../src/actions/clients';
 import {EmptyGistError} from '../../../src/clients/gists';
 import {userLoggedOut} from '../../../src/actions/user';
+import {applicationLoaded} from '../../../src/actions/';
 
 const initialState = Immutable.fromJS({
   editors: {
@@ -246,3 +247,19 @@ test('refreshPreview', reducerTest(
   partial(refreshPreview, 1),
   initialState.set('lastRefreshTimestamp', 1),
 ));
+
+test('applicationLoaded', (t) => {
+  t.test('isExperimental = true', reducerTest(
+    reducer,
+    initialState,
+    partial(applicationLoaded, {gistId: null, isExperimental: true}),
+    initialState.set('experimental', true),
+  ));
+
+  t.test('isExperimental = false', reducerTest(
+    reducer,
+    initialState,
+    partial(applicationLoaded, {gistId: null, isExperimental: false}),
+    initialState.set('experimental', false),
+  ));
+});

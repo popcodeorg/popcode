@@ -1,86 +1,78 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {TextEncoder} from 'text-encoding';
-import base64 from 'base64-js';
-import bindAll from 'lodash/bindAll';
+import isNil from 'lodash/isNil';
+import partial from 'lodash/partial';
 import classnames from 'classnames';
 import generatePreview from '../util/generatePreview';
-import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 import PreviewFrame from './PreviewFrame';
 
-class Preview extends React.Component {
-  constructor() {
-    super();
-    bindAll(this, '_handlePopOutClick');
+function generateFrameSrc(
+  project,
+  isSyntacticallyValid,
+  lastRefreshTimestamp,
+) {
+  if (isNil(project) || !isSyntacticallyValid) {
+    return '';
   }
 
-  _generateDocument(isLivePreview = false) {
-    if (!this.props.isValid) {
-      return '';
-    }
-    const project = this.props.project;
+  return generatePreview(
+    project,
+    {
+      targetBaseTop: true,
+      propagateErrorsToParent: true,
+      breakLoops: true,
+      nonBlockingAlertsAndPrompts: true,
+      lastRefreshTimestamp,
+    },
+  );
+}
 
-    if (project === undefined) {
-      return '';
-    }
-
-    return generatePreview(
-      project,
-      {
-        targetBaseTop: isLivePreview,
-        propagateErrorsToParent: isLivePreview,
-        breakLoops: isLivePreview,
-        nonBlockingAlertsAndPrompts: isLivePreview,
-        lastRefreshTimestamp: isLivePreview && this.props.lastRefreshTimestamp,
-      },
-    );
-  }
-
-  _handlePopOutClick() {
-    this._popOut();
-  }
-
-  _popOut() {
-    const doc = this._generateDocument();
-    const uint8array = new TextEncoder('utf-8').encode(doc);
-    const base64encoded = base64.fromByteArray(uint8array);
-    const url = `data:text/html;charset=utf-8;base64,${base64encoded}`;
-
-    openWindowWithWorkaroundForChromeClosingBug(url);
-  }
-
-  render() {
-    return (
-      <div
-        className={classnames(
-          'preview',
-          'output__item',
-          {u__hidden: !this.props.isValid},
-        )}
-      >
-        <span
-          className="preview__button preview__button_reset"
-          onClick={this.props.onRefreshClick}
-        >&#xf021;</span>
-        <span
-          className="preview__button preview__button_pop-out"
-          onClick={this._handlePopOutClick}
-        >&#xf08e;</span>
-        <PreviewFrame
-          src={this._generateDocument(true)}
-          onFrameWillRefresh={this.props.onClearRuntimeErrors}
-          onRuntimeError={this.props.onRuntimeError}
-        />
-      </div>
-    );
-  }
+export default function Preview({
+  isSyntacticallyValid,
+  lastRefreshTimestamp,
+  project,
+  onPopOutProject,
+  onRefreshClick,
+  onRuntimeError,
+}) {
+  return (
+    <div
+      className={classnames(
+        'preview',
+        'output__item',
+        {u__hidden: !isSyntacticallyValid},
+      )}
+    >
+      <span
+        className="preview__button preview__button_reset"
+        onClick={onRefreshClick}
+      >&#xf021;</span>
+      <span
+        className="preview__button preview__button_pop-out"
+        onClick={partial(onPopOutProject, project)}
+      >&#xf08e;</span>
+      <PreviewFrame
+        src={
+          generateFrameSrc(project, isSyntacticallyValid, lastRefreshTimestamp)
+        }
+        onRuntimeError={onRuntimeError}
+      />
+    </div>
+  );
 }
 
 Preview.propTypes = {
-  isValid: PropTypes.bool.isRequired,
+  isSyntacticallyValid: PropTypes.bool.isRequired,
   lastRefreshTimestamp: PropTypes.number,
-  project: PropTypes.object.isRequired,
-  onClearRuntimeErrors: PropTypes.func.isRequired,
+  project: PropTypes.shape({
+    sources: PropTypes.shape({
+      html: PropTypes.string.isRequired,
+      css: PropTypes.string.isRequired,
+      javascript: PropTypes.string.isRequired,
+    }).isRequired,
+    enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
+  onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
 };
@@ -88,5 +80,3 @@ Preview.propTypes = {
 Preview.defaultProps = {
   lastRefreshTimestamp: null,
 };
-
-export default Preview;

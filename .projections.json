@@ -1,7 +1,15 @@
 {
   "src/components/*.jsx": {
     "type": "component",
-    "template": "import React from 'react';\n\nclass {camelcase|capitalize} extends React.Component {open}\n  render() {open}\n  {close}\n{close};\n\nexport default {camelcase|capitalize};"
+    "template": "import React from 'react';\nimport PropTypes from 'prop-types';\n\nexport default function {}() {open}\n{close}\n\n{}.propTypes = {open}\n{close};"
+  },
+  "src/containers/*.js": {
+    "type": "container",
+    "template": "import {open}connect{close} from 'react-redux';\nimport {open}{}{close} from '../components';\nimport {open}{close} from '../actions';\n\nfunction mapStateToProps(state) {open}\n  return {open}\n  {close};\n{close}\n\nfunction mapDispatchToProps(dispatch) {open}\n  return {open}\n  {close};\n{close}\n\nexport default connect(\n  mapStateToProps,\n  mapDispatchToProps,\n)({});\n"
+  },
+  "src/selectors/*.js": {
+    "type": "selector",
+    "template": "import {open}createSelector{close} from 'reselect';\n\nexport default createSelector(\n  [],\n  () => {open}\n  {close},\n);"
   },
   "src/store.js": {
     "type": "store"

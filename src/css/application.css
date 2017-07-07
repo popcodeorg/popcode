@@ -636,7 +636,7 @@ body {
 }
 
 .pop-throbber__image {
-  background: url('../images/pop/thinking.svg') center no-repeat;
+  background: url('./images/pop/thinking.svg') center no-repeat;
   height: 100%;
 }
 

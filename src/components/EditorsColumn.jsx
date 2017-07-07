@@ -10,13 +10,6 @@ import {getNodeHeights} from '../util/resize';
 import EditorContainer from './EditorContainer';
 import Editor from './Editor';
 
-function allErrorsFor(language, errors, runtimeErrors) {
-  if (language === 'javascript') {
-    return errors.javascript.items.concat(runtimeErrors);
-  }
-  return errors[language].items;
-}
-
 export default class EditorsColumn extends React.Component {
   constructor(props) {
     super(props);
@@ -59,7 +52,6 @@ export default class EditorsColumn extends React.Component {
       onToggleEditorTextSize,
       onRef,
       onRequestedLineFocused,
-      runtimeErrors,
       style,
       ui,
     } = this.props;
@@ -85,7 +77,7 @@ export default class EditorsColumn extends React.Component {
           <Editor
             textSizeIsLarge={includes(ui.editors.enlargedEditors,
               `editor.${language}`)}
-            errors={allErrorsFor(language, errors, runtimeErrors)}
+            errors={errors[language].items}
             key={language}
             language={language}
             percentageOfHeight={1 / languages.length}
@@ -128,7 +120,6 @@ EditorsColumn.propTypes = {
   currentProject: PropTypes.object.isRequired,
   editorsFlex: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
-  runtimeErrors: PropTypes.array.isRequired,
   style: PropTypes.object.isRequired,
   ui: PropTypes.shape({
     editors: PropTypes.object.isRequired,

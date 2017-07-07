@@ -7,11 +7,11 @@ import {generateTextPreview} from '../util/generatePreview';
 
 const MAX_LENGTH = 50;
 
-function ProjectList(props) {
-  const projects = props.projects.map((project) => {
+function ProjectList({currentProject, projects, onProjectSelected}) {
+  const projectPreviews = projects.map((project) => {
     const preview = generateTextPreview(project);
     const isSelected =
-      project.projectKey === props.currentProject.projectKey;
+      project.projectKey === currentProject.projectKey;
 
     return (
       <div
@@ -21,7 +21,7 @@ function ProjectList(props) {
           {'dashboard__menu-item_active': isSelected},
         )}
         key={project.projectKey}
-        onClick={partial(props.onProjectSelected, project)}
+        onClick={partial(onProjectSelected, project)}
       >
         <div className="project-preview__timestamp">
           {moment(project.updatedAt).fromNow()}
@@ -35,7 +35,7 @@ function ProjectList(props) {
 
   return (
     <div className="dashboard__menu dashboard__menu_scrollable">
-      {projects}
+      {projectPreviews}
     </div>
   );
 }
