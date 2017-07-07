@@ -1,7 +1,7 @@
-import {call, put, select, takeEvery} from 'redux-saga/effects';
+import {all, call, put, select, takeEvery} from 'redux-saga/effects';
 import {createFromProject} from '../clients/gists';
 import {gistExported, gistExportError} from '../actions/clients';
-import {getCurrentProject} from '../util/projectUtils';
+import {getCurrentProject} from '../selectors';
 
 export function* exportGist() {
   const state = yield select();
@@ -16,7 +16,7 @@ export function* exportGist() {
 }
 
 export default function* () {
-  yield [
+  yield all([
     takeEvery('EXPORT_GIST', exportGist),
-  ];
+  ]);
 }

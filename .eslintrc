@@ -50,7 +50,7 @@
         ],
         "complexity": [
           2,
-          {"max": 27}
+          {"max": 30}
         ],
         "computed-property-spacing": [
             2,
@@ -687,6 +687,9 @@
         ],
         "react/no-unknown-property": [
             2
+        ],
+        "react/no-unused-prop-types": [
+          2
         ],
         "react/prefer-es6-class": [
           2,
