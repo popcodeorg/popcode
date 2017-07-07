@@ -16,6 +16,13 @@ function EditorContainer(props) {
     );
   }
 
+  let plusMinus;
+  if (props.textSizeIsLarge) {
+      plusMinus = <span className="environment__label__toggleTextSize_plusMinus">&#xf068;</span>;
+  } else {
+      plusMinus = <span className="environment__label__toggleTextSize_plusMinus">&#xf067;</span>;
+  }
+
   return (
     <div
       className="editors__editor-container"
@@ -32,7 +39,7 @@ function EditorContainer(props) {
         className="environment__label_toggleTextSize label"
         onClick={props.onToggleEditorTextSize}
       >
-        Aa
+          {plusMinus}
       </div>
       {helpText}
       {props.children}
@@ -45,6 +52,7 @@ EditorContainer.propTypes = {
   language: PropTypes.string.isRequired,
   source: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
+  textSizeIsLarge: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
   onToggleEditorTextSize: PropTypes.func.isRequired,

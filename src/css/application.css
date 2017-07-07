@@ -404,6 +404,10 @@ body {
   z-index: 1;
 }
 
+.environment__label__toggleTextSize_plusMinus{
+  font-family: 'FontAwesome';
+}
+
 /** @define editors */
 
 .editors {

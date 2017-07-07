@@ -13,6 +13,8 @@ import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 
 const RESIZE_THROTTLE = 250;
+const NORMAL_FONTSIZE = 14;
+const LARGE_FONTSIZE = 20;
 
 function createSessionWithoutWorker(source, language) {
   const session = ACE.createEditSession(source, null);
@@ -36,7 +38,7 @@ class Editor extends React.Component {
 
   componentDidMount() {
     this._focusRequestedLine(this.props.requestedFocusedLine);
-    this._toggleEditorTextSize(this.props.editorTextSizeIsLarge);
+    this._toggleEditorTextSize(this.props.textSizeIsLarge);
     window.addEventListener('resize', this._handleWindowResize);
   }
 
@@ -49,7 +51,7 @@ class Editor extends React.Component {
     }
 
     this._focusRequestedLine(nextProps.requestedFocusedLine);
-    this._toggleEditorTextSize(nextProps.editorTextSizeIsLarge);
+    this._toggleEditorTextSize(nextProps.textSizeIsLarge);
 
     if (nextProps.percentageOfHeight !== this.props.percentageOfHeight) {
       requestAnimationFrame(this._resizeEditor);
@@ -116,11 +118,11 @@ class Editor extends React.Component {
     }
   }
 
-  _toggleEditorTextSize(editorTextSizeIsLarge) {
-    if (editorTextSizeIsLarge === true) {
-      this._editor.setFontSize('18px');
+  _toggleEditorTextSize(textSizeIsLarge) {
+    if (textSizeIsLarge) {
+      this._editor.setFontSize(LARGE_FONTSIZE);
     } else {
-      this._editor.setFontSize('14px');
+      this._editor.setFontSize(NORMAL_FONTSIZE);
     }
   }
 
@@ -152,20 +154,20 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  editorTextSizeIsLarge: PropTypes.bool.isRequired,
   errors: PropTypes.array.isRequired,
   language: PropTypes.string.isRequired,
   percentageOfHeight: PropTypes.number.isRequired,
   projectKey: PropTypes.string.isRequired,
   requestedFocusedLine: PropTypes.object,
   source: PropTypes.string.isRequired,
+  textSizeIsLarge: PropTypes.bool.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };
 
 Editor.defaultProps = {
   requestedFocusedLine: null,
-  editorTextSizeIsLarge: false,
+  textSizeIsLarge: false,
 };
 
 export default Editor;
