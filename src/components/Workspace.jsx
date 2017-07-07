@@ -32,7 +32,6 @@ import {
   stopDragColumnDivider,
   userDismissedNotification,
   applicationLoaded,
-  refreshPreview,
   incrementTextSize,
   decrementTextSize,
 } from '../actions';
@@ -81,7 +80,6 @@ class Workspace extends React.Component {
       '_handleNotificationDismissed',
       '_storeDividerRef',
       '_storeColumnRef',
-      '_handleRefreshClick',
       '_handleIncrementTextSize',
       '_handleDecrementTextSize',
     );

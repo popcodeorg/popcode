@@ -50,9 +50,19 @@ class Sidebar extends React.Component {
           )}
           onClick={this.props.onToggleDashboard}
         />
-        <div className="sidebar__change-textSize">
-          <div onClick={this.props.onIncrementTextSize}> &#xf067; </div>
-          <div onClick={this.props.onDecrementTextSize}> &#xf068; </div>
+        <div className="sidebar__component">
+          <div
+            className="sidebar__plusMinus"
+            onClick={this.props.onIncrementTextSize}
+          >
+            &#xf00e;
+          </div>
+          <div
+            className="sidebar__plusMinus"
+            onClick={this.props.onDecrementTextSize}
+          >
+            &#xf010;
+          </div>
         </div>
         {this._renderHiddenComponents()}
       </div>
