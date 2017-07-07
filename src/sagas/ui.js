@@ -7,7 +7,8 @@ import {
   gistExportDisplayed,
   gistExportNotDisplayed,
   repoExportDisplayed,
-  repoExportNotDisplayed} from '../actions/clients';
+  repoExportNotDisplayed,
+} from '../actions/clients';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 import generatePreview from '../util/generatePreview';
 import {spinnerPage} from '../templates';
@@ -16,24 +17,37 @@ export function* userDoneTyping() {
   yield put(userDoneTypingAction());
 }
 
-export function* exportGist() {
+function* githubExport(
+  successAction,
+  failureAction,
+  notDisplayedAction,
+  displayedAction) {
   const exportWindow = yield call(
     openWindowWithWorkaroundForChromeClosingBug,
     `data:text/html;charset=utf-8;base64,${spinnerPage}`,
   );
   const {type, payload: url} =
-    yield take(['GIST_EXPORTED', 'GIST_EXPORT_ERROR']);
+    yield take([successAction, failureAction]);
 
-  if (type === 'GIST_EXPORTED') {
+  if (type === successAction) {
     if (exportWindow.closed) {
-      yield put(gistExportNotDisplayed(url));
+      yield put(notDisplayedAction(url));
     } else {
       exportWindow.location.href = url;
-      yield put(gistExportDisplayed());
+      yield put(displayedAction());
     }
   } else {
     yield call([exportWindow, 'close']);
   }
+}
+
+export function* exportGist() {
+  yield* githubExport(
+    'GIST_EXPORTED',
+    'GIST_EXPORT_ERROR',
+    gistExportNotDisplayed,
+    gistExportDisplayed,
+  );
 }
 
 export function* popOutProject({payload: project}) {
@@ -45,23 +59,12 @@ export function* popOutProject({payload: project}) {
 }
 
 export function* exportRepo() {
-  const exportWindow = yield call(
-    openWindowWithWorkaroundForChromeClosingBug,
-    `data:text/html;base64,${spinnerPage}`,
+  yield* githubExport(
+    'REPO_EXPORTED',
+    'REPO_EXPORT_ERROR',
+    repoExportNotDisplayed,
+    repoExportDisplayed,
   );
-  const {type, payload: url} =
-    yield take(['REPO_EXPORTED', 'REPO_EXPORT_ERROR']);
-
-  if (type === 'REPO_EXPORTED') {
-    if (exportWindow.closed) {
-      yield put(repoExportNotDisplayed(url));
-    } else {
-      exportWindow.location.href = url;
-      yield put(repoExportDisplayed());
-    }
-  } else {
-    yield call([exportWindow, 'close']);
-  }
 }
 
 export default function* () {

@@ -46,7 +46,6 @@ export default function clients(stateIn, action) {
         ['repos', 'lastExport'],
         new Immutable.Map({status: 'error', error: action.payload}),
       );
-
   }
 
   return state;

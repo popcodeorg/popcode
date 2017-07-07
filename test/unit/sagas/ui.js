@@ -105,7 +105,7 @@ test('exportRepo', (t) => {
     testSaga(exportRepoSaga).
       next().call(
         openWindowWithWorkaroundForChromeClosingBug,
-        `data:text/html;base64,${spinnerPage}`,
+        `data:text/html;charset=utf-8;base64,${spinnerPage}`,
       ).
       next(mockWindow).take(['REPO_EXPORTED', 'REPO_EXPORT_ERROR']).
       next(repoExported(url)).put(repoExportDisplayed()).
@@ -122,7 +122,7 @@ test('exportRepo', (t) => {
     testSaga(exportRepoSaga).
       next().call(
         openWindowWithWorkaroundForChromeClosingBug,
-        `data:text/html;base64,${spinnerPage}`,
+        `data:text/html;charset=utf-8;base64,${spinnerPage}`,
       ).
       next(mockWindow).take(['REPO_EXPORTED', 'REPO_EXPORT_ERROR']).
       next(repoExported(url)).put(repoExportNotDisplayed(url)).
@@ -138,7 +138,7 @@ test('exportRepo', (t) => {
     testSaga(exportRepoSaga).
       next().call(
         openWindowWithWorkaroundForChromeClosingBug,
-        `data:text/html;base64,${spinnerPage}`,
+        `data:text/html;charset=utf-8;base64,${spinnerPage}`,
       ).
       next(mockWindow).take(['REPO_EXPORTED', 'REPO_EXPORT_ERROR']).
       next(repoExportError(new Error())).call([mockWindow, 'close']).

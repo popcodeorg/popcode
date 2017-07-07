@@ -80,7 +80,7 @@ class Dashboard extends React.Component {
         this._renderSubmenuToggleButton('projectList', 'load-project');
     }
 
-    if (this.props.isExperimental) {
+    if (this.props.isExperimental && this.props.currentUser.authenticated) {
       exportRepoButton = (
         <div
           className="dashboard__menu-item dashboard__menu-item_grid"
@@ -250,6 +250,7 @@ Dashboard.propTypes = {
   currentProject: PropTypes.object,
   currentUser: PropTypes.object.isRequired,
   gistExportInProgress: PropTypes.bool.isRequired,
+  isExperimental: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
   onExportGist: PropTypes.func.isRequired,

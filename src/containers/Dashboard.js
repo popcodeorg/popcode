@@ -56,7 +56,7 @@ function mapDispatchToProps(dispatch) {
     },
 
     onExportRepo() {
-      this.props.dispatch(exportRepo());
+      dispatch(exportRepo());
     },
 
     onLibraryToggled(projectKey, libraryKey) {

@@ -39,6 +39,7 @@ export default function NotificationList(props) {
       >
         <Notification
           payload={notification.payload}
+          type={notification.type}
         />
       </NotificationContainer>
     );

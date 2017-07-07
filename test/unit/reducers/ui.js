@@ -25,7 +25,7 @@ import {
   repoExportNotDisplayed,
   repoExportError,
 } from '../../../src/actions/clients';
-import {EmptyGistError} from '../../../src/clients/gists';
+import {EmptyGistError} from '../../../src/clients/github';
 import {userLoggedOut} from '../../../src/actions/user';
 import {applicationLoaded} from '../../../src/actions/';
 

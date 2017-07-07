@@ -18,7 +18,7 @@ import {
   projectLoaded,
 } from '../actions/projects';
 import {saveCurrentProject} from '../util/projectUtils';
-import {loadFromId} from '../clients/gists';
+import {loadGistFromId} from '../clients/github';
 import FirebasePersistor from '../persistors/FirebasePersistor';
 
 export function* applicationLoaded(action) {
@@ -42,7 +42,7 @@ export function* changeCurrentProject() {
 export function* importGist({payload: {gistId}}) {
   try {
     const gistData =
-      yield call(loadFromId, gistId, {authenticated: false});
+      yield call(loadGistFromId, gistId, {authenticated: false});
     yield put(gistImported(generateProjectKey(), gistData));
   } catch (error) {
     if (get(error, 'response.status') === 404) {

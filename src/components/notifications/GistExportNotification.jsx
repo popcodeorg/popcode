@@ -6,9 +6,9 @@ import GenericNotificationWithURL from './GenericNotificationWithURL';
 export default function GistExportNotification({payload: {url}}) {
   return (
     <GenericNotificationWithURL
+      linkText={t('notifications.github-export-link')}
       text={t('notifications.gist-export-complete')}
       url={url}
-      urlText={t('notifications.gist-export-link')}
     />
   );
 }
