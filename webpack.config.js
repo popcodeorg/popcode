@@ -5,6 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const OfflinePlugin = require('offline-plugin');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
 const startsWith = require('lodash/startsWith');
@@ -37,7 +38,6 @@ const babelrc = {
     env: process.env.NODE_ENV || 'development',
   }),
 };
-
 
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
@@ -213,6 +213,32 @@ module.exports = {
       NODE_ENV: 'development',
       WARN_ON_DROPPED_ERRORS: 'false',
       GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2'
+    }),
+    // it's always better if OfflinePlugin is the last plugin added https://github.com/NekR/offline-plugin#setup
+    new OfflinePlugin({
+      publicPath: '/',
+      responseStrategy: 'network-first',
+      externals: [
+        'index.html',
+        'application.css',
+        'fonts/Roboto-Regular-webfont.woff',
+        'fonts/Roboto-Regular-webfont.ttf',
+        'fonts/Roboto-Regular-webfont.eot',
+        'fonts/Roboto-Bold-webfont.woff',
+        'fonts/Roboto-Bold-webfont.ttf',
+        'fonts/Roboto-Bold-webfont.eot',
+        'fonts/inconsolata-regular.woff2',
+        'fonts/inconsolata-regular.woff',
+        'fonts/inconsolata-regular.ttf',
+        'fonts/inconsolata-regular.eot',
+        'fonts/fontawesome-webfont.woff2',
+        'fonts/fontawesome-webfont.woff',
+        'fonts/fontawesome-webfont.ttf',
+        'fonts/fontawesome-webfont.eot',
+        'images/pop/thinking.svg',
+        'images/large-spinner.gif',
+      ],
+      ServiceWorker: {navigateFallbackURL: '/'},
     }),
   ],
 
