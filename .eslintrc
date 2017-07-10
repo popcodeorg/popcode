@@ -94,6 +94,9 @@
             "after": true
           }
         ],
+        "getter-return": [
+          2
+        ],
         "global-require": [
             2
         ],
@@ -784,6 +787,9 @@
         "strict": [
             2,
             "never"
+        ],
+        "switch-colon-spacing": [
+          2,
         ],
         "use-isnan": [
           2
