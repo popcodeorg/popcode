@@ -11,7 +11,5 @@ export function* applicationLoaded() {
 }
 
 export default function* () {
-  yield all([
-    takeEvery('APPLICATION_LOADED', applicationLoaded),
-  ]);
+  yield all([takeEvery('APPLICATION_LOADED', applicationLoaded)]);
 }

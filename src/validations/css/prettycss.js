@@ -18,7 +18,8 @@ const FILTER_VALUE_EXPR =
     '^opacity\\(',
     '^saturate\\(',
     '^sepia\\(',
-    '^inherit$'].join('|'));
+    '^inherit$',
+  ].join('|'));
 
 function isIncorrectlyRejectedValue(value) {
   return isIncorrectlyRejectedRadialGradientValue(value) ||

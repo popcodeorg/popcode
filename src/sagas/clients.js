@@ -16,7 +16,5 @@ export function* exportGist() {
 }
 
 export default function* () {
-  yield all([
-    takeEvery('EXPORT_GIST', exportGist),
-  ]);
+  yield all([takeEvery('EXPORT_GIST', exportGist)]);
 }
