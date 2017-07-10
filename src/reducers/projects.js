@@ -136,7 +136,7 @@ export default function reduceProjects(stateIn, action) {
       return state.updateIn(
         [action.payload.projectKey, 'enabledLibraries'],
         (enabledLibraries) => {
-          const libraryKey = action.payload.libraryKey;
+          const {libraryKey} = action.payload;
           if (enabledLibraries.has(libraryKey)) {
             return enabledLibraries.delete(libraryKey);
           }

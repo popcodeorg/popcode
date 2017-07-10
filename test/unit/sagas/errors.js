@@ -24,7 +24,7 @@ test('validateCurrentProject()', (assert) => {
   const saga = testSaga(validateCurrentProjectSaga, tasks).
     next().inspect((effect) => {
       assert.ok(effect.SELECT, 'invokes select effect');
-      selector = effect.SELECT.selector;
+      ({selector} = effect.SELECT);
     });
 
   const args = [selector(scenario.state)];

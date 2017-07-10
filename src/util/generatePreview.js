@@ -14,13 +14,11 @@ const errorHandlerScript = `(${function() {
   window.onerror = (fullMessage, _file, line, column, error) => {
     let name, message;
     if (error) {
-      name = error.name;
-      message = error.message;
+      ({name, message} = error);
     } else {
       const components = fullMessage.split(': ', 2);
       if (components.length === 2) {
-        name = components[0];
-        message = components[1];
+        [name, message] = components;
       } else {
         name = 'Error';
         message = fullMessage;
@@ -92,7 +90,7 @@ class PreviewGenerator {
   }
 
   _ensureDocumentElement() {
-    let documentElement = this.previewDocument.documentElement;
+    let {documentElement} = this.previewDocument;
     if (!documentElement) {
       documentElement = this.previewDocument.createElement('html');
       this.previewDocument.appendChild(documentElement);
@@ -112,7 +110,7 @@ class PreviewGenerator {
   _addBase() {
     const baseTag = this.previewDocument.createElement('base');
     baseTag.target = '_top';
-    const firstChild = this._previewHead.childNodes[0];
+    const [firstChild] = this._previewHead.childNodes;
     if (firstChild) {
       this._previewHead.insertBefore(baseTag, firstChild);
     } else {
@@ -171,8 +169,7 @@ class PreviewGenerator {
   }
 
   _attachLibrary(library) {
-    const css = library.css;
-    const javascript = library.javascript;
+    const {css, javascript} = library;
     if (css !== undefined) {
       castArray(css).forEach(this._attachCssLibrary.bind(this));
     }
@@ -200,8 +197,7 @@ class PreviewGenerator {
 }
 
 function generatePreview(project, options) {
-  const previewDocument =
-    new PreviewGenerator(project, options).previewDocument;
+  const {previewDocument} = new PreviewGenerator(project, options);
   return `<!DOCTYPE html> ${previewDocument.documentElement.outerHTML}`;
 }
 

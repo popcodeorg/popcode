@@ -551,6 +551,12 @@
         "prefer-const": [
           2
         ],
+        "prefer-destructuring": [
+          2
+        ],
+        "prefer-promise-reject-errors": [
+          2
+        ],
         "prefer-reflect": [
           2
         ],

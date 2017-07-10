@@ -59,7 +59,7 @@ const errorMap = {
   E042: (error, source) => {
     const lines = source.split('\n');
     const tagNameExpr = /[^\s>]+/;
-    const tag = tagNameExpr.exec(lines[error.line - 1].slice(error.column))[0];
+    const [tag] = tagNameExpr.exec(lines[error.line - 1].slice(error.column));
 
     return {
       reason: 'unclosed-tag',

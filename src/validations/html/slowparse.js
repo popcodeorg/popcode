@@ -143,7 +143,7 @@ class SlowparseValidator extends Validator {
     const {Slowparse} = await System.import('../linters');
     let error;
     try {
-      error = Slowparse.HTML(document, this._source, {errorDetectors}).error;
+      ({error} = Slowparse.HTML(document, this._source, {errorDetectors}));
     } catch (e) {
       error = null;
     }
