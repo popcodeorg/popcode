@@ -138,7 +138,6 @@ class Editor extends React.Component {
       />
     );
   }
-
 }
 
 Editor.propTypes = {

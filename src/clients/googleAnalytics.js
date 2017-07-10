@@ -3,8 +3,8 @@ import config from '../config';
 
 const cookieDomain =
   (window.location.hostname === 'localhost') ?
-  'none' :
-  window.location.hostname;
+    'none' :
+    window.location.hostname;
 
 export function init() {
   ReactGA.initialize(

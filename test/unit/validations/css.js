@@ -117,7 +117,7 @@ test('extra token that is prefix of the beginning of the line', validationTest(
 ));
 
 test('thoroughly unparseable CSS', validationTest(
-  '<a href=\"http;.facebook.com>',
+  '<a href="http;.facebook.com>',
   css,
   {reason: 'invalid-token', row: 0},
 ));
