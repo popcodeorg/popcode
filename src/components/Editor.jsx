@@ -38,7 +38,7 @@ class Editor extends React.Component {
 
   componentDidMount() {
     this._focusRequestedLine(this.props.requestedFocusedLine);
-    this._toggleEditorTextSize(this.props.textSizeIsLarge);
+    this._applyFontSize(this.props.textSizeIsLarge);
     window.addEventListener('resize', this._handleWindowResize);
   }
 
@@ -51,7 +51,7 @@ class Editor extends React.Component {
     }
 
     this._focusRequestedLine(nextProps.requestedFocusedLine);
-    this._toggleEditorTextSize(nextProps.textSizeIsLarge);
+    this._applyFontSize(nextProps.textSizeIsLarge);
 
     if (nextProps.percentageOfHeight !== this.props.percentageOfHeight) {
       requestAnimationFrame(this._resizeEditor);
@@ -118,7 +118,7 @@ class Editor extends React.Component {
     }
   }
 
-  _toggleEditorTextSize(textSizeIsLarge) {
+  _applyFontSize(textSizeIsLarge) {
     if (textSizeIsLarge) {
       this._editor.setFontSize(LARGE_FONTSIZE);
     } else {

@@ -194,16 +194,11 @@ body {
   transform-origin: right 50%;
 }
 
-.sidebar__component {
+.sidebar__plusMinus {
   text-align: center;
+  position: relative;
   padding-bottom: 1rem;
   font-size: 1.5rem;
-}
-
-.sidebar__plusMinus {
-  font-family: 'FontAwesome';
-  position: relative;
-  margin: auto;
 }
 
 /** @define dashboard */
@@ -676,6 +671,12 @@ body {
 
 .u__hidden {
   display: none;
+}
+
+.u__icon {
+  font-family: 'FontAwesome';
+  cursor: pointer;
+  user-select: none;
 }
 
 .u__fontawesome {

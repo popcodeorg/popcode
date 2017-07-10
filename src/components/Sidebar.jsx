@@ -35,13 +35,6 @@ class Sidebar extends React.Component {
       },
     );
 
-    let plusMinus;
-    if (this.props.textSizeIsLarge) {
-      plusMinus = <span className="sidebar__plusMinus">&#xf010;</span>;
-    } else {
-      plusMinus = <span className="sidebar__plusMinus">&#xf00e;</span>;
-    }
-
     return (
       <div className={sidebarClassnames}>
         <div className="sidebar__wordmark-container">
@@ -58,10 +51,14 @@ class Sidebar extends React.Component {
           onClick={this.props.onToggleDashboard}
         />
         <div
-          className="sidebar__component"
+          className="sidebar__plusMinus"
           onClick={this.props.onToggleEditorTextSize}
         >
-          {plusMinus}
+          {
+            this.props.textSizeIsLarge ?
+              <icon className="u__icon">&#xf010;</icon> :
+              <icon className="u__icon">&#xf00e;</icon>
+          }
         </div>
         {this._renderHiddenComponents()}
       </div>
