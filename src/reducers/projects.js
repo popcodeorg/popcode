@@ -69,10 +69,9 @@ function importGist(state, projectKey, gistData) {
 export function reduceRoot(stateIn, action) {
   return stateIn.update('projects', (projects) => {
     switch (action.type) {
-      case 'USER_LOGGED_OUT':
-      {
+      case 'USER_LOGGED_OUT': {
         const currentProjectKey =
-            stateIn.getIn(['currentProject', 'projectKey']);
+          stateIn.getIn(['currentProject', 'projectKey']);
 
         if (isNil(currentProjectKey)) {
           return new Immutable.Map();

@@ -219,6 +219,9 @@
         "no-array-constructor": [
             2
         ],
+        "no-await-in-loop": [
+            2
+        ],
         "no-caller": [
             2
         ],
@@ -424,6 +427,9 @@
         "no-return-assign": [
             2
         ],
+        "no-return-await": [
+            2
+        ],
         "no-script-url": [
             2
         ],
@@ -496,6 +502,9 @@
         ],
         "no-useless-constructor": [
           2
+        ],
+        "no-useless-return": [
+            2
         ],
         "no-var": [
           2
