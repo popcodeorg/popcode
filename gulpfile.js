@@ -19,7 +19,7 @@ const postcss = require('gulp-postcss');
 const cssnext = require('postcss-cssnext');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
-const CloudFlare = require('cloudflare');
+const cloudflare = require('cloudflare');
 const BrowserSync = require('browser-sync');
 const pify = require('pify');
 const config = require('./src/config');
@@ -67,7 +67,7 @@ gulp.task('fonts', () => gulp.
       'roboto-webfont-bower/fonts/Roboto-{Bold,Regular}-webfont.*'
     ),
   ]).
-    pipe(gulp.dest(path.join(distDir, 'fonts')))
+  pipe(gulp.dest(path.join(distDir, 'fonts')))
 );
 
 gulp.task('css', () => {
@@ -105,7 +105,7 @@ gulp.task('js', ['env'], () => {
 
 gulp.task('build', ['static', 'fonts', 'css', 'js']);
 
-gulp.task('syncFirebase', async () => {
+gulp.task('syncFirebase', async() => {
   const data = await pify(fs).readFile(
     path.resolve(__dirname, 'config/firebase-auth.json')
   );
@@ -144,22 +144,24 @@ gulp.task('browserSync', ['static'], () => {
   browserSync.init({
     server: {
       baseDir: distDir,
-      middleware: [webpackDevMiddleware(
-        compiler,
-        {
-          lazy: false,
-          stats: 'errors-only',
-        }
-      )],
+      middleware: [
+        webpackDevMiddleware(
+          compiler,
+          {
+            lazy: false,
+            stats: 'errors-only',
+          }
+        )
+      ],
     },
   });
 });
 
 gulp.task('purgeCache', () =>
-  new CloudFlare({
+  cloudflare({
     email: process.env.CLOUDFLARE_EMAIL,
     key: process.env.CLOUDFLARE_KEY,
-  }).deleteCache(
+  }).zones.purgeCache(
     process.env.CLOUDFLARE_ZONE,
     {purge_everything: true}
   )
