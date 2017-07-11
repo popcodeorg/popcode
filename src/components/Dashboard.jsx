@@ -123,6 +123,10 @@ class Dashboard extends React.Component {
   }
 
   _renderProjects() {
+    if (isNull(this.props.currentProject)) {
+      return null;
+    }
+
     return (
       <ProjectList
         currentProject={this.props.currentProject}
