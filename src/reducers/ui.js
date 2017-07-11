@@ -32,9 +32,9 @@ function addNotification(state, type, severity, payload = {}) {
   return state.update('notifications', notifications =>
     notifications.add(
       new Immutable.Map().
-      set('type', type).
-      set('severity', severity).
-      set('payload', Immutable.fromJS(payload)),
+        set('type', type).
+        set('severity', severity).
+        set('payload', Immutable.fromJS(payload)),
     ),
   );
 }

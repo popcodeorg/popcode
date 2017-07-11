@@ -27,7 +27,7 @@ const errorMap = {
   INVALID_TAG_NAME: (error, source) => {
     const tagName = error.openTag.name;
     if (tagName === '') {
-      const tagMatch = /^<\s+([A-Za-z0-9\-]+)/.exec(
+      const tagMatch = /^<\s+([A-Za-z0-9-]+)/.exec(
         source.slice(error.openTag.start),
       );
       if (tagMatch) {
@@ -143,7 +143,7 @@ class SlowparseValidator extends Validator {
     const {Slowparse} = await System.import('../linters');
     let error;
     try {
-      error = Slowparse.HTML(document, this._source, {errorDetectors}).error;
+      ({error} = Slowparse.HTML(document, this._source, {errorDetectors}));
     } catch (e) {
       error = null;
     }

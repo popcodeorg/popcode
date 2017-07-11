@@ -40,13 +40,15 @@ export function user(userIn) {
   return merge({
     displayName: null,
     photoURL: null,
-    providerData: [{
-      displayName: 'Popcode User',
-      email: 'popcodeuser@example.com',
-      photoURL: 'https://camo.github.com/popcodeuser.jpg',
-      providerId: 'github.com',
-      uid: '345',
-    }],
+    providerData: [
+      {
+        displayName: 'Popcode User',
+        email: 'popcodeuser@example.com',
+        photoURL: 'https://camo.github.com/popcodeuser.jpg',
+        providerId: 'github.com',
+        uid: '345',
+      },
+    ],
     uid: 'abc123',
   }, userIn);
 }

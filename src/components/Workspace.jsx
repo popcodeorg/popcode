@@ -107,8 +107,8 @@ class Workspace extends React.Component {
   }
 
   _confirmUnload(event) {
-    if (!this.props.currentUser.authenticated) {
-      const currentProject = this.props.currentProject;
+    const {currentUser, currentProject} = this.props;
+    if (!currentUser.authenticated) {
       if (!isNull(currentProject) && !isPristineProject(currentProject)) {
         event.returnValue = t('workspace.confirmations.unload-unsaved');
       }

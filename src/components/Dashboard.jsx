@@ -12,7 +12,7 @@ import Pop from './Pop';
 
 class Dashboard extends React.Component {
   _renderLoginState() {
-    const currentUser = this.props.currentUser;
+    const {currentUser} = this.props;
 
     if (currentUser.authenticated) {
       const name = currentUser.displayName;

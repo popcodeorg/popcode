@@ -58,7 +58,7 @@ function importGist(state, projectKey, gistData) {
         html: get(find(files, {language: 'HTML'}), 'content', ''),
         css: map(filter(files, {language: 'CSS'}), 'content').join('\n\n'),
         javascript: map(filter(files, {language: 'JavaScript'}), 'content').
-        join('\n\n'),
+          join('\n\n'),
       },
       enabledLibraries: popcodeJson.enabledLibraries || [],
       hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
@@ -69,20 +69,19 @@ function importGist(state, projectKey, gistData) {
 export function reduceRoot(stateIn, action) {
   return stateIn.update('projects', (projects) => {
     switch (action.type) {
-      case 'USER_LOGGED_OUT':
-        {
-          const currentProjectKey =
-            stateIn.getIn(['currentProject', 'projectKey']);
+      case 'USER_LOGGED_OUT': {
+        const currentProjectKey =
+          stateIn.getIn(['currentProject', 'projectKey']);
 
-          if (isNil(currentProjectKey)) {
-            return new Immutable.Map();
-          }
-
-          return new Immutable.Map().set(
-            currentProjectKey,
-            projects.get(currentProjectKey),
-          );
+        if (isNil(currentProjectKey)) {
+          return new Immutable.Map();
         }
+
+        return new Immutable.Map().set(
+          currentProjectKey,
+          projects.get(currentProjectKey),
+        );
+      }
       case 'FOCUS_LINE':
         return unhideComponent(
           projects,
@@ -137,7 +136,7 @@ export default function reduceProjects(stateIn, action) {
       return state.updateIn(
         [action.payload.projectKey, 'enabledLibraries'],
         (enabledLibraries) => {
-          const libraryKey = action.payload.libraryKey;
+          const {libraryKey} = action.payload;
           if (enabledLibraries.has(libraryKey)) {
             return enabledLibraries.delete(libraryKey);
           }
