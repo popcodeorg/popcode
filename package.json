@@ -186,7 +186,7 @@
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-postcss": "^6.1.1",
-    "gulp-sourcemaps": "^1.6.0",
+    "gulp-sourcemaps": "^2.6.0",
     "gulp-util": "^3.0.7",
     "i18next-resource-store-loader": "^0.1.1",
     "immutable-devtools": "0.0.7",
