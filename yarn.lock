@@ -26,9 +26,9 @@ JSONStream@^0.8.4:
     jsonparse "0.0.5"
     through ">=2.2.7 <3"
 
-"PrettyCSS@git+https://github.com/popcodeorg/PrettyCSS#v0.3.12-unicodefix":
-  version "0.3.12-unicodefix"
-  resolved "git+https://github.com/popcodeorg/PrettyCSS#5ab276ba72992cef0c08b28348d9cbfcb948bfa0"
+PrettyCSS@^0.3.13:
+  version "0.3.13"
+  resolved "https://registry.yarnpkg.com/PrettyCSS/-/PrettyCSS-0.3.13.tgz#ce1a334db4f7d8ed7ab115c589720b36ffc3e118"
   dependencies:
     option-parser "~0.1.3"
 
