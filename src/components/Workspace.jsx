@@ -15,7 +15,7 @@ import {
   onSignedIn,
   onSignedOut,
   startSessionHeartbeat,
-} from '../clients/firebaseAuth';
+} from '../clients/firebase';
 
 import {
   updateProjectSource,

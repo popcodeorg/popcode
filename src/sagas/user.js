@@ -1,7 +1,7 @@
 import {all, call, put, takeEvery} from 'redux-saga/effects';
 import isNull from 'lodash/isNull';
 import {userAuthenticated} from '../actions/user';
-import {getInitialUserState} from '../clients/firebaseAuth';
+import {getInitialUserState} from '../clients/firebase';
 
 export function* applicationLoaded() {
   const userCredential = yield call(getInitialUserState);

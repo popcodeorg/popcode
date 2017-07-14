@@ -28,7 +28,7 @@ import {
 import {
   signIn,
   signOut,
-} from '../clients/firebaseAuth';
+} from '../clients/firebase';
 
 function getValidationStateForDashboard(state) {
   const validationState = getCurrentValidationState(state);
