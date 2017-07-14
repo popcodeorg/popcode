@@ -1,6 +1,7 @@
 import test from 'tape';
 import partial from 'lodash/partial';
-import {fromJS} from 'immutable';
+import {List} from 'immutable';
+import {Error, ErrorList} from '../../../src/records';
 import reducerTest from '../../helpers/reducerTest';
 import {errors as states} from '../../helpers/referenceStates';
 import {gistData} from '../../helpers/factory';
@@ -80,9 +81,9 @@ test('addRuntimeError', reducerTest(
   partial(addRuntimeError, 'javascript', {reason: 'code-explode'}),
   states.noErrors.set(
     'javascript',
-    fromJS({
+    new ErrorList({
       state: 'runtime-error',
-      items: [{reason: 'code-explode'}],
+      items: new List([Error.fromJS({reason: 'code-explode'})]),
     }),
   ),
 ));

@@ -1,36 +1,33 @@
-import Immutable from 'immutable';
+import {List, Map, fromJS} from 'immutable';
+import {Error, ErrorList, ErrorReport} from '../../src/records';
 
-const sampleError = {reason: 'bad-code'};
+const sampleError = new Error({reason: 'bad-code'});
+const validatingErrorList = new ErrorList({state: 'validating'});
 
 export const user = {
-  initial: Immutable.fromJS({authenticated: false}),
+  initial: fromJS({authenticated: false}),
 };
 
 export const projects = {
-  initial: new Immutable.Map(),
+  initial: new Map(),
 };
 
 export const errors = {
-  noErrors: Immutable.fromJS({
-    html: {items: [], state: 'passed'},
-    css: {items: [], state: 'passed'},
-    javascript: {items: [], state: 'passed'},
-  }),
+  noErrors: new ErrorReport(),
 
-  errors: Immutable.fromJS({
-    html: {items: [], state: 'passed'},
-    css: {items: [sampleError], state: 'validation-error'},
-    javascript: {items: [], state: 'passed'},
-  }),
+  errors: new ErrorReport().set(
+    'css',
+    new ErrorList({items: new List([sampleError]), state: 'validation-error'}),
+  ),
 
-  validating: Immutable.fromJS({
-    html: {items: [], state: 'validating'},
-    css: {items: [], state: 'validating'},
-    javascript: {items: [], state: 'validating'},
+  validating: new ErrorReport({
+    html: validatingErrorList,
+    css: validatingErrorList,
+    javascript: validatingErrorList,
   }),
 };
 
 export const clients = {
-  initial: Immutable.fromJS({gists: {lastExport: null}}),
-  waiting: Immutable.fromJS({gists: {lastExport: {status: 'waiting'}}}),
+  initial: fromJS({gists: {lastExport: null}}),
+  waiting: fromJS({gists: {lastExport: {status: 'waiting'}}}),
 };

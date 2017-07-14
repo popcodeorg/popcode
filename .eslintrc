@@ -215,7 +215,7 @@
         ],
         "new-cap": [
             2,
-            {"capIsNewExceptions": ["Slowparse.HTML"]}
+            {"capIsNewExceptions": ["Slowparse.HTML", "Record"]}
         ],
         "new-parens": [
             2
