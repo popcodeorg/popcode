@@ -1,3 +1,3 @@
 export default function isSnapshotInProgress(state) {
-  return state.getIn(['clients', 'firebase', 'waitingForSnapshot']);
+  return state.getIn(['clients', 'firebase', 'exportingSnapshot']);
 }
