@@ -80,6 +80,7 @@ function mapDispatchToProps(dispatch) {
           case 'auth/cancelled-popup-request':
             break;
           case 'auth/web-storage-unsupported':
+          case 'auth/operation-not-supported-in-this-environment':
             dispatch(
               notificationTriggered('auth-third-party-cookies-disabled'),
             );
