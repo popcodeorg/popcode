@@ -1,6 +1,5 @@
 import {
   all,
-  apply,
   call,
   fork,
   put,
@@ -19,7 +18,8 @@ import {
 } from '../actions/projects';
 import {saveCurrentProject} from '../util/projectUtils';
 import {loadGistFromId} from '../clients/github';
-import FirebasePersistor from '../persistors/FirebasePersistor';
+import {loadAllProjects} from '../clients/firebase';
+import {getCurrentUserId} from '../selectors';
 
 export function* applicationLoaded(action) {
   if (isNull(action.payload.gistId)) {
@@ -62,13 +62,8 @@ export function* userAuthenticated() {
   const state = yield select();
   yield fork(saveCurrentProject, state);
 
-  const persistor = yield apply(
-    FirebasePersistor,
-    FirebasePersistor.forUser,
-    [state.get('user')],
-  );
+  const projects = yield call(loadAllProjects, getCurrentUserId(state));
 
-  const projects = yield apply(persistor, persistor.all);
   for (const project of projects) {
     yield put(projectLoaded(project));
   }

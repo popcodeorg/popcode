@@ -20,7 +20,7 @@ import {userAuthenticated} from '../../../src/actions/user';
 import applicationLoaded from '../../../src/actions/applicationLoaded';
 import {saveCurrentProject} from '../../../src/util/projectUtils';
 import {loadGistFromId} from '../../../src/clients/github';
-import FirebasePersistor from '../../../src/persistors/FirebasePersistor';
+import {loadAllProjects} from '../../../src/clients/firebase';
 import Scenario from '../../helpers/Scenario';
 import {gistData, project, userCredential} from '../../helpers/factory';
 
@@ -142,19 +142,11 @@ test('importGist()', (t) => {
 
 test('userAuthenticated', (assert) => {
   const scenario = new Scenario().logIn();
-  const mockPersistor = {
-    all() { },
-  };
   const projects = [project()];
   testSaga(userAuthenticatedSaga, userAuthenticated(userCredential())).
     next().inspect(effect => assert.ok(effect.SELECT)).
     next(scenario.state).fork(saveCurrentProject, scenario.state).
-    next().apply(
-      FirebasePersistor,
-      FirebasePersistor.forUser,
-      [scenario.state.get('user')],
-    ).
-    next(mockPersistor).apply(mockPersistor, mockPersistor.all).
+    next().call(loadAllProjects, scenario.user.get('id')).
     next(projects).put(projectLoaded(projects[0]));
   assert.end();
 });

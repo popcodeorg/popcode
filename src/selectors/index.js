@@ -2,6 +2,7 @@ import getActiveSubmenu from './getActiveSubmenu';
 import getAllProjects from './getAllProjects';
 import getCurrentProject from './getCurrentProject';
 import getCurrentUser from './getCurrentUser';
+import getCurrentUserId from './getCurrentUserId';
 import getCurrentValidationState from './getCurrentValidationState';
 import getErrors from './getErrors';
 import getLastRefreshTimestamp from './getLastRefreshTimestamp';
@@ -19,6 +20,7 @@ export {
   getAllProjects,
   getCurrentProject,
   getCurrentUser,
+  getCurrentUserId,
   getCurrentValidationState,
   getErrors,
   getLastRefreshTimestamp,
