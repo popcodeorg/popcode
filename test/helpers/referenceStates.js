@@ -28,6 +28,16 @@ export const errors = {
 };
 
 export const clients = {
-  initial: fromJS({gists: {lastExport: null}}),
-  waiting: fromJS({gists: {lastExport: {status: 'waiting'}}}),
+  initial: fromJS({
+    firebase: {exportingSnapshot: false},
+    gists: {lastExport: null},
+  }),
+  waitingForSnapshot: fromJS({
+    firebase: {exportingSnapshot: true},
+    gists: {lastExport: null},
+  }),
+  waitingForGist: fromJS({
+    firebase: {exportingSnapshot: false},
+    gists: {lastExport: {status: 'waiting'}},
+  }),
 };

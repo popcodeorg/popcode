@@ -11,6 +11,7 @@ import isCurrentProjectSyntacticallyValid
 import isDashboardOpen from './isDashboardOpen';
 import isExperimental from './isExperimental';
 import isGistExportInProgress from './isGistExportInProgress';
+import isSnapshotInProgress from './isSnapshotInProgress';
 import isUserTyping from './isUserTyping';
 
 export {
@@ -26,5 +27,6 @@ export {
   isDashboardOpen,
   isExperimental,
   isGistExportInProgress,
+  isSnapshotInProgress,
   isUserTyping,
 };

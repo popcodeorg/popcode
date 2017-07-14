@@ -1,6 +1,7 @@
 import Immutable from 'immutable';
 
 const defaultState = new Immutable.Map({
+  firebase: new Immutable.Map({exportingSnapshot: false}),
   gists: new Immutable.Map({lastExport: null}),
 });
 
@@ -11,6 +12,9 @@ export default function clients(stateIn, action) {
   }
 
   switch (action.type) {
+    case 'CREATE_SNAPSHOT':
+      return state.setIn(['firebase', 'exportingSnapshot'], true);
+
     case 'EXPORT_GIST':
       return state.setIn(
         ['gists', 'lastExport'],

@@ -6,6 +6,7 @@ import {Dashboard} from '../components';
 import {
   changeCurrentProject,
   createProject,
+  createSnapshot,
   exportGist,
   exportRepo,
   notificationTriggered,
@@ -21,6 +22,7 @@ import {
   isDashboardOpen,
   isExperimental,
   isGistExportInProgress,
+  isSnapshotInProgress,
   isUserTyping,
 } from '../selectors';
 import {
@@ -45,12 +47,17 @@ function mapStateToProps(state) {
     gistExportInProgress: isGistExportInProgress(state),
     isExperimental: isExperimental(state),
     isOpen: isDashboardOpen(state),
+    snapshotInProgress: isSnapshotInProgress(state),
     validationState: getValidationStateForDashboard(state),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    onCreateSnapshot() {
+      dispatch(createSnapshot());
+    },
+
     onExportGist() {
       dispatch(exportGist());
     },

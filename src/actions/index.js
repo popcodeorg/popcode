@@ -1,6 +1,7 @@
 import applicationLoaded from './applicationLoaded';
 
 import {
+  createSnapshot,
   exportGist,
   gistExportDisplayed,
   gistExportNotDisplayed,
@@ -50,6 +51,7 @@ function toggleDashboardSubmenu(submenu) {
 
 export {
   createProject,
+  createSnapshot,
   changeCurrentProject,
   updateProjectSource,
   toggleLibrary,

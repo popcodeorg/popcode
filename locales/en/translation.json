@@ -9,6 +9,7 @@
       "new-project": "New Project",
       "load-project": "Load Project",
       "libraries": "Libraries",
+      "create-snapshot": "Create Snapshot",
       "export-gist": "Export Gist",
       "send-feedback": "Send Feedback",
       "export-repo": "Export Repo"
