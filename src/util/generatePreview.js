@@ -1,5 +1,9 @@
 import castArray from 'lodash/castArray';
+import compact from 'lodash/compact';
+import flatMap from 'lodash/flatMap';
+import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
+import uniq from 'lodash/uniq';
 import base64 from 'base64-js';
 import loopBreaker from 'loop-breaker';
 import libraries from '../config/libraries';
@@ -65,6 +69,7 @@ class PreviewGenerator {
     );
     this._previewHead = this._ensureElement('head');
     this.previewBody = this._ensureElement('body');
+    this._firstScriptTag = this.previewDocument.querySelector('script');
 
     this.previewText = (this.previewDocument.title || '').trim();
     this._attachLibraries(
@@ -154,18 +159,37 @@ class PreviewGenerator {
   }
 
   _attachLibraries({nonBlockingAlertsAndPrompts = false}) {
-    this._project.enabledLibraries.forEach((libraryKey) => {
+    const enabledLibrariesWithDependencies =
+      this._librariesWithDependencies(this._project.enabledLibraries);
+
+    for (const libraryKey of enabledLibrariesWithDependencies) {
       if (!(libraryKey in libraries)) {
         return;
       }
 
       const library = libraries[libraryKey];
       this._attachLibrary(library);
-    });
+    }
 
     if (nonBlockingAlertsAndPrompts) {
       this._attachLibrary(previewFrameLibraries.sweetalert);
     }
+  }
+
+  _librariesWithDependencies(libraryKeys) {
+    if (isEmpty(libraryKeys)) {
+      return libraryKeys;
+    }
+
+    const requestedLibraries =
+      libraryKeys.map(libraryKey => libraries[libraryKey]);
+
+    const dependencies = compact(flatMap(requestedLibraries, 'dependsOn'));
+
+    return uniq(
+      compact(this._librariesWithDependencies(dependencies)).
+        concat(libraryKeys),
+    );
   }
 
   _attachLibrary(library) {
@@ -192,7 +216,12 @@ class PreviewGenerator {
     const scriptTag = this.previewDocument.createElement('script');
     const javascriptText = String(javascript);
     scriptTag.innerHTML = javascriptText.replace(/<\/script>/g, '<\\/script>');
-    this._previewHead.insertBefore(scriptTag, this._previewHead.firstChild);
+    if (this._firstScriptTag) {
+      this._firstScriptTag.parentNode.
+        insertBefore(scriptTag, this._firstScriptTag);
+    } else {
+      this._previewHead.appendChild(scriptTag);
+    }
   }
 }
 
