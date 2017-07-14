@@ -50,6 +50,20 @@ class Sidebar extends React.Component {
           )}
           onClick={this.props.onToggleDashboard}
         />
+        <div className="sidebar__component">
+          <div
+            className="sidebar__plusMinus"
+            onClick={this.props.onIncrementTextSize}
+          >
+            &#xf00e;
+          </div>
+          <div
+            className="sidebar__plusMinus"
+            onClick={this.props.onDecrementTextSize}
+          >
+            &#xf010;
+          </div>
+        </div>
         {this._renderHiddenComponents()}
       </div>
     );
@@ -61,6 +75,8 @@ Sidebar.propTypes = {
   hiddenComponents: PropTypes.array.isRequired,
   validationState: PropTypes.string.isRequired,
   onComponentUnhide: PropTypes.func.isRequired,
+  onDecrementTextSize: PropTypes.func.isRequired,
+  onIncrementTextSize: PropTypes.func.isRequired,
   onToggleDashboard: PropTypes.func.isRequired,
 };
 

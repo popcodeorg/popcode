@@ -77,6 +77,7 @@ export default class EditorsColumn extends React.Component {
             projectKey={currentProject.projectKey}
             requestedFocusedLine={ui.editors.requestedFocusedLine}
             source={currentProject.sources[language]}
+            textSize={ui.editors.textSize}
             onInput={partial(onEditorInput, language)}
             onRequestedLineFocused={onRequestedLineFocused}
           />

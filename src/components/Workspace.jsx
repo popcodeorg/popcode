@@ -32,6 +32,8 @@ import {
   stopDragColumnDivider,
   userDismissedNotification,
   applicationLoaded,
+  incrementTextSize,
+  decrementTextSize,
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
@@ -78,6 +80,8 @@ class Workspace extends React.Component {
       '_handleNotificationDismissed',
       '_storeDividerRef',
       '_storeColumnRef',
+      '_handleIncrementTextSize',
+      '_handleDecrementTextSize',
     );
     this.columnRefs = [null, null];
   }
@@ -223,6 +227,8 @@ class Workspace extends React.Component {
           hiddenComponents={hiddenComponents}
           validationState={this._getOverallValidationState()}
           onComponentUnhide={this._handleComponentUnhide}
+          onDecrementTextSize={this._handleDecrementTextSize}
+          onIncrementTextSize={this._handleIncrementTextSize}
           onToggleDashboard={this._handleToggleDashboard}
         />
       </div>
@@ -253,6 +259,14 @@ class Workspace extends React.Component {
       lastX,
       x,
     }));
+  }
+
+  _handleIncrementTextSize() {
+    this.props.dispatch(incrementTextSize());
+  }
+
+  _handleDecrementTextSize() {
+    this.props.dispatch(decrementTextSize());
   }
 
   _renderEnvironment() {

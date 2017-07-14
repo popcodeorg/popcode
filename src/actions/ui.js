@@ -46,3 +46,11 @@ export const refreshPreview = createAction(
   'REFRESH_PREVIEW',
   timestamp => ({timestamp}),
 );
+
+export const incrementTextSize = createAction(
+  'INCREMENT_TEXT_SIZE',
+);
+
+export const decrementTextSize = createAction(
+  'DECREMENT_TEXT_SIZE',
+);

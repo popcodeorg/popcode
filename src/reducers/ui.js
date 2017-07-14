@@ -17,6 +17,7 @@ const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({
     typing: false,
     requestedFocusedLine: null,
+    textSize: 14,
   })).
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Set()).
@@ -170,6 +171,22 @@ export default function ui(stateIn, action) {
         return state.set('experimental', true);
       }
       return state.set('experimental', false);
+
+    case 'INCREMENT_TEXT_SIZE':
+      return state.updateIn(['editors', 'textSize'], (textSize) => {
+        if (textSize <= 25) {
+          return textSize + 1;
+        }
+        return textSize;
+      });
+
+    case 'DECREMENT_TEXT_SIZE':
+      return state.updateIn(['editors', 'textSize'], (textSize) => {
+        if (textSize >= 10) {
+          return textSize - 1;
+        }
+        return textSize;
+      });
 
     default:
       return state;

@@ -194,6 +194,19 @@ body {
   transform-origin: right 50%;
 }
 
+.sidebar__component {
+  text-align: center;
+  position: relative;
+  padding-bottom: 1em;
+}
+
+.sidebar__plusMinus {
+  font-family: 'FontAwesome';
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+
 /** @define dashboard */
 
 .dashboard {

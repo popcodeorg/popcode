@@ -48,6 +48,7 @@ class Editor extends React.Component {
     }
 
     this._focusRequestedLine(nextProps.requestedFocusedLine);
+    this._updateTextSize(nextProps.textSize);
 
     if (nextProps.percentageOfHeight !== this.props.percentageOfHeight) {
       requestAnimationFrame(this._resizeEditor);
@@ -114,6 +115,10 @@ class Editor extends React.Component {
     }
   }
 
+  _updateTextSize(textSize) {
+    this._editor.setFontSize(textSize);
+  }
+
   _disableAutoClosing() {
     this._editor.setBehavioursEnabled(false);
   }
@@ -147,6 +152,7 @@ Editor.propTypes = {
   projectKey: PropTypes.string.isRequired,
   requestedFocusedLine: PropTypes.object,
   source: PropTypes.string.isRequired,
+  textSize: PropTypes.number.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };
