@@ -26,6 +26,7 @@ import {
   userDismissedNotification,
   refreshPreview,
   popOutProject,
+  toggleEditorTextSize,
 } from './ui';
 
 import {
@@ -71,4 +72,5 @@ export {
   popOutProject,
   applicationLoaded,
   refreshPreview,
+  toggleEditorTextSize,
 };

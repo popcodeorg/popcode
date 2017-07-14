@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {t} from 'i18next';
 
 function EditorContainer(props) {
-  let helpText;
+  let helpText, plusMinus;
 
   if (props.source === '') {
     helpText = (
@@ -13,6 +13,24 @@ function EditorContainer(props) {
           {language: props.language},
         )}
       </div>
+    );
+  }
+
+  if (props.textSizeIsLarge) {
+    plusMinus = (
+      <span
+        className="environment__toggleTextSize_plusMinus"
+      >
+        &#xf068;
+      </span>
+    );
+  } else {
+    plusMinus = (
+      <span
+        className="environment__toggleTextSize_plusMinus"
+      >
+        &#xf067;
+      </span>
     );
   }
 
@@ -28,6 +46,12 @@ function EditorContainer(props) {
       >
         {t(`languages.${props.language}`)}
       </div>
+      <div
+        className="environment__label_toggleTextSize label"
+        onClick={props.onToggleEditorTextSize}
+      >
+        {plusMinus}
+      </div>
       {helpText}
       {props.children}
     </div>
@@ -39,8 +63,10 @@ EditorContainer.propTypes = {
   language: PropTypes.string.isRequired,
   source: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
+  textSizeIsLarge: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
+  onToggleEditorTextSize: PropTypes.func.isRequired,
 };
 
 export default EditorContainer;
