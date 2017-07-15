@@ -3,13 +3,21 @@ import {
   createGistFromProject,
   createRepoFromProject,
 } from '../clients/github';
+import {createProjectSnapshot} from '../clients/firebase';
 import {
+  snapshotCreated,
   gistExported,
   gistExportError,
   repoExported,
   repoExportError,
 } from '../actions/clients';
 import {getCurrentProject} from '../selectors';
+
+export function* createSnapshot() {
+  const project = yield select(getCurrentProject);
+  const snapshotKey = yield call(createProjectSnapshot, project);
+  yield put(snapshotCreated(snapshotKey));
+}
 
 export function* exportGist() {
   const state = yield select();
@@ -39,5 +47,6 @@ export default function* () {
   yield all([
     takeEvery('EXPORT_GIST', exportGist),
     takeEvery('EXPORT_REPO', exportRepo),
+    takeEvery('CREATE_SNAPSHOT', createSnapshot),
   ]);
 }

@@ -3,6 +3,7 @@ import get from 'lodash/get';
 import isNil from 'lodash/isNil';
 import isNull from 'lodash/isNull';
 import values from 'lodash/values';
+import uuid from 'uuid/v4';
 import {auth, database, githubAuthProvider} from '../services/appFirebase';
 import {Observable} from '../services/rxjs';
 
@@ -25,6 +26,8 @@ function workspace(uid) {
   return database.ref(`workspaces/${uid}`);
 }
 
+const snapshots = database.ref('snapshots');
+
 async function getCurrentProjectKey(uid) {
   const snapshot =
     await workspace(uid).child('currentProjectKey').once('value');
@@ -44,6 +47,12 @@ async function loadProject(uid, projectKey) {
   const snapshot =
     await workspace(uid).child('projects').child(projectKey).once('value');
   return snapshot.val();
+}
+
+export async function createProjectSnapshot(project) {
+  const snapshotKey = uuid().toString();
+  await snapshots.child(snapshotKey).set(project);
+  return snapshotKey;
 }
 
 export async function loadCurrentProject(uid) {

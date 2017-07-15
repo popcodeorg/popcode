@@ -1,11 +1,30 @@
 import test from 'tape';
 import {testSaga} from 'redux-saga-test-plan';
 import {
+  createSnapshot as createSnapshotSaga,
   exportGist as exportGistSaga,
 } from '../../../src/sagas/clients';
-import {gistExported, gistExportError} from '../../../src/actions/clients';
+import {
+  gistExported,
+  gistExportError,
+  snapshotCreated,
+} from '../../../src/actions/clients';
 import Scenario from '../../helpers/Scenario';
 import {createGistFromProject} from '../../../src/clients/github';
+import {createProjectSnapshot} from '../../../src/clients/firebase';
+import {getCurrentProject} from '../../../src/selectors';
+
+test('createSnapshot()', (assert) => {
+  const {project} = new Scenario();
+  const key = '123-456';
+  testSaga(createSnapshotSaga).
+    next().select(getCurrentProject).
+    next(project.toJS()).call(createProjectSnapshot, project.toJS()).
+    next(key).put(snapshotCreated(key)).
+    next().isDone();
+
+  assert.end();
+});
 
 test('exportGist()', (t) => {
   const url = 'https://gist.github.com/abc123';

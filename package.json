@@ -143,6 +143,7 @@
     "slowparse": "^1.1.4",
     "stylelint": "^7.10.1",
     "text-encoding": "^0.6.0",
+    "uuid": "^3.1.0",
     "void-elements": "^3.1.0"
   },
   "engines": {
