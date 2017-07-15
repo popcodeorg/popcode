@@ -20,6 +20,7 @@ import {
   refreshPreview,
 } from '../../../src/actions/ui';
 import {
+  snapshotCreated,
   gistExportNotDisplayed,
   gistExportError,
   repoExportNotDisplayed,
@@ -283,3 +284,12 @@ test('applicationLoaded', (t) => {
     initialState.set('experimental', false),
   ));
 });
+
+tap('123-456', snapshotKey =>
+  test('snapshotCreated', reducerTest(
+    reducer,
+    initialState,
+    partial(snapshotCreated, snapshotKey),
+    withNotification('snapshot-created', 'notice', {snapshotKey}),
+  )),
+);

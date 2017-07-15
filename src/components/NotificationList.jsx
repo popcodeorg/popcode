@@ -7,12 +7,14 @@ import {
   GistExportNotification,
   GistImportError,
   RepoExportNotification,
+  SnapshotNotification,
 } from './notifications';
 
 const NOTIFICATION_COMPONENTS = {
   'gist-export-complete': GistExportNotification,
   'gist-import-error': GistImportError,
   'repo-export-complete': RepoExportNotification,
+  'snapshot-created': SnapshotNotification,
 };
 
 function chooseNotificationComponent(notification) {

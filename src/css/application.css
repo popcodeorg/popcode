@@ -655,6 +655,11 @@ body {
   flex: 1 0 100%;
 }
 
+.u__link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .u__hidden {
   display: none;
 }

@@ -36,7 +36,9 @@
     "gist-import-error": "There was a problem importing that gist.",
     "gist-import-link": "Click here to open it",
     "repo-export-error": "Something went wrong trying to create that repo. Please try again.",
-    "repo-export-complete": "Your repo export is ready!"
+    "repo-export-complete": "Your repo export is ready!",
+    "snapshot-created": "Your snapshot is ready!",
+    "click-to-copy": "Click here to copy it"
   },
   "languages": {
     "html": "HTML",

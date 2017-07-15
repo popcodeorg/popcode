@@ -148,6 +148,14 @@ export default function ui(stateIn, action) {
       }
       return state;
 
+    case 'SNAPSHOT_CREATED':
+      return addNotification(
+        state,
+        'snapshot-created',
+        'notice',
+        {snapshotKey: action.payload},
+      );
+
     case 'GIST_EXPORT_NOT_DISPLAYED':
       return addNotification(
         state,
