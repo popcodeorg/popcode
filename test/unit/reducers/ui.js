@@ -21,6 +21,7 @@ import {
 } from '../../../src/actions/ui';
 import {
   snapshotCreated,
+  snapshotExportError,
   gistExportNotDisplayed,
   gistExportError,
   repoExportNotDisplayed,
@@ -189,13 +190,20 @@ test('gistExportError', (t) => {
     withNotification('gist-export-error', 'error'),
   ));
 
-  t.test('with generic error', reducerTest(
+  t.test('with empty gist error', reducerTest(
     reducer,
     initialState,
     partial(gistExportError, new EmptyGistError()),
     withNotification('empty-gist', 'error'),
   ));
 });
+
+test('snapshotExportError', reducerTest(
+  reducer,
+  initialState,
+  partial(snapshotExportError, new Error()),
+  withNotification('snapshot-export-error', 'error'),
+));
 
 tap('https://popcode-mat.github.io/my-popcode-repo', (url) => {
   test('repoExportNotDisplayed', reducerTest(

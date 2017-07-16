@@ -6,6 +6,7 @@ import {
 import {createProjectSnapshot} from '../clients/firebase';
 import {
   snapshotCreated,
+  snapshotExportError,
   gistExported,
   gistExportError,
   repoExported,
@@ -15,8 +16,12 @@ import {getCurrentProject} from '../selectors';
 
 export function* createSnapshot() {
   const project = yield select(getCurrentProject);
-  const snapshotKey = yield call(createProjectSnapshot, project);
-  yield put(snapshotCreated(snapshotKey));
+  try {
+    const snapshotKey = yield call(createProjectSnapshot, project);
+    yield put(snapshotCreated(snapshotKey));
+  } catch (e) {
+    yield put(snapshotExportError(e));
+  }
 }
 
 export function* exportGist() {

@@ -18,6 +18,9 @@ export default function clients(stateIn, action) {
     case 'SNAPSHOT_CREATED':
       return state.setIn(['firebase', 'exportingSnapshot'], false);
 
+    case 'SNAPSHOT_EXPORT_ERROR':
+      return state.setIn(['firebase', 'exportingSnapshot'], false);
+
     case 'EXPORT_GIST':
       return state.setIn(
         ['gists', 'lastExport'],

@@ -38,7 +38,8 @@
     "repo-export-error": "Something went wrong trying to create that repo. Please try again.",
     "repo-export-complete": "Your repo export is ready!",
     "snapshot-created": "Your snapshot is ready!",
-    "click-to-copy": "Click here to copy it"
+    "click-to-copy": "Click here to copy it",
+    "snapshot-export-error": "Something went wrong trying to create that snapshot. Please try again."
   },
   "languages": {
     "html": "HTML",

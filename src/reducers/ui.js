@@ -190,6 +190,9 @@ export default function ui(stateIn, action) {
     case 'REPO_EXPORT_ERROR':
       return addNotification(state, 'repo-export-error', 'error');
 
+    case 'SNAPSHOT_EXPORT_ERROR':
+      return addNotification(state, 'snapshot-export-error', 'error');
+
     default:
       return state;
   }

@@ -6,6 +6,7 @@ import reducerTest from '../../helpers/reducerTest';
 import {
   createSnapshot,
   snapshotCreated,
+  snapshotExportError,
   exportGist,
   gistExported,
   gistExportError,
@@ -29,6 +30,14 @@ test('snapshot export', (t) => {
     reducer,
     states.waitingForSnapshot,
     snapshotCreated,
+    states.initial,
+    'sets clients.firebase.exportingSnapshot to false',
+  ));
+
+  t.test('snapshotExportError', reducerTest(
+    reducer,
+    states.waitingForSnapshot,
+    snapshotExportError,
     states.initial,
     'sets clients.firebase.exportingSnapshot to false',
   ));
