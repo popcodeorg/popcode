@@ -28,6 +28,7 @@ import {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
+  updateNotificationMetadata,
   refreshPreview,
   popOutProject,
 } from './ui';
@@ -70,6 +71,7 @@ export {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
+  updateNotificationMetadata,
   exportGist,
   exportRepo,
   gistExportDisplayed,

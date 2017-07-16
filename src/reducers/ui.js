@@ -19,7 +19,7 @@ const defaultState = new Immutable.Map().
     requestedFocusedLine: null,
   })).
   set('workspace', DEFAULT_WORKSPACE).
-  set('notifications', new Immutable.Set()).
+  set('notifications', new Immutable.Map()).
   set(
     'dashboard',
     new Immutable.Map().
@@ -29,13 +29,9 @@ const defaultState = new Immutable.Map().
   set('lastRefreshTimestamp', null);
 
 function addNotification(state, type, severity, payload = {}) {
-  return state.update('notifications', notifications =>
-    notifications.add(
-      new Immutable.Map().
-        set('type', type).
-        set('severity', severity).
-        set('payload', Immutable.fromJS(payload)),
-    ),
+  return state.setIn(
+    ['notifications', type],
+    Immutable.fromJS({type, severity, payload, metadata: {}}),
   );
 }
 
@@ -134,9 +130,13 @@ export default function ui(stateIn, action) {
     case 'USER_DISMISSED_NOTIFICATION':
       return state.update(
         'notifications',
-        errors => errors.filterNot(
-          error => error.get('type') === action.payload.type,
-        ),
+        notifications => notifications.delete(action.payload.type),
+      );
+
+    case 'UPDATE_NOTIFICATION_METADATA':
+      return state.setIn(
+        ['notifications', action.payload.type, 'metadata'],
+        Immutable.fromJS(action.payload.metadata),
       );
 
     case 'USER_LOGGED_OUT':

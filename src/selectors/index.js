@@ -6,6 +6,7 @@ import getCurrentUserId from './getCurrentUserId';
 import getCurrentValidationState from './getCurrentValidationState';
 import getErrors from './getErrors';
 import getLastRefreshTimestamp from './getLastRefreshTimestamp';
+import getNotifications from './getNotifications';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
   from './isCurrentProjectSyntacticallyValid';
@@ -24,6 +25,7 @@ export {
   getCurrentValidationState,
   getErrors,
   getLastRefreshTimestamp,
+  getNotifications,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isDashboardOpen,

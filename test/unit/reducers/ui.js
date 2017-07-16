@@ -36,7 +36,7 @@ const initialState = Immutable.fromJS({
     requestedFocusedLine: null,
   },
   workspace: DEFAULT_WORKSPACE,
-  notifications: new Immutable.Set(),
+  notifications: new Immutable.Map(),
   dashboard: {
     isOpen: false,
     activeSubmenu: null,
@@ -45,13 +45,9 @@ const initialState = Immutable.fromJS({
 });
 
 function withNotification(type, severity, payload = {}) {
-  return initialState.update(
-    'notifications',
-    notifications => notifications.add(Immutable.fromJS({
-      type,
-      severity,
-      payload,
-    })),
+  return initialState.setIn(
+    ['notifications', type],
+    Immutable.fromJS({type, severity, payload, metadata: {}}),
   );
 }
 
