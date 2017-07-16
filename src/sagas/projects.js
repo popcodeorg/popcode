@@ -7,7 +7,7 @@ import {
   takeEvery,
   throttle,
 } from 'redux-saga/effects';
-import isNull from 'lodash/isNull';
+import isString from 'lodash/isString';
 import get from 'lodash/get';
 import {
   gistImported,
@@ -16,16 +16,19 @@ import {
   projectCreated,
   projectLoaded,
 } from '../actions/projects';
+import {snapshotImported} from '../actions/clients';
 import {saveCurrentProject} from '../util/projectUtils';
 import {loadGistFromId} from '../clients/github';
-import {loadAllProjects} from '../clients/firebase';
+import {loadAllProjects, loadProjectSnapshot} from '../clients/firebase';
 import {getCurrentUserId} from '../selectors';
 
 export function* applicationLoaded(action) {
-  if (isNull(action.payload.gistId)) {
-    yield call(createProject);
-  } else {
+  if (isString(action.payload.gistId)) {
     yield call(importGist, action);
+  } else if (isString(action.payload.snapshotKey)) {
+    yield call(importSnapshot, action);
+  } else {
+    yield call(createProject);
   }
 }
 
@@ -37,6 +40,11 @@ export function* changeCurrentProject() {
   const state = yield select();
 
   yield call(saveCurrentProject, state);
+}
+
+export function* importSnapshot({payload: {snapshotKey}}) {
+  const snapshot = yield call(loadProjectSnapshot, snapshotKey);
+  yield put(snapshotImported(snapshot));
 }
 
 export function* importGist({payload: {gistId}}) {

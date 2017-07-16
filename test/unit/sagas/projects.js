@@ -5,6 +5,7 @@ import {
   createProject as createProjectSaga,
   changeCurrentProject as changeCurrentProjectSaga,
   importGist as importGistSaga,
+  importSnapshot as importSnapshotSaga,
   toggleLibrary as toggleLibrarySaga,
   userAuthenticated as userAuthenticatedSaga,
   updateProjectSource as updateProjectSourceSaga,
@@ -16,11 +17,15 @@ import {
   toggleLibrary,
   updateProjectSource,
 } from '../../../src/actions/projects';
+import {snapshotImported} from '../../../src/actions/clients';
 import {userAuthenticated} from '../../../src/actions/user';
 import applicationLoaded from '../../../src/actions/applicationLoaded';
 import {saveCurrentProject} from '../../../src/util/projectUtils';
 import {loadGistFromId} from '../../../src/clients/github';
-import {loadAllProjects} from '../../../src/clients/firebase';
+import {
+  loadAllProjects,
+  loadProjectSnapshot,
+} from '../../../src/clients/firebase';
 import Scenario from '../../helpers/Scenario';
 import {gistData, project, userCredential} from '../../helpers/factory';
 
@@ -71,9 +76,18 @@ test('changeCurrentProject()', (assert) => {
 });
 
 test('applicationLoaded()', (t) => {
-  t.test('with no gist ID', (assert) => {
+  t.test('with no gist or snapshot ID', (assert) => {
     testSaga(applicationLoadedSaga, applicationLoaded({gistId: null})).
       next().call(createProjectSaga).
+      next().isDone();
+
+    assert.end();
+  });
+
+  t.test('with snapshot ID', (assert) => {
+    const snapshotKey = '123-abc';
+    testSaga(applicationLoadedSaga, applicationLoaded({snapshotKey})).
+      next().call(importSnapshotSaga, applicationLoaded({snapshotKey})).
       next().isDone();
 
     assert.end();
@@ -83,6 +97,20 @@ test('applicationLoaded()', (t) => {
     const gistId = '123abc';
     testSaga(applicationLoadedSaga, applicationLoaded({gistId})).
       next().call(importGistSaga, applicationLoaded({gistId})).
+      next().isDone();
+
+    assert.end();
+  });
+});
+
+test('importSnapshot()', (t) => {
+  const snapshotKey = 'abc-123';
+
+  t.test('with successful import', (assert) => {
+    const projectData = project();
+    testSaga(importSnapshotSaga, applicationLoaded({snapshotKey})).
+      next().call(loadProjectSnapshot, snapshotKey).
+      next(projectData).put(snapshotImported(projectData)).
       next().isDone();
 
     assert.end();

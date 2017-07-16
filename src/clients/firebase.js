@@ -29,9 +29,9 @@ function workspace(uid) {
 const snapshots = database.ref('snapshots');
 
 async function getCurrentProjectKey(uid) {
-  const snapshot =
+  const event =
     await workspace(uid).child('currentProjectKey').once('value');
-  return snapshot.val();
+  return event.val();
 }
 
 export async function setCurrentProjectKey(uid, projectKey) {
@@ -44,15 +44,20 @@ export async function loadAllProjects(uid) {
 }
 
 async function loadProject(uid, projectKey) {
-  const snapshot =
+  const event =
     await workspace(uid).child('projects').child(projectKey).once('value');
-  return snapshot.val();
+  return event.val();
 }
 
 export async function createProjectSnapshot(project) {
   const snapshotKey = uuid().toString();
   await snapshots.child(snapshotKey).set(project);
   return snapshotKey;
+}
+
+export async function loadProjectSnapshot(snapshotKey) {
+  const event = await snapshots.child(snapshotKey).once('value');
+  return event.val();
 }
 
 export async function loadCurrentProject(uid) {
@@ -76,9 +81,9 @@ export async function saveCurrentProject(uid, project) {
 }
 
 async function userCredentialForUserData(user) {
-  const snapshot =
+  const event =
     await database.ref(`authTokens/${user.uid}/github_com`).once('value');
-  const credential = snapshot.val();
+  const credential = event.val();
   if (isNil(credential)) {
     await auth.signOut();
     return null;

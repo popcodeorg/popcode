@@ -108,6 +108,9 @@ export default function reduceProjects(stateIn, action) {
     case 'CHANGE_CURRENT_PROJECT':
       return removePristineExcept(state, action.payload.projectKey);
 
+    case 'SNAPSHOT_IMPORTED':
+      return addProject(state, action.payload);
+
     case 'GIST_IMPORTED':
       return importGist(
         state,

@@ -21,6 +21,9 @@ import {
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {
+  snapshotImported,
+} from '../../../src/actions/clients';
+import {
   focusLine,
 } from '../../../src/actions/ui';
 import {userLoggedOut} from '../../../src/actions/user';
@@ -84,6 +87,21 @@ test('changeCurrentProject', (t) => {
     'keeps previous project in store',
   ));
 });
+
+tap(project(), importedProject =>
+  test('snapshotImported', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      snapshotImported,
+      importedProject,
+    ),
+    states.initial.set(
+      importedProject.projectKey,
+      Project.fromJS(importedProject),
+    ),
+  )),
+);
 
 test('gistImported', (t) => {
   t.test('HTML and CSS, no JSON', reducerTest(
