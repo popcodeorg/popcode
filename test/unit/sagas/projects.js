@@ -17,7 +17,11 @@ import {
   toggleLibrary,
   updateProjectSource,
 } from '../../../src/actions/projects';
-import {snapshotImported} from '../../../src/actions/clients';
+import {
+  snapshotImported,
+  snapshotImportError,
+  snapshotNotFound,
+} from '../../../src/actions/clients';
 import {userAuthenticated} from '../../../src/actions/user';
 import applicationLoaded from '../../../src/actions/applicationLoaded';
 import {saveCurrentProject} from '../../../src/util/projectUtils';
@@ -111,6 +115,25 @@ test('importSnapshot()', (t) => {
     testSaga(importSnapshotSaga, applicationLoaded({snapshotKey})).
       next().call(loadProjectSnapshot, snapshotKey).
       next(projectData).put(snapshotImported(projectData)).
+      next().isDone();
+
+    assert.end();
+  });
+
+  t.test('with import error', (assert) => {
+    const error = new Error();
+    testSaga(importSnapshotSaga, applicationLoaded({snapshotKey})).
+      next().call(loadProjectSnapshot, snapshotKey).
+      throw(error).put(snapshotImportError(error)).
+      next().isDone();
+
+    assert.end();
+  });
+
+  t.test('with snapshot not found', (assert) => {
+    testSaga(importSnapshotSaga, applicationLoaded({snapshotKey})).
+      next().call(loadProjectSnapshot, snapshotKey).
+      next(null).put(snapshotNotFound()).
       next().isDone();
 
     assert.end();

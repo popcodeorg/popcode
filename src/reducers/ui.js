@@ -193,6 +193,12 @@ export default function ui(stateIn, action) {
     case 'SNAPSHOT_EXPORT_ERROR':
       return addNotification(state, 'snapshot-export-error', 'error');
 
+    case 'SNAPSHOT_IMPORT_ERROR':
+      return addNotification(state, 'snapshot-import-error', 'error');
+
+    case 'SNAPSHOT_NOT_FOUND':
+      return addNotification(state, 'snapshot-not-found', 'error');
+
     default:
       return state;
   }

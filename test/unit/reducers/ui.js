@@ -22,6 +22,8 @@ import {
 import {
   snapshotCreated,
   snapshotExportError,
+  snapshotImportError,
+  snapshotNotFound,
   gistExportNotDisplayed,
   gistExportError,
   repoExportNotDisplayed,
@@ -203,6 +205,20 @@ test('snapshotExportError', reducerTest(
   initialState,
   partial(snapshotExportError, new Error()),
   withNotification('snapshot-export-error', 'error'),
+));
+
+test('snapshotImportError', reducerTest(
+  reducer,
+  initialState,
+  partial(snapshotImportError, new Error()),
+  withNotification('snapshot-import-error', 'error'),
+));
+
+test('snapshotNotFound', reducerTest(
+  reducer,
+  initialState,
+  snapshotNotFound,
+  withNotification('snapshot-not-found', 'error'),
 ));
 
 tap('https://popcode-mat.github.io/my-popcode-repo', (url) => {
