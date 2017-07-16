@@ -4,6 +4,9 @@ import {
   exportGist,
   gistExportDisplayed,
   gistExportNotDisplayed,
+  exportRepo,
+  repoExportDisplayed,
+  repoExportNotDisplayed,
 } from './clients';
 
 import {
@@ -66,9 +69,12 @@ export {
   notificationTriggered,
   userDismissedNotification,
   exportGist,
+  exportRepo,
   gistExportDisplayed,
   gistExportNotDisplayed,
   popOutProject,
   applicationLoaded,
   refreshPreview,
+  repoExportDisplayed,
+  repoExportNotDisplayed,
 };

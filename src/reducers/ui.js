@@ -171,6 +171,17 @@ export default function ui(stateIn, action) {
       }
       return state.set('experimental', false);
 
+    case 'REPO_EXPORT_NOT_DISPLAYED':
+      return addNotification(
+        state,
+        'repo-export-complete',
+        'notice',
+        {url: action.payload},
+      );
+
+    case 'REPO_EXPORT_ERROR':
+      return addNotification(state, 'repo-export-error', 'error');
+
     default:
       return state;
   }

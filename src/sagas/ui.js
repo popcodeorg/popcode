@@ -3,7 +3,12 @@ import debounceFor from 'redux-saga-debounce-effect/src/debounceFor';
 import {TextEncoder} from 'text-encoding';
 import base64 from 'base64-js';
 import {userDoneTyping as userDoneTypingAction} from '../actions/ui';
-import {gistExportDisplayed, gistExportNotDisplayed} from '../actions/clients';
+import {
+  gistExportDisplayed,
+  gistExportNotDisplayed,
+  repoExportDisplayed,
+  repoExportNotDisplayed,
+} from '../actions/clients';
 import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
 import generatePreview from '../util/generatePreview';
 import {spinnerPage} from '../templates';
@@ -12,24 +17,37 @@ export function* userDoneTyping() {
   yield put(userDoneTypingAction());
 }
 
-export function* exportGist() {
+function* githubExport(
+  successAction,
+  failureAction,
+  notDisplayedAction,
+  displayedAction) {
   const exportWindow = yield call(
     openWindowWithWorkaroundForChromeClosingBug,
     `data:text/html;charset=utf-8;base64,${spinnerPage}`,
   );
   const {type, payload: url} =
-    yield take(['GIST_EXPORTED', 'GIST_EXPORT_ERROR']);
+    yield take([successAction, failureAction]);
 
-  if (type === 'GIST_EXPORTED') {
+  if (type === successAction) {
     if (exportWindow.closed) {
-      yield put(gistExportNotDisplayed(url));
+      yield put(notDisplayedAction(url));
     } else {
       exportWindow.location.href = url;
-      yield put(gistExportDisplayed());
+      yield put(displayedAction());
     }
   } else {
     yield call([exportWindow, 'close']);
   }
+}
+
+export function* exportGist() {
+  yield* githubExport(
+    'GIST_EXPORTED',
+    'GIST_EXPORT_ERROR',
+    gistExportNotDisplayed,
+    gistExportDisplayed,
+  );
 }
 
 export function* popOutProject({payload: project}) {
@@ -40,10 +58,20 @@ export function* popOutProject({payload: project}) {
   yield call(openWindowWithWorkaroundForChromeClosingBug, url);
 }
 
+export function* exportRepo() {
+  yield* githubExport(
+    'REPO_EXPORTED',
+    'REPO_EXPORT_ERROR',
+    repoExportNotDisplayed,
+    repoExportDisplayed,
+  );
+}
+
 export default function* () {
   yield all([
     debounceFor('UPDATE_PROJECT_SOURCE', userDoneTyping, 1000),
     takeEvery('EXPORT_GIST', exportGist),
     takeEvery('POP_OUT_PROJECT', popOutProject),
+    takeEvery('EXPORT_REPO', exportRepo),
   ]);
 }

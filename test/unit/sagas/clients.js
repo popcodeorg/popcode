@@ -5,7 +5,7 @@ import {
 } from '../../../src/sagas/clients';
 import {gistExported, gistExportError} from '../../../src/actions/clients';
 import Scenario from '../../helpers/Scenario';
-import {createFromProject} from '../../../src/clients/gists';
+import {createGistFromProject} from '../../../src/clients/github';
 
 test('exportGist()', (t) => {
   const url = 'https://gist.github.com/abc123';
@@ -18,7 +18,7 @@ test('exportGist()', (t) => {
         assert.ok(effect.SELECT, 'invokes select effect');
       }).
       next(scenario.state).call(
-        createFromProject,
+        createGistFromProject,
         scenario.project.toJS(),
         scenario.user.toJS(),
       );
