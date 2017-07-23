@@ -62,6 +62,7 @@ export default function* () {
   yield all([
     takeEvery('CHANGE_CURRENT_PROJECT', validateCurrentProject, tasks),
     takeEvery('GIST_IMPORTED', validateCurrentProject, tasks),
+    takeEvery('SNAPSHOT_IMPORTED', validateCurrentProject, tasks),
     takeEvery('UPDATE_PROJECT_SOURCE', updateProjectSource, tasks),
     takeEvery('TOGGLE_LIBRARY', toggleLibrary, tasks),
   ]);
