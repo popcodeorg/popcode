@@ -34,6 +34,7 @@ const errorMap = {
         return {
           reason: 'space-before-tag-name',
           payload: {tag: tagMatch[1]},
+          suppresses: ['unexpected-close-tag'],
         };
       }
     }
@@ -56,22 +57,6 @@ const errorMap = {
     suppresses: ['lower-case-attribute-name'],
   }),
 
-  MISMATCHED_CLOSE_TAG: (error) => {
-    const openTagName = error.openTag.name;
-    const closeTagName = error.closeTag.name;
-    if (openTagName === '#document-fragment') {
-      return {
-        reason: 'unexpected-close-tag',
-        payload: {tag: closeTagName},
-      };
-    }
-
-    return {
-      reason: 'mismatched-close-tag',
-      payload: {open: openTagName, close: closeTagName},
-    };
-  },
-
   SELF_CLOSING_NON_VOID_ELEMENT: error => ({
     reason: 'self-closing-non-void-element',
     payload: {tag: error.name},
@@ -80,7 +65,6 @@ const errorMap = {
   UNCLOSED_TAG: error => ({
     reason: 'unclosed-tag',
     payload: {tag: error.openTag.name},
-    suppresses: ['mismatched-close-tag'],
   }),
 
   UNEXPECTED_CLOSE_TAG: error => ({

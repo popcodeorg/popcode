@@ -19,6 +19,10 @@
     normalize-path "^2.0.1"
     through2 "^2.0.3"
 
+"@types/node@^6.0.46":
+  version "6.0.78"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.78.tgz#5d4a3f579c1524e01ee21bf474e6fba09198f470"
+
 JSONStream@^0.8.4:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-0.8.4.tgz#91657dfe6ff857483066132b4618b62e8f4887bd"
@@ -2671,6 +2675,10 @@ entities@1.0:
 entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
+
+enumify@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/enumify/-/enumify-1.0.4.tgz#2bb6263071dd4551e54c55755707fad24a40cd7e"
 
 err-code@^1.0.0:
   version "1.1.2"
@@ -5891,6 +5899,12 @@ parse-passwd@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/parse-passwd/-/parse-passwd-1.0.0.tgz#6d5b934a456993b23d37f40a382d6f1666a8e5c6"
 
+parse5@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-3.0.2.tgz#05eff57f0ef4577fb144a79f8b9a967a6cc44510"
+  dependencies:
+    "@types/node" "^6.0.46"
+
 parsejson@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/parsejson/-/parsejson-0.0.3.tgz#ab7e3759f209ece99437973f7d0f1f64ae0e64ab"
@@ -8539,6 +8553,10 @@ vm-browserify@0.0.4:
 void-elements@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
+
+void-elements@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
 
 w3c-blob@0.0.1:
   version "0.0.1"

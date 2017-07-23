@@ -64,7 +64,6 @@ const errorMap = {
     return {
       reason: 'unclosed-tag',
       payload: {tag},
-      suppresses: ['mismatched-close-tag'],
     };
   },
 };

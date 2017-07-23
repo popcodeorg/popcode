@@ -105,6 +105,7 @@
     "bugsnag-js": "^3.0.1",
     "classnames": "^2.1.5",
     "css": "^2.2.1",
+    "enumify": "^1.0.4",
     "es6-set": "^0.1.4",
     "esprima": "^3.0.0",
     "firebase": "^4.1.3",
@@ -120,6 +121,7 @@
     "loop-breaker": "^0.1.0-alpha.7",
     "moment": "^2.14.1",
     "offline-plugin": "^4.8.1",
+    "parse5": "^3.0.2",
     "pify": "^3.0.0",
     "promise-retry": "^1.1.1",
     "prop-types": "^15.5.10",
@@ -140,7 +142,8 @@
     "rxjs": "^5.0.2",
     "slowparse": "^1.1.4",
     "stylelint": "^7.10.1",
-    "text-encoding": "^0.6.0"
+    "text-encoding": "^0.6.0",
+    "void-elements": "^3.1.0"
   },
   "engines": {
     "node": "7.6.0",
