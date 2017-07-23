@@ -20,6 +20,10 @@ import {
   refreshPreview,
 } from '../../../src/actions/ui';
 import {
+  snapshotCreated,
+  snapshotExportError,
+  snapshotImportError,
+  snapshotNotFound,
   gistExportNotDisplayed,
   gistExportError,
   repoExportNotDisplayed,
@@ -35,7 +39,7 @@ const initialState = Immutable.fromJS({
     requestedFocusedLine: null,
   },
   workspace: DEFAULT_WORKSPACE,
-  notifications: new Immutable.Set(),
+  notifications: new Immutable.Map(),
   dashboard: {
     isOpen: false,
     activeSubmenu: null,
@@ -44,13 +48,9 @@ const initialState = Immutable.fromJS({
 });
 
 function withNotification(type, severity, payload = {}) {
-  return initialState.update(
-    'notifications',
-    notifications => notifications.add(Immutable.fromJS({
-      type,
-      severity,
-      payload,
-    })),
+  return initialState.setIn(
+    ['notifications', type],
+    Immutable.fromJS({type, severity, payload, metadata: {}}),
   );
 }
 
@@ -192,13 +192,34 @@ test('gistExportError', (t) => {
     withNotification('gist-export-error', 'error'),
   ));
 
-  t.test('with generic error', reducerTest(
+  t.test('with empty gist error', reducerTest(
     reducer,
     initialState,
     partial(gistExportError, new EmptyGistError()),
     withNotification('empty-gist', 'error'),
   ));
 });
+
+test('snapshotExportError', reducerTest(
+  reducer,
+  initialState,
+  partial(snapshotExportError, new Error()),
+  withNotification('snapshot-export-error', 'error'),
+));
+
+test('snapshotImportError', reducerTest(
+  reducer,
+  initialState,
+  partial(snapshotImportError, new Error()),
+  withNotification('snapshot-import-error', 'error'),
+));
+
+test('snapshotNotFound', reducerTest(
+  reducer,
+  initialState,
+  snapshotNotFound,
+  withNotification('snapshot-not-found', 'error'),
+));
 
 tap('https://popcode-mat.github.io/my-popcode-repo', (url) => {
   test('repoExportNotDisplayed', reducerTest(
@@ -283,3 +304,12 @@ test('applicationLoaded', (t) => {
     initialState.set('experimental', false),
   ));
 });
+
+tap('123-456', snapshotKey =>
+  test('snapshotCreated', reducerTest(
+    reducer,
+    initialState,
+    partial(snapshotCreated, snapshotKey),
+    withNotification('snapshot-created', 'notice', {snapshotKey}),
+  )),
+);

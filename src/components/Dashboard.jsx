@@ -103,6 +103,21 @@ class Dashboard extends React.Component {
               'dashboard__menu-item_grid',
               {
                 'dashboard__menu-item_spinner':
+                  this.props.snapshotInProgress,
+              },
+            )
+          }
+          onClick={this.props.onCreateSnapshot}
+        >
+          {t('dashboard.menu.create-snapshot')}
+        </div>
+        <div
+          className={
+            classnames(
+              'dashboard__menu-item',
+              'dashboard__menu-item_grid',
+              {
+                'dashboard__menu-item_spinner':
                   this.props.gistExportInProgress,
               },
             )
@@ -252,7 +267,9 @@ Dashboard.propTypes = {
   gistExportInProgress: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  snapshotInProgress: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
+  onCreateSnapshot: PropTypes.func.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onLibraryToggled: PropTypes.func.isRequired,

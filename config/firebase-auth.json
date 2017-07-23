@@ -6,6 +6,12 @@
         ".write": "$user_id === auth.uid"
       }
     },
+    "snapshots": {
+      "$snapshotKey": {
+        ".read": true,
+        ".write": "!data.exists()"
+      }
+    },
     "authTokens": {
       "$user_id": {
         ".read": "$user_id === auth.uid",

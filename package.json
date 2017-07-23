@@ -127,6 +127,7 @@
     "prop-types": "^15.5.10",
     "qs": "^6.1.0",
     "react": "^15.4.1",
+    "react-copy-to-clipboard": "^5.0.0",
     "react-dom": "^15.4.1",
     "react-draggable": "^2.2.6",
     "react-ga": "^2.1.2",
@@ -143,6 +144,7 @@
     "slowparse": "^1.1.4",
     "stylelint": "^7.10.1",
     "text-encoding": "^0.6.0",
+    "uuid": "^3.1.0",
     "void-elements": "^3.1.0"
   },
   "engines": {

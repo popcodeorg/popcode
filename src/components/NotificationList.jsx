@@ -7,12 +7,14 @@ import {
   GistExportNotification,
   GistImportError,
   RepoExportNotification,
+  SnapshotNotification,
 } from './notifications';
 
 const NOTIFICATION_COMPONENTS = {
   'gist-export-complete': GistExportNotification,
   'gist-import-error': GistImportError,
   'repo-export-complete': RepoExportNotification,
+  'snapshot-created': SnapshotNotification,
 };
 
 function chooseNotificationComponent(notification) {
@@ -23,23 +25,33 @@ function chooseNotificationComponent(notification) {
   return GenericNotification;
 }
 
-export default function NotificationList(props) {
-  if (!props.notifications.length) {
+export default function NotificationList({
+  notifications,
+  onNotificationDismissed,
+  onUpdateNotificationMetadata,
+}) {
+  if (!notifications.length) {
     return null;
   }
 
-  const notificationList = props.notifications.map((notification) => {
+  const notificationList = notifications.map((notification) => {
     const Notification = chooseNotificationComponent(notification);
 
     return (
       <NotificationContainer
         key={notification.type}
         severity={notification.severity}
-        onErrorDismissed={partial(props.onErrorDismissed, notification)}
+        onDismissed={
+          partial(onNotificationDismissed, notification)
+        }
       >
         <Notification
+          metadata={notification.metadata}
           payload={notification.payload}
           type={notification.type}
+          onUpdateMetadata={
+            partial(onUpdateNotificationMetadata, notification)
+          }
         />
       </NotificationContainer>
     );
@@ -52,5 +64,6 @@ export default function NotificationList(props) {
 
 NotificationList.propTypes = {
   notifications: PropTypes.array.isRequired,
-  onErrorDismissed: PropTypes.func.isRequired,
+  onNotificationDismissed: PropTypes.func.isRequired,
+  onUpdateNotificationMetadata: PropTypes.func.isRequired,
 };

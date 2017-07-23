@@ -42,6 +42,11 @@ export const userDismissedNotification = createAction(
   type => ({type}),
 );
 
+export const updateNotificationMetadata = createAction(
+  'UPDATE_NOTIFICATION_METADATA',
+  (type, metadata) => ({type, metadata}),
+);
+
 export const refreshPreview = createAction(
   'REFRESH_PREVIEW',
   timestamp => ({timestamp}),

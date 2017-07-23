@@ -5,6 +5,7 @@ import {
   createProject as createProjectSaga,
   changeCurrentProject as changeCurrentProjectSaga,
   importGist as importGistSaga,
+  importSnapshot as importSnapshotSaga,
   toggleLibrary as toggleLibrarySaga,
   userAuthenticated as userAuthenticatedSaga,
   updateProjectSource as updateProjectSourceSaga,
@@ -16,11 +17,19 @@ import {
   toggleLibrary,
   updateProjectSource,
 } from '../../../src/actions/projects';
+import {
+  snapshotImported,
+  snapshotImportError,
+  snapshotNotFound,
+} from '../../../src/actions/clients';
 import {userAuthenticated} from '../../../src/actions/user';
 import applicationLoaded from '../../../src/actions/applicationLoaded';
 import {saveCurrentProject} from '../../../src/util/projectUtils';
 import {loadGistFromId} from '../../../src/clients/github';
-import FirebasePersistor from '../../../src/persistors/FirebasePersistor';
+import {
+  loadAllProjects,
+  loadProjectSnapshot,
+} from '../../../src/clients/firebase';
 import Scenario from '../../helpers/Scenario';
 import {gistData, project, userCredential} from '../../helpers/factory';
 
@@ -71,9 +80,18 @@ test('changeCurrentProject()', (assert) => {
 });
 
 test('applicationLoaded()', (t) => {
-  t.test('with no gist ID', (assert) => {
+  t.test('with no gist or snapshot ID', (assert) => {
     testSaga(applicationLoadedSaga, applicationLoaded({gistId: null})).
       next().call(createProjectSaga).
+      next().isDone();
+
+    assert.end();
+  });
+
+  t.test('with snapshot ID', (assert) => {
+    const snapshotKey = '123-abc';
+    testSaga(applicationLoadedSaga, applicationLoaded({snapshotKey})).
+      next().call(importSnapshotSaga, applicationLoaded({snapshotKey})).
       next().isDone();
 
     assert.end();
@@ -83,6 +101,39 @@ test('applicationLoaded()', (t) => {
     const gistId = '123abc';
     testSaga(applicationLoadedSaga, applicationLoaded({gistId})).
       next().call(importGistSaga, applicationLoaded({gistId})).
+      next().isDone();
+
+    assert.end();
+  });
+});
+
+test('importSnapshot()', (t) => {
+  const snapshotKey = 'abc-123';
+
+  t.test('with successful import', (assert) => {
+    const projectData = project();
+    testSaga(importSnapshotSaga, applicationLoaded({snapshotKey})).
+      next().call(loadProjectSnapshot, snapshotKey).
+      next(projectData).put(snapshotImported(projectData)).
+      next().isDone();
+
+    assert.end();
+  });
+
+  t.test('with import error', (assert) => {
+    const error = new Error();
+    testSaga(importSnapshotSaga, applicationLoaded({snapshotKey})).
+      next().call(loadProjectSnapshot, snapshotKey).
+      throw(error).put(snapshotImportError(error)).
+      next().isDone();
+
+    assert.end();
+  });
+
+  t.test('with snapshot not found', (assert) => {
+    testSaga(importSnapshotSaga, applicationLoaded({snapshotKey})).
+      next().call(loadProjectSnapshot, snapshotKey).
+      next(null).put(snapshotNotFound()).
       next().isDone();
 
     assert.end();
@@ -142,19 +193,11 @@ test('importGist()', (t) => {
 
 test('userAuthenticated', (assert) => {
   const scenario = new Scenario().logIn();
-  const mockPersistor = {
-    all() { },
-  };
   const projects = [project()];
   testSaga(userAuthenticatedSaga, userAuthenticated(userCredential())).
     next().inspect(effect => assert.ok(effect.SELECT)).
     next(scenario.state).fork(saveCurrentProject, scenario.state).
-    next().apply(
-      FirebasePersistor,
-      FirebasePersistor.forUser,
-      [scenario.state.get('user')],
-    ).
-    next(mockPersistor).apply(mockPersistor, mockPersistor.all).
+    next().call(loadAllProjects, scenario.user.get('id')).
     next(projects).put(projectLoaded(projects[0]));
   assert.end();
 });

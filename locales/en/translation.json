@@ -9,6 +9,7 @@
       "new-project": "New Project",
       "load-project": "Load Project",
       "libraries": "Libraries",
+      "create-snapshot": "Create Snapshot",
       "export-gist": "Export Gist",
       "send-feedback": "Send Feedback",
       "export-repo": "Export Repo"
@@ -35,7 +36,12 @@
     "gist-import-error": "There was a problem importing that gist.",
     "gist-import-link": "Click here to open it",
     "repo-export-error": "Something went wrong trying to create that repo. Please try again.",
-    "repo-export-complete": "Your repo export is ready!"
+    "repo-export-complete": "Your repo export is ready!",
+    "snapshot-created": "Your snapshot is ready!",
+    "click-to-copy": "Click here to copy it",
+    "snapshot-export-error": "Something went wrong trying to create that snapshot. Please try again.",
+    "snapshot-import-error": "Something went wrong trying to load that snapshot. Please try again.",
+    "snapshot-not-found": "That snapshot doesn’t seem to exist. Check the link and try again."
   },
   "languages": {
     "html": "HTML",
