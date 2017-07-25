@@ -28,6 +28,7 @@ const libraries = {
     name: 'Bootstrap',
     css: BOOTSTRAP_CSS,
     javascript: BOOTSTRAP_JS,
+    dependsOn: ['jquery'],
   },
 };
 

@@ -15,7 +15,7 @@ import {
   onSignedIn,
   onSignedOut,
   startSessionHeartbeat,
-} from '../clients/firebaseAuth';
+} from '../clients/firebase';
 
 import {
   updateProjectSource,
@@ -30,7 +30,6 @@ import {
   dragColumnDivider,
   startDragColumnDivider,
   stopDragColumnDivider,
-  userDismissedNotification,
   applicationLoaded,
   toggleEditorTextSize,
 
@@ -39,11 +38,10 @@ import {
 import {isPristineProject} from '../util/projectUtils';
 import {getCurrentProject} from '../selectors';
 
-import {Dashboard} from '../containers';
+import {Dashboard, NotificationList} from '../containers';
 import EditorsColumn from './EditorsColumn';
 import Output from './Output';
 import Sidebar from './Sidebar';
-import NotificationList from './NotificationList';
 import PopThrobber from './PopThrobber';
 
 function mapStateToProps(state) {
@@ -77,7 +75,6 @@ class Workspace extends React.Component {
       '_handleErrorClick',
       '_handleToggleDashboard',
       '_handleRequestedLineFocused',
-      '_handleNotificationDismissed',
       '_storeDividerRef',
       '_storeColumnRef',
       '_handleEditorTextSizeToggled',
@@ -87,16 +84,24 @@ class Workspace extends React.Component {
 
   componentWillMount() {
     let gistId = null;
+    let snapshotKey = null;
     let isExperimental = false;
     if (location.search) {
       const query = qs.parse(location.search.slice(1));
       if (query.gist) {
         gistId = query.gist;
       }
+      if (query.snapshot) {
+        snapshotKey = query.snapshot;
+      }
       isExperimental = Object.keys(query).includes('experimental');
     }
     history.replaceState({}, '', location.pathname);
-    this.props.dispatch(applicationLoaded({gistId, isExperimental}));
+    this.props.dispatch(applicationLoaded({
+      snapshotKey,
+      gistId,
+      isExperimental,
+    }));
     this._listenForAuthChange();
     startSessionHeartbeat();
   }
@@ -110,8 +115,8 @@ class Workspace extends React.Component {
   }
 
   _confirmUnload(event) {
-    if (!this.props.currentUser.authenticated) {
-      const currentProject = this.props.currentProject;
+    const {currentUser, currentProject} = this.props;
+    if (!currentUser.authenticated) {
       if (!isNull(currentProject) && !isPristineProject(currentProject)) {
         event.returnValue = t('workspace.confirmations.unload-unsaved');
       }
@@ -204,10 +209,6 @@ class Workspace extends React.Component {
       this.props.dispatch(userAuthenticated(userCredential)),
     );
     onSignedOut(() => this.props.dispatch(userLoggedOut()));
-  }
-
-  _handleNotificationDismissed(error) {
-    this.props.dispatch(userDismissedNotification(error.type));
   }
 
   _handleRequestedLineFocused() {
@@ -308,10 +309,7 @@ class Workspace extends React.Component {
   render() {
     return (
       <div>
-        <NotificationList
-          notifications={this.props.ui.notifications}
-          onErrorDismissed={this._handleNotificationDismissed}
-        />
+        <NotificationList />
         <div className="layout">
           <Dashboard />
           {this._renderSidebar()}

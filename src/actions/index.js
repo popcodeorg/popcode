@@ -1,9 +1,13 @@
 import applicationLoaded from './applicationLoaded';
 
 import {
+  createSnapshot,
   exportGist,
   gistExportDisplayed,
   gistExportNotDisplayed,
+  exportRepo,
+  repoExportDisplayed,
+  repoExportNotDisplayed,
 } from './clients';
 
 import {
@@ -24,6 +28,7 @@ import {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
+  updateNotificationMetadata,
   refreshPreview,
   popOutProject,
   toggleEditorTextSize,
@@ -48,6 +53,7 @@ function toggleDashboardSubmenu(submenu) {
 
 export {
   createProject,
+  createSnapshot,
   changeCurrentProject,
   updateProjectSource,
   toggleLibrary,
@@ -66,11 +72,15 @@ export {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
+  updateNotificationMetadata,
   exportGist,
+  exportRepo,
   gistExportDisplayed,
   gistExportNotDisplayed,
   popOutProject,
   applicationLoaded,
   refreshPreview,
+  repoExportDisplayed,
+  repoExportNotDisplayed,
   toggleEditorTextSize,
 };

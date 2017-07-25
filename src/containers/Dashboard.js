@@ -6,7 +6,9 @@ import {Dashboard} from '../components';
 import {
   changeCurrentProject,
   createProject,
+  createSnapshot,
   exportGist,
+  exportRepo,
   notificationTriggered,
   toggleDashboardSubmenu,
   toggleLibrary,
@@ -18,13 +20,15 @@ import {
   getCurrentUser,
   getCurrentValidationState,
   isDashboardOpen,
+  isExperimental,
   isGistExportInProgress,
+  isSnapshotInProgress,
   isUserTyping,
 } from '../selectors';
 import {
   signIn,
   signOut,
-} from '../clients/firebaseAuth';
+} from '../clients/firebase';
 
 function getValidationStateForDashboard(state) {
   const validationState = getCurrentValidationState(state);
@@ -41,15 +45,25 @@ function mapStateToProps(state) {
     currentProject: getCurrentProject(state),
     currentUser: getCurrentUser(state),
     gistExportInProgress: isGistExportInProgress(state),
+    isExperimental: isExperimental(state),
     isOpen: isDashboardOpen(state),
+    snapshotInProgress: isSnapshotInProgress(state),
     validationState: getValidationStateForDashboard(state),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    onCreateSnapshot() {
+      dispatch(createSnapshot());
+    },
+
     onExportGist() {
       dispatch(exportGist());
+    },
+
+    onExportRepo() {
+      dispatch(exportRepo());
     },
 
     onLibraryToggled(projectKey, libraryKey) {
@@ -80,6 +94,7 @@ function mapDispatchToProps(dispatch) {
           case 'auth/cancelled-popup-request':
             break;
           case 'auth/web-storage-unsupported':
+          case 'auth/operation-not-supported-in-this-environment':
             dispatch(
               notificationTriggered('auth-third-party-cookies-disabled'),
             );

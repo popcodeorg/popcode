@@ -1,6 +1,5 @@
 import {
   all,
-  apply,
   call,
   fork,
   put,
@@ -9,6 +8,7 @@ import {
   throttle,
 } from 'redux-saga/effects';
 import isNull from 'lodash/isNull';
+import isString from 'lodash/isString';
 import get from 'lodash/get';
 import {
   gistImported,
@@ -17,15 +17,23 @@ import {
   projectCreated,
   projectLoaded,
 } from '../actions/projects';
+import {
+  snapshotImported,
+  snapshotImportError,
+  snapshotNotFound,
+} from '../actions/clients';
 import {saveCurrentProject} from '../util/projectUtils';
-import {loadFromId} from '../clients/gists';
-import FirebasePersistor from '../persistors/FirebasePersistor';
+import {loadGistFromId} from '../clients/github';
+import {loadAllProjects, loadProjectSnapshot} from '../clients/firebase';
+import {getCurrentUserId} from '../selectors';
 
 export function* applicationLoaded(action) {
-  if (isNull(action.payload.gistId)) {
-    yield call(createProject);
-  } else {
+  if (isString(action.payload.gistId)) {
     yield call(importGist, action);
+  } else if (isString(action.payload.snapshotKey)) {
+    yield call(importSnapshot, action);
+  } else {
+    yield call(createProject);
   }
 }
 
@@ -39,10 +47,23 @@ export function* changeCurrentProject() {
   yield call(saveCurrentProject, state);
 }
 
+export function* importSnapshot({payload: {snapshotKey}}) {
+  try {
+    const snapshot = yield call(loadProjectSnapshot, snapshotKey);
+    if (isNull(snapshot)) {
+      yield put(snapshotNotFound());
+    } else {
+      yield put(snapshotImported(snapshot));
+    }
+  } catch (error) {
+    yield put(snapshotImportError(error));
+  }
+}
+
 export function* importGist({payload: {gistId}}) {
   try {
     const gistData =
-      yield call(loadFromId, gistId, {authenticated: false});
+      yield call(loadGistFromId, gistId, {authenticated: false});
     yield put(gistImported(generateProjectKey(), gistData));
   } catch (error) {
     if (get(error, 'response.status') === 404) {
@@ -62,13 +83,8 @@ export function* userAuthenticated() {
   const state = yield select();
   yield fork(saveCurrentProject, state);
 
-  const persistor = yield apply(
-    FirebasePersistor,
-    FirebasePersistor.forUser,
-    [state.get('user')],
-  );
+  const projects = yield call(loadAllProjects, getCurrentUserId(state));
 
-  const projects = yield apply(persistor, persistor.all);
   for (const project of projects) {
     yield put(projectLoaded(project));
   }

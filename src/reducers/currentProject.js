@@ -15,6 +15,8 @@ function currentProject(stateIn, action) {
       return state.set('projectKey', action.payload.projectKey);
     case 'PROJECT_CREATED':
       return state.set('projectKey', action.payload.projectKey);
+    case 'SNAPSHOT_IMPORTED':
+      return state.set('projectKey', action.payload.projectKey);
     case 'GIST_IMPORTED':
       return state.set('projectKey', action.payload.projectKey);
     default:

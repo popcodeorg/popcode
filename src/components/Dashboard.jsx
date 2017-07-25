@@ -12,7 +12,7 @@ import Pop from './Pop';
 
 class Dashboard extends React.Component {
   _renderLoginState() {
-    const currentUser = this.props.currentUser;
+    const {currentUser} = this.props;
 
     if (currentUser.authenticated) {
       const name = currentUser.displayName;
@@ -65,7 +65,7 @@ class Dashboard extends React.Component {
   }
 
   _renderMenu() {
-    let newProjectButton, loadProjectButton;
+    let newProjectButton, loadProjectButton, exportRepoButton;
     if (this.props.currentUser.authenticated) {
       newProjectButton = (
         <div
@@ -80,11 +80,37 @@ class Dashboard extends React.Component {
         this._renderSubmenuToggleButton('projectList', 'load-project');
     }
 
+    if (this.props.isExperimental && this.props.currentUser.authenticated) {
+      exportRepoButton = (
+        <div
+          className="dashboard__menu-item dashboard__menu-item_grid"
+          onClick={this.props.onExportRepo}
+        >
+          {t('dashboard.menu.export-repo')}
+        </div>
+      );
+    }
+
     return (
       <div className="dashboard__menu dashboard__menu_grid">
         {newProjectButton}
         {loadProjectButton}
         {this._renderSubmenuToggleButton('libraryPicker', 'libraries')}
+        <div
+          className={
+            classnames(
+              'dashboard__menu-item',
+              'dashboard__menu-item_grid',
+              {
+                'dashboard__menu-item_spinner':
+                  this.props.snapshotInProgress,
+              },
+            )
+          }
+          onClick={this.props.onCreateSnapshot}
+        >
+          {t('dashboard.menu.create-snapshot')}
+        </div>
         <div
           className={
             classnames(
@@ -108,6 +134,7 @@ class Dashboard extends React.Component {
         >
           {t('dashboard.menu.send-feedback')}
         </a>
+        {exportRepoButton}
       </div>
     );
   }
@@ -123,6 +150,10 @@ class Dashboard extends React.Component {
   }
 
   _renderProjects() {
+    if (isNull(this.props.currentProject)) {
+      return null;
+    }
+
     return (
       <ProjectList
         currentProject={this.props.currentProject}
@@ -234,9 +265,13 @@ Dashboard.propTypes = {
   currentProject: PropTypes.object,
   currentUser: PropTypes.object.isRequired,
   gistExportInProgress: PropTypes.bool.isRequired,
+  isExperimental: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  snapshotInProgress: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
+  onCreateSnapshot: PropTypes.func.isRequired,
   onExportGist: PropTypes.func.isRequired,
+  onExportRepo: PropTypes.func.isRequired,
   onLibraryToggled: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onNewProject: PropTypes.func.isRequired,
