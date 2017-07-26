@@ -36,6 +36,7 @@ function addNotification(state, type, severity, payload = {}) {
   );
 }
 
+/* eslint-disable complexity */
 export default function ui(stateIn, action) {
   let state = stateIn;
   if (state === undefined) {
