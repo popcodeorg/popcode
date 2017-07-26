@@ -53,8 +53,7 @@
             {"before": false, "after": true}
         ],
         "complexity": [
-          2,
-          {"max": 36}
+          2
         ],
         "computed-property-spacing": [
             2,
