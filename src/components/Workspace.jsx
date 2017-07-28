@@ -299,9 +299,9 @@ class Workspace extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="layout">
         <NotificationList />
-        <div className="layout">
+        <div className="layout__columns">
           <Dashboard />
           {this._renderSidebar()}
           <div className="workspace layout__main">
