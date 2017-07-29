@@ -408,13 +408,6 @@ body {
   z-index: 1;
 }
 
-.environment__label_toggleTextSize {
-  position: absolute;
-  bottom: 3em;
-  right: 1em;
-  z-index: 1;
-}
-
 /** @define editors */
 
 .editors {
