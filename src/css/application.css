@@ -74,24 +74,31 @@ body {
 /** @define layout */
 
 .layout {
-  display: flex;
   height: 100vh;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout__columns {
+  position: relative;
+  display: flex;
+  flex: 0 1 100vh;
 }
 
 .layout__sidebar {
-  flex: 0 0 auto;
+  flex: none;
   border-right: 1px solid var(--color-gray);
   display: flex;
 }
 
 .layout__main {
-  flex: 1 1 100%;
+  flex: 1 1 100vw;
   position: relative;
 }
 
 .layout__dashboard {
-  flex: 1 0 20%;
+  flex: 0 0 20%;
 }
 
 /** @define sidebar */
@@ -206,7 +213,6 @@ body {
 .dashboard {
   background-color: var(--color-green);
   color: black;
-  height: 100vh;
 }
 
 .dashboard_yellow {
@@ -368,7 +374,6 @@ body {
 .workspace {
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
 /** @define environment */
@@ -378,7 +383,6 @@ body {
   flex: 1 1 auto;
   display: flex;
   flex-direction: row;
-  height: 100vh;
 }
 
 .environment__column {

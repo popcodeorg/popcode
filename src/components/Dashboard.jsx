@@ -236,6 +236,7 @@ class Dashboard extends React.Component {
     }
 
     const sidebarClassnames = classnames(
+      'layout__dashboard',
       'dashboard',
       'u__flex-container',
       'u__flex-container_column',
