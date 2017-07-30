@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {t} from 'i18next';
 import classnames from 'classnames';
 import partial from 'lodash/partial';
-import WordmarkVertical from '../static/images/wordmark-vertical.svg';
 
 class Sidebar extends React.Component {
   _renderHiddenComponents() {
@@ -37,9 +36,6 @@ class Sidebar extends React.Component {
 
     return (
       <div className={sidebarClassnames}>
-        <div className="sidebar__wordmark-container">
-          <WordmarkVertical />
-        </div>
         <div
           className={classnames(
             'sidebar__arrow',
