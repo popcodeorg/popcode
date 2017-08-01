@@ -122,6 +122,12 @@ body {
 .top-bar__hamburger {
   font-size: 2em;
   padding: 0.25em 0.5em 0.25em 0;
+  user-select: none;
+  cursor: pointer;
+}
+
+.top-bar__hamburger_active {
+  color: var(--color-dark-gray);
 }
 
 .top-bar__logo-container svg {
