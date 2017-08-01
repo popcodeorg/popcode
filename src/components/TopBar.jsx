@@ -22,6 +22,9 @@ export default function TopBar({validationState, isUserTyping}) {
 
   return (
     <div className={classnames('top-bar', modifier)}>
+      <div className="top-bar__hamburger u__fontawesome">
+        &#xf0c9;
+      </div>
       <div className="top-bar__logo-container">
         <Pop variant={popVariant} />
       </div>

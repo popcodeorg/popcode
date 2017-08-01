@@ -107,8 +107,8 @@ body {
 .top-bar {
   background-color: var(--color-green);
   display: flex;
-  font-size: 12px;
-  padding-left: 1rem;
+  padding-left: 1em;
+  font-size: 16px;
 }
 
 .top-bar_yellow {
@@ -119,17 +119,23 @@ body {
   background-color: var(--color-red);
 }
 
-.top-bar__logo-container svg {
-  height: 3rem;
+.top-bar__hamburger {
+  font-size: 2em;
+  padding: 0.25em 0.5em 0.25em 0;
 }
 
-.top-bar__wordmark_container {
+.top-bar__logo-container svg {
+  height: 3em;
+}
+
+.top-bar__wordmark-container {
   position: relative;
+  margin-left: -0.25em;
 }
 
 .top-bar__wordmark-container svg {
-  padding: 1rem;
-  max-height: 1rem;
+  padding: 1em;
+  max-height: 1em;
   max-width: 100%;
   width: auto;
 }
