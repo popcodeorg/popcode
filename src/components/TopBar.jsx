@@ -17,11 +17,26 @@ function uiVariants({validationState, isUserTyping}) {
   return {popVariant: 'horns', modifier: 'top-bar_red'};
 }
 
-export default function TopBar({validationState, isUserTyping}) {
+export default function TopBar({
+  isHamburgerMenuActive,
+  isUserTyping,
+  validationState,
+  onClickHamburgerMenu,
+}) {
   const {popVariant, modifier} = uiVariants({validationState, isUserTyping});
 
   return (
     <div className={classnames('top-bar', modifier)}>
+      <div
+        className={classnames(
+          'top-bar__hamburger',
+          'u__fontawesome',
+          {'top-bar__hamburger_active': isHamburgerMenuActive},
+        )}
+        onClick={onClickHamburgerMenu}
+      >
+        &#xf0c9;
+      </div>
       <div className="top-bar__logo-container">
         <Pop variant={popVariant} />
       </div>
@@ -33,6 +48,8 @@ export default function TopBar({validationState, isUserTyping}) {
 }
 
 TopBar.propTypes = {
+  isHamburgerMenuActive: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
+  onClickHamburgerMenu: PropTypes.func.isRequired,
 };
