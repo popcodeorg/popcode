@@ -18,25 +18,15 @@ import {
   getAllProjects,
   getCurrentProject,
   getCurrentUser,
-  getCurrentValidationState,
   isDashboardOpen,
   isExperimental,
   isGistExportInProgress,
   isSnapshotInProgress,
-  isUserTyping,
 } from '../selectors';
 import {
   signIn,
   signOut,
 } from '../clients/firebase';
-
-function getValidationStateForDashboard(state) {
-  const validationState = getCurrentValidationState(state);
-  if (validationState === 'validation-error' && isUserTyping(state)) {
-    return 'validating';
-  }
-  return validationState;
-}
 
 function mapStateToProps(state) {
   return {
@@ -48,7 +38,6 @@ function mapStateToProps(state) {
     isExperimental: isExperimental(state),
     isOpen: isDashboardOpen(state),
     snapshotInProgress: isSnapshotInProgress(state),
-    validationState: getValidationStateForDashboard(state),
   };
 }
 
