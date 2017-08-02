@@ -210,7 +210,7 @@
     "npm-check": "^5.2.1",
     "null-loader": "^0.1.1",
     "postcss": "^6.0.6",
-    "postcss-cssnext": "^2.8.0",
+    "postcss-cssnext": "^3.0.2",
     "raw-loader": "^0.5.1",
     "redux-saga-test-plan": "^3.0.2",
     "sinon": "^2.3.1",
