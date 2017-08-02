@@ -142,7 +142,7 @@
     "reselect": "^3.0.1",
     "rxjs": "^5.0.2",
     "slowparse": "^1.1.4",
-    "stylelint": "^7.10.1",
+    "stylelint": "^8.0.0",
     "text-encoding": "^0.6.0",
     "uuid": "^3.1.0",
     "void-elements": "^3.1.0"
