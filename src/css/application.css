@@ -61,6 +61,7 @@
 :root {
   --color-gray: #eee;
   --color-dark-gray: #aaa;
+  --color-very-dark-gray: #333;
   --color-green: #00ff85;
   --color-yellow: #ffd100;
   --color-red: #ff5e4f;
@@ -101,38 +102,58 @@ body {
   flex: 0 0 20%;
 }
 
-/** @define sidebar */
+/** @define top-bar */
 
-.sidebar {
+.top-bar {
   background-color: var(--color-green);
   display: flex;
-  flex-direction: column;
-  position: relative;
-  flex: 0 1 auto;
+  padding-left: 1em;
+  font-size: 16px;
 }
 
-.sidebar_yellow {
+.top-bar_yellow {
   background-color: var(--color-yellow);
 }
 
-.sidebar_red {
+.top-bar_red {
   background-color: var(--color-red);
 }
 
-.sidebar__wordmark-container {
-  flex: 1 0 auto;
+.top-bar__hamburger {
+  font-size: 2em;
+  padding: 0.25em 0.5em 0.25em 0;
+  user-select: none;
+  cursor: pointer;
+}
+
+.top-bar__hamburger_active {
+  color: var(--color-dark-gray);
+}
+
+.top-bar__logo-container svg {
+  height: 3em;
+}
+
+.top-bar__wordmark-container {
   position: relative;
+  margin-left: -0.25em;
 }
 
-.sidebar__wordmark-container svg {
-  padding: 10px;
-  max-width: 24px;
-  height: auto;
-  max-height: 100%;
+.top-bar__wordmark-container svg {
+  padding: 1em;
+  max-height: 1em;
+  max-width: 100%;
+  width: auto;
 }
 
-.sidebar__wordmark-container path {
-  fill: black !important;
+/** @define sidebar */
+
+.sidebar {
+  background-color: var(--color-very-dark-gray);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 48px;
 }
 
 .sidebar__minimized-components {
@@ -164,7 +185,7 @@ body {
 }
 
 :root {
-  --sidebar-arrow-stroke: 4px solid black;
+  --sidebar-arrow-stroke: 4px solid white;
 }
 
 .sidebar__arrow {
@@ -211,16 +232,9 @@ body {
 /** @define dashboard */
 
 .dashboard {
-  background-color: var(--color-green);
+  background-color: var(--color-gray);
   color: black;
-}
-
-.dashboard_yellow {
-  background-color: var(--color-yellow);
-}
-
-.dashboard_red {
-  background-color: var(--color-red);
+  padding: 0 1rem;
 }
 
 .dashboard__session {

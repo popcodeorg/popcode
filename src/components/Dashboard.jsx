@@ -2,13 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
 import partial from 'lodash/partial';
-import includes from 'lodash/includes';
 import isNull from 'lodash/isNull';
 import classnames from 'classnames';
 import config from '../config';
 import ProjectList from './ProjectList';
 import LibraryPicker from './LibraryPicker';
-import Pop from './Pop';
 
 class Dashboard extends React.Component {
   _renderLoginState() {
@@ -179,32 +177,6 @@ class Dashboard extends React.Component {
     );
   }
 
-  _renderPopSvg(variant, ...validationStates) {
-    return (
-      <div
-        className={classnames(
-          'dashboard__pop',
-          {
-            dashboard__pop_visible:
-              includes(validationStates, this.props.validationState),
-          },
-        )}
-      >
-        <Pop variant={variant} />
-      </div>
-    );
-  }
-
-  _renderPop() {
-    return (
-      <div className="dashboard__pop-container">
-        {this._renderPopSvg('neutral', 'passed')}
-        {this._renderPopSvg('thinking', 'validating')}
-        {this._renderPopSvg('horns', 'validation-error', 'runtime-error')}
-      </div>
-    );
-  }
-
   _renderLinks() {
     return (
       <div className="dashboard__links">
@@ -240,11 +212,6 @@ class Dashboard extends React.Component {
       'dashboard',
       'u__flex-container',
       'u__flex-container_column',
-      {
-        dashboard_yellow: this.props.validationState === 'validating',
-        dashboard_red: this.props.validationState === 'validation-error' ||
-          this.props.validationState === 'runtime-error',
-      },
     );
 
     return (
@@ -253,7 +220,6 @@ class Dashboard extends React.Component {
         {this._renderMenu()}
         {this._renderSubmenu()}
         <div className="dashboard__spacer" />
-        {this._renderPop()}
         {this._renderLinks()}
       </div>
     );
@@ -269,7 +235,6 @@ Dashboard.propTypes = {
   isExperimental: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   snapshotInProgress: PropTypes.bool.isRequired,
-  validationState: PropTypes.string.isRequired,
   onCreateSnapshot: PropTypes.func.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,

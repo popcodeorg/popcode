@@ -38,7 +38,7 @@ import {
 import {isPristineProject} from '../util/projectUtils';
 import {getCurrentProject} from '../selectors';
 
-import {Dashboard, NotificationList} from '../containers';
+import {TopBar, Dashboard, NotificationList} from '../containers';
 import EditorsColumn from './EditorsColumn';
 import Output from './Output';
 import Sidebar from './Sidebar';
@@ -309,6 +309,7 @@ class Workspace extends React.Component {
   render() {
     return (
       <div className="layout">
+        <TopBar />
         <NotificationList />
         <div className="layout__columns">
           <Dashboard />
