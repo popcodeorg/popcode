@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import Wordmark from '../static/images/wordmark.svg';
-import Pop from './Pop';
+import Wordmark from '../../static/images/wordmark.svg';
+import Pop from '../Pop';
+import CurrentUser from './CurrentUser';
 
 function uiVariants({validationState, isUserTyping}) {
   if (validationState === 'passed') {
@@ -18,10 +19,13 @@ function uiVariants({validationState, isUserTyping}) {
 }
 
 export default function TopBar({
+  currentUser,
   isHamburgerMenuActive,
   isUserTyping,
   validationState,
   onClickHamburgerMenu,
+  onLogOut,
+  onStartLogIn,
 }) {
   const {popVariant, modifier} = uiVariants({validationState, isUserTyping});
 
@@ -43,13 +47,22 @@ export default function TopBar({
       <div className="top-bar__wordmark-container">
         <Wordmark />
       </div>
+      <div className="top-bar__spacer" />
+      <CurrentUser
+        user={currentUser}
+        onLogOut={onLogOut}
+        onStartLogIn={onStartLogIn}
+      />
     </div>
   );
 }
 
 TopBar.propTypes = {
+  currentUser: PropTypes.object.isRequired,
   isHamburgerMenuActive: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
   onClickHamburgerMenu: PropTypes.func.isRequired,
+  onLogOut: PropTypes.func.isRequired,
+  onStartLogIn: PropTypes.func.isRequired,
 };

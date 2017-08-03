@@ -1,10 +1,11 @@
 {
-  "dashboard": {
+  "top-bar": {
     "session": {
-      "not-logged-in": "Not logged in",
-      "log-in-prompt": "Sign in",
-      "log-out-prompt": "Sign out"
-    },
+      "log-in-prompt": "Log in to save",
+      "log-out-prompt": "Log out"
+    }
+  },
+  "dashboard": {
     "menu": {
       "new-project": "New Project",
       "load-project": "Load Project",

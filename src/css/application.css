@@ -108,7 +108,10 @@ body {
   background-color: var(--color-green);
   display: flex;
   padding-left: 1em;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  align-items: center;
+  padding: 0 1em;
 }
 
 .top-bar_yellow {
@@ -121,7 +124,7 @@ body {
 
 .top-bar__hamburger {
   font-size: 2em;
-  padding: 0.25em 0.5em 0.25em 0;
+  padding-right: 0.5em;
   user-select: none;
   cursor: pointer;
 }
@@ -130,7 +133,7 @@ body {
   color: var(--color-dark-gray);
 }
 
-.top-bar__logo-container svg {
+.top-bar__logo-container > svg {
   height: 3em;
 }
 
@@ -139,11 +142,31 @@ body {
   margin-left: -0.25em;
 }
 
-.top-bar__wordmark-container svg {
-  padding: 1em;
+.top-bar__wordmark-container > svg {
+  padding: 0 1em;
   max-height: 1em;
   max-width: 100%;
   width: auto;
+}
+
+.top-bar__avatar {
+  height: 2em;
+  border-radius: 50%;
+  vertical-align: middle;
+  line-height: 1em;
+}
+
+.top-bar__username {
+  margin-left: 0.5em;
+}
+
+.top-bar__spacer {
+  flex: 1 0 0;
+}
+
+.top-bar__log-in-prompt {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 /** @define sidebar */
@@ -240,33 +263,6 @@ body {
   background-color: var(--color-gray);
   color: black;
   padding: 0 1rem;
-}
-
-.dashboard__session {
-  flex: 0 0 auto;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  padding: 1em;
-  margin: 0 auto;
-  overflow: hidden;
-}
-
-.dashboard__avatar {
-  max-width: 32px;
-  max-height: 32px;
-  border-radius: 50%;
-  vertical-align: middle;
-}
-
-.dashboard__username {
-  font-weight: bold;
-  padding-left: 0.5rem;
-}
-
-.dashboard__log-in-out {
-  padding-left: 1rem;
-  text-decoration: underline;
-  cursor: pointer;
 }
 
 .dashboard__menu {
