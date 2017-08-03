@@ -160,10 +160,12 @@ module.exports = {
       {
         test: /\.js$/,
         include: [
-          matchModule('redux'),
+          matchModule('ansi-styles'),
+          matchModule('chalk'),
           matchModule('lodash-es'),
-          matchModule('stylelint'),
+          matchModule('redux'),
           matchModule('redux-saga-debounce-effect'),
+          matchModule('stylelint'),
         ],
         use: {loader: 'babel-loader', options: babelrc},
       },
