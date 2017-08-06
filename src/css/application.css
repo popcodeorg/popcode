@@ -224,9 +224,14 @@ body {
 
 .sidebar__plusMinus {
   text-align: center;
-  position: relative;
+  position: absolute;
+  display: block;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding-bottom: 1rem;
   font-size: 1.5rem;
+  color: white;
 }
 
 /** @define dashboard */

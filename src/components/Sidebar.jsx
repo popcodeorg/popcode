@@ -52,8 +52,8 @@ class Sidebar extends React.Component {
         >
           {
             this.props.textSizeIsLarge ?
-              <icon className="u__icon">&#xf010;</icon> :
-              <icon className="u__icon">&#xf00e;</icon>
+              <span className="u__icon">&#xf010;</span> :
+              <span className="u__icon">&#xf00e;</span>
           }
         </div>
         {this._renderHiddenComponents()}
