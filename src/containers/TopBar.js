@@ -33,7 +33,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onClickHamburgerMenu() {
-      dispatch(toggleDashboard);
+      dispatch(toggleDashboard());
     },
 
     onClickMenu(menuKey) {
