@@ -31,6 +31,8 @@ import {
   startDragColumnDivider,
   stopDragColumnDivider,
   applicationLoaded,
+  toggleEditorTextSize,
+
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
@@ -75,6 +77,7 @@ class Workspace extends React.Component {
       '_handleRequestedLineFocused',
       '_storeDividerRef',
       '_storeColumnRef',
+      '_handleEditorTextSizeToggled',
     );
     this.columnRefs = [null, null];
   }
@@ -212,6 +215,10 @@ class Workspace extends React.Component {
     this.props.dispatch(editorFocusedRequestedLine());
   }
 
+  _handleEditorTextSizeToggled() {
+    this.props.dispatch(toggleEditorTextSize());
+  }
+
   _renderSidebar() {
     let hiddenComponents = [];
     if (!isNull(this.props.currentProject)) {
@@ -222,9 +229,11 @@ class Workspace extends React.Component {
         <Sidebar
           dashboardIsOpen={this.props.ui.dashboard.isOpen}
           hiddenComponents={hiddenComponents}
+          textSizeIsLarge={this.props.ui.editors.textSizeIsLarge}
           validationState={this._getOverallValidationState()}
           onComponentUnhide={this._handleComponentUnhide}
           onToggleDashboard={this._handleToggleDashboard}
+          onToggleEditorTextSize={this._handleEditorTextSizeToggled}
         />
       </div>
     );

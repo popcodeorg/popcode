@@ -13,6 +13,8 @@ import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 
 const RESIZE_THROTTLE = 250;
+const NORMAL_FONTSIZE = 14;
+const LARGE_FONTSIZE = 20;
 
 function createSessionWithoutWorker(source, language) {
   const session = ACE.createEditSession(source, null);
@@ -36,6 +38,7 @@ class Editor extends React.Component {
 
   componentDidMount() {
     this._focusRequestedLine(this.props.requestedFocusedLine);
+    this._applyFontSize(this.props.textSizeIsLarge);
     window.addEventListener('resize', this._handleWindowResize);
   }
 
@@ -48,6 +51,7 @@ class Editor extends React.Component {
     }
 
     this._focusRequestedLine(nextProps.requestedFocusedLine);
+    this._applyFontSize(nextProps.textSizeIsLarge);
 
     if (nextProps.percentageOfHeight !== this.props.percentageOfHeight) {
       requestAnimationFrame(this._resizeEditor);
@@ -114,6 +118,14 @@ class Editor extends React.Component {
     }
   }
 
+  _applyFontSize(textSizeIsLarge) {
+    if (textSizeIsLarge) {
+      this._editor.setFontSize(LARGE_FONTSIZE);
+    } else {
+      this._editor.setFontSize(NORMAL_FONTSIZE);
+    }
+  }
+
   _disableAutoClosing() {
     this._editor.setBehavioursEnabled(false);
   }
@@ -147,12 +159,14 @@ Editor.propTypes = {
   projectKey: PropTypes.string.isRequired,
   requestedFocusedLine: PropTypes.object,
   source: PropTypes.string.isRequired,
+  textSizeIsLarge: PropTypes.bool.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };
 
 Editor.defaultProps = {
   requestedFocusedLine: null,
+  textSizeIsLarge: false,
 };
 
 export default Editor;

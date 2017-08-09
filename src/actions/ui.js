@@ -51,3 +51,7 @@ export const refreshPreview = createAction(
   'REFRESH_PREVIEW',
   timestamp => ({timestamp}),
 );
+
+export const toggleEditorTextSize = createAction(
+  'TOGGLE_EDITOR_TEXT_SIZE',
+);

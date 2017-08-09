@@ -17,6 +17,7 @@ const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({
     typing: false,
     requestedFocusedLine: null,
+    textSizeIsLarge: false,
   })).
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Map()).
@@ -199,6 +200,11 @@ export default function ui(stateIn, action) {
 
     case 'SNAPSHOT_NOT_FOUND':
       return addNotification(state, 'snapshot-not-found', 'error');
+
+    case 'TOGGLE_EDITOR_TEXT_SIZE':
+      return state.updateIn(['editors', 'textSizeIsLarge'],
+        textSizeIsLarge => !textSizeIsLarge,
+      );
 
     default:
       return state;

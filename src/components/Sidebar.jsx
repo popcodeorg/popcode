@@ -46,6 +46,16 @@ class Sidebar extends React.Component {
           )}
           onClick={this.props.onToggleDashboard}
         />
+        <div
+          className="sidebar__plusMinus"
+          onClick={this.props.onToggleEditorTextSize}
+        >
+          {
+            this.props.textSizeIsLarge ?
+              <span className="u__icon">&#xf010;</span> :
+              <span className="u__icon">&#xf00e;</span>
+          }
+        </div>
         {this._renderHiddenComponents()}
       </div>
     );
@@ -55,9 +65,11 @@ class Sidebar extends React.Component {
 Sidebar.propTypes = {
   dashboardIsOpen: PropTypes.bool.isRequired,
   hiddenComponents: PropTypes.array.isRequired,
+  textSizeIsLarge: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
   onComponentUnhide: PropTypes.func.isRequired,
   onToggleDashboard: PropTypes.func.isRequired,
+  onToggleEditorTextSize: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

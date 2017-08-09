@@ -31,6 +31,7 @@ import {
   updateNotificationMetadata,
   refreshPreview,
   popOutProject,
+  toggleEditorTextSize,
 } from './ui';
 
 import {
@@ -81,4 +82,5 @@ export {
   refreshPreview,
   repoExportDisplayed,
   repoExportNotDisplayed,
+  toggleEditorTextSize,
 };

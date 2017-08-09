@@ -222,6 +222,18 @@ body {
   transform-origin: right 50%;
 }
 
+.sidebar__plusMinus {
+  text-align: center;
+  position: absolute;
+  display: block;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: 1rem;
+  font-size: 1.5rem;
+  color: white;
+}
+
 /** @define dashboard */
 
 .dashboard {
@@ -680,6 +692,12 @@ body {
 
 .u__hidden {
   display: none;
+}
+
+.u__icon {
+  font-family: 'FontAwesome';
+  cursor: pointer;
+  user-select: none;
 }
 
 .u__fontawesome {
