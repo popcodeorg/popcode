@@ -18,8 +18,18 @@ const sagaMiddleware = createSagaMiddleware();
 createStoreWithMiddleware =
   applyMiddleware(sagaMiddleware)(createStoreWithMiddleware);
 
+let devToolsExtension;
+
+if (window.__REDUX_DEVTOOLS_EXTENSION__) {
+  devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__();
+}
+
 function createApplicationStore() {
-  const store = createStoreWithMiddleware(reducers, new Immutable.Map());
+  const store = createStoreWithMiddleware(
+    reducers,
+    new Immutable.Map(),
+    devToolsExtension,
+  );
   sagaMiddleware.run(rootSaga);
   return store;
 }
