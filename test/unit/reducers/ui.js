@@ -18,6 +18,7 @@ import {
   notificationTriggered,
   userDismissedNotification,
   refreshPreview,
+  toggleTopBarMenu,
 } from '../../../src/actions/ui';
 import {
   snapshotCreated,
@@ -30,7 +31,9 @@ import {
   repoExportError,
 } from '../../../src/actions/clients';
 import {EmptyGistError} from '../../../src/clients/github';
-import {userLoggedOut} from '../../../src/actions/user';
+import {
+  userLoggedOut,
+} from '../../../src/actions/user';
 import {applicationLoaded} from '../../../src/actions/';
 
 const initialState = Immutable.fromJS({
@@ -45,6 +48,7 @@ const initialState = Immutable.fromJS({
     activeSubmenu: null,
   },
   lastRefreshTimestamp: null,
+  topBar: {openMenu: null},
 });
 
 function withNotification(type, severity, payload = {}) {
@@ -172,6 +176,27 @@ test('userLoggedOut', (t) => {
     ),
     userLoggedOut,
     initialState,
+  ));
+
+  t.test('with no top bar menu open', reducerTest(
+    reducer,
+    initialState,
+    userLoggedOut,
+    initialState,
+  ));
+
+  t.test('with currentUser menu open', reducerTest(
+    reducer,
+    initialState.setIn(['topBar', 'openMenu'], 'currentUser'),
+    userLoggedOut,
+    initialState,
+  ));
+
+  t.test('with different menu open', reducerTest(
+    reducer,
+    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+    userLoggedOut,
+    initialState.setIn(['topBar', 'openMenu'], 'silly'),
   ));
 });
 
@@ -313,3 +338,26 @@ tap('123-456', snapshotKey =>
     withNotification('snapshot-created', 'notice', {snapshotKey}),
   )),
 );
+
+test('toggleTopBarMenu', (t) => {
+  t.test('with no menu open', reducerTest(
+    reducer,
+    initialState,
+    partial(toggleTopBarMenu, 'silly'),
+    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+  ));
+
+  t.test('with specified menu open', reducerTest(
+    reducer,
+    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+    partial(toggleTopBarMenu, 'silly'),
+    initialState,
+  ));
+
+  t.test('with different menu open', reducerTest(
+    reducer,
+    initialState.setIn(['topBar', 'openMenu'], 'goofy'),
+    partial(toggleTopBarMenu, 'silly'),
+    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+  ));
+});

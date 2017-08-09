@@ -9,43 +9,6 @@ import ProjectList from './ProjectList';
 import LibraryPicker from './LibraryPicker';
 
 class Dashboard extends React.Component {
-  _renderLoginState() {
-    const {currentUser} = this.props;
-
-    if (currentUser.authenticated) {
-      const name = currentUser.displayName;
-
-      return (
-        <div className="dashboard__session">
-          <img
-            className="dashboard__avatar"
-            src={currentUser.avatarUrl}
-          />
-          <span className="dashboard__username">{name}</span>
-          <span
-            className="dashboard__log-in-out"
-            onClick={this.props.onLogOut}
-          >
-            {t('dashboard.session.log-out-prompt')}
-          </span>
-        </div>
-      );
-    }
-    return (
-      <div className="dashboard__session">
-        <span className="dashboard__username">
-          {t('dashboard.session.not-logged-in')}
-        </span>
-        <span
-          className="dashboard__log-in-out"
-          onClick={this.props.onStartLogIn}
-        >
-          {t('dashboard.session.log-in-prompt')}
-        </span>
-      </div>
-    );
-  }
-
   _renderSubmenuToggleButton(submenu, label) {
     return (
       <div
@@ -216,7 +179,6 @@ class Dashboard extends React.Component {
 
     return (
       <div className={sidebarClassnames}>
-        {this._renderLoginState()}
         {this._renderMenu()}
         {this._renderSubmenu()}
         <div className="dashboard__spacer" />
@@ -239,10 +201,8 @@ Dashboard.propTypes = {
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onLibraryToggled: PropTypes.func.isRequired,
-  onLogOut: PropTypes.func.isRequired,
   onNewProject: PropTypes.func.isRequired,
   onProjectSelected: PropTypes.func.isRequired,
-  onStartLogIn: PropTypes.func.isRequired,
   onSubmenuToggled: PropTypes.func.isRequired,
 };
 

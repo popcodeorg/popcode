@@ -7,6 +7,7 @@ import getCurrentValidationState from './getCurrentValidationState';
 import getErrors from './getErrors';
 import getLastRefreshTimestamp from './getLastRefreshTimestamp';
 import getNotifications from './getNotifications';
+import getOpenTopBarMenu from './getOpenTopBarMenu';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
   from './isCurrentProjectSyntacticallyValid';
@@ -26,6 +27,7 @@ export {
   getErrors,
   getLastRefreshTimestamp,
   getNotifications,
+  getOpenTopBarMenu,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isDashboardOpen,
