@@ -27,6 +27,7 @@ const defaultState = new Immutable.Map().
       set('isOpen', false).
       set('activeSubmenu', null),
   ).
+  set('topBar', new Immutable.Map({openMenu: null})).
   set('lastRefreshTimestamp', null);
 
 function addNotification(state, type, severity, payload = {}) {
@@ -142,13 +143,13 @@ export default function ui(stateIn, action) {
       );
 
     case 'USER_LOGGED_OUT':
-      if (state.getIn(['dashboard', 'activeSubmenu']) === 'projectList') {
-        return state.setIn(
-          ['dashboard', 'activeSubmenu'],
-          null,
-        );
-      }
-      return state;
+      return state.updateIn(
+        ['topBar', 'openMenu'],
+        menu => menu === 'currentUser' ? null : menu,
+      ).updateIn(
+        ['dashboard', 'activeSubmenu'],
+        submenu => submenu === 'projectList' ? null : submenu,
+      );
 
     case 'SNAPSHOT_CREATED':
       return addNotification(
@@ -204,6 +205,12 @@ export default function ui(stateIn, action) {
     case 'TOGGLE_EDITOR_TEXT_SIZE':
       return state.updateIn(['editors', 'textSizeIsLarge'],
         textSizeIsLarge => !textSizeIsLarge,
+      );
+
+    case 'TOGGLE_TOP_BAR_MENU':
+      return state.updateIn(
+        ['topBar', 'openMenu'],
+        menu => menu === action.payload ? null : action.payload,
       );
 
     default:

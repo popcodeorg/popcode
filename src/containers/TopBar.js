@@ -6,10 +6,12 @@ import {TopBar} from '../components';
 import {
   getCurrentUser,
   getCurrentValidationState,
+  getOpenTopBarMenu,
   isDashboardOpen,
   isUserTyping,
 } from '../selectors';
 import {
+  toggleTopBarMenu,
   notificationTriggered,
   toggleDashboard,
 } from '../actions';
@@ -23,6 +25,7 @@ function mapStateToProps(state) {
     currentUser: getCurrentUser(state),
     isHamburgerMenuActive: isDashboardOpen(state),
     isUserTyping: isUserTyping(state),
+    openMenu: getOpenTopBarMenu(state),
     validationState: getCurrentValidationState(state),
   };
 }
@@ -31,6 +34,10 @@ function mapDispatchToProps(dispatch) {
   return {
     onClickHamburgerMenu() {
       dispatch(toggleDashboard);
+    },
+
+    onClickMenu(menuKey) {
+      dispatch(toggleTopBarMenu(menuKey));
     },
 
     onLogOut() {

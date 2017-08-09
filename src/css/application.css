@@ -107,11 +107,11 @@ body {
 .top-bar {
   background-color: var(--color-green);
   display: flex;
-  padding-left: 1em;
   font-size: 18px;
   font-weight: bold;
   align-items: center;
   padding: 0 1em;
+  z-index: 2;
 }
 
 .top-bar_yellow {
@@ -158,6 +158,52 @@ body {
 
 .top-bar__username {
   margin-left: 0.5em;
+}
+
+.top-bar__menu-button {
+  align-self: stretch;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 0 1px;
+  box-sizing: border-box;
+  cursor: pointer;
+  line-height: 3em;
+  padding: 0 0.5em;
+  position: relative;
+  user-select: none;
+  vertical-align: middle;
+}
+
+.top-bar__menu-button_active {
+  background-color: white;
+  border-color: var(--color-gray);
+}
+
+.top-bar__menu {
+  border: 1px solid var(--color-gray);
+  box-shadow: 2px 2px 2px var(--color-gray);
+  left: -1px;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+}
+
+.top-bar__menu-item {
+  background-color: white;
+  box-sizing: border-box;
+  color: var(--color-very-dark-gray);
+  font-weight: normal;
+  padding: 0 0.5em;
+  width: 100%;
+}
+
+.top-bar__menu-item:hover {
+  background-color: var(--color-gray);
+  color: black;
+}
+
+.top-bar__drop-down-button {
+  padding: 0 0.5em;
 }
 
 .top-bar__spacer {
