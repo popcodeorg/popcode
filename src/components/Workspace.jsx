@@ -53,7 +53,6 @@ function mapStateToProps(state) {
     isUserTyping: state.getIn(['ui', 'editors', 'typing']),
     editorsFlex: state.getIn(['ui', 'workspace', 'columnFlex']).toJS(),
     rowsFlex: state.getIn(['ui', 'workspace', 'rowFlex']).toJS(),
-    currentUser: state.get('user').toJS(),
     ui: state.get('ui').toJS(),
   };
 }
@@ -63,7 +62,7 @@ class Workspace extends React.Component {
     super();
     bindAll(
       this,
-      '_confirmUnload',
+      '_handleUnload',
       '_handleComponentUnhide',
       '_handleComponentHide',
       '_handleDividerDrag',
@@ -84,6 +83,7 @@ class Workspace extends React.Component {
     let gistId = null;
     let snapshotKey = null;
     let isExperimental = false;
+    let rehydratedProject = null;
     if (location.search) {
       const query = qs.parse(location.search.slice(1));
       if (query.gist) {
@@ -94,30 +94,35 @@ class Workspace extends React.Component {
       }
       isExperimental = Object.keys(query).includes('experimental');
     }
+    const dehydratedProject = localStorage.getItem('popcode-project-state');
+    if (dehydratedProject) {
+      localStorage.removeItem('popcode-project-state');
+      rehydratedProject = JSON.parse(dehydratedProject);
+    }
     history.replaceState({}, '', location.pathname);
     this.props.dispatch(applicationLoaded({
       snapshotKey,
       gistId,
       isExperimental,
+      rehydratedProject,
     }));
     this._listenForAuthChange();
     startSessionHeartbeat();
   }
 
   componentDidMount() {
-    addEventListener('beforeunload', this._confirmUnload);
+    addEventListener('beforeunload', this._handleUnload);
   }
 
   componentWillUnmount() {
-    removeEventListener('beforeunload', this._confirmUnload);
+    removeEventListener('beforeunload', this._handleUnload);
   }
 
-  _confirmUnload(event) {
-    const {currentUser, currentProject} = this.props;
-    if (!currentUser.authenticated) {
-      if (!isNull(currentProject) && !isPristineProject(currentProject)) {
-        event.returnValue = t('workspace.confirmations.unload-unsaved');
-      }
+  _handleUnload() {
+    const {currentProject} = this.props;
+    if (!isNull(currentProject) && !isPristineProject(currentProject)) {
+      const dehydratedProject = JSON.stringify(currentProject);
+      localStorage.setItem('popcode-project-state', dehydratedProject);
     }
   }
 
@@ -303,7 +308,6 @@ class Workspace extends React.Component {
 
 Workspace.propTypes = {
   currentProject: PropTypes.object,
-  currentUser: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   editorsFlex: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
