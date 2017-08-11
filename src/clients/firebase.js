@@ -81,19 +81,24 @@ export async function saveCurrentProject(uid, project) {
 }
 
 async function userCredentialForUserData(user) {
-  const event =
-    await database.ref(`authTokens/${user.uid}/github_com`).once('value');
-  const credential = event.val();
+  const path = providerPath(user.uid, user.providerData[0].providerId);
+  const [credentialEvent, providerInfoEvent] = await Promise.all([
+    database.ref(`authTokens/${path}`).once('value'),
+    database.ref(`providerInfo/${path}`).once('value'),
+  ]);
+  const credential = credentialEvent.val();
+  const additionalUserInfo = providerInfoEvent.val();
   if (isNil(credential)) {
     await auth.signOut();
     return null;
   }
 
-  return {user, credential};
+  return {user, credential, additionalUserInfo};
 }
 
 export async function getInitialUserState() {
   const userCredential = await oneAuth();
+
   if (!isNull(userCredential)) {
     if (isNull(userCredential.credential)) {
       await auth.signOut();
@@ -119,7 +124,7 @@ export function onSignedOut(handler) {
 
 export async function signIn() {
   const userCredential = await auth.signInWithPopup(githubAuthProvider);
-  saveCredentials(userCredential.user.uid, userCredential.credential);
+  await saveUserCredential(userCredential);
   return userCredential;
 }
 
@@ -127,10 +132,31 @@ export function signOut() {
   return auth.signOut();
 }
 
-export function saveCredentials(uid, credential) {
-  database.
-    ref(`authTokens/${uid}/${credential.providerId.replace('.', '_')}`).
+async function saveUserCredential({
+  user: {uid},
+  credential,
+  additionalUserInfo,
+}) {
+  await Promise.all([
+    saveProviderInfo(uid, additionalUserInfo),
+    saveCredentials(uid, credential),
+  ]);
+}
+
+async function saveCredentials(uid, credential) {
+  await database.
+    ref(`authTokens/${providerPath(uid, credential.providerId)}`).
     set(credential);
+}
+
+async function saveProviderInfo(uid, providerInfo) {
+  await database.
+    ref(`providerInfo/${providerPath(uid, providerInfo.providerId)}`).
+    set(providerInfo);
+}
+
+function providerPath(uid, providerId) {
+  return `${uid}/${providerId.replace('.', '_')}`;
 }
 
 export function startSessionHeartbeat() {
