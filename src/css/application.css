@@ -149,6 +149,11 @@ body {
   width: auto;
 }
 
+.top-bar__snapshot_in-progress {
+  color: var(--color-dark-gray);
+  cursor: progress;
+}
+
 .top-bar__avatar {
   height: 2em;
   border-radius: 50%;

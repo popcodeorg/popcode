@@ -8,14 +8,16 @@ import {
   getCurrentValidationState,
   getOpenTopBarMenu,
   isDashboardOpen,
+  isSnapshotInProgress,
   isTextSizeLarge,
   isUserTyping,
 } from '../selectors';
 import {
-  toggleTopBarMenu,
+  createSnapshot,
   notificationTriggered,
   toggleDashboard,
   toggleEditorTextSize,
+  toggleTopBarMenu,
 } from '../actions';
 import {
   signIn,
@@ -26,6 +28,7 @@ function mapStateToProps(state) {
   return {
     currentUser: getCurrentUser(state),
     isHamburgerMenuActive: isDashboardOpen(state),
+    isSnapshotInProgress: isSnapshotInProgress(state),
     isTextSizeLarge: isTextSizeLarge(state),
     isUserTyping: isUserTyping(state),
     openMenu: getOpenTopBarMenu(state),
@@ -41,6 +44,10 @@ function mapDispatchToProps(dispatch) {
 
     onClickMenu(menuKey) {
       dispatch(toggleTopBarMenu(menuKey));
+    },
+
+    onCreateSnapshot() {
+      dispatch(createSnapshot());
     },
 
     onLogOut() {

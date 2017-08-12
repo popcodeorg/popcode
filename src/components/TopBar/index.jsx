@@ -5,6 +5,7 @@ import partial from 'lodash/partial';
 import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
 import CurrentUser from './CurrentUser';
+import SnapshotButton from './SnapshotButton';
 import TextSize from './TextSize';
 
 function uiVariants({validationState, isUserTyping}) {
@@ -24,11 +25,13 @@ export default function TopBar({
   currentUser,
   isHamburgerMenuActive,
   isUserTyping,
-  openMenu,
+  isSnapshotInProgress,
   isTextSizeLarge,
+  openMenu,
   validationState,
   onClickHamburgerMenu,
   onClickMenu,
+  onCreateSnapshot,
   onLogOut,
   onStartLogIn,
   onToggleTextSize,
@@ -54,6 +57,10 @@ export default function TopBar({
         <Wordmark />
       </div>
       <div className="top-bar__spacer" />
+      <SnapshotButton
+        isInProgress={isSnapshotInProgress}
+        onClick={onCreateSnapshot}
+      />
       <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
       <CurrentUser
         isOpen={openMenu === 'currentUser'}
@@ -69,12 +76,14 @@ export default function TopBar({
 TopBar.propTypes = {
   currentUser: PropTypes.object.isRequired,
   isHamburgerMenuActive: PropTypes.bool.isRequired,
+  isSnapshotInProgress: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool.isRequired,
   openMenu: PropTypes.string,
   validationState: PropTypes.string.isRequired,
   onClickHamburgerMenu: PropTypes.func.isRequired,
   onClickMenu: PropTypes.func.isRequired,
+  onCreateSnapshot: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,
