@@ -3,7 +3,6 @@ import {Dashboard} from '../components';
 import {
   changeCurrentProject,
   createProject,
-  createSnapshot,
   exportGist,
   exportRepo,
   toggleDashboardSubmenu,
@@ -17,7 +16,6 @@ import {
   isDashboardOpen,
   isExperimental,
   isGistExportInProgress,
-  isSnapshotInProgress,
 } from '../selectors';
 
 function mapStateToProps(state) {
@@ -29,16 +27,11 @@ function mapStateToProps(state) {
     gistExportInProgress: isGistExportInProgress(state),
     isExperimental: isExperimental(state),
     isOpen: isDashboardOpen(state),
-    snapshotInProgress: isSnapshotInProgress(state),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onCreateSnapshot() {
-      dispatch(createSnapshot());
-    },
-
     onExportGist() {
       dispatch(exportGist());
     },
