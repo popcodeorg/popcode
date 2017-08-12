@@ -56,8 +56,6 @@ export function* rehydrateProject({payload: {rehydratedProject}}) {
   if (allProjectKeys.includes(rehydratedProject.projectKey)) {
     yield put(__changeCurrentProject(rehydratedProject.projectKey));
   } else {
-    rehydratedProject.projectKey = generateProjectKey();
-    rehydratedProject.updatedAt = null;
     yield put(projectLoaded(rehydratedProject));
     yield put(__changeCurrentProject(rehydratedProject.projectKey));
   }
