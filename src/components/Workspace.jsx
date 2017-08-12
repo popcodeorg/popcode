@@ -94,11 +94,14 @@ class Workspace extends React.Component {
       }
       isExperimental = Object.keys(query).includes('experimental');
     }
-    const dehydratedProject = localStorage.getItem('popcode-project-state');
-    if (dehydratedProject) {
-      localStorage.removeItem('popcode-project-state');
-      rehydratedProject = JSON.parse(dehydratedProject);
+    const dehydrated = localStorage.getItem('popcode-project-state');
+    if (dehydrated) {
+      const rehydrated = JSON.parse(dehydrated);
+      if (Date.now() - rehydrated.dehydratedAt <= 5 * 60 * 1000) {
+        rehydratedProject = rehydrated.project;
+      }
     }
+    localStorage.removeItem('popcode-project-state');
     history.replaceState({}, '', location.pathname);
     this.props.dispatch(applicationLoaded({
       snapshotKey,
@@ -121,8 +124,11 @@ class Workspace extends React.Component {
   _handleUnload() {
     const {currentProject} = this.props;
     if (!isNull(currentProject) && !isPristineProject(currentProject)) {
-      const dehydratedProject = JSON.stringify(currentProject);
-      localStorage.setItem('popcode-project-state', dehydratedProject);
+      const dehydrated = JSON.stringify({
+        dehydratedAt: Date.now(),
+        project: currentProject,
+      });
+      localStorage.setItem('popcode-project-state', dehydrated);
     }
   }
 
