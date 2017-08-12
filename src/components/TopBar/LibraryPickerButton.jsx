@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {t} from 'i18next';
 import LibraryPicker from './LibraryPicker';
 
 export default function LibraryPickerButton({
@@ -17,7 +18,7 @@ export default function LibraryPickerButton({
       )}
       onClick={onClick}
     >
-      Libraries
+      {t('top-bar.libraries')}
       <LibraryPicker
         enabledLibraries={enabledLibraries}
         isOpen={isOpen}
