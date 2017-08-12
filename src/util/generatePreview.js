@@ -5,6 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import uniq from 'lodash/uniq';
 import base64 from 'base64-js';
+import {TextEncoder} from 'text-encoding';
 import loopBreaker from 'loop-breaker';
 import libraries from '../config/libraries';
 import previewFrameLibraries from '../config/previewFrameLibraries';
