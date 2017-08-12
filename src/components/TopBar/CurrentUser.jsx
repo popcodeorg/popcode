@@ -28,7 +28,7 @@ export default function CurrentUser({
           src={user.avatarUrl}
         />
         <span className="top-bar__username">{name}</span>
-        <span className="top-bar__drop-down-button u__fontawesome">
+        <span className="top-bar__drop-down-button u__icon">
           &#xf0d7;
         </span>
         <CurrentUserMenu isOpen={isOpen} onLogOut={onLogOut} />

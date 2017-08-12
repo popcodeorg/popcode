@@ -17,7 +17,7 @@ export default function SnapshotNotification({
   if (isCopied) {
     checkmark = [
       ' ',
-      <span className="u__fontawesome" key="icon">&#xf058;</span>,
+      <span className="u__icon" key="icon">&#xf058;</span>,
     ];
   }
 

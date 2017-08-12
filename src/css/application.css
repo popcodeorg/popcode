@@ -740,8 +740,5 @@ body {
   font-family: 'FontAwesome';
   cursor: pointer;
   user-select: none;
-}
-
-.u__fontawesome {
-  font-family: 'FontAwesome';
+  font-weight: normal;
 }

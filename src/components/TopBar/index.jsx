@@ -37,7 +37,7 @@ export default function TopBar({
       <div
         className={classnames(
           'top-bar__hamburger',
-          'u__fontawesome',
+          'u__icon',
           {'top-bar__hamburger_active': isHamburgerMenuActive},
         )}
         onClick={onClickHamburgerMenu}
