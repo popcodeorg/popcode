@@ -5,6 +5,7 @@ import partial from 'lodash/partial';
 import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
 import CurrentUser from './CurrentUser';
+import LibraryPickerButton from './LibraryPickerButton';
 import SnapshotButton from './SnapshotButton';
 import TextSize from './TextSize';
 
@@ -22,7 +23,9 @@ function uiVariants({validationState, isUserTyping}) {
 }
 
 export default function TopBar({
+  currentProjectKey,
   currentUser,
+  enabledLibraries,
   isHamburgerMenuActive,
   isUserTyping,
   isSnapshotInProgress,
@@ -32,6 +35,7 @@ export default function TopBar({
   onClickHamburgerMenu,
   onClickMenu,
   onCreateSnapshot,
+  onLibraryToggled,
   onLogOut,
   onStartLogIn,
   onToggleTextSize,
@@ -57,6 +61,12 @@ export default function TopBar({
         <Wordmark />
       </div>
       <div className="top-bar__spacer" />
+      <LibraryPickerButton
+        enabledLibraries={enabledLibraries}
+        isOpen={openMenu === 'libraryPicker'}
+        onClick={partial(onClickMenu, 'libraryPicker')}
+        onLibraryToggled={partial(onLibraryToggled, currentProjectKey)}
+      />
       <SnapshotButton
         isInProgress={isSnapshotInProgress}
         onClick={onCreateSnapshot}
@@ -74,7 +84,9 @@ export default function TopBar({
 }
 
 TopBar.propTypes = {
+  currentProjectKey: PropTypes.string,
   currentUser: PropTypes.object.isRequired,
+  enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
   isHamburgerMenuActive: PropTypes.bool.isRequired,
   isSnapshotInProgress: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
@@ -84,11 +96,13 @@ TopBar.propTypes = {
   onClickHamburgerMenu: PropTypes.func.isRequired,
   onClickMenu: PropTypes.func.isRequired,
   onCreateSnapshot: PropTypes.func.isRequired,
+  onLibraryToggled: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,
 };
 
 TopBar.defaultProps = {
+  currentProjectKey: null,
   openMenu: null,
 };

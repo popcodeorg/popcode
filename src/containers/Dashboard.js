@@ -6,7 +6,6 @@ import {
   exportGist,
   exportRepo,
   toggleDashboardSubmenu,
-  toggleLibrary,
 } from '../actions';
 import {
   getActiveSubmenu,
@@ -38,10 +37,6 @@ function mapDispatchToProps(dispatch) {
 
     onExportRepo() {
       dispatch(exportRepo());
-    },
-
-    onLibraryToggled(projectKey, libraryKey) {
-      dispatch(toggleLibrary(projectKey, libraryKey));
     },
 
     onNewProject() {

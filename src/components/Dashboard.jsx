@@ -6,7 +6,6 @@ import isNull from 'lodash/isNull';
 import classnames from 'classnames';
 import config from '../config';
 import ProjectList from './ProjectList';
-import LibraryPicker from './LibraryPicker';
 
 class Dashboard extends React.Component {
   _renderSubmenuToggleButton(submenu, label) {
@@ -56,7 +55,6 @@ class Dashboard extends React.Component {
       <div className="dashboard__menu dashboard__menu_grid">
         {newProjectButton}
         {loadProjectButton}
-        {this._renderSubmenuToggleButton('libraryPicker', 'libraries')}
         <div
           className={
             classnames(
@@ -89,9 +87,6 @@ class Dashboard extends React.Component {
     if (this.props.activeSubmenu === 'projectList') {
       return this._renderProjects();
     }
-    if (this.props.activeSubmenu === 'libraryPicker') {
-      return this._renderLibraryPicker();
-    }
     return null;
   }
 
@@ -105,22 +100,6 @@ class Dashboard extends React.Component {
         currentProject={this.props.currentProject}
         projects={this.props.allProjects}
         onProjectSelected={this.props.onProjectSelected}
-      />
-    );
-  }
-
-  _renderLibraryPicker() {
-    if (isNull(this.props.currentProject)) {
-      return null;
-    }
-
-    return (
-      <LibraryPicker
-        enabledLibraries={this.props.currentProject.enabledLibraries}
-        onLibraryToggled={partial(
-          this.props.onLibraryToggled,
-          this.props.currentProject.projectKey,
-        )}
       />
     );
   }
@@ -183,7 +162,6 @@ Dashboard.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
-  onLibraryToggled: PropTypes.func.isRequired,
   onNewProject: PropTypes.func.isRequired,
   onProjectSelected: PropTypes.func.isRequired,
   onSubmenuToggled: PropTypes.func.isRequired,

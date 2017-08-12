@@ -190,7 +190,7 @@ body {
   left: -1px;
   position: absolute;
   top: 100%;
-  width: 100%;
+  min-width: 100%;
 }
 
 .top-bar__menu-item {
@@ -198,13 +198,19 @@ body {
   box-sizing: border-box;
   color: var(--color-very-dark-gray);
   font-weight: normal;
+  min-width: 100%;
   padding: 0 0.5em;
-  width: 100%;
+  white-space: nowrap;
 }
 
-.top-bar__menu-item:hover {
+.top-bar__menu-item:hover,
+.top-bar__menu-item_active {
   background-color: var(--color-gray);
   color: black;
+}
+
+.top-bar__menu-item_active {
+  font-weight: bold;
 }
 
 .top-bar__drop-down-button {
@@ -739,6 +745,10 @@ body {
 
 .u__hidden {
   display: none;
+}
+
+.u__invisible {
+  visibility: hidden;
 }
 
 .u__icon {

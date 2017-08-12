@@ -4,8 +4,10 @@ import {connect} from 'react-redux';
 import Bugsnag from '../util/Bugsnag';
 import {TopBar} from '../components';
 import {
+  getCurrentProjectKey,
   getCurrentUser,
   getCurrentValidationState,
+  getEnabledLibraries,
   getOpenTopBarMenu,
   isDashboardOpen,
   isSnapshotInProgress,
@@ -17,6 +19,7 @@ import {
   notificationTriggered,
   toggleDashboard,
   toggleEditorTextSize,
+  toggleLibrary,
   toggleTopBarMenu,
 } from '../actions';
 import {
@@ -26,7 +29,9 @@ import {
 
 function mapStateToProps(state) {
   return {
+    currentProjectKey: getCurrentProjectKey(state),
     currentUser: getCurrentUser(state),
+    enabledLibraries: getEnabledLibraries(state),
     isHamburgerMenuActive: isDashboardOpen(state),
     isSnapshotInProgress: isSnapshotInProgress(state),
     isTextSizeLarge: isTextSizeLarge(state),
@@ -48,6 +53,10 @@ function mapDispatchToProps(dispatch) {
 
     onCreateSnapshot() {
       dispatch(createSnapshot());
+    },
+
+    onLibraryToggled(projectKey, libraryKey) {
+      dispatch(toggleLibrary(projectKey, libraryKey));
     },
 
     onLogOut() {
