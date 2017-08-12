@@ -8,14 +8,17 @@ function user(stateIn, action) {
 
   switch (action.type) {
     case 'USER_AUTHENTICATED': {
-      const {user: userData, credential} = action.payload;
+      const {user: userData, credential, additionalUserInfo} = action.payload;
 
       const profileData = get(userData, ['providerData', 0], userData);
 
       return state.merge({
         authenticated: true,
         id: userData.uid,
-        displayName: profileData.displayName,
+        displayName: profileData.displayName || get(
+          additionalUserInfo,
+          'username',
+        ),
         avatarUrl: profileData.photoURL,
         accessTokens: new Immutable.Map().set(
           credential.providerId,
