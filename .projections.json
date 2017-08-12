@@ -3,9 +3,6 @@
     "type": "component",
     "template": "import React from 'react';\nimport PropTypes from 'prop-types';\n\nexport default function {}() {open}\n{close}\n\n{}.propTypes = {open}\n{close};"
   },
-  "src/components/*/index.jsx": {
-    "type": "component",
-  },
   "src/containers/*.js": {
     "type": "container",
     "template": "import {open}connect{close} from 'react-redux';\nimport {open}{}{close} from '../components';\nimport {open}{close} from '../actions';\n\nfunction mapStateToProps(state) {open}\n  return {open}\n  {close};\n{close}\n\nfunction mapDispatchToProps(dispatch) {open}\n  return {open}\n  {close};\n{close}\n\nexport default connect(\n  mapStateToProps,\n  mapDispatchToProps,\n)({});\n"

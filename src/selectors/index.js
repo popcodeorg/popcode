@@ -15,6 +15,7 @@ import isDashboardOpen from './isDashboardOpen';
 import isExperimental from './isExperimental';
 import isGistExportInProgress from './isGistExportInProgress';
 import isSnapshotInProgress from './isSnapshotInProgress';
+import isTextSizeLarge from './isTextSizeLarge';
 import isUserTyping from './isUserTyping';
 
 export {
@@ -34,5 +35,6 @@ export {
   isExperimental,
   isGistExportInProgress,
   isSnapshotInProgress,
+  isTextSizeLarge,
   isUserTyping,
 };
