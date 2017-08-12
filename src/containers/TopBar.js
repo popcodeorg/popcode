@@ -8,12 +8,14 @@ import {
   getCurrentValidationState,
   getOpenTopBarMenu,
   isDashboardOpen,
+  isTextSizeLarge,
   isUserTyping,
 } from '../selectors';
 import {
   toggleTopBarMenu,
   notificationTriggered,
   toggleDashboard,
+  toggleEditorTextSize,
 } from '../actions';
 import {
   signIn,
@@ -24,6 +26,7 @@ function mapStateToProps(state) {
   return {
     currentUser: getCurrentUser(state),
     isHamburgerMenuActive: isDashboardOpen(state),
+    isTextSizeLarge: isTextSizeLarge(state),
     isUserTyping: isUserTyping(state),
     openMenu: getOpenTopBarMenu(state),
     validationState: getCurrentValidationState(state),
@@ -71,6 +74,10 @@ function mapDispatchToProps(dispatch) {
             break;
         }
       });
+    },
+
+    onToggleTextSize() {
+      dispatch(toggleEditorTextSize());
     },
   };
 }
