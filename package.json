@@ -132,6 +132,7 @@
     "react-dom": "^15.4.1",
     "react-draggable": "^2.2.6",
     "react-ga": "^2.1.2",
+    "react-prevent-clickthrough": "^0.0.3",
     "react-redux": "^5.0.3",
     "reduce-reducers": "^0.1.2",
     "redux": "^3.6.0",

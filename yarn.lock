@@ -6477,6 +6477,10 @@ react-ga@^2.1.2:
     object-assign "^4.0.1"
     prop-types "^15.5.6"
 
+react-prevent-clickthrough@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/react-prevent-clickthrough/-/react-prevent-clickthrough-0.0.3.tgz#42d5cd85d7dd76dbb5862062ee7c70f1056edb80"
+
 react-redux@^5.0.3:
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.5.tgz#f8e8c7b239422576e52d6b7db06439469be9846a"
