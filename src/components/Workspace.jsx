@@ -16,6 +16,7 @@ import {
   onSignedOut,
   startSessionHeartbeat,
 } from '../clients/firebase';
+import {dehydrateProject, rehydrateProject} from '../clients/projectStorage';
 
 import {
   updateProjectSource,
@@ -83,7 +84,6 @@ class Workspace extends React.Component {
     let gistId = null;
     let snapshotKey = null;
     let isExperimental = false;
-    let rehydratedProject = null;
     if (location.search) {
       const query = qs.parse(location.search.slice(1));
       if (query.gist) {
@@ -94,14 +94,7 @@ class Workspace extends React.Component {
       }
       isExperimental = Object.keys(query).includes('experimental');
     }
-    const dehydrated = localStorage.getItem('popcode-project-state');
-    if (dehydrated) {
-      const rehydrated = JSON.parse(dehydrated);
-      if (Date.now() - rehydrated.dehydratedAt <= 5 * 60 * 1000) {
-        rehydratedProject = rehydrated.project;
-      }
-    }
-    localStorage.removeItem('popcode-project-state');
+    const rehydratedProject = rehydrateProject();
     history.replaceState({}, '', location.pathname);
     this.props.dispatch(applicationLoaded({
       snapshotKey,
@@ -124,11 +117,7 @@ class Workspace extends React.Component {
   _handleUnload() {
     const {currentProject} = this.props;
     if (!isNull(currentProject) && !isPristineProject(currentProject)) {
-      const dehydrated = JSON.stringify({
-        dehydratedAt: Date.now(),
-        project: currentProject,
-      });
-      localStorage.setItem('popcode-project-state', dehydrated);
+      dehydrateProject(currentProject);
     }
   }
 
