@@ -1,15 +1,18 @@
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import {t} from 'i18next';
-import LibraryPicker from './LibraryPicker';
+import ProjectList from './ProjectList';
 
-export default function LibraryPickerButton({
-  enabledLibraries,
+export default function ProjectsButton({
   isOpen,
+  projectKeys,
   onClick,
-  onLibraryToggled,
 }) {
+  if (projectKeys.length < 2) {
+    return null;
+  }
+
   return (
     <div
       className={classnames(
@@ -18,23 +21,21 @@ export default function LibraryPickerButton({
       )}
       onClick={onClick}
     >
-      {t('top-bar.libraries')}
+      {t('top-bar.load-project')}
       {' '}
       <span className="u__icon">
         &#xf0d7;
       </span>
-      <LibraryPicker
-        enabledLibraries={enabledLibraries}
+      <ProjectList
         isOpen={isOpen}
-        onLibraryToggled={onLibraryToggled}
+        projectKeys={projectKeys}
       />
     </div>
   );
 }
 
-LibraryPickerButton.propTypes = {
-  enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
+ProjectsButton.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   onClick: PropTypes.func.isRequired,
-  onLibraryToggled: PropTypes.func.isRequired,
 };

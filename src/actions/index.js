@@ -48,10 +48,6 @@ function toggleDashboard() {
   return {type: 'DASHBOARD_TOGGLED'};
 }
 
-function toggleDashboardSubmenu(submenu) {
-  return {type: 'DASHBOARD_SUBMENU_TOGGLED', payload: {submenu}};
-}
-
 export {
   createProject,
   createSnapshot,
@@ -64,7 +60,6 @@ export {
   hideComponent,
   unhideComponent,
   toggleDashboard,
-  toggleDashboardSubmenu,
   focusLine,
   editorFocusedRequestedLine,
   dragRowDivider,

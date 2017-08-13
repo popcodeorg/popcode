@@ -15,8 +15,8 @@ export default function ProjectPreview({
     <div
       className={classnames(
         'project-preview',
-        'dashboard__menu-item',
-        {'dashboard__menu-item_active': isSelected},
+        'top-bar__menu-item',
+        {'top-bar__menu-item_active': isSelected},
       )}
       key={project.projectKey}
       onClick={onProjectSelected}
@@ -24,7 +24,7 @@ export default function ProjectPreview({
       <div className="project-preview__timestamp">
         {moment(project.updatedAt).fromNow()}
       </div>
-      <div>
+      <div className="project-preview__label">
         {preview.slice(0, MAX_LENGTH)}
       </div>
     </div>

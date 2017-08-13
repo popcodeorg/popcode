@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ProjectPreview} from '../containers';
+import {ProjectPreview} from '../../containers';
 
-function ProjectList({projectKeys}) {
+function ProjectList({isOpen, projectKeys}) {
+  if (!isOpen) {
+    return null;
+  }
+
   const projectPreviews = projectKeys.map(projectKey => (
     <ProjectPreview
       key={projectKey}
@@ -11,13 +15,14 @@ function ProjectList({projectKeys}) {
   ));
 
   return (
-    <div className="dashboard__menu dashboard__menu_scrollable">
+    <div className="top-bar__menu">
       {projectPreviews}
     </div>
   );
 }
 
 ProjectList.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   projectKeys: PropTypes.array.isRequired,
 };
 

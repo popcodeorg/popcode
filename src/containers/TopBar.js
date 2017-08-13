@@ -9,6 +9,7 @@ import {
   getCurrentValidationState,
   getEnabledLibraries,
   getOpenTopBarMenu,
+  getAllProjectKeys,
   isDashboardOpen,
   isSnapshotInProgress,
   isTextSizeLarge,
@@ -37,6 +38,7 @@ function mapStateToProps(state) {
     isTextSizeLarge: isTextSizeLarge(state),
     isUserTyping: isUserTyping(state),
     openMenu: getOpenTopBarMenu(state),
+    projectKeys: getAllProjectKeys(state),
     validationState: getCurrentValidationState(state),
   };
 }

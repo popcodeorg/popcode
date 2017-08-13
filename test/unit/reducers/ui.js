@@ -45,7 +45,6 @@ const initialState = Immutable.fromJS({
   notifications: new Immutable.Map(),
   dashboard: {
     isOpen: false,
-    activeSubmenu: null,
   },
   lastRefreshTimestamp: null,
   topBar: {openMenu: null},
@@ -157,27 +156,6 @@ test('userDoneTyping', reducerTest(
 ));
 
 test('userLoggedOut', (t) => {
-  const libraryPickerOpen = initialState.setIn(
-    ['dashboard', 'activeSubmenu'],
-    'libraryPicker',
-  );
-  t.test('with active submenu that is not projects', reducerTest(
-    reducer,
-    libraryPickerOpen,
-    userLoggedOut,
-    libraryPickerOpen,
-  ));
-
-  t.test('with projectList active submenu', reducerTest(
-    reducer,
-    initialState.setIn(
-      ['dashboard', 'activeSubmenu'],
-      'projectList',
-    ),
-    userLoggedOut,
-    initialState,
-  ));
-
   t.test('with no top bar menu open', reducerTest(
     reducer,
     initialState,

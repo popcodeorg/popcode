@@ -4,11 +4,8 @@ import {
   createProject,
   exportGist,
   exportRepo,
-  toggleDashboardSubmenu,
 } from '../actions';
 import {
-  getActiveSubmenu,
-  getAllProjectKeys,
   getCurrentProject,
   getCurrentUser,
   isDashboardOpen,
@@ -18,13 +15,11 @@ import {
 
 function mapStateToProps(state) {
   return {
-    activeSubmenu: getActiveSubmenu(state),
     currentProject: getCurrentProject(state),
     currentUser: getCurrentUser(state),
     gistExportInProgress: isGistExportInProgress(state),
     isExperimental: isExperimental(state),
     isOpen: isDashboardOpen(state),
-    projectKeys: getAllProjectKeys(state),
   };
 }
 
@@ -40,10 +35,6 @@ function mapDispatchToProps(dispatch) {
 
     onNewProject() {
       dispatch(createProject());
-    },
-
-    onSubmenuToggled(submenu) {
-      dispatch(toggleDashboardSubmenu(submenu));
     },
   };
 }

@@ -24,8 +24,7 @@ const defaultState = new Immutable.Map().
   set(
     'dashboard',
     new Immutable.Map().
-      set('isOpen', false).
-      set('activeSubmenu', null),
+      set('isOpen', false),
   ).
   set('topBar', new Immutable.Map({openMenu: null})).
   set('lastRefreshTimestamp', null);
@@ -63,18 +62,7 @@ export default function ui(stateIn, action) {
       return state.setIn(['editors', 'typing'], false);
 
     case 'DASHBOARD_TOGGLED':
-      return state.updateIn(['dashboard', 'isOpen'], isOpen => !isOpen).
-        setIn(['dashboard', 'activeSubmenu'], null);
-
-    case 'DASHBOARD_SUBMENU_TOGGLED':
-      return state.updateIn(['dashboard', 'activeSubmenu'], (submenu) => {
-        const newSubmenu = action.payload.submenu;
-        if (submenu === newSubmenu) {
-          return null;
-        }
-
-        return newSubmenu;
-      });
+      return state.updateIn(['dashboard', 'isOpen'], isOpen => !isOpen);
 
     case 'FOCUS_LINE':
       return state.setIn(
@@ -146,9 +134,6 @@ export default function ui(stateIn, action) {
       return state.updateIn(
         ['topBar', 'openMenu'],
         menu => menu === 'currentUser' ? null : menu,
-      ).updateIn(
-        ['dashboard', 'activeSubmenu'],
-        submenu => submenu === 'projectList' ? null : submenu,
       );
 
     case 'SNAPSHOT_CREATED':

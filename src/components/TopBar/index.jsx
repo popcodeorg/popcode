@@ -6,6 +6,7 @@ import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
 import CurrentUser from './CurrentUser';
 import LibraryPickerButton from './LibraryPickerButton';
+import ProjectsButton from './ProjectsButton';
 import SnapshotButton from './SnapshotButton';
 import TextSize from './TextSize';
 
@@ -31,6 +32,7 @@ export default function TopBar({
   isSnapshotInProgress,
   isTextSizeLarge,
   openMenu,
+  projectKeys,
   validationState,
   onClickHamburgerMenu,
   onClickMenu,
@@ -61,6 +63,11 @@ export default function TopBar({
         <Wordmark />
       </div>
       <div className="top-bar__spacer" />
+      <ProjectsButton
+        isOpen={openMenu === 'projectPicker'}
+        projectKeys={projectKeys}
+        onClick={partial(onClickMenu, 'projectPicker')}
+      />
       <LibraryPickerButton
         enabledLibraries={enabledLibraries}
         isOpen={openMenu === 'libraryPicker'}
@@ -92,6 +99,7 @@ TopBar.propTypes = {
   isTextSizeLarge: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool.isRequired,
   openMenu: PropTypes.string,
+  projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   validationState: PropTypes.string.isRequired,
   onClickHamburgerMenu: PropTypes.func.isRequired,
   onClickMenu: PropTypes.func.isRequired,

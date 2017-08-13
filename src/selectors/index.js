@@ -1,4 +1,3 @@
-import getActiveSubmenu from './getActiveSubmenu';
 import getAllProjectKeys from './getAllProjectKeys';
 import getAllProjects from './getAllProjects';
 import getCurrentProject from './getCurrentProject';
@@ -24,7 +23,6 @@ import isUserTyping from './isUserTyping';
 import makeGetProjectPreview from './makeGetProjectPreview';
 
 export {
-  getActiveSubmenu,
   getAllProjectKeys,
   getAllProjects,
   getCurrentProject,

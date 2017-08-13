@@ -1,28 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
-import partial from 'lodash/partial';
 import classnames from 'classnames';
 import config from '../config';
-import ProjectList from './ProjectList';
 
 class Dashboard extends React.Component {
-  _renderSubmenuToggleButton(submenu, label) {
-    return (
-      <div
-        className={classnames(
-          'dashboard__menu-item',
-          'dashboard__menu-item_grid',
-          {'dashboard__menu-item_active':
-            this.props.activeSubmenu === submenu},
-        )}
-        onClick={partial(this.props.onSubmenuToggled, submenu)}
-      >
-        {t(`dashboard.menu.${label}`)}
-      </div>
-    );
-  }
-
   _renderMenu() {
     let newProjectButton, loadProjectButton, exportRepoButton;
     if (this.props.currentUser.authenticated) {
@@ -34,8 +16,6 @@ class Dashboard extends React.Component {
           {t('dashboard.menu.new-project')}
         </div>
       );
-      loadProjectButton =
-        this._renderSubmenuToggleButton('projectList', 'load-project');
     }
 
     if (this.props.isExperimental && this.props.currentUser.authenticated) {
@@ -81,21 +61,6 @@ class Dashboard extends React.Component {
     );
   }
 
-  _renderSubmenu() {
-    if (this.props.activeSubmenu === 'projectList') {
-      return this._renderProjects();
-    }
-    return null;
-  }
-
-  _renderProjects() {
-    return (
-      <ProjectList
-        projectKeys={this.props.projectKeys}
-      />
-    );
-  }
-
   _renderLinks() {
     return (
       <div className="dashboard__links">
@@ -136,7 +101,6 @@ class Dashboard extends React.Component {
     return (
       <div className={sidebarClassnames}>
         {this._renderMenu()}
-        {this._renderSubmenu()}
         <div className="dashboard__spacer" />
         {this._renderLinks()}
       </div>
@@ -145,20 +109,16 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  activeSubmenu: PropTypes.string,
   currentUser: PropTypes.object.isRequired,
   gistExportInProgress: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  projectKeys: PropTypes.array.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onNewProject: PropTypes.func.isRequired,
-  onSubmenuToggled: PropTypes.func.isRequired,
 };
 
 Dashboard.defaultProps = {
-  activeSubmenu: null,
   currentProject: null,
 };
 
