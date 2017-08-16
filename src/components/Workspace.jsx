@@ -16,7 +16,7 @@ import {
   onSignedOut,
   startSessionHeartbeat,
 } from '../clients/firebase';
-import {dehydrateProject, rehydrateProject} from '../clients/projectStorage';
+import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {
   updateProjectSource,
