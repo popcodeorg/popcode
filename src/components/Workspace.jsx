@@ -175,20 +175,11 @@ class Workspace extends React.Component {
   }
 
   _renderOutput() {
-    const {
-      currentProject: {hiddenUIComponents},
-      isDraggingColumnDivider,
-      rowsFlex,
-    } = this.props;
+    const {isDraggingColumnDivider, rowsFlex} = this.props;
     return (
       <Output
         isDraggingColumnDivider={isDraggingColumnDivider}
-        isHidden={includes(hiddenUIComponents, 'output')}
         style={{flex: rowsFlex[1]}}
-        onHide={
-          partial(this._handleComponentHide,
-            'output')
-        }
         onRef={partial(this._storeColumnRef, 1)}
       />
     );
