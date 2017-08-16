@@ -6,17 +6,7 @@ import config from '../config';
 
 class Dashboard extends React.Component {
   _renderMenu() {
-    let newProjectButton, loadProjectButton, exportRepoButton;
-    if (this.props.currentUser.authenticated) {
-      newProjectButton = (
-        <div
-          className="dashboard__menu-item dashboard__menu-item_grid"
-          onClick={this.props.onNewProject}
-        >
-          {t('dashboard.menu.new-project')}
-        </div>
-      );
-    }
+    let exportRepoButton;
 
     if (this.props.isExperimental && this.props.currentUser.authenticated) {
       exportRepoButton = (
@@ -31,8 +21,6 @@ class Dashboard extends React.Component {
 
     return (
       <div className="dashboard__menu dashboard__menu_grid">
-        {newProjectButton}
-        {loadProjectButton}
         <div
           className={
             classnames(
@@ -115,7 +103,6 @@ Dashboard.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
-  onNewProject: PropTypes.func.isRequired,
 };
 
 Dashboard.defaultProps = {

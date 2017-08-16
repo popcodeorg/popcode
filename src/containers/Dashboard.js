@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 import {Dashboard} from '../components';
 import {
-  createProject,
   exportGist,
   exportRepo,
 } from '../actions';
@@ -31,10 +30,6 @@ function mapDispatchToProps(dispatch) {
 
     onExportRepo() {
       dispatch(exportRepo());
-    },
-
-    onNewProject() {
-      dispatch(createProject());
     },
   };
 }
