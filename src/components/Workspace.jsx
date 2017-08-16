@@ -205,17 +205,11 @@ class Workspace extends React.Component {
   }
 
   _renderSidebar() {
-    let hiddenComponents = [];
-    if (!isNull(this.props.currentProject)) {
-      hiddenComponents = this.props.currentProject.hiddenUIComponents;
-    }
     return (
       <div className="layout__sidebar">
         <Sidebar
           dashboardIsOpen={this.props.ui.dashboard.isOpen}
-          hiddenComponents={hiddenComponents}
           validationState={this._getOverallValidationState()}
-          onComponentUnhide={this._handleComponentUnhide}
           onToggleDashboard={this._handleToggleDashboard}
         />
       </div>

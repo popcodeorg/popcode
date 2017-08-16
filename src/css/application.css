@@ -241,34 +241,6 @@ body {
   width: 48px;
 }
 
-.sidebar__minimized-components {
-  flex: 0 0 auto;
-}
-
-.sidebar__minimized-component {
-  background-color: white;
-  text-align: center;
-  margin-top: 0.5em;
-  padding: 1em 0;
-  font-size: 0.7em;
-  position: relative;
-  cursor: pointer;
-}
-
-.sidebar__minimized-component::before {
-  display: block;
-  position: absolute;
-  width: 1em;
-  height: 1em;
-  top: 0;
-  right: 0;
-  content: "";
-  border-top: solid 0.5em var(--color-red);
-  border-right: solid 0.5em var(--color-red);
-  border-bottom: solid 0.5em transparent;
-  border-left: solid 0.5em transparent;
-}
-
 :root {
   --sidebar-arrow-stroke: 4px solid white;
 }
