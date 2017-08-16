@@ -72,7 +72,6 @@ class PreviewGenerator {
     this.previewBody = this._ensureElement('body');
     this._firstScriptTag = this.previewDocument.querySelector('script');
 
-    this.previewText = (this.previewDocument.title || '').trim();
     this._attachLibraries(
       pick(options, ['nonBlockingAlertsAndPrompts']),
     );
@@ -232,7 +231,8 @@ function generatePreview(project, options) {
 }
 
 function generateTextPreview(project) {
-  return new PreviewGenerator(project).previewText;
+  const {title} = parser.parseFromString(project.sources.html, 'text/html');
+  return (title || '').trim();
 }
 
 export {sourceDelimiter, generateTextPreview};
