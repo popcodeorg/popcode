@@ -477,9 +477,18 @@ body {
 }
 
 .environment__label {
+  background-color: var(--color-gray);
+  color: var(--color-very-dark-gray);
+  cursor: pointer;
+  font-family: 'Roboto';
+  font-size: 14px;
+  padding: 0.5em;
   position: absolute;
-  bottom: 1em;
-  right: 1em;
+  right: 0;
+  text-align: right;
+  top: 0;
+  user-select: none;
+  width: 8em;
   z-index: 1;
 }
 
@@ -529,23 +538,6 @@ body {
   font-family: Roboto;
   user-select: none;
   pointer-events: none;
-}
-
-/** @define label */
-
-.label {
-  background-color: black;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-  font-family: 'Inconsolata';
-  font-size: 0.8rem;
-  opacity: 0.2;
-  padding: 0.2rem;
-}
-
-.label:hover {
-  opacity: 0.5;
 }
 
 /** @define output */

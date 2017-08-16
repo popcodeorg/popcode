@@ -23,10 +23,12 @@ function EditorContainer(props) {
       style={props.style}
     >
       <div
-        className="environment__label label"
+        className="environment__label"
         onClick={props.onHide}
       >
         {t(`languages.${props.language}`)}
+        {' '}
+        <span className="u__icon">&#xf078;</span>
       </div>
       {helpText}
       {props.children}
