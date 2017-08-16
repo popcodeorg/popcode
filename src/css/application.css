@@ -476,22 +476,6 @@ body {
   overflow-y: scroll;
 }
 
-.environment__label {
-  background-color: var(--color-gray);
-  color: var(--color-very-dark-gray);
-  cursor: pointer;
-  font-family: 'Roboto';
-  font-size: 14px;
-  padding: 0.5em;
-  position: absolute;
-  right: 0;
-  text-align: right;
-  top: 0;
-  user-select: none;
-  width: 8em;
-  z-index: 1;
-}
-
 /** @define editors */
 
 .editors {
@@ -512,6 +496,30 @@ body {
 .editors__editor {
   z-index: 0;
   flex: 1;
+}
+
+.editors__collapsed-editor {
+  border-top: 4px solid var(--color-dark-gray);
+  flex: none;
+}
+
+.editors__label {
+  background-color: var(--color-gray);
+  color: var(--color-very-dark-gray);
+  cursor: pointer;
+  font-family: 'Roboto';
+  font-size: 14px;
+  padding: 0.5em;
+  text-align: right;
+  user-select: none;
+}
+
+.editors__label_expanded {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 8em;
+  z-index: 1;
 }
 
 .editors__column-divider {

@@ -20,7 +20,7 @@ function EditorContainer({children, language, source, style, onHide, onRef}) {
       style={style}
     >
       <div
-        className="environment__label"
+        className="editors__label editors__label_expanded"
         onClick={onHide}
       >
         {t(`languages.${language}`)}

@@ -269,6 +269,7 @@ class Workspace extends React.Component {
           style={{flex: rowsFlex[0]}}
           ui={ui}
           onComponentHide={this._handleComponentHide}
+          onComponentUnhide={this._handleComponentUnhide}
           onDividerDrag={this._handleEditorsDividerDrag}
           onEditorInput={this._handleEditorInput}
           onRef={partial(this._storeColumnRef, 0)}
