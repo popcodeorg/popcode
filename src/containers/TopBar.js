@@ -9,12 +9,15 @@ import {
   getCurrentValidationState,
   getEnabledLibraries,
   getOpenTopBarMenu,
+  getAllProjectKeys,
   isDashboardOpen,
   isSnapshotInProgress,
   isTextSizeLarge,
+  isUserAuthenticated,
   isUserTyping,
 } from '../selectors';
 import {
+  createProject,
   createSnapshot,
   notificationTriggered,
   toggleDashboard,
@@ -35,8 +38,10 @@ function mapStateToProps(state) {
     isHamburgerMenuActive: isDashboardOpen(state),
     isSnapshotInProgress: isSnapshotInProgress(state),
     isTextSizeLarge: isTextSizeLarge(state),
+    isUserAuthenticated: isUserAuthenticated(state),
     isUserTyping: isUserTyping(state),
     openMenu: getOpenTopBarMenu(state),
+    projectKeys: getAllProjectKeys(state),
     validationState: getCurrentValidationState(state),
   };
 }
@@ -49,6 +54,10 @@ function mapDispatchToProps(dispatch) {
 
     onClickMenu(menuKey) {
       dispatch(toggleTopBarMenu(menuKey));
+    },
+
+    onCreateNewProject() {
+      dispatch(createProject());
     },
 
     onCreateSnapshot() {

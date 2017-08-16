@@ -6,6 +6,8 @@ import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
 import CurrentUser from './CurrentUser';
 import LibraryPickerButton from './LibraryPickerButton';
+import NewProjectButton from './NewProjectButton';
+import ProjectsButton from './ProjectsButton';
 import SnapshotButton from './SnapshotButton';
 import TextSize from './TextSize';
 
@@ -27,13 +29,16 @@ export default function TopBar({
   currentUser,
   enabledLibraries,
   isHamburgerMenuActive,
+  isUserAuthenticated,
   isUserTyping,
   isSnapshotInProgress,
   isTextSizeLarge,
   openMenu,
+  projectKeys,
   validationState,
   onClickHamburgerMenu,
   onClickMenu,
+  onCreateNewProject,
   onCreateSnapshot,
   onLibraryToggled,
   onLogOut,
@@ -61,6 +66,15 @@ export default function TopBar({
         <Wordmark />
       </div>
       <div className="top-bar__spacer" />
+      <NewProjectButton
+        isUserAuthenticated={isUserAuthenticated}
+        onClick={onCreateNewProject}
+      />
+      <ProjectsButton
+        isOpen={openMenu === 'projectPicker'}
+        projectKeys={projectKeys}
+        onClick={partial(onClickMenu, 'projectPicker')}
+      />
       <LibraryPickerButton
         enabledLibraries={enabledLibraries}
         isOpen={openMenu === 'libraryPicker'}
@@ -90,11 +104,14 @@ TopBar.propTypes = {
   isHamburgerMenuActive: PropTypes.bool.isRequired,
   isSnapshotInProgress: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
+  isUserAuthenticated: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool.isRequired,
   openMenu: PropTypes.string,
+  projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   validationState: PropTypes.string.isRequired,
   onClickHamburgerMenu: PropTypes.func.isRequired,
   onClickMenu: PropTypes.func.isRequired,
+  onCreateNewProject: PropTypes.func.isRequired,
   onCreateSnapshot: PropTypes.func.isRequired,
   onLibraryToggled: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,

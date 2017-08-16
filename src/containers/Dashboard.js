@@ -1,15 +1,10 @@
 import {connect} from 'react-redux';
 import {Dashboard} from '../components';
 import {
-  changeCurrentProject,
-  createProject,
   exportGist,
   exportRepo,
-  toggleDashboardSubmenu,
 } from '../actions';
 import {
-  getActiveSubmenu,
-  getAllProjects,
   getCurrentProject,
   getCurrentUser,
   isDashboardOpen,
@@ -19,8 +14,6 @@ import {
 
 function mapStateToProps(state) {
   return {
-    activeSubmenu: getActiveSubmenu(state),
-    allProjects: getAllProjects(state),
     currentProject: getCurrentProject(state),
     currentUser: getCurrentUser(state),
     gistExportInProgress: isGistExportInProgress(state),
@@ -37,18 +30,6 @@ function mapDispatchToProps(dispatch) {
 
     onExportRepo() {
       dispatch(exportRepo());
-    },
-
-    onNewProject() {
-      dispatch(createProject());
-    },
-
-    onProjectSelected(project) {
-      dispatch(changeCurrentProject(project.projectKey));
-    },
-
-    onSubmenuToggled(submenu) {
-      dispatch(toggleDashboardSubmenu(submenu));
     },
   };
 }

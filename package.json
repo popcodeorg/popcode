@@ -213,6 +213,7 @@
     "postcss": "^6.0.6",
     "postcss-cssnext": "^3.0.2",
     "raw-loader": "^0.5.1",
+    "react-addons-perf": "^15.4.2",
     "redux-saga-test-plan": "^3.0.2",
     "sinon": "^2.3.1",
     "string-replace-loader": "^1.0.5",

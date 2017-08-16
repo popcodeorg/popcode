@@ -192,6 +192,9 @@ body {
   position: absolute;
   top: 100%;
   min-width: 100%;
+  max-height: 50vh;
+  max-width: 300%;
+  overflow: scroll;
 }
 
 .top-bar__menu-item {
@@ -199,8 +202,9 @@ body {
   box-sizing: border-box;
   color: var(--color-very-dark-gray);
   font-weight: normal;
+  line-height: 1.2em;
   min-width: 100%;
-  padding: 0 0.5em;
+  padding: 1em 0.5em;
   white-space: nowrap;
 }
 
@@ -435,11 +439,9 @@ body {
 
 /** @define project-preview */
 
-.project-preview__timestamp {
-  text-align: right;
-  color: var(--color-gray);
-  font-style: italic;
-  font-weight: normal;
+.project-preview__label {
+  font-size: 0.8em;
+  white-space: normal;
 }
 
 /** @define workspace */

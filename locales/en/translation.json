@@ -1,16 +1,16 @@
 {
   "top-bar": {
+    "create-snapshot": "Snapshot",
+    "libraries": "Libraries",
+    "load-project": "My Projects",
+    "new-project": "New Project",
     "session": {
       "log-in-prompt": "Log in to save",
       "log-out-prompt": "Log out"
-    },
-    "create-snapshot": "Snapshot",
-    "libraries": "Libraries"
+    }
   },
   "dashboard": {
     "menu": {
-      "new-project": "New Project",
-      "load-project": "Load Project",
       "export-gist": "Export Gist",
       "send-feedback": "Send Feedback",
       "export-repo": "Export Repo"
