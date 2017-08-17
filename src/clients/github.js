@@ -108,6 +108,12 @@ function buildGistFromProject(project) {
       language: 'JavaScript',
     };
   }
+  if (trim(project.readme)) {
+    files['README.md'] = {
+      content: project.readme,
+      language: 'Markdown',
+    };
+  }
   if (project.enabledLibraries.length || project.hiddenUIComponents.length) {
     files['popcode.json'] = {
       content: createPopcodeJson(project),

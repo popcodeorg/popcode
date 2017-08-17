@@ -28,6 +28,10 @@ function unhideComponent(state, projectKey, component, timestamp) {
   ).setIn([projectKey, 'updatedAt'], timestamp);
 }
 
+function contentForLanguage(files, language) {
+  return map(filter(files, {language}), 'content').join('\n\n');
+}
+
 function importGist(state, projectKey, gistData) {
   const files = values(gistData.files);
   const popcodeJsonFile = find(files, {filename: 'popcode.json'});
@@ -39,12 +43,12 @@ function importGist(state, projectKey, gistData) {
       projectKey,
       sources: {
         html: get(find(files, {language: 'HTML'}), 'content', ''),
-        css: map(filter(files, {language: 'CSS'}), 'content').join('\n\n'),
-        javascript: map(filter(files, {language: 'JavaScript'}), 'content').
-          join('\n\n'),
+        css: contentForLanguage(files, 'CSS'),
+        javascript: contentForLanguage(files, 'JavaScript'),
       },
       enabledLibraries: popcodeJson.enabledLibraries || [],
       hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
+      readme: contentForLanguage(files, 'Markdown'),
     },
   );
 }
