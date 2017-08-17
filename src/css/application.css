@@ -554,14 +554,19 @@ body {
   display: flex;
 }
 
+.preview__frame-container {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 1.5em;
+  z-index: 0;
+}
+
 .preview__frame {
   border: 0;
-  z-index: 0;
-  position: absolute;
-  top: 1.5em;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .preview__title-bar {
