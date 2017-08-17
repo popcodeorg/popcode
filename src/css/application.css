@@ -241,34 +241,6 @@ body {
   width: 48px;
 }
 
-.sidebar__minimized-components {
-  flex: 0 0 auto;
-}
-
-.sidebar__minimized-component {
-  background-color: white;
-  text-align: center;
-  margin-top: 0.5em;
-  padding: 1em 0;
-  font-size: 0.7em;
-  position: relative;
-  cursor: pointer;
-}
-
-.sidebar__minimized-component::before {
-  display: block;
-  position: absolute;
-  width: 1em;
-  height: 1em;
-  top: 0;
-  right: 0;
-  content: "";
-  border-top: solid 0.5em var(--color-red);
-  border-right: solid 0.5em var(--color-red);
-  border-bottom: solid 0.5em transparent;
-  border-left: solid 0.5em transparent;
-}
-
 :root {
   --sidebar-arrow-stroke: 4px solid white;
 }
@@ -476,13 +448,6 @@ body {
   overflow-y: scroll;
 }
 
-.environment__label {
-  position: absolute;
-  bottom: 1em;
-  right: 1em;
-  z-index: 1;
-}
-
 /** @define editors */
 
 .editors {
@@ -503,6 +468,30 @@ body {
 .editors__editor {
   z-index: 0;
   flex: 1;
+}
+
+.editors__collapsed-editor {
+  border-top: 4px solid var(--color-dark-gray);
+  flex: none;
+}
+
+.editors__label {
+  background-color: var(--color-gray);
+  color: var(--color-very-dark-gray);
+  cursor: pointer;
+  font-family: 'Roboto';
+  font-size: 14px;
+  padding: 0.5em;
+  text-align: right;
+  user-select: none;
+}
+
+.editors__label_expanded {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 8em;
+  z-index: 1;
 }
 
 .editors__column-divider {
@@ -529,23 +518,6 @@ body {
   font-family: Roboto;
   user-select: none;
   pointer-events: none;
-}
-
-/** @define label */
-
-.label {
-  background-color: black;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-  font-family: 'Inconsolata';
-  font-size: 0.8rem;
-  opacity: 0.2;
-  padding: 0.2rem;
-}
-
-.label:hover {
-  opacity: 0.5;
 }
 
 /** @define output */

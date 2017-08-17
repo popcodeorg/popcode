@@ -175,20 +175,11 @@ class Workspace extends React.Component {
   }
 
   _renderOutput() {
-    const {
-      currentProject: {hiddenUIComponents},
-      isDraggingColumnDivider,
-      rowsFlex,
-    } = this.props;
+    const {isDraggingColumnDivider, rowsFlex} = this.props;
     return (
       <Output
         isDraggingColumnDivider={isDraggingColumnDivider}
-        isHidden={includes(hiddenUIComponents, 'output')}
         style={{flex: rowsFlex[1]}}
-        onHide={
-          partial(this._handleComponentHide,
-            'output')
-        }
         onRef={partial(this._storeColumnRef, 1)}
       />
     );
@@ -214,17 +205,11 @@ class Workspace extends React.Component {
   }
 
   _renderSidebar() {
-    let hiddenComponents = [];
-    if (!isNull(this.props.currentProject)) {
-      hiddenComponents = this.props.currentProject.hiddenUIComponents;
-    }
     return (
       <div className="layout__sidebar">
         <Sidebar
           dashboardIsOpen={this.props.ui.dashboard.isOpen}
-          hiddenComponents={hiddenComponents}
           validationState={this._getOverallValidationState()}
-          onComponentUnhide={this._handleComponentUnhide}
           onToggleDashboard={this._handleToggleDashboard}
         />
       </div>
@@ -278,6 +263,7 @@ class Workspace extends React.Component {
           style={{flex: rowsFlex[0]}}
           ui={ui}
           onComponentHide={this._handleComponentHide}
+          onComponentUnhide={this._handleComponentUnhide}
           onDividerDrag={this._handleEditorsDividerDrag}
           onEditorInput={this._handleEditorInput}
           onRef={partial(this._storeColumnRef, 0)}
