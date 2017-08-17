@@ -4,6 +4,7 @@ import filter from 'lodash/filter';
 import find from 'lodash/find';
 import get from 'lodash/get';
 import map from 'lodash/map';
+import sortBy from 'lodash/sortBy';
 import values from 'lodash/values';
 
 import {Project} from '../records';
@@ -29,7 +30,10 @@ function unhideComponent(state, projectKey, component, timestamp) {
 }
 
 function contentForLanguage(files, language) {
-  return map(filter(files, {language}), 'content').join('\n\n');
+  const filesForLanguage = sortBy(
+    filter(files, {language}),
+    file => file.filename);
+  return map(filesForLanguage, 'content').join('\n\n');
 }
 
 function importGist(state, projectKey, gistData) {
