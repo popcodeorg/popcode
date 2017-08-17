@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import remark from 'remark';
+import remarkReact from 'remark-react';
 import {t} from 'i18next';
 import classnames from 'classnames';
 import config from '../config';
@@ -75,7 +77,8 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    if (!this.props.isOpen) {
+    const {readme, isOpen} = this.props;
+    if (!isOpen) {
       return null;
     }
 
@@ -89,6 +92,9 @@ class Dashboard extends React.Component {
     return (
       <div className={sidebarClassnames}>
         {this._renderMenu()}
+        <div className="dashboard__readme">
+          {remark().use(remarkReact).processSync(readme).contents}
+        </div>
         <div className="dashboard__spacer" />
         {this._renderLinks()}
       </div>
@@ -101,6 +107,7 @@ Dashboard.propTypes = {
   gistExportInProgress: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  readme: PropTypes.string.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
 };

@@ -370,6 +370,10 @@ body {
   font-weight: bold;
 }
 
+.dashboard__readme {
+  overflow: scroll;
+}
+
 .dashboard__spacer {
   flex: 1 0 auto;
 }

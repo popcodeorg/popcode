@@ -13,12 +13,13 @@ import {
 } from '../selectors';
 
 function mapStateToProps(state) {
+  const project = getCurrentProject(state);
   return {
-    currentProject: getCurrentProject(state),
     currentUser: getCurrentUser(state),
     gistExportInProgress: isGistExportInProgress(state),
     isExperimental: isExperimental(state),
     isOpen: isDashboardOpen(state),
+    readme: project ? project.readme : '',
   };
 }
 
