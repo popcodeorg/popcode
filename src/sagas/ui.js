@@ -1,7 +1,5 @@
 import {all, call, put, take, takeEvery} from 'redux-saga/effects';
 import debounceFor from 'redux-saga-debounce-effect/src/debounceFor';
-import {TextEncoder} from 'text-encoding';
-import base64 from 'base64-js';
 import {userDoneTyping as userDoneTypingAction} from '../actions/ui';
 import {
   gistExportDisplayed,
@@ -9,9 +7,9 @@ import {
   repoExportDisplayed,
   repoExportNotDisplayed,
 } from '../actions/clients';
-import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
+import {openWindowWithContent} from '../util';
 import generatePreview from '../util/generatePreview';
-import {spinnerPage} from '../templates';
+import spinnerPageHtml from '../../templates/github-export.html';
 
 export function* userDoneTyping() {
   yield put(userDoneTypingAction());
@@ -22,10 +20,7 @@ function* githubExport(
   failureAction,
   notDisplayedAction,
   displayedAction) {
-  const exportWindow = yield call(
-    openWindowWithWorkaroundForChromeClosingBug,
-    `data:text/html;charset=utf-8;base64,${spinnerPage}`,
-  );
+  const exportWindow = yield call(openWindowWithContent, spinnerPageHtml);
   const {type, payload: url} =
     yield take([successAction, failureAction]);
 
@@ -52,10 +47,7 @@ export function* exportGist() {
 
 export function* popOutProject({payload: project}) {
   const preview = yield call(generatePreview, project);
-  const uint8array = new TextEncoder('utf-8').encode(preview);
-  const base64encoded = base64.fromByteArray(uint8array);
-  const url = `data:text/html;charset=utf-8;base64,${base64encoded}`;
-  yield call(openWindowWithWorkaroundForChromeClosingBug, url);
+  yield call(openWindowWithContent, preview);
 }
 
 export function* exportRepo() {
