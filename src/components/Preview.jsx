@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import isNil from 'lodash/isNil';
 import partial from 'lodash/partial';
 import classnames from 'classnames';
-import generatePreview from '../util/generatePreview';
+import generatePreview, {generateTextPreview} from '../util/generatePreview';
 import PreviewFrame from './PreviewFrame';
 
 function generateFrameSrc(
@@ -43,14 +43,17 @@ export default function Preview({
         {u__hidden: !isSyntacticallyValid},
       )}
     >
-      <span
-        className="preview__button preview__button_reset"
-        onClick={onRefreshClick}
-      >&#xf021;</span>
-      <span
-        className="preview__button preview__button_pop-out"
-        onClick={partial(onPopOutProject, project)}
-      >&#xf08e;</span>
+      <div className="preview__title-bar">
+        <span
+          className="preview__button preview__button_pop-out u__icon"
+          onClick={partial(onPopOutProject, project)}
+        >&#xf08e;</span>
+        {generateTextPreview(project)}
+        <span
+          className="preview__button preview__button_reset u__icon"
+          onClick={onRefreshClick}
+        >&#xf021;</span>
+      </div>
       <PreviewFrame
         src={
           generateFrameSrc(project, isSyntacticallyValid, lastRefreshTimestamp)

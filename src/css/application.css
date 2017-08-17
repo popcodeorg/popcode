@@ -85,6 +85,7 @@ body {
   position: relative;
   display: flex;
   flex: 0 1 100vh;
+  z-index: 1;
 }
 
 .layout__sidebar {
@@ -556,31 +557,41 @@ body {
 .preview__frame {
   border: 0;
   z-index: 0;
-  flex: 1 0 100%;
+  position: absolute;
+  top: 1.5em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.preview__title-bar {
+  top: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  text-align: center;
+  height: 1.5em;
+  font-weight: bold;
+  line-height: 1.5em;
+  vertical-align: middle;
+  background-color: var(--color-gray);
+  z-index: 2;
+}
+
+.preview__title {
+  text-align: center;
 }
 
 .preview__button {
-  font-family: 'FontAwesome';
-  width: 16px;
-  height: 18px;
-  position: absolute;
-  cursor: pointer;
-  opacity: 0.25;
-  z-index: 1;
-}
-
-.preview__button:hover {
-  opacity: 0.5;
+  padding: 0 0.5em;
 }
 
 .preview__button_pop-out {
-  right: 10px;
-  top: 11px;
+  float: left;
 }
 
 .preview__button_reset {
-  right: 35px;
-  top: 10px;
+  float: right;
 }
 
 /** @define error-list */
