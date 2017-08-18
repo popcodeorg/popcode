@@ -34,7 +34,9 @@ export function* applicationLoaded(action) {
   } else if (isString(action.payload.snapshotKey)) {
     yield call(importSnapshot, action);
   } else if (action.payload.rehydratedProject) {
-    yield call(rehydrateProject, action);
+    yield put(
+      projectRestoredFromLastSession(action.payload.rehydratedProject),
+    );
   } else {
     yield call(createProject);
   }
@@ -48,10 +50,6 @@ export function* changeCurrentProject() {
   const state = yield select();
 
   yield call(saveCurrentProject, state);
-}
-
-export function* rehydrateProject({payload: {rehydratedProject}}) {
-  yield put(projectRestoredFromLastSession(rehydratedProject));
 }
 
 export function* importSnapshot({payload: {snapshotKey}}) {
