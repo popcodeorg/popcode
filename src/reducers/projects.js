@@ -127,6 +127,9 @@ export default function reduceProjects(stateIn, action) {
         action.payload.gistData,
       );
 
+    case 'PROJECT_RESTORED_FROM_LAST_SESSION':
+      return addProject(state, action.payload);
+
     case 'TOGGLE_LIBRARY':
       return state.updateIn(
         [action.payload.projectKey, 'enabledLibraries'],

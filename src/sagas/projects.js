@@ -16,14 +16,14 @@ import {
   gistNotFound,
   projectCreated,
   projectLoaded,
-  changeCurrentProject as __changeCurrentProject,
 } from '../actions/projects';
 import {
   snapshotImported,
   snapshotImportError,
   snapshotNotFound,
+  projectRestoredFromLastSession,
 } from '../actions/clients';
-import {getProjectKeys, saveCurrentProject} from '../util/projectUtils';
+import {saveCurrentProject} from '../util/projectUtils';
 import {loadGistFromId} from '../clients/github';
 import {loadAllProjects, loadProjectSnapshot} from '../clients/firebase';
 import {getCurrentUserId} from '../selectors';
@@ -51,14 +51,7 @@ export function* changeCurrentProject() {
 }
 
 export function* rehydrateProject({payload: {rehydratedProject}}) {
-  const state = yield select();
-  const allProjectKeys = getProjectKeys(state);
-  if (allProjectKeys.includes(rehydratedProject.projectKey)) {
-    yield put(__changeCurrentProject(rehydratedProject.projectKey));
-  } else {
-    yield put(projectLoaded(rehydratedProject));
-    yield put(__changeCurrentProject(rehydratedProject.projectKey));
-  }
+  yield put(projectRestoredFromLastSession(rehydratedProject));
 }
 
 export function* importSnapshot({payload: {snapshotKey}}) {
