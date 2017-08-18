@@ -1,6 +1,7 @@
 import getAllProjectKeys from './getAllProjectKeys';
 import getAllProjects from './getAllProjects';
 import getCurrentProject from './getCurrentProject';
+import getCurrentProjectInstructions from './getCurrentProjectInstructions';
 import getCurrentProjectKey from './getCurrentProjectKey';
 import getCurrentUser from './getCurrentUser';
 import getCurrentUserId from './getCurrentUserId';
@@ -27,6 +28,7 @@ export {
   getAllProjectKeys,
   getAllProjects,
   getCurrentProject,
+  getCurrentProjectInstructions,
   getCurrentProjectKey,
   getCurrentUser,
   getCurrentUserId,
