@@ -77,7 +77,7 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const {readme, isOpen} = this.props;
+    const {instructions, isOpen} = this.props;
     if (!isOpen) {
       return null;
     }
@@ -92,8 +92,8 @@ class Dashboard extends React.Component {
     return (
       <div className={sidebarClassnames}>
         {this._renderMenu()}
-        <div className="dashboard__readme">
-          {remark().use(remarkReact).processSync(readme).contents}
+        <div className="dashboard__instructions">
+          {remark().use(remarkReact).processSync(instructions).contents}
         </div>
         <div className="dashboard__spacer" />
         {this._renderLinks()}
@@ -105,9 +105,9 @@ class Dashboard extends React.Component {
 Dashboard.propTypes = {
   currentUser: PropTypes.object.isRequired,
   gistExportInProgress: PropTypes.bool.isRequired,
+  instructions: PropTypes.string.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  readme: PropTypes.string.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
 };

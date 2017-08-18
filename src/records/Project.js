@@ -14,7 +14,7 @@ export default class Project extends Record({
   enabledLibraries: new Set(),
   hiddenUIComponents: new Set(),
   updatedAt: null,
-  readme: '',
+  instructions: '',
 }) {
   static fromJS({
     projectKey = null,
@@ -22,7 +22,7 @@ export default class Project extends Record({
     enabledLibraries = [],
     hiddenUIComponents = [],
     updatedAt = null,
-    readme = '',
+    instructions = '',
   }) {
     return new Project({
       projectKey,
@@ -30,7 +30,7 @@ export default class Project extends Record({
       enabledLibraries: new Set(enabledLibraries),
       hiddenUIComponents: new Set(hiddenUIComponents),
       updatedAt,
-      readme,
+      instructions,
     });
   }
 }

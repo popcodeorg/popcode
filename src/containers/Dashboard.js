@@ -17,9 +17,9 @@ function mapStateToProps(state) {
   return {
     currentUser: getCurrentUser(state),
     gistExportInProgress: isGistExportInProgress(state),
+    instructions: project ? project.instructions : '',
     isExperimental: isExperimental(state),
     isOpen: isDashboardOpen(state),
-    readme: project ? project.readme : '',
   };
 }
 

@@ -32,7 +32,8 @@ function unhideComponent(state, projectKey, component, timestamp) {
 function contentForLanguage(files, language) {
   const filesForLanguage = sortBy(
     filter(files, {language}),
-    file => file.filename);
+    file => file.filename,
+  );
   return map(filesForLanguage, 'content').join('\n\n');
 }
 
@@ -52,7 +53,7 @@ function importGist(state, projectKey, gistData) {
       },
       enabledLibraries: popcodeJson.enabledLibraries || [],
       hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
-      readme: contentForLanguage(files, 'Markdown'),
+      instructions: contentForLanguage(files, 'Markdown'),
     },
   );
 }
