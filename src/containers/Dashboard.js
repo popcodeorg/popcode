@@ -5,7 +5,7 @@ import {
   exportRepo,
 } from '../actions';
 import {
-  getCurrentProject,
+  getCurrentProjectInstructions,
   getCurrentUser,
   isDashboardOpen,
   isExperimental,
@@ -14,9 +14,9 @@ import {
 
 function mapStateToProps(state) {
   return {
-    currentProject: getCurrentProject(state),
     currentUser: getCurrentUser(state),
     gistExportInProgress: isGistExportInProgress(state),
+    instructions: getCurrentProjectInstructions(state),
     isExperimental: isExperimental(state),
     isOpen: isDashboardOpen(state),
   };

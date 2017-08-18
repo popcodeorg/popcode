@@ -4,6 +4,7 @@ import filter from 'lodash/filter';
 import find from 'lodash/find';
 import get from 'lodash/get';
 import map from 'lodash/map';
+import sortBy from 'lodash/sortBy';
 import values from 'lodash/values';
 
 import {Project} from '../records';
@@ -28,6 +29,14 @@ function unhideComponent(state, projectKey, component, timestamp) {
   ).setIn([projectKey, 'updatedAt'], timestamp);
 }
 
+function contentForLanguage(files, language) {
+  const filesForLanguage = sortBy(
+    filter(files, {language}),
+    file => file.filename,
+  );
+  return map(filesForLanguage, 'content').join('\n\n');
+}
+
 function importGist(state, projectKey, gistData) {
   const files = values(gistData.files);
   const popcodeJsonFile = find(files, {filename: 'popcode.json'});
@@ -39,12 +48,12 @@ function importGist(state, projectKey, gistData) {
       projectKey,
       sources: {
         html: get(find(files, {language: 'HTML'}), 'content', ''),
-        css: map(filter(files, {language: 'CSS'}), 'content').join('\n\n'),
-        javascript: map(filter(files, {language: 'JavaScript'}), 'content').
-          join('\n\n'),
+        css: contentForLanguage(files, 'CSS'),
+        javascript: contentForLanguage(files, 'JavaScript'),
       },
       enabledLibraries: popcodeJson.enabledLibraries || [],
       hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
+      instructions: contentForLanguage(files, 'Markdown'),
     },
   );
 }
