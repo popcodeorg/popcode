@@ -5,7 +5,7 @@ import {userAuthenticated} from '../../../src/actions/user';
 import {
   applicationLoaded as applicationLoadedSaga,
 } from '../../../src/sagas/user';
-import {getInitialUserState} from '../../../src/clients/firebaseAuth';
+import {getInitialUserState} from '../../../src/clients/firebase';
 import {userCredential as createUserCredential} from '../../helpers/factory';
 
 test('applicationLoaded', (t) => {

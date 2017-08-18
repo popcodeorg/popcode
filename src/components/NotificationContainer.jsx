@@ -15,7 +15,7 @@ export default function NotificationContainer(props) {
       {props.children}
       <span
         className="notification-list__dismiss"
-        onClick={props.onErrorDismissed}
+        onClick={props.onDismissed}
       >&#xf00d;</span>
     </div>
   );
@@ -24,5 +24,5 @@ export default function NotificationContainer(props) {
 NotificationContainer.propTypes = {
   children: PropTypes.node.isRequired,
   severity: PropTypes.string.isRequired,
-  onErrorDismissed: PropTypes.func.isRequired,
+  onDismissed: PropTypes.func.isRequired,
 };

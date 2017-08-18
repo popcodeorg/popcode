@@ -73,7 +73,7 @@ const normalizers = {
         return {type: 'not-a-function', params: {name: match[1]}};
       }
 
-      match = /^([\w\.]+) is (null|undefined)$/.exec(message);
+      match = /^([\w.]+) is (null|undefined)$/.exec(message);
       if (match) {
         return {
           type: `access-property-of-${match[2]}`,

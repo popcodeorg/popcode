@@ -19,12 +19,24 @@ const loggedInState = Immutable.fromJS({
   },
 });
 
-test('userAuthenticated', reducerTest(
-  reducer,
-  states.initial,
-  partial(userAuthenticated, userCredentialIn),
-  loggedInState,
-));
+test('userAuthenticated', (t) => {
+  t.test('with displayName', reducerTest(
+    reducer,
+    states.initial,
+    partial(userAuthenticated, userCredentialIn),
+    loggedInState,
+  ));
+
+  t.test('with no displayName', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      userAuthenticated,
+      userCredential({user: {providerData: [{displayName: null}]}}),
+    ),
+    loggedInState.set('displayName', 'popcoder'),
+  ));
+});
 
 test('userLoggedOut', reducerTest(
   reducer,

@@ -8,6 +8,9 @@ import {
   projectCreated,
   gistImported,
 } from '../../../src/actions/projects';
+import {
+  snapshotImported,
+} from '../../../src/actions/clients';
 import {gistData} from '../../helpers/factory';
 
 const projectKey = '12345';
@@ -27,6 +30,13 @@ test('changeCurrentProject', reducerTest(
   partial(changeCurrentProject, projectKey),
   new Immutable.Map().set('projectKey', projectKey),
   'sets projectKey to current project key',
+));
+
+test('snapshotImported', reducerTest(
+  reducer,
+  initialState,
+  partial(snapshotImported, {projectKey}),
+  Immutable.fromJS({projectKey}),
 ));
 
 test('gistImported', reducerTest(

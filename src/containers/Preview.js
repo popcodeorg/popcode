@@ -25,8 +25,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(popOutProject(project));
     },
 
-    onRuntimeError(language, error) {
-      dispatch(addRuntimeError(language, error));
+    onRuntimeError(error) {
+      dispatch(addRuntimeError('javascript', error));
     },
 
     onRefreshClick() {

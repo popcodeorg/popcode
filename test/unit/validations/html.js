@@ -59,9 +59,9 @@ test('missing internal closing tag', validationTest(
   htmlWithBody('<div>'),
   html,
   {
-    reason: 'mismatched-close-tag',
+    reason: 'unclosed-tag',
     row: htmlWithBody.offset + 1,
-    payload: {open: 'div', close: 'body'},
+    payload: {tag: 'div'},
   },
 ));
 
@@ -69,9 +69,9 @@ test('missing internal closing tag', validationTest(
   htmlWithBody('<p>'),
   html,
   {
-    reason: 'mismatched-close-tag',
+    reason: 'unclosed-tag',
     row: htmlWithBody.offset + 1,
-    payload: {open: 'p', close: 'body'},
+    payload: {tag: 'p'},
   },
 ));
 
@@ -89,9 +89,25 @@ test('mismatched closing tag', validationTest(
   htmlWithBody('<div></div></span>'),
   html,
   {
-    reason: 'mismatched-close-tag',
+    reason: 'unexpected-close-tag',
     row: htmlWithBody.offset,
-    payload: {open: 'body', close: 'span'},
+    payload: {tag: 'span'},
+  },
+));
+
+test('misplaced closing tag', validationTest(
+  htmlWithBody(`<div><span></div>
+</span>`),
+  html,
+  {
+    reason: 'misplaced-close-tag',
+    row: htmlWithBody.offset + 1,
+    payload: {
+      open: 'span',
+      close: 'div',
+      // Display the mismatch as one-indexed, not zero-indexed.
+      mismatch: htmlWithBody.offset + 1,
+    },
   },
 ));
 

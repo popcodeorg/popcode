@@ -2,11 +2,11 @@ import test from 'tape';
 import reduce from 'lodash/reduce';
 import tap from 'lodash/tap';
 import partial from 'lodash/partial';
-import defaults from 'lodash/defaults';
 import Immutable from 'immutable';
 import reducerTest from '../../helpers/reducerTest';
 import {projects as states} from '../../helpers/referenceStates';
 import {gistData, project} from '../../helpers/factory';
+import {Project} from '../../../src/records';
 import reducer, {
   reduceRoot as rootReducer,
 } from '../../../src/reducers/projects';
@@ -20,6 +20,9 @@ import {
   unhideComponent,
   updateProjectSource,
 } from '../../../src/actions/projects';
+import {
+  snapshotImported,
+} from '../../../src/actions/clients';
 import {
   focusLine,
 } from '../../../src/actions/ui';
@@ -84,6 +87,21 @@ test('changeCurrentProject', (t) => {
     'keeps previous project in store',
   ));
 });
+
+tap(project(), importedProject =>
+  test('snapshotImported', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      snapshotImported,
+      importedProject,
+    ),
+    states.initial.set(
+      importedProject.projectKey,
+      Project.fromJS(importedProject),
+    ),
+  )),
+);
 
 test('gistImported', (t) => {
   t.test('HTML and CSS, no JSON', reducerTest(
@@ -232,17 +250,10 @@ function initProjects(map = {}) {
 function buildProject(
   key, sources, enabledLibraries = [], hiddenUIComponents = [],
 ) {
-  return Immutable.fromJS({
+  return Project.fromJS({
     projectKey: key,
-    sources: defaults(
-      sources,
-      {
-        html: '<!doctype html><html></html>',
-        css: '',
-        javascript: '',
-      },
-    ),
-    enabledLibraries: new Immutable.Set(enabledLibraries),
-    hiddenUIComponents: new Immutable.Set(hiddenUIComponents),
+    sources,
+    enabledLibraries,
+    hiddenUIComponents,
   });
 }

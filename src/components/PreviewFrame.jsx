@@ -110,11 +110,13 @@ class PreviewFrame extends React.Component {
     }
 
     return (
-      <iframe
-        className="preview__frame"
-        sandbox={sandboxOptions}
-        {...srcProps}
-      />
+      <div className="preview__frame-container">
+        <iframe
+          className="preview__frame"
+          sandbox={sandboxOptions}
+          {...srcProps}
+        />
+      </div>
     );
   }
 }

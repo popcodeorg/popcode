@@ -15,7 +15,7 @@ import {
   onSignedIn,
   onSignedOut,
   startSessionHeartbeat,
-} from '../clients/firebaseAuth';
+} from '../clients/firebase';
 
 import {
   updateProjectSource,
@@ -30,18 +30,17 @@ import {
   dragColumnDivider,
   startDragColumnDivider,
   stopDragColumnDivider,
-  userDismissedNotification,
   applicationLoaded,
+
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
 import {getCurrentProject} from '../selectors';
 
-import {Dashboard} from '../containers';
+import {TopBar, Dashboard, NotificationList} from '../containers';
 import EditorsColumn from './EditorsColumn';
 import Output from './Output';
 import Sidebar from './Sidebar';
-import NotificationList from './NotificationList';
 import PopThrobber from './PopThrobber';
 
 function mapStateToProps(state) {
@@ -75,7 +74,6 @@ class Workspace extends React.Component {
       '_handleErrorClick',
       '_handleToggleDashboard',
       '_handleRequestedLineFocused',
-      '_handleNotificationDismissed',
       '_storeDividerRef',
       '_storeColumnRef',
     );
@@ -84,16 +82,24 @@ class Workspace extends React.Component {
 
   componentWillMount() {
     let gistId = null;
+    let snapshotKey = null;
     let isExperimental = false;
     if (location.search) {
       const query = qs.parse(location.search.slice(1));
       if (query.gist) {
         gistId = query.gist;
       }
+      if (query.snapshot) {
+        snapshotKey = query.snapshot;
+      }
       isExperimental = Object.keys(query).includes('experimental');
     }
     history.replaceState({}, '', location.pathname);
-    this.props.dispatch(applicationLoaded({gistId, isExperimental}));
+    this.props.dispatch(applicationLoaded({
+      snapshotKey,
+      gistId,
+      isExperimental,
+    }));
     this._listenForAuthChange();
     startSessionHeartbeat();
   }
@@ -107,8 +113,8 @@ class Workspace extends React.Component {
   }
 
   _confirmUnload(event) {
-    if (!this.props.currentUser.authenticated) {
-      const currentProject = this.props.currentProject;
+    const {currentUser, currentProject} = this.props;
+    if (!currentUser.authenticated) {
       if (!isNull(currentProject) && !isPristineProject(currentProject)) {
         event.returnValue = t('workspace.confirmations.unload-unsaved');
       }
@@ -169,20 +175,11 @@ class Workspace extends React.Component {
   }
 
   _renderOutput() {
-    const {
-      currentProject: {hiddenUIComponents},
-      isDraggingColumnDivider,
-      rowsFlex,
-    } = this.props;
+    const {isDraggingColumnDivider, rowsFlex} = this.props;
     return (
       <Output
         isDraggingColumnDivider={isDraggingColumnDivider}
-        isHidden={includes(hiddenUIComponents, 'output')}
         style={{flex: rowsFlex[1]}}
-        onHide={
-          partial(this._handleComponentHide,
-            'output')
-        }
         onRef={partial(this._storeColumnRef, 1)}
       />
     );
@@ -203,26 +200,16 @@ class Workspace extends React.Component {
     onSignedOut(() => this.props.dispatch(userLoggedOut()));
   }
 
-  _handleNotificationDismissed(error) {
-    this.props.dispatch(userDismissedNotification(error.type));
-  }
-
   _handleRequestedLineFocused() {
     this.props.dispatch(editorFocusedRequestedLine());
   }
 
   _renderSidebar() {
-    let hiddenComponents = [];
-    if (!isNull(this.props.currentProject)) {
-      hiddenComponents = this.props.currentProject.hiddenUIComponents;
-    }
     return (
       <div className="layout__sidebar">
         <Sidebar
           dashboardIsOpen={this.props.ui.dashboard.isOpen}
-          hiddenComponents={hiddenComponents}
           validationState={this._getOverallValidationState()}
-          onComponentUnhide={this._handleComponentUnhide}
           onToggleDashboard={this._handleToggleDashboard}
         />
       </div>
@@ -276,6 +263,7 @@ class Workspace extends React.Component {
           style={{flex: rowsFlex[0]}}
           ui={ui}
           onComponentHide={this._handleComponentHide}
+          onComponentUnhide={this._handleComponentUnhide}
           onDividerDrag={this._handleEditorsDividerDrag}
           onEditorInput={this._handleEditorInput}
           onRef={partial(this._storeColumnRef, 0)}
@@ -298,12 +286,10 @@ class Workspace extends React.Component {
 
   render() {
     return (
-      <div>
-        <NotificationList
-          notifications={this.props.ui.notifications}
-          onErrorDismissed={this._handleNotificationDismissed}
-        />
-        <div className="layout">
+      <div className="layout">
+        <TopBar />
+        <NotificationList />
+        <div className="layout__columns">
           <Dashboard />
           {this._renderSidebar()}
           <div className="workspace layout__main">

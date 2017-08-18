@@ -1,6 +1,8 @@
 import {Map} from 'immutable';
-import FirebasePersistor from '../persistors/FirebasePersistor';
-import {getCurrentProject} from '../selectors';
+import {
+  saveCurrentProject as saveCurrentProjectToFirebase,
+} from '../clients/firebase';
+import {getCurrentProject, getCurrentUserId} from '../selectors';
 
 export function getProjectKeys(state) {
   return Array.from(state.get('projects').keys());
@@ -8,27 +10,19 @@ export function getProjectKeys(state) {
 
 export function isPristineProject(project) {
   if (Map.isMap(project)) {
-    return !project.has('updatedAt');
+    return !project.get('updatedAt');
   }
-  return !('updatedAt' in project);
+  return !project.updatedAt;
 }
 
 export function saveCurrentProject(state) {
+  const userId = getCurrentUserId(state);
   const currentProject = getCurrentProject(state);
-  const persistor = getCurrentPersistor(state);
 
-  if (persistor && currentProject && !isPristineProject(currentProject)) {
-    persistor.saveCurrentProject(currentProject);
+  if (userId && currentProject && !isPristineProject(currentProject)) {
+    saveCurrentProjectToFirebase(userId, currentProject);
     return true;
   }
 
   return false;
-}
-
-function getCurrentPersistor(state) {
-  const currentUser = state.get('user');
-  if (currentUser.get('authenticated')) {
-    return new FirebasePersistor(currentUser.get('id'));
-  }
-  return null;
 }

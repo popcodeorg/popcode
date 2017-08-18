@@ -1,43 +1,62 @@
 import {all, call, put, take, takeEvery} from 'redux-saga/effects';
 import debounceFor from 'redux-saga-debounce-effect/src/debounceFor';
-import {TextEncoder} from 'text-encoding';
-import base64 from 'base64-js';
 import {userDoneTyping as userDoneTypingAction} from '../actions/ui';
-import {gistExportDisplayed, gistExportNotDisplayed} from '../actions/clients';
-import {openWindowWithWorkaroundForChromeClosingBug} from '../util';
+import {
+  gistExportDisplayed,
+  gistExportNotDisplayed,
+  repoExportDisplayed,
+  repoExportNotDisplayed,
+} from '../actions/clients';
+import {openWindowWithContent} from '../util';
 import generatePreview from '../util/generatePreview';
-import {spinnerPage} from '../templates';
+import spinnerPageHtml from '../../templates/github-export.html';
 
 export function* userDoneTyping() {
   yield put(userDoneTypingAction());
 }
 
-export function* exportGist() {
-  const exportWindow = yield call(
-    openWindowWithWorkaroundForChromeClosingBug,
-    `data:text/html;charset=utf-8;base64,${spinnerPage}`,
-  );
+function* githubExport(
+  successAction,
+  failureAction,
+  notDisplayedAction,
+  displayedAction) {
+  const exportWindow = yield call(openWindowWithContent, spinnerPageHtml);
   const {type, payload: url} =
-    yield take(['GIST_EXPORTED', 'GIST_EXPORT_ERROR']);
+    yield take([successAction, failureAction]);
 
-  if (type === 'GIST_EXPORTED') {
+  if (type === successAction) {
     if (exportWindow.closed) {
-      yield put(gistExportNotDisplayed(url));
+      yield put(notDisplayedAction(url));
     } else {
       exportWindow.location.href = url;
-      yield put(gistExportDisplayed());
+      yield put(displayedAction());
     }
   } else {
     yield call([exportWindow, 'close']);
   }
 }
 
+export function* exportGist() {
+  yield* githubExport(
+    'GIST_EXPORTED',
+    'GIST_EXPORT_ERROR',
+    gistExportNotDisplayed,
+    gistExportDisplayed,
+  );
+}
+
 export function* popOutProject({payload: project}) {
   const preview = yield call(generatePreview, project);
-  const uint8array = new TextEncoder('utf-8').encode(preview);
-  const base64encoded = base64.fromByteArray(uint8array);
-  const url = `data:text/html;charset=utf-8;base64,${base64encoded}`;
-  yield call(openWindowWithWorkaroundForChromeClosingBug, url);
+  yield call(openWindowWithContent, preview);
+}
+
+export function* exportRepo() {
+  yield* githubExport(
+    'REPO_EXPORTED',
+    'REPO_EXPORT_ERROR',
+    repoExportNotDisplayed,
+    repoExportDisplayed,
+  );
 }
 
 export default function* () {
@@ -45,5 +64,6 @@ export default function* () {
     debounceFor('UPDATE_PROJECT_SOURCE', userDoneTyping, 1000),
     takeEvery('EXPORT_GIST', exportGist),
     takeEvery('POP_OUT_PROJECT', popOutProject),
+    takeEvery('EXPORT_REPO', exportRepo),
   ]);
 }

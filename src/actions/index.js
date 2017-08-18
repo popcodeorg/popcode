@@ -1,9 +1,13 @@
 import applicationLoaded from './applicationLoaded';
 
 import {
+  createSnapshot,
   exportGist,
   gistExportDisplayed,
   gistExportNotDisplayed,
+  exportRepo,
+  repoExportDisplayed,
+  repoExportNotDisplayed,
 } from './clients';
 
 import {
@@ -24,8 +28,11 @@ import {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
+  updateNotificationMetadata,
   refreshPreview,
   popOutProject,
+  toggleEditorTextSize,
+  toggleTopBarMenu,
 } from './ui';
 
 import {
@@ -41,12 +48,9 @@ function toggleDashboard() {
   return {type: 'DASHBOARD_TOGGLED'};
 }
 
-function toggleDashboardSubmenu(submenu) {
-  return {type: 'DASHBOARD_SUBMENU_TOGGLED', payload: {submenu}};
-}
-
 export {
   createProject,
+  createSnapshot,
   changeCurrentProject,
   updateProjectSource,
   toggleLibrary,
@@ -56,7 +60,6 @@ export {
   hideComponent,
   unhideComponent,
   toggleDashboard,
-  toggleDashboardSubmenu,
   focusLine,
   editorFocusedRequestedLine,
   dragRowDivider,
@@ -65,10 +68,16 @@ export {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
+  updateNotificationMetadata,
   exportGist,
+  exportRepo,
   gistExportDisplayed,
   gistExportNotDisplayed,
   popOutProject,
   applicationLoaded,
   refreshPreview,
+  repoExportDisplayed,
+  repoExportNotDisplayed,
+  toggleEditorTextSize,
+  toggleTopBarMenu,
 };
