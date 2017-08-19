@@ -11,6 +11,8 @@ import {
   getOpenTopBarMenu,
   getAllProjectKeys,
   isDashboardOpen,
+  isExperimental,
+  isGistExportInProgress,
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserAuthenticated,
@@ -19,6 +21,8 @@ import {
 import {
   createProject,
   createSnapshot,
+  exportGist,
+  exportRepo,
   notificationTriggered,
   toggleDashboard,
   toggleEditorTextSize,
@@ -35,6 +39,8 @@ function mapStateToProps(state) {
     currentProjectKey: getCurrentProjectKey(state),
     currentUser: getCurrentUser(state),
     enabledLibraries: getEnabledLibraries(state),
+    isExperimental: isExperimental(state),
+    isGistExportInProgress: isGistExportInProgress(state),
     isHamburgerMenuActive: isDashboardOpen(state),
     isSnapshotInProgress: isSnapshotInProgress(state),
     isTextSizeLarge: isTextSizeLarge(state),
@@ -62,6 +68,14 @@ function mapDispatchToProps(dispatch) {
 
     onCreateSnapshot() {
       dispatch(createSnapshot());
+    },
+
+    onExportGist() {
+      dispatch(exportGist());
+    },
+
+    onExportRepo() {
+      dispatch(exportRepo());
     },
 
     onLibraryToggled(projectKey, libraryKey) {

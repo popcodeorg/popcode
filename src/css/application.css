@@ -124,17 +124,6 @@ body {
   background-color: var(--color-red);
 }
 
-.top-bar__hamburger {
-  font-size: 2em;
-  padding-right: 0.5em;
-  user-select: none;
-  cursor: pointer;
-}
-
-.top-bar__hamburger_active {
-  color: var(--color-dark-gray);
-}
-
 .top-bar__logo-container > svg {
   height: 3em;
 }
@@ -186,6 +175,10 @@ body {
   border-color: var(--color-gray);
 }
 
+.top-bar__hamburger {
+  font-size: 2em;
+}
+
 .top-bar__menu {
   border: 1px solid var(--color-gray);
   box-shadow: 2px 2px 2px var(--color-gray);
@@ -194,7 +187,7 @@ body {
   top: 100%;
   min-width: 100%;
   max-height: 50vh;
-  max-width: 300%;
+  max-width: 30em;
   overflow: scroll;
 }
 
@@ -202,11 +195,19 @@ body {
   background-color: white;
   box-sizing: border-box;
   color: var(--color-very-dark-gray);
+  display: block;
   font-weight: normal;
   line-height: 1.2em;
   min-width: 100%;
   padding: 1em 0.5em;
+  text-decoration: none;
   white-space: nowrap;
+}
+
+.top-bar__menu-item_icons {
+  letter-spacing: 1.5em;
+  margin-right: -1.5em;
+  text-align: center;
 }
 
 .top-bar__menu-item:hover,
@@ -747,8 +748,10 @@ body {
 }
 
 .u__icon {
-  font-family: 'FontAwesome';
+  color: inherit;
   cursor: pointer;
-  user-select: none;
+  font-family: 'FontAwesome';
   font-weight: normal;
+  user-select: none;
+  text-decoration: none;
 }
