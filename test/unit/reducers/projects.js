@@ -22,6 +22,7 @@ import {
 } from '../../../src/actions/projects';
 import {
   snapshotImported,
+  projectRestoredFromLastSession,
 } from '../../../src/actions/clients';
 import {
   focusLine,
@@ -99,6 +100,21 @@ tap(project(), importedProject =>
     states.initial.set(
       importedProject.projectKey,
       Project.fromJS(importedProject),
+    ),
+  )),
+);
+
+tap(project(), rehydratedProject =>
+  test('projectRestoredFromLastSession', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      projectRestoredFromLastSession,
+      rehydratedProject,
+    ),
+    states.initial.set(
+      rehydratedProject.projectKey,
+      Project.fromJS(rehydratedProject),
     ),
   )),
 );
