@@ -206,6 +206,11 @@ module.exports = {
         ),
         use: ['null-loader'],
       },
+      {
+        test: /\.js$/,
+        include: matchModule('moment/locale'),
+        use: ['null-loader'],
+      },
     ],
   },
 
