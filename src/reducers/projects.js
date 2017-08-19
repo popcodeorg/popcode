@@ -163,6 +163,21 @@ export default function reduceProjects(stateIn, action) {
         action.meta.timestamp,
       );
 
+    case 'TOGGLE_COMPONENT':
+      return state.updateIn(
+        [action.payload.projectKey, 'hiddenUIComponents'],
+        (hiddenUIComponents) => {
+          const {componentName} = action.payload;
+          if (hiddenUIComponents.includes(componentName)) {
+            return hiddenUIComponents.remove(action.payload.componentName);
+          }
+          return hiddenUIComponents.add(action.payload.componentName);
+        },
+      ).setIn(
+        [action.payload.projectKey, 'updatedAt'],
+        action.meta.timestamp,
+      );
+
     default:
       return state;
   }

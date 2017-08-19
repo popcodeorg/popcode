@@ -10,7 +10,6 @@ import {
   getEnabledLibraries,
   getOpenTopBarMenu,
   getAllProjectKeys,
-  isDashboardOpen,
   isExperimental,
   isGistExportInProgress,
   isSnapshotInProgress,
@@ -24,7 +23,6 @@ import {
   exportGist,
   exportRepo,
   notificationTriggered,
-  toggleDashboard,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
@@ -41,7 +39,6 @@ function mapStateToProps(state) {
     enabledLibraries: getEnabledLibraries(state),
     isExperimental: isExperimental(state),
     isGistExportInProgress: isGistExportInProgress(state),
-    isHamburgerMenuActive: isDashboardOpen(state),
     isSnapshotInProgress: isSnapshotInProgress(state),
     isTextSizeLarge: isTextSizeLarge(state),
     isUserAuthenticated: isUserAuthenticated(state),
@@ -54,10 +51,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onClickHamburgerMenu() {
-      dispatch(toggleDashboard());
-    },
-
     onClickMenu(menuKey) {
       dispatch(toggleTopBarMenu(menuKey));
     },

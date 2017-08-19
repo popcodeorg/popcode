@@ -1,17 +1,17 @@
 import {connect} from 'react-redux';
-import {Dashboard} from '../components';
+import {Instructions} from '../components';
 import {
   getCurrentProjectInstructions,
-  isDashboardOpen,
+  getHiddenUIComponents,
 } from '../selectors';
 
 function mapStateToProps(state) {
   return {
     instructions: getCurrentProjectInstructions(state),
-    isOpen: isDashboardOpen(state),
+    isOpen: !getHiddenUIComponents(state).includes('instructions'),
   };
 }
 
 export default connect(
   mapStateToProps,
-)(Dashboard);
+)(Instructions);

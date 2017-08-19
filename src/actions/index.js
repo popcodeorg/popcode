@@ -16,6 +16,7 @@ import {
   toggleLibrary,
   hideComponent,
   unhideComponent,
+  toggleComponent,
   updateProjectSource,
 } from './projects';
 
@@ -44,10 +45,6 @@ import {
   userLoggedOut,
 } from './user';
 
-function toggleDashboard() {
-  return {type: 'DASHBOARD_TOGGLED'};
-}
-
 export {
   createProject,
   createSnapshot,
@@ -59,7 +56,7 @@ export {
   addRuntimeError,
   hideComponent,
   unhideComponent,
-  toggleDashboard,
+  toggleComponent,
   focusLine,
   editorFocusedRequestedLine,
   dragRowDivider,

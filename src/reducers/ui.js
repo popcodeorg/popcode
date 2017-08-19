@@ -21,11 +21,6 @@ const defaultState = new Immutable.Map().
   })).
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Map()).
-  set(
-    'dashboard',
-    new Immutable.Map().
-      set('isOpen', false),
-  ).
   set('topBar', new Immutable.Map({openMenu: null})).
   set('lastRefreshTimestamp', null);
 
@@ -60,9 +55,6 @@ export default function ui(stateIn, action) {
 
     case 'USER_DONE_TYPING':
       return state.setIn(['editors', 'typing'], false);
-
-    case 'DASHBOARD_TOGGLED':
-      return state.updateIn(['dashboard', 'isOpen'], isOpen => !isOpen);
 
     case 'FOCUS_LINE':
       return state.setIn(

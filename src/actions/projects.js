@@ -36,6 +36,12 @@ export const unhideComponent = createAction(
   (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
 );
 
+export const toggleComponent = createAction(
+  'TOGGLE_COMPONENT',
+  (projectKey, componentName) => ({projectKey, componentName}),
+  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+);
+
 export const gistImported = createAction(
   'GIST_IMPORTED',
   (projectKey, gistData) => ({projectKey, gistData}),
