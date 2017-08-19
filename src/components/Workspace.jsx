@@ -26,13 +26,13 @@ import {
   stopDragColumnDivider,
   toggleComponent,
   applicationLoaded,
-
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
 import {getCurrentProject} from '../selectors';
 
 import TopBar from '../containers/TopBar';
+import IdentityConfirmation from '../containers/IdentityConfirmation';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
 import EditorsColumn from './EditorsColumn';
@@ -282,6 +282,7 @@ class Workspace extends React.Component {
   render() {
     return (
       <div className="layout">
+        <IdentityConfirmation />
         <TopBar />
         <NotificationList />
         <div className="layout__columns">

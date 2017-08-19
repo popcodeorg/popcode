@@ -84,6 +84,23 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+/** @define identity-confirmation */
+
+.identity-confirmation {
+  background: rgba(0, 0, 0, 0.48);
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
+  z-index: 3;
+}
+
+.identity-confirmation__modal {
+  background: #fafafa;
+  height: 20vh;
+  margin: 10% auto 0;
+  width: 40vw;
+}
+
 /** @define layout */
 
 .layout {
