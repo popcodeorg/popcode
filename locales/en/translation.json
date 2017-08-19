@@ -1,19 +1,15 @@
 {
   "top-bar": {
     "create-snapshot": "Snapshot",
+    "export-gist": "Export Gist",
+    "export-repo": "Export Repo",
     "libraries": "Libraries",
     "load-project": "My Projects",
     "new-project": "New Project",
+    "send-feedback": "Send Feedback",
     "session": {
       "log-in-prompt": "Log in to save",
       "log-out-prompt": "Log out"
-    }
-  },
-  "dashboard": {
-    "menu": {
-      "export-gist": "Export Gist",
-      "send-feedback": "Send Feedback",
-      "export-repo": "Export Repo"
     }
   },
   "editors": {

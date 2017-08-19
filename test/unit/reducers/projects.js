@@ -18,6 +18,7 @@ import {
   toggleLibrary,
   hideComponent,
   unhideComponent,
+  toggleComponent,
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {
@@ -230,6 +231,28 @@ tap(initProjects({1: true}), projects =>
     projects,
   )),
 );
+
+test('toggleComponent', (t) => {
+  const projects = initProjects({1: true});
+
+  t.test('with component visible', reducerTest(
+    reducer,
+    projects,
+    partial(toggleComponent, '1', 'output', now),
+    projects.update('1', projectIn =>
+      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    ),
+  ));
+
+  t.test('with component hidden', reducerTest(
+    reducer,
+    projects.update('1', projectIn =>
+      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    ),
+    partial(toggleComponent, '1', 'output', now),
+    projects,
+  ));
+});
 
 tap(initProjects({1: true}), (projects) => {
   const timestamp = Date.now();

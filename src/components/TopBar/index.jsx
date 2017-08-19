@@ -5,6 +5,7 @@ import partial from 'lodash/partial';
 import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
 import CurrentUser from './CurrentUser';
+import HamburgerMenuButton from './HamburgerMenuButton';
 import LibraryPickerButton from './LibraryPickerButton';
 import NewProjectButton from './NewProjectButton';
 import ProjectsButton from './ProjectsButton';
@@ -28,7 +29,8 @@ export default function TopBar({
   currentProjectKey,
   currentUser,
   enabledLibraries,
-  isHamburgerMenuActive,
+  isExperimental,
+  isGistExportInProgress,
   isUserAuthenticated,
   isUserTyping,
   isSnapshotInProgress,
@@ -36,10 +38,11 @@ export default function TopBar({
   openMenu,
   projectKeys,
   validationState,
-  onClickHamburgerMenu,
   onClickMenu,
   onCreateNewProject,
   onCreateSnapshot,
+  onExportGist,
+  onExportRepo,
   onLibraryToggled,
   onLogOut,
   onStartLogIn,
@@ -49,16 +52,15 @@ export default function TopBar({
 
   return (
     <div className={classnames('top-bar', modifier)}>
-      <div
-        className={classnames(
-          'top-bar__hamburger',
-          'u__icon',
-          {'top-bar__hamburger_active': isHamburgerMenuActive},
-        )}
-        onClick={onClickHamburgerMenu}
-      >
-        &#xf0c9;
-      </div>
+      <HamburgerMenuButton
+        isExperimental={isExperimental}
+        isGistExportInProgress={isGistExportInProgress}
+        isOpen={openMenu === 'hamburger'}
+        isUserAuthenticated={isUserAuthenticated}
+        onClick={partial(onClickMenu, 'hamburger')}
+        onExportGist={onExportGist}
+        onExportRepo={onExportRepo}
+      />
       <div className="top-bar__logo-container">
         <Pop variant={popVariant} />
       </div>
@@ -101,7 +103,8 @@ TopBar.propTypes = {
   currentProjectKey: PropTypes.string,
   currentUser: PropTypes.object.isRequired,
   enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
-  isHamburgerMenuActive: PropTypes.bool.isRequired,
+  isExperimental: PropTypes.bool.isRequired,
+  isGistExportInProgress: PropTypes.bool.isRequired,
   isSnapshotInProgress: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
@@ -109,10 +112,11 @@ TopBar.propTypes = {
   openMenu: PropTypes.string,
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   validationState: PropTypes.string.isRequired,
-  onClickHamburgerMenu: PropTypes.func.isRequired,
   onClickMenu: PropTypes.func.isRequired,
   onCreateNewProject: PropTypes.func.isRequired,
   onCreateSnapshot: PropTypes.func.isRequired,
+  onExportGist: PropTypes.func.isRequired,
+  onExportRepo: PropTypes.func.isRequired,
   onLibraryToggled: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
