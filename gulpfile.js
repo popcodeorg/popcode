@@ -29,6 +29,7 @@ const browserSync = BrowserSync.create();
 const srcDir = 'src';
 const distDir = 'dist';
 const stylesheetsDir = path.join(srcDir, 'css');
+const highlightStylesheetsDir = 'node_modules/highlight.js/styles';
 const staticDir = path.join(srcDir, 'static');
 const bowerComponents = 'bower_components';
 
@@ -79,6 +80,7 @@ gulp.task('css', () => {
   return gulp.
     src([
       path.join(bowerComponents, 'normalize-css/normalize.css'),
+      path.join(highlightStylesheetsDir, 'github.css'),
       path.join(stylesheetsDir, '**/*.css'),
     ]).
     pipe(concat('application.css')).

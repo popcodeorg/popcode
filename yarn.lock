@@ -4026,7 +4026,7 @@ hast-to-hyperscript@^2.0.1:
     trim "0.0.1"
     unist-util-is "^2.0.0"
 
-hast-util-sanitize@^1.0.0:
+hast-util-sanitize@^1.0.0, hast-util-sanitize@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/hast-util-sanitize/-/hast-util-sanitize-1.1.1.tgz#c439852d9db7ff554ecd6be96435a6a8274ade32"
   dependencies:
@@ -4040,6 +4040,10 @@ hawk@~3.1.3:
     cryptiles "2.x.x"
     hoek "2.x.x"
     sntp "1.x.x"
+
+highlight.js@^9.12.0, highlight.js@~9.12.0:
+  version "9.12.0"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.12.0.tgz#e6d9dbe57cbefe60751f02af336195870c90c01e"
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
@@ -5253,6 +5257,12 @@ loud-rejection@^1.0.0:
 lowercase-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-1.0.0.tgz#4e3366b39e7f5457e35f1324bdf6f88d0bfc7306"
+
+lowlight@^1.0.0:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/lowlight/-/lowlight-1.9.1.tgz#ed7c3dffc36f8c1f263735c0fe0c907847c11250"
+  dependencies:
+    highlight.js "~9.12.0"
 
 lru-cache@2:
   version "2.7.3"
@@ -6977,6 +6987,13 @@ react-ga@^2.1.2:
     object-assign "^4.0.1"
     prop-types "^15.5.6"
 
+react-lowlight@^1.0.4:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-lowlight/-/react-lowlight-1.1.1.tgz#27cfa2894d27872a6de6967534852829148a82fa"
+  dependencies:
+    lowlight "^1.0.0"
+    prop-types "^15.5.8"
+
 react-onclickoutside@^6.5.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.5.0.tgz#c45b39fe0d7f087817a9f5edab8c12349856b640"
@@ -7265,6 +7282,12 @@ remark-parse@^4.0.0:
     unist-util-remove-position "^1.0.0"
     vfile-location "^2.0.0"
     xtend "^4.0.1"
+
+remark-react-lowlight@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/remark-react-lowlight/-/remark-react-lowlight-0.6.0.tgz#c837d965acbf2160ae6efa9c9124f720b09cff62"
+  dependencies:
+    react-lowlight "^1.0.4"
 
 remark-react@^4.0.0:
   version "4.0.0"
