@@ -4,13 +4,10 @@ import flatMap from 'lodash/flatMap';
 import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import uniq from 'lodash/uniq';
-import base64 from 'base64-js';
-import {TextEncoder} from 'text-encoding';
 import loopBreaker from 'loop-breaker';
 import libraries from '../config/libraries';
 import previewFrameLibraries from '../config/previewFrameLibraries';
 
-const textEncoder = new TextEncoder('utf-8');
 const parser = new DOMParser();
 
 const sourceDelimiter = '/*__POPCODESTART__*/';
@@ -204,12 +201,9 @@ class PreviewGenerator {
   }
 
   _attachCssLibrary(css) {
-    const linkTag = this.previewDocument.createElement('link');
-    linkTag.rel = 'stylesheet';
-
-    const base64encoded = base64.fromByteArray(textEncoder.encode(css));
-    linkTag.href = `data:text/css;charset=utf-8;base64,${base64encoded}`;
-    this._previewHead.appendChild(linkTag);
+    const styleTag = this.previewDocument.createElement('style');
+    styleTag.textContent = String(css);
+    this._previewHead.appendChild(styleTag);
   }
 
   _attachJavascriptLibrary(javascript) {
