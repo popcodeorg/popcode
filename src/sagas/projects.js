@@ -21,6 +21,7 @@ import {
   snapshotImported,
   snapshotImportError,
   snapshotNotFound,
+  projectRestoredFromLastSession,
 } from '../actions/clients';
 import {saveCurrentProject} from '../util/projectUtils';
 import {loadGistFromId} from '../clients/github';
@@ -32,6 +33,10 @@ export function* applicationLoaded(action) {
     yield call(importGist, action);
   } else if (isString(action.payload.snapshotKey)) {
     yield call(importSnapshot, action);
+  } else if (action.payload.rehydratedProject) {
+    yield put(
+      projectRestoredFromLastSession(action.payload.rehydratedProject),
+    );
   } else {
     yield call(createProject);
   }
