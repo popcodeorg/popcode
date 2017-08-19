@@ -1,3 +1,4 @@
+// import {confirmIdentity} from '../actions/user';
 import Bugsnag from '../util/Bugsnag';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
@@ -35,6 +36,7 @@ function* handleInitialAuth() {
       return;
     }
 
+    // yield put(confirmIdentity(userCredential));
     yield put(userAuthenticated(userCredential));
   }
 }
