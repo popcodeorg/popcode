@@ -221,6 +221,7 @@
     "react-addons-perf": "^15.4.2",
     "redux-saga-test-plan": "^3.0.2",
     "sinon": "^3.2.1",
+    "source-map-explorer": "^1.4.0",
     "string-replace-loader": "^1.0.5",
     "stylelint-selector-bem-pattern": "^1.0.0",
     "substitute-loader": "^1.0.0",
