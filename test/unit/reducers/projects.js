@@ -18,10 +18,12 @@ import {
   toggleLibrary,
   hideComponent,
   unhideComponent,
+  toggleComponent,
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {
   snapshotImported,
+  projectRestoredFromLastSession,
 } from '../../../src/actions/clients';
 import {
   focusLine,
@@ -99,6 +101,21 @@ tap(project(), importedProject =>
     states.initial.set(
       importedProject.projectKey,
       Project.fromJS(importedProject),
+    ),
+  )),
+);
+
+tap(project(), rehydratedProject =>
+  test('projectRestoredFromLastSession', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      projectRestoredFromLastSession,
+      rehydratedProject,
+    ),
+    states.initial.set(
+      rehydratedProject.projectKey,
+      Project.fromJS(rehydratedProject),
     ),
   )),
 );
@@ -214,6 +231,28 @@ tap(initProjects({1: true}), projects =>
     projects,
   )),
 );
+
+test('toggleComponent', (t) => {
+  const projects = initProjects({1: true});
+
+  t.test('with component visible', reducerTest(
+    reducer,
+    projects,
+    partial(toggleComponent, '1', 'output', now),
+    projects.update('1', projectIn =>
+      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    ),
+  ));
+
+  t.test('with component hidden', reducerTest(
+    reducer,
+    projects.update('1', projectIn =>
+      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    ),
+    partial(toggleComponent, '1', 'output', now),
+    projects,
+  ));
+});
 
 tap(initProjects({1: true}), (projects) => {
   const timestamp = Date.now();

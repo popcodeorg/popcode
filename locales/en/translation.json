@@ -1,19 +1,15 @@
 {
   "top-bar": {
     "create-snapshot": "Snapshot",
+    "export-gist": "Export Gist",
+    "export-repo": "Export Repo",
     "libraries": "Libraries",
     "load-project": "My Projects",
     "new-project": "New Project",
+    "send-feedback": "Send Feedback",
     "session": {
       "log-in-prompt": "Log in to save",
       "log-out-prompt": "Log out"
-    }
-  },
-  "dashboard": {
-    "menu": {
-      "export-gist": "Export Gist",
-      "send-feedback": "Send Feedback",
-      "export-repo": "Export Repo"
     }
   },
   "editors": {
@@ -51,7 +47,6 @@
   },
   "workspace": {
     "confirmations": {
-      "unload-unsaved": "If you leave the page, you will lose your work. To save your work, you must log in using your GitHub account.",
       "anonymous-gist-export": "Are you sure you want to export this gist anonymously? If you sign in before exporting, the gist will be added to your GitHub account."
     },
     "loading": "Loading…",

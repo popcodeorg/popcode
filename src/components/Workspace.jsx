@@ -6,6 +6,7 @@ import values from 'lodash/values';
 import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
 import isNull from 'lodash/isNull';
+import get from 'lodash/get';
 import partial from 'lodash/partial';
 import map from 'lodash/map';
 import {t} from 'i18next';
@@ -16,6 +17,7 @@ import {
   onSignedOut,
   startSessionHeartbeat,
 } from '../clients/firebase';
+import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {
   updateProjectSource,
@@ -23,13 +25,13 @@ import {
   userLoggedOut,
   hideComponent,
   unhideComponent,
-  toggleDashboard,
   focusLine,
   editorFocusedRequestedLine,
   dragRowDivider,
   dragColumnDivider,
   startDragColumnDivider,
   stopDragColumnDivider,
+  toggleComponent,
   applicationLoaded,
 
 } from '../actions';
@@ -37,10 +39,9 @@ import {
 import {isPristineProject} from '../util/projectUtils';
 import {getCurrentProject} from '../selectors';
 
-import {TopBar, Dashboard, NotificationList} from '../containers';
+import {TopBar, Instructions, NotificationList} from '../containers';
 import EditorsColumn from './EditorsColumn';
 import Output from './Output';
-import Sidebar from './Sidebar';
 import PopThrobber from './PopThrobber';
 
 function mapStateToProps(state) {
@@ -53,7 +54,6 @@ function mapStateToProps(state) {
     isUserTyping: state.getIn(['ui', 'editors', 'typing']),
     editorsFlex: state.getIn(['ui', 'workspace', 'columnFlex']).toJS(),
     rowsFlex: state.getIn(['ui', 'workspace', 'rowFlex']).toJS(),
-    currentUser: state.get('user').toJS(),
     ui: state.get('ui').toJS(),
   };
 }
@@ -63,7 +63,8 @@ class Workspace extends React.Component {
     super();
     bindAll(
       this,
-      '_confirmUnload',
+      '_handleUnload',
+      '_handleClickInstructionsBar',
       '_handleComponentUnhide',
       '_handleComponentHide',
       '_handleDividerDrag',
@@ -72,7 +73,6 @@ class Workspace extends React.Component {
       '_handleEditorInput',
       '_handleEditorsDividerDrag',
       '_handleErrorClick',
-      '_handleToggleDashboard',
       '_handleRequestedLineFocused',
       '_storeDividerRef',
       '_storeColumnRef',
@@ -94,30 +94,30 @@ class Workspace extends React.Component {
       }
       isExperimental = Object.keys(query).includes('experimental');
     }
+    const rehydratedProject = rehydrateProject();
     history.replaceState({}, '', location.pathname);
     this.props.dispatch(applicationLoaded({
       snapshotKey,
       gistId,
       isExperimental,
+      rehydratedProject,
     }));
     this._listenForAuthChange();
     startSessionHeartbeat();
   }
 
   componentDidMount() {
-    addEventListener('beforeunload', this._confirmUnload);
+    addEventListener('beforeunload', this._handleUnload);
   }
 
   componentWillUnmount() {
-    removeEventListener('beforeunload', this._confirmUnload);
+    removeEventListener('beforeunload', this._handleUnload);
   }
 
-  _confirmUnload(event) {
-    const {currentUser, currentProject} = this.props;
-    if (!currentUser.authenticated) {
-      if (!isNull(currentProject) && !isPristineProject(currentProject)) {
-        event.returnValue = t('workspace.confirmations.unload-unsaved');
-      }
+  _handleUnload() {
+    const {currentProject} = this.props;
+    if (!isNull(currentProject) && !isPristineProject(currentProject)) {
+      dehydrateProject(currentProject);
     }
   }
 
@@ -185,10 +185,6 @@ class Workspace extends React.Component {
     );
   }
 
-  _handleToggleDashboard() {
-    this.props.dispatch(toggleDashboard());
-  }
-
   _handleEditorsDividerDrag(data) {
     this.props.dispatch(dragRowDivider(data));
   }
@@ -204,14 +200,24 @@ class Workspace extends React.Component {
     this.props.dispatch(editorFocusedRequestedLine());
   }
 
-  _renderSidebar() {
+  _handleClickInstructionsBar() {
+    this.props.dispatch(toggleComponent(
+      get(this.props, ['currentProject', 'projectKey']),
+      'instructions',
+    ));
+  }
+
+  _renderInstructionsBar() {
+    if (!get(this.props, ['currentProject', 'instructions'])) {
+      return null;
+    }
+
     return (
-      <div className="layout__sidebar">
-        <Sidebar
-          dashboardIsOpen={this.props.ui.dashboard.isOpen}
-          validationState={this._getOverallValidationState()}
-          onToggleDashboard={this._handleToggleDashboard}
-        />
+      <div
+        className="layout__instructions-bar"
+        onClick={this._handleClickInstructionsBar}
+      >
+        <span className="u__icon">&#xf05a;</span>
       </div>
     );
   }
@@ -290,8 +296,8 @@ class Workspace extends React.Component {
         <TopBar />
         <NotificationList />
         <div className="layout__columns">
-          <Dashboard />
-          {this._renderSidebar()}
+          <Instructions />
+          {this._renderInstructionsBar()}
           <div className="workspace layout__main">
             {this._renderEnvironment()}
           </div>
@@ -303,7 +309,6 @@ class Workspace extends React.Component {
 
 Workspace.propTypes = {
   currentProject: PropTypes.object,
-  currentUser: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   editorsFlex: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,

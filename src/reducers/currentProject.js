@@ -19,6 +19,8 @@ function currentProject(stateIn, action) {
       return state.set('projectKey', action.payload.projectKey);
     case 'GIST_IMPORTED':
       return state.set('projectKey', action.payload.projectKey);
+    case 'PROJECT_RESTORED_FROM_LAST_SESSION':
+      return state.set('projectKey', action.payload.projectKey);
     default:
       return state;
   }

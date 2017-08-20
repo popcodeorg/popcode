@@ -43,9 +43,6 @@ const initialState = Immutable.fromJS({
   },
   workspace: DEFAULT_WORKSPACE,
   notifications: new Immutable.Map(),
-  dashboard: {
-    isOpen: false,
-  },
   lastRefreshTimestamp: null,
   topBar: {openMenu: null},
 });

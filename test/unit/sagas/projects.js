@@ -21,6 +21,7 @@ import {
   snapshotImported,
   snapshotImportError,
   snapshotNotFound,
+  projectRestoredFromLastSession,
 } from '../../../src/actions/clients';
 import {userAuthenticated} from '../../../src/actions/user';
 import applicationLoaded from '../../../src/actions/applicationLoaded';
@@ -80,7 +81,7 @@ test('changeCurrentProject()', (assert) => {
 });
 
 test('applicationLoaded()', (t) => {
-  t.test('with no gist or snapshot ID', (assert) => {
+  t.test('with no gist or snapshot ID or rehydrated project', (assert) => {
     testSaga(applicationLoadedSaga, applicationLoaded({gistId: null})).
       next().call(createProjectSaga).
       next().isDone();
@@ -101,6 +102,15 @@ test('applicationLoaded()', (t) => {
     const gistId = '123abc';
     testSaga(applicationLoadedSaga, applicationLoaded({gistId})).
       next().call(importGistSaga, applicationLoaded({gistId})).
+      next().isDone();
+
+    assert.end();
+  });
+
+  t.test('with rehydrated project', (assert) => {
+    const rehydratedProject = project();
+    testSaga(applicationLoadedSaga, applicationLoaded({rehydratedProject})).
+      next().put(projectRestoredFromLastSession(rehydratedProject)).
       next().isDone();
 
     assert.end();
