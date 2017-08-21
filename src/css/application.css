@@ -59,9 +59,10 @@
 }
 
 :root {
-  --color-gray: #eee;
-  --color-dark-gray: #666;
-  --color-darker-hover-gray: #444;
+  --color-low-contrast-gray: #eee;
+  --color-light-gray: #aaa;
+  --color-gray: #666;
+  --color-dark-gray: #444;
   --color-green: #00ff85;
   --color-yellow: #ffd100;
   --color-red: #ff5e4f;
@@ -82,7 +83,7 @@ body {
 
 .layout__sidebar {
   flex: 0 0 auto;
-  border-right: 1px solid var(--color-gray);
+  border-right: 1px solid var(--color-low-contrast-gray);
   display: flex;
 }
 
@@ -283,7 +284,7 @@ body {
 
 .dashboard__menu-item:hover,
 .dashboard__menu-item_active {
-  background-color: var(--color-gray);
+  background-color: var(--color-low-contrast-gray);
 }
 
 .dashboard__menu-item_unchecked {
@@ -352,7 +353,7 @@ body {
 
 .project-preview__timestamp {
   text-align: right;
-  color: var(--color-gray);
+  color: var(--color-low-contrast-gray);
   font-style: italic;
   font-weight: normal;
 }
@@ -421,13 +422,13 @@ body {
 }
 
 .editors__column-divider {
-  background-color: #aaa;
+  background-color: var(--color-light-gray);
   cursor: ew-resize;
   min-width: 4px;
 }
 
 .editors__row-divider {
-  background-color: #aaa;
+  background-color: var(--color-light-gray);
   cursor: ns-resize;
   min-height: 4px;
 }
@@ -440,7 +441,7 @@ body {
   top: 50%;
   left: 50%;
   margin: -1rem 0 0 -5.5rem;
-  color: var(--color-dark-gray);
+  color: var(--color-gray);
   font-family: Roboto;
   user-select: none;
   pointer-events: none;
@@ -449,7 +450,7 @@ body {
 /** @define label */
 
 .label {
-  background-color: var(--color-dark-gray);
+  background-color: var(--color-gray);
   border-radius: 4px;
   color: white;
   cursor: pointer;
@@ -459,7 +460,7 @@ body {
 }
 
 .label:hover {
-  background-color: var(--color-darker-hover-gray);
+  background-color: var(--color-dark-gray);
 }
 
 /** @define output */
@@ -507,12 +508,12 @@ body {
   height: 18px;
   position: absolute;
   cursor: pointer;
-  color: var(--color-dark-gray);
+  color: var(--color-gray);
   z-index: 1;
 }
 
 .preview__button:hover {
-  color: var(--color-darker-hover-gray);
+  color: var(--color-dark-gray);
 }
 
 .preview__button_pop-out {
@@ -535,7 +536,7 @@ body {
 
 .error-list_docked {
   overflow: scroll;
-  border-top: 3px solid var(--color-gray);
+  border-top: 3px solid var(--color-low-contrast-gray);
 }
 
 .error-list__header {
@@ -548,7 +549,7 @@ body {
   list-style-type: none;
   margin: 0;
   padding: 0.5rem 1rem;
-  background-color: var(--color-gray);
+  background-color: var(--color-low-contrast-gray);
 }
 
 .error-list__error {
@@ -621,7 +622,7 @@ body {
   text-transform: uppercase;
   font-size: 1.5vw;
   padding-left: 1em;
-  color: var(--color-dark-gray);
+  color: var(--color-low-contrast-gray);
 }
 
 .pop-throbber__image {
@@ -630,7 +631,7 @@ body {
 }
 
 .pop-throbber path {
-  fill: var(--color-gray) !important;
+  fill: var(--color-low-contrast-gray) !important;
 }
 
 /** @define utilities */
