@@ -21,11 +21,11 @@ export default function ProjectPreview({
       key={project.projectKey}
       onClick={onProjectSelected}
     >
-      <div className="project-preview__timestamp">
-        {moment(project.updatedAt).fromNow()}
-      </div>
       <div className="project-preview__label">
         {preview.slice(0, MAX_LENGTH)}
+      </div>
+      <div className="project-preview__timestamp">
+        {moment(project.updatedAt).fromNow()}
       </div>
     </div>
   );

@@ -251,6 +251,10 @@ body {
 /** @define project-preview */
 
 .project-preview__label {
+  white-space: normal;
+}
+
+.project-preview__timestamp {
   font-size: 0.8em;
   white-space: normal;
 }
