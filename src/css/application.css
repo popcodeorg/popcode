@@ -148,7 +148,7 @@ body {
 }
 
 .top-bar__snapshot_in-progress {
-  color: var(--color-dark-gray);
+  color: var(--color-light-gray);
   cursor: progress;
 }
 
@@ -179,7 +179,7 @@ body {
 
 .top-bar__menu-button_active {
   background-color: white;
-  border-color: var(--color-gray);
+  border-color: var(--color-low-contrast-gray);
 }
 
 .top-bar__hamburger {
@@ -187,8 +187,8 @@ body {
 }
 
 .top-bar__menu {
-  border: 1px solid var(--color-gray);
-  box-shadow: 2px 2px 2px var(--color-gray);
+  border: 1px solid var(--color-low-contrast-gray);
+  box-shadow: 2px 2px 2px var(--color-low-contrast-gray);
   left: -1px;
   position: absolute;
   top: 100%;
@@ -201,7 +201,7 @@ body {
 .top-bar__menu-item {
   background-color: white;
   box-sizing: border-box;
-  color: var(--color-very-dark-gray);
+  color: var(--color-dark-gray);
   display: block;
   font-weight: normal;
   line-height: 1.2em;
@@ -243,7 +243,7 @@ body {
 /** @define instructions */
 
 .instructions {
-  background-color: var(--color-gray);
+  background-color: var(--color-low-contrast-gray);
   color: black;
   overflow: scroll;
   padding: 1rem;
@@ -315,13 +315,13 @@ body {
 }
 
 .editors__collapsed-editor {
-  border-top: 4px solid var(--color-dark-gray);
+  border-top: 4px solid var(--color-light-gray);
   flex: none;
 }
 
 .editors__label {
-  background-color: var(--color-gray);
-  color: var(--color-very-dark-gray);
+  background-color: var(--color-low-contrast-gray);
+  color: var(--color-dark-gray);
   cursor: pointer;
   font-family: 'Roboto';
   font-size: 14px;
