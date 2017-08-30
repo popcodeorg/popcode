@@ -17,28 +17,21 @@ const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({
     typing: false,
     requestedFocusedLine: null,
+    textSizeIsLarge: false,
   })).
   set('workspace', DEFAULT_WORKSPACE).
-  set('notifications', new Immutable.Set()).
-  set(
-    'dashboard',
-    new Immutable.Map().
-      set('isOpen', false).
-      set('activeSubmenu', null),
-  ).
+  set('notifications', new Immutable.Map()).
+  set('topBar', new Immutable.Map({openMenu: null})).
   set('lastRefreshTimestamp', null);
 
 function addNotification(state, type, severity, payload = {}) {
-  return state.update('notifications', notifications =>
-    notifications.add(
-      new Immutable.Map().
-      set('type', type).
-      set('severity', severity).
-      set('payload', Immutable.fromJS(payload)),
-    ),
+  return state.setIn(
+    ['notifications', type],
+    Immutable.fromJS({type, severity, payload, metadata: {}}),
   );
 }
 
+/* eslint-disable complexity */
 export default function ui(stateIn, action) {
   let state = stateIn;
   if (state === undefined) {
@@ -62,20 +55,6 @@ export default function ui(stateIn, action) {
 
     case 'USER_DONE_TYPING':
       return state.setIn(['editors', 'typing'], false);
-
-    case 'DASHBOARD_TOGGLED':
-      return state.updateIn(['dashboard', 'isOpen'], isOpen => !isOpen).
-        setIn(['dashboard', 'activeSubmenu'], null);
-
-    case 'DASHBOARD_SUBMENU_TOGGLED':
-      return state.updateIn(['dashboard', 'activeSubmenu'], (submenu) => {
-        const newSubmenu = action.payload.submenu;
-        if (submenu === newSubmenu) {
-          return null;
-        }
-
-        return newSubmenu;
-      });
 
     case 'FOCUS_LINE':
       return state.setIn(
@@ -134,19 +113,28 @@ export default function ui(stateIn, action) {
     case 'USER_DISMISSED_NOTIFICATION':
       return state.update(
         'notifications',
-        errors => errors.filterNot(
-          error => error.get('type') === action.payload.type,
-        ),
+        notifications => notifications.delete(action.payload.type),
+      );
+
+    case 'UPDATE_NOTIFICATION_METADATA':
+      return state.setIn(
+        ['notifications', action.payload.type, 'metadata'],
+        Immutable.fromJS(action.payload.metadata),
       );
 
     case 'USER_LOGGED_OUT':
-      if (state.getIn(['dashboard', 'activeSubmenu']) === 'projectList') {
-        return state.setIn(
-          ['dashboard', 'activeSubmenu'],
-          null,
-        );
-      }
-      return state;
+      return state.updateIn(
+        ['topBar', 'openMenu'],
+        menu => menu === 'currentUser' ? null : menu,
+      );
+
+    case 'SNAPSHOT_CREATED':
+      return addNotification(
+        state,
+        'snapshot-created',
+        'notice',
+        {snapshotKey: action.payload},
+      );
 
     case 'GIST_EXPORT_NOT_DISPLAYED':
       return addNotification(
@@ -170,6 +158,37 @@ export default function ui(stateIn, action) {
         return state.set('experimental', true);
       }
       return state.set('experimental', false);
+
+    case 'REPO_EXPORT_NOT_DISPLAYED':
+      return addNotification(
+        state,
+        'repo-export-complete',
+        'notice',
+        {url: action.payload},
+      );
+
+    case 'REPO_EXPORT_ERROR':
+      return addNotification(state, 'repo-export-error', 'error');
+
+    case 'SNAPSHOT_EXPORT_ERROR':
+      return addNotification(state, 'snapshot-export-error', 'error');
+
+    case 'SNAPSHOT_IMPORT_ERROR':
+      return addNotification(state, 'snapshot-import-error', 'error');
+
+    case 'SNAPSHOT_NOT_FOUND':
+      return addNotification(state, 'snapshot-not-found', 'error');
+
+    case 'TOGGLE_EDITOR_TEXT_SIZE':
+      return state.updateIn(['editors', 'textSizeIsLarge'],
+        textSizeIsLarge => !textSizeIsLarge,
+      );
+
+    case 'TOGGLE_TOP_BAR_MENU':
+      return state.updateIn(
+        ['topBar', 'openMenu'],
+        menu => menu === action.payload ? null : action.payload,
+      );
 
     default:
       return state;

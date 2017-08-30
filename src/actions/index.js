@@ -1,9 +1,13 @@
 import applicationLoaded from './applicationLoaded';
 
 import {
+  createSnapshot,
   exportGist,
   gistExportDisplayed,
   gistExportNotDisplayed,
+  exportRepo,
+  repoExportDisplayed,
+  repoExportNotDisplayed,
 } from './clients';
 
 import {
@@ -12,6 +16,7 @@ import {
   toggleLibrary,
   hideComponent,
   unhideComponent,
+  toggleComponent,
   updateProjectSource,
 } from './projects';
 
@@ -24,8 +29,11 @@ import {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
+  updateNotificationMetadata,
   refreshPreview,
   popOutProject,
+  toggleEditorTextSize,
+  toggleTopBarMenu,
 } from './ui';
 
 import {
@@ -37,16 +45,9 @@ import {
   userLoggedOut,
 } from './user';
 
-function toggleDashboard() {
-  return {type: 'DASHBOARD_TOGGLED'};
-}
-
-function toggleDashboardSubmenu(submenu) {
-  return {type: 'DASHBOARD_SUBMENU_TOGGLED', payload: {submenu}};
-}
-
 export {
   createProject,
+  createSnapshot,
   changeCurrentProject,
   updateProjectSource,
   toggleLibrary,
@@ -55,8 +56,7 @@ export {
   addRuntimeError,
   hideComponent,
   unhideComponent,
-  toggleDashboard,
-  toggleDashboardSubmenu,
+  toggleComponent,
   focusLine,
   editorFocusedRequestedLine,
   dragRowDivider,
@@ -65,10 +65,16 @@ export {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
+  updateNotificationMetadata,
   exportGist,
+  exportRepo,
   gistExportDisplayed,
   gistExportNotDisplayed,
   popOutProject,
   applicationLoaded,
   refreshPreview,
+  repoExportDisplayed,
+  repoExportNotDisplayed,
+  toggleEditorTextSize,
+  toggleTopBarMenu,
 };

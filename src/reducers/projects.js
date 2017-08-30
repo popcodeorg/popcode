@@ -4,32 +4,16 @@ import filter from 'lodash/filter';
 import find from 'lodash/find';
 import get from 'lodash/get';
 import map from 'lodash/map';
+import sortBy from 'lodash/sortBy';
 import values from 'lodash/values';
 
+import {Project} from '../records';
 import {isPristineProject} from '../util/projectUtils';
-import HTML_TEMPLATE from '../../templates/new.html';
 
 const emptyMap = new Immutable.Map();
 
-const newProject = Immutable.fromJS({
-  sources: {
-    html: HTML_TEMPLATE,
-    css: '',
-    javascript: '',
-  },
-  enabledLibraries: new Immutable.Set(),
-  hiddenUIComponents: new Immutable.Set(),
-});
-
-function projectToImmutable(project) {
-  return Immutable.fromJS(project).merge({
-    enabledLibraries: new Immutable.Set(project.enabledLibraries),
-    hiddenUIComponents: new Immutable.Set(project.hiddenUIComponents),
-  });
-}
-
 function addProject(state, project) {
-  return state.set(project.projectKey, projectToImmutable(project));
+  return state.set(project.projectKey, Project.fromJS(project));
 }
 
 function removePristineExcept(state, keepProjectKey) {
@@ -45,6 +29,14 @@ function unhideComponent(state, projectKey, component, timestamp) {
   ).setIn([projectKey, 'updatedAt'], timestamp);
 }
 
+function contentForLanguage(files, language) {
+  const filesForLanguage = sortBy(
+    filter(files, {language}),
+    file => file.filename,
+  );
+  return map(filesForLanguage, 'content').join('\n\n');
+}
+
 function importGist(state, projectKey, gistData) {
   const files = values(gistData.files);
   const popcodeJsonFile = find(files, {filename: 'popcode.json'});
@@ -56,12 +48,12 @@ function importGist(state, projectKey, gistData) {
       projectKey,
       sources: {
         html: get(find(files, {language: 'HTML'}), 'content', ''),
-        css: map(filter(files, {language: 'CSS'}), 'content').join('\n\n'),
-        javascript: map(filter(files, {language: 'JavaScript'}), 'content').
-        join('\n\n'),
+        css: contentForLanguage(files, 'CSS'),
+        javascript: contentForLanguage(files, 'JavaScript'),
       },
       enabledLibraries: popcodeJson.enabledLibraries || [],
       hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
+      instructions: contentForLanguage(files, 'Markdown'),
     },
   );
 }
@@ -69,20 +61,19 @@ function importGist(state, projectKey, gistData) {
 export function reduceRoot(stateIn, action) {
   return stateIn.update('projects', (projects) => {
     switch (action.type) {
-      case 'USER_LOGGED_OUT':
-        {
-          const currentProjectKey =
-            stateIn.getIn(['currentProject', 'projectKey']);
+      case 'USER_LOGGED_OUT': {
+        const currentProjectKey =
+          stateIn.getIn(['currentProject', 'projectKey']);
 
-          if (isNil(currentProjectKey)) {
-            return new Immutable.Map();
-          }
-
-          return new Immutable.Map().set(
-            currentProjectKey,
-            projects.get(currentProjectKey),
-          );
+        if (isNil(currentProjectKey)) {
+          return new Immutable.Map();
         }
+
+        return new Immutable.Map().set(
+          currentProjectKey,
+          projects.get(currentProjectKey),
+        );
+      }
       case 'FOCUS_LINE':
         return unhideComponent(
           projects,
@@ -120,11 +111,14 @@ export default function reduceProjects(stateIn, action) {
     case 'PROJECT_CREATED':
       return removePristineExcept(state, action.payload.projectKey).set(
         action.payload.projectKey,
-        newProject.set('projectKey', action.payload.projectKey),
+        new Project({projectKey: action.payload.projectKey}),
       );
 
     case 'CHANGE_CURRENT_PROJECT':
       return removePristineExcept(state, action.payload.projectKey);
+
+    case 'SNAPSHOT_IMPORTED':
+      return addProject(state, action.payload);
 
     case 'GIST_IMPORTED':
       return importGist(
@@ -133,11 +127,14 @@ export default function reduceProjects(stateIn, action) {
         action.payload.gistData,
       );
 
+    case 'PROJECT_RESTORED_FROM_LAST_SESSION':
+      return addProject(state, action.payload);
+
     case 'TOGGLE_LIBRARY':
       return state.updateIn(
         [action.payload.projectKey, 'enabledLibraries'],
         (enabledLibraries) => {
-          const libraryKey = action.payload.libraryKey;
+          const {libraryKey} = action.payload;
           if (enabledLibraries.has(libraryKey)) {
             return enabledLibraries.delete(libraryKey);
           }
@@ -163,6 +160,21 @@ export default function reduceProjects(stateIn, action) {
         state,
         action.payload.projectKey,
         action.payload.componentName,
+        action.meta.timestamp,
+      );
+
+    case 'TOGGLE_COMPONENT':
+      return state.updateIn(
+        [action.payload.projectKey, 'hiddenUIComponents'],
+        (hiddenUIComponents) => {
+          const {componentName} = action.payload;
+          if (hiddenUIComponents.includes(componentName)) {
+            return hiddenUIComponents.remove(action.payload.componentName);
+          }
+          return hiddenUIComponents.add(action.payload.componentName);
+        },
+      ).setIn(
+        [action.payload.projectKey, 'updatedAt'],
         action.meta.timestamp,
       );
 

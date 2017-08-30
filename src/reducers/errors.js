@@ -1,31 +1,25 @@
-import Immutable from 'immutable';
+import {List} from 'immutable';
+import map from 'lodash/map';
+import {Error, ErrorList, ErrorReport} from '../records';
 
-const emptyList = new Immutable.List();
+const passedLanguageErrors = new ErrorList();
 
-const passedLanguageErrors = new Immutable.Map({
-  items: emptyList,
-  state: 'passed',
-});
-
-const validatingLanguageErrors = new Immutable.Map({
-  items: emptyList,
-  state: 'validating',
-});
+const validatingLanguageErrors = new ErrorList({state: 'validating'});
 
 function buildFailedLanguageErrors(errorList) {
-  return Immutable.fromJS({
-    items: errorList,
+  return new ErrorList({
+    items: new List(map(errorList, error => Error.fromJS(error))),
     state: 'validation-error',
   });
 }
 
-const validatingErrors = new Immutable.Map({
+const validatingErrors = new ErrorReport({
   html: validatingLanguageErrors,
   css: validatingLanguageErrors,
   javascript: validatingLanguageErrors,
 });
 
-const emptyErrors = new Immutable.Map({
+const emptyErrors = new ErrorReport({
   html: passedLanguageErrors,
   css: passedLanguageErrors,
   javascript: passedLanguageErrors,
@@ -58,7 +52,7 @@ function errors(stateIn, action) {
         action.payload.language,
         list => list.update(
           'items',
-          items => items.push(Immutable.fromJS(action.payload.error)).
+          items => items.push(Error.fromJS(action.payload.error)).
             sortBy(error => error.get('row')),
         ).set('state', 'runtime-error'));
 

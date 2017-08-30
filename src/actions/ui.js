@@ -42,7 +42,20 @@ export const userDismissedNotification = createAction(
   type => ({type}),
 );
 
+export const updateNotificationMetadata = createAction(
+  'UPDATE_NOTIFICATION_METADATA',
+  (type, metadata) => ({type, metadata}),
+);
+
 export const refreshPreview = createAction(
   'REFRESH_PREVIEW',
   timestamp => ({timestamp}),
+);
+
+export const toggleEditorTextSize = createAction(
+  'TOGGLE_EDITOR_TEXT_SIZE',
+);
+
+export const toggleTopBarMenu = createAction(
+  'TOGGLE_TOP_BAR_MENU',
 );

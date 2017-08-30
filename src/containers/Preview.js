@@ -5,16 +5,16 @@ import {
   popOutProject,
   refreshPreview,
 } from '../actions';
-import {getCurrentProject} from '../util/projectUtils';
-
-const syntacticallyValidStates = new Set(['passed', 'runtime-error']);
+import {
+  getCurrentProject,
+  getLastRefreshTimestamp,
+  isCurrentProjectSyntacticallyValid,
+} from '../selectors';
 
 function mapStateToProps(state) {
   return {
-    isSyntacticallyValid: !state.get('errors').find(
-      error => !syntacticallyValidStates.has(error.get('state')),
-    ),
-    lastRefreshTimestamp: state.getIn(['ui', 'lastRefreshTimestamp']),
+    isSyntacticallyValid: isCurrentProjectSyntacticallyValid(state),
+    lastRefreshTimestamp: getLastRefreshTimestamp(state),
     project: getCurrentProject(state),
   };
 }
@@ -25,8 +25,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(popOutProject(project));
     },
 
-    onRuntimeError(language, error) {
-      dispatch(addRuntimeError(language, error));
+    onRuntimeError(error) {
+      dispatch(addRuntimeError('javascript', error));
     },
 
     onRefreshClick() {

@@ -2,7 +2,7 @@ import 'bugsnag-js';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import config from '../config';
-import {getCurrentProject} from './projectUtils';
+import {getCurrentProject} from '../selectors';
 
 const Bugsnag = window.Bugsnag.noConflict();
 Bugsnag.apiKey = config.bugsnagApiKey;

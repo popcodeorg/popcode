@@ -1,17 +1,18 @@
 import {connect} from 'react-redux';
 import {ErrorReport} from '../components';
 import {focusLine} from '../actions';
+import {
+  getErrors,
+  isCurrentlyValidating,
+  isCurrentProjectSyntacticallyValid,
+  isUserTyping,
+} from '../selectors';
 
 function mapStateToProps(state) {
   return {
-    errors: state.get('errors').toJS(),
-    isValidating: Boolean(
-      state.getIn(['ui', 'editors', 'typing']) &&
-      state.get('errors').find(
-        error => error.get('state') === 'validation-error',
-      ) ||
-      state.get('errors').find(error => error.get('state') === 'validating'),
-    ),
+    errors: getErrors(state),
+    isValidating: isCurrentlyValidating(state) ||
+      (isUserTyping(state) && !isCurrentProjectSyntacticallyValid(state)),
   };
 }
 

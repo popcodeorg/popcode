@@ -1,16 +1,15 @@
 {
-  "dashboard": {
+  "top-bar": {
+    "create-snapshot": "Snapshot",
+    "export-gist": "Export Gist",
+    "export-repo": "Export Repo",
+    "libraries": "Libraries",
+    "load-project": "My Projects",
+    "new-project": "New Project",
+    "send-feedback": "Send Feedback",
     "session": {
-      "not-logged-in": "Not logged in",
-      "log-in-prompt": "Sign in",
-      "log-out-prompt": "Sign out"
-    },
-    "menu": {
-      "new-project": "New Project",
-      "load-project": "Load Project",
-      "libraries": "Libraries",
-      "export-gist": "Export Gist",
-      "send-feedback": "Send Feedback"
+      "log-in-prompt": "Log in to save",
+      "log-out-prompt": "Log out"
     }
   },
   "editors": {
@@ -29,10 +28,17 @@
     "empty-gist": "You need some code in your project to export a gist!",
     "gist-export-error": "Something went wrong trying to create that gist. Please try again.",
     "gist-export-complete": "Your gist export is ready!",
-    "gist-export-link": "Click here to open it",
+    "github-export-link": "Click here to open it",
     "gist-import-not-found": "Looks like that gist doesn’t exist. Check the URL and try again.",
     "gist-import-error": "There was a problem importing that gist.",
-    "gist-import-link": "Click here to open it"
+    "gist-import-link": "Click here to open it",
+    "repo-export-error": "Something went wrong trying to create that repo. Please try again.",
+    "repo-export-complete": "Your repo export is ready!",
+    "snapshot-created": "Your snapshot is ready!",
+    "click-to-copy": "Click here to copy it",
+    "snapshot-export-error": "Something went wrong trying to create that snapshot. Please try again.",
+    "snapshot-import-error": "Something went wrong trying to load that snapshot. Please try again.",
+    "snapshot-not-found": "That snapshot doesn’t seem to exist. Check the link and try again."
   },
   "languages": {
     "html": "HTML",
@@ -41,7 +47,6 @@
   },
   "workspace": {
     "confirmations": {
-      "unload-unsaved": "If you leave the page, you will lose your work. To save your work, you must log in using your GitHub account.",
       "anonymous-gist-export": "Are you sure you want to export this gist anonymously? If you sign in before exporting, the gist will be added to your GitHub account."
     },
     "loading": "Loading…",
@@ -99,7 +104,6 @@
       "empty-title-element": "You have an empty <title> tag. A <title> tag should always contain text.",
       "html-in-css-block": "It looks like you typed some HTML code inside a <style> tag. Remember that only CSS code can go inside a <style> tag.",
       "invalid-attribute-name": "{{attribute}} isn’t allowed as an attribute name.",
-      "mismatched-close-tag": "Your <{{open}}> tag needs a closing tag, but instead there’s a </{{close}}> tag where the </{{open}}> tag should be.",
       "self-closing-non-void-element": "{{tag, en-handle-an|capitalize}} <{{tag}}> tag always needs a closing </{{tag}}> tag. Writing <{{tag}}/> is not allowed.",
       "unclosed-tag": "Your <{{tag}}> tag needs to be closed by an </{{tag}}> tag.",
       "unexpected-close-tag": "You have a closing </{{tag}}> tag that doesn’t match any opening <{{tag}}> tag.",
@@ -109,7 +113,8 @@
       "unterminated-comment": "You have a comment that never ends. End the comment with -->",
       "unbound-attribute-value": "The value {{value}} isn’t attached to an attribute. Are you missing an = sign?",
       "invalid-tag-name": "<{{tag}}> isn’t a valid HTML tag. If you want to create a custom tag, make sure the name has a - in it, like <my-tag>",
-      "space-before-tag-name": "You can’t put any space after the < in an HTML tag. Write <{{tag}}> instead of < {{tag}}>."
+      "space-before-tag-name": "You can’t put any space after the < in an HTML tag. Write <{{tag}}> instead of < {{tag}}>.",
+      "misplaced-close-tag": "This closing </{{open}}> tag should go to before the </{{close}}> tag on line {{mismatch}}."
     },
     "css": {
       "missing-opening-curly": "You should have a { at the end of this line.",
