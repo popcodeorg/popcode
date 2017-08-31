@@ -180,7 +180,10 @@ class Workspace extends React.Component {
     const {isDraggingColumnDivider, rowsFlex} = this.props;
     return (
       <Output
-        isDraggingColumnDivider={isDraggingColumnDivider}
+        ignorePointerEvents={
+          isDraggingColumnDivider ||
+            Boolean(get(this, 'props.ui.topBar.openMenu'))
+        }
         style={{flex: rowsFlex[1]}}
         onRef={partial(this._storeColumnRef, 1)}
       />

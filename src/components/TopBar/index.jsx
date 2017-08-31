@@ -39,6 +39,7 @@ export default function TopBar({
   projectKeys,
   validationState,
   onClickMenu,
+  onCloseMenu,
   onCreateNewProject,
   onCreateSnapshot,
   onExportGist,
@@ -92,6 +93,7 @@ export default function TopBar({
         isOpen={openMenu === 'currentUser'}
         user={currentUser}
         onClick={partial(onClickMenu, 'currentUser')}
+        onClose={partial(onCloseMenu, 'currentUser')}
         onLogOut={onLogOut}
         onStartLogIn={onStartLogIn}
       />
@@ -113,6 +115,7 @@ TopBar.propTypes = {
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   validationState: PropTypes.string.isRequired,
   onClickMenu: PropTypes.func.isRequired,
+  onCloseMenu: PropTypes.func.isRequired,
   onCreateNewProject: PropTypes.func.isRequired,
   onCreateSnapshot: PropTypes.func.isRequired,
   onExportGist: PropTypes.func.isRequired,

@@ -34,6 +34,7 @@ import {
   popOutProject,
   toggleEditorTextSize,
   toggleTopBarMenu,
+  closeTopBarMenu,
 } from './ui';
 
 import {
@@ -77,4 +78,5 @@ export {
   repoExportNotDisplayed,
   toggleEditorTextSize,
   toggleTopBarMenu,
+  closeTopBarMenu,
 };

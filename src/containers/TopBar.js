@@ -18,6 +18,7 @@ import {
   isUserTyping,
 } from '../selectors';
 import {
+  closeTopBarMenu,
   createProject,
   createSnapshot,
   exportGist,
@@ -53,6 +54,10 @@ function mapDispatchToProps(dispatch) {
   return {
     onClickMenu(menuKey) {
       dispatch(toggleTopBarMenu(menuKey));
+    },
+
+    onCloseMenu(menuKey) {
+      dispatch(closeTopBarMenu(menuKey));
     },
 
     onCreateNewProject() {

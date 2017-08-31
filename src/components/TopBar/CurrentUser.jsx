@@ -8,6 +8,7 @@ export default function CurrentUser({
   isOpen,
   user,
   onClick,
+  onClose,
   onLogOut,
   onStartLogIn,
 }) {
@@ -31,7 +32,11 @@ export default function CurrentUser({
         <span className="top-bar__drop-down-button u__icon">
           &#xf0d7;
         </span>
-        <CurrentUserMenu isOpen={isOpen} onLogOut={onLogOut} />
+        <CurrentUserMenu
+          isOpen={isOpen}
+          onClose={onClose}
+          onLogOut={onLogOut}
+        />
       </div>
     );
   }
@@ -53,6 +58,7 @@ CurrentUser.propTypes = {
     authenticated: PropTypes.boolean,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
 };

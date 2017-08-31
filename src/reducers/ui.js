@@ -190,6 +190,12 @@ export default function ui(stateIn, action) {
         menu => menu === action.payload ? null : action.payload,
       );
 
+    case 'CLOSE_TOP_BAR_MENU':
+      return state.updateIn(
+        ['topBar', 'openMenu'],
+        menu => menu === action.payload ? null : menu,
+      );
+
     default:
       return state;
   }

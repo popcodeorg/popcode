@@ -6718,6 +6718,10 @@ react-addons-perf@^15.4.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
+react-click-outside@tj/react-click-outside:
+  version "1.1.1"
+  resolved "https://codeload.github.com/tj/react-click-outside/tar.gz/32c16f09318dff8701cacc4ea73655e1f393f2c7"
+
 react-copy-to-clipboard@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-copy-to-clipboard/-/react-copy-to-clipboard-5.0.0.tgz#23ccdd7c4d9ec2cc763839e2a55b1220aeb4f33d"
