@@ -6,7 +6,7 @@ import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
 import CurrentUser from './CurrentUser';
 import HamburgerMenuButton from './HamburgerMenuButton';
-import LibraryPickerButton from './LibraryPickerButton';
+import LibraryPicker from './LibraryPicker';
 import NewProjectButton from './NewProjectButton';
 import ProjectsButton from './ProjectsButton';
 import SnapshotButton from './SnapshotButton';
@@ -78,11 +78,9 @@ export default function TopBar({
         projectKeys={projectKeys}
         onClick={partial(onClickMenu, 'projectPicker')}
       />
-      <LibraryPickerButton
+      <LibraryPicker
         enabledLibraries={enabledLibraries}
-        isOpen={openMenu === 'libraryPicker'}
-        onClick={partial(onClickMenu, 'libraryPicker')}
-        onLibraryToggled={partial(onLibraryToggled, currentProjectKey)}
+        onClickItem={partial(onLibraryToggled, currentProjectKey)}
       />
       <SnapshotButton
         isInProgress={isSnapshotInProgress}
