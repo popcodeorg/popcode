@@ -26,8 +26,12 @@ export function MenuItem({children, isEnabled, onClick}) {
 
 MenuItem.propTypes = {
   children: PropTypes.node.isRequired,
-  isEnabled: PropTypes.bool.isRequired,
+  isEnabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+};
+
+MenuItem.defaultProps = {
+  isEnabled: false,
 };
 
 export default function createMenu({

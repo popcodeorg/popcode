@@ -5,7 +5,7 @@ import partial from 'lodash/partial';
 import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
 import CurrentUser from './CurrentUser';
-import HamburgerMenuButton from './HamburgerMenuButton';
+import HamburgerMenu from './HamburgerMenu';
 import LibraryPicker from './LibraryPicker';
 import NewProjectButton from './NewProjectButton';
 import ProjectPicker from './ProjectPicker';
@@ -54,7 +54,7 @@ export default function TopBar({
 
   return (
     <div className={classnames('top-bar', modifier)}>
-      <HamburgerMenuButton
+      <HamburgerMenu
         isExperimental={isExperimental}
         isGistExportInProgress={isGistExportInProgress}
         isOpen={openMenu === 'hamburger'}
