@@ -39,7 +39,9 @@ import {
 import {isPristineProject} from '../util/projectUtils';
 import {getCurrentProject} from '../selectors';
 
-import {TopBar, Instructions, NotificationList} from '../containers';
+import TopBar from '../containers/TopBar';
+import Instructions from '../containers/Instructions';
+import NotificationList from '../containers/NotificationList';
 import EditorsColumn from './EditorsColumn';
 import Output from './Output';
 import PopThrobber from './PopThrobber';

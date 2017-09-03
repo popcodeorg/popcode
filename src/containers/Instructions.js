@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {Instructions} from '../components';
+import Instructions from '../components/Instructions';
 import {
   getCurrentProjectInstructions,
   getHiddenUIComponents,

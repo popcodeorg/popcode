@@ -2,7 +2,7 @@ import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import {connect} from 'react-redux';
 import Bugsnag from '../util/Bugsnag';
-import {TopBar} from '../components';
+import TopBar from '../components/TopBar';
 import {
   getCurrentProjectKey,
   getCurrentUser,

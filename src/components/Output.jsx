@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ErrorReport, Preview} from '../containers';
+import ErrorReport from '../containers/ErrorReport';
+import Preview from '../containers/Preview';
 
 export default function Output({
   isDraggingColumnDivider,

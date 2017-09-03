@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ProjectPreview} from '../../containers';
+import ProjectPreview from '../../containers/ProjectPreview';
 
 function ProjectList({isOpen, projectKeys}) {
   if (!isOpen) {
