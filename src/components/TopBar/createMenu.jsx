@@ -1,8 +1,9 @@
+/* eslint-disable react/no-multi-comp */
+
 import classnames from 'classnames';
 import {connect} from 'react-redux';
 import constant from 'lodash/constant';
 import onClickOutside from 'react-onclickoutside';
-import partial from 'lodash/partial';
 import preventClickthrough from 'react-prevent-clickthrough';
 import property from 'lodash/property';
 import PropTypes from 'prop-types';
@@ -10,9 +11,28 @@ import React from 'react';
 import {closeTopBarMenu, toggleTopBarMenu} from '../../actions';
 import {getOpenTopBarMenu} from '../../selectors';
 
+export function MenuItem({children, isEnabled, onClick}) {
+  return (
+    <div
+      className={classnames('top-bar__menu-item',
+        {'top-bar__menu-item_active': isEnabled},
+      )}
+      onClick={onClick}
+    >
+      {children}
+    </div>
+  );
+}
+
+MenuItem.propTypes = {
+  children: PropTypes.node.isRequired,
+  isEnabled: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
 export default function createMenu({
   isVisible = constant(true),
-  mapPropsToItems,
+  renderItems,
   name,
 }) {
   function mapStateToProps(state) {
@@ -35,31 +55,20 @@ export default function createMenu({
     };
   }
 
-  return function createMenuWithMappedProps(Label, Item) {
+  return function createMenuWithMappedProps(Label) {
     function Menu(props) {
       if (!isVisible(props)) {
         return null;
       }
 
-      const {isOpen, onClickItem, onToggle} = props;
-      const items = mapPropsToItems(props);
+      const {isOpen, onToggle} = props;
       const menu = isOpen ?
         (
           <div
             className="top-bar__menu"
             onClick={preventClickthrough}
           >
-            {items.map(({key, enabled, props: itemProps}) => (
-              <div
-                className={classnames('top-bar__menu-item',
-                  {'top-bar__menu-item_active': enabled},
-                )}
-                key={key}
-                onClick={partial(onClickItem, key)}
-              >
-                <Item {...itemProps} />
-              </div>
-            ))}
+            {renderItems(props)}
           </div>
         ) : null;
 
@@ -81,7 +90,6 @@ export default function createMenu({
 
     Menu.propTypes = {
       isOpen: PropTypes.bool.isRequired,
-      onClickItem: PropTypes.func.isRequired,
       onToggle: PropTypes.func.isRequired,
     };
 

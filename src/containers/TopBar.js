@@ -81,7 +81,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(exportRepo());
     },
 
-    onLibraryToggled(projectKey, libraryKey) {
+    onToggleLibrary(projectKey, libraryKey) {
       dispatch(toggleLibrary(projectKey, libraryKey));
     },
 

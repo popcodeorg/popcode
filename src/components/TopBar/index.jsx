@@ -45,9 +45,9 @@ export default function TopBar({
   onCreateSnapshot,
   onExportGist,
   onExportRepo,
-  onLibraryToggled,
   onLogOut,
   onStartLogIn,
+  onToggleLibrary,
   onToggleTextSize,
 }) {
   const {popVariant, modifier} = uiVariants({validationState, isUserTyping});
@@ -77,11 +77,11 @@ export default function TopBar({
       <ProjectPicker
         currentProjectKey={currentProjectKey}
         projectKeys={projectKeys}
-        onClickItem={onChangeCurrentProject}
+        onChangeCurrentProject={onChangeCurrentProject}
       />
       <LibraryPicker
         enabledLibraries={enabledLibraries}
-        onClickItem={partial(onLibraryToggled, currentProjectKey)}
+        onToggleLibrary={partial(onToggleLibrary, currentProjectKey)}
       />
       <SnapshotButton
         isInProgress={isSnapshotInProgress}
@@ -120,9 +120,9 @@ TopBar.propTypes = {
   onCreateSnapshot: PropTypes.func.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
-  onLibraryToggled: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
+  onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,
 };
 
