@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import {connect} from 'react-redux';
+import constant from 'lodash/constant';
 import onClickOutside from 'react-onclickoutside';
 import partial from 'lodash/partial';
 import preventClickthrough from 'react-prevent-clickthrough';
@@ -9,7 +10,11 @@ import React from 'react';
 import {closeTopBarMenu, toggleTopBarMenu} from '../../actions';
 import {getOpenTopBarMenu} from '../../selectors';
 
-export default function createMenu({mapPropsToItems, name}) {
+export default function createMenu({
+  isVisible = constant(true),
+  mapPropsToItems,
+  name,
+}) {
   function mapStateToProps(state) {
     const isOpen = getOpenTopBarMenu(state) === name;
     return {
@@ -32,6 +37,10 @@ export default function createMenu({mapPropsToItems, name}) {
 
   return function createMenuWithMappedProps(Label, Item) {
     function Menu(props) {
+      if (!isVisible(props)) {
+        return null;
+      }
+
       const {isOpen, onClickItem, onToggle} = props;
       const items = mapPropsToItems(props);
       const menu = isOpen ?

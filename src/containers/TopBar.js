@@ -18,6 +18,7 @@ import {
   isUserTyping,
 } from '../selectors';
 import {
+  changeCurrentProject,
   closeTopBarMenu,
   createProject,
   createSnapshot,
@@ -52,6 +53,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    onChangeCurrentProject(projectKey) {
+      dispatch(changeCurrentProject(projectKey));
+    },
+
     onClickMenu(menuKey) {
       dispatch(toggleTopBarMenu(menuKey));
     },

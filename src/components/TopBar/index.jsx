@@ -8,7 +8,7 @@ import CurrentUser from './CurrentUser';
 import HamburgerMenuButton from './HamburgerMenuButton';
 import LibraryPicker from './LibraryPicker';
 import NewProjectButton from './NewProjectButton';
-import ProjectsButton from './ProjectsButton';
+import ProjectPicker from './ProjectPicker';
 import SnapshotButton from './SnapshotButton';
 import TextSize from './TextSize';
 
@@ -38,6 +38,7 @@ export default function TopBar({
   openMenu,
   projectKeys,
   validationState,
+  onChangeCurrentProject,
   onClickMenu,
   onCloseMenu,
   onCreateNewProject,
@@ -73,10 +74,10 @@ export default function TopBar({
         isUserAuthenticated={isUserAuthenticated}
         onClick={onCreateNewProject}
       />
-      <ProjectsButton
-        isOpen={openMenu === 'projectPicker'}
+      <ProjectPicker
+        currentProjectKey={currentProjectKey}
         projectKeys={projectKeys}
-        onClick={partial(onClickMenu, 'projectPicker')}
+        onClickItem={onChangeCurrentProject}
       />
       <LibraryPicker
         enabledLibraries={enabledLibraries}
@@ -112,6 +113,7 @@ TopBar.propTypes = {
   openMenu: PropTypes.string,
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   validationState: PropTypes.string.isRequired,
+  onChangeCurrentProject: PropTypes.func.isRequired,
   onClickMenu: PropTypes.func.isRequired,
   onCloseMenu: PropTypes.func.isRequired,
   onCreateNewProject: PropTypes.func.isRequired,
