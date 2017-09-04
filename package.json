@@ -189,7 +189,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-promise": "^3.4.2",
     "eslint-plugin-react": "^7.0.1",
-    "eslint_d": "^4.0.1",
+    "eslint_d": "^5.1.0",
     "exports-loader": "^0.6.3",
     "git-rev-sync": "^1.6.0",
     "gulp": "^3.9.1",
