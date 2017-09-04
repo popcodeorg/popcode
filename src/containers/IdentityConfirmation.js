@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
-import {IdentityConfirmation} from '../components';
+import {confirmIdentity} from '../actions/user';
+import IdentityConfirmation from '../components/IdentityConfirmation';
 import {getCurrentUser} from '../selectors';
-import {userAuthenticated} from '../actions/user';
 
 function makeMapStateToProps() {
   return function mapStateToProps(state) {
@@ -13,8 +13,8 @@ function makeMapStateToProps() {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onConfirmIdentity(confirmedUser) {
-      dispatch(userAuthenticated(confirmedUser));
+    onConfirmIdentity() {
+      dispatch(confirmIdentity());
     },
   };
 }
