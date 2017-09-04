@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {confirmIdentity} from '../actions/user';
+import {confirmIdentity, rejectIdentity} from '../actions/user';
 import IdentityConfirmation from '../components/IdentityConfirmation';
 import {getCurrentUser} from '../selectors';
 
@@ -15,6 +15,10 @@ function mapDispatchToProps(dispatch) {
   return {
     onConfirmIdentity() {
       dispatch(confirmIdentity());
+    },
+
+    onRejectIdentity() {
+      dispatch(rejectIdentity());
     },
   };
 }

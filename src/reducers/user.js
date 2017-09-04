@@ -16,6 +16,10 @@ function user(stateIn, action) {
       });
     }
 
+    case 'REJECT_IDENTITY': {
+      return init.set('authenticationState', AuthenticationStates.REJECTED);
+    }
+
     case 'USER_AUTHENTICATED': {
       const {user: userData, credential, additionalUserInfo} = action.payload;
 
