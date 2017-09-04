@@ -165,7 +165,6 @@ module.exports = {
           matchModule('chalk'),
           matchModule('lodash-es'),
           matchModule('redux'),
-          matchModule('redux-saga-debounce-effect'),
           matchModule('stylelint'),
         ],
         use: {loader: 'babel-loader', options: babelrc},

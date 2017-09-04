@@ -1,5 +1,5 @@
 import {all, call, put, take, takeEvery} from 'redux-saga/effects';
-import debounceFor from 'redux-saga-debounce-effect/src/debounceFor';
+import {debounceFor} from 'redux-saga-debounce-effect';
 import {userDoneTyping as userDoneTypingAction} from '../actions/ui';
 import {
   gistExportDisplayed,

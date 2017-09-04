@@ -7263,9 +7263,9 @@ redux-logger@^3.0.6:
   dependencies:
     deep-diff "^0.3.5"
 
-"redux-saga-debounce-effect@https://github.com/madewithlove/redux-saga-debounce-effect.git#v0.2.2":
+redux-saga-debounce-effect@^0.2.2:
   version "0.2.2"
-  resolved "https://github.com/madewithlove/redux-saga-debounce-effect.git#b77115acd6a97cbf84952f5031804c5f0df7d0f5"
+  resolved "https://registry.yarnpkg.com/redux-saga-debounce-effect/-/redux-saga-debounce-effect-0.2.2.tgz#ba61f7ac939f3bcc5b6693384e39837a4802b5ee"
 
 redux-saga-test-plan@^3.0.2:
   version "3.1.0"
