@@ -84,7 +84,7 @@ export default function createMenu({
           )}
           onClick={onToggle}
         >
-          <Label />
+          <Label {...props} />
           {menu}
         </div>
       );
