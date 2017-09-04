@@ -13,7 +13,7 @@ const HamburgerMenu = createMenu({
   renderItems({
     isExperimental,
     isGistExportInProgress,
-    isUserAuthenticated,
+    isUserConfirmed,
     onExportGist,
     onExportRepo,
   }) {
@@ -27,7 +27,7 @@ const HamburgerMenu = createMenu({
         </MenuItem>,
       );
 
-      if (isUserAuthenticated && isExperimental) {
+      if (isUserConfirmed && isExperimental) {
         items.push(
           <MenuItem
             key="exportRepo"
@@ -84,7 +84,7 @@ HamburgerMenu.propTypes = {
   isExperimental: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  isUserAuthenticated: PropTypes.bool.isRequired,
+  isUserConfirmed: PropTypes.bool.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
 };

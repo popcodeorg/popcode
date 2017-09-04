@@ -1,8 +1,9 @@
 import Immutable from 'immutable';
 import get from 'lodash/get';
+import AuthenticationStates from '../enums/AuthenticationStates';
 
 const init = new Immutable.Map({
-  authenticated: false,
+  authenticationState: AuthenticationStates.UNKNOWN,
 });
 
 function user(stateIn, action) {
@@ -11,7 +12,7 @@ function user(stateIn, action) {
   switch (action.type) {
     case 'CONFIRM_IDENTITY': {
       return state.merge({
-        // TODO: authenticated: 'confirmed',
+        authenticationState: AuthenticationStates.CONFIRMED,
       });
     }
 
@@ -21,7 +22,7 @@ function user(stateIn, action) {
       const profileData = get(userData, ['providerData', 0], userData);
 
       return state.merge({
-        authenticated: true,
+        authenticationState: AuthenticationStates.AUTHENTICATED,
         id: userData.uid,
         displayName: profileData.displayName || get(
           additionalUserInfo,

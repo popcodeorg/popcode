@@ -11,7 +11,7 @@ import {
   isGistExportInProgress,
   isSnapshotInProgress,
   isTextSizeLarge,
-  isUserAuthenticated,
+  isUserConfirmed,
   isUserTyping,
 } from '../selectors';
 import {
@@ -37,7 +37,7 @@ function mapStateToProps(state) {
     isGistExportInProgress: isGistExportInProgress(state),
     isSnapshotInProgress: isSnapshotInProgress(state),
     isTextSizeLarge: isTextSizeLarge(state),
-    isUserAuthenticated: isUserAuthenticated(state),
+    isUserConfirmed: isUserConfirmed(state),
     isUserTyping: isUserTyping(state),
     openMenu: getOpenTopBarMenu(state),
     projectKeys: getAllProjectKeys(state),

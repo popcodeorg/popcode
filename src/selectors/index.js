@@ -21,7 +21,7 @@ import isExperimental from './isExperimental';
 import isGistExportInProgress from './isGistExportInProgress';
 import isSnapshotInProgress from './isSnapshotInProgress';
 import isTextSizeLarge from './isTextSizeLarge';
-import isUserAuthenticated from './isUserAuthenticated';
+import isUserConfirmed from './isUserConfirmed';
 import isUserTyping from './isUserTyping';
 import makeGetProjectPreview from './makeGetProjectPreview';
 
@@ -48,7 +48,7 @@ export {
   isGistExportInProgress,
   isSnapshotInProgress,
   isTextSizeLarge,
-  isUserAuthenticated,
+  isUserConfirmed,
   isUserTyping,
   makeGetProjectPreview,
 };
