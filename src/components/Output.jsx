@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ErrorReport, Preview} from '../containers';
+import ErrorReport from '../containers/ErrorReport';
+import Preview from '../containers/Preview';
 
 export default function Output({
-  isDraggingColumnDivider,
+  ignorePointerEvents,
   style,
   onRef,
 }) {
@@ -12,7 +13,7 @@ export default function Output({
       className="environment__column"
       ref={onRef}
       style={Object.assign({}, style, {
-        pointerEvents: isDraggingColumnDivider ? 'none' : 'all',
+        pointerEvents: ignorePointerEvents ? 'none' : 'all',
       })}
     >
       <div className="environment__columnContents output">
@@ -24,7 +25,7 @@ export default function Output({
 }
 
 Output.propTypes = {
-  isDraggingColumnDivider: PropTypes.bool.isRequired,
+  ignorePointerEvents: PropTypes.bool.isRequired,
   style: PropTypes.object.isRequired,
   onRef: PropTypes.func.isRequired,
 };

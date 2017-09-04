@@ -1634,6 +1634,10 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+circular-dependency-plugin@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/circular-dependency-plugin/-/circular-dependency-plugin-4.2.0.tgz#913e884d9a0e8ac1ddabdac4c2c91bde52c784cc"
+
 circular-json@^0.3.1:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
@@ -6743,6 +6747,10 @@ react-ga@^2.1.2:
     create-react-class "^15.5.2"
     object-assign "^4.0.1"
     prop-types "^15.5.6"
+
+react-onclickoutside@^6.5.0:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.5.0.tgz#c45b39fe0d7f087817a9f5edab8c12349856b640"
 
 react-prevent-clickthrough@^0.0.3:
   version "0.0.3"

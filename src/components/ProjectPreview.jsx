@@ -1,26 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import moment from 'moment';
 
 const MAX_LENGTH = 50;
 
-export default function ProjectPreview({
-  isSelected,
-  preview,
-  project,
-  onProjectSelected,
-}) {
+export default function ProjectPreview({preview, project}) {
   return (
-    <div
-      className={classnames(
-        'project-preview',
-        'top-bar__menu-item',
-        {'top-bar__menu-item_active': isSelected},
-      )}
-      key={project.projectKey}
-      onClick={onProjectSelected}
-    >
+    <div>
       <div className="project-preview__label">
         {preview.slice(0, MAX_LENGTH)}
       </div>
@@ -32,8 +18,6 @@ export default function ProjectPreview({
 }
 
 ProjectPreview.propTypes = {
-  isSelected: PropTypes.bool.isRequired,
   preview: PropTypes.string.isRequired,
   project: PropTypes.object.isRequired,
-  onProjectSelected: PropTypes.func.isRequired,
 };

@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {Preview} from '../components';
+import Preview from '../components/Preview';
 import {
   addRuntimeError,
   popOutProject,

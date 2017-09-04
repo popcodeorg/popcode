@@ -59,3 +59,7 @@ export const toggleEditorTextSize = createAction(
 export const toggleTopBarMenu = createAction(
   'TOGGLE_TOP_BAR_MENU',
 );
+
+export const closeTopBarMenu = createAction(
+  'CLOSE_TOP_BAR_MENU',
+);

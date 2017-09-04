@@ -1,41 +1,38 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import map from 'lodash/map';
 import partial from 'lodash/partial';
-import preventClickthrough from 'react-prevent-clickthrough';
+import PropTypes from 'prop-types';
+import React from 'react';
 import libraries from '../../config/libraries';
-import LibraryPickerItem from './LibraryPickerItem';
+import createMenu, {MenuItem} from './createMenu';
+import LibraryPickerButton from './LibraryPickerButton';
 
-export default function LibraryPicker({
-  enabledLibraries,
-  isOpen,
-  onLibraryToggled,
-}) {
-  if (!isOpen) {
-    return null;
-  }
+const LibraryPicker = createMenu({
+  name: 'libraryPicker',
 
-  const libraryButtons = map(libraries, (library, key) => (
-    <LibraryPickerItem
-      enabled={enabledLibraries.includes(key)}
-      key={key}
-      library={library}
-      onLibraryToggled={partial(onLibraryToggled, key)}
-    />
-  ));
+  renderItems({enabledLibraries, onToggleLibrary}) {
+    return map(libraries, (library, key) => {
+      const isEnabled = enabledLibraries.includes(key);
 
-  return (
-    <div
-      className="top-bar__menu"
-      onClick={preventClickthrough}
-    >
-      {libraryButtons}
-    </div>
-  );
-}
+      return (
+        <MenuItem
+          isEnabled={isEnabled}
+          key={key}
+          onClick={partial(onToggleLibrary, key)}
+        >
+          <span className={classnames('u__icon', {u__invisible: !isEnabled})}>
+            &#xf00c;{' '}
+          </span>
+          {library.name}
+        </MenuItem>
+      );
+    });
+  },
+})(LibraryPickerButton);
 
 LibraryPicker.propTypes = {
   enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  onLibraryToggled: PropTypes.func.isRequired,
+  onToggleLibrary: PropTypes.func.isRequired,
 };
+
+export default LibraryPicker;

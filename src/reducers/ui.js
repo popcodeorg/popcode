@@ -40,6 +40,13 @@ export default function ui(stateIn, action) {
 
   switch (action.type) {
     case 'CHANGE_CURRENT_PROJECT':
+      return state.
+        set('workspace', DEFAULT_WORKSPACE).
+        updateIn(
+          ['topBar', 'openMenu'],
+          menu => menu === 'projectPicker' ? null : menu,
+        );
+
     case 'PROJECT_CREATED':
       return state.set('workspace', DEFAULT_WORKSPACE);
 
@@ -188,6 +195,12 @@ export default function ui(stateIn, action) {
       return state.updateIn(
         ['topBar', 'openMenu'],
         menu => menu === action.payload ? null : action.payload,
+      );
+
+    case 'CLOSE_TOP_BAR_MENU':
+      return state.updateIn(
+        ['topBar', 'openMenu'],
+        menu => menu === action.payload ? null : menu,
       );
 
     default:

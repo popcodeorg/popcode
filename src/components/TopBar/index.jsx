@@ -5,10 +5,10 @@ import partial from 'lodash/partial';
 import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
 import CurrentUser from './CurrentUser';
-import HamburgerMenuButton from './HamburgerMenuButton';
-import LibraryPickerButton from './LibraryPickerButton';
+import HamburgerMenu from './HamburgerMenu';
+import LibraryPicker from './LibraryPicker';
 import NewProjectButton from './NewProjectButton';
-import ProjectsButton from './ProjectsButton';
+import ProjectPicker from './ProjectPicker';
 import SnapshotButton from './SnapshotButton';
 import TextSize from './TextSize';
 
@@ -38,21 +38,23 @@ export default function TopBar({
   openMenu,
   projectKeys,
   validationState,
+  onChangeCurrentProject,
   onClickMenu,
+  onCloseMenu,
   onCreateNewProject,
   onCreateSnapshot,
   onExportGist,
   onExportRepo,
-  onLibraryToggled,
   onLogOut,
   onStartLogIn,
+  onToggleLibrary,
   onToggleTextSize,
 }) {
   const {popVariant, modifier} = uiVariants({validationState, isUserTyping});
 
   return (
     <div className={classnames('top-bar', modifier)}>
-      <HamburgerMenuButton
+      <HamburgerMenu
         isExperimental={isExperimental}
         isGistExportInProgress={isGistExportInProgress}
         isOpen={openMenu === 'hamburger'}
@@ -72,16 +74,14 @@ export default function TopBar({
         isUserAuthenticated={isUserAuthenticated}
         onClick={onCreateNewProject}
       />
-      <ProjectsButton
-        isOpen={openMenu === 'projectPicker'}
+      <ProjectPicker
+        currentProjectKey={currentProjectKey}
         projectKeys={projectKeys}
-        onClick={partial(onClickMenu, 'projectPicker')}
+        onChangeCurrentProject={onChangeCurrentProject}
       />
-      <LibraryPickerButton
+      <LibraryPicker
         enabledLibraries={enabledLibraries}
-        isOpen={openMenu === 'libraryPicker'}
-        onClick={partial(onClickMenu, 'libraryPicker')}
-        onLibraryToggled={partial(onLibraryToggled, currentProjectKey)}
+        onToggleLibrary={partial(onToggleLibrary, currentProjectKey)}
       />
       <SnapshotButton
         isInProgress={isSnapshotInProgress}
@@ -92,6 +92,7 @@ export default function TopBar({
         isOpen={openMenu === 'currentUser'}
         user={currentUser}
         onClick={partial(onClickMenu, 'currentUser')}
+        onClose={partial(onCloseMenu, 'currentUser')}
         onLogOut={onLogOut}
         onStartLogIn={onStartLogIn}
       />
@@ -112,14 +113,16 @@ TopBar.propTypes = {
   openMenu: PropTypes.string,
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   validationState: PropTypes.string.isRequired,
+  onChangeCurrentProject: PropTypes.func.isRequired,
   onClickMenu: PropTypes.func.isRequired,
+  onCloseMenu: PropTypes.func.isRequired,
   onCreateNewProject: PropTypes.func.isRequired,
   onCreateSnapshot: PropTypes.func.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
-  onLibraryToggled: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
+  onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,
 };
 

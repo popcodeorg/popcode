@@ -2,7 +2,7 @@ import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import {connect} from 'react-redux';
 import Bugsnag from '../util/Bugsnag';
-import {TopBar} from '../components';
+import TopBar from '../components/TopBar';
 import {
   getCurrentProjectKey,
   getCurrentUser,
@@ -18,6 +18,8 @@ import {
   isUserTyping,
 } from '../selectors';
 import {
+  changeCurrentProject,
+  closeTopBarMenu,
   createProject,
   createSnapshot,
   exportGist,
@@ -51,8 +53,16 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    onChangeCurrentProject(projectKey) {
+      dispatch(changeCurrentProject(projectKey));
+    },
+
     onClickMenu(menuKey) {
       dispatch(toggleTopBarMenu(menuKey));
+    },
+
+    onCloseMenu(menuKey) {
+      dispatch(closeTopBarMenu(menuKey));
     },
 
     onCreateNewProject() {
@@ -71,7 +81,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(exportRepo());
     },
 
-    onLibraryToggled(projectKey, libraryKey) {
+    onToggleLibrary(projectKey, libraryKey) {
       dispatch(toggleLibrary(projectKey, libraryKey));
     },
 

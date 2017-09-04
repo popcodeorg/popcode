@@ -1,10 +1,10 @@
 import React from 'react';
 import {t} from 'i18next';
 
-export default function LibraryPickerButton() {
+export default function ProjectPickerButton() {
   return (
     <span>
-      {t('top-bar.libraries')}
+      {t('top-bar.load-project')}
       {' '}
       <span className="u__icon">
         &#xf0d7;
@@ -13,4 +13,4 @@ export default function LibraryPickerButton() {
   );
 }
 
-LibraryPickerButton.propTypes = {};
+ProjectPickerButton.propTypes = {};

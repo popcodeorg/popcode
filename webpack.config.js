@@ -6,6 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const OfflinePlugin = require('offline-plugin');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
 const startsWith = require('lodash/startsWith');
@@ -216,7 +217,10 @@ module.exports = {
       WARN_ON_DROPPED_ERRORS: 'false',
       GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2'
     }),
-    // it's always better if OfflinePlugin is the last plugin added https://github.com/NekR/offline-plugin#setup
+    new CircularDependencyPlugin({
+      exclude: /node_modules/,
+      failOnError: true,
+    }),
     new OfflinePlugin({
       publicPath: '/',
       responseStrategy: 'network-first',

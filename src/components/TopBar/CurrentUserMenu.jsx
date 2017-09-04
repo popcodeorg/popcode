@@ -1,22 +1,24 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {t} from 'i18next';
+import createMenu, {MenuItem} from './createMenu';
+import CurrentUserButton from './CurrentUserButton';
 
-export default function CurrentUserMenu({isOpen, onLogOut}) {
-  if (!isOpen) {
-    return null;
-  }
+const CurrentUserMenu = createMenu({
+  name: 'currentUser',
 
-  return (
-    <div className="top-bar__menu">
-      <div className="top-bar__menu-item" onClick={onLogOut}>
+  // eslint-disable-next-line react/prop-types
+  renderItems({onLogOut}) {
+    return (
+      <MenuItem onClick={onLogOut}>
         {t('top-bar.session.log-out-prompt')}
-      </div>
-    </div>
-  );
-}
+      </MenuItem>
+    );
+  },
+})(CurrentUserButton);
 
 CurrentUserMenu.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   onLogOut: PropTypes.func.isRequired,
 };
+
+export default CurrentUserMenu;

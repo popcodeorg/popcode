@@ -39,7 +39,9 @@ import {
 import {isPristineProject} from '../util/projectUtils';
 import {getCurrentProject} from '../selectors';
 
-import {TopBar, Instructions, NotificationList} from '../containers';
+import TopBar from '../containers/TopBar';
+import Instructions from '../containers/Instructions';
+import NotificationList from '../containers/NotificationList';
 import EditorsColumn from './EditorsColumn';
 import Output from './Output';
 import PopThrobber from './PopThrobber';
@@ -178,7 +180,10 @@ class Workspace extends React.Component {
     const {isDraggingColumnDivider, rowsFlex} = this.props;
     return (
       <Output
-        isDraggingColumnDivider={isDraggingColumnDivider}
+        ignorePointerEvents={
+          isDraggingColumnDivider ||
+            Boolean(get(this, 'props.ui.topBar.openMenu'))
+        }
         style={{flex: rowsFlex[1]}}
         onRef={partial(this._storeColumnRef, 1)}
       />

@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {NotificationList} from '../components';
+import NotificationList from '../components/NotificationList';
 import {
   updateNotificationMetadata,
   userDismissedNotification,

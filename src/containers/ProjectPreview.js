@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {ProjectPreview} from '../components';
+import ProjectPreview from '../components/ProjectPreview';
 import {changeCurrentProject} from '../actions';
 import {
   makeGetProjectPreview,
