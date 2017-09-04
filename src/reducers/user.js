@@ -3,7 +3,6 @@ import get from 'lodash/get';
 
 const init = new Immutable.Map({
   authenticated: false,
-  unconfirmedIdentity: null,
 });
 
 function user(stateIn, action) {
@@ -11,33 +10,29 @@ function user(stateIn, action) {
 
   switch (action.type) {
     case 'CONFIRM_IDENTITY': {
+      return state.merge({
+        // TODO: authenticated: 'confirmed',
+      });
+    }
+
+    case 'USER_AUTHENTICATED': {
       const {user: userData, credential, additionalUserInfo} = action.payload;
 
       const profileData = get(userData, ['providerData', 0], userData);
 
       return state.merge({
-        unconfirmedIdentity: {
-          id: userData.uid,
-          displayName: profileData.displayName || get(
-            additionalUserInfo,
-            'username',
-          ),
-          avatarUrl: profileData.photoURL,
-          accessTokens: new Immutable.Map().set(
-            credential.providerId,
-            credential.accessToken,
-          ),
-        },
+        authenticated: true,
+        id: userData.uid,
+        displayName: profileData.displayName || get(
+          additionalUserInfo,
+          'username',
+        ),
+        avatarUrl: profileData.photoURL,
+        accessTokens: new Immutable.Map().set(
+          credential.providerId,
+          credential.accessToken,
+        ),
       });
-    }
-
-    case 'USER_AUTHENTICATED': {
-      const updatedState = action.payload;
-
-      updatedState.authenticated = true;
-      updatedState.unconfirmedIdentity = null;
-
-      return state.merge(updatedState);
     }
 
     case 'USER_LOGGED_OUT':
