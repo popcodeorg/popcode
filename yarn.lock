@@ -4253,9 +4253,9 @@ i18next-resource-store-loader@^0.1.1:
     loader-utils "^0.2.11"
     lodash "^4.6.1"
 
-i18next@^8.4.3:
-  version "8.4.3"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-8.4.3.tgz#36b6ff516c4f992010eedcce24a36c4609e8c7dc"
+i18next@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-9.0.0.tgz#a89ab0481b5b6b3964f55b12f03de9063d8f4500"
 
 iconv-lite@0.4.15:
   version "0.4.15"
