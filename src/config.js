@@ -16,6 +16,6 @@ module.exports = {
   bugsnagApiKey: '400134511e506b91ae6c24ac962af962',
 
   gitRevision: process.env.GIT_REVISION,
-
+  gitHubLogoutUrl: 'https://github.com/logout',
   googleAnalyticsTrackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID,
 };

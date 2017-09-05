@@ -2,12 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AuthenticationStates from '../enums/AuthenticationStates';
 
-// TODO: Move to saga
-function navigateToGithubLogOut() {
-  const GITHUB_LOGOUT_URL = 'https://github.com/logout';
-  window.open(GITHUB_LOGOUT_URL, '_blank');
-}
-
 function IdentityConfirmation(props) {
   const {
     currentUser,
