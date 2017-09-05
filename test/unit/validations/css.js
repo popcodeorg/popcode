@@ -26,6 +26,15 @@ test('valid filter', validationTest(
   css,
 ));
 
+test('valid text-shadow declaration', validationTest(
+  `p {
+    text-shadow: rgba(0,0,0,0.1) 0 -5px, rgba(0,0,0,0.1) 0 -1px, \
+     rgba(255,255,255,0.1) 1px 0, rgba(255,255,255,0.1) 0 1px, \
+     rgba(0,0,0,0.1) -1px -1px, rgba(255,255,255,0.1) 1px 1px; 
+  }`,
+  css,
+));
+
 test('bogus flex value', validationTest(
   '.flex-item { flex: bogus; }',
   css,
