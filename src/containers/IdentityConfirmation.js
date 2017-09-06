@@ -1,7 +1,9 @@
 import {connect} from 'react-redux';
+import config from '../config';
 import {confirmIdentity, rejectIdentity} from '../actions/user';
 import IdentityConfirmation from '../components/IdentityConfirmation';
 import {getCurrentUser} from '../selectors';
+import {signOut} from '../clients/firebase';
 
 function makeMapStateToProps() {
   return function mapStateToProps(state) {
@@ -17,7 +19,11 @@ function mapDispatchToProps(dispatch) {
       dispatch(confirmIdentity());
     },
 
-    onRejectIdentity() {
+    onRejectIdentity(e) {
+      e.preventDefault();
+
+      window.open(config.gitHubLogoutUrl, '_blank');
+      signOut();
       dispatch(rejectIdentity());
     },
   };

@@ -94,11 +94,78 @@ body {
   z-index: 3;
 }
 
+.identity-confirmation__confirm-btn {
+  position: relative;
+
+  display: block;
+  margin: 30px auto;
+  padding: 0;
+
+  overflow: hidden;
+
+  border-width: 0;
+  outline: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+
+  background-color: #2ecc71;
+  color: #ecf0f1;
+
+  transition: background-color .3s;
+}
+
+.identity-confirmation__confirm-btn:hover, .identity-confirmation__confirm-btn:focus {
+  background-color: #27ae60;
+}
+
+.identity-confirmation__confirm-btn {
+  cursor: pointer;
+  padding: 1em;
+}
+
+.identity-confirmation__confirm-btn > * {
+  position: relative;
+}
+
+.identity-confirmation__confirm-btn:before {
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  background-color: rgba(236, 240, 241, .3);
+  border-radius: 100%;
+  content: "";
+  display: block;
+  left: 50%;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+}
+
+.identity-confirmation__confirm-btn:active:before {
+  padding-top: 120%;
+  transition: width .2s ease-out, padding-top .2s ease-out;
+  width: 120%;
+}
+
 .identity-confirmation__modal {
   background: #fafafa;
-  height: 20vh;
+  box-shadow: 0px 2px 8px #888;
   margin: 10% auto 0;
+  padding: 1em 2em 2em;
   width: 40vw;
+}
+
+.identity-confirmation__text {
+  margin: 2em 0;
+}
+
+.identity-confirmation__title {
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 1.5em;
 }
 
 /** @define layout */
