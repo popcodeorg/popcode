@@ -56,19 +56,19 @@ const HamburgerMenu = createMenu({
           key="social"
         >
           <a
-            className="u__icon"
+            className="u__icon top-bar__menu-item-icon"
             href="https://github.com/popcodeorg/popcode"
             rel="noopener noreferrer"
             target="_blank"
           >&#xf09b;</a>
           <a
-            className="u__icon"
+            className="u__icon top-bar__menu-item-icon"
             href="https://twitter.com/popcodeorg"
             rel="noopener noreferrer"
             target="_blank"
           >&#xf099;</a>
           <a
-            className="u__icon"
+            className="u__icon top-bar__menu-item-icon"
             href="https://slack.popcode.org/"
             rel="noopener noreferrer"
             target="_blank"
