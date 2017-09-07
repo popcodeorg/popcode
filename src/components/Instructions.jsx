@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import InstructionsErrorBoundary from './InstructionsErrorBoundary';
+import {toReact as markdownToReact} from '../util/markdown';
 
 export default function Instructions({instructions, isOpen}) {
   if (!instructions || !isOpen) {
@@ -17,9 +17,7 @@ export default function Instructions({instructions, isOpen}) {
         'u__flex-container_column',
       )}
     >
-      {instructions ?
-        <InstructionsErrorBoundary instructions={instructions} /> :
-        null}
+      {instructions ? markdownToReact(instructions) : null}
     </div>
   );
 }
