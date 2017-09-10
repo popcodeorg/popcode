@@ -33,10 +33,13 @@ import {
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
+<<<<<<< HEAD
   startEditingInstructions,
   cancelEditingInstructions,
   showSaveIndicator,
   hideSaveIndicator,
+=======
+>>>>>>> fa1acd3... Element Highlighter
 } from './ui';
 
 import {
@@ -53,6 +56,7 @@ import {
   userLoggedOut,
 } from './user';
 
+<<<<<<< HEAD
 import {
   projectCompiled,
   projectCompilationFailed,
@@ -74,6 +78,8 @@ import {
   updateResizableFlex,
 } from './resizableFlex';
 
+=======
+>>>>>>> fa1acd3... Element Highlighter
 export {
   clearConsoleEntries,
   consoleInputChanged,

@@ -1,5 +1,4 @@
 import {connect} from 'react-redux';
-
 import ProjectPreview from '../components/ProjectPreview';
 import {changeCurrentProject} from '../actions';
 import {

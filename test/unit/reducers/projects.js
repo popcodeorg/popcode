@@ -147,6 +147,21 @@ tap(project(), rehydratedProject =>
   )),
 );
 
+tap(project(), rehydratedProject =>
+  test('projectRestoredFromLastSession', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      projectRestoredFromLastSession,
+      rehydratedProject,
+    ),
+    states.initial.set(
+      rehydratedProject.projectKey,
+      Project.fromJS(rehydratedProject),
+    ),
+  )),
+);
+
 test('gistImported', (t) => {
   t.test('HTML and CSS, no JSON', reducerTest(
     reducer,

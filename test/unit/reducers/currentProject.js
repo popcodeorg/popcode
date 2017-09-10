@@ -48,6 +48,13 @@ test('projectRestoredFromLastSession', reducerTest(
   Immutable.fromJS({projectKey}),
 ));
 
+test('projectRestoredFromLastSession', reducerTest(
+  reducer,
+  initialState,
+  partial(projectRestoredFromLastSession, {projectKey}),
+  Immutable.fromJS({projectKey}),
+));
+
 test('gistImported', reducerTest(
   reducer,
   initialState,

@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 import {t} from 'i18next';
+import createMenu, {MenuItem} from './createMenu';
+import CurrentUserButton from './CurrentUserButton';
 
 import createMenu, {MenuItem} from './createMenu';
 import CurrentUserButton from './CurrentUserButton';

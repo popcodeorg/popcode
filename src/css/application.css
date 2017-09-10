@@ -161,6 +161,11 @@ body {
   cursor: progress;
 }
 
+.top-bar__snapshot_in-progress {
+  color: var(--color-light-gray);
+  cursor: progress;
+}
+
 .top-bar__avatar {
   border-radius: var(--size-rounded-corners);
   height: 1.8em;

@@ -1,5 +1,4 @@
 import {connect} from 'react-redux';
-
 import Preview from '../components/Preview';
 import {
   addRuntimeError,

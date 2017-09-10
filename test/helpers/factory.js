@@ -67,3 +67,11 @@ export function credential(credentialIn) {
     providerId: 'github.com',
   }, credentialIn);
 }
+
+export function additionalUserInfo(additionalUserInfoIn) {
+  return defaultsDeep({}, additionalUserInfoIn, {
+    profile: {},
+    providerId: 'github.com',
+    username: 'popcoder',
+  });
+}

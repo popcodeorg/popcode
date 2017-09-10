@@ -1,5 +1,4 @@
 import {createSelector} from 'reselect';
-
 import getCurrentProjectKey from './getCurrentProjectKey';
 import getProjects from './getProjects';
 
