@@ -39,24 +39,24 @@ const errorHandlerScript = `(${function() {
   };
 }.toString()}());`;
 
-const elementPositions = `(${function() {
-  let newSelector = '';
+const elementHighlighterScript = `(${function() {
+  let selector = '';
   window.addEventListener('message', (message) => {
     const data = JSON.parse(message.data);
-    const {selector: {selector: selector}} = data;
-    newSelector = selector;
+    const {selector: {selector: selectorFromMessage}} = data;
+    selector = selectorFromMessage;
     removeCovers();
-    generateCovers(newSelector);
+    generateCovers();
   });
 
   window.addEventListener('resize', () => {
     removeCovers();
-    generateCovers(newSelector);
+    generateCovers();
   });
 
   window.addEventListener('scroll', () => {
     removeCovers();
-    generateCovers(newSelector);
+    generateCovers();
   });
 
   function removeCovers() {
@@ -69,10 +69,10 @@ const elementPositions = `(${function() {
     }
   }
 
-  function generateCovers(mySelector) {
-    if (mySelector !== '') {
+  function generateCovers() {
+    if (selector !== '') {
       const elements =
-      window.document.querySelectorAll(mySelector);
+      window.document.querySelectorAll(selector);
       elements.forEach((element) => {
         const rect = element.getBoundingClientRect();
         const cover =
@@ -122,7 +122,6 @@ class PreviewGenerator {
       project.sources.html,
       'text/html',
     );
-    this._addDataValueToElements();
     this._previewHead = this._ensureElement('head');
     this.previewBody = this._ensureElement('body');
     this._firstScriptTag = this.previewDocument.querySelector('script');
@@ -144,7 +143,7 @@ class PreviewGenerator {
     if (options.lastRefreshTimestamp) {
       this._addRefreshTimestamp(options.lastRefreshTimestamp);
     }
-    this._addElementPostitionHandling();
+    this._addElementHighlighterHandling();
     this._addJavascript(pick(options, 'breakLoops'));
   }
 
@@ -164,17 +163,6 @@ class PreviewGenerator {
       this._ensureDocumentElement().appendChild(element);
     }
     return element;
-  }
-
-  _addDataValueToElements() {
-    const elements =
-    this.previewDocument.getElementsByTagName('*');
-    for (let i = 0; i < elements.length; i++) {
-      const att =
-      document.createAttribute('elementIndex');
-      att.value = i;
-      elements[i].setAttributeNode(att);
-    }
   }
 
   _addBase() {
@@ -223,9 +211,9 @@ class PreviewGenerator {
     this.previewBody.appendChild(scriptTag);
   }
 
-  _addElementPostitionHandling() {
+  _addElementHighlighterHandling() {
     const scriptTag = this.previewDocument.createElement('script');
-    scriptTag.innerHTML = elementPositions;
+    scriptTag.innerHTML = elementHighlighterScript;
     this.previewBody.appendChild(scriptTag);
   }
 

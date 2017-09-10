@@ -18,7 +18,6 @@ const sandboxOptions = [
   'allow-popups-to-escape-sandbox',
   'allow-scripts',
   'allow-top-navigation',
-  'allow-same-origin',
 ].join(' ');
 
 let nextId = 1;

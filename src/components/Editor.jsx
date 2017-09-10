@@ -77,10 +77,6 @@ class Editor extends React.Component {
     window.removeEventListener('resize', this._handleWindowResize);
   }
 
-  _getCurrentCursorPostion() {
-    this._editor.selection.getCursor();
-  }
-
   _focusRequestedLine(requestedFocusedLine) {
     if (get(requestedFocusedLine, 'component') !==
       `editor.${this.props.language}`) {
@@ -136,12 +132,10 @@ class Editor extends React.Component {
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
     });
-    session.selection.on('changeCursor', (e) => {
+    session.selection.on('changeCursor', () => {
       let selector = '';
       if (this.props.language === 'css') {
-        selector = this._locateSelectorCSS(e, session);
-      } else if (this.props.language === 'html') {
-        // const html = this._instrumentHTML(e, session);
+        selector = this._locateSelectorCSS(session);
       }
       this._sendSelectorToHighlighter(selector);
     });
@@ -151,39 +145,34 @@ class Editor extends React.Component {
     this._resizeEditor();
   }
 
-  _locateSelectorCSS(e, session) {
+  _locateSelectorCSS(session) {
     const reCssQuery = /(^|.*\})(.*)\{|\}/;
     let query = false;
-    if (e) {
-      if (!session) {
-        return query;
-      }
-      const lines = session.doc.$lines;
-      const cursor = session.selection.lead;
-      if (!lines[cursor.row]) {
-        return query;
-      }
-      const line = lines[cursor.row].substr(0, cursor.column);
-      let started = false;
-      if (line.match(reCssQuery)) {
-        query = RegExp.$2;
-        started = true;
-      }
-      if (!started || query) {
-        for (let i = cursor.row - 1; i >= 0; i--) {
-          if (started) {
-            if (lines[i].match(/[};]/)) {
-              break;
-            } else {
-              query = `${lines[i]} ${query}`;
-            }
-          } else if (lines[i].match(reCssQuery)) {
-            query = RegExp.$2;
-            if (!query) {
-              break;
-            }
-            started = true;
+    const lines = session.doc.$lines;
+    const cursor = session.selection.lead;
+    if (!lines[cursor.row]) {
+      return query;
+    }
+    const line = lines[cursor.row].substr(0, cursor.column);
+    let started = false;
+    if (line.match(reCssQuery)) {
+      query = RegExp.$2;
+      started = true;
+    }
+    if (!started || query) {
+      for (let i = cursor.row - 1; i >= 0; i--) {
+        if (started) {
+          if (lines[i].match(/[};]/)) {
+            break;
+          } else {
+            query = `${lines[i]} ${query}`;
           }
+        } else if (lines[i].match(reCssQuery)) {
+          query = RegExp.$2;
+          if (!query) {
+            break;
+          }
+          started = true;
         }
       }
     }
