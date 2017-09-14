@@ -97,7 +97,7 @@
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
   "license": "MIT",
   "dependencies": {
-    "PrettyCSS": "^0.3.13",
+    "PrettyCSS": "^0.3.15",
     "ajv": "^5.2.2",
     "array-to-sentence": "^1.1.0",
     "bowser": "^1.4.5",
