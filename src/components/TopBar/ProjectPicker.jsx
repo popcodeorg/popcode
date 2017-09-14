@@ -24,7 +24,7 @@ const ProjectPicker = createMenu({
       </MenuItem>
     ));
   },
-})(ProjectPickerButton, ProjectPreview);
+})(ProjectPickerButton);
 
 ProjectPicker.propTypes = {
   currentProjectKey: PropTypes.string,

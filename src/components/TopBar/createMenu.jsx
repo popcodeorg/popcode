@@ -59,7 +59,7 @@ export default function createMenu({
     };
   }
 
-  return function createMenuWithMappedProps(Label) {
+  return function createMenuWithMappedProps(MenuLaunchButton) {
     function Menu(props) {
       if (!isVisible(props)) {
         return null;
@@ -84,7 +84,7 @@ export default function createMenu({
           )}
           onClick={onToggle}
         >
-          <Label {...props} />
+          <MenuLaunchButton {...props} />
           {menu}
         </div>
       );
