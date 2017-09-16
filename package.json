@@ -166,7 +166,8 @@
     "lint": "eslint --ext .js,.jsx --plugin react src test *.js && stylelint src/**/*.css",
     "fixlint": "eslint --ext .js,.jsx --plugin react --fix src test *.js",
     "toc": "doctoc README.md --github --title '## Table of Contents'",
-    "preview": "rm -rvf dist && gulp build --production && static dist"
+    "preview": "rm -rvf dist && gulp build --production && static dist",
+    "analyze-bundle": "gulp js --production && source-map-explorer ./dist/application.js"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
