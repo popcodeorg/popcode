@@ -1,5 +1,7 @@
 import test from 'tape';
 import partial from 'lodash/partial';
+import {List} from 'immutable';
+import {Error, ErrorList} from '../../../src/records';
 import reducerTest from '../../helpers/reducerTest';
 import {errors as states} from '../../helpers/referenceStates';
 import {gistData} from '../../helpers/factory';
@@ -11,6 +13,7 @@ import {
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {
+  addRuntimeError,
   validatedSource,
 } from '../../../src/actions/errors';
 import reducer from '../../../src/reducers/errors';
@@ -25,7 +28,7 @@ test('validatedSource', (t) => {
       states.errors.getIn(['css', 'items']).toJS(),
     ),
     states.errors,
-    'sets state to failed with errors',
+    'sets state to validation-error with errors',
   ));
 
   t.test('with no errors', reducerTest(
@@ -70,4 +73,17 @@ test('toggleLibrary', reducerTest(
   states.noErrors,
   partial(toggleLibrary, '12345', 'jquery'),
   states.validating,
+));
+
+test('addRuntimeError', reducerTest(
+  reducer,
+  states.noErrors,
+  partial(addRuntimeError, 'javascript', {reason: 'code-explode'}),
+  states.noErrors.set(
+    'javascript',
+    new ErrorList({
+      state: 'runtime-error',
+      items: new List([Error.fromJS({reason: 'code-explode'})]),
+    }),
+  ),
 ));

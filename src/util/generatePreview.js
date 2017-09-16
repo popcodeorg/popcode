@@ -1,6 +1,9 @@
 import castArray from 'lodash/castArray';
+import compact from 'lodash/compact';
+import flatMap from 'lodash/flatMap';
+import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
-import base64 from 'base64-js';
+import uniq from 'lodash/uniq';
 import loopBreaker from 'loop-breaker';
 import libraries from '../config/libraries';
 import previewFrameLibraries from '../config/previewFrameLibraries';
@@ -9,17 +12,15 @@ const parser = new DOMParser();
 
 const sourceDelimiter = '/*__POPCODESTART__*/';
 
-const errorHandlerScript = `(${(() => {
+const errorHandlerScript = `(${function() {
   window.onerror = (fullMessage, _file, line, column, error) => {
     let name, message;
     if (error) {
-      name = error.name;
-      message = error.message;
+      ({name, message} = error);
     } else {
       const components = fullMessage.split(': ', 2);
       if (components.length === 2) {
-        name = components[0];
-        message = components[1];
+        [name, message] = components;
       } else {
         name = 'Error';
         message = fullMessage;
@@ -36,9 +37,9 @@ const errorHandlerScript = `(${(() => {
       },
     }), '*');
   };
-}).toString()}());`;
+}.toString()}());`;
 
-const alertAndPromptReplacementScript = `(${(() => {
+const alertAndPromptReplacementScript = `(${function() {
   const _swal = window.swal;
 
   Object.defineProperties(window, { // eslint-disable-line prefer-reflect
@@ -55,7 +56,7 @@ const alertAndPromptReplacementScript = `(${(() => {
   });
 
   delete window.swal; // eslint-disable-line prefer-reflect
-}).toString()}());`;
+}.toString()}());`;
 
 class PreviewGenerator {
   constructor(project, options = {}) {
@@ -66,8 +67,8 @@ class PreviewGenerator {
     );
     this._previewHead = this._ensureElement('head');
     this.previewBody = this._ensureElement('body');
+    this._firstScriptTag = this.previewDocument.querySelector('script');
 
-    this.previewText = (this.previewDocument.title || '').trim();
     this._attachLibraries(
       pick(options, ['nonBlockingAlertsAndPrompts']),
     );
@@ -83,12 +84,15 @@ class PreviewGenerator {
     if (options.nonBlockingAlertsAndPrompts) {
       this._addAlertAndPromptHandling();
     }
+    if (options.lastRefreshTimestamp) {
+      this._addRefreshTimestamp(options.lastRefreshTimestamp);
+    }
 
     this._addJavascript(pick(options, 'breakLoops'));
   }
 
   _ensureDocumentElement() {
-    let documentElement = this.previewDocument.documentElement;
+    let {documentElement} = this.previewDocument;
     if (!documentElement) {
       documentElement = this.previewDocument.createElement('html');
       this.previewDocument.appendChild(documentElement);
@@ -108,7 +112,7 @@ class PreviewGenerator {
   _addBase() {
     const baseTag = this.previewDocument.createElement('base');
     baseTag.target = '_top';
-    const firstChild = this._previewHead.childNodes[0];
+    const [firstChild] = this._previewHead.childNodes;
     if (firstChild) {
       this._previewHead.insertBefore(baseTag, firstChild);
     } else {
@@ -122,6 +126,12 @@ class PreviewGenerator {
     this._previewHead.appendChild(styleTag);
   }
 
+  _addRefreshTimestamp(timestamp) {
+    const dateString = `Last refresh on: ${String(new Date(timestamp))}`;
+    const comment = this.previewDocument.createComment(dateString);
+    this.previewBody.append(comment);
+  }
+
   _addJavascript({breakLoops = false}) {
     let source = `\n${sourceDelimiter}\n${this._project.sources.javascript}`;
     if (breakLoops) {
@@ -130,7 +140,6 @@ class PreviewGenerator {
     const scriptTag = this.previewDocument.createElement('script');
     scriptTag.innerHTML = source;
     this.previewBody.appendChild(scriptTag);
-
     return this.previewDocument.documentElement.outerHTML;
   }
 
@@ -147,23 +156,41 @@ class PreviewGenerator {
   }
 
   _attachLibraries({nonBlockingAlertsAndPrompts = false}) {
-    this._project.enabledLibraries.forEach((libraryKey) => {
+    const enabledLibrariesWithDependencies =
+      this._librariesWithDependencies(this._project.enabledLibraries);
+
+    for (const libraryKey of enabledLibrariesWithDependencies) {
       if (!(libraryKey in libraries)) {
         return;
       }
 
       const library = libraries[libraryKey];
       this._attachLibrary(library);
-    });
+    }
 
     if (nonBlockingAlertsAndPrompts) {
       this._attachLibrary(previewFrameLibraries.sweetalert);
     }
   }
 
+  _librariesWithDependencies(libraryKeys) {
+    if (isEmpty(libraryKeys)) {
+      return libraryKeys;
+    }
+
+    const requestedLibraries =
+      libraryKeys.map(libraryKey => libraries[libraryKey]);
+
+    const dependencies = compact(flatMap(requestedLibraries, 'dependsOn'));
+
+    return uniq(
+      compact(this._librariesWithDependencies(dependencies)).
+        concat(libraryKeys),
+    );
+  }
+
   _attachLibrary(library) {
-    const css = library.css;
-    const javascript = library.javascript;
+    const {css, javascript} = library;
     if (css !== undefined) {
       castArray(css).forEach(this._attachCssLibrary.bind(this));
     }
@@ -174,31 +201,32 @@ class PreviewGenerator {
   }
 
   _attachCssLibrary(css) {
-    const linkTag = this.previewDocument.createElement('link');
-    linkTag.rel = 'stylesheet';
-
-    const base64encoded = base64.fromByteArray(css);
-    linkTag.href = `data:text/css;charset=utf-8;base64,${base64encoded}`;
-    this._previewHead.appendChild(linkTag);
+    const styleTag = this.previewDocument.createElement('style');
+    styleTag.textContent = String(css);
+    this._previewHead.appendChild(styleTag);
   }
 
   _attachJavascriptLibrary(javascript) {
     const scriptTag = this.previewDocument.createElement('script');
-    const base64encoded = base64.fromByteArray(javascript);
-    scriptTag.src =
-      `data:text/javascript;charset=utf-8;base64,${base64encoded}`;
-    this.previewBody.appendChild(scriptTag);
+    const javascriptText = String(javascript);
+    scriptTag.innerHTML = javascriptText.replace(/<\/script>/g, '<\\/script>');
+    if (this._firstScriptTag) {
+      this._firstScriptTag.parentNode.
+        insertBefore(scriptTag, this._firstScriptTag);
+    } else {
+      this._previewHead.appendChild(scriptTag);
+    }
   }
 }
 
 function generatePreview(project, options) {
-  const previewDocument =
-    new PreviewGenerator(project, options).previewDocument;
+  const {previewDocument} = new PreviewGenerator(project, options);
   return `<!DOCTYPE html> ${previewDocument.documentElement.outerHTML}`;
 }
 
 function generateTextPreview(project) {
-  return new PreviewGenerator(project).previewText;
+  const {title} = parser.parseFromString(project.sources.html, 'text/html');
+  return (title || '').trim();
 }
 
 export {sourceDelimiter, generateTextPreview};

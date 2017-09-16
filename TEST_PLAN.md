@@ -22,20 +22,46 @@ parts that seem relevant to your code changes.
   the message in the error list focuses the cursor on the location in the
   source.
 * Click the pop-out button. Ensure that a new tab opens with the rendered page.
-* Minimize various editors and the output column by clicking the appropriate
-  label. Maximize them by clicking the button in the left column.
+* Minimize various editors by clicking the appropriate label. Maximize them by
+  clicking the bar at the bottom of the editors column.
+* Click the zoom in button. Ensure that the text in the editors gets bigger.
+  Click it again and ensure that the text returns to normal size.
+
+### Persistence
+
+* Log out if you are logged in.
+* Add some content to the HTML.
+* Refresh the browser tab. Verify that your content is still there.
+* Close the browser tab, then open Popcode in a new tab. Verify that your
+  content is still there.
+* Without closing the current tab, open another Popcode instance in a new tab.
+  Verify that the environment contains a fresh project.
 
 ### Libraries
 
 * Type some JavaScript that requires jQuery. Ensure that an error message
-  appears suggesting you enable jQuery. Enable jQuery and ensure that the page
-  now renders and behaves as expected.
+  appears suggesting you enable jQuery.
+* Enable jQuery and ensure that the page now renders and behaves as expected.
+  The menu should stay visible after you select jQuery.
 
-### Gist import
+### Snapshots
+
+* Add some content to the page. Click **Snapshot**. Click the prompt to
+  copy.
+* Paste the URL from your clipboard into a new tab. Verify that the project
+  contains the content that you exported.
+
+### Gist import & project instructions
 
 * Open [a gist import
   URL](http://localhost:3000/?gist=339c841617fb50c98420d9f37654039d) and ensure
   that the gist is imported into the environment
+* Open [a gist with
+  instructions](http://localhost:3000/?gist=911a82a17a280545858d2d8ecc557ef3).
+  Verify that the instructions appear in the left pane of the environment.
+* Click the dark gray bar to the right of the instructions. Ensure that the
+  instructions are hidden.
+* Click it again. Ensure that the instructions are visible.
 
 ### Login
 

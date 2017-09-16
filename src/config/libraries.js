@@ -1,45 +1,34 @@
-import fs from 'fs';
-import path from 'path';
+/* eslint-disable import/extensions */
+
+import JQUERY from '../../bower_components/jquery/dist/jquery.min.js';
+import LODASH from '../../bower_components/lodash/dist/lodash.min.js';
+import MUSTACHE from '../../bower_components/mustache.js/mustache.js';
+import BOOTSTRAP_CSS from
+  '../../bower_components/bootstrap/dist/css/bootstrap.min.css';
+import BOOTSTRAP_JS from
+  '../../bower_components/bootstrap/dist/js/bootstrap.min.js';
 
 const libraries = {
   jquery: {
     name: 'jQuery',
-    javascript: fs.readFileSync(
-      path.join(__dirname, '../../bower_components/jquery/dist/jquery.min.js'),
-    ),
+    javascript: JQUERY,
     predefined: ['$', 'jQuery'],
   },
   lodash: {
     name: 'lodash',
-    javascript: fs.readFileSync(
-      path.join(__dirname, '../../bower_components/lodash/dist/lodash.min.js'),
-    ),
+    javascript: LODASH,
     predefined: ['_'],
   },
   mustache: {
     name: 'Mustache.js',
-    javascript: fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../bower_components/mustache.js/mustache.js',
-      ),
-    ),
+    javascript: MUSTACHE,
     predefined: ['Mustache'],
   },
   bootstrap: {
     name: 'Bootstrap',
-    css: fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../bower_components/bootstrap/dist/css/bootstrap.min.css',
-      ),
-    ),
-    javascript: fs.readFileSync(
-      path.join(
-        __dirname,
-        '../../bower_components/bootstrap/dist/js/bootstrap.min.js',
-      ),
-    ),
+    css: BOOTSTRAP_CSS,
+    javascript: BOOTSTRAP_JS,
+    dependsOn: ['jquery'],
   },
 };
 

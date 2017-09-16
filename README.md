@@ -30,6 +30,7 @@ You can try out Popcode at
   - [Architecture Overview](#architecture-overview)
 - [Contributing](#contributing)
   - [Running locally](#running-locally)
+  - [Debug Mode](#debug-mode)
   - [Developer Reference](#developer-reference)
 - [License](#license)
 - [Contributors](#contributors)
@@ -156,6 +157,17 @@ When you're done, lint and make sure tests pass before opening a pull request:
 $ yarn test
 ```
 
+### Debug Mode ###
+
+By default, Popcode’s JavaScript code  is compiled to ES5 to support a wide
+array of older browsers. This can make it difficult to debug errors, however,
+as the compiled code in the debugger can look quite different from the original
+source code.
+
+To improve the situation, you can use **debug mode**, which configures Babel to
+compile the JavaScript to target only the latest version of Chrome, which
+supports most modern ES features.
+
 ### Developer Reference ###
 
 Popcode endeavors to use up-to-date technologies and code conventions to make
@@ -192,6 +204,11 @@ for all the sordid details.
 * [Frederic Brodbeck](http://www.freder.io/)
 * [Ben Yelsey](https://github.com/inlinestyle)
 * [Aaron Greenberg](https://github.com/ajgreenb)
+* [Peter Jablonski](https://github.com/pwjablonski)
+* [Ten-Young Guh](https://github.com/tenyoung795)
+* [Ilona Brand](https://github.com/ibrand)
+* [Kaylee Knowles](https://github.com/kaylee42)
+* [Felicia Wong](https://github.com/quixotically)
 * [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
 * Logo design, "Pop" concept, and UI by the team at
   [Red Peak](http://redpeakgroup.com): Andrew Haug, Aya Kawabata, Jieun Lee,

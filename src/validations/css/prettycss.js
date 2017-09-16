@@ -18,7 +18,8 @@ const FILTER_VALUE_EXPR =
     '^opacity\\(',
     '^saturate\\(',
     '^sepia\\(',
-    '^inherit$'].join('|'));
+    '^inherit$',
+  ].join('|'));
 
 function isIncorrectlyRejectedValue(value) {
   return isIncorrectlyRejectedRadialGradientValue(value) ||
@@ -52,7 +53,8 @@ const errorMap = {
   },
 
   'extra-tokens-after-value': (error, source) => {
-    const lineNumber = error.token.line;
+    const errorToken = error.token;
+    const lineNumber = errorToken.line;
 
     if (lineNumber > 1) {
       const lines = source.split('\n');
@@ -60,7 +62,7 @@ const errorMap = {
       const thisLine = lines[lineNumber - 1];
 
       if (
-        error.token.charNum - 1 === /\S/.exec(thisLine).index &&
+        errorToken.charNum - 1 === /\S/.exec(thisLine).index &&
         !endsWith(trim(previousLine), ';')
       ) {
         return {
@@ -73,7 +75,7 @@ const errorMap = {
 
     return ({
       reason: 'extra-tokens-after-value',
-      payload: {token: error.token.content},
+      payload: {token: errorToken.content},
     });
   },
 

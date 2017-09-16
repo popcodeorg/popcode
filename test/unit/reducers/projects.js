@@ -2,11 +2,11 @@ import test from 'tape';
 import reduce from 'lodash/reduce';
 import tap from 'lodash/tap';
 import partial from 'lodash/partial';
-import defaults from 'lodash/defaults';
 import Immutable from 'immutable';
 import reducerTest from '../../helpers/reducerTest';
 import {projects as states} from '../../helpers/referenceStates';
 import {gistData, project} from '../../helpers/factory';
+import {Project} from '../../../src/records';
 import reducer, {
   reduceRoot as rootReducer,
 } from '../../../src/reducers/projects';
@@ -18,8 +18,13 @@ import {
   toggleLibrary,
   hideComponent,
   unhideComponent,
+  toggleComponent,
   updateProjectSource,
 } from '../../../src/actions/projects';
+import {
+  snapshotImported,
+  projectRestoredFromLastSession,
+} from '../../../src/actions/clients';
 import {
   focusLine,
 } from '../../../src/actions/ui';
@@ -84,6 +89,36 @@ test('changeCurrentProject', (t) => {
     'keeps previous project in store',
   ));
 });
+
+tap(project(), importedProject =>
+  test('snapshotImported', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      snapshotImported,
+      importedProject,
+    ),
+    states.initial.set(
+      importedProject.projectKey,
+      Project.fromJS(importedProject),
+    ),
+  )),
+);
+
+tap(project(), rehydratedProject =>
+  test('projectRestoredFromLastSession', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      projectRestoredFromLastSession,
+      rehydratedProject,
+    ),
+    states.initial.set(
+      rehydratedProject.projectKey,
+      Project.fromJS(rehydratedProject),
+    ),
+  )),
+);
 
 test('gistImported', (t) => {
   t.test('HTML and CSS, no JSON', reducerTest(
@@ -197,6 +232,28 @@ tap(initProjects({1: true}), projects =>
   )),
 );
 
+test('toggleComponent', (t) => {
+  const projects = initProjects({1: true});
+
+  t.test('with component visible', reducerTest(
+    reducer,
+    projects,
+    partial(toggleComponent, '1', 'output', now),
+    projects.update('1', projectIn =>
+      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    ),
+  ));
+
+  t.test('with component hidden', reducerTest(
+    reducer,
+    projects.update('1', projectIn =>
+      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    ),
+    partial(toggleComponent, '1', 'output', now),
+    projects,
+  ));
+});
+
 tap(initProjects({1: true}), (projects) => {
   const timestamp = Date.now();
   test('focusLine', reducerTest(
@@ -232,17 +289,10 @@ function initProjects(map = {}) {
 function buildProject(
   key, sources, enabledLibraries = [], hiddenUIComponents = [],
 ) {
-  return Immutable.fromJS({
+  return Project.fromJS({
     projectKey: key,
-    sources: defaults(
-      sources,
-      {
-        html: '<!doctype html><html></html>',
-        css: '',
-        javascript: '',
-      },
-    ),
-    enabledLibraries: new Immutable.Set(enabledLibraries),
-    hiddenUIComponents: new Immutable.Set(hiddenUIComponents),
+    sources,
+    enabledLibraries,
+    hiddenUIComponents,
   });
 }

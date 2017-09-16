@@ -28,6 +28,10 @@ export const stopDragColumnDivider = createAction(
   'STOP_DRAG_COLUMN_DIVIDER',
 );
 
+export const popOutProject = createAction(
+  'POP_OUT_PROJECT',
+);
+
 export const notificationTriggered = createAction(
   'NOTIFICATION_TRIGGERED',
   (type, severity = 'error', payload = {}) => ({type, severity, payload}),
@@ -36,4 +40,26 @@ export const notificationTriggered = createAction(
 export const userDismissedNotification = createAction(
   'USER_DISMISSED_NOTIFICATION',
   type => ({type}),
+);
+
+export const updateNotificationMetadata = createAction(
+  'UPDATE_NOTIFICATION_METADATA',
+  (type, metadata) => ({type, metadata}),
+);
+
+export const refreshPreview = createAction(
+  'REFRESH_PREVIEW',
+  timestamp => ({timestamp}),
+);
+
+export const toggleEditorTextSize = createAction(
+  'TOGGLE_EDITOR_TEXT_SIZE',
+);
+
+export const toggleTopBarMenu = createAction(
+  'TOGGLE_TOP_BAR_MENU',
+);
+
+export const closeTopBarMenu = createAction(
+  'CLOSE_TOP_BAR_MENU',
 );

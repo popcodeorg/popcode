@@ -1,7 +1,9 @@
-export function openWindowWithWorkaroundForChromeClosingBug(
-  location, name = '_blank',
-) {
+export function openWindowWithContent(content, name = '_blank') {
   const newWindow = open('about:blank', name);
-  newWindow.location.href = location;
+  Reflect.deleteProperty(newWindow, 'opener');
+  const {document} = newWindow;
+  document.open();
+  document.write(content);
+  document.close();
   return newWindow;
 }

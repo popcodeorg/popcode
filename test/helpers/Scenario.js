@@ -29,7 +29,7 @@ export default class Scenario {
   }
 
   get analyzer() {
-    return new Analyzer(this.project);
+    return new Analyzer(this.project.toJS());
   }
 
   _reduce(action) {

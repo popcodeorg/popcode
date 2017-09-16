@@ -1,10 +1,10 @@
 /* eslint-env node */
-/* eslint-disable comma-dangle */
 /* eslint-disable import/unambiguous */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable import/no-nodejs-modules */
 
 const fs = require('fs');
+const path = require('path');
 const https = require('https');
 const gulp = require('gulp');
 const yargs = require('yargs');
@@ -18,7 +18,7 @@ const postcss = require('gulp-postcss');
 const cssnext = require('postcss-cssnext');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
-const CloudFlare = require('cloudflare');
+const cloudflare = require('cloudflare');
 const BrowserSync = require('browser-sync');
 const pify = require('pify');
 const config = require('./src/config');
@@ -26,9 +26,10 @@ const webpackConfiguration = require('./webpack.config');
 
 const browserSync = BrowserSync.create();
 const srcDir = 'src';
-const baseDir = 'static';
-const distDir = `${baseDir}/compiled`;
-const stylesheetsDir = `${srcDir}/css`;
+const distDir = 'dist';
+const stylesheetsDir = path.join(srcDir, 'css');
+const highlightStylesheetsDir = 'node_modules/highlight.js/styles';
+const staticDir = path.join(srcDir, 'static');
 const bowerComponents = 'bower_components';
 
 const cssnextBrowsers = [];
@@ -49,14 +50,24 @@ gulp.task('env', () => {
   }
 });
 
+gulp.task('static', () => gulp.
+  src(path.join(staticDir, '**/*')).
+  pipe(gulp.dest(distDir)),
+);
+
 gulp.task('fonts', () => gulp.
   src([
-    `${bowerComponents}/inconsolata-webfont/fonts/inconsolata-regular.*`,
-    `${bowerComponents}/fontawesome/fonts/fontawesome-webfont.*`,
-    `${bowerComponents}/roboto-webfont-bower/fonts/` +
-      'Roboto-{Bold,Regular}-webfont.*',
+    path.join(
+      bowerComponents,
+      'inconsolata-webfont/fonts/inconsolata-regular.*',
+    ),
+    path.join(bowerComponents, 'fontawesome/fonts/fontawesome-webfont.*'),
+    path.join(
+      bowerComponents,
+      'roboto-webfont-bower/fonts/Roboto-{Bold,Regular}-webfont.*',
+    ),
   ]).
-    pipe(gulp.dest(`${distDir}/fonts`))
+  pipe(gulp.dest(path.join(distDir, 'fonts'))),
 );
 
 gulp.task('css', () => {
@@ -67,8 +78,9 @@ gulp.task('css', () => {
 
   return gulp.
     src([
-      `${bowerComponents}/normalize-css/normalize.css`,
-      `${stylesheetsDir}/**/*.css`,
+      path.join(bowerComponents, 'normalize-css/normalize.css'),
+      path.join(highlightStylesheetsDir, 'github.css'),
+      path.join(stylesheetsDir, '**/*.css'),
     ]).
     pipe(concat('application.css')).
     pipe(sourcemaps.init({loadMaps: true})).
@@ -86,17 +98,18 @@ gulp.task('js', ['env'], () => {
       compress: {warnings: false},
       output: {comments: false},
       sourceMap: true,
-    })
+    }),
   );
 
   return pify(webpack)(productionWebpackConfig);
 });
 
-gulp.task('build', ['fonts', 'css', 'js']);
+gulp.task('build', ['static', 'fonts', 'css', 'js']);
 
-gulp.task('syncFirebase', async () => {
-  const data =
-    await pify(fs).readFile(`${__dirname}/config/firebase-auth.json`);
+gulp.task('syncFirebase', async() => {
+  const data = await pify(fs).readFile(
+    path.resolve(__dirname, 'config/firebase-auth.json'),
+  );
   const firebaseSecret = process.env.FIREBASE_SECRET;
   if (!firebaseSecret) {
     throw new Error('Missing environment variable FIREBASE_SECRET');
@@ -120,35 +133,37 @@ gulp.task('syncFirebase', async () => {
   });
 });
 
-gulp.task('dev', ['browserSync', 'fonts', 'css'], () => {
-  gulp.watch(`${stylesheetsDir}/**/*.css`, ['css']);
-  gulp.watch(`${baseDir}/*`).on('change', browserSync.reload);
+gulp.task('dev', ['browserSync', 'static', 'fonts', 'css'], () => {
+  gulp.watch(path.join(staticDir, '/**/*'), ['static']);
+  gulp.watch(path.join(stylesheetsDir, '**/*.css'), ['css']);
+  gulp.watch(path.join(distDir, '*')).on('change', browserSync.reload);
 });
 
-gulp.task('browserSync', () => {
+gulp.task('browserSync', ['static'], () => {
   const compiler = webpack(webpackConfiguration);
   compiler.plugin('invalid', browserSync.reload);
   browserSync.init({
     server: {
-      baseDir,
-      middleware: [webpackDevMiddleware(
-        compiler,
-        {
-          lazy: false,
-          stats: 'errors-only',
-          publicPath: `/${webpackConfiguration.output.publicPath}`,
-        }
-      )],
+      baseDir: distDir,
+      middleware: [
+        webpackDevMiddleware(
+          compiler,
+          {
+            lazy: false,
+            stats: 'errors-only',
+          },
+        ),
+      ],
     },
   });
 });
 
 gulp.task('purgeCache', () =>
-  new CloudFlare({
+  cloudflare({
     email: process.env.CLOUDFLARE_EMAIL,
     key: process.env.CLOUDFLARE_KEY,
-  }).deleteCache(
+  }).zones.purgeCache(
     process.env.CLOUDFLARE_ZONE,
-    {purge_everything: true}
-  )
+    {purge_everything: true},
+  ),
 );
