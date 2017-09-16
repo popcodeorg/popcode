@@ -1,7 +1,6 @@
 /* eslint-env node */
 /* eslint-disable import/unambiguous */
 /* eslint-disable import/no-commonjs */
-/* eslint-disable comma-dangle */
 
 const fs = require('fs');
 const path = require('path');
@@ -22,13 +21,13 @@ if (process.env.DEBUG === 'true') {
   targets = {browsers: 'last 1 Chrome version'};
 } else {
   targets = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, 'config/browsers.json'))
+    fs.readFileSync(path.resolve(__dirname, 'config/browsers.json')),
   );
 }
 const babelrc = {
   presets: [
     'react',
-    ['env', {targets, modules: false}]
+    ['env', {targets, modules: false}],
   ],
   compact: false,
   cacheDirectory: true,
@@ -42,10 +41,10 @@ const babelrc = {
 
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
-    escapeRegExp(path.join('/node_modules', modulePath))
+    escapeRegExp(path.join('/node_modules', modulePath)),
   );
   const moduleDependencyPattern = new RegExp(
-    escapeRegExp(path.join('/node_modules', modulePath, 'node_modules'))
+    escapeRegExp(path.join('/node_modules', modulePath, 'node_modules')),
   );
 
   return filePath =>
@@ -55,7 +54,7 @@ function matchModule(modulePath) {
 function directoryContentsExcept(directory, exceptions) {
   const fullExceptions = map(
     exceptions,
-    exception => path.resolve(directory, exception)
+    exception => path.resolve(directory, exception),
   );
 
   return filePath =>
@@ -80,7 +79,7 @@ module.exports = {
         ],
         use: [
           {loader: 'babel-loader', options: babelrc},
-          'eslint-loader'
+          'eslint-loader',
         ],
       },
       {
@@ -118,10 +117,12 @@ module.exports = {
       },
       {
         include: path.resolve(__dirname, 'locales'),
-        use: [{
-          loader: 'i18next-resource-store-loader',
-          options: 'include=\\.json$',
-        }],
+        use: [
+          {
+            loader: 'i18next-resource-store-loader',
+            options: 'include=\\.json$',
+          },
+        ],
       },
       {
         include: matchModule('htmllint'),
@@ -134,29 +135,31 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        include: [
-          matchModule('htmllint'),
-        ],
-        use: [{
-          loader: 'string-replace-loader',
-          options: {
-            search: 'require(plugin)',
-            replace: 'undefined',
+        include: [matchModule('htmllint')],
+        use: [
+          {
+            loader: 'string-replace-loader',
+            options: {
+              search: 'require(plugin)',
+              replace: 'undefined',
+            },
           },
-        }],
+        ],
       },
       {
         test: /\.js$/,
         include: [
           path.resolve(
             __dirname,
-            'node_modules/stylelint/lib/utils/isAutoprefixable'
+            'node_modules/stylelint/lib/utils/isAutoprefixable',
           ),
         ],
-        use: [{
-          loader: 'substitute-loader',
-          options: {content: '() => false'},
-        }],
+        use: [
+          {
+            loader: 'substitute-loader',
+            options: {content: '() => false'},
+          },
+        ],
       },
       {
         test: /\.js$/,
@@ -199,10 +202,10 @@ module.exports = {
           [
             'index.js',
             'declaration-block-trailing-semicolon/index.js',
-          ]
+          ],
         ),
         use: ['null-loader'],
-      }
+      },
     ],
   },
 
@@ -214,7 +217,7 @@ module.exports = {
       LOG_REDUX_ACTIONS: 'false',
       NODE_ENV: 'development',
       WARN_ON_DROPPED_ERRORS: 'false',
-      GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2'
+      GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2',
     }),
     new CircularDependencyPlugin({
       exclude: /node_modules/,
