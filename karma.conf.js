@@ -22,9 +22,7 @@ module.exports = function(config) {
 
     frameworks: ['tap', 'sinon'],
 
-    files: [
-      'test/index.js',
-    ],
+    files: ['test/index.js'],
 
     preprocessors: {
       'test/index.js': ['webpack', 'sourcemap'],

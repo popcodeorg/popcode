@@ -1,5 +1,4 @@
 /* eslint-env node */
-/* eslint-disable comma-dangle */
 /* eslint-disable import/unambiguous */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable import/no-nodejs-modules */
@@ -53,22 +52,22 @@ gulp.task('env', () => {
 
 gulp.task('static', () => gulp.
   src(path.join(staticDir, '**/*')).
-  pipe(gulp.dest(distDir))
+  pipe(gulp.dest(distDir)),
 );
 
 gulp.task('fonts', () => gulp.
   src([
     path.join(
       bowerComponents,
-      'inconsolata-webfont/fonts/inconsolata-regular.*'
+      'inconsolata-webfont/fonts/inconsolata-regular.*',
     ),
     path.join(bowerComponents, 'fontawesome/fonts/fontawesome-webfont.*'),
     path.join(
       bowerComponents,
-      'roboto-webfont-bower/fonts/Roboto-{Bold,Regular}-webfont.*'
+      'roboto-webfont-bower/fonts/Roboto-{Bold,Regular}-webfont.*',
     ),
   ]).
-  pipe(gulp.dest(path.join(distDir, 'fonts')))
+  pipe(gulp.dest(path.join(distDir, 'fonts'))),
 );
 
 gulp.task('css', () => {
@@ -99,7 +98,7 @@ gulp.task('js', ['env'], () => {
       compress: {warnings: false},
       output: {comments: false},
       sourceMap: true,
-    })
+    }),
   );
 
   return pify(webpack)(productionWebpackConfig);
@@ -109,7 +108,7 @@ gulp.task('build', ['static', 'fonts', 'css', 'js']);
 
 gulp.task('syncFirebase', async() => {
   const data = await pify(fs).readFile(
-    path.resolve(__dirname, 'config/firebase-auth.json')
+    path.resolve(__dirname, 'config/firebase-auth.json'),
   );
   const firebaseSecret = process.env.FIREBASE_SECRET;
   if (!firebaseSecret) {
@@ -152,8 +151,8 @@ gulp.task('browserSync', ['static'], () => {
           {
             lazy: false,
             stats: 'errors-only',
-          }
-        )
+          },
+        ),
       ],
     },
   });
@@ -165,6 +164,6 @@ gulp.task('purgeCache', () =>
     key: process.env.CLOUDFLARE_KEY,
   }).zones.purgeCache(
     process.env.CLOUDFLARE_ZONE,
-    {purge_everything: true}
-  )
+    {purge_everything: true},
+  ),
 );

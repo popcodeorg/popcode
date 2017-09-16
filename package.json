@@ -163,10 +163,11 @@
     "dev": "yarn install && gulp dev",
     "test": "karma start --single-run --no-auto-watch",
     "autotest": "karma start --no-single-run --auto-watch",
-    "lint": "eslint --ext .js,.jsx --plugin react src test && stylelint src/**/*.css",
-    "fixlint": "eslint --ext .js,.jsx --plugin react --fix src test",
+    "lint": "eslint --ext .js,.jsx --plugin react src test *.js && stylelint src/**/*.css",
+    "fixlint": "eslint --ext .js,.jsx --plugin react --fix src test *.js",
     "toc": "doctoc README.md --github --title '## Table of Contents'",
-    "preview": "rm -rvf dist && gulp build --production && static dist"
+    "preview": "rm -rvf dist && gulp build --production && static dist",
+    "analyze-bundle": "gulp js --production && source-map-explorer ./dist/application.js"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
@@ -181,6 +182,7 @@
     "brfs": "^1.4.3",
     "browser-sync": "^2.14.3",
     "bulkify": "^1.4.2",
+    "bundlesize": "^0.14.4",
     "check-dependencies": "^1.0.1",
     "circular-dependency-plugin": "^4.2.0",
     "cloudflare": "^2.1.1",
@@ -221,6 +223,7 @@
     "react-addons-perf": "^15.4.2",
     "redux-saga-test-plan": "^3.0.2",
     "sinon": "^3.2.1",
+    "source-map-explorer": "^1.4.0",
     "string-replace-loader": "^1.0.5",
     "stylelint-selector-bem-pattern": "^1.0.0",
     "substitute-loader": "^1.0.0",
@@ -236,5 +239,8 @@
   },
   "optionalDependencies": {
     "fsevents": "*"
-  }
+  },
+  "bundlesize": [{
+    "path": "./dist/*application.js"
+  }]
 }
