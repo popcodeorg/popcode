@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import remark from 'remark';
-import remarkReact from 'remark-react';
 import classnames from 'classnames';
+import {toReact as markdownToReact} from '../util/markdown';
 
 export default function Instructions({instructions, isOpen}) {
   if (!instructions || !isOpen) {
@@ -18,7 +17,7 @@ export default function Instructions({instructions, isOpen}) {
         'u__flex-container_column',
       )}
     >
-      {remark().use(remarkReact).processSync(instructions).contents}
+      {instructions ? markdownToReact(instructions) : null}
     </div>
   );
 }
