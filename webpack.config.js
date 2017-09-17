@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const OfflinePlugin = require('offline-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
 const startsWith = require('lodash/startsWith');
@@ -104,6 +105,10 @@ module.exports = (env = 'development') => {
         'images/large-spinner.gif',
       ],
       ServiceWorker: {navigateFallbackURL: '/'},
+    }),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      chunksSortMode: 'dependency',
     }),
   ];
 
