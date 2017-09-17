@@ -6,6 +6,9 @@ const fs = require('fs');
 const path = require('path');
 const OfflinePlugin = require('offline-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const MD5ChunkHash = require('webpack-chunk-hash');
+const InlineChunkManifestHtmlPlugin =
+  require('inline-chunk-manifest-html-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
@@ -106,10 +109,27 @@ module.exports = (env = 'development') => {
       ],
       ServiceWorker: {navigateFallbackURL: '/'},
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks({ context }) {
+        if (context) {
+          const isNodeModule = context.indexOf('node_modules') !== -1;
+          const isBowerComponent = context.indexOf('bower_components') !== -1;
+          return isNodeModule || isBowerComponent;
+        }
+        return false;
+      },
+    }),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'manifest' }),
+    process.env.NODE_ENV === 'production'
+      ? new webpack.HashedModuleIdsPlugin()
+      : new webpack.NamedModulesPlugin(),
+    new MD5ChunkHash(),
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: path.resolve(__dirname, 'src/index.html'),
       chunksSortMode: 'dependency',
     }),
+    new InlineChunkManifestHtmlPlugin(),
   ];
 
   if (isProduction) {

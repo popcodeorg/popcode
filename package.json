@@ -216,6 +216,7 @@
     "i18next-resource-store-loader": "^0.1.1",
     "immutable-devtools": "0.0.7",
     "imports-loader": "^0.7.1",
+    "inline-chunk-manifest-html-webpack-plugin": "^1.1.1",
     "json-loader": "^0.5.4",
     "karma": "^1.1.0",
     "karma-browserstack-launcher": "^1.1.1",
@@ -243,6 +244,7 @@
     "tape": "^4.6.3",
     "transform-loader": "^0.2.3",
     "webpack": "^3.1.0",
+    "webpack-chunk-hash": "^0.4.0",
     "webpack-dev-middleware": "^1.8.2",
     "webpack-hot-middleware": "^2.12.2"
   },
