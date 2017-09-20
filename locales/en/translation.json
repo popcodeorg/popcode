@@ -114,6 +114,10 @@
       "unbound-attribute-value": "The value `{{-value}}` isn’t attached to an attribute. Are you missing an `=` sign?",
       "invalid-tag-name": "`<{{-tag}}>` isn’t a valid HTML tag. If you want to create a custom tag, make sure the name has a `-` in it, like `<my-tag>`",
       "space-before-tag-name": "You can’t put any space after the `<` in an HTML tag. Write `<{{-tag}}>` instead of `< {{-tag}}>`.",
+      "head-before-body": "Your `<head>` element must come before your `<body>` element.",
+      "only-head-body-in-html": "Only `<head>` and `<body>` tags may be direct children of `<html>`",
+      "invalid-tag-in-head": "This tag is not allowed inside the `<head>`.",
+      "only-one-head-and-body": "You may only have one `<head>` and one `<body>` tag in your document.",
       "misplaced-close-tag": "This closing `</{{-open}}>` tag should go to before the `</{{-close}}>` tag on line {{-mismatch}}."
     },
     "css": {

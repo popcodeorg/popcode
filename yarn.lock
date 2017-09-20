@@ -1527,7 +1527,7 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
-bulk-require@^1.0.0:
+bulk-require@^1.0.0, bulk-require@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/bulk-require/-/bulk-require-1.0.1.tgz#cb3d039e698139a444fc574b261d6b3b2cf44c89"
   dependencies:
@@ -4170,14 +4170,14 @@ html-tags@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/html-tags/-/html-tags-2.0.0.tgz#10b30a386085f43cede353cc8fa7cb0deeea668b"
 
-htmllint@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/htmllint/-/htmllint-0.5.0.tgz#4ba7c89907d9b990f7f6a88100fc1ca630b5a6e4"
+"htmllint@https://github.com/htmllint/htmllint.git#eee0dd1":
+  version "0.6.0"
+  resolved "https://github.com/htmllint/htmllint.git#eee0dd1ff154b320174528180009b601a4b4ef29"
   dependencies:
-    bulk-require "^1.0.0"
-    htmlparser2 "^3.7.3"
-    lodash "^4.3.0"
-    promise "^7.1.1"
+    bulk-require "^1.0.1"
+    htmlparser2 "^3.9.2"
+    lodash "^4.17.4"
+    promise "^8.0.1"
 
 htmlparser2@3.8.x:
   version "3.8.3"
@@ -4189,7 +4189,7 @@ htmlparser2@3.8.x:
     entities "1.0"
     readable-stream "1.1"
 
-htmlparser2@^3.7.3, htmlparser2@~3.9.2:
+htmlparser2@^3.9.2, htmlparser2@~3.9.2:
   version "3.9.2"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.9.2.tgz#1bdf87acca0f3f9e53fa4fcceb0f4b4cbb00b338"
   dependencies:
@@ -6886,6 +6886,12 @@ promise-retry@^1.1.1:
 promise@^7.1.1:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/promise/-/promise-7.3.1.tgz#064b72602b18f90f29192b8b1bc418ffd1ebd3bf"
+  dependencies:
+    asap "~2.0.3"
+
+promise@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/promise/-/promise-8.0.1.tgz#e45d68b00a17647b6da711bf85ed6ed47208f450"
   dependencies:
     asap "~2.0.3"
 
