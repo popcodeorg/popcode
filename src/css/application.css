@@ -250,6 +250,24 @@ body {
   color: black;
   overflow: scroll;
   padding: 1rem;
+
+  /* postcss-bem-linter: ignore */
+  & img {
+    max-width: 100%;
+  }
+
+  /* postcss-bem-linter: ignore */
+  & pre code.hljs {
+    /* Highlight.js puts `style="display: inline;"` on code blocks which causes
+    the lines to collapse into eachother */
+    display: inline-block !important;
+    white-space: pre-wrap;
+  }
+
+  /* postcss-bem-linter: ignore */
+  & p code.hljs {
+    padding: 0;
+  }
 }
 
 /** @define project-preview */
@@ -595,11 +613,4 @@ body {
   font-weight: normal;
   user-select: none;
   text-decoration: none;
-}
-
-/* stylelint-disable-next-line plugin/selector-bem-pattern */
-code.hljs {
-  /* Highlight.js puts `style="display: inline;"` on code blocks which causes
-   the lines to collapse into eachother */
-  display: inline-block !important;
 }
