@@ -2,6 +2,8 @@ import {t} from 'i18next';
 import assign from 'lodash/assign';
 import map from 'lodash/map';
 import compact from 'lodash/compact';
+import remark from 'remark';
+import stripMarkdown from 'strip-markdown';
 import config from '../config';
 
 class Validator {
@@ -47,7 +49,7 @@ class Validator {
     const location = this._locationForError(rawError);
 
     return assign({}, location, error, {
-      text: message,
+      text: remark().use(stripMarkdown).processSync(message).toString(),
       raw: message,
       type: 'error',
     });

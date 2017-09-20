@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import partial from 'lodash/partial';
+import remark from 'remark';
+import remarkReact from 'remark-react';
+
+const parser = remark().use(remarkReact);
 
 function ErrorItem(props) {
   const lineLabel = props.row >= 0 ?
@@ -18,16 +22,18 @@ function ErrorItem(props) {
       )}
     >
       {lineLabel}
-      <div className="error-list__message">{props.text}</div>
+      <div className="error-list__message">
+        {parser.processSync(props.raw).contents}
+      </div>
     </li>
   );
 }
 
 ErrorItem.propTypes = {
   column: PropTypes.number.isRequired,
+  raw: PropTypes.string.isRequired,
   reason: PropTypes.string.isRequired,
   row: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
