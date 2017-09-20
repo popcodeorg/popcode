@@ -495,10 +495,12 @@ body {
   overflow-wrap: break-word;
 }
 
+/* postcss-bem-linter: ignore */
 .error-list__message code {
   font-weight: bold;
 }
 
+/* postcss-bem-linter: ignore */
 .error-list__message p {
   margin: 0;
 }
