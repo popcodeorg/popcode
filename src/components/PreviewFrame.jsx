@@ -23,12 +23,6 @@ class PreviewFrame extends React.Component {
     window.addEventListener('message', this._onMessage);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.shouldComponentUpdate(nextProps)) {
-      this.props.onFrameWillRefresh();
-    }
-  }
-
   shouldComponentUpdate(nextProps) {
     return nextProps.src !== this.props.src;
   }
@@ -81,14 +75,17 @@ class PreviewFrame extends React.Component {
       line = 1;
     }
 
-    this.props.onRuntimeError({
-      reason: normalizedError.type,
-      text: normalizedError.message,
-      raw: normalizedError.message,
-      row: line - 1,
-      column: data.error.column,
-      type: 'error',
-    });
+    this.props.onRuntimeError(
+      'javascript',
+      {
+        reason: normalizedError.type,
+        text: normalizedError.message,
+        raw: normalizedError.message,
+        row: line - 1,
+        column: data.error.column,
+        type: 'error',
+      },
+    );
   }
 
   _handleInfiniteLoop(line) {
@@ -113,18 +110,19 @@ class PreviewFrame extends React.Component {
     }
 
     return (
-      <iframe
-        className="preview__frame"
-        sandbox={sandboxOptions}
-        {...srcProps}
-      />
+      <div className="preview__frame-container">
+        <iframe
+          className="preview__frame"
+          sandbox={sandboxOptions}
+          {...srcProps}
+        />
+      </div>
     );
   }
 }
 
 PreviewFrame.propTypes = {
   src: PropTypes.string.isRequired,
-  onFrameWillRefresh: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
 };
 

@@ -2,16 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
 
-function EditorContainer(props) {
+function EditorContainer({children, language, source, style, onHide, onRef}) {
   let helpText;
 
-  if (props.source === '') {
+  if (source === '') {
     helpText = (
       <div className="editors__help-text">
-        {t(
-          'editors.help-text',
-          {language: props.language},
-        )}
+        {t('editors.help-text', {language})}
       </div>
     );
   }
@@ -19,17 +16,19 @@ function EditorContainer(props) {
   return (
     <div
       className="editors__editor-container"
-      ref={props.onRef}
-      style={props.style}
+      ref={onRef}
+      style={style}
     >
       <div
-        className="environment__label label"
-        onClick={props.onHide}
+        className="editors__label editors__label_expanded"
+        onClick={onHide}
       >
-        {t(`languages.${props.language}`)}
+        {t(`languages.${language}`)}
+        {' '}
+        <span className="u__icon">&#xf078;</span>
       </div>
       {helpText}
-      {props.children}
+      {children}
     </div>
   );
 }

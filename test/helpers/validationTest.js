@@ -3,7 +3,7 @@ import orderBy from 'lodash/orderBy';
 import pick from 'lodash/pick';
 
 export default function validationTest(input, validate, ...expectedErrors) {
-  return async (assert) => {
+  return async(assert) => {
     try {
       const errors = await validate(input);
       assert.deepEqual(

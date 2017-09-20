@@ -1,9 +1,13 @@
 import applicationLoaded from './applicationLoaded';
 
 import {
+  createSnapshot,
   exportGist,
   gistExportDisplayed,
   gistExportNotDisplayed,
+  exportRepo,
+  repoExportDisplayed,
+  repoExportNotDisplayed,
 } from './clients';
 
 import {
@@ -12,6 +16,7 @@ import {
   toggleLibrary,
   hideComponent,
   unhideComponent,
+  toggleComponent,
   updateProjectSource,
 } from './projects';
 
@@ -24,47 +29,35 @@ import {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
+  updateNotificationMetadata,
+  refreshPreview,
+  popOutProject,
+  toggleEditorTextSize,
+  toggleTopBarMenu,
+  closeTopBarMenu,
 } from './ui';
+
+import {
+  addRuntimeError,
+} from './errors';
 
 import {
   userAuthenticated,
   userLoggedOut,
 } from './user';
 
-function addRuntimeError(error) {
-  return {
-    type: 'RUNTIME_ERROR_ADDED',
-    payload: {error},
-  };
-}
-
-function clearRuntimeErrors() {
-  return {
-    type: 'RUNTIME_ERRORS_CLEARED',
-  };
-}
-
-function toggleDashboard() {
-  return {type: 'DASHBOARD_TOGGLED'};
-}
-
-function toggleDashboardSubmenu(submenu) {
-  return {type: 'DASHBOARD_SUBMENU_TOGGLED', payload: {submenu}};
-}
-
 export {
   createProject,
+  createSnapshot,
   changeCurrentProject,
   updateProjectSource,
   toggleLibrary,
   userAuthenticated,
   userLoggedOut,
   addRuntimeError,
-  clearRuntimeErrors,
   hideComponent,
   unhideComponent,
-  toggleDashboard,
-  toggleDashboardSubmenu,
+  toggleComponent,
   focusLine,
   editorFocusedRequestedLine,
   dragRowDivider,
@@ -73,8 +66,17 @@ export {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
+  updateNotificationMetadata,
   exportGist,
+  exportRepo,
   gistExportDisplayed,
   gistExportNotDisplayed,
+  popOutProject,
   applicationLoaded,
+  refreshPreview,
+  repoExportDisplayed,
+  repoExportNotDisplayed,
+  toggleEditorTextSize,
+  toggleTopBarMenu,
+  closeTopBarMenu,
 };

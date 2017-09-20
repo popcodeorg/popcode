@@ -6,12 +6,12 @@ function gistUrlFromId(gistId) {
   return `https://gist.github.com/${gistId}`;
 }
 
-export default function GistImportError(props) {
+export default function GistImportError({payload: {gistId}}) {
   return (
     <span>
       {t('notifications.gist-import-error')}{' '}
       <a
-        href={gistUrlFromId(props.payload.gistId)}
+        href={gistUrlFromId(gistId)}
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -23,5 +23,4 @@ export default function GistImportError(props) {
 
 GistImportError.propTypes = {
   payload: PropTypes.object.isRequired,
-  type: PropTypes.string.isRequired,
 };

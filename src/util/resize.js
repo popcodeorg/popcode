@@ -1,5 +1,5 @@
 export function getNodeWidth(node) {
-  const minWidth = window.getComputedStyle(node).minWidth;
+  const {minWidth} = window.getComputedStyle(node);
   return {
     width: node.offsetWidth,
     minWidth: parseInt(minWidth.replace('px', ''), 10),
@@ -13,7 +13,7 @@ export function getNodeWidths(refs) {
 export function getNodeHeights(refs) {
   return refs.map((node) => {
     if (node) {
-      const minHeight = window.getComputedStyle(node).minHeight;
+      const {minHeight} = window.getComputedStyle(node);
       return {
         height: node.offsetHeight,
         minHeight: parseInt(minHeight.replace('px', ''), 10),
