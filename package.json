@@ -90,7 +90,11 @@
     },
     {
       "name": "Felicia Wong",
-      "email": "https://github.com/quixotically"
+      "url": "https://github.com/quixotically"
+    },
+    {
+      "name": "Tim Miller",
+      "url": "https://github.com/gangstertim"
     }
   ],
   "keywords": "code editor education learning",
