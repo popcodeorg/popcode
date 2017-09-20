@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import partial from 'lodash/partial';
+import remark from 'remark';
+import remarkReact from 'remark-react';
+
+const parser = remark().use(remarkReact);
 
 function ErrorItem(props) {
   const lineLabel = props.row >= 0 ?
@@ -19,7 +23,7 @@ function ErrorItem(props) {
     >
       {lineLabel}
       <div className="error-list__message">
-        <div dangerouslySetInnerHTML={{__html: props.raw}} />
+        {parser.processSync(props.raw).contents}
       </div>
     </li>
   );

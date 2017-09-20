@@ -144,7 +144,6 @@
     "redux-saga": "^0.15.3",
     "redux-saga-debounce-effect": "^0.2.2",
     "remark": "^8.0.0",
-    "remark-html": "^6.0.0",
     "remark-react": "^4.0.0",
     "remark-react-lowlight": "^0.6.0",
     "reselect": "^3.0.1",
@@ -242,7 +241,9 @@
   "optionalDependencies": {
     "fsevents": "*"
   },
-  "bundlesize": [{
-    "path": "./dist/*application.js"
-  }]
+  "bundlesize": [
+    {
+      "path": "./dist/*application.js"
+    }
+  ]
 }

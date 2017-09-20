@@ -3,7 +3,6 @@ import assign from 'lodash/assign';
 import map from 'lodash/map';
 import compact from 'lodash/compact';
 import remark from 'remark';
-import remarkHtml from 'remark-html';
 import stripMarkdown from 'strip-markdown';
 import config from '../config';
 
@@ -51,7 +50,7 @@ class Validator {
 
     return assign({}, location, error, {
       text: remark().use(stripMarkdown).processSync(message).toString(),
-      raw: remark().use(remarkHtml).processSync(message).toString(),
+      raw: message,
       type: 'error',
     });
   }
