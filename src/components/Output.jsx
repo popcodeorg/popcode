@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import prefixAll from 'inline-style-prefixer/static';
 import ErrorReport from '../containers/ErrorReport';
 import Preview from '../containers/Preview';
 
@@ -12,9 +13,9 @@ export default function Output({
     <div
       className="environment__column"
       ref={onRef}
-      style={Object.assign({}, style, {
+      style={prefixAll(Object.assign({}, style, {
         pointerEvents: ignorePointerEvents ? 'none' : 'all',
-      })}
+      }))}
     >
       <div className="environment__columnContents output">
         <Preview />
