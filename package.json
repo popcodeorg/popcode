@@ -113,6 +113,7 @@
     "brace": "^0.10.0",
     "bugsnag-js": "^3.0.1",
     "classnames": "^2.1.5",
+    "clipboard": "^1.7.1",
     "css": "^2.2.1",
     "enumify": "^1.0.4",
     "es6-set": "^0.1.4",
@@ -138,7 +139,6 @@
     "prop-types": "^15.5.10",
     "qs": "^6.1.0",
     "react": "^15.4.1",
-    "react-copy-to-clipboard": "^5.0.0",
     "react-dom": "^15.4.1",
     "react-draggable": "^3.0.3",
     "react-ga": "^2.1.2",
@@ -161,7 +161,8 @@
     "strip-markdown": "^3.0.0",
     "stylelint": "^8.0.0",
     "uuid": "^3.1.0",
-    "void-elements": "^3.1.0"
+    "void-elements": "^3.1.0",
+    "zeroclipboard": "^2.3.0"
   },
   "engines": {
     "node": "8.5.0",
