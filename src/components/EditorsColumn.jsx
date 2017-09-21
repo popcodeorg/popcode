@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import prefixAll from 'inline-style-prefixer/static';
 import {t} from 'i18next';
 import {DraggableCore} from 'react-draggable';
 import bindAll from 'lodash/bindAll';
@@ -127,7 +128,11 @@ export default class EditorsColumn extends React.Component {
     }
 
     return (
-      <div className="environment__column" ref={onRef} style={style}>
+      <div
+        className="environment__column"
+        ref={onRef}
+        style={prefixAll(style)}
+      >
         <div className="environment__columnContents editors">{children}</div>
       </div>
     );

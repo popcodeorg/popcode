@@ -1,5 +1,6 @@
-import React from 'react';
+import prefixAll from 'inline-style-prefixer/static';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {t} from 'i18next';
 
 function EditorContainer({children, language, source, style, onHide, onRef}) {
@@ -17,7 +18,7 @@ function EditorContainer({children, language, source, style, onHide, onRef}) {
     <div
       className="editors__editor-container"
       ref={onRef}
-      style={style}
+      style={prefixAll(style)}
     >
       <div
         className="editors__label editors__label_expanded"
