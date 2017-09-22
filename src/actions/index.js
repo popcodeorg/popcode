@@ -48,6 +48,10 @@ import {
   userLoggedOut,
 } from './user';
 
+import {
+  projectCompiled,
+} from './compiledProjects';
+
 export {
   createProject,
   createSnapshot,
@@ -83,4 +87,5 @@ export {
   closeTopBarMenu,
   logIn,
   logOut,
+  projectCompiled,
 };

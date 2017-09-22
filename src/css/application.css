@@ -120,6 +120,7 @@ body {
   font-size: 2vh;
   font-weight: bold;
   align-items: center;
+  transition: background-color 1s;
   padding: 0 1em;
   z-index: 2;
 }
@@ -429,9 +430,15 @@ body {
 }
 
 .preview__frame {
+  background: white;
   border: 0;
   height: 100%;
+  visibility: hidden;
   width: 100%;
+}
+
+.preview__frame_loaded {
+  visibility: visible;
 }
 
 .preview__title-bar {

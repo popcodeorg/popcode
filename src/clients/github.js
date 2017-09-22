@@ -10,7 +10,6 @@ const COMMIT_MESSAGE = 'Created using Popcode: https://popcode.org';
 const MASTER = 'master';
 const GH_PAGES = 'gh-pages';
 const NETWORK_ERROR = 'Network Error';
-const parser = new DOMParser();
 
 export function EmptyGistError(message) {
   this.name = 'EmptyGistError';
@@ -19,10 +18,8 @@ export function EmptyGistError(message) {
 }
 EmptyGistError.prototype = Object.create(Error.prototype);
 
-function getPageTitle(preview) {
-  const parsedDocument = parser.parseFromString(preview, 'text/html');
-
-  const titleWithoutPunctuationAndWhitespace = parsedDocument.title.
+function normalizeTitle(title) {
+  const titleWithoutPunctuationAndWhitespace = title.
     replace(/[^\w\s]|_/g, '').
     replace(/\W/g, '-');
 
@@ -32,7 +29,7 @@ function getPageTitle(preview) {
 export async function createRepoFromProject(project, user) {
   const github = clientForUser(user);
   const preview = generatePreview(project);
-  const title = getPageTitle(preview);
+  const title = normalizeTitle(preview.title);
 
   const REPO_NAME = `${title}-${Date.now()}`;
 
@@ -225,7 +222,7 @@ async function createPreviewFile(github, project, userName, repoName) {
     repoName,
     GH_PAGES,
     'index.html',
-    preview,
+    preview.source,
   );
 }
 

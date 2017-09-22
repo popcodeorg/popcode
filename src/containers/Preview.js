@@ -6,7 +6,7 @@ import {
   refreshPreview,
 } from '../actions';
 import {
-  getCurrentProject,
+  getCompiledProjects,
   getLastRefreshTimestamp,
   isCurrentProjectSyntacticallyValid,
 } from '../selectors';
@@ -15,14 +15,14 @@ function mapStateToProps(state) {
   return {
     isSyntacticallyValid: isCurrentProjectSyntacticallyValid(state),
     lastRefreshTimestamp: getLastRefreshTimestamp(state),
-    project: getCurrentProject(state),
+    compiledProjects: getCompiledProjects(state),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onPopOutProject(project) {
-      dispatch(popOutProject(project));
+    onPopOutProject() {
+      dispatch(popOutProject());
     },
 
     onRuntimeError(error) {

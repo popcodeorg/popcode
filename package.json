@@ -152,6 +152,7 @@
     "react-dom": "^16.0.0",
     "react-draggable": "^3.0.3",
     "react-ga": "^2.1.2",
+    "react-immutable-proptypes": "^2.1.0",
     "react-onclickoutside": "^6.5.0",
     "react-prevent-clickthrough": "^0.0.3",
     "react-redux": "^5.0.3",
