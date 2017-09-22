@@ -5,7 +5,6 @@ export function cssSelectorAtCursor(source, cursor) {
   try {
     const root1 = postcss.parse(source);
     root1.walkRules((rule) => {
-      console.log(rule);
       const ruleStartRow = rule.source.start.line;
       const ruleStartCol = rule.source.start.column;
       const ruleEndRow = rule.source.end.line;

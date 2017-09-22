@@ -10,7 +10,8 @@ import previewFrameLibraries from '../config/previewFrameLibraries';
 import highlighterCss from '../../templates/highlighterCss.txt';
 import errorHandlerScript from './errorHandlerScript';
 import elementHighlighterScript from './elementHighlighterScript';
-import alertAndPromptReplacementScript from './alertAndPromptReplacementScript';
+import alertAndPromptReplacementScript
+  from './alertAndPromptReplacementScript';
 
 const parser = new DOMParser();
 
