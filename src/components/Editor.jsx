@@ -8,6 +8,7 @@ import noop from 'lodash-es/noop';
 
 import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
 import {EditorLocation} from '../records';
+import {cssSelectorAtCursor} from '../util/cssSelectorAtCursor';
 
 import 'brace/ext/searchbox';
 import 'brace/mode/html';
@@ -133,57 +134,17 @@ class Editor extends React.Component {
       this.props.onInput(this._editor.getValue());
     });
     session.selection.on('changeCursor', () => {
-      let selector = '';
       if (this.props.language === 'css') {
-        selector = this._locateSelectorCSS(session);
+        const cursor = session.selection.lead;
+        const highlighterSelector =
+        cssSelectorAtCursor(this._editor.getValue(), cursor);
+        this.props.onCursorChange(highlighterSelector);
       }
-      this._sendSelectorToHighlighter(selector);
     });
     session.setAnnotations(this.props.errors);
     this._editor.setSession(session);
     this._editor.moveCursorTo(0, 0);
     this._resizeEditor();
-  }
-
-  _locateSelectorCSS(session) {
-    const reCssQuery = /(^|.*\})(.*)\{|\}/;
-    let query = false;
-    const lines = session.doc.$lines;
-    const cursor = session.selection.lead;
-    if (!lines[cursor.row]) {
-      return query;
-    }
-    const line = lines[cursor.row].substr(0, cursor.column);
-    let started = false;
-    if (line.match(reCssQuery)) {
-      query = RegExp.$2;
-      started = true;
-    }
-    if (!started || query) {
-      for (let i = cursor.row - 1; i >= 0; i--) {
-        if (started) {
-          if (lines[i].match(/[};]/)) {
-            break;
-          } else {
-            query = `${lines[i]} ${query}`;
-          }
-        } else if (lines[i].match(reCssQuery)) {
-          query = RegExp.$2;
-          if (!query) {
-            break;
-          }
-          started = true;
-        }
-      }
-    }
-    return query;
-  }
-
-  _sendSelectorToHighlighter(selector) {
-    window.frames[0].postMessage(JSON.stringify({
-      type: 'highlightElement',
-      selector: {selector},
-    }), '*');
   }
 
   render() {
@@ -204,6 +165,7 @@ Editor.propTypes = {
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   source: PropTypes.string.isRequired,
   textSizeIsLarge: PropTypes.bool.isRequired,
+  onCursorChange: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };

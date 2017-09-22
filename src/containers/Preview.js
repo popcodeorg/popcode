@@ -11,6 +11,7 @@ import {
 import {
   getCompiledProjects,
   getConsoleHistory,
+  getHighlighterSelector,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
 } from '../selectors';
@@ -23,6 +24,7 @@ function mapStateToProps(state) {
       !isUserTyping(state) &&
         !isCurrentProjectSyntacticallyValid(state)
     ),
+    highlighterSelector: getHighlighterSelector(state),
   };
 }
 

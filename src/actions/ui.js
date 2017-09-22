@@ -34,6 +34,11 @@ export const userDismissedNotification = createAction(
   type => ({type}),
 );
 
+export const updateHighlighterSelector = createAction(
+  'UPDATE_HIGHLIGHTER_SELECTOR',
+  selector => ({selector}),
+);
+
 export const updateNotificationMetadata = createAction(
   'UPDATE_NOTIFICATION_METADATA',
   (type, metadata) => ({type, metadata}),

@@ -1,0 +1,11 @@
+.popcode_HIGHLIGHTER {
+  position:fixed;
+  z-index: 10000000000;
+  border:1px solid rgba(238, 238, 48, 0.5);
+  box-sizing:border-box;
+  box-shadow:0 0 20px rgba(0,0,0,0.5);
+  pointer-events: none;
+  color: black;
+  background: transparent;
+}
+        

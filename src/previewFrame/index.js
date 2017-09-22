@@ -7,113 +7,14 @@ import uniq from 'lodash/uniq';
 import loopBreaker from 'loop-breaker';
 import libraries from '../config/libraries';
 import previewFrameLibraries from '../config/previewFrameLibraries';
+import highlighterCss from '../../templates/highlighterCss.txt';
+import errorHandlerScript from './errorHandlerScript';
+import elementHighlighterScript from './elementHighlighterScript';
+import alertAndPromptReplacementScript from './alertAndPromptReplacementScript';
 
 const parser = new DOMParser();
 
 const sourceDelimiter = '/*__POPCODESTART__*/';
-
-const errorHandlerScript = `(${function() {
-  window.onerror = (fullMessage, _file, line, column, error) => {
-    let name, message;
-    if (error) {
-      ({name, message} = error);
-    } else {
-      const components = fullMessage.split(': ', 2);
-      if (components.length === 2) {
-        [name, message] = components;
-      } else {
-        name = 'Error';
-        message = fullMessage;
-      }
-    }
-
-    window.parent.postMessage(JSON.stringify({
-      type: 'org.popcode.error',
-      error: {
-        name,
-        message,
-        line,
-        column,
-      },
-    }), '*');
-  };
-}.toString()}());`;
-
-const elementHighlighterScript = `(${function() {
-  let selector = '';
-  window.addEventListener('message', (message) => {
-    const data = JSON.parse(message.data);
-    const {selector: {selector: selectorFromMessage}} = data;
-    selector = selectorFromMessage;
-    removeCovers();
-    generateCovers();
-  });
-
-  window.addEventListener('resize', () => {
-    removeCovers();
-    generateCovers();
-  });
-
-  window.addEventListener('scroll', () => {
-    removeCovers();
-    generateCovers();
-  });
-
-  function removeCovers() {
-    const highlighterElements =
-    window.document.querySelectorAll('.popcode_HIGHLIGHTER');
-    if (highlighterElements.length !== 0) {
-      highlighterElements.forEach((highlighterElement) => {
-        highlighterElement.remove();
-      });
-    }
-  }
-
-  function generateCovers() {
-    if (selector !== '') {
-      const elements =
-      window.document.querySelectorAll(selector);
-      elements.forEach((element) => {
-        const rect = element.getBoundingClientRect();
-        const cover =
-        window.document.documentElement.appendChild(
-          window.document.createElement('div'));
-        cover.className = 'popcode_HIGHLIGHTER';
-        cover.style.position = 'fixed';
-        cover.style.zIndex = 10000000000;
-        cover.style.border = '1px solid rgba(238, 238, 48, 0.5)';
-        cover.style.boxSizing = 'border-box';
-        cover.style.boxShadow = '0 0 20px rgba(0,0,0,0.5)';
-        cover.style.pointerEvents = 'none';
-        cover.style.color = 'black';
-        cover.style.background = 'transparent';
-        cover.style.left = `${rect.left - 1}px`;
-        cover.style.top = `${rect.top - 1}px`;
-        cover.style.width = `${rect.width + 2}px`;
-        cover.style.height = `${rect.height + 2}px`;
-      });
-    }
-  }
-}.toString()}());`;
-
-const alertAndPromptReplacementScript = `(${function() {
-  const _swal = window.swal;
-
-  Object.defineProperties(window, { // eslint-disable-line prefer-reflect
-    alert: {
-      value: (message) => {
-        _swal(String(message));
-      },
-      configurable: true,
-    },
-    prompt: {
-      value: (message, defaultValue = '') => defaultValue,
-      configurable: true,
-    },
-  });
-
-  delete window.swal; // eslint-disable-line prefer-reflect
-}.toString()}());`;
 
 class PreviewGenerator {
   constructor(project, options = {}) {
@@ -145,6 +46,7 @@ class PreviewGenerator {
     }
     this._addElementHighlighterHandling();
     this._addJavascript(pick(options, 'breakLoops'));
+    this._attachHighlighterCss();
   }
 
   _ensureDocumentElement() {
@@ -217,7 +119,6 @@ class PreviewGenerator {
     this.previewBody.appendChild(scriptTag);
   }
 
-
   _attachLibraries({nonBlockingAlertsAndPrompts = false}) {
     const enabledLibrariesWithDependencies =
       this._librariesWithDependencies(this._project.enabledLibraries);
@@ -279,6 +180,12 @@ class PreviewGenerator {
     } else {
       this._previewHead.appendChild(scriptTag);
     }
+  }
+
+  _attachHighlighterCss() {
+    const styleTag = this.previewDocument.createElement('style');
+    styleTag.innerHTML = highlighterCss;
+    this._previewHead.appendChild(styleTag);
   }
 }
 

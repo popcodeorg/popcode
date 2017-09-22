@@ -8,6 +8,7 @@ import PreviewFrame from './PreviewFrame';
 export default function Preview({
   compiledProjects,
   consoleEntries,
+  highlighterSelector,
   showingErrors,
   onConsoleError,
   onConsoleLog,
@@ -50,6 +51,7 @@ export default function Preview({
         >&#xf021;</span>
       </div>
       {projectFrames}
+      // highlighterSelector={highlighterSelector}
     </div>
   );
 }
@@ -57,6 +59,7 @@ export default function Preview({
 Preview.propTypes = {
   compiledProjects: ImmutablePropTypes.iterable.isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
+  highlighterSelector: PropTypes.string,
   showingErrors: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
   onConsoleLog: PropTypes.func.isRequired,
@@ -64,4 +67,8 @@ Preview.propTypes = {
   onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
+};
+
+Preview.defaultProps = {
+  highlighterSelector: '',
 };

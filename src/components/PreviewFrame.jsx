@@ -43,6 +43,12 @@ class PreviewFrame extends React.Component {
     );
   }
 
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.highlighterSelector !== this.props.highlighterSelector) {
+  //     this._postHighlighterSelectorToFrame(nextProps.highlighterSelector);
+  //   }
+  // }
+
   componentDidUpdate({consoleEntries: prevConsoleEntries}) {
     const {consoleEntries, isActive} = this.props;
 
@@ -135,6 +141,13 @@ class PreviewFrame extends React.Component {
     this.props.onConsoleLog(printedValue, compiledProjectKey);
   }
 
+  _postHighlighterSelectorToFrame(selector) {
+    window.frames[0].postMessage(JSON.stringify({
+      type: 'highlightElement',
+      selector: {selector},
+    }), '*');
+  }
+
   _attachToFrame(frame) {
     if (!frame) {
       if (this._channel) {
@@ -168,11 +181,16 @@ class PreviewFrame extends React.Component {
 PreviewFrame.propTypes = {
   compiledProject: PropTypes.instanceOf(CompiledProjectRecord).isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
+  highlighterSelector: PropTypes.string,
   isActive: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
   onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
+};
+
+PreviewFrame.defaultProps = {
+  highlighterSelector: '',
 };
 
 export default PreviewFrame;
