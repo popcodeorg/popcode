@@ -112,12 +112,12 @@ module.exports = (env = 'development') => {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks({context}) {
-        if (context) {
-          const isNodeModule = context.indexOf('node_modules') !== -1;
-          const isBowerComponent = context.indexOf('bower_components') !== -1;
-          return isNodeModule || isBowerComponent;
+        if (!context) {
+          return false;
         }
-        return false;
+        const isNodeModule = context.indexOf('node_modules') !== -1;
+        const isBowerComponent = context.indexOf('bower_components') !== -1;
+        return isNodeModule || isBowerComponent;
       },
     }),
     new webpack.optimize.CommonsChunkPlugin({name: 'manifest'}),
