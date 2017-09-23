@@ -111,7 +111,7 @@ module.exports = (env = 'development') => {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks({ context }) {
+      minChunks({context}) {
         if (context) {
           const isNodeModule = context.indexOf('node_modules') !== -1;
           const isBowerComponent = context.indexOf('bower_components') !== -1;
@@ -120,10 +120,10 @@ module.exports = (env = 'development') => {
         return false;
       },
     }),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'manifest' }),
-    process.env.NODE_ENV === 'production'
-      ? new webpack.HashedModuleIdsPlugin()
-      : new webpack.NamedModulesPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({name: 'manifest'}),
+    process.env.NODE_ENV === 'production' ?
+      new webpack.HashedModuleIdsPlugin() :
+      new webpack.NamedModulesPlugin(),
     new MD5ChunkHash(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/index.html'),
