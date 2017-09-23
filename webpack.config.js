@@ -126,7 +126,7 @@ module.exports = (env = 'development') => {
       new webpack.NamedModulesPlugin(),
     new MD5ChunkHash(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src/index.html'),
+      template: path.resolve(__dirname, 'src/html/index.html'),
       chunksSortMode: 'dependency',
     }),
     new InlineChunkManifestHtmlPlugin(),
