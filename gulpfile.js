@@ -51,10 +51,7 @@ gulp.task('env', () => {
 });
 
 gulp.task('static', () => gulp.
-  src([
-    path.join(staticDir, '**/*'),
-    path.join('node_modules/zeroclipboard/dist/ZeroClipboard.swf'),
-  ]).
+  src(path.join(staticDir, '**/*')).
   pipe(gulp.dest(distDir)),
 );
 

@@ -36,7 +36,6 @@
     "repo-export-complete": "Your repo export is ready!",
     "snapshot-created": "Your snapshot is ready!",
     "click-to-copy": "Click here to copy it",
-    "copy-prompt": "Press ⌘-C to copy this link!",
     "snapshot-export-error": "Something went wrong trying to create that snapshot. Please try again.",
     "snapshot-import-error": "Something went wrong trying to load that snapshot. Please try again.",
     "snapshot-not-found": "That snapshot doesn’t seem to exist. Check the link and try again."
