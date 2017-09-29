@@ -17,8 +17,11 @@ const map = require('lodash/map');
 const includes = require('lodash/includes');
 const git = require('git-rev-sync');
 const babel = require('babel-core');
+const yargs = require('yargs');
 const babelLoaderVersion =
   require('./node_modules/babel-loader/package.json').version;
+
+const isProduction = yargs.argv.production;
 
 let targets;
 if (process.env.DEBUG === 'true') {
@@ -39,7 +42,7 @@ const babelrc = {
     babel: babel.version,
     'babel-loader': babelLoaderVersion,
     debug: process.env.DEBUG,
-    env: process.env.NODE_ENV || 'development',
+    env: isProduction ? 'production' : 'development',
   }),
 };
 
@@ -109,6 +112,17 @@ module.exports = (env = 'development') => {
       ],
       ServiceWorker: {navigateFallbackURL: '/'},
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(isProduction ? 'production' : 'development'),
+      },
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {warnings: false},
+      output: {comments: false},
+      sourceMap: true,
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks({context}) {
@@ -121,7 +135,7 @@ module.exports = (env = 'development') => {
       },
     }),
     new webpack.optimize.CommonsChunkPlugin({name: 'manifest'}),
-    process.env.NODE_ENV === 'production' ?
+    isProduction ?
       new webpack.HashedModuleIdsPlugin() :
       new webpack.NamedModulesPlugin(),
     new MD5ChunkHash(),
