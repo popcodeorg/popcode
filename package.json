@@ -122,7 +122,7 @@
     "hast-util-sanitize": "^1.1.1",
     "highlight.js": "^9.12.0",
     "html-inspector": "^0.8.2",
-    "htmllint": "~0.5.0",
+    "htmllint": "https://github.com/htmllint/htmllint.git#eee0dd1",
     "i18next": "^9.0.0",
     "immutable": "^3.7.5",
     "inline-style-prefixer": "^3.0.8",
