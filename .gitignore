@@ -4,4 +4,3 @@ node_modules
 npm-debug.log
 bower_components
 yarn-error.log
-.DS_Store
