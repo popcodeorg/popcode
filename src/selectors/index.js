@@ -16,7 +16,7 @@ import getCurrentValidationState from './getCurrentValidationState';
 import getEnabledLibraries from './getEnabledLibraries';
 import getErrors from './getErrors';
 import getHiddenUIComponents from './getHiddenUIComponents';
-import getHighlighterSelector from './getHighlighterSelector';
+import getFocusedSelector from './getFocusedSelector';
 import getLastRefreshTimestamp from './getLastRefreshTimestamp';
 import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
@@ -61,7 +61,7 @@ export {
   getEnabledLibraries,
   getErrors,
   getHiddenUIComponents,
-  getHighlighterSelector,
+  getFocusedSelector,
   getLastRefreshTimestamp,
   getNotifications,
   getOpenTopBarMenu,

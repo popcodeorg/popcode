@@ -5,9 +5,9 @@ import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import uniq from 'lodash/uniq';
 import loopBreaker from 'loop-breaker';
-import libraries from '../config/libraries';
-import previewFrameLibraries from '../config/previewFrameLibraries';
-import highlighterCss from '../../templates/highlighterCss.txt';
+import libraries from '../../config/libraries';
+import previewFrameLibraries from '../../config/previewFrameLibraries';
+import highlighterCss from '../../../templates/highlighter.css';
 import errorHandlerScript from './errorHandlerScript';
 import elementHighlighterScript from './elementHighlighterScript';
 import alertAndPromptReplacementScript

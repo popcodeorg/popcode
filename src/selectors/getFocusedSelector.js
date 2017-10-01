@@ -1,3 +1,3 @@
-export default function getHighlighterSelector(state) {
+export default function getFocusedSelector(state) {
   return state.getIn(['ui', 'editors', 'focusedSelector']);
 }

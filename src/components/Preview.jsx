@@ -51,24 +51,43 @@ export default function Preview({
         >&#xf021;</span>
       </div>
       {projectFrames}
-      // highlighterSelector={highlighterSelector}
+      // focusedSelector={focusedSelector}
     </div>
   );
 }
 
 Preview.propTypes = {
+<<<<<<< HEAD
   compiledProjects: ImmutablePropTypes.iterable.isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
-  highlighterSelector: PropTypes.string,
+  focusedSelector: PropTypes.string,
   showingErrors: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
   onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
+=======
+  focusedSelector: PropTypes.string,
+  isSyntacticallyValid: PropTypes.bool.isRequired,
+  lastRefreshTimestamp: PropTypes.number,
+  project: PropTypes.shape({
+    sources: PropTypes.shape({
+      html: PropTypes.string.isRequired,
+      css: PropTypes.string.isRequired,
+      javascript: PropTypes.string.isRequired,
+    }).isRequired,
+    enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
+>>>>>>> 621d5f6... Add saga, add ref to iframe element
   onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
 };
 
 Preview.defaultProps = {
+<<<<<<< HEAD
   highlighterSelector: '',
+=======
+  focusedSelector: null,
+  lastRefreshTimestamp: null,
+>>>>>>> 621d5f6... Add saga, add ref to iframe element
 };

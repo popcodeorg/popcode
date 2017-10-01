@@ -75,6 +75,16 @@ export default class Workspace extends React.Component {
         'instructions',
       );
     }
+
+    // _handleEditorCursorChange(source, cursor, language) {
+    //   this.props.dispatch(
+    //     currentCursorChanged(
+    //       source,
+    //       cursor,
+    //       language,
+    //     ),
+    //   );
+    // }
   }
 
   _handleClickInstructionsEditButton() {

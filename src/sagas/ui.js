@@ -5,6 +5,7 @@ import {
   userDoneTyping as userDoneTypingAction,
   showSaveIndicator,
   hideSaveIndicator,
+  currentFocusedSelectorChanged,
 } from '../actions/ui';
 import {getCurrentProject} from '../selectors';
 import {
@@ -61,11 +62,19 @@ export function* exportProject() {
   );
 }
 
+export function* updateFocusedSelector({payload: {source, cursor, language}}) {
+  const selector = yield call(selectorAtCursor, source, cursor, language);
+  yield put(currentFocusedSelectorChanged(selector));
+}
+
 export default function* () {
   yield all([
     debounceFor('UPDATE_PROJECT_SOURCE', userDoneTyping, 1000),
     takeEvery('POP_OUT_PROJECT', popOutProject),
     takeEvery('EXPORT_PROJECT', exportProject),
     debounceFor('PROJECT_SUCCESSFULLY_SAVED', projectSuccessfullySaved, 1000),
+    takeEvery('CURRENT_CURSOR_CHANGED', updateFocusedSelector),
   ]);
 }
+
+

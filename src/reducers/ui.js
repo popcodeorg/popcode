@@ -27,7 +27,7 @@ const defaultState = new Immutable.Map().
     typing: false,
     requestedFocusedLine: null,
     textSizeIsLarge: false,
-    highlighterSelector: null,
+    focusedSelector: null,
   })).
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Map()).
@@ -71,10 +71,9 @@ export default function ui(stateIn, action) {
     case 'UPDATE_PROJECT_SOURCE':
       return state.set('isTyping', true);
 
-    case 'UPDATE_HIGHLIGHTER_SELECTOR':
+    case 'CURRENT_FOCUSED_SELECTOR_CHANGED':
       return state.setIn(
-        ['editors', 'highlighterSelector'],
-        action.payload.selector,
+        ['editors', 'focusedSelector'], action.payload,
       );
 
     case 'USER_DONE_TYPING':

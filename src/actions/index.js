@@ -22,13 +22,13 @@ import {
 } from './projects';
 
 import {
+  currentCursorChanged,
   focusLine,
   editorFocusedRequestedLine,
   startDragColumnDivider,
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
-  updateHighlighterSelector,
   updateNotificationMetadata,
   popOutProject,
   toggleEditorTextSize,
@@ -107,7 +107,7 @@ export {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
-  updateHighlighterSelector,
+  currentCursorChanged,
   updateNotificationMetadata,
   exportProject,
   projectExportDisplayed,

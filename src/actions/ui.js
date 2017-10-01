@@ -34,9 +34,13 @@ export const userDismissedNotification = createAction(
   type => ({type}),
 );
 
-export const updateHighlighterSelector = createAction(
-  'UPDATE_HIGHLIGHTER_SELECTOR',
-  selector => ({selector}),
+export const currentCursorChanged = createAction(
+  'CURRENT_CURSOR_CHANGED',
+  (source, cursor, language) => ({source, cursor, language}),
+);
+
+export const currentFocusedSelectorChanged = createAction(
+  'CURRENT_FOCUSED_SELECTOR_CHANGED',
 );
 
 export const updateNotificationMetadata = createAction(

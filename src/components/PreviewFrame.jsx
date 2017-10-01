@@ -18,6 +18,7 @@ const sandboxOptions = [
   'allow-popups-to-escape-sandbox',
   'allow-scripts',
   'allow-top-navigation',
+  'allow-same-origin',
 ].join(' ');
 
 let nextId = 1;
@@ -46,6 +47,16 @@ class PreviewFrame extends React.Component {
   // componentWillReceiveProps(nextProps) {
   //   if (nextProps.highlighterSelector !== this.props.highlighterSelector) {
   //     this._postHighlighterSelectorToFrame(nextProps.highlighterSelector);
+  //   }
+  // }
+  // componentDidMount() {
+  //   window.addEventListener('message', this._onMessage);
+  //   this._postFocusedSelectorToFrame(this.props.focusedSelector);
+  // }
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.focusedSelector !== this.props.focusedSelector) {
+  //     this._postFocusedSelectorToFrame(nextProps.focusedSelector);
   //   }
   // }
 
@@ -148,6 +159,13 @@ class PreviewFrame extends React.Component {
     }), '*');
   }
 
+  _postFocusedSelectorToFrame(selector) {
+    this._frame_element.contentWindow.postMessage(JSON.stringify({
+      type: 'org.popcode.highlightElement',
+      selector,
+    }), '*');
+  }
+
   _attachToFrame(frame) {
     if (!frame) {
       if (this._channel) {
@@ -179,18 +197,22 @@ class PreviewFrame extends React.Component {
 }
 
 PreviewFrame.propTypes = {
+<<<<<<< HEAD
   compiledProject: PropTypes.instanceOf(CompiledProjectRecord).isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
-  highlighterSelector: PropTypes.string,
+  focusedSelector: PropTypes.string,
   isActive: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
   onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
+=======
+  src: PropTypes.string.isRequired,
+>>>>>>> 621d5f6... Add saga, add ref to iframe element
   onRuntimeError: PropTypes.func.isRequired,
 };
 
 PreviewFrame.defaultProps = {
-  highlighterSelector: '',
+  focusedSelector: null,
 };
 
 export default PreviewFrame;

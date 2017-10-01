@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+<<<<<<< HEAD
 import bindAll from 'lodash-es/bindAll';
 import constant from 'lodash-es/constant';
 import get from 'lodash-es/get';
@@ -9,6 +10,13 @@ import noop from 'lodash-es/noop';
 import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
 import {EditorLocation} from '../records';
 import {cssSelectorAtCursor} from '../util/cssSelectorAtCursor';
+=======
+import ACE from 'brace';
+import bindAll from 'lodash/bindAll';
+import get from 'lodash/get';
+import throttle from 'lodash/throttle';
+import noop from 'lodash/noop';
+>>>>>>> 621d5f6... Add saga, add ref to iframe element
 
 import 'brace/ext/searchbox';
 import 'brace/mode/html';
@@ -134,12 +142,12 @@ class Editor extends React.Component {
       this.props.onInput(this._editor.getValue());
     });
     session.selection.on('changeCursor', () => {
-      if (this.props.language === 'css') {
-        const cursor = session.selection.lead;
-        const highlighterSelector =
-        cssSelectorAtCursor(this._editor.getValue(), cursor);
-        this.props.onCursorChange(highlighterSelector);
-      }
+      const cursor = session.selection.lead;
+      this.props.onCursorChange(
+        this._editor.getValue(),
+        cursor,
+        this.props.language,
+      );
     });
     session.setAnnotations(this.props.errors);
     this._editor.setSession(session);
