@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import AuthenticationStates from '../enums/AuthenticationStates';
 import config from '../config';
 
-function IdentityConfirmation(props) {
-  const {
-    currentUser,
-    onConfirmIdentity,
-    onRejectIdentity,
-  } = props;
-
+function IdentityConfirmation({
+  currentUser,
+  onConfirmIdentity,
+  onRejectIdentity,
+}) {
   if (currentUser.authenticationState !== AuthenticationStates.AUTHENTICATED) {
     return null;
   }
