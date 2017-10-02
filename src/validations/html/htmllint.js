@@ -52,9 +52,25 @@ const errorMap = {
 
   E017: () => ({reason: 'lower-case-tag-name'}),
 
+  E018: (error, source) => {
+    const lines = source.split('\n');
+    const tagNameExpr = /(.*?)\s*\/>/;
+    const [, tag] = tagNameExpr.exec(lines[error.line - 1].slice(error.column));
+
+    return {
+      reason: 'self-closing-tag',
+      payload: {tag},
+    };
+  },
+
   E027: () => ({reason: 'missing-title'}),
 
   E028: () => ({reason: 'duplicated-title'}),
+
+  E041: ({data: {classes}}) => ({
+    reason: 'duplicated-class',
+    payload: {classes},
+  }),
 
   E042: (error, source) => {
     const lines = source.split('\n');
@@ -91,18 +107,27 @@ const htmlLintOptions = {
   'attr-name-style': 'dash',
   'attr-no-dup': true,
   'attr-quote-style': 'quoted',
+  'attr-req-value': true,
+  'attr-validate': false,
+  'class-no-dup': true,
   'doctype-first': true,
   'doctype-html5': true,
   'head-req-title': true,
+  'head-valid-content-model': true,
+  'html-valid-content-model': true,
+  'id-class-no-ad': false,
   'id-class-style': false,
   'id-no-dup': true,
   'img-req-alt': false,
   'img-req-src': true,
-  'indent-style': 'spaces',
-  'indent-width': 4,
+  'indent-style': false,
+  'indent-width': false,
+  'input-radio-req-name': false,
+  'input-req-label': false,
+  'label-req-for': false,
+  'lang-style': false,
   'line-end-style': false,
-  'head-valid-content-model': true,
-  'html-valid-content-model': true,
+  'spec-char-escape': false,
   'tag-bans': [
     'b',
     'big',
@@ -115,7 +140,8 @@ const htmlLintOptions = {
   'tag-close': false,
   'tag-name-match': true,
   'tag-name-lowercase': true,
-  'title-max-length': 0,
+  'tag-self-close': 'never',
+  'title-max-length': false,
   'title-no-dup': true,
 };
 
