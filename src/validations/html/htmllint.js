@@ -1,3 +1,6 @@
+import clone from 'lodash/clone';
+import defaults from 'lodash/defaults';
+import reduce from 'lodash/reduce';
 import Validator from '../Validator';
 import importLinters from '../importLinters';
 
@@ -52,9 +55,26 @@ const errorMap = {
 
   E017: () => ({reason: 'lower-case-tag-name'}),
 
+  E018: (error, source) => {
+    const lines = source.split('\n');
+    const tagNameExpr = /(.*?)\s*\/>/;
+    const [, tag] =
+      tagNameExpr.exec(lines[error.line - 1].slice(error.column));
+
+    return {
+      reason: 'self-closing-tag',
+      payload: {tag},
+    };
+  },
+
   E027: () => ({reason: 'missing-title'}),
 
   E028: () => ({reason: 'duplicated-title'}),
+
+  E041: ({data: {classes}}) => ({
+    reason: 'duplicated-class',
+    payload: {classes},
+  }),
 
   E042: (error, source) => {
     const lines = source.split('\n');
@@ -91,16 +111,15 @@ const htmlLintOptions = {
   'attr-name-style': 'dash',
   'attr-no-dup': true,
   'attr-quote-style': 'quoted',
+  'attr-req-value': true,
+  'class-no-dup': true,
   'doctype-first': true,
   'doctype-html5': true,
   'head-req-title': true,
-  'id-class-style': false,
+  'head-valid-content-model': true,
+  'html-valid-content-model': true,
   'id-no-dup': true,
-  'img-req-alt': false,
   'img-req-src': true,
-  'indent-style': 'spaces',
-  'indent-width': 4,
-  'line-end-style': false,
   'tag-bans': [
     'b',
     'big',
@@ -110,10 +129,9 @@ const htmlLintOptions = {
     'tt',
     'strike',
   ],
-  'tag-close': false,
   'tag-name-match': true,
   'tag-name-lowercase': true,
-  'title-max-length': 0,
+  'tag-self-close': 'never',
   'title-no-dup': true,
 };
 
@@ -124,8 +142,14 @@ class HtmllintValidator extends Validator {
 
   async _getRawErrors() {
     const {htmllint} = await importLinters();
+    const options = reduce(
+      htmllint.rules,
+      (acc, {name}) => defaults(acc, {[name]: false}),
+      clone(htmlLintOptions),
+    );
+
     try {
-      const results = await htmllint(this._source, htmlLintOptions);
+      const results = await htmllint(this._source, options);
       return results;
     } catch (e) {
       return [];
