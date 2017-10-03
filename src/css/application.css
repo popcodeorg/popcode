@@ -95,44 +95,37 @@ body {
 }
 
 .identity-confirmation__confirm-btn {
-  position: relative;
-
+  background-color: #2ecc71;
+  border-radius: 2px;
+  border-width: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  color: #ecf0f1;
+  cursor: pointer;
   display: block;
   margin: 30px auto;
-  padding: 0;
-
-  overflow: hidden;
-
-  border-width: 0;
   outline: none;
-  border-radius: 2px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
-
-  background-color: #2ecc71;
-  color: #ecf0f1;
-
-  transition: background-color .3s;
-}
-
-.identity-confirmation__confirm-btn:hover, .identity-confirmation__confirm-btn:focus {
-  background-color: #27ae60;
-}
-
-.identity-confirmation__confirm-btn {
-  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
   padding: 1em;
+  position: relative;
+  transition: background-color 0.3s;
+}
+
+.identity-confirmation__confirm-btn:hover,
+.identity-confirmation__confirm-btn:focus {
+  background-color: #27ae60;
 }
 
 .identity-confirmation__confirm-btn > * {
   position: relative;
 }
 
-.identity-confirmation__confirm-btn:before {
+.identity-confirmation__confirm-btn::before {
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
-  background-color: rgba(236, 240, 241, .3);
+  background-color: rgba(236, 240, 241, 0.3);
   border-radius: 100%;
   content: "";
   display: block;
@@ -144,15 +137,15 @@ body {
   width: 0;
 }
 
-.identity-confirmation__confirm-btn:active:before {
+.identity-confirmation__confirm-btn:active::before {
   padding-top: 120%;
-  transition: width .2s ease-out, padding-top .2s ease-out;
+  transition: width 0.2s ease-out, padding-top 0.2s ease-out;
   width: 120%;
 }
 
 .identity-confirmation__modal {
   background: #fafafa;
-  box-shadow: 0px 2px 8px #888;
+  box-shadow: 0 2px 8px #888;
   margin: 10% auto 0;
   padding: 1em 2em 2em;
   width: 40vw;
