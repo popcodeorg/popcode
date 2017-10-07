@@ -253,7 +253,7 @@
   },
   "bundlesize": [
     {
-      "path": "./dist/*application.js"
+      "path": "./dist/*.js"
     }
   ]
 }
