@@ -81,6 +81,6 @@ module.exports = function(config) {
       reporters: ['dots', 'BrowserStack'],
     });
   } else if (isCi) {
-    config.set({browsers: ['Firefox']});
+    config.set({browsers: ['ChromeHeadless']});
   }
 };
