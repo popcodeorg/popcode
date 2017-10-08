@@ -212,9 +212,13 @@ for all the sordid details.
 * [Tim Miller](https://github.com/gangstertim)
 * [Bruno Garcia](http://twitter.com/b_garcia)
 * [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
-* Logo design, "Pop" concept, and UI by the team at
+* Logo design, "Pop" concept, and branding elements by the team at
   [Red Peak](http://redpeakgroup.com): Andrew Haug, Aya Kawabata, Jieun Lee,
   Achu Fones, Iwona Waluk, Stewart Devlin, and Katie Conneally
+* User interface designed by [Ariel Liu](https://github.com/charstarstars),
+  [Ian Jones](https://github.com/ianmclaury), [Meghan
+  Knoll](https://github.com/megknoll), and [Simon
+  Lesser](https://twitter.com/simonlesser).
 
 ## Thanks to ##
 
