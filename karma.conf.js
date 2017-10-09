@@ -2,7 +2,6 @@
 /* eslint-disable import/unambiguous */
 /* eslint-disable import/no-commonjs */
 
-const assign = require('lodash/assign');
 const webpackConfiguration = require('./webpack.config.js');
 
 const isCi = Boolean(process.env.TRAVIS);
@@ -28,10 +27,7 @@ module.exports = function(config) {
       'test/index.js': ['webpack', 'sourcemap'],
     },
 
-    webpack: assign({}, webpackConfiguration, {
-      devtool: 'inline-source-map',
-      node: {fs: 'empty'},
-    }),
+    webpack: webpackConfiguration('test'),
 
     webpackMiddleware: {
       stats: 'errors-only',
