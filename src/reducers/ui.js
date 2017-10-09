@@ -40,6 +40,13 @@ function restoreFlexOnComponentToggle(componentName, state) {
   return restoreDefaultColumnFlex(state);
 }
 
+function focusEditor(language, state) {
+  return state.setIn(
+    ['editors', 'requestedFocusedLine'],
+    Immutable.fromJS({language, line: 0}),
+  );
+}
+
 function addNotification(state, type, severity, payload = {}) {
   return state.setIn(
     ['notifications', type],
@@ -67,7 +74,12 @@ export default function ui(stateIn, action) {
       return state.set('workspace', DEFAULT_WORKSPACE);
 
     case 'HIDE_COMPONENT':
+      return restoreFlexOnComponentToggle(action.payload.componentName, state);
+
     case 'UNHIDE_COMPONENT':
+      state = focusEditor(
+        action.payload.componentName.replace('editor.', ''),
+        state);
       return restoreFlexOnComponentToggle(action.payload.componentName, state);
 
     case 'UPDATE_PROJECT_SOURCE':
