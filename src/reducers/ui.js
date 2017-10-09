@@ -24,6 +24,22 @@ const defaultState = new Immutable.Map().
   set('topBar', new Immutable.Map({openMenu: null})).
   set('lastRefreshTimestamp', null);
 
+// i.e. restore to before editors were resized
+function restoreDefaultColumnFlex(state) {
+  return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
+}
+
+function restoreDefaultRowFlex(state) {
+  return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
+}
+
+function restoreFlexOnComponentToggle(componentName, state) {
+  if (componentName === 'output') {
+    return restoreDefaultRowFlex(state);
+  }
+  return restoreDefaultColumnFlex(state);
+}
+
 function addNotification(state, type, severity, payload = {}) {
   return state.setIn(
     ['notifications', type],
@@ -52,10 +68,7 @@ export default function ui(stateIn, action) {
 
     case 'HIDE_COMPONENT':
     case 'UNHIDE_COMPONENT':
-      if (action.payload.componentName === 'output') {
-        return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
-      }
-      return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
+      return restoreFlexOnComponentToggle(action.payload.componentName, state);
 
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(['editors', 'typing'], true);
