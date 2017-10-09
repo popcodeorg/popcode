@@ -62,159 +62,11 @@ function directoryContentsExcept(directory, exceptions) {
       !includes(fullExceptions, filePath);
 }
 
-module.exports = {
-  entry: './src/application.js',
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'application.js',
-    sourceMapFilename: 'application.js.map',
-  },
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'test'),
-        ],
-        use: [
-          {loader: 'babel-loader', options: babelrc},
-          'eslint-loader',
-        ],
-      },
-      {
-        test: /\.json$/,
-        use: ['json-loader'],
-      },
-      {
-        include: [
-          path.resolve(__dirname, 'bower_components'),
-          path.resolve(__dirname, 'templates'),
-        ],
-        use: ['raw-loader'],
-      },
-      {
-        test: /\.svg$/,
-        use: [
-          'svg-react-loader',
-          {
-            loader: 'svgo-loader',
-            options: {
-              plugins: [
-                {
-                  removeXMLNS: true,
-                },
-                {
-                  removeAttrs: {
-                    active: true,
-                    attrs: 'svg:data-name',
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-      {
-        include: path.resolve(__dirname, 'locales'),
-        use: [
-          {
-            loader: 'i18next-resource-store-loader',
-            options: 'include=\\.json$',
-          },
-        ],
-      },
-      {
-        include: matchModule('htmllint'),
-        enforce: 'post',
-        use: ['transform-loader/cacheable?bulkify'],
-      },
-      {
-        include: [matchModule('PrettyCSS'), matchModule('css')],
-        use: ['transform-loader/cacheable?brfs'],
-      },
-      {
-        test: /\.js$/,
-        include: [matchModule('htmllint')],
-        use: [
-          {
-            loader: 'string-replace-loader',
-            options: {
-              search: 'require(plugin)',
-              replace: 'undefined',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.js$/,
-        include: [
-          path.resolve(
-            __dirname,
-            'node_modules/stylelint/lib/utils/isAutoprefixable',
-          ),
-        ],
-        use: [
-          {
-            loader: 'substitute-loader',
-            options: {content: '() => false'},
-          },
-        ],
-      },
-      {
-        test: /\.js$/,
-        include: [
-          matchModule('ansi-styles'),
-          matchModule('chalk'),
-          matchModule('lodash-es'),
-          matchModule('redux'),
-          matchModule('stylelint'),
-        ],
-        use: {loader: 'babel-loader', options: babelrc},
-      },
-      {
-        include: matchModule('html-inspector'),
-        use: [
-          {loader: 'imports-loader', options: 'window=>{}'},
-          {
-            loader: 'exports-loader',
-            options: {'window.HTMLInspector': true},
-          },
-        ],
-      },
-      {
-        test: /\.js$/,
-        include: [
-          path.resolve(__dirname, 'node_modules/brace/worker'),
-          matchModule('autoprefixer'),
-          matchModule('postcss-scss'),
-          matchModule('postcss-less'),
-          matchModule('sugarss'),
-          matchModule('stylelint/lib/dynamicRequire'),
-          matchModule('css/lib/stringify/source-map-support'),
-        ],
-        use: ['null-loader'],
-      },
-      {
-        test: /\.js$/,
-        include: directoryContentsExcept(
-          'node_modules/stylelint/lib/rules',
-          [
-            'index.js',
-            'declaration-block-trailing-semicolon/index.js',
-          ],
-        ),
-        use: ['null-loader'],
-      },
-      {
-        test: /\.js$/,
-        include: matchModule('moment/locale'),
-        use: ['null-loader'],
-      },
-    ],
-  },
+module.exports = (env = 'development') => {
+  const isProduction = env === 'production';
+  const isTest = env === 'test';
 
-  plugins: [
+  const plugins = [
     new webpack.EnvironmentPlugin({
       FIREBASE_APP: 'popcode-development',
       FIREBASE_API_KEY: 'AIzaSyCHlo2RhOkRFFh48g779YSZrLwKjoyCcws',
@@ -253,19 +105,182 @@ module.exports = {
       ],
       ServiceWorker: {navigateFallbackURL: '/'},
     }),
-  ],
+  ];
 
-  node: {
-    fs: 'empty',
-  },
+  if (isProduction) {
+    plugins.push(new webpack.optimize.UglifyJsPlugin({
+      compress: {warnings: false},
+      output: {comments: false},
+      sourceMap: true,
+    }));
+  }
 
-  resolve: {
-    alias: {
-      'github-api$': 'github-api/dist/components/GitHub.js',
-      'github-api': 'github-api/dist/components',
-      'html-inspector$': 'html-inspector/html-inspector.js',
+  return {
+    entry: './src/application.js',
+    output: {
+      path: path.resolve(__dirname, './dist'),
+      filename: 'application.js',
+      sourceMapFilename: 'application.js.map',
     },
-    extensions: ['.js', '.jsx', '.json'],
-  },
-  devtool: 'source-map',
+    module: {
+      rules: [
+        {
+          test: /\.jsx?$/,
+          include: [
+            path.resolve(__dirname, 'src'),
+            path.resolve(__dirname, 'test'),
+          ],
+          use: [
+            {loader: 'babel-loader', options: babelrc},
+            'eslint-loader',
+          ],
+        },
+        {
+          test: /\.json$/,
+          use: ['json-loader'],
+        },
+        {
+          include: [
+            path.resolve(__dirname, 'bower_components'),
+            path.resolve(__dirname, 'templates'),
+          ],
+          use: ['raw-loader'],
+        },
+        {
+          test: /\.svg$/,
+          use: [
+            'svg-react-loader',
+            {
+              loader: 'svgo-loader',
+              options: {
+                plugins: [
+                  {
+                    removeXMLNS: true,
+                  },
+                  {
+                    removeAttrs: {
+                      active: true,
+                      attrs: 'svg:data-name',
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        {
+          include: path.resolve(__dirname, 'locales'),
+          use: [
+            {
+              loader: 'i18next-resource-store-loader',
+              options: 'include=\\.json$',
+            },
+          ],
+        },
+        {
+          include: matchModule('htmllint'),
+          enforce: 'post',
+          use: ['transform-loader/cacheable?bulkify'],
+        },
+        {
+          include: [matchModule('PrettyCSS'), matchModule('css')],
+          use: ['transform-loader/cacheable?brfs'],
+        },
+        {
+          test: /\.js$/,
+          include: [matchModule('htmllint')],
+          use: [
+            {
+              loader: 'string-replace-loader',
+              options: {
+                search: 'require(plugin)',
+                replace: 'undefined',
+              },
+            },
+          ],
+        },
+        {
+          test: /\.js$/,
+          include: [
+            path.resolve(
+              __dirname,
+              'node_modules/stylelint/lib/utils/isAutoprefixable',
+            ),
+          ],
+          use: [
+            {
+              loader: 'substitute-loader',
+              options: {content: '() => false'},
+            },
+          ],
+        },
+        {
+          test: /\.js$/,
+          include: [
+            matchModule('ansi-styles'),
+            matchModule('chalk'),
+            matchModule('lodash-es'),
+            matchModule('redux'),
+            matchModule('stylelint'),
+          ],
+          use: {loader: 'babel-loader', options: babelrc},
+        },
+        {
+          include: matchModule('html-inspector'),
+          use: [
+            {loader: 'imports-loader', options: 'window=>{}'},
+            {
+              loader: 'exports-loader',
+              options: {'window.HTMLInspector': true},
+            },
+          ],
+        },
+        {
+          test: /\.js$/,
+          include: [
+            path.resolve(__dirname, 'node_modules/brace/worker'),
+            matchModule('autoprefixer'),
+            matchModule('postcss-scss'),
+            matchModule('postcss-less'),
+            matchModule('sugarss'),
+            matchModule('stylelint/lib/dynamicRequire'),
+            matchModule('css/lib/stringify/source-map-support'),
+          ],
+          use: ['null-loader'],
+        },
+        {
+          test: /\.js$/,
+          include: directoryContentsExcept(
+            'node_modules/stylelint/lib/rules',
+            [
+              'index.js',
+              'declaration-block-trailing-semicolon/index.js',
+            ],
+          ),
+          use: ['null-loader'],
+        },
+        {
+          test: /\.js$/,
+          include: matchModule('moment/locale'),
+          use: ['null-loader'],
+        },
+      ],
+    },
+
+    plugins,
+
+    node: {
+      fs: 'empty',
+    },
+
+    resolve: {
+      alias: {
+        'github-api$': 'github-api/dist/components/GitHub.js',
+        'github-api': 'github-api/dist/components',
+        'html-inspector$': 'html-inspector/html-inspector.js',
+      },
+      extensions: ['.js', '.jsx', '.json'],
+    },
+    devtool: isTest ? 'inline-source-map' : 'source-map',
+  };
 };

@@ -85,19 +85,9 @@ gulp.task('css', () => {
     pipe(browserSync.stream());
 });
 
-gulp.task('js', ['env'], () => {
-  const productionWebpackConfig = Object.create(webpackConfiguration);
-  productionWebpackConfig.plugins = productionWebpackConfig.plugins.concat(
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {warnings: false},
-      output: {comments: false},
-      sourceMap: true,
-    }),
-  );
-
-  return pify(webpack)(productionWebpackConfig);
-});
+gulp.task('js', ['env'], () =>
+  pify(webpack)(webpackConfiguration(process.env.NODE_ENV)),
+);
 
 gulp.task('build', ['static', 'fonts', 'css', 'js']);
 
