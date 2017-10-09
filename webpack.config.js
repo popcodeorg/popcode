@@ -114,18 +114,6 @@ module.exports = (env = 'development') => {
         NODE_ENV: JSON.stringify(isProduction ? 'production' : 'development'),
       },
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks({context}) {
-        if (!context) {
-          return false;
-        }
-        const isNodeModule = context.indexOf('node_modules') !== -1;
-        const isBowerComponent = context.indexOf('bower_components') !== -1;
-        return isNodeModule || isBowerComponent;
-      },
-    }),
-    new webpack.optimize.CommonsChunkPlugin({name: 'manifest'}),
     isProduction ?
       new webpack.HashedModuleIdsPlugin() :
       new webpack.NamedModulesPlugin(),
@@ -136,6 +124,23 @@ module.exports = (env = 'development') => {
     }),
     new InlineChunkManifestHtmlPlugin(),
   ];
+
+  if (!isTest) {
+    plugins.push(
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks({context}) {
+          if (!context) {
+            return false;
+          }
+          const isNodeModule = context.indexOf('node_modules') !== -1;
+          const isBowerComponent = context.indexOf('bower_components') !== -1;
+          return isNodeModule || isBowerComponent;
+        },
+      }),
+      new webpack.optimize.CommonsChunkPlugin({name: 'manifest'}),
+    );
+  }
 
   if (isProduction) {
     plugins.push(new webpack.optimize.UglifyJsPlugin({
