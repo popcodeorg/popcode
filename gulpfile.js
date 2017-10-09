@@ -125,7 +125,7 @@ gulp.task('dev', ['browserSync', 'static', 'fonts', 'css'], () => {
 });
 
 gulp.task('browserSync', ['static'], () => {
-  const compiler = webpack(webpackConfiguration);
+  const compiler = webpack(webpackConfiguration(process.env.NODE_ENV));
   compiler.plugin('invalid', browserSync.reload);
   browserSync.init({
     server: {
