@@ -138,9 +138,9 @@
     "promise-retry": "^1.1.1",
     "prop-types": "^15.5.10",
     "qs": "^6.1.0",
-    "react": "^15.4.1",
+    "react": "^16.0.0",
     "react-copy-to-clipboard": "^5.0.0",
-    "react-dom": "^15.4.1",
+    "react-dom": "^16.0.0",
     "react-draggable": "^3.0.3",
     "react-ga": "^2.1.2",
     "react-onclickoutside": "^6.5.0",
@@ -155,7 +155,7 @@
     "redux-saga-debounce-effect": "^0.2.2",
     "remark": "^8.0.0",
     "remark-react": "^4.0.0",
-    "remark-react-lowlight": "^0.6.0",
+    "remark-react-lowlight": "^0.7.0",
     "reselect": "^3.0.1",
     "rxjs": "^5.0.2",
     "slowparse": "^1.1.4",
@@ -212,7 +212,6 @@
     "gulp-concat": "^2.6.0",
     "gulp-postcss": "^7.0.0",
     "gulp-sourcemaps": "^2.6.0",
-    "gulp-util": "^3.0.7",
     "i18next-resource-store-loader": "^0.1.1",
     "immutable-devtools": "0.0.7",
     "imports-loader": "^0.7.1",
@@ -231,7 +230,6 @@
     "postcss": "^6.0.6",
     "postcss-cssnext": "^3.0.2",
     "raw-loader": "^0.5.1",
-    "react-addons-perf": "^15.4.2",
     "redux-saga-test-plan": "^3.0.2",
     "sinon": "^3.2.1",
     "source-map-explorer": "^1.4.0",
@@ -245,8 +243,7 @@
     "transform-loader": "^0.2.3",
     "webpack": "^3.1.0",
     "webpack-dev-middleware": "^1.8.2",
-    "webpack-hot-middleware": "^2.12.2",
-    "yargs": "^8.0.1"
+    "webpack-hot-middleware": "^2.12.2"
   },
   "optionalDependencies": {
     "fsevents": "*"

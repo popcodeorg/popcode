@@ -3,6 +3,7 @@ node_js:
 - 8.5.0
 env:
   global:
+  - NODE_ENV=production
   - CXX=g++-4.8
   - LOG_REDUX_ACTIONS=false
   - FIREBASE_APP=popcode
@@ -24,13 +25,15 @@ addons:
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.0.2
   - export PATH="$HOME/.yarn/bin:$PATH"
+install:
+  - yarn install --production=false --frozen-lockfile --non-interactive
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 script:
 - yarn check
 - yarn test
-- gulp build --production
+- gulp build
 - bundlesize
 before_deploy:
 - gulp syncFirebase

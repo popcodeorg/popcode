@@ -7,11 +7,9 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const gulp = require('gulp');
-const yargs = require('yargs');
 const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
 const cssnano = require('cssnano');
-const gutil = require('gulp-util');
 const forOwn = require('lodash/forOwn');
 const git = require('git-rev-sync');
 const postcss = require('gulp-postcss');
@@ -45,9 +43,6 @@ forOwn(supportedBrowsers, (version, browser) => {
 
 gulp.task('env', () => {
   process.env.GIT_REVISION = git.short();
-  if (yargs.argv.production) {
-    process.env.NODE_ENV = 'production';
-  }
 });
 
 gulp.task('static', () => gulp.
@@ -72,7 +67,7 @@ gulp.task('fonts', () => gulp.
 
 gulp.task('css', () => {
   const processors = [cssnext({browsers: cssnextBrowsers})];
-  if (gutil.env.production) {
+  if (process.env.NODE_ENV === 'production') {
     processors.push(cssnano());
   }
 
@@ -90,19 +85,9 @@ gulp.task('css', () => {
     pipe(browserSync.stream());
 });
 
-gulp.task('js', ['env'], () => {
-  const productionWebpackConfig = Object.create(webpackConfiguration);
-  productionWebpackConfig.plugins = productionWebpackConfig.plugins.concat(
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {warnings: false},
-      output: {comments: false},
-      sourceMap: true,
-    }),
-  );
-
-  return pify(webpack)(productionWebpackConfig);
-});
+gulp.task('js', ['env'], () =>
+  pify(webpack)(webpackConfiguration(process.env.NODE_ENV)),
+);
 
 gulp.task('build', ['static', 'fonts', 'css', 'js']);
 
