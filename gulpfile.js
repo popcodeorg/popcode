@@ -149,6 +149,11 @@ gulp.task('purgeCache', () =>
     key: process.env.CLOUDFLARE_KEY,
   }).zones.purgeCache(
     process.env.CLOUDFLARE_ZONE,
-    {purge_everything: true},
+    {
+      files: [
+        'https://popcode.org/index.html',
+        'https://popcode.org/application.css',
+      ],
+    },
   ),
 );
