@@ -109,11 +109,6 @@ module.exports = (env = 'development') => {
       ],
       ServiceWorker: {navigateFallbackURL: '/'},
     }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(isProduction ? 'production' : 'development'),
-      },
-    }),
     isProduction ?
       new webpack.HashedModuleIdsPlugin() :
       new webpack.NamedModulesPlugin(),
