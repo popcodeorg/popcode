@@ -6,6 +6,10 @@ const fs = require('fs');
 const path = require('path');
 const OfflinePlugin = require('offline-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const MD5ChunkHash = require('webpack-chunk-hash');
+const InlineChunkManifestHtmlPlugin =
+  require('inline-chunk-manifest-html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
 const startsWith = require('lodash/startsWith');
@@ -105,7 +109,33 @@ module.exports = (env = 'development') => {
       ],
       ServiceWorker: {navigateFallbackURL: '/'},
     }),
+    isProduction ?
+      new webpack.HashedModuleIdsPlugin() :
+      new webpack.NamedModulesPlugin(),
+    new MD5ChunkHash(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'src/html/index.html'),
+      chunksSortMode: 'dependency',
+    }),
+    new InlineChunkManifestHtmlPlugin(),
   ];
+
+  if (!isTest) {
+    plugins.push(
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks({context}) {
+          if (!context) {
+            return false;
+          }
+          const isNodeModule = context.indexOf('node_modules') !== -1;
+          const isBowerComponent = context.indexOf('bower_components') !== -1;
+          return isNodeModule || isBowerComponent;
+        },
+      }),
+      new webpack.optimize.CommonsChunkPlugin({name: 'manifest'}),
+    );
+  }
 
   if (isProduction) {
     plugins.push(new webpack.optimize.UglifyJsPlugin({
@@ -119,8 +149,8 @@ module.exports = (env = 'development') => {
     entry: './src/application.js',
     output: {
       path: path.resolve(__dirname, './dist'),
-      filename: 'application.js',
-      sourceMapFilename: 'application.js.map',
+      filename: isProduction ? '[name].[chunkhash].js' : '[name].js',
+      chunkFilename: isProduction ? '[name].[chunkhash].js' : '[name].js',
     },
     module: {
       rules: [

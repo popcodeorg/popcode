@@ -149,6 +149,11 @@ gulp.task('purgeCache', () =>
     key: process.env.CLOUDFLARE_KEY,
   }).zones.purgeCache(
     process.env.CLOUDFLARE_ZONE,
-    {purge_everything: true},
+    {
+      files: [
+        `https://${process.env.HOSTNAME}/index.html`,
+        `https://${process.env.HOSTNAME}/application.css`,
+      ],
+    },
   ),
 );
