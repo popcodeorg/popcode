@@ -125,7 +125,7 @@ gulp.task('dev', ['browserSync', 'static', 'fonts', 'css'], () => {
 });
 
 gulp.task('browserSync', ['static'], () => {
-  const compiler = webpack(webpackConfiguration);
+  const compiler = webpack(webpackConfiguration(process.env.NODE_ENV));
   compiler.plugin('invalid', browserSync.reload);
   browserSync.init({
     server: {
@@ -149,6 +149,11 @@ gulp.task('purgeCache', () =>
     key: process.env.CLOUDFLARE_KEY,
   }).zones.purgeCache(
     process.env.CLOUDFLARE_ZONE,
-    {purge_everything: true},
+    {
+      files: [
+        `https://${process.env.HOSTNAME}/index.html`,
+        `https://${process.env.HOSTNAME}/application.css`,
+      ],
+    },
   ),
 );
