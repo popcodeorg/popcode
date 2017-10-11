@@ -24,7 +24,6 @@ const defaultState = new Immutable.Map().
   set('topBar', new Immutable.Map({openMenu: null})).
   set('lastRefreshTimestamp', null);
 
-// i.e. restore to before editors were resized
 function restoreDefaultColumnFlex(state) {
   return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
 }
@@ -79,7 +78,8 @@ export default function ui(stateIn, action) {
     case 'UNHIDE_COMPONENT':
       state = focusEditor(
         action.payload.componentName.replace('editor.', ''),
-        state);
+        state,
+      );
       return restoreFlexOnComponentToggle(action.payload.componentName, state);
 
     case 'UPDATE_PROJECT_SOURCE':
