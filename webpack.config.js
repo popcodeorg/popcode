@@ -166,6 +166,11 @@ module.exports = (env = 'development') => {
           ],
         },
         {
+          test: /\.js$/,
+          use: ['source-map-loader'],
+          enforce: 'pre',
+        },
+        {
           test: /\.json$/,
           use: ['json-loader'],
         },
