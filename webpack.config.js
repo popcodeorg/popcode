@@ -121,7 +121,9 @@ module.exports = (env = 'development') => {
     new InlineChunkManifestHtmlPlugin(),
   ];
 
-  if (!isTest) {
+  if (isTest) {
+    plugins.push(new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}));
+  } else {
     plugins.push(
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
