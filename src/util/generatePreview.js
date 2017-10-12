@@ -129,7 +129,7 @@ class PreviewGenerator {
   _addRefreshTimestamp(timestamp) {
     const dateString = `Last refresh on: ${String(new Date(timestamp))}`;
     const comment = this.previewDocument.createComment(dateString);
-    this.previewBody.append(comment);
+    this.previewBody.appendChild(comment);
   }
 
   _addJavascript({breakLoops = false}) {
