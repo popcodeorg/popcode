@@ -96,8 +96,8 @@ export default function reduceProjects(stateIn, action) {
   }
 
   switch (action.type) {
-    case 'PROJECT_LOADED':
-      return addProject(state, action.payload.project);
+    case 'PROJECTS_LOADED':
+      return action.payload.reduce(addProject, state);
 
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(

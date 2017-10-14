@@ -15,7 +15,7 @@ import {
   gistImportError,
   gistNotFound,
   projectCreated,
-  projectLoaded,
+  projectsLoaded,
 } from '../actions/projects';
 import {
   snapshotImported,
@@ -90,9 +90,7 @@ export function* userAuthenticated() {
 
   const projects = yield call(loadAllProjects, getCurrentUserId(state));
 
-  for (const project of projects) {
-    yield put(projectLoaded(project));
-  }
+  yield put(projectsLoaded(projects));
 }
 
 export function* toggleLibrary() {
