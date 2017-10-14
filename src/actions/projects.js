@@ -57,7 +57,4 @@ export const gistImportError = createAction(
   gistId => ({gistId}),
 );
 
-export const projectLoaded = createAction(
-  'PROJECT_LOADED',
-  project => ({project}),
-);
+export const projectsLoaded = createAction('PROJECTS_LOADED');

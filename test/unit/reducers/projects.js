@@ -14,7 +14,7 @@ import {
   changeCurrentProject,
   gistImported,
   projectCreated,
-  projectLoaded,
+  projectsLoaded,
   toggleLibrary,
   hideComponent,
   unhideComponent,
@@ -171,17 +171,20 @@ test('gistImported', (t) => {
   ));
 });
 
-tap(project(), projectIn =>
-  test('loadProject', reducerTest(
+tap([project(), project()], projectsIn =>
+  test('projectsLoaded', reducerTest(
     reducer,
     states.initial,
-    partial(projectLoaded, projectIn),
-    new Immutable.Map().set(
-      projectIn.projectKey,
-      buildProject(
+    partial(projectsLoaded, projectsIn),
+    projectsIn.reduce(
+      (map, projectIn) => map.set(
         projectIn.projectKey,
-        projectIn.sources,
-      ).set('updatedAt', projectIn.updatedAt),
+        buildProject(
+          projectIn.projectKey,
+          projectIn.sources,
+        ).set('updatedAt', projectIn.updatedAt),
+      ),
+      new Immutable.Map(),
     ),
   )),
 );
