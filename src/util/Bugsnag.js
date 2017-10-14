@@ -1,6 +1,4 @@
 import 'bugsnag-js';
-import isError from 'lodash/isError';
-import isString from 'lodash/isString';
 import config from '../config';
 import {getCurrentProject} from '../selectors';
 
@@ -25,17 +23,6 @@ export function includeStoreInBugReports(store) {
   };
 }
 
-window.addEventListener('unhandledrejection', ({reason}) => {
-  if (isError(reason)) {
-    Bugsnag.notifyException(reason);
-  } else if (isString(reason)) {
-    Bugsnag.notify('UnhandledRejection', reason);
-  } else {
-    Bugsnag.notify(
-      'UnhandledRejection',
-      JSON.stringify(reason) || 'No reason given',
-    );
-  }
-});
+Bugsnag.enableNotifyUnhandledRejections();
 
 export default Bugsnag;
