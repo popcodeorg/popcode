@@ -106,6 +106,9 @@ function mapDispatchToProps(dispatch) {
               notificationTriggered('auth-third-party-cookies-disabled'),
             );
             break;
+          case 'auth/internal-error':
+            dispatch(notificationTriggered('auth-error'));
+            break;
           default:
             dispatch(notificationTriggered('auth-error'));
             if (isError(e)) {
