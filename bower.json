@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "angular": "^1.5.5",
-    "bootstrap": "^3.3.6",
+    "bootstrap": "^4.0.0",
     "ember": "^2.5.1",
     "fontawesome": "^4.6.3",
     "foundation": "^5.5.3",
