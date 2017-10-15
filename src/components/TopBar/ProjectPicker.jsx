@@ -1,3 +1,4 @@
+import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
 import partial from 'lodash/partial';
 import PropTypes from 'prop-types';
@@ -9,8 +10,10 @@ import createMenu, {MenuItem} from './createMenu';
 const ProjectPicker = createMenu({
   name: 'projectPicker',
 
-  isVisible({currentProjectKey, projectKeys}) {
-    return currentProjectKey && projectKeys.length > 1;
+  isVisible({currentProjectKey, isUserAuthenticated, projectKeys}) {
+    return Boolean(currentProjectKey) &&
+      !isEmpty(projectKeys) &&
+      isUserAuthenticated;
   },
 
   renderItems({currentProjectKey, projectKeys, onChangeCurrentProject}) {
