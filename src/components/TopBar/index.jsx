@@ -76,6 +76,7 @@ export default function TopBar({
       />
       <ProjectPicker
         currentProjectKey={currentProjectKey}
+        isUserAuthenticated={isUserAuthenticated}
         projectKeys={projectKeys}
         onChangeCurrentProject={onChangeCurrentProject}
       />
