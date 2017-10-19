@@ -17,10 +17,10 @@ function uiVariants({validationState, isUserTyping}) {
     return {popVariant: 'neutral'};
   }
   if (validationState === 'validating') {
-    return {popVariant: 'thinking', modifier: 'top-bar_thinking'};
+    return {popVariant: 'thinking'};
   }
   if (validationState === 'validation-error' && isUserTyping) {
-    return {popVariant: 'thinking', modifier: 'top-bar_thinking'};
+    return {popVariant: 'thinking'};
   }
   return {popVariant: 'horns', modifier: 'top-bar_red'};
 }
