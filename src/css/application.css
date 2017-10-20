@@ -116,15 +116,7 @@ body {
   background-color: #27ae60;
 }
 
-.identity-confirmation__confirm-button > * {
-  position: relative;
-}
-
 .identity-confirmation__confirm-button::before {
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
   background-color: rgba(236, 240, 241, 0.3);
   border-radius: 100%;
   content: "";
