@@ -53,7 +53,7 @@ function IdentityConfirmation({
         </a>
 
         <button
-          className="identity-confirmation__confirm-btn"
+          className="identity-confirmation__confirm-button"
           type="button"
           onClick={onConfirmIdentity}
         >
