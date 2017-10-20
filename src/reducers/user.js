@@ -12,12 +12,15 @@ function user(stateIn, action) {
   switch (action.type) {
     case 'CONFIRM_IDENTITY': {
       return state.merge({
-        authenticationState: AuthenticationStates.CONFIRMED,
+        authenticationState: AuthenticationStates.AUTHENTICATED,
       });
     }
 
     case 'REJECT_IDENTITY': {
-      return init.set('authenticationState', AuthenticationStates.REJECTED);
+      return init.set(
+        'authenticationState',
+        AuthenticationStates.UNAUTHENTICATED,
+      );
     }
 
     case 'USER_AUTHENTICATED': {
@@ -26,7 +29,7 @@ function user(stateIn, action) {
       const profileData = get(userData, ['providerData', 0], userData);
 
       return state.merge({
-        authenticationState: AuthenticationStates.AUTHENTICATED,
+        authenticationState: AuthenticationStates.PENDING_CONFIRMATION,
         id: userData.uid,
         displayName: profileData.displayName || get(
           additionalUserInfo,

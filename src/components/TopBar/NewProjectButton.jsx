@@ -2,8 +2,8 @@ import {t} from 'i18next';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function NewProjectButton({isUserConfirmed, onClick}) {
-  if (!isUserConfirmed) {
+export default function NewProjectButton({isUserAuthenticated, onClick}) {
+  if (!isUserAuthenticated) {
     return false;
   }
 
@@ -18,6 +18,6 @@ export default function NewProjectButton({isUserConfirmed, onClick}) {
 }
 
 NewProjectButton.propTypes = {
-  isUserConfirmed: PropTypes.bool.isRequired,
+  isUserAuthenticated: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };

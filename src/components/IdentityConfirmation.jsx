@@ -8,7 +8,9 @@ function IdentityConfirmation({
   onConfirmIdentity,
   onRejectIdentity,
 }) {
-  if (currentUser.authenticationState !== AuthenticationStates.AUTHENTICATED) {
+  const {authenticationState, displayName} = currentUser;
+
+  if (authenticationState !== AuthenticationStates.PENDING_CONFIRMATION) {
     return null;
   }
 
@@ -16,11 +18,11 @@ function IdentityConfirmation({
     <div className="identity-confirmation">
       <div className="identity-confirmation__modal">
         <h1 className="identity-confirmation__title">
-          {`Are you ${currentUser.displayName}?`}
+          {`Are you ${displayName}?`}
         </h1>
 
         <p>
-          {`If you are not ${currentUser.displayName}:`}
+          {`If you are not ${displayName}:`}
         </p>
 
         <ol>
@@ -46,7 +48,7 @@ function IdentityConfirmation({
           target="_blank"
           onClick={onRejectIdentity}
         >
-          {`If you are not ${currentUser.displayName}, click here to  be taken
+          {`If you are not ${displayName}, click here to  be taken
           to the GitHub logout page.`}
         </a>
 
@@ -55,7 +57,7 @@ function IdentityConfirmation({
           type="button"
           onClick={onConfirmIdentity}
         >
-          {`Yes, I am ${currentUser.displayName}. Log me into Popcode!`}
+          {`Yes, I am ${displayName}. Log me into Popcode!`}
         </button>
       </div>
     </div>

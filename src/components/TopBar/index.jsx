@@ -31,7 +31,7 @@ export default function TopBar({
   enabledLibraries,
   isExperimental,
   isGistExportInProgress,
-  isUserConfirmed,
+  isUserAuthenticated,
   isUserTyping,
   isSnapshotInProgress,
   isTextSizeLarge,
@@ -58,7 +58,7 @@ export default function TopBar({
         isExperimental={isExperimental}
         isGistExportInProgress={isGistExportInProgress}
         isOpen={openMenu === 'hamburger'}
-        isUserConfirmed={isUserConfirmed}
+        isUserAuthenticated={isUserAuthenticated}
         onClick={partial(onClickMenu, 'hamburger')}
         onExportGist={onExportGist}
         onExportRepo={onExportRepo}
@@ -71,7 +71,7 @@ export default function TopBar({
       </div>
       <div className="top-bar__spacer" />
       <NewProjectButton
-        isUserConfirmed={isUserConfirmed}
+        isUserAuthenticated={isUserAuthenticated}
         onClick={onCreateNewProject}
       />
       <ProjectPicker
@@ -109,7 +109,7 @@ TopBar.propTypes = {
   isGistExportInProgress: PropTypes.bool.isRequired,
   isSnapshotInProgress: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
-  isUserConfirmed: PropTypes.bool.isRequired,
+  isUserAuthenticated: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool.isRequired,
   openMenu: PropTypes.string,
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,

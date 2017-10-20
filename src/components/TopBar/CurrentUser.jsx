@@ -9,7 +9,7 @@ export default function CurrentUser({
   onLogOut,
   onStartLogIn,
 }) {
-  if (user.authenticationState === AuthenticationStates.CONFIRMED) {
+  if (user.authenticationState === AuthenticationStates.AUTHENTICATED) {
     return <CurrentUserMenu user={user} onLogOut={onLogOut} />;
   }
   return (
