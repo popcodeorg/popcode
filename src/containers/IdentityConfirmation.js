@@ -1,5 +1,4 @@
 import {connect} from 'react-redux';
-import config from '../config';
 import {confirmIdentity, rejectIdentity} from '../actions/user';
 import IdentityConfirmation from '../components/IdentityConfirmation';
 import {getCurrentUser} from '../selectors';
@@ -19,10 +18,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(confirmIdentity());
     },
 
-    onRejectIdentity(e) {
-      e.preventDefault();
-
-      window.open(config.gitHubLogoutUrl, '_blank');
+    onRejectIdentity() {
       signOut();
       dispatch(rejectIdentity());
     },
