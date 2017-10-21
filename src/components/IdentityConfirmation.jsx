@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {t} from 'i18next';
 import AuthenticationStates from '../enums/AuthenticationStates';
 import config from '../config';
 
@@ -18,38 +19,15 @@ function IdentityConfirmation({
     <div className="identity-confirmation">
       <div className="identity-confirmation__modal">
         <h1 className="identity-confirmation__title">
-          {`Are you ${displayName}?`}
+          {t('identity-confirmation.title', {displayName})}
         </h1>
-
-        <p>
-          {`If you are not ${displayName}:`}
-        </p>
-
-        <ol>
-          <li>
-            Click the link below to be taken to the GitHub logout page.
-          </li>
-
-          <li>
-            On the GitHub logout page, click the log out button.
-          </li>
-
-          <li>
-            Sign in with your own username and password.
-          </li>
-
-          <li>
-            {'Come back here and click "Log in" again.'}
-          </li>
-        </ol>
 
         <a
           href={config.gitHubLogoutUrl}
           target="_blank"
           onClick={onRejectIdentity}
         >
-          {`If you are not ${displayName}, click here to  be taken
-          to the GitHub logout page.`}
+          {t('identity-confirmation.github-log-out-prompt', {displayName})}
         </a>
 
         <button
@@ -57,7 +35,7 @@ function IdentityConfirmation({
           type="button"
           onClick={onConfirmIdentity}
         >
-          {`Yes, I am ${displayName}. Log me into Popcode!`}
+          {t('identity-confirmation.confirm-identity', {displayName})}
         </button>
       </div>
     </div>
