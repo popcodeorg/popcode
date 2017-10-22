@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
@@ -15,6 +16,8 @@ function IdentityConfirmation({
     return null;
   }
 
+  const buttonClassName = 'identity-confirmation__button';
+
   return (
     <div className="identity-confirmation">
       <div className="identity-confirmation__modal">
@@ -22,21 +25,28 @@ function IdentityConfirmation({
           {t('identity-confirmation.title', {displayName})}
         </h1>
 
+        <button
+          className={classnames(
+            buttonClassName,
+            `${buttonClassName}_confirm`,
+          )}
+          type="button"
+          onClick={onConfirmIdentity}
+        >
+          {t('identity-confirmation.confirm-identity', {displayName})}
+        </button>
+
         <a
+          className={classnames(
+            buttonClassName,
+            `${buttonClassName}_reject`,
+          )}
           href={config.gitHubLogoutUrl}
           target="_blank"
           onClick={onRejectIdentity}
         >
           {t('identity-confirmation.github-log-out-prompt', {displayName})}
         </a>
-
-        <button
-          className="identity-confirmation__confirm-button"
-          type="button"
-          onClick={onConfirmIdentity}
-        >
-          {t('identity-confirmation.confirm-identity', {displayName})}
-        </button>
       </div>
     </div>
   );

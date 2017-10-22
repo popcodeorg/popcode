@@ -17,10 +17,9 @@ function user(stateIn, action) {
     }
 
     case 'REJECT_IDENTITY': {
-      return init.set(
-        'authenticationState',
-        AuthenticationStates.UNAUTHENTICATED,
-      );
+      return new Immutable.Map({
+        authenticationState: AuthenticationStates.UNAUTHENTICATED,
+      });
     }
 
     case 'USER_AUTHENTICATED': {
