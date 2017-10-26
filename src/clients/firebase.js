@@ -5,22 +5,23 @@ import isNull from 'lodash/isNull';
 import values from 'lodash/values';
 import uuid from 'uuid/v4';
 import {auth, database, githubAuthProvider} from '../services/appFirebase';
-import {Observable} from '../services/rxjs';
 
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
 const SESSION_TTL_MS = 5 * 60 * 1000;
 
-const loginStateSource = Observable.create((observer) => {
-  auth.onAuthStateChanged(observer.next.bind(observer));
-}).switchMap((user) => {
-  if (isNull(user)) {
-    return Observable.of(null);
-  }
-
-  return Observable.fromPromise(userCredentialForUserData(user));
-});
-
-const [logOutSource, logInSource] = loginStateSource.skip(1).partition(isNull);
+/* eslint-disable promise/prefer-await-to-callbacks */
+export function onAuthStateChanged(callback) {
+  const unsubscribe = auth.onAuthStateChanged(async(user) => {
+    if (isNull(user)) {
+      callback({user, credential: null});
+    } else {
+      const userCredential = await userCredentialForUserData(user);
+      callback(userCredential);
+    }
+  });
+  return unsubscribe;
+}
+/* eslint-enable promise/prefer-await-to-callbacks */
 
 function workspace(uid) {
   return database.ref(`workspaces/${uid}`);
@@ -96,32 +97,6 @@ async function userCredentialForUserData(user) {
   return {user, credential, additionalUserInfo};
 }
 
-export async function getInitialUserState() {
-  const userCredential = await oneAuth();
-
-  if (!isNull(userCredential)) {
-    if (isNull(userCredential.credential)) {
-      await auth.signOut();
-      return null;
-    }
-
-    if (userCredential.user.uid !== getSessionUid()) {
-      await auth.signOut();
-      return null;
-    }
-  }
-
-  return userCredential;
-}
-
-export function onSignedIn(handler) {
-  logInSource.subscribe(handler);
-}
-
-export function onSignedOut(handler) {
-  logOutSource.subscribe(handler);
-}
-
 export async function signIn() {
   const userCredential = await auth.signInWithPopup(githubAuthProvider);
   await saveUserCredential(userCredential);
@@ -163,18 +138,17 @@ export function startSessionHeartbeat() {
   setInterval(setSessionUid, 1000);
 }
 
-function oneAuth() {
-  return loginStateSource.first().toPromise();
-}
-
-function getSessionUid() {
+export function getSessionUid() {
   return Cookies.get(VALID_SESSION_UID_COOKIE);
 }
 
 export function setSessionUid() {
-  Cookies.set(
-    VALID_SESSION_UID_COOKIE,
-    get(auth, 'currentUser.uid'),
-    {expires: new Date(Date.now() + SESSION_TTL_MS)},
-  );
+  const uid = get(auth, 'currentUser.uid');
+  if (!isNil(uid)) {
+    Cookies.set(
+      VALID_SESSION_UID_COOKIE,
+      uid,
+      {expires: new Date(Date.now() + SESSION_TTL_MS)},
+    );
+  }
 }

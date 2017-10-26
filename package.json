@@ -156,7 +156,6 @@
     "remark-react": "^4.0.0",
     "remark-react-lowlight": "^0.7.0",
     "reselect": "^3.0.1",
-    "rxjs": "^5.0.2",
     "slowparse": "^1.1.4",
     "strip-markdown": "^3.0.0",
     "stylelint": "^8.0.0",
