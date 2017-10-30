@@ -9,6 +9,7 @@ import values from 'lodash/values';
 
 import {Project} from '../records';
 import {isPristineProject} from '../util/projectUtils';
+import {makeComponentName} from '../util/componentName';
 
 const emptyMap = new Immutable.Map();
 
@@ -78,7 +79,10 @@ export function reduceRoot(stateIn, action) {
         return unhideComponent(
           projects,
           stateIn.getIn(['currentProject', 'projectKey']),
-          `editor.${action.payload.language}`,
+          makeComponentName({
+            componentType: 'editor',
+            componentId: action.payload.language,
+          }),
           action.meta.timestamp,
         );
     }
@@ -88,6 +92,7 @@ export function reduceRoot(stateIn, action) {
 
 export default function reduceProjects(stateIn, action) {
   let state;
+  const {payload} = action;
 
   if (stateIn === undefined) {
     state = emptyMap;
@@ -97,84 +102,84 @@ export default function reduceProjects(stateIn, action) {
 
   switch (action.type) {
     case 'PROJECT_LOADED':
-      return addProject(state, action.payload.project);
+      return addProject(state, payload.project);
 
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(
-        [action.payload.projectKey, 'sources', action.payload.language],
-        action.payload.newValue,
+        [payload.projectKey, 'sources', payload.language],
+        payload.newValue,
       ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
+        [payload.projectKey, 'updatedAt'],
         action.meta.timestamp,
       );
 
     case 'PROJECT_CREATED':
-      return removePristineExcept(state, action.payload.projectKey).set(
-        action.payload.projectKey,
-        new Project({projectKey: action.payload.projectKey}),
+      return removePristineExcept(state, payload.projectKey).set(
+        payload.projectKey,
+        new Project({projectKey: payload.projectKey}),
       );
 
     case 'CHANGE_CURRENT_PROJECT':
-      return removePristineExcept(state, action.payload.projectKey);
+      return removePristineExcept(state, payload.projectKey);
 
     case 'SNAPSHOT_IMPORTED':
-      return addProject(state, action.payload);
+      return addProject(state, payload);
 
     case 'GIST_IMPORTED':
       return importGist(
         state,
-        action.payload.projectKey,
-        action.payload.gistData,
+        payload.projectKey,
+        payload.gistData,
       );
 
     case 'PROJECT_RESTORED_FROM_LAST_SESSION':
-      return addProject(state, action.payload);
+      return addProject(state, payload);
 
     case 'TOGGLE_LIBRARY':
       return state.updateIn(
-        [action.payload.projectKey, 'enabledLibraries'],
+        [payload.projectKey, 'enabledLibraries'],
         (enabledLibraries) => {
-          const {libraryKey} = action.payload;
+          const {libraryKey} = payload;
           if (enabledLibraries.has(libraryKey)) {
             return enabledLibraries.delete(libraryKey);
           }
           return enabledLibraries.add(libraryKey);
         },
       ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
+        [payload.projectKey, 'updatedAt'],
         action.meta.timestamp,
       );
 
     case 'HIDE_COMPONENT':
       return state.updateIn(
-        [action.payload.projectKey, 'hiddenUIComponents'],
+        [payload.projectKey, 'hiddenUIComponents'],
         hiddenUIComponents =>
-          hiddenUIComponents.add(action.payload.componentName),
+          hiddenUIComponents.add(makeComponentName(payload.component)),
       ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
+        [payload.projectKey, 'updatedAt'],
         action.meta.timestamp,
       );
 
     case 'UNHIDE_COMPONENT':
       return unhideComponent(
         state,
-        action.payload.projectKey,
-        action.payload.componentName,
+        payload.projectKey,
+        makeComponentName(payload.component),
         action.meta.timestamp,
       );
 
     case 'TOGGLE_COMPONENT':
       return state.updateIn(
-        [action.payload.projectKey, 'hiddenUIComponents'],
+        [payload.projectKey, 'hiddenUIComponents'],
         (hiddenUIComponents) => {
-          const {componentName} = action.payload;
+          const componentName = makeComponentName(payload.component);
           if (hiddenUIComponents.includes(componentName)) {
-            return hiddenUIComponents.remove(action.payload.componentName);
+            return hiddenUIComponents.remove(componentName);
           }
-          return hiddenUIComponents.add(action.payload.componentName);
+          return hiddenUIComponents.add(componentName);
         },
       ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
+        [payload.projectKey, 'updatedAt'],
         action.meta.timestamp,
       );
 

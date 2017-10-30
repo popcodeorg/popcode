@@ -26,20 +26,20 @@ export const toggleLibrary = createAction(
 
 export const hideComponent = createAction(
   'HIDE_COMPONENT',
-  (projectKey, componentName) => ({projectKey, componentName}),
-  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+  (projectKey, component) => ({projectKey, component}),
+  (_projectKey, _component, timestamp = Date.now()) => ({timestamp}),
 );
 
 export const unhideComponent = createAction(
   'UNHIDE_COMPONENT',
-  (projectKey, componentName) => ({projectKey, componentName}),
-  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+  (projectKey, component) => ({projectKey, component}),
+  (_projectKey, _component, timestamp = Date.now()) => ({timestamp}),
 );
 
 export const toggleComponent = createAction(
   'TOGGLE_COMPONENT',
-  (projectKey, componentName) => ({projectKey, componentName}),
-  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+  (projectKey, component) => ({projectKey, component}),
+  (_projectKey, _component, timestamp = Date.now()) => ({timestamp}),
 );
 
 export const gistImported = createAction(

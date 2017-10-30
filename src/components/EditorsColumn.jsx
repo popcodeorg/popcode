@@ -73,7 +73,10 @@ export default class EditorsColumn extends React.Component {
           language={language}
           source={currentProject.sources[language]}
           style={{flex: editorsFlex[index]}}
-          onHide={partial(onComponentHide, `editor.${language}`)}
+          onHide={partial(onComponentHide, {
+            componentType: 'editor',
+            componentId: language,
+          })}
           onRef={partial(this._storeEditorRef, index)}
         >
           <Editor
@@ -111,7 +114,10 @@ export default class EditorsColumn extends React.Component {
           key={language}
           onClick={partial(
             this.props.onComponentUnhide,
-            `editor.${language}`,
+            {
+              componentType: 'editor',
+              componentId: language,
+            },
           )}
         >
           <div className="editors__label editors__label_collapsed">

@@ -123,20 +123,20 @@ class Workspace extends React.Component {
     }
   }
 
-  _handleComponentHide(componentName) {
+  _handleComponentHide(component) {
     this.props.dispatch(
       hideComponent(
         this.props.currentProject.projectKey,
-        componentName,
+        component,
       ),
     );
   }
 
-  _handleComponentUnhide(componentName) {
+  _handleComponentUnhide(component) {
     this.props.dispatch(
       unhideComponent(
         this.props.currentProject.projectKey,
-        componentName,
+        component,
       ),
     );
   }
@@ -208,7 +208,7 @@ class Workspace extends React.Component {
   _handleClickInstructionsBar() {
     this.props.dispatch(toggleComponent(
       get(this.props, ['currentProject', 'projectKey']),
-      'instructions',
+      {componentType: 'instructions'},
     ));
   }
 

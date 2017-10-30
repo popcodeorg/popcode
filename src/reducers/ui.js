@@ -1,4 +1,5 @@
 import Immutable from 'immutable';
+import {makeComponentName} from '../util/componentName';
 import {
   updateEditorColumnFlex,
   updateWorkspaceRowFlex,
@@ -32,17 +33,22 @@ function restoreDefaultRowFlex(state) {
   return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
 }
 
-function restoreFlexOnComponentToggle(componentName, state) {
+function restoreFlexOnComponentToggle(state, component) {
+  const componentName = makeComponentName(component);
   if (componentName === 'output') {
     return restoreDefaultRowFlex(state);
   }
   return restoreDefaultColumnFlex(state);
 }
 
-function focusEditor(language, state) {
+function focusEditor(state, {language, line, column}) {
   return state.setIn(
     ['editors', 'requestedFocusedLine'],
-    Immutable.fromJS({language, line: 0}),
+    Immutable.fromJS({
+      language,
+      line,
+      column,
+    }),
   );
 }
 
@@ -73,14 +79,14 @@ export default function ui(stateIn, action) {
       return state.set('workspace', DEFAULT_WORKSPACE);
 
     case 'HIDE_COMPONENT':
-      return restoreFlexOnComponentToggle(action.payload.componentName, state);
+      return restoreFlexOnComponentToggle(state, action.payload.component);
 
     case 'UNHIDE_COMPONENT':
-      state = focusEditor(
-        action.payload.componentName.replace('editor.', ''),
-        state,
-      );
-      return restoreFlexOnComponentToggle(action.payload.componentName, state);
+      state = focusEditor(state, {
+        language: action.payload.component.componentId,
+        line: 0,
+      });
+      return restoreFlexOnComponentToggle(state, action.payload.component);
 
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(['editors', 'typing'], true);
@@ -89,13 +95,7 @@ export default function ui(stateIn, action) {
       return state.setIn(['editors', 'typing'], false);
 
     case 'FOCUS_LINE':
-      return state.setIn(
-        ['editors', 'requestedFocusedLine'],
-        new Immutable.Map().
-          set('language', action.payload.language).
-          set('line', action.payload.line).
-          set('column', action.payload.column),
-      );
+      return focusEditor(state, action.payload);
 
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.setIn(['editors', 'requestedFocusedLine'], null);
