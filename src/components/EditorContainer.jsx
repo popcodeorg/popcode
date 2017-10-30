@@ -20,6 +20,8 @@ function EditorContainer({children, language, source, style, onHide, onRef}) {
       ref={onRef}
       style={prefixAll(style)}
     >
+      {helpText}
+      {children}
       <div
         className="editors__label editors__label_expanded"
         onClick={onHide}
@@ -28,8 +30,6 @@ function EditorContainer({children, language, source, style, onHide, onRef}) {
         {' '}
         <span className="u__icon">&#xf078;</span>
       </div>
-      {helpText}
-      {children}
     </div>
   );
 }
