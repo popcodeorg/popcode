@@ -9,11 +9,15 @@ import {
   getCompiledProjects,
   getLastRefreshTimestamp,
   isCurrentProjectSyntacticallyValid,
+  isUserTyping,
 } from '../selectors';
 
 function mapStateToProps(state) {
   return {
-    isSyntacticallyValid: isCurrentProjectSyntacticallyValid(state),
+    showingErrors: (
+      !isUserTyping(state) &&
+        !isCurrentProjectSyntacticallyValid(state)
+    ),
     lastRefreshTimestamp: getLastRefreshTimestamp(state),
     compiledProjects: getCompiledProjects(state),
   };

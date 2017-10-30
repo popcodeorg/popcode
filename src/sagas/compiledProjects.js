@@ -3,7 +3,7 @@ import {
   call,
   put,
   select,
-  takeEvery,
+  throttle,
 } from 'redux-saga/effects';
 
 import every from 'lodash/every';
@@ -32,5 +32,5 @@ export function* validatedSource() {
 }
 
 export default function* () {
-  yield all([takeEvery('VALIDATED_SOURCE', validatedSource)]);
+  yield all([throttle(100, 'VALIDATED_SOURCE', validatedSource)]);
 }

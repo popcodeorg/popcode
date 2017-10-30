@@ -58,6 +58,16 @@
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 :root {
   --color-low-contrast-gray: #eee;
   --color-chrome: #e2e2e2;
@@ -115,12 +125,12 @@ body {
 
 .top-bar {
   background-color: var(--color-green);
+  transition: background-color 0.5s;
   display: flex;
   flex: 0 0 auto;
   font-size: 2vh;
   font-weight: bold;
   align-items: center;
-  transition: background-color 1s;
   padding: 0 1em;
   z-index: 2;
 }
@@ -409,8 +419,8 @@ body {
   left: 0;
   right: 0;
   z-index: 1;
-  background: white url(../images/large-spinner.gif) no-repeat center center;
-  opacity: 0.2;
+  background: white;
+  animation: 0.2s ease-in 0.1s both fadeIn;
 }
 
 /** @define preview */
