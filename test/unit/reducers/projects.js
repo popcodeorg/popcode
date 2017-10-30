@@ -217,7 +217,7 @@ tap(initProjects({1: true}), projects =>
   test('hideComponent', reducerTest(
     reducer,
     projects,
-    partial(hideComponent, '1', 'output', now),
+    partial(hideComponent, '1', {componentType: 'output'}, now),
     projects.update('1', projectIn =>
       projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
     ),
@@ -230,7 +230,7 @@ tap(initProjects({1: true}), projects =>
     projects.update('1', projectIn =>
       projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
     ),
-    partial(unhideComponent, '1', 'output', now),
+    partial(unhideComponent, '1', {componentType: 'output'}, now),
     projects,
   )),
 );
@@ -241,7 +241,7 @@ test('toggleComponent', (t) => {
   t.test('with component visible', reducerTest(
     reducer,
     projects,
-    partial(toggleComponent, '1', 'output', now),
+    partial(toggleComponent, '1', {componentType: 'output'}, now),
     projects.update('1', projectIn =>
       projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
     ),
@@ -252,7 +252,7 @@ test('toggleComponent', (t) => {
     projects.update('1', projectIn =>
       projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
     ),
-    partial(toggleComponent, '1', 'output', now),
+    partial(toggleComponent, '1', {componentType: 'output'}, now),
     projects,
   ));
 });
