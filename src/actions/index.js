@@ -42,6 +42,8 @@ import {
 } from './errors';
 
 import {
+  logIn,
+  logOut,
   userAuthenticated,
   userLoggedOut,
 } from './user';
@@ -79,4 +81,6 @@ export {
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
+  logIn,
+  logOut,
 };
