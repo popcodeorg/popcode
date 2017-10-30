@@ -13,7 +13,7 @@ import {
 import {
   gistImportError,
   gistNotFound,
-  projectLoaded,
+  projectsLoaded,
   toggleLibrary,
   updateProjectSource,
 } from '../../../src/actions/projects';
@@ -208,7 +208,7 @@ test('userAuthenticated', (assert) => {
     next().inspect(effect => assert.ok(effect.SELECT)).
     next(scenario.state).fork(saveCurrentProject, scenario.state).
     next().call(loadAllProjects, scenario.user.get('id')).
-    next(projects).put(projectLoaded(projects[0]));
+    next(projects).put(projectsLoaded(projects));
   assert.end();
 });
 

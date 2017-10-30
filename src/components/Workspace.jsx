@@ -12,17 +12,10 @@ import map from 'lodash/map';
 import {t} from 'i18next';
 import qs from 'qs';
 import {getNodeWidth, getNodeWidths} from '../util/resize';
-import {
-  onSignedIn,
-  onSignedOut,
-  startSessionHeartbeat,
-} from '../clients/firebase';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {
   updateProjectSource,
-  userAuthenticated,
-  userLoggedOut,
   hideComponent,
   unhideComponent,
   focusLine,
@@ -104,8 +97,6 @@ class Workspace extends React.Component {
       isExperimental,
       rehydratedProject,
     }));
-    this._listenForAuthChange();
-    startSessionHeartbeat();
   }
 
   componentDidMount() {
@@ -192,13 +183,6 @@ class Workspace extends React.Component {
 
   _handleEditorsDividerDrag(data) {
     this.props.dispatch(dragRowDivider(data));
-  }
-
-  _listenForAuthChange() {
-    onSignedIn(userCredential =>
-      this.props.dispatch(userAuthenticated(userCredential)),
-    );
-    onSignedOut(() => this.props.dispatch(userLoggedOut()));
   }
 
   _handleRequestedLineFocused() {

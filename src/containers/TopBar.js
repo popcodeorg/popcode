@@ -1,7 +1,4 @@
-import isError from 'lodash/isError';
-import isString from 'lodash/isString';
 import {connect} from 'react-redux';
-import Bugsnag from '../util/Bugsnag';
 import TopBar from '../components/TopBar';
 import {
   getCurrentProjectKey,
@@ -24,15 +21,12 @@ import {
   createSnapshot,
   exportGist,
   exportRepo,
-  notificationTriggered,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
+  logIn,
+  logOut,
 } from '../actions';
-import {
-  signIn,
-  signOut,
-} from '../clients/firebase';
 
 function mapStateToProps(state) {
   return {
@@ -86,36 +80,11 @@ function mapDispatchToProps(dispatch) {
     },
 
     onLogOut() {
-      signOut();
+      dispatch(logOut());
     },
 
     onStartLogIn() {
-      signIn().catch((e) => {
-        switch (e.code) {
-          case 'auth/popup-closed-by-user':
-            dispatch(notificationTriggered('user-cancelled-auth'));
-            break;
-          case 'auth/network-request-failed':
-            dispatch(notificationTriggered('auth-network-error'));
-            break;
-          case 'auth/cancelled-popup-request':
-            break;
-          case 'auth/web-storage-unsupported':
-          case 'auth/operation-not-supported-in-this-environment':
-            dispatch(
-              notificationTriggered('auth-third-party-cookies-disabled'),
-            );
-            break;
-          default:
-            dispatch(notificationTriggered('auth-error'));
-            if (isError(e)) {
-              Bugsnag.notifyException(e, e.code);
-            } else if (isString(e)) {
-              Bugsnag.notifyException(new Error(e));
-            }
-            break;
-        }
-      });
+      dispatch(logIn());
     },
 
     onToggleTextSize() {

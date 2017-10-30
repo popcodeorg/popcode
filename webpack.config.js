@@ -33,6 +33,7 @@ const babelrc = {
     'react',
     ['env', {targets, modules: false}],
   ],
+  plugins: ['syntax-dynamic-import'],
   compact: false,
   cacheDirectory: true,
   cacheIdentifier: JSON.stringify({
@@ -120,7 +121,9 @@ module.exports = (env = 'development') => {
     new InlineChunkManifestHtmlPlugin(),
   ];
 
-  if (!isTest) {
+  if (isTest) {
+    plugins.push(new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}));
+  } else {
     plugins.push(
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
@@ -164,6 +167,11 @@ module.exports = (env = 'development') => {
             {loader: 'babel-loader', options: babelrc},
             'eslint-loader',
           ],
+        },
+        {
+          test: /\.js$/,
+          use: ['source-map-loader'],
+          enforce: 'pre',
         },
         {
           test: /\.json$/,
