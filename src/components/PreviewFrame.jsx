@@ -75,17 +75,14 @@ class PreviewFrame extends React.Component {
       line = 1;
     }
 
-    this.props.onRuntimeError(
-      'javascript',
-      {
-        reason: normalizedError.type,
-        text: normalizedError.message,
-        raw: normalizedError.message,
-        row: line - 1,
-        column: data.error.column,
-        type: 'error',
-      },
-    );
+    this.props.onRuntimeError({
+      reason: normalizedError.type,
+      text: normalizedError.message,
+      raw: normalizedError.message,
+      row: line - 1,
+      column: data.error.column,
+      type: 'error',
+    });
   }
 
   _handleInfiniteLoop(line) {
