@@ -33,7 +33,7 @@ test('applicationLoaded', (t) => {
     testSaga(applicationLoadedSaga, applicationLoaded()).
       next().call(startSessionHeartbeat).
       next().take(loginState).
-      next({}).put(userLoggedOut());
+      next({userCredential: null}).put(userLoggedOut());
 
     assert.end();
   });
@@ -43,7 +43,7 @@ test('applicationLoaded', (t) => {
     testSaga(applicationLoadedSaga, applicationLoaded()).
       next().call(startSessionHeartbeat).
       next().take(loginState).
-      next(userCredential).call(getSessionUid).
+      next({userCredential}).call(getSessionUid).
       next(userCredential.user.uid).put(userAuthenticated(userCredential));
 
     assert.end();
@@ -54,7 +54,7 @@ test('applicationLoaded', (t) => {
     testSaga(applicationLoadedSaga, applicationLoaded()).
       next().call(startSessionHeartbeat).
       next().take(loginState).
-      next(userCredential).call(getSessionUid).
+      next({userCredential}).call(getSessionUid).
       next(undefined).call(signOut);
 
     assert.end();

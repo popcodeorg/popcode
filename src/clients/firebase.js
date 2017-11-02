@@ -9,19 +9,16 @@ import {auth, database, githubAuthProvider} from '../services/appFirebase';
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
 const SESSION_TTL_MS = 5 * 60 * 1000;
 
-/* eslint-disable promise/prefer-await-to-callbacks */
-export function onAuthStateChanged(callback) {
+export function onAuthStateChanged(listener) {
   const unsubscribe = auth.onAuthStateChanged(async(user) => {
     if (isNull(user)) {
-      callback({user, credential: null});
+      listener(null);
     } else {
-      const userCredential = await userCredentialForUserData(user);
-      callback(userCredential);
+      listener(await userCredentialForUserData(user));
     }
   });
   return unsubscribe;
 }
-/* eslint-enable promise/prefer-await-to-callbacks */
 
 function workspace(uid) {
   return database.ref(`workspaces/${uid}`);
