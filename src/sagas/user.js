@@ -20,8 +20,8 @@ export function* applicationLoaded() {
 }
 
 function* handleInitialAuth() {
-  const userCredential = yield take(loginState);
-  if (isNil(userCredential.user)) {
+  const {userCredential} = yield take(loginState);
+  if (isNil(userCredential)) {
     yield put(userLoggedOut());
   } else {
     if (isNil(userCredential.credential)) {
@@ -41,8 +41,8 @@ function* handleInitialAuth() {
 
 function* handleAuthChange() {
   while (true) {
-    const userCredential = yield take(loginState);
-    if (isNil(userCredential.user)) {
+    const {userCredential} = yield take(loginState);
+    if (isNil(userCredential)) {
       yield put(userLoggedOut());
     } else {
       yield put(userAuthenticated(userCredential));
