@@ -150,7 +150,7 @@
     "redux-actions": "^2.2.1",
     "redux-immutable": "^4.0.0",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^0.15.3",
+    "redux-saga": "^0.16.0",
     "redux-saga-debounce-effect": "^0.2.2",
     "remark": "^8.0.0",
     "remark-react": "^4.0.0",
