@@ -196,6 +196,9 @@ module.exports = (env = 'development') => {
                     removeXMLNS: true,
                   },
                   {
+                    removeViewBox: false,
+                  },
+                  {
                     removeAttrs: {
                       active: true,
                       attrs: 'svg:data-name',
