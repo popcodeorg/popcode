@@ -95,9 +95,18 @@ async function userCredentialForUserData(user) {
 }
 
 export async function signIn() {
-  const userCredential = await auth.signInWithPopup(githubAuthProvider);
-  await saveUserCredential(userCredential);
-  return userCredential;
+  const originalOnerror = window.onerror;
+  window.onerror = message => message.toLowerCase().includes('network error');
+
+  try {
+    const userCredential = await auth.signInWithPopup(githubAuthProvider);
+    await saveUserCredential(userCredential);
+    return userCredential;
+  } finally {
+    setTimeout(() => {
+      window.onerror = originalOnerror;
+    });
+  }
 }
 
 export function signOut() {
