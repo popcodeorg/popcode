@@ -41,6 +41,9 @@ function errors(stateIn, action) {
     case 'GIST_IMPORTED':
       return validatingErrors;
 
+    case 'SNAPSHOT_IMPORTED':
+      return validatingErrors;
+
     case 'TOGGLE_LIBRARY':
       return validatingErrors;
 
