@@ -54,21 +54,21 @@ export default function TopBar({
 
   return (
     <div className={classnames('top-bar', modifier)}>
-      <HamburgerMenu
-        isExperimental={isExperimental}
-        isGistExportInProgress={isGistExportInProgress}
-        isOpen={openMenu === 'hamburger'}
-        isUserAuthenticated={isUserAuthenticated}
-        onClick={partial(onClickMenu, 'hamburger')}
-        onExportGist={onExportGist}
-        onExportRepo={onExportRepo}
-      />
       <div className="top-bar__logo-container">
         <Pop variant={popVariant} />
       </div>
       <div className="top-bar__wordmark-container">
         <Wordmark />
       </div>
+      <LibraryPicker
+        enabledLibraries={enabledLibraries}
+        onToggleLibrary={partial(onToggleLibrary, currentProjectKey)}
+      />
+      <SnapshotButton
+        isInProgress={isSnapshotInProgress}
+        onClick={onCreateSnapshot}
+      />
+      <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
       <div className="top-bar__spacer" />
       <NewProjectButton
         isUserAuthenticated={isUserAuthenticated}
@@ -80,15 +80,6 @@ export default function TopBar({
         projectKeys={projectKeys}
         onChangeCurrentProject={onChangeCurrentProject}
       />
-      <LibraryPicker
-        enabledLibraries={enabledLibraries}
-        onToggleLibrary={partial(onToggleLibrary, currentProjectKey)}
-      />
-      <SnapshotButton
-        isInProgress={isSnapshotInProgress}
-        onClick={onCreateSnapshot}
-      />
-      <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
       <CurrentUser
         isOpen={openMenu === 'currentUser'}
         user={currentUser}
@@ -96,6 +87,15 @@ export default function TopBar({
         onClose={partial(onCloseMenu, 'currentUser')}
         onLogOut={onLogOut}
         onStartLogIn={onStartLogIn}
+      />
+      <HamburgerMenu
+        isExperimental={isExperimental}
+        isGistExportInProgress={isGistExportInProgress}
+        isOpen={openMenu === 'hamburger'}
+        isUserAuthenticated={isUserAuthenticated}
+        onClick={partial(onClickMenu, 'hamburger')}
+        onExportGist={onExportGist}
+        onExportRepo={onExportRepo}
       />
     </div>
   );

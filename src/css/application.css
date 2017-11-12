@@ -113,14 +113,17 @@ body {
 /** @define top-bar */
 
 .top-bar {
+  align-items: center;
   background-color: var(--color-green);
+  color: rgba(0, 0, 0, 0.6);
   display: flex;
   flex: 0 0 auto;
-  font-size: 1rem;
+  font-family: sans-serif;
+  font-size: .75rem;
   font-weight: bold;
-  align-items: center;
   height: 3rem;
-  padding: 0 1em;
+  min-width: 820px;
+  padding: 0 .5rem;
   z-index: 2;
 }
 
@@ -133,31 +136,30 @@ body {
 }
 
 .top-bar__logo-container > svg {
-  height: 3em;
+  height: 3rem;
 }
 
 .top-bar__wordmark-container {
   position: relative;
-  margin-left: -0.25em;
+  margin: 0 1rem 0 .5rem;
+  width: 5rem;
+  height: 3rem;
 }
 
 .top-bar__wordmark-container > svg {
-  padding: 0 1em;
-  max-height: 1em;
-  max-width: 100%;
-  width: auto;
+  width: 100%;
+  height: 3rem;
 }
 
 .top-bar__snapshot_in-progress {
-  color: var(--color-light-gray);
+  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .25);
   cursor: progress;
 }
 
 .top-bar__avatar {
-  height: 2em;
-  border-radius: 50%;
+  height: 1.5rem;
   vertical-align: middle;
-  line-height: 1em;
+  margin-top: -2px;
 }
 
 .top-bar__username {
@@ -165,34 +167,60 @@ body {
 }
 
 .top-bar__menu-button {
-  align-self: stretch;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 0 1px;
+  align-self: center;
   box-sizing: border-box;
   cursor: pointer;
-  line-height: 3em;
-  padding: 0 0.5em;
+  height: 2rem;
+  line-height: 2rem;
+  padding: 0 .75rem;
   position: relative;
   user-select: none;
   vertical-align: middle;
+  margin-right: .5rem;
+}
+
+.top-bar__menu-button:last-child {
+  margin-right: 0;
+}
+
+.top-bar__menu-button--primary {
+  background-color: rgba(0, 0, 0, 0.25);
+  color: #fff;
+}
+
+.top-bar__menu-button--primary:hover {
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .25);
+}
+
+.top-bar__menu-button--secondary {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.top-bar__menu-button--secondary:hover {
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .25);
+}
+
+.top-bar__menu-button--tertiary:hover:not(.top-bar__menu-button_active) {
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .25);
 }
 
 .top-bar__menu-button_active {
-  background-color: white;
-  border-color: var(--color-low-contrast-gray);
+  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .25);
+}
+
+.top-bar__menu-button--projects .top-bar__menu {
+  width: 16rem;
 }
 
 .top-bar__hamburger {
-  font-size: 2em;
+  font-size: 1.2rem;
 }
 
 .top-bar__menu {
-  border: 1px solid var(--color-low-contrast-gray);
-  box-shadow: 2px 2px 2px var(--color-low-contrast-gray);
-  left: -1px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  right: 0px;
   position: absolute;
-  top: 100%;
+  top: 2.5rem;
   min-width: 100%;
   max-height: 50vh;
   max-width: 30em;
@@ -221,9 +249,12 @@ body {
   padding-right: 0.75em;
 }
 
-.top-bar__menu-item:hover,
-.top-bar__menu-item_active {
+.top-bar__menu-item:hover:not(.top-bar__menu-item_active) {
   background-color: var(--color-low-contrast-gray);
+}
+
+.top-bar__menu-item_active {
+  background-color: rgb(186, 236, 255);
   color: black;
 }
 
@@ -232,16 +263,11 @@ body {
 }
 
 .top-bar__drop-down-button {
-  padding: 0 0.5em;
+  padding-left: .25rem;
 }
 
 .top-bar__spacer {
   flex: 1 0 0;
-}
-
-.top-bar__log-in-prompt {
-  text-decoration: underline;
-  cursor: pointer;
 }
 
 /** @define instructions */
@@ -527,7 +553,8 @@ body {
 }
 
 .notification-list__notification_notice {
-  background-color: var(--color-green);
+  background-color: #00b8ff;
+  color: #fff;
 }
 
 .notification-list__dismiss {

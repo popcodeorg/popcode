@@ -9,7 +9,7 @@ export default function NewProjectButton({isUserAuthenticated, onClick}) {
 
   return (
     <div
-      className="top-bar__menu-button"
+      className="top-bar__menu-button top-bar__menu-button--primary"
       onClick={onClick}
     >
       {t('top-bar.new-project')}

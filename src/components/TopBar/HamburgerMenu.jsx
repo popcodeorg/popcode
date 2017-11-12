@@ -9,7 +9,7 @@ import HamburgerMenuButton from './HamburgerMenuButton';
 
 const HamburgerMenu = createMenu({
   name: 'hamburger',
-
+  menuClass: 'top-bar__menu-button--tertiary',
   renderItems({
     isExperimental,
     isGistExportInProgress,

@@ -10,7 +10,7 @@ export default function CurrentUserButton({user: {avatarUrl, displayName}}) {
       />
       <span className="top-bar__username">{displayName}</span>
       <span className="top-bar__drop-down-button u__icon">
-        &#xf0d7;
+        &#xf078;
       </span>
     </div>
   );

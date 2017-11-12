@@ -1,10 +1,10 @@
 {
   "top-bar": {
-    "create-snapshot": "Snapshot",
+    "create-snapshot": "Take Snapshot",
     "export-gist": "Export Gist",
     "export-repo": "Export Repo",
     "libraries": "Libraries",
-    "load-project": "My Projects",
+    "load-project": "Your Projects",
     "new-project": "New Project",
     "send-feedback": "Send Feedback",
     "session": {

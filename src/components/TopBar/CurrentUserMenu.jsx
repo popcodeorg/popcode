@@ -6,7 +6,7 @@ import CurrentUserButton from './CurrentUserButton';
 
 const CurrentUserMenu = createMenu({
   name: 'currentUser',
-
+  menuClass: 'top-bar__menu-button--tertiary',
   // eslint-disable-next-line react/prop-types
   renderItems({onLogOut}) {
     return (
