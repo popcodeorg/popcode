@@ -159,7 +159,7 @@ Lint and make sure tests pass before opening a pull request:
 $ yarn test
 ```
 
-Even if you've stopped all local processes, Chrome might still appear to be in use. Navigate to the following URLs and remove entires related to port 3000 (or whichever port you're using for local development):
+Even if you've stopped all local processes, Chrome might still appear to be in use. Navigate to the following URLs and remove entries related to port 3000 (or whichever port you're using for local development):
 chrome://appcache-internals
 chrome://serviceworker-internals
 
