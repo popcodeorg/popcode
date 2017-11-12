@@ -118,13 +118,11 @@ body {
   flex: 0 0 auto;
   font-size: 2vh;
   font-weight: bold;
-  align-items: center;
-  padding: 0 1em;
+  align-items: stretch;
   z-index: 2;
-}
-
-.top-bar_yellow {
-  background-color: var(--color-yellow);
+  min-width: 760px;
+  color: rgba(0, 0, 0, 0.8);
+  transition: background-color .2s;
 }
 
 .top-bar_red {
@@ -156,11 +154,17 @@ body {
   height: 2em;
   border-radius: 50%;
   vertical-align: middle;
-  line-height: 1em;
+  margin-right: .5em;
 }
 
-.top-bar__username {
-  margin-left: 0.5em;
+.top-bar__group {
+  display: flex;
+  flex: 0 0 auto;
+  width: 50%;
+}
+
+.top-bar__group--right {
+  justify-content: flex-end;
 }
 
 .top-bar__menu-button {
@@ -170,20 +174,37 @@ body {
   border-width: 0 1px;
   box-sizing: border-box;
   cursor: pointer;
-  line-height: 3em;
-  padding: 0 0.5em;
+  padding: 0 1.5em;
   position: relative;
   user-select: none;
-  vertical-align: middle;
+  align-items: center;
+  display: flex;
+  font-size: 12px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.top-bar__menu-button:first-child {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.top-bar__menu-button:last-child {
+  border-left: 0;
+}
+
+.top-bar__menu-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .top-bar__menu-button_active {
-  background-color: white;
-  border-color: var(--color-low-contrast-gray);
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.top-bar__menu-button_active:hover {
+  background-color: rgba(255, 255, 255, 0.75);
 }
 
 .top-bar__hamburger {
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 .top-bar__menu {
@@ -526,7 +547,8 @@ body {
 }
 
 .notification-list__notification_notice {
-  background-color: var(--color-green);
+  background-color: #00aaff;
+  color: white;
 }
 
 .notification-list__dismiss {

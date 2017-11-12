@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import partial from 'lodash/partial';
-import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
 import CurrentUser from './CurrentUser';
 import HamburgerMenu from './HamburgerMenu';
@@ -17,10 +16,10 @@ function uiVariants({validationState, isUserTyping}) {
     return {popVariant: 'neutral'};
   }
   if (validationState === 'validating') {
-    return {popVariant: 'thinking', modifier: 'top-bar_yellow'};
+    return {popVariant: 'thinking'};
   }
   if (validationState === 'validation-error' && isUserTyping) {
-    return {popVariant: 'thinking', modifier: 'top-bar_yellow'};
+    return {popVariant: 'thinking'};
   }
   return {popVariant: 'horns', modifier: 'top-bar_red'};
 }
@@ -54,49 +53,49 @@ export default function TopBar({
 
   return (
     <div className={classnames('top-bar', modifier)}>
-      <HamburgerMenu
-        isExperimental={isExperimental}
-        isGistExportInProgress={isGistExportInProgress}
-        isOpen={openMenu === 'hamburger'}
-        isUserAuthenticated={isUserAuthenticated}
-        onClick={partial(onClickMenu, 'hamburger')}
-        onExportGist={onExportGist}
-        onExportRepo={onExportRepo}
-      />
-      <div className="top-bar__logo-container">
-        <Pop variant={popVariant} />
+      <div className={classnames('top-bar__group top-bar__group')}>
+        <div className="top-bar__logo-container">
+          <Pop variant={popVariant} />
+        </div>
+        <HamburgerMenu
+          isExperimental={isExperimental}
+          isGistExportInProgress={isGistExportInProgress}
+          isOpen={openMenu === 'hamburger'}
+          isUserAuthenticated={isUserAuthenticated}
+          onClick={partial(onClickMenu, 'hamburger')}
+          onExportGist={onExportGist}
+          onExportRepo={onExportRepo}
+        />
+        <LibraryPicker
+          enabledLibraries={enabledLibraries}
+          onToggleLibrary={partial(onToggleLibrary, currentProjectKey)}
+        />
+        <SnapshotButton
+          isInProgress={isSnapshotInProgress}
+          onClick={onCreateSnapshot}
+        />
+        <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
       </div>
-      <div className="top-bar__wordmark-container">
-        <Wordmark />
+      <div className={classnames('top-bar__group top-bar__group--right')}>
+        <NewProjectButton
+          isUserAuthenticated={isUserAuthenticated}
+          onClick={onCreateNewProject}
+        />
+        <ProjectPicker
+          currentProjectKey={currentProjectKey}
+          isUserAuthenticated={isUserAuthenticated}
+          projectKeys={projectKeys}
+          onChangeCurrentProject={onChangeCurrentProject}
+        />
+        <CurrentUser
+          isOpen={openMenu === 'currentUser'}
+          user={currentUser}
+          onClick={partial(onClickMenu, 'currentUser')}
+          onClose={partial(onCloseMenu, 'currentUser')}
+          onLogOut={onLogOut}
+          onStartLogIn={onStartLogIn}
+        />
       </div>
-      <div className="top-bar__spacer" />
-      <NewProjectButton
-        isUserAuthenticated={isUserAuthenticated}
-        onClick={onCreateNewProject}
-      />
-      <ProjectPicker
-        currentProjectKey={currentProjectKey}
-        isUserAuthenticated={isUserAuthenticated}
-        projectKeys={projectKeys}
-        onChangeCurrentProject={onChangeCurrentProject}
-      />
-      <LibraryPicker
-        enabledLibraries={enabledLibraries}
-        onToggleLibrary={partial(onToggleLibrary, currentProjectKey)}
-      />
-      <SnapshotButton
-        isInProgress={isSnapshotInProgress}
-        onClick={onCreateSnapshot}
-      />
-      <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
-      <CurrentUser
-        isOpen={openMenu === 'currentUser'}
-        user={currentUser}
-        onClick={partial(onClickMenu, 'currentUser')}
-        onClose={partial(onCloseMenu, 'currentUser')}
-        onLogOut={onLogOut}
-        onStartLogIn={onStartLogIn}
-      />
     </div>
   );
 }

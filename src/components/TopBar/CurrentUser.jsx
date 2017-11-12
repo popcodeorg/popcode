@@ -12,7 +12,7 @@ export default function CurrentUser({
     return <CurrentUserMenu user={user} onLogOut={onLogOut} />;
   }
   return (
-    <div className="top-bar__current-user">
+    <div className="top-bar__current-user top-bar__menu-button">
       <span
         className="top-bar__log-in-prompt"
         onClick={onStartLogIn}
