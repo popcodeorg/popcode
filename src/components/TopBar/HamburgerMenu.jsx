@@ -9,6 +9,7 @@ import HamburgerMenuButton from './HamburgerMenuButton';
 
 const HamburgerMenu = createMenu({
   name: 'hamburger',
+
   renderItems({
     isExperimental,
     isGistExportInProgress,
