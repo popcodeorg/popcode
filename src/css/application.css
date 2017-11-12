@@ -183,25 +183,17 @@ body {
   margin-right: 0;
 }
 
+.top-bar__menu-button:hover:not(.top-bar__menu-button_active) {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+}
+
 .top-bar__menu-button_primary {
   background-color: rgba(0, 0, 0, 0.25);
   color: #fff;
 }
 
-.top-bar__menu-button_primary:hover {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
-}
-
 .top-bar__menu-button_secondary {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-}
-
-.top-bar__menu-button_secondary:hover {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
-}
-
-.top-bar__menu-button_tertiary:hover:not(.top-bar__menu-button_active) {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
 }
 
 .top-bar__menu-button_active {
