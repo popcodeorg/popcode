@@ -1,6 +1,6 @@
 {
   "top-bar": {
-    "create-snapshot": "Take Snapshot",
+    "create-snapshot": "Create Snapshot",
     "export-gist": "Export Gist",
     "export-repo": "Export Repo",
     "libraries": "Libraries",

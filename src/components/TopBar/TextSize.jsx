@@ -1,13 +1,10 @@
-import classnames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function TextSize({isLarge, onToggle}) {
   return (
     <div
-      className={classnames('top-bar__menu-button',
-        'top-bar__menu-button_tertiary',
-      )}
+      className="top-bar__menu-button top-bar__text-size"
       onClick={onToggle}
     >
       {
