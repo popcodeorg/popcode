@@ -116,9 +116,10 @@ body {
   background-color: var(--color-green);
   display: flex;
   flex: 0 0 auto;
-  font-size: 2vh;
+  font-size: 1rem;
   font-weight: bold;
   align-items: center;
+  height: 3rem;
   padding: 0 1em;
   z-index: 2;
 }
