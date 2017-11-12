@@ -9,7 +9,7 @@ export default function SnapshotButton({isInProgress, onClick}) {
       className={classnames(
         'top-bar__menu-button',
         'top-bar__snapshot',
-        'top-bar__menu-button--secondary',
+        'top-bar__menu-button_secondary',
         {'top-bar__snapshot_in-progress': isInProgress},
       )}
       onClick={onClick}

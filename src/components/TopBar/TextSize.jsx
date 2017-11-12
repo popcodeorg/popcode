@@ -6,7 +6,7 @@ export default function TextSize({isLarge, onToggle}) {
   return (
     <div
       className={classnames('top-bar__menu-button',
-        'top-bar__menu-button--tertiary',
+        'top-bar__menu-button_tertiary',
       )}
       onClick={onToggle}
     >
