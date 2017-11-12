@@ -39,16 +39,23 @@ script:
 before_deploy:
 - gulp syncFirebase
 deploy:
-  provider: s3
-  access_key_id: AKIAJY2GYDQBE4HFF32Q
-  secret_access_key:
-    secure: qqkSdpnlOM80HavspUc/S4OpohDAkbDqaCKQTw08j2/CaU0LwN335CVQhDZ4Oskgr6y5evx6LrTU0BNiDfzcMIEykokV1ZCPLuWLrHo/ZtCSIU+3ikVErY/0qZH4FdZ1h/Q1FP5gTDydP0QbXWkQsQQg1cgg2NTX4/BsTTT9nBRJeg4Gdm9ARLW0b3SGutW13tW8fuRG9YrNJs6gKZsZ6FhP1ru4T47tdsbphV1IsedZv8nU7dGnWQj67//4OpAHOi1KOm6K1CprNa35Kw7D/+n6786skbPi7Tsu7UbIVMWD+Jy1c2xtz3mqinIbyS8spzLd3kbDV+BRvIYXXHpC6B4gGhyRd+ohN+WcoDQZJha2PaOfIPfAxPhK2IKO6h+6i8Q0CK4/x4Yd8PurVHrB8KEyPrMHPa42abMTTeRLs7OAjrtM7dWucngCvW6fBqhpgp36cRDZeXLKjywkapo1/6l64fjkM+wGkYFkI5i6qzEAr0JvBrIeTDiymz1Oitf3Uio+vs4hfjXegQansq5l/mXtMdI9DfNrKm/R2zpUp1qS7i+v1MfnhAxd8NOEGYpT75sJbSVca0jgnkLXcja6+O4oRswx4maA+BTiIcwknAn6B4Rupf8U0Tnt3s/pFu6Ih6lnMo6rpeBkV7FO1Bwyv59zyxZS8Z23ec+v7+TZ/iE=
-  bucket: popcode.org
-  skip_cleanup: true
-  local-dir: dist
-  acl: public_read
-  on:
-    repo: popcodeorg/popcode
-    branch: master
+  - provider: s3
+    access_key_id: AKIAJY2GYDQBE4HFF32Q
+    secret_access_key:
+      secure: qqkSdpnlOM80HavspUc/S4OpohDAkbDqaCKQTw08j2/CaU0LwN335CVQhDZ4Oskgr6y5evx6LrTU0BNiDfzcMIEykokV1ZCPLuWLrHo/ZtCSIU+3ikVErY/0qZH4FdZ1h/Q1FP5gTDydP0QbXWkQsQQg1cgg2NTX4/BsTTT9nBRJeg4Gdm9ARLW0b3SGutW13tW8fuRG9YrNJs6gKZsZ6FhP1ru4T47tdsbphV1IsedZv8nU7dGnWQj67//4OpAHOi1KOm6K1CprNa35Kw7D/+n6786skbPi7Tsu7UbIVMWD+Jy1c2xtz3mqinIbyS8spzLd3kbDV+BRvIYXXHpC6B4gGhyRd+ohN+WcoDQZJha2PaOfIPfAxPhK2IKO6h+6i8Q0CK4/x4Yd8PurVHrB8KEyPrMHPa42abMTTeRLs7OAjrtM7dWucngCvW6fBqhpgp36cRDZeXLKjywkapo1/6l64fjkM+wGkYFkI5i6qzEAr0JvBrIeTDiymz1Oitf3Uio+vs4hfjXegQansq5l/mXtMdI9DfNrKm/R2zpUp1qS7i+v1MfnhAxd8NOEGYpT75sJbSVca0jgnkLXcja6+O4oRswx4maA+BTiIcwknAn6B4Rupf8U0Tnt3s/pFu6Ih6lnMo6rpeBkV7FO1Bwyv59zyxZS8Z23ec+v7+TZ/iE=
+    bucket: popcode.org
+    skip_cleanup: true
+    local-dir: dist
+    acl: public_read
+    on:
+      repo: popcodeorg/popcode
+      branch: master
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    local-dir: dist
+    on:
+      repo: popcodeorg/popcode
+      branch: master
 after_deploy:
 - gulp purgeCache
