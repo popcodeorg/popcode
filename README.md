@@ -152,11 +152,16 @@ This will start a local static server, and open it in your browser. The first
 pageload will be rather slow as it compiles the bundle; after you change files,
 assets are recompiled incrementally and your browser automatically reloads.
 
-When you're done, lint and make sure tests pass before opening a pull request:
+When you're done:
 
+Lint and make sure tests pass before opening a pull request:
 ```bash
 $ yarn test
 ```
+
+Even if you've stopped all local processes, Chrome might still appear to be in use. Navigate to the following URLs and remove entires related to port 3000 (or whichever port you're using for local development):
+chrome://appcache-internals
+chrome://serviceworker-internals
 
 ### Debug Mode ###
 
