@@ -189,7 +189,7 @@ body {
 }
 
 .top-bar__menu-button_primary {
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
 }
 
