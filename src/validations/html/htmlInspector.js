@@ -1,5 +1,6 @@
 import last from 'lodash/last';
 import isNull from 'lodash/isNull';
+import trim from 'lodash/trim';
 import {localizedArrayToSentence} from '../../util/arrayToSentence';
 import importLinters from '../importLinters';
 import Validator from '../Validator';
@@ -38,7 +39,36 @@ const errorMap = {
       },
     };
   },
+  'invalid-list-children': (error) => {
+    const tag = error.context.tagName.toLowerCase();
+
+    return {
+      reason: 'invalid-list-children',
+      payload: {
+        tag,
+        children: 'li',
+      },
+    };
+  },
 };
+
+function invalidListChildrenValidator(listener, reporter) {
+  listener.on('element', (elementName, domElement) => {
+    if (domElement.childNodes.length &&
+        (elementName === 'ul' || elementName === 'ol')) {
+      // Iterate over direct descendents of lists
+      for (let node = domElement.firstChild; node; node = node.nextSibling) {
+        if (node.nodeType === Node.TEXT_NODE &&
+            trim(node.textContent).length > 0) {
+          // Non-empty text node inside list should show error
+          // This is a common student mistake
+          reporter.warn('invalid-list-children', '', domElement);
+          break;
+        }
+      }
+    }
+  });
+}
 
 class HtmlInspectorValidator extends Validator {
   constructor(source) {
@@ -52,10 +82,14 @@ class HtmlInspectorValidator extends Validator {
     }
 
     const {HTMLInspector} = await importLinters();
+
+    HTMLInspector.rules.add('validate-list-children',
+      invalidListChildrenValidator);
+
     return new Promise((resolve) => {
       HTMLInspector.inspect({
         domRoot: this._doc.documentElement,
-        useRules: ['validate-element-location'],
+        useRules: ['validate-element-location', 'validate-list-children'],
         onComplete: resolve,
       });
     });

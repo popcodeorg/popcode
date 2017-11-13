@@ -143,6 +143,26 @@ test('uppercase attributes', validationTest(
   {reason: 'lower-case-attribute-name', row: htmlWithBody.offset},
 ));
 
+test('ul with child text outside <li>', validationTest(
+  htmlWithBody('<ul>Invalid to have non-empty text nodes</ul>'),
+  html,
+  {
+    reason: 'invalid-list-children',
+    row: htmlWithBody.offset,
+    payload: {tag: 'ul', children: 'li'},
+  },
+));
+
+test('ol with child text outside <li>', validationTest(
+  htmlWithBody('<ol>Invalid to have non-empty text nodes</ol>'),
+  html,
+  {
+    reason: 'invalid-list-children',
+    row: htmlWithBody.offset,
+    payload: {tag: 'ol', children: 'li'},
+  },
+));
+
 test('li not inside ul', validationTest(
   htmlWithBody('<li>Orphaned List Item</li>'),
   html,
