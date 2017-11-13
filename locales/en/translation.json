@@ -135,7 +135,7 @@
       "invalid-value": "`{{-error}}` isn't a meaningful value for this property. Double-check what values you can use here.",
       "invalid-negative-value": "This property can’t have a negative value.",
       "invalid-fractional-value": "This property needs a whole number for a value.",
-      "missing-semicolon": "Looks like you’re missing a semicolon at the end of this line.",
+      "missing-semicolon": "Looks like you’re missing a semicolon (;) at the end of this line.",
       "require-value": "Put a value for `{{-error}}` after the colon.",
       "selector-expected": "Use a comma to separate multiple tag names, classes, or IDs.",
       "unknown-property": "`{{-error}}` isn't a property that CSS understands. Double-check the name of the property that you want to use."
