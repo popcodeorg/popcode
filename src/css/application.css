@@ -119,11 +119,9 @@ body {
   display: flex;
   flex: 0 0 auto;
   font-family: sans-serif;
-  font-size: 0.75rem;
+  font-size: 1.6vh;
   font-weight: bold;
-  height: 3rem;
-  min-width: 830px;
-  padding: 0 0.5rem;
+  padding: 1vh;
   z-index: 2;
 }
 
@@ -135,31 +133,33 @@ body {
   background-color: var(--color-red);
 }
 
-.top-bar__logo-container > svg {
-  height: 3rem;
+.top-bar__logo-container {
+  margin-right: 0.2em;
+  min-width: 1.6em;
+  transform: scale(1.4);
+  width: 1.6em;
 }
 
 .top-bar__wordmark-container {
   position: relative;
-  margin: 0 1rem 0 0.5rem;
-  width: 5rem;
-  height: 3rem;
+  margin: 0 1em 0 0.5em;
+  min-width: 6.5em;
+  width: 6.5em;
 }
 
 .top-bar__wordmark-container > svg {
   width: 100%;
-  height: 3rem;
+  height: 100%;
 }
 
 .top-bar__snapshot_in-progress {
-  box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+  opacity: 0.5;
   cursor: progress;
 }
 
 .top-bar__avatar {
-  height: 1.5rem;
+  height: 1.8em;
   vertical-align: middle;
-  margin-top: -2px;
 }
 
 .top-bar__username {
@@ -170,13 +170,14 @@ body {
   align-self: center;
   box-sizing: border-box;
   cursor: pointer;
-  height: 2rem;
-  line-height: 2rem;
-  padding: 0 0.75rem;
+  height: 2.6em;
+  line-height: 2.6em;
+  padding: 0 1em;
   position: relative;
   user-select: none;
   vertical-align: middle;
-  margin-right: 0.5rem;
+  margin-right: 0.5em;
+  white-space: nowrap;
 }
 
 .top-bar__menu-button:last-child {
@@ -193,11 +194,11 @@ body {
 }
 
 .top-bar__menu-button_secondary {
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 0 0.08em rgba(0, 0, 0, 0.1);
 }
 
 .top-bar__menu-button_active {
-  box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 0.08em 0.2em 0 rgba(0, 0, 0, 0.25);
 }
 
 .top-bar__menu-button_projects .top-bar__menu {
@@ -205,14 +206,14 @@ body {
 }
 
 .top-bar__hamburger {
-  font-size: 1.2rem;
+  font-size: 1.5em;
 }
 
 .top-bar__menu {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
   right: 0;
   position: absolute;
-  top: 2.5rem;
+  top: 3.25em;
   min-width: 100%;
   max-height: 50vh;
   max-width: 30em;
@@ -255,7 +256,7 @@ body {
 }
 
 .top-bar__drop-down-button {
-  padding-left: 0.25rem;
+  padding-left: 0.5em;
 }
 
 .top-bar__spacer {
