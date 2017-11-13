@@ -115,7 +115,7 @@ body {
 .top-bar {
   align-items: center;
   background-color: var(--color-green);
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.75);
   display: flex;
   flex: 0 0 auto;
   font-family: sans-serif;
