@@ -7,7 +7,7 @@ export default function ProjectPickerButton() {
       {t('top-bar.load-project')}
       {' '}
       <span className="u__icon top-bar__drop-down-button">
-        &#xf078;
+        &#xf0d7;
       </span>
     </span>
   );

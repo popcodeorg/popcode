@@ -7,7 +7,7 @@ export default function LibraryPickerButton() {
       {t('top-bar.libraries')}
       {' '}
       <span className="top-bar__drop-down-button u__icon">
-        &#xf078;
+        &#xf0d7;
       </span>
     </span>
   );
