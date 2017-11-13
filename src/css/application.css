@@ -341,7 +341,7 @@ body {
 }
 
 .editors__label {
-  background-color: var(--color-low-contrast-gray);
+  background-color: #e2e2e2;
   color: var(--color-dark-gray);
   cursor: pointer;
   font-family: 'Roboto';
@@ -443,7 +443,7 @@ body {
   font-weight: bold;
   line-height: 1.5em;
   vertical-align: middle;
-  background-color: var(--color-low-contrast-gray);
+  background-color: #e2e2e2;
   z-index: 2;
 }
 
