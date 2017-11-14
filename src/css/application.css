@@ -158,6 +158,7 @@ body {
 }
 
 .top-bar__avatar {
+  border-radius: 0.2em;
   height: 1.8em;
   vertical-align: middle;
 }
@@ -168,6 +169,7 @@ body {
 
 .top-bar__menu-button {
   align-self: center;
+  border-radius: 0.2em;
   box-sizing: border-box;
   cursor: pointer;
   height: 2.8em;
