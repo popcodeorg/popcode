@@ -187,21 +187,23 @@ body {
   margin-right: 0;
 }
 
-.top-bar__menu-button:hover:not(.top-bar__menu-button_active) {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+.top-bar__menu-button:hover {
+  box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3);
+}
+
+.top-bar__menu-button_primary,
+.top-bar__menu-button_secondary {
+  box-shadow: 0 0 0.2em 0 rgba(0, 0, 0, 0.3);
 }
 
 .top-bar__menu-button_primary {
   background-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 0 0.08em rgba(0, 0, 0, 0.1);
 }
 
-.top-bar__menu-button_secondary {
-  box-shadow: inset 0 0 0 0.08em rgba(0, 0, 0, 0.1);
-}
-
-.top-bar__menu-button_active {
-  box-shadow: inset 0 0.08em 0.2em 0 rgba(0, 0, 0, 0.25);
+.top-bar__menu-button_active,
+.top-bar__menu-button_active:hover,
+.top-bar__menu-button:active {
+  box-shadow: inset 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3);
 }
 
 .top-bar__menu_project-picker {
