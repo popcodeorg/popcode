@@ -213,6 +213,7 @@ for all the sordid details.
 * [Tim Miller](https://github.com/gangstertim)
 * [Bruno Garcia](http://twitter.com/b_garcia)
 * [Cory Etzkorn](http://www.coryetzkorn.com/)
+* [Nick Volpe](https://github.com/iamnickvolpe)
 * [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
 * Logo design, "Pop" concept, and branding elements by the team at
   [Red Peak](http://redpeakgroup.com): Andrew Haug, Aya Kawabata, Jieun Lee,

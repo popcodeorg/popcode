@@ -345,7 +345,7 @@ body {
   color: var(--color-dark-gray);
   cursor: pointer;
   font-family: 'Roboto';
-  font-size: 14px;
+  font-size: 2vh;
   padding: 0.5em;
   text-align: right;
   user-select: none;
@@ -362,13 +362,13 @@ body {
 .editors__column-divider {
   background-color: var(--color-light-gray);
   cursor: ew-resize;
-  min-width: 4px;
+  width: 0.5vh;
 }
 
 .editors__row-divider {
   background-color: var(--color-light-gray);
   cursor: ns-resize;
-  min-height: 4px;
+  height: 0.5vh;
 }
 
 .editors__help-text {
@@ -423,7 +423,7 @@ body {
   left: 0;
   position: absolute;
   right: 0;
-  top: 1.5em;
+  top: 4.4vh;
   z-index: 0;
 }
 
@@ -434,14 +434,15 @@ body {
 }
 
 .preview__title-bar {
+  font-size: 2.2vh;
+  height: 2.4vh;
   top: 0;
   left: 0;
   right: 0;
+  padding: 1vh;
   position: absolute;
   text-align: center;
-  height: 1.5em;
   font-weight: bold;
-  line-height: 1.5em;
   vertical-align: middle;
   background-color: #e2e2e2;
   z-index: 2;
