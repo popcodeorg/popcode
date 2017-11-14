@@ -120,7 +120,6 @@ body {
   color: rgba(0, 0, 0, 0.75);
   display: flex;
   flex: 0 0 auto;
-  font-family: sans-serif;
   font-size: 1.7vh;
   font-weight: bold;
   padding: 1vh;
@@ -136,9 +135,9 @@ body {
 }
 
 .top-bar__logo-container {
-  margin-right: 0.2em;
+  margin: 0 0.4em 0 0.2em;
   min-width: 1.6em;
-  transform: scale(1.4);
+  transform: scale(1.8);
   width: 1.6em;
 }
 
@@ -193,8 +192,8 @@ body {
 }
 
 .top-bar__menu-button_primary {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #fff;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 0.08em rgba(0, 0, 0, 0.1);
 }
 
 .top-bar__menu-button_secondary {
