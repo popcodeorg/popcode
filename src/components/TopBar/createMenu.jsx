@@ -70,7 +70,9 @@ export default function createMenu({
       const menu = isOpen ?
         (
           <div
-            className="top-bar__menu"
+            className={classnames('top-bar__menu',
+              menuClass,
+            )}
             onClick={preventClickthrough}
           >
             {renderItems(props)}
@@ -81,7 +83,6 @@ export default function createMenu({
         <div
           className={classnames(
             'top-bar__menu-button',
-            menuClass,
             {'top-bar__menu-button_active': isOpen},
           )}
           onClick={onToggle}

@@ -67,6 +67,8 @@
   --color-yellow: #ffd100;
   --color-red: #ff5e4f;
   --color-purple: #f0f;
+  --color-low-contrast-blue: #baecff;
+  --color-blue: #00b8ff;
 }
 
 body {
@@ -203,7 +205,7 @@ body {
   box-shadow: inset 0 0.08em 0.2em 0 rgba(0, 0, 0, 0.25);
 }
 
-.top-bar__menu-button_projects .top-bar__menu {
+.top-bar__menu_project-picker {
   width: 16rem;
 }
 
@@ -212,6 +214,7 @@ body {
 }
 
 .top-bar__menu {
+  border-radius: 0.2em;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
   right: 0;
   position: absolute;
@@ -249,7 +252,7 @@ body {
 }
 
 .top-bar__menu-item_active {
-  background-color: rgb(186, 236, 255);
+  background-color: var(--color-low-contrast-blue);
   color: black;
 }
 
@@ -549,8 +552,8 @@ body {
 }
 
 .notification-list__notification_notice {
-  background-color: #00b8ff;
-  color: #fff;
+  background-color: var(--color-blue);
+  color: white;
 }
 
 .notification-list__dismiss {
