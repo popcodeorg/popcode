@@ -8,6 +8,7 @@ import createMenu, {MenuItem} from './createMenu';
 import LibraryPickerButton from './LibraryPickerButton';
 
 const LibraryPicker = createMenu({
+  menuClass: 'top-bar__menu_library-picker',
   name: 'libraryPicker',
 
   renderItems({enabledLibraries, onToggleLibrary}) {
