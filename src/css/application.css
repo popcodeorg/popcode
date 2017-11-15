@@ -445,7 +445,7 @@ body {
   text-align: center;
   font-weight: bold;
   vertical-align: middle;
-  background-color: var(--color-medium-contrast-gray);
+  background-color: var(--color-chrome);
   z-index: 2;
 }
 
