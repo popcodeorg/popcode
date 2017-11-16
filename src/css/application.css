@@ -60,6 +60,7 @@
 
 :root {
   --color-low-contrast-gray: #eee;
+  --color-chrome: #e2e2e2;
   --color-light-gray: #aaa;
   --color-gray: #666;
   --color-dark-gray: #444;
@@ -341,7 +342,7 @@ body {
 }
 
 .editors__label {
-  background-color: var(--color-low-contrast-gray);
+  background-color: var(--color-chrome);
   color: var(--color-dark-gray);
   cursor: pointer;
   font-family: 'Roboto';
@@ -444,7 +445,7 @@ body {
   text-align: center;
   font-weight: bold;
   vertical-align: middle;
-  background-color: var(--color-low-contrast-gray);
+  background-color: var(--color-chrome);
   z-index: 2;
 }
 
