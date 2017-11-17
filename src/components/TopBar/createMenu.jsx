@@ -70,9 +70,7 @@ export default function createMenu({
       const menu = isOpen ?
         (
           <div
-            className={classnames('top-bar__menu',
-              menuClass,
-            )}
+            className={classnames('top-bar__menu', menuClass)}
             onClick={preventClickthrough}
           >
             {renderItems(props)}
