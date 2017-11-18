@@ -6,6 +6,7 @@ import {
   popOutProject as popOutProjectSaga,
   exportRepo as exportRepoSaga,
 } from '../../../src/sagas/ui';
+import {getCurrentProject} from '../../../src/selectors';
 import {userDoneTyping, popOutProject} from '../../../src/actions/ui';
 import {
   gistExported,
@@ -74,10 +75,11 @@ test('exportGist', (t) => {
 test('popOutProject', (assert) => {
   const mockWindow = {closed: false, close() { }};
   const project = {};
-  const preview = '<html></html>';
-  testSaga(popOutProjectSaga, popOutProject(project)).
-    next().call(generatePreview, project).
-    next(preview).call(openWindowWithContent, preview).
+  const preview = {src: '<html></html>'};
+  testSaga(popOutProjectSaga, popOutProject()).
+    next().select(getCurrentProject).
+    next(project).call(generatePreview, project).
+    next({source: preview}).call(openWindowWithContent, preview).
     next(mockWindow).isDone();
   assert.end();
 });

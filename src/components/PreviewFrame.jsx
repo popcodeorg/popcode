@@ -13,9 +13,12 @@ const sandboxOptions = [
   'allow-top-navigation',
 ].join(' ');
 
+let nextId = 1;
+
 class PreviewFrame extends React.Component {
   constructor() {
     super();
+    this._frameName = `preview-frame-${nextId++}`;
     bindAll(this, '_onMessage', '_handleInfiniteLoop');
   }
 
@@ -23,17 +26,12 @@ class PreviewFrame extends React.Component {
     window.addEventListener('message', this._onMessage);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.src !== this.props.src;
+  shouldComponentUpdate() {
+    return false;
   }
 
   componentWillUnmount() {
     window.removeEventListener('message', this._onMessage);
-  }
-
-  _saveFrame(frame) {
-    this.frame = frame;
-    this._writeFrameContents(this.props.src);
   }
 
   _runtimeErrorLineOffset() {
@@ -56,6 +54,10 @@ class PreviewFrame extends React.Component {
     }
 
     if (data.type !== 'org.popcode.error') {
+      return;
+    }
+
+    if (data.windowName !== this._frameName) {
       return;
     }
 
@@ -97,6 +99,16 @@ class PreviewFrame extends React.Component {
     });
   }
 
+  _attachToFrame(frame) {
+    if (!frame) {
+      return;
+    }
+
+    frame.addEventListener('load', () => {
+      frame.classList.add('preview__frame_loaded');
+    });
+  }
+
   render() {
     let srcProps;
 
@@ -110,6 +122,8 @@ class PreviewFrame extends React.Component {
       <div className="preview__frame-container">
         <iframe
           className="preview__frame"
+          name={this._frameName}
+          ref={this._attachToFrame}
           sandbox={sandboxOptions}
           {...srcProps}
         />

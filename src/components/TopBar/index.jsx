@@ -17,7 +17,7 @@ function uiVariants({validationState, isUserTyping}) {
     return {popVariant: 'neutral'};
   }
   if (validationState === 'validating') {
-    return {popVariant: 'thinking', modifier: 'top-bar_yellow'};
+    return {popVariant: 'neutral', modifier: 'top-bar_yellow'};
   }
   if (validationState === 'validation-error' && isUserTyping) {
     return {popVariant: 'thinking', modifier: 'top-bar_yellow'};
