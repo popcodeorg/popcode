@@ -27,6 +27,15 @@ export default function compiledProjects(stateIn, action) {
         })),
         2,
       );
+
+    case 'USER_DONE_TYPING':
+      return trimRight(state, 1);
+
+    case 'VALIDATED_SOURCE':
+      if (action.payload.errors.length) {
+        return initialState;
+      }
+      return state;
   }
 
   return state;
