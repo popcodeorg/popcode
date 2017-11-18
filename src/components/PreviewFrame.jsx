@@ -19,7 +19,7 @@ class PreviewFrame extends React.Component {
   constructor() {
     super();
     this._frameName = `preview-frame-${nextId++}`;
-    bindAll(this, '_onMessage', '_handleInfiniteLoop');
+    bindAll(this, '_attachToFrame', '_handleInfiniteLoop', '_onMessage');
   }
 
   componentDidMount() {
@@ -104,20 +104,18 @@ class PreviewFrame extends React.Component {
       return;
     }
 
-    frame.addEventListener('load', () => {
-      frame.classList.add('preview__frame_loaded');
-    });
+    const {src} = this.props;
+
+    if (src) {
+      frame.addEventListener('load', () => {
+        frame.classList.add('preview__frame_loaded');
+      });
+
+      frame.srcdoc = src;
+    }
   }
 
   render() {
-    let srcProps;
-
-    if (this.props.src) {
-      srcProps = {srcDoc: this.props.src};
-    } else {
-      srcProps = {src: 'about:blank'};
-    }
-
     return (
       <div className="preview__frame-container">
         <iframe
@@ -125,7 +123,7 @@ class PreviewFrame extends React.Component {
           name={this._frameName}
           ref={this._attachToFrame}
           sandbox={sandboxOptions}
-          {...srcProps}
+          src="about:blank"
         />
       </div>
     );
