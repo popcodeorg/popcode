@@ -87,6 +87,11 @@
   --font-size-menu: 1.7vh;
 }
 
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
 }
