@@ -83,6 +83,8 @@
   --size-rounded-corners: 0.2em;
   --size-top-bar: 4em;
   --size-top-bar-menu-button: 2.8em;
+  --box-shadow: 0 0 0.1em 0 rgba(0, 0, 0, 0.5);
+  --font-size-menu: 1.7vh;
 }
 
 body {
@@ -131,12 +133,12 @@ body {
 .top-bar {
   align-items: center;
   background-color: var(--color-green);
-  box-shadow: 0 0 0.1em 0 rgba(0, 0, 0, 0.5);
+  box-shadow: var(--box-shadow);
   color: rgba(0, 0, 0, 0.75);
   transition: background-color 0.5s;
   display: flex;
   flex: 0 0 auto;
-  font-size: 1.7vh;
+  font-size: var(--font-size-menu);
   font-weight: bold;
   height: var(--size-top-bar);
   padding: 0 0.5em;
@@ -387,17 +389,18 @@ body {
   color: var(--color-dark-gray);
   cursor: pointer;
   font-family: 'Roboto';
-  font-size: 2vh;
-  padding: 0.5em;
+  font-size: var(--font-size-menu);
+  padding: 0.5em 1em;
   text-align: right;
   user-select: none;
 }
 
 .editors__label_expanded {
+  background-color: rgba(226, 226, 226, 0.9);
+  box-shadow: var(--box-shadow);
   position: absolute;
   right: 0;
   top: 0;
-  width: 8em;
   z-index: 1;
 }
 
@@ -482,6 +485,7 @@ body {
 }
 
 .preview__title-bar {
+  box-shadow: var(--box-shadow);
   font-size: 2.2vh;
   height: 2.4vh;
   top: 0;
