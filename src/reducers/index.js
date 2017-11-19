@@ -6,6 +6,7 @@ import currentProject from './currentProject';
 import errors from './errors';
 import ui from './ui';
 import clients from './clients';
+import compiledProjects from './compiledProjects';
 
 const reduceRoot = combineReducers({
   user,
@@ -14,6 +15,7 @@ const reduceRoot = combineReducers({
   errors,
   ui,
   clients,
+  compiledProjects,
 });
 
 export default reduceReducers(

@@ -1,10 +1,10 @@
 {
   "top-bar": {
-    "create-snapshot": "Snapshot",
+    "create-snapshot": "Create Snapshot",
     "export-gist": "Export Gist",
     "export-repo": "Export Repo",
     "libraries": "Libraries",
-    "load-project": "My Projects",
+    "load-project": "Your Projects",
     "new-project": "New Project",
     "send-feedback": "Send Feedback",
     "session": {
@@ -86,7 +86,7 @@
       "attribute-value": "Every attribute needs a value.\nTry: `myattribute=\"myvalue\"`",
       "doctype": "The first line of your HTML should always be:\n`<!DOCTYPE html>`",
       "duplicated-id": "You can't use the id \"{{-id}}\" more than once in your HTML",
-      "img-src": "`<img>` tags need a `src` attribute, with the URL of the image you want to display.\nTry: `<img src=\"http://coolimages.com/image.jpg\">`",
+      "img-src": "`<img>` tags need a `src` attribute, with the URL of the image you want to display.",
       "deprecated-tag": {
         "b": "You shouldn't use the `<b>` tag. Use the `<strong>` tag or the CSS `font-weight` property instead",
         "big": "You shouldn't use the `<big>` tag. Use the CSS `font-size` property instead",

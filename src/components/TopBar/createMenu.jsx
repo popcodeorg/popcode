@@ -38,6 +38,7 @@ export default function createMenu({
   isVisible = constant(true),
   renderItems,
   name,
+  menuClass,
 }) {
   function mapStateToProps(state) {
     const isOpen = getOpenTopBarMenu(state) === name;
@@ -69,7 +70,7 @@ export default function createMenu({
       const menu = isOpen ?
         (
           <div
-            className="top-bar__menu"
+            className={classnames('top-bar__menu', menuClass)}
             onClick={preventClickthrough}
           >
             {renderItems(props)}

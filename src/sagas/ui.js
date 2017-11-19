@@ -1,6 +1,7 @@
-import {all, call, put, take, takeEvery} from 'redux-saga/effects';
+import {all, call, put, select, take, takeEvery} from 'redux-saga/effects';
 import {debounceFor} from 'redux-saga-debounce-effect';
 import {userDoneTyping as userDoneTypingAction} from '../actions/ui';
+import {getCurrentProject} from '../selectors';
 import {
   gistExportDisplayed,
   gistExportNotDisplayed,
@@ -45,9 +46,10 @@ export function* exportGist() {
   );
 }
 
-export function* popOutProject({payload: project}) {
-  const preview = yield call(generatePreview, project);
-  yield call(openWindowWithContent, preview);
+export function* popOutProject() {
+  const project = yield select(getCurrentProject);
+  const {source} = yield call(generatePreview, project);
+  yield call(openWindowWithContent, source);
 }
 
 export function* exportRepo() {
