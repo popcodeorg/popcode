@@ -80,7 +80,9 @@
   --color-purple: #f0f;
   --color-low-contrast-blue: #baecff;
   --color-blue: #00b8ff;
-  --rounded-corners: 0.2em;
+  --size-rounded-corners: 0.2em;
+  --size-top-bar: 4em;
+  --size-top-bar-menu-button: 2.8em;
 }
 
 body {
@@ -136,7 +138,7 @@ body {
   flex: 0 0 auto;
   font-size: 1.7vh;
   font-weight: bold;
-  height: 4em;
+  height: var(--size-top-bar);
   padding: 0 0.5em;
   z-index: 2;
 }
@@ -167,7 +169,7 @@ body {
 }
 
 .top-bar__avatar {
-  border-radius: var(--rounded-corners);
+  border-radius: var(--size-rounded-corners);
   height: 1.8em;
   vertical-align: middle;
 }
@@ -177,11 +179,11 @@ body {
 }
 
 .top-bar__menu-button {
-  border-radius: var(--rounded-corners);
+  border-radius: var(--size-rounded-corners);
   box-sizing: border-box;
   cursor: pointer;
-  height: 2.8em;
-  line-height: 2.8em;
+  height: var(--size-top-bar-menu-button);
+  line-height: var(--size-top-bar-menu-button);
   padding: 0 1em;
   position: relative;
   user-select: none;
@@ -218,10 +220,10 @@ body {
 }
 
 .top-bar__menu {
-  border-radius: var(--rounded-corners);
+  border-radius: var(--size-rounded-corners);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
   position: absolute;
-  top: 3.4em;
+  top: calc(var(--size-top-bar-menu-button) + (var(--size-top-bar) - var(--size-top-bar-menu-button)) / 2);
   min-width: 100%;
   max-height: 50vh;
   max-width: 30em;
