@@ -78,13 +78,13 @@
   --color-yellow: #ffd100;
   --color-red: #ff5e4f;
   --color-purple: #f0f;
-  --box-shadow: 0 0 0.1em 0 rgba(0, 0, 0, 0.5);
-  --font-size-menu: 1.7vh;
   --color-low-contrast-blue: #baecff;
   --color-blue: #00b8ff;
   --size-rounded-corners: 0.2em;
   --size-top-bar: 4em;
   --size-top-bar-menu-button: 2.8em;
+  --box-shadow: 0 0 0.1em 0 rgba(0, 0, 0, 0.5);
+  --font-size-menu: 1.7vh;
 }
 
 body {
