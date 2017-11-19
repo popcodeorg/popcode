@@ -18,6 +18,12 @@ export default function compiledProjects(stateIn, action) {
   }
 
   switch (action.type) {
+    case 'PROJECT_CREATED':
+      return initialState;
+
+    case 'CHANGE_CURRENT_PROJECT':
+      return initialState;
+
     case 'PROJECT_COMPILED':
       return trimRight(
         state.push(new CompiledProject({
