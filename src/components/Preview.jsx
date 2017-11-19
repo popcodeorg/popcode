@@ -1,5 +1,4 @@
 import get from 'lodash/get';
-import {OrderedMap} from 'immutable';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import React from 'react';
@@ -7,8 +6,10 @@ import PreviewFrame from './PreviewFrame';
 
 export default function Preview({
   compiledProjects,
-  consoleInputs,
+  consoleEntries,
   showingErrors,
+  onConsoleError,
+  onConsoleValue,
   onPopOutProject,
   onRefreshClick,
   onRuntimeError,
@@ -19,13 +20,12 @@ export default function Preview({
 
   const projectFrames = compiledProjects.map(({source, timestamp}, key) => (
     <PreviewFrame
-      consoleInputs={
-        key === compiledProjects.keySeq().last() ?
-          consoleInputs :
-          new OrderedMap()
-      }
+      consoleEntries={consoleEntries}
+      isActive={key === compiledProjects.keySeq().last()}
       key={timestamp}
       src={source}
+      onConsoleError={onConsoleError}
+      onConsoleValue={onConsoleValue}
       onRuntimeError={onRuntimeError}
     />
   ));
@@ -53,8 +53,10 @@ export default function Preview({
 
 Preview.propTypes = {
   compiledProjects: ImmutablePropTypes.iterable.isRequired,
-  consoleInputs: ImmutablePropTypes.iterable.isRequired,
+  consoleEntries: ImmutablePropTypes.iterable.isRequired,
   showingErrors: PropTypes.bool.isRequired,
+  onConsoleError: PropTypes.func.isRequired,
+  onConsoleValue: PropTypes.func.isRequired,
   onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,

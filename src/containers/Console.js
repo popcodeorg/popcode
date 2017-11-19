@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import Console from '../components/Console';
 import {getConsoleHistory} from '../selectors';
-import {evaluateConsoleInput} from '../actions';
+import {evaluateConsoleEntry} from '../actions';
 
 function mapStateToProps(state) {
   return {
@@ -12,7 +12,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onInput(input) {
-      dispatch(evaluateConsoleInput(input));
+      dispatch(evaluateConsoleEntry(input));
     },
   };
 }

@@ -53,10 +53,14 @@ import {
 } from './compiledProjects';
 
 import {
-  evaluateConsoleInput,
+  consoleErrorProduced,
+  consoleValueProduced,
+  evaluateConsoleEntry,
 } from './console';
 
 export {
+  consoleValueProduced,
+  consoleErrorProduced,
   createProject,
   createSnapshot,
   changeCurrentProject,
@@ -91,6 +95,6 @@ export {
   closeTopBarMenu,
   logIn,
   logOut,
-  evaluateConsoleInput,
+  evaluateConsoleEntry,
   projectCompiled,
 };

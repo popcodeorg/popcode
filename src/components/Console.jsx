@@ -1,11 +1,9 @@
-/* eslint-disable react/no-direct-mutation-state */
-/* eslint-disable react/no-set-state */
-
 import ACE from 'brace';
 import bindAll from 'lodash/bindAll';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import ConsoleEntry from './ConsoleEntry';
 
 function createSessionWithoutWorker() {
   const session = ACE.createEditSession('', null);
@@ -18,9 +16,6 @@ export default class Console extends Component {
   constructor() {
     super();
     bindAll(this, '_handleInput');
-    this.state = {
-      history: [],
-    };
   }
 
   _handleInput(containerElement) {
@@ -46,7 +41,7 @@ export default class Console extends Component {
 
       session.on('change', ({action, lines}) => {
         if (action === 'insert' && lines.length === 2) {
-          onInput(this._editor.getValue());
+          onInput(this._editor.getValue().replace('\n', ''));
           this._editor.setValue('', 0);
         }
       });
@@ -54,16 +49,14 @@ export default class Console extends Component {
   }
 
   render() {
-    const {history} = this.state;
+    const {history} = this.props;
 
     return (
       <div className="console output__item">
-        {history.map(({command, output}) => (
-          <div className="console__iteration" key={Math.random()}>
-            <div className="console__command">{command}</div>
-            <div className="console__output">=&gt; {output} </div>
-          </div>
-        ))}
+        {history.map((entry, key) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <ConsoleEntry entry={entry} key={key} />
+        )).valueSeq()}
         <div className="console__input" ref={this._handleInput} />
       </div>
     );

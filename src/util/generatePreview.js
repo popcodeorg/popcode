@@ -30,7 +30,7 @@ const errorHandlerScript = `(${function() {
     window.parent.postMessage(JSON.stringify({
       type: 'org.popcode.error',
       windowName: window.name,
-      error: {
+      payload: {
         name,
         message,
         line,
@@ -60,11 +60,13 @@ const messageHandlerScript = `(${function() {
       const value = globalEval(expression);
       window.parent.postMessage(JSON.stringify({
         type: 'org.popcode.console.value',
+        windowName: window.name,
         payload: {key, value},
       }), '*');
     } catch (error) {
       window.parent.postMessage(JSON.stringify({
         type: 'org.popcode.console.error',
+        windowName: window.name,
         payload: {key, error: {name: error.name, message: error.message}},
       }), '*');
     }

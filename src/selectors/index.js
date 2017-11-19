@@ -11,7 +11,6 @@ import getCurrentValidationState from './getCurrentValidationState';
 import getEnabledLibraries from './getEnabledLibraries';
 import getErrors from './getErrors';
 import getHiddenUIComponents from './getHiddenUIComponents';
-import getNewConsoleInputs from './getNewConsoleInputs';
 import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
 import getProject from './getProject';
@@ -40,7 +39,6 @@ export {
   getEnabledLibraries,
   getErrors,
   getHiddenUIComponents,
-  getNewConsoleInputs,
   getNotifications,
   getOpenTopBarMenu,
   getProject,
