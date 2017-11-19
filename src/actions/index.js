@@ -52,6 +52,10 @@ import {
   refreshPreview,
 } from './compiledProjects';
 
+import {
+  evaluateConsoleInput,
+} from './console';
+
 export {
   createProject,
   createSnapshot,
@@ -87,5 +91,6 @@ export {
   closeTopBarMenu,
   logIn,
   logOut,
+  evaluateConsoleInput,
   projectCompiled,
 };
