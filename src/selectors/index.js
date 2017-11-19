@@ -1,5 +1,6 @@
 import getAllProjectKeys from './getAllProjectKeys';
 import getAllProjects from './getAllProjects';
+import getCompiledProjects from './getCompiledProjects';
 import getCurrentProject from './getCurrentProject';
 import getCurrentProjectInstructions from './getCurrentProjectInstructions';
 import getCurrentProjectKey from './getCurrentProjectKey';
@@ -27,6 +28,7 @@ import makeGetProjectPreview from './makeGetProjectPreview';
 export {
   getAllProjectKeys,
   getAllProjects,
+  getCompiledProjects,
   getCurrentProject,
   getCurrentProjectInstructions,
   getCurrentProjectKey,

@@ -13,27 +13,25 @@ const sandboxOptions = [
   'allow-top-navigation',
 ].join(' ');
 
+let nextId = 1;
+
 class PreviewFrame extends React.Component {
   constructor() {
     super();
-    bindAll(this, '_onMessage', '_handleInfiniteLoop');
+    this._frameName = `preview-frame-${nextId++}`;
+    bindAll(this, '_attachToFrame', '_handleInfiniteLoop', '_onMessage');
   }
 
   componentDidMount() {
     window.addEventListener('message', this._onMessage);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.src !== this.props.src;
+  shouldComponentUpdate() {
+    return false;
   }
 
   componentWillUnmount() {
     window.removeEventListener('message', this._onMessage);
-  }
-
-  _saveFrame(frame) {
-    this.frame = frame;
-    this._writeFrameContents(this.props.src);
   }
 
   _runtimeErrorLineOffset() {
@@ -56,6 +54,10 @@ class PreviewFrame extends React.Component {
     }
 
     if (data.type !== 'org.popcode.error') {
+      return;
+    }
+
+    if (data.windowName !== this._frameName) {
       return;
     }
 
@@ -97,21 +99,31 @@ class PreviewFrame extends React.Component {
     });
   }
 
-  render() {
-    let srcProps;
-
-    if (this.props.src) {
-      srcProps = {srcDoc: this.props.src};
-    } else {
-      srcProps = {src: 'about:blank'};
+  _attachToFrame(frame) {
+    if (!frame) {
+      return;
     }
 
+    const {src} = this.props;
+
+    if (src) {
+      frame.addEventListener('load', () => {
+        frame.classList.add('preview__frame_loaded');
+      });
+
+      frame.srcdoc = src;
+    }
+  }
+
+  render() {
     return (
       <div className="preview__frame-container">
         <iframe
           className="preview__frame"
+          name={this._frameName}
+          ref={this._attachToFrame}
           sandbox={sandboxOptions}
-          {...srcProps}
+          src="about:blank"
         />
       </div>
     );

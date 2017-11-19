@@ -106,7 +106,6 @@ module.exports = (env = 'development') => {
         'fonts/fontawesome-webfont.ttf',
         'fonts/fontawesome-webfont.eot',
         'images/pop/thinking.svg',
-        'images/large-spinner.gif',
       ],
       ServiceWorker: {navigateFallbackURL: '/'},
     }),

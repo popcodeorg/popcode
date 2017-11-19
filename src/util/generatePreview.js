@@ -10,7 +10,7 @@ import previewFrameLibraries from '../config/previewFrameLibraries';
 
 const parser = new DOMParser();
 
-const sourceDelimiter = '/*__POPCODESTART__*/';
+export const sourceDelimiter = '/*__POPCODESTART__*/';
 
 const errorHandlerScript = `(${function() {
   window.onerror = (fullMessage, _file, line, column, error) => {
@@ -29,6 +29,7 @@ const errorHandlerScript = `(${function() {
 
     window.parent.postMessage(JSON.stringify({
       type: 'org.popcode.error',
+      windowName: window.name,
       error: {
         name,
         message,
@@ -58,16 +59,16 @@ const alertAndPromptReplacementScript = `(${function() {
   delete window.swal; // eslint-disable-line prefer-reflect
 }.toString()}());`;
 
-class PreviewGenerator {
+export class PreviewGenerator {
   constructor(project, options = {}) {
     this._project = project;
-    this.previewDocument = parser.parseFromString(
+    this._previewDocument = parser.parseFromString(
       project.sources.html,
       'text/html',
     );
     this._previewHead = this._ensureElement('head');
     this.previewBody = this._ensureElement('body');
-    this._firstScriptTag = this.previewDocument.querySelector('script');
+    this._firstScriptTag = this._previewDocument.querySelector('script');
 
     this._attachLibraries(
       pick(options, ['nonBlockingAlertsAndPrompts']),
@@ -91,26 +92,35 @@ class PreviewGenerator {
     this._addJavascript(pick(options, 'breakLoops'));
   }
 
+  get title() {
+    return (this._previewDocument.title || '').trim();
+  }
+
+  get source() {
+    const {_previewDocument: {documentElement}} = this;
+    return `<!DOCTYPE html> ${documentElement.outerHTML}`;
+  }
+
   _ensureDocumentElement() {
-    let {documentElement} = this.previewDocument;
+    let {documentElement} = this._previewDocument;
     if (!documentElement) {
-      documentElement = this.previewDocument.createElement('html');
-      this.previewDocument.appendChild(documentElement);
+      documentElement = this._previewDocument.createElement('html');
+      this._previewDocument.appendChild(documentElement);
     }
     return documentElement;
   }
 
   _ensureElement(elementName) {
-    let element = this.previewDocument[elementName];
+    let element = this._previewDocument[elementName];
     if (!element) {
-      element = this.previewDocument.createElement(elementName);
+      element = this._previewDocument.createElement(elementName);
       this._ensureDocumentElement().appendChild(element);
     }
     return element;
   }
 
   _addBase() {
-    const baseTag = this.previewDocument.createElement('base');
+    const baseTag = this._previewDocument.createElement('base');
     baseTag.target = '_top';
     const [firstChild] = this._previewHead.childNodes;
     if (firstChild) {
@@ -121,14 +131,14 @@ class PreviewGenerator {
   }
 
   _addCss() {
-    const styleTag = this.previewDocument.createElement('style');
+    const styleTag = this._previewDocument.createElement('style');
     styleTag.innerHTML = this._project.sources.css;
     this._previewHead.appendChild(styleTag);
   }
 
   _addRefreshTimestamp(timestamp) {
     const dateString = `Last refresh on: ${String(new Date(timestamp))}`;
-    const comment = this.previewDocument.createComment(dateString);
+    const comment = this._previewDocument.createComment(dateString);
     this.previewBody.appendChild(comment);
   }
 
@@ -137,20 +147,20 @@ class PreviewGenerator {
     if (breakLoops) {
       source = loopBreaker(source);
     }
-    const scriptTag = this.previewDocument.createElement('script');
+    const scriptTag = this._previewDocument.createElement('script');
     scriptTag.innerHTML = source;
     this.previewBody.appendChild(scriptTag);
-    return this.previewDocument.documentElement.outerHTML;
+    return this._previewDocument.documentElement.outerHTML;
   }
 
   _addErrorHandling() {
-    const scriptTag = this.previewDocument.createElement('script');
+    const scriptTag = this._previewDocument.createElement('script');
     scriptTag.innerHTML = errorHandlerScript;
     this.previewBody.appendChild(scriptTag);
   }
 
   _addAlertAndPromptHandling() {
-    const scriptTag = this.previewDocument.createElement('script');
+    const scriptTag = this._previewDocument.createElement('script');
     scriptTag.innerHTML = alertAndPromptReplacementScript;
     this.previewBody.appendChild(scriptTag);
   }
@@ -201,13 +211,13 @@ class PreviewGenerator {
   }
 
   _attachCssLibrary(css) {
-    const styleTag = this.previewDocument.createElement('style');
+    const styleTag = this._previewDocument.createElement('style');
     styleTag.textContent = String(css);
     this._previewHead.appendChild(styleTag);
   }
 
   _attachJavascriptLibrary(javascript) {
-    const scriptTag = this.previewDocument.createElement('script');
+    const scriptTag = this._previewDocument.createElement('script');
     const javascriptText = String(javascript);
     scriptTag.innerHTML = javascriptText.replace(/<\/script>/g, '<\\/script>');
     if (this._firstScriptTag) {
@@ -219,15 +229,12 @@ class PreviewGenerator {
   }
 }
 
-function generatePreview(project, options) {
-  const {previewDocument} = new PreviewGenerator(project, options);
-  return `<!DOCTYPE html> ${previewDocument.documentElement.outerHTML}`;
-}
-
-function generateTextPreview(project) {
+export function generateTextPreview(project) {
   const {title} = parser.parseFromString(project.sources.html, 'text/html');
   return (title || '').trim();
 }
 
-export {sourceDelimiter, generateTextPreview};
-export default generatePreview;
+export default function generatePreview(project, options) {
+  const {source, title} = new PreviewGenerator(project, options);
+  return {source, title};
+}

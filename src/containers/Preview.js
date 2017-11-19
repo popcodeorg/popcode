@@ -6,23 +6,27 @@ import {
   refreshPreview,
 } from '../actions';
 import {
-  getCurrentProject,
+  getCompiledProjects,
   getLastRefreshTimestamp,
   isCurrentProjectSyntacticallyValid,
+  isUserTyping,
 } from '../selectors';
 
 function mapStateToProps(state) {
   return {
-    isSyntacticallyValid: isCurrentProjectSyntacticallyValid(state),
+    showingErrors: (
+      !isUserTyping(state) &&
+        !isCurrentProjectSyntacticallyValid(state)
+    ),
     lastRefreshTimestamp: getLastRefreshTimestamp(state),
-    project: getCurrentProject(state),
+    compiledProjects: getCompiledProjects(state),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onPopOutProject(project) {
-      dispatch(popOutProject(project));
+    onPopOutProject() {
+      dispatch(popOutProject());
     },
 
     onRuntimeError(error) {
