@@ -8,6 +8,7 @@ import createMenu, {MenuItem} from './createMenu';
 import HamburgerMenuButton from './HamburgerMenuButton';
 
 const HamburgerMenu = createMenu({
+  menuClass: 'top-bar__menu_right',
   name: 'hamburger',
 
   renderItems({
