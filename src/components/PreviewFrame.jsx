@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
 import {t} from 'i18next';
@@ -24,6 +25,21 @@ class PreviewFrame extends React.Component {
 
   componentDidMount() {
     window.addEventListener('message', this._onMessage);
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (this._frame) {
+      const {consoleInputs: previousConsoleInputs} = this.props;
+
+      for (const [key, {expression}] of newProps.consoleInputs) {
+        if (!previousConsoleInputs.has(key)) {
+          this._frame.contentWindow.postMessage(JSON.stringify({
+            type: 'org.popcode.console.expression',
+            payload: {key, expression},
+          }), '*');
+        }
+      }
+    }
   }
 
   shouldComponentUpdate() {
@@ -100,6 +116,8 @@ class PreviewFrame extends React.Component {
   }
 
   _attachToFrame(frame) {
+    this._frame = frame;
+
     if (!frame) {
       return;
     }
@@ -131,6 +149,7 @@ class PreviewFrame extends React.Component {
 }
 
 PreviewFrame.propTypes = {
+  consoleInputs: ImmutablePropTypes.iterable.isRequired,
   src: PropTypes.string.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
 };

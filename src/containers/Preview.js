@@ -7,17 +7,19 @@ import {
 } from '../actions';
 import {
   getCompiledProjects,
+  getNewConsoleInputs,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
 } from '../selectors';
 
 function mapStateToProps(state) {
   return {
+    compiledProjects: getCompiledProjects(state),
+    consoleInputs: getNewConsoleInputs(state),
     showingErrors: (
       !isUserTyping(state) &&
         !isCurrentProjectSyntacticallyValid(state)
     ),
-    compiledProjects: getCompiledProjects(state),
   };
 }
 

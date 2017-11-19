@@ -33,6 +33,7 @@ test('validatedSource', (t) => {
           nonBlockingAlertsAndPrompts: true,
           targetBaseTop: true,
           propagateErrorsToParent: true,
+          listenForMessages: true,
         },
       ).
       next(preview).put(projectCompiled(preview, Date.now()));

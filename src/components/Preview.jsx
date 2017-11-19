@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import {OrderedMap} from 'immutable';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import React from 'react';
@@ -6,6 +7,7 @@ import PreviewFrame from './PreviewFrame';
 
 export default function Preview({
   compiledProjects,
+  consoleInputs,
   showingErrors,
   onPopOutProject,
   onRefreshClick,
@@ -15,8 +17,13 @@ export default function Preview({
     return null;
   }
 
-  const projectFrames = compiledProjects.map(({source, timestamp}) => (
+  const projectFrames = compiledProjects.map(({source, timestamp}, key) => (
     <PreviewFrame
+      consoleInputs={
+        key === compiledProjects.keySeq().last() ?
+          consoleInputs :
+          new OrderedMap()
+      }
       key={timestamp}
       src={source}
       onRuntimeError={onRuntimeError}
@@ -46,6 +53,7 @@ export default function Preview({
 
 Preview.propTypes = {
   compiledProjects: ImmutablePropTypes.iterable.isRequired,
+  consoleInputs: ImmutablePropTypes.iterable.isRequired,
   showingErrors: PropTypes.bool.isRequired,
   onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,

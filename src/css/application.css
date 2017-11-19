@@ -461,6 +461,28 @@ body {
   animation: 0.2s ease-in 0.1s both fadeIn;
 }
 
+/** @define console */
+
+.console {
+  font-family: 'Inconsolata';
+  flex: 0 0 40%;
+  border-top: 2px solid var(--color-light-gray);
+  padding: 0.5em;
+}
+
+.console__entry,
+.console__input {
+  margin-bottom: 0.5em;
+}
+
+.console__entry {
+  margin-left: 4px;
+}
+
+.console__error {
+  color: var(--color-red);
+}
+
 /** @define preview */
 
 .preview {
