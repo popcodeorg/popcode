@@ -87,37 +87,28 @@ body {
 /** @define identity-confirmation */
 
 .identity-confirmation {
-  background: rgba(0, 0, 0, 0.48);
-  height: 100vh;
-  position: absolute;
-  width: 100vw;
-  z-index: 3;
+  text-align: center;
 }
 
-.identity-confirmation__confirm-button {
-  background-color: #2ecc71;
+.identity-confirmation__button {
   border-radius: 2px;
   border-width: 0;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-  color: #ecf0f1;
   cursor: pointer;
-  display: block;
-  margin: 30px auto;
   outline: none;
   overflow: hidden;
-  padding: 0;
   padding: 1em;
   position: relative;
   transition: background-color 0.3s;
 }
 
-.identity-confirmation__confirm-button:hover,
-.identity-confirmation__confirm-button:focus {
-  background-color: #27ae60;
+.identity-confirmation__button:active::before {
+  padding-top: 120%;
+  transition: width 0.2s ease-out, padding-top 0.2s ease-out;
+  width: 120%;
 }
 
-.identity-confirmation__confirm-button::before {
-  background-color: rgba(236, 240, 241, 0.3);
+.identity-confirmation__button:before {
   border-radius: 100%;
   content: "";
   display: block;
@@ -129,18 +120,32 @@ body {
   width: 0;
 }
 
-.identity-confirmation__confirm-button:active::before {
-  padding-top: 120%;
-  transition: width 0.2s ease-out, padding-top 0.2s ease-out;
-  width: 120%;
+.identity-confirmation__button_confirm {
+  background-color: #2ecc71;
+  color: #ecf0f1;
+  display: block;
+  margin: 30px auto;
 }
 
-.identity-confirmation__modal {
-  background: #fafafa;
-  box-shadow: 0 2px 8px #888;
-  margin: 10% auto 0;
-  padding: 1em 2em 2em;
-  width: 40vw;
+.identity-confirmation__button_confirm:hover {
+  background-color: #27ae60;
+}
+
+.identity-confirmation__button_confirm::before,
+.identity-confirmation__button_reject::before {
+  background-color: rgba(236, 240, 241, 0.3);
+}
+
+.identity-confirmation__button_reject {
+  background-color: var(--color-chrome);
+  color: black;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.identity-confirmation__button_reject:hover {
+  background-color: var(--color-light-gray);
 }
 
 .identity-confirmation__text {
@@ -151,6 +156,7 @@ body {
   font-size: 1.5em;
   font-weight: bold;
   line-height: 1.5em;
+  text-align: center;
 }
 
 /** @define layout */
@@ -188,6 +194,24 @@ body {
 
 .layout__instructions {
   flex: 0 0 25%;
+}
+
+/** @define modal */
+
+.modal {
+  background: rgba(0, 0, 0, 0.48);
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
+  z-index: 3;
+}
+
+.modal__contents {
+  background: #fafafa;
+  box-shadow: 0 2px 8px #888;
+  margin: 10% auto 0;
+  padding: 1em 2em 2em;
+  width: 40vw;
 }
 
 /** @define top-bar */

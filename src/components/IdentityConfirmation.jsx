@@ -19,34 +19,36 @@ function IdentityConfirmation({
   const buttonClassName = 'identity-confirmation__button';
 
   return (
-    <div className="identity-confirmation">
-      <div className="identity-confirmation__modal">
-        <h1 className="identity-confirmation__title">
-          {t('identity-confirmation.title', {displayName})}
-        </h1>
+    <div className="modal">
+      <div className="modal__contents">
+        <div className="identity-confirmation">
+          <h1 className="identity-confirmation__title">
+            {t('identity-confirmation.title', {displayName})}
+          </h1>
 
-        <button
-          className={classnames(
-            buttonClassName,
-            `${buttonClassName}_confirm`,
-          )}
-          type="button"
-          onClick={onConfirmIdentity}
-        >
-          {t('identity-confirmation.confirm-identity', {displayName})}
-        </button>
+          <button
+            className={classnames(
+              buttonClassName,
+              `${buttonClassName}_confirm`,
+            )}
+            type="button"
+            onClick={onConfirmIdentity}
+          >
+            {t('identity-confirmation.confirm-identity', {displayName})}
+          </button>
 
-        <a
-          className={classnames(
-            buttonClassName,
-            `${buttonClassName}_reject`,
-          )}
-          href={config.gitHubLogoutUrl}
-          target="_blank"
-          onClick={onRejectIdentity}
-        >
-          {t('identity-confirmation.github-log-out-prompt', {displayName})}
-        </a>
+          <a
+            className={classnames(
+              buttonClassName,
+              `${buttonClassName}_reject`,
+            )}
+            href={config.gitHubLogoutUrl}
+            target="_blank"
+            onClick={onRejectIdentity}
+          >
+            {t('identity-confirmation.github-log-out-prompt', {displayName})}
+          </a>
+        </div>
       </div>
     </div>
   );
