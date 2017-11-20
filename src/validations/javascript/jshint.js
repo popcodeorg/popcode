@@ -6,7 +6,7 @@ import defaults from 'lodash/defaults';
 import find from 'lodash/find';
 import includes from 'lodash/includes';
 import libraries from '../../config/libraries';
-import importLinters from '../importLinters';
+import retryingFailedImports from '../retryingFailedImports';
 import Validator from '../Validator';
 
 const jshintrc = {
@@ -171,7 +171,10 @@ class JsHintValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const {jshint} = await importLinters();
+    const {JSHINT: jshint} = await retryingFailedImports(() => import(
+      /* webpackChunkName: 'linters' */
+      'jshint',
+    ));
     try {
       jshint(this._source, this._jshintOptions);
     } catch (e) {

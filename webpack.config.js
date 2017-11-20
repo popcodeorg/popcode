@@ -86,6 +86,11 @@ module.exports = (env = 'development') => {
       failOnError: true,
     }),
     new OfflinePlugin({
+      caches: {
+        main: [':rest:'],
+        additional: ['linters*.js'],
+      },
+      safeToUseOptionalCaches: true,
       publicPath: '/',
       responseStrategy: 'network-first',
       externals: [
