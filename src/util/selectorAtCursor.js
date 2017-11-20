@@ -13,7 +13,7 @@ export function selectorAtCursor(source, cursor, language) {
         const cursorRow = cursor.row + 1;
         const cursorCol = cursor.column + 1;
         if ((cursorRow > ruleStartRow && cursorRow < ruleEndRow) ||
-          (cursorRow === ruleStartRow && cursorCol > ruleStartCol) ||
+          (cursorRow === ruleStartRow && cursorCol >= ruleStartCol) ||
           (cursorRow === ruleEndRow && cursorCol <= ruleEndCol)) {
           highlighterSelector = rule.selector;
         }

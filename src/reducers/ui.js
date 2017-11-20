@@ -28,6 +28,7 @@ const defaultState = new Immutable.Map().
     requestedFocusedLine: null,
     textSizeIsLarge: false,
     focusedSelector: null,
+    focusedEditors: new Immutable.Set(),
   })).
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Map()).
@@ -89,6 +90,7 @@ export default function ui(stateIn, action) {
         }),
       );
 
+<<<<<<< HEAD
     case 'CLEAR_CONSOLE_ENTRIES':
       return state.set(
         'requestedFocusedLine',
@@ -98,6 +100,37 @@ export default function ui(stateIn, action) {
           column: 0,
         }),
       );
+=======
+    case 'EDITOR_FOCUSED_REQUESTED_LINE':
+      return state.setIn(['editors', 'requestedFocusedLine'], null);
+
+    case 'EDITOR_FOCUSED':
+      return state.updateIn(
+        ['editors', 'focusedEditors'],
+        (focusedEditors) => {
+          const componentName = action.payload.language;
+          return focusedEditors.add(componentName);
+        },
+      );
+
+    case 'EDITOR_BLURRED':
+      return state.updateIn(
+        ['editors', 'focusedEditors'],
+        (focusedEditors) => {
+          const componentName = action.payload.language;
+          if (focusedEditors.has(componentName)) {
+            return focusedEditors.delete(componentName);
+          }
+          return focusedEditors;
+        },
+      );
+
+    case 'DRAG_ROW_DIVIDER':
+      return state.updateIn(['workspace', 'columnFlex'], (prevFlex) => {
+        const newFlex = updateEditorColumnFlex(action.payload);
+        return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
+      });
+>>>>>>> 23eb7f2... Updates to element highlighter
 
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.set('requestedFocusedLine', null);

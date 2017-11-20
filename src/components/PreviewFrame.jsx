@@ -3,8 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Bowser from 'bowser';
+<<<<<<< HEAD
 import bindAll from 'lodash-es/bindAll';
 import constant from 'lodash-es/constant';
+=======
+import bindAll from 'lodash/bindAll';
+import includes from 'lodash/includes';
+>>>>>>> 23eb7f2... Updates to element highlighter
 import {t} from 'i18next';
 
 import normalizeError from '../util/normalizeError';
@@ -18,7 +23,6 @@ const sandboxOptions = [
   'allow-popups-to-escape-sandbox',
   'allow-scripts',
   'allow-top-navigation',
-  'allow-same-origin',
 ].join(' ');
 
 let nextId = 1;
@@ -29,7 +33,19 @@ class PreviewFrame extends React.Component {
 
     const {compiledProject: {source}} = props;
 
+<<<<<<< HEAD
     bindAll(this, '_attachToFrame', '_handleInfiniteLoop');
+=======
+  componentWillReceiveProps(nextProps) {
+    if (!includes(nextProps.focusedEditors, 'css')) {
+      this._postRemoveHighlightToFrame();
+    }
+    if (nextProps.focusedSelector !== this.props.focusedSelector ||
+      includes(nextProps.focusedEditors, 'css')) {
+      this._postFocusedSelectorToFrame(nextProps.focusedSelector);
+    }
+  }
+>>>>>>> 23eb7f2... Updates to element highlighter
 
     this.render = constant(
       <div className="preview__frame-container">
@@ -166,6 +182,7 @@ class PreviewFrame extends React.Component {
     }), '*');
   }
 
+<<<<<<< HEAD
   _attachToFrame(frame) {
     if (!frame) {
       if (this._channel) {
@@ -173,6 +190,25 @@ class PreviewFrame extends React.Component {
         Reflect.deleteProperty(this, '_channel');
       }
       return;
+=======
+  _postRemoveHighlightToFrame() {
+    this._frame_element.contentWindow.postMessage(JSON.stringify({
+      type: 'org.popcode.removeHighlight',
+    }), '*');
+  }
+
+  _setFrameElement(frame) {
+    this._frame_element = frame;
+  }
+
+  render() {
+    let srcProps;
+
+    if (this.props.src) {
+      srcProps = {srcDoc: this.props.src};
+    } else {
+      srcProps = {src: 'about:blank'};
+>>>>>>> 23eb7f2... Updates to element highlighter
     }
 
     this._channel = Channel.build({
@@ -198,8 +234,12 @@ class PreviewFrame extends React.Component {
 
 PreviewFrame.propTypes = {
 <<<<<<< HEAD
+<<<<<<< HEAD
   compiledProject: PropTypes.instanceOf(CompiledProjectRecord).isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
+=======
+  focusedEditors: PropTypes.array,
+>>>>>>> 23eb7f2... Updates to element highlighter
   focusedSelector: PropTypes.string,
   isActive: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
@@ -212,6 +252,7 @@ PreviewFrame.propTypes = {
 };
 
 PreviewFrame.defaultProps = {
+  focusedEditors: null,
   focusedSelector: null,
 };
 

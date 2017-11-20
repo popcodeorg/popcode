@@ -16,6 +16,7 @@ import getCurrentValidationState from './getCurrentValidationState';
 import getEnabledLibraries from './getEnabledLibraries';
 import getErrors from './getErrors';
 import getHiddenUIComponents from './getHiddenUIComponents';
+import getFocusedEditors from './getFocusedEditors';
 import getFocusedSelector from './getFocusedSelector';
 import getLastRefreshTimestamp from './getLastRefreshTimestamp';
 import getNotifications from './getNotifications';
@@ -61,6 +62,7 @@ export {
   getEnabledLibraries,
   getErrors,
   getHiddenUIComponents,
+  getFocusedEditors,
   getFocusedSelector,
   getLastRefreshTimestamp,
   getNotifications,

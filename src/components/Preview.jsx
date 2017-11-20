@@ -1,11 +1,29 @@
 import get from 'lodash-es/get';
 import PropTypes from 'prop-types';
+<<<<<<< HEAD
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import React from 'react';
+=======
+import isNil from 'lodash/isNil';
+import partial from 'lodash/partial';
+import classnames from 'classnames';
+import generatePreview, {generateTextPreview} from '../util/previewFrame';
+import PreviewFrame from './PreviewFrame';
+
+function generateFrameSrc(
+  project,
+  isSyntacticallyValid,
+  lastRefreshTimestamp,
+) {
+  if (isNil(project) || !isSyntacticallyValid) {
+    return '';
+  }
+>>>>>>> 23eb7f2... Updates to element highlighter
 
 import PreviewFrame from './PreviewFrame';
 
 export default function Preview({
+<<<<<<< HEAD
   compiledProjects,
   consoleEntries,
   highlighterSelector,
@@ -13,6 +31,13 @@ export default function Preview({
   onConsoleError,
   onConsoleLog,
   onConsoleValue,
+=======
+  focusedEditors,
+  focusedSelector,
+  isSyntacticallyValid,
+  lastRefreshTimestamp,
+  project,
+>>>>>>> 23eb7f2... Updates to element highlighter
   onPopOutProject,
   onRefreshClick,
   onRuntimeError,
@@ -50,13 +75,25 @@ export default function Preview({
           onClick={onRefreshClick}
         >&#xf021;</span>
       </div>
+<<<<<<< HEAD
       {projectFrames}
       // focusedSelector={focusedSelector}
+=======
+      <PreviewFrame
+        focusedEditors={focusedEditors}
+        focusedSelector={focusedSelector}
+        src={
+          generateFrameSrc(project, isSyntacticallyValid, lastRefreshTimestamp)
+        }
+        onRuntimeError={onRuntimeError}
+      />
+>>>>>>> 23eb7f2... Updates to element highlighter
     </div>
   );
 }
 
 Preview.propTypes = {
+<<<<<<< HEAD
 <<<<<<< HEAD
   compiledProjects: ImmutablePropTypes.iterable.isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
@@ -66,6 +103,9 @@ Preview.propTypes = {
   onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
 =======
+=======
+  focusedEditors: PropTypes.array.isRequired,
+>>>>>>> 23eb7f2... Updates to element highlighter
   focusedSelector: PropTypes.string,
   isSyntacticallyValid: PropTypes.bool.isRequired,
   lastRefreshTimestamp: PropTypes.number,

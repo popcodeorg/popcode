@@ -24,6 +24,8 @@ import {
 import {
   currentCursorChanged,
   focusLine,
+  editorBlurred,
+  editorFocused,
   editorFocusedRequestedLine,
   startDragColumnDivider,
   stopDragColumnDivider,
@@ -100,6 +102,8 @@ export {
   unhideComponent,
   toggleComponent,
   focusLine,
+  editorBlurred,
+  editorFocused,
   editorFocusedRequestedLine,
   previousConsoleHistory,
   nextConsoleHistory,

@@ -123,6 +123,19 @@ class Editor extends React.Component {
       this._startNewSession(this.props.source);
       this._resizeEditor();
       this._editor.on('focus', this._resizeEditor);
+<<<<<<< HEAD
+=======
+      this._editor.on('blur', () => {
+        this.props.onEditorBlurred(this.props.language);
+      });
+      this._editor.on('focus', () => {
+        this.props.onEditorFocused(this.props.language);
+      });
+      this._editor.setOptions({
+        fontFamily: 'Inconsolata',
+        fontSize: '14px',
+      });
+>>>>>>> 23eb7f2... Updates to element highlighter
     } else {
       this._editor.destroy();
     }
@@ -174,6 +187,8 @@ Editor.propTypes = {
   source: PropTypes.string.isRequired,
   textSizeIsLarge: PropTypes.bool.isRequired,
   onCursorChange: PropTypes.func.isRequired,
+  onEditorBlurred: PropTypes.func.isRequired,
+  onEditorFocused: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };

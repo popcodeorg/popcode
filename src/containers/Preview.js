@@ -11,7 +11,6 @@ import {
 import {
   getCompiledProjects,
   getConsoleHistory,
-  getHighlighterSelector,
   getFocusedSelector,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
