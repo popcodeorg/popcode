@@ -29,7 +29,7 @@
     "foundation": "^5.5.3",
     "handlebars": "^4.0.5",
     "inconsolata-webfont": "^1.0.3",
-    "jquery": "^2.2.3",
+    "jquery": "^3.2.1",
     "lodash": "^4.11.2",
     "mustache.js": "mustache#^2.2.1",
     "normalize-css": "normalize.css#^4.1.1",
