@@ -30,7 +30,6 @@ import {
   notificationTriggered,
   userDismissedNotification,
   updateNotificationMetadata,
-  refreshPreview,
   popOutProject,
   toggleEditorTextSize,
   toggleTopBarMenu,
@@ -50,6 +49,7 @@ import {
 
 import {
   projectCompiled,
+  refreshPreview,
 } from './compiledProjects';
 
 export {
