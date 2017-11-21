@@ -125,7 +125,7 @@ class SlowparseValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const Slowparse = await retryingFailedImports(() => import(
+    const {'default': Slowparse} = await retryingFailedImports(() => import(
       /* webpackChunkName: 'linters' */
       '../../util/slowparse',
     ));

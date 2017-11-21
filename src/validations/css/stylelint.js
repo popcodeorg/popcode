@@ -21,7 +21,7 @@ class StyleLintValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const stylelint = await retryingFailedImports(() => import(
+    const {'default': stylelint} = await retryingFailedImports(() => import(
       /* webpackChunkName: 'linters' */
       '../../util/minimalStylelint',
     ));
