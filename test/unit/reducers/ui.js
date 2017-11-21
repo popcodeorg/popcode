@@ -17,7 +17,6 @@ import {
   editorFocusedRequestedLine,
   notificationTriggered,
   userDismissedNotification,
-  refreshPreview,
   toggleTopBarMenu,
 } from '../../../src/actions/ui';
 import {
@@ -43,7 +42,6 @@ const initialState = Immutable.fromJS({
   },
   workspace: DEFAULT_WORKSPACE,
   notifications: new Immutable.Map(),
-  lastRefreshTimestamp: null,
   topBar: {openMenu: null},
 });
 
@@ -280,13 +278,6 @@ test('userDismissedNotification', reducerTest(
   withNotification('some-error', 'error'),
   partial(userDismissedNotification, 'some-error'),
   initialState,
-));
-
-test('refreshPreview', reducerTest(
-  reducer,
-  initialState,
-  partial(refreshPreview, 1),
-  initialState.set('lastRefreshTimestamp', 1),
 ));
 
 test('applicationLoaded', (t) => {

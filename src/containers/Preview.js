@@ -7,7 +7,6 @@ import {
 } from '../actions';
 import {
   getCompiledProjects,
-  getLastRefreshTimestamp,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
 } from '../selectors';
@@ -18,7 +17,6 @@ function mapStateToProps(state) {
       !isUserTyping(state) &&
         !isCurrentProjectSyntacticallyValid(state)
     ),
-    lastRefreshTimestamp: getLastRefreshTimestamp(state),
     compiledProjects: getCompiledProjects(state),
   };
 }

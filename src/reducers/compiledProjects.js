@@ -24,6 +24,21 @@ export default function compiledProjects(stateIn, action) {
     case 'CHANGE_CURRENT_PROJECT':
       return initialState;
 
+    case 'REFRESH_PREVIEW': {
+      if (state.isEmpty()) {
+        return state;
+      }
+
+      const {source, title} = state.last();
+      return trimRight(
+        state.push(new CompiledProject({
+          source,
+          title,
+          timestamp: action.payload.timestamp,
+        })),
+      );
+    }
+
     case 'PROJECT_COMPILED':
       return trimRight(
         state.push(new CompiledProject({
