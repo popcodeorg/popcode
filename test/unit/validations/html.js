@@ -147,9 +147,13 @@ test('ul with child text outside <li>', validationTest(
   htmlWithBody('<ul>Invalid to have non-empty text nodes</ul>'),
   html,
   {
-    reason: 'invalid-list-children',
+    reason: 'text-elements-as-list-children',
     row: htmlWithBody.offset,
-    payload: {tag: 'ul', children: 'li'},
+    payload: {
+      tag: 'ul',
+      children: 'li',
+      textContent: 'Invalid to have non-empty text nodes',
+    },
   },
 ));
 
@@ -157,9 +161,13 @@ test('ol with child text outside <li>', validationTest(
   htmlWithBody('<ol>Invalid to have non-empty text nodes</ol>'),
   html,
   {
-    reason: 'invalid-list-children',
+    reason: 'text-elements-as-list-children',
     row: htmlWithBody.offset,
-    payload: {tag: 'ol', children: 'li'},
+    payload: {
+      tag: 'ol',
+      children: 'li',
+      textContent: 'Invalid to have non-empty text nodes'
+    },
   },
 ));
 

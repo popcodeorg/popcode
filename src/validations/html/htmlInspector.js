@@ -39,30 +39,42 @@ const errorMap = {
       },
     };
   },
-  'invalid-list-children': (error) => {
+  'text-elements-as-list-children': (error) => {
     const tag = error.context.tagName.toLowerCase();
+    let requiredChild = 'li';
+
+    if (tag === 'dl') {
+      requiredChild = 'dd> or <dt';
+    }
 
     return {
-      reason: 'invalid-list-children',
+      reason: 'text-elements-as-list-children',
       payload: {
         tag,
-        children: 'li',
+        children: requiredChild,
+        textContent: error.message,
       },
     };
   },
 };
 
-function invalidListChildrenValidator(listener, reporter) {
+function noListsWithTextChildrenValidator(listener, reporter) {
   listener.on('element', (elementName, domElement) => {
-    if (domElement.childNodes.length &&
-        (elementName === 'ul' || elementName === 'ol')) {
-      // Iterate over direct descendents of lists
-      for (let node = domElement.firstChild; node; node = node.nextSibling) {
-        if (node.nodeType === Node.TEXT_NODE &&
-            trim(node.textContent).length > 0) {
-          // Non-empty text node inside list should show error
-          // This is a common student mistake
-          reporter.warn('invalid-list-children', '', domElement);
+    if (
+      domElement.childNodes.length &&
+      (elementName === 'ul' || elementName === 'ol' || elementName === 'dl')
+    ) {
+      for (const node of domElement.childNodes) {
+        const textContent = trim(node.textContent);
+        if (
+          node.nodeType === Node.TEXT_NODE &&
+          textContent.length > 0
+        ) {
+          reporter.warn(
+            'text-elements-as-list-children',
+            textContent,
+            domElement,
+          );
           break;
         }
       }
@@ -83,8 +95,10 @@ class HtmlInspectorValidator extends Validator {
 
     const {HTMLInspector} = await importLinters();
 
-    HTMLInspector.rules.add('validate-list-children',
-      invalidListChildrenValidator);
+    HTMLInspector.rules.add(
+      'validate-list-children',
+      noListsWithTextChildrenValidator,
+    );
 
     return new Promise((resolve) => {
       HTMLInspector.inspect({
