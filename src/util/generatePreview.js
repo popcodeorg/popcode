@@ -85,9 +85,6 @@ export class PreviewGenerator {
     if (options.nonBlockingAlertsAndPrompts) {
       this._addAlertAndPromptHandling();
     }
-    if (options.lastRefreshTimestamp) {
-      this._addRefreshTimestamp(options.lastRefreshTimestamp);
-    }
 
     this._addJavascript(pick(options, 'breakLoops'));
   }
@@ -134,12 +131,6 @@ export class PreviewGenerator {
     const styleTag = this._previewDocument.createElement('style');
     styleTag.innerHTML = this._project.sources.css;
     this._previewHead.appendChild(styleTag);
-  }
-
-  _addRefreshTimestamp(timestamp) {
-    const dateString = `Last refresh on: ${String(new Date(timestamp))}`;
-    const comment = this._previewDocument.createComment(dateString);
-    this.previewBody.appendChild(comment);
   }
 
   _addJavascript({breakLoops = false}) {

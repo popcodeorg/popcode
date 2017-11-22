@@ -6,3 +6,8 @@ export const projectCompiled = createAction(
   identity,
   (_source, timestamp = Date.now()) => ({timestamp}),
 );
+
+export const refreshPreview = createAction(
+  'REFRESH_PREVIEW',
+  timestamp => ({timestamp}),
+);
