@@ -24,7 +24,6 @@ export function* validatedSource() {
         nonBlockingAlertsAndPrompts: true,
         targetBaseTop: true,
         propagateErrorsToParent: true,
-        lastRefreshTimestamp: timestamp,
       },
     );
     yield put(projectCompiled(preview, timestamp));

@@ -68,6 +68,17 @@ function errors(stateIn, action) {
       }
       return state.set(action.payload.language, passedLanguageErrors);
 
+    case 'REFRESH_PREVIEW':
+      return state.update(
+        'javascript',
+        (errorList) => {
+          if (errorList.state === 'runtime-error') {
+            return passedLanguageErrors;
+          }
+          return errorList;
+        },
+      );
+
     default:
       return state;
   }
