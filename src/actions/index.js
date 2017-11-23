@@ -8,6 +8,7 @@ import {
   exportRepo,
   repoExportDisplayed,
   repoExportNotDisplayed,
+  shareToClassroom,
 } from './clients';
 
 import {
@@ -82,6 +83,7 @@ export {
   refreshPreview,
   repoExportDisplayed,
   repoExportNotDisplayed,
+  shareToClassroom,
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,

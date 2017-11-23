@@ -20,3 +20,10 @@ export const repoExportNotDisplayed =
   createAction('REPO_EXPORT_NOT_DISPLAYED');
 export const projectRestoredFromLastSession =
   createAction('PROJECT_RESTORED_FROM_LAST_SESSION');
+export const shareToClassroom = createAction('SHARE_TO_CLASSROOM');
+export const sharedToClassroom = createAction('SHARED_TO_CLASSROOM');
+export const shareToClassroomError = createAction('SHARE_TO_CLASSROOM_ERROR');
+export const shareToClassroomDisplayed =
+  createAction('SHARE_TO_CLASSROOM_DISPLAYED');
+export const shareToClassroomNotDisplayed =
+  createAction('SHARE_TO_CLASSROOM_NOT_DISPLAYED');

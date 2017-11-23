@@ -8,6 +8,7 @@ import {
   GistImportError,
   RepoExportNotification,
   SnapshotNotification,
+  ShareToClassroomNotification,
 } from './notifications';
 
 const NOTIFICATION_COMPONENTS = {
@@ -15,13 +16,13 @@ const NOTIFICATION_COMPONENTS = {
   'gist-import-error': GistImportError,
   'repo-export-complete': RepoExportNotification,
   'snapshot-created': SnapshotNotification,
+  'share-to-classrom-complete': ShareToClassroomNotification,
 };
 
 function chooseNotificationComponent(notification) {
   if (notification.type in NOTIFICATION_COMPONENTS) {
     return NOTIFICATION_COMPONENTS[notification.type];
   }
-
   return GenericNotification;
 }
 

@@ -3,6 +3,9 @@ import {
   createGistFromProject,
   createRepoFromProject,
 } from '../clients/github';
+import {
+  createShareToClassroomUrl,
+} from '../clients/googleClassroom';
 import {createProjectSnapshot} from '../clients/firebase';
 import {
   snapshotCreated,
@@ -11,6 +14,8 @@ import {
   gistExportError,
   repoExported,
   repoExportError,
+  sharedToClassroom,
+  shareToClassroomError,
 } from '../actions/clients';
 import {getCurrentProject} from '../selectors';
 
@@ -48,10 +53,23 @@ export function* exportRepo() {
   }
 }
 
+export function* shareToClassroom() {
+  const project = yield select(getCurrentProject);
+  try {
+    const snapshotKey = yield call(createProjectSnapshot, project);
+    const shareToClassroomUrl =
+      yield call(createShareToClassroomUrl, snapshotKey);
+    yield put(sharedToClassroom(shareToClassroomUrl));
+  } catch (e) {
+    yield put(shareToClassroomError(e));
+  }
+}
+
 export default function* () {
   yield all([
     takeEvery('EXPORT_GIST', exportGist),
     takeEvery('EXPORT_REPO', exportRepo),
     takeEvery('CREATE_SNAPSHOT', createSnapshot),
+    takeEvery('SHARE_TO_CLASSROOM', shareToClassroom),
   ]);
 }

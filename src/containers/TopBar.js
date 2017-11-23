@@ -21,6 +21,7 @@ import {
   createSnapshot,
   exportGist,
   exportRepo,
+  shareToClassroom,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
@@ -73,6 +74,10 @@ function mapDispatchToProps(dispatch) {
 
     onExportRepo() {
       dispatch(exportRepo());
+    },
+
+    onShareToClassroom() {
+      dispatch(shareToClassroom());
     },
 
     onToggleLibrary(projectKey, libraryKey) {

@@ -46,6 +46,7 @@ export default function TopBar({
   onExportGist,
   onExportRepo,
   onLogOut,
+  onShareToClassroom,
   onStartLogIn,
   onToggleLibrary,
   onToggleTextSize,
@@ -96,6 +97,7 @@ export default function TopBar({
         onClick={partial(onClickMenu, 'hamburger')}
         onExportGist={onExportGist}
         onExportRepo={onExportRepo}
+        onShareToClassroom={onShareToClassroom}
       />
     </div>
   );
@@ -122,6 +124,7 @@ TopBar.propTypes = {
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
+  onShareToClassroom: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
   onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,

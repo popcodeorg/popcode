@@ -203,6 +203,17 @@ export default function ui(stateIn, action) {
         menu => menu === action.payload ? null : menu,
       );
 
+    case 'SHARE_TO_CLASSROOM_NOT_DISPLAYED':
+      return addNotification(
+        state,
+        'share-to-classrom-complete',
+        'notice',
+        {url: action.payload},
+      );
+
+    case 'SHARE_TO_CLASSROOM_ERROR':
+      return addNotification(state, 'share-to-classroom-error', 'error');
+
     default:
       return state;
   }

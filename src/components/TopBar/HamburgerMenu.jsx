@@ -17,6 +17,7 @@ const HamburgerMenu = createMenu({
     isUserAuthenticated,
     onExportGist,
     onExportRepo,
+    onShareToClassroom,
   }) {
     return tap([], (items) => {
       items.push(
@@ -25,6 +26,12 @@ const HamburgerMenu = createMenu({
           onClick={isGistExportInProgress ? noop : onExportGist}
         >
           {t('top-bar.export-gist')}
+        </MenuItem>,
+        <MenuItem
+          key="shareToClassroom"
+          onClick={onShareToClassroom}
+        >
+          {t('top-bar.share-to-classroom')}
         </MenuItem>,
       );
 
@@ -88,6 +95,7 @@ HamburgerMenu.propTypes = {
   isUserAuthenticated: PropTypes.bool.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
+  onShareToClassroom: PropTypes.func.isRequired,
 };
 
 export default HamburgerMenu;
