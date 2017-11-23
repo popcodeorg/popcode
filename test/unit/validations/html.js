@@ -166,7 +166,7 @@ test('ol with child text outside <li>', validationTest(
     payload: {
       tag: 'ol',
       children: 'li',
-      textContent: 'Invalid to have non-empty text nodes'
+      textContent: 'Invalid to have non-empty text nodes',
     },
   },
 ));
