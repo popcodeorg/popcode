@@ -250,7 +250,7 @@ class Workspace extends React.Component {
     }
 
     return (
-      <main className="environment">
+      <div className="environment">
         <EditorsColumn
           currentProject={currentProject}
           editorsFlex={editorsFlex}
@@ -275,7 +275,7 @@ class Workspace extends React.Component {
           />
         </DraggableCore>
         {this._renderOutput()}
-      </main>
+      </div>
     );
   }
 
@@ -284,13 +284,13 @@ class Workspace extends React.Component {
       <div className="layout">
         <TopBar />
         <NotificationList />
-        <div className="layout__columns">
+        <main className="layout__columns">
           <Instructions />
           {this._renderInstructionsBar()}
           <div className="workspace layout__main">
             {this._renderEnvironment()}
           </div>
-        </div>
+        </main>
       </div>
     );
   }
