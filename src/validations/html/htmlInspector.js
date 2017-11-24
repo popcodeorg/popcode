@@ -1,5 +1,6 @@
 import last from 'lodash/last';
 import isNull from 'lodash/isNull';
+import trim from 'lodash/trim';
 import {localizedArrayToSentence} from '../../util/arrayToSentence';
 import importLinters from '../importLinters';
 import Validator from '../Validator';
@@ -38,7 +39,48 @@ const errorMap = {
       },
     };
   },
+  'text-elements-as-list-children': (error) => {
+    const tag = error.context.tagName.toLowerCase();
+    let requiredChild = 'li';
+
+    if (tag === 'dl') {
+      requiredChild = 'dd> or <dt';
+    }
+
+    return {
+      reason: 'text-elements-as-list-children',
+      payload: {
+        tag,
+        children: requiredChild,
+        textContent: error.message,
+      },
+    };
+  },
 };
+
+function noListsWithTextChildrenValidator(listener, reporter) {
+  listener.on('element', (elementName, domElement) => {
+    if (
+      domElement.childNodes.length &&
+      (elementName === 'ul' || elementName === 'ol' || elementName === 'dl')
+    ) {
+      for (const node of domElement.childNodes) {
+        const textContent = trim(node.textContent);
+        if (
+          node.nodeType === Node.TEXT_NODE &&
+          textContent.length > 0
+        ) {
+          reporter.warn(
+            'text-elements-as-list-children',
+            textContent,
+            domElement,
+          );
+          break;
+        }
+      }
+    }
+  });
+}
 
 class HtmlInspectorValidator extends Validator {
   constructor(source) {
@@ -52,10 +94,16 @@ class HtmlInspectorValidator extends Validator {
     }
 
     const {HTMLInspector} = await importLinters();
+
+    HTMLInspector.rules.add(
+      'validate-list-children',
+      noListsWithTextChildrenValidator,
+    );
+
     return new Promise((resolve) => {
       HTMLInspector.inspect({
         domRoot: this._doc.documentElement,
-        useRules: ['validate-element-location'],
+        useRules: ['validate-element-location', 'validate-list-children'],
         onComplete: resolve,
       });
     });

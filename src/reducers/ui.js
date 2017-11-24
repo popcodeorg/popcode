@@ -21,8 +21,7 @@ const defaultState = new Immutable.Map().
   })).
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Map()).
-  set('topBar', new Immutable.Map({openMenu: null})).
-  set('lastRefreshTimestamp', null);
+  set('topBar', new Immutable.Map({openMenu: null}));
 
 function addNotification(state, type, severity, payload = {}) {
   return state.setIn(
@@ -156,9 +155,6 @@ export default function ui(stateIn, action) {
         return addNotification(state, 'empty-gist', 'error');
       }
       return addNotification(state, 'gist-export-error', 'error');
-
-    case 'REFRESH_PREVIEW':
-      return state.set('lastRefreshTimestamp', action.payload.timestamp);
 
     case 'APPLICATION_LOADED':
       if (action.payload.isExperimental) {

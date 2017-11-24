@@ -466,7 +466,6 @@ body {
 .preview {
   position: relative;
   display: flex;
-  overflow: hidden;
 }
 
 .preview__frame-container {
