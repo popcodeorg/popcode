@@ -53,7 +53,7 @@ export default function TopBar({
   const {popVariant, modifier} = uiVariants({validationState, isUserTyping});
 
   return (
-    <div className={classnames('top-bar', modifier)}>
+    <header className={classnames('top-bar', modifier)}>
       <div className="top-bar__logo-container">
         <Pop variant={popVariant} />
       </div>
@@ -97,7 +97,7 @@ export default function TopBar({
         onExportGist={onExportGist}
         onExportRepo={onExportRepo}
       />
-    </div>
+    </header>
   );
 }
 

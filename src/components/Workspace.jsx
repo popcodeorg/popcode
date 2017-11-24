@@ -284,13 +284,13 @@ class Workspace extends React.Component {
       <div className="layout">
         <TopBar />
         <NotificationList />
-        <div className="layout__columns">
+        <main className="layout__columns">
           <Instructions />
           {this._renderInstructionsBar()}
           <div className="workspace layout__main">
             {this._renderEnvironment()}
           </div>
-        </div>
+        </main>
       </div>
     );
   }
