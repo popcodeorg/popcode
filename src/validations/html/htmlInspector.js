@@ -97,7 +97,7 @@ class HtmlInspectorValidator extends Validator {
       /* webpackChunkName: 'linters' */
       'html-inspector',
     ));
-    
+
     HTMLInspector.rules.add(
       'validate-list-children',
       noListsWithTextChildrenValidator,
