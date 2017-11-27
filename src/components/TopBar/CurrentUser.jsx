@@ -18,13 +18,9 @@ export default function CurrentUser({
         'top-bar__menu-button',
         'top-bar__menu-button_primary',
       )}
+      onClick={onStartLogIn}
     >
-      <span
-        className="top-bar__log-in-prompt"
-        onClick={onStartLogIn}
-      >
-        {t('top-bar.session.log-in-prompt')}
-      </span>
+      {t('top-bar.session.log-in-prompt')}
     </div>
   );
 }
