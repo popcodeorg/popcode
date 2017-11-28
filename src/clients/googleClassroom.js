@@ -1,9 +1,11 @@
-const BASE_URL = 'https://classroom.google.com/u/0/share?url=';
+import qs from 'qs';
+
+const BASE_URL = 'https://classroom.google.com/u/0/share?';
 
 export function createShareToClassroomUrl(snapshotKey) {
   const uri = document.createElement('a');
-  uri.setAttribute('href', '/');
+  uri.href = '/';
   uri.search = `snapshot=${snapshotKey}`;
-  const classroomShareUrl = BASE_URL + uri.href;
+  const classroomShareUrl = BASE_URL + qs.stringify({url: uri.href});
   return classroomShareUrl;
 }

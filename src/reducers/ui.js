@@ -142,36 +142,11 @@ export default function ui(stateIn, action) {
         {snapshotKey: action.payload},
       );
 
-    case 'GIST_EXPORT_NOT_DISPLAYED':
-      return addNotification(
-        state,
-        'gist-export-complete',
-        'notice',
-        {url: action.payload},
-      );
-
-    case 'GIST_EXPORT_ERROR':
-      if (action.payload.name === 'EmptyGistError') {
-        return addNotification(state, 'empty-gist', 'error');
-      }
-      return addNotification(state, 'gist-export-error', 'error');
-
     case 'APPLICATION_LOADED':
       if (action.payload.isExperimental) {
         return state.set('experimental', true);
       }
       return state.set('experimental', false);
-
-    case 'REPO_EXPORT_NOT_DISPLAYED':
-      return addNotification(
-        state,
-        'repo-export-complete',
-        'notice',
-        {url: action.payload},
-      );
-
-    case 'REPO_EXPORT_ERROR':
-      return addNotification(state, 'repo-export-error', 'error');
 
     case 'SNAPSHOT_EXPORT_ERROR':
       return addNotification(state, 'snapshot-export-error', 'error');
@@ -199,16 +174,28 @@ export default function ui(stateIn, action) {
         menu => menu === action.payload ? null : menu,
       );
 
-    case 'SHARE_TO_CLASSROOM_NOT_DISPLAYED':
+    case 'PROJECT_EXPORT_NOT_DISPLAYED':
       return addNotification(
         state,
-        'share-to-classrom-complete',
+        'project-export-complete',
         'notice',
-        {url: action.payload},
+        action.payload,
       );
 
-    case 'SHARE_TO_CLASSROOM_ERROR':
-      return addNotification(state, 'share-to-classroom-error', 'error');
+    case 'PROJECT_EXPORT_ERROR':
+      if (action.payload.name === 'EmptyGistError') {
+        return addNotification(
+          state,
+          'empty-gist',
+          'error',
+        );
+      }
+      return addNotification(
+        state,
+        'project-export-error',
+        'error',
+        action.payload,
+      );
 
     default:
       return state;

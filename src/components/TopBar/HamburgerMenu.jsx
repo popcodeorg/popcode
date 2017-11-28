@@ -3,6 +3,7 @@ import {t} from 'i18next';
 import tap from 'lodash/tap';
 import PropTypes from 'prop-types';
 import React from 'react';
+import partial from 'lodash/partial';
 import config from '../../config';
 import createMenu, {MenuItem} from './createMenu';
 import HamburgerMenuButton from './HamburgerMenuButton';
@@ -13,23 +14,23 @@ const HamburgerMenu = createMenu({
 
   renderItems({
     isExperimental,
-    isGistExportInProgress,
+    isProjectExportInProgress,
     isUserAuthenticated,
-    onExportGist,
-    onExportRepo,
-    onShareToClassroom,
+    onExportProject,
   }) {
     return tap([], (items) => {
       items.push(
         <MenuItem
           key="exportGist"
-          onClick={isGistExportInProgress ? noop : onExportGist}
+          onClick={isProjectExportInProgress ? noop :
+            partial(onExportProject, 'gist')}
         >
           {t('top-bar.export-gist')}
         </MenuItem>,
         <MenuItem
-          key="shareToClassroom"
-          onClick={onShareToClassroom}
+          key="exportToClassroom"
+          onClick={isProjectExportInProgress ? noop :
+            partial(onExportProject, 'classroom')}
         >
           {t('top-bar.share-to-classroom')}
         </MenuItem>,
@@ -39,7 +40,7 @@ const HamburgerMenu = createMenu({
         items.push(
           <MenuItem
             key="exportRepo"
-            onClick={onExportRepo}
+            onClick={partial(onExportProject, 'repo')}
           >
             {t('top-bar.export-repo')}
           </MenuItem>,
@@ -90,12 +91,10 @@ const HamburgerMenu = createMenu({
 
 HamburgerMenu.propTypes = {
   isExperimental: PropTypes.bool.isRequired,
-  isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  isProjectExportInProgress: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
-  onExportGist: PropTypes.func.isRequired,
-  onExportRepo: PropTypes.func.isRequired,
-  onShareToClassroom: PropTypes.func.isRequired,
+  onExportProject: PropTypes.func.isRequired,
 };
 
 export default HamburgerMenu;

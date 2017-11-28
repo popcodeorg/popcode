@@ -30,7 +30,7 @@ export default function TopBar({
   currentUser,
   enabledLibraries,
   isExperimental,
-  isGistExportInProgress,
+  isProjectExportInProgress,
   isUserAuthenticated,
   isUserTyping,
   isSnapshotInProgress,
@@ -43,10 +43,8 @@ export default function TopBar({
   onCloseMenu,
   onCreateNewProject,
   onCreateSnapshot,
-  onExportGist,
-  onExportRepo,
+  onExportProject,
   onLogOut,
-  onShareToClassroom,
   onStartLogIn,
   onToggleLibrary,
   onToggleTextSize,
@@ -91,13 +89,11 @@ export default function TopBar({
       />
       <HamburgerMenu
         isExperimental={isExperimental}
-        isGistExportInProgress={isGistExportInProgress}
         isOpen={openMenu === 'hamburger'}
+        isProjectExportInProgress={isProjectExportInProgress}
         isUserAuthenticated={isUserAuthenticated}
         onClick={partial(onClickMenu, 'hamburger')}
-        onExportGist={onExportGist}
-        onExportRepo={onExportRepo}
-        onShareToClassroom={onShareToClassroom}
+        onExportProject={onExportProject}
       />
     </header>
   );
@@ -108,7 +104,7 @@ TopBar.propTypes = {
   currentUser: PropTypes.object.isRequired,
   enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
   isExperimental: PropTypes.bool.isRequired,
-  isGistExportInProgress: PropTypes.bool.isRequired,
+  isProjectExportInProgress: PropTypes.bool.isRequired,
   isSnapshotInProgress: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
@@ -121,10 +117,8 @@ TopBar.propTypes = {
   onCloseMenu: PropTypes.func.isRequired,
   onCreateNewProject: PropTypes.func.isRequired,
   onCreateSnapshot: PropTypes.func.isRequired,
-  onExportGist: PropTypes.func.isRequired,
-  onExportRepo: PropTypes.func.isRequired,
+  onExportProject: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
-  onShareToClassroom: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
   onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,

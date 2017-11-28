@@ -17,7 +17,7 @@ import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
   from './isCurrentProjectSyntacticallyValid';
 import isExperimental from './isExperimental';
-import isGistExportInProgress from './isGistExportInProgress';
+import isProjectExportInProgress from './isProjectExportInProgress';
 import isSnapshotInProgress from './isSnapshotInProgress';
 import isTextSizeLarge from './isTextSizeLarge';
 import isUserAuthenticated from './isUserAuthenticated';
@@ -43,7 +43,7 @@ export {
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isExperimental,
-  isGistExportInProgress,
+  isProjectExportInProgress,
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserAuthenticated,

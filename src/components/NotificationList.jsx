@@ -4,19 +4,17 @@ import partial from 'lodash/partial';
 import NotificationContainer from './NotificationContainer';
 import {
   GenericNotification,
-  GistExportNotification,
   GistImportError,
-  RepoExportNotification,
   SnapshotNotification,
-  ShareToClassroomNotification,
+  ProjectExportNotification,
+  ProjectExportError,
 } from './notifications';
 
 const NOTIFICATION_COMPONENTS = {
-  'gist-export-complete': GistExportNotification,
   'gist-import-error': GistImportError,
-  'repo-export-complete': RepoExportNotification,
   'snapshot-created': SnapshotNotification,
-  'share-to-classrom-complete': ShareToClassroomNotification,
+  'project-export-complete': ProjectExportNotification,
+  'project-export-error': ProjectExportError,
 };
 
 function chooseNotificationComponent(notification) {
