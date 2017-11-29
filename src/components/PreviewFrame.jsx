@@ -8,6 +8,7 @@ import {sourceDelimiter} from '../util/generatePreview';
 
 const sandboxOptions = [
   'allow-forms',
+  'allow-modals',
   'allow-popups',
   'allow-scripts',
   'allow-top-navigation',

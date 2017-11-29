@@ -50,10 +50,6 @@ const alertAndPromptReplacementScript = `(${function() {
       },
       configurable: true,
     },
-    prompt: {
-      value: (message, defaultValue = '') => defaultValue,
-      configurable: true,
-    },
   });
 
   delete window.swal; // eslint-disable-line prefer-reflect
