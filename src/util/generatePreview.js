@@ -13,6 +13,9 @@ const parser = new DOMParser();
 export const sourceDelimiter = '/*__POPCODESTART__*/';
 
 const errorHandlerScript = `(${function() {
+  const windowParent = window.parent;
+  const windowName = window.name;
+
   window.onerror = (fullMessage, _file, line, column, error) => {
     let name, message;
     if (error) {
@@ -27,9 +30,9 @@ const errorHandlerScript = `(${function() {
       }
     }
 
-    window.parent.postMessage(JSON.stringify({
+    windowParent.postMessage(JSON.stringify({
       type: 'org.popcode.error',
-      windowName: window.name,
+      windowName,
       payload: {
         name,
         message,
@@ -43,6 +46,8 @@ const errorHandlerScript = `(${function() {
 const messageHandlerScript = `(${function() {
   // eslint-disable-next-line no-eval
   const globalEval = window.eval;
+  const windowName = window.name;
+  const windowParent = window.parent;
 
   window.addEventListener('message', ({data: message}) => {
     let type, expression, key;
@@ -58,15 +63,15 @@ const messageHandlerScript = `(${function() {
 
     try {
       const value = globalEval(expression);
-      window.parent.postMessage(JSON.stringify({
+      windowParent.postMessage(JSON.stringify({
         type: 'org.popcode.console.value',
-        windowName: window.name,
+        windowName,
         payload: {key, value},
       }), '*');
     } catch (error) {
-      window.parent.postMessage(JSON.stringify({
+      windowParent.postMessage(JSON.stringify({
         type: 'org.popcode.console.error',
-        windowName: window.name,
+        windowName,
         payload: {key, error: {name: error.name, message: error.message}},
       }), '*');
     }
