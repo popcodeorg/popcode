@@ -1,4 +1,5 @@
 import Validator from '../Validator';
+import importLinters from '../importLinters';
 
 const errorMap = {
   ATTRIBUTE_IN_CLOSING_TAG: error => ({
@@ -124,7 +125,7 @@ class SlowparseValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const {Slowparse} = await System.import('../linters');
+    const {Slowparse} = await importLinters();
     let error;
     try {
       ({error} = Slowparse.HTML(document, this._source, {errorDetectors}));
