@@ -4,6 +4,7 @@ import {
   getConsoleHistory,
   getCurrentProjectKey,
   getHiddenUIComponents,
+  isExperimental,
 } from '../selectors';
 import {evaluateConsoleEntry, toggleComponent} from '../actions';
 
@@ -11,6 +12,7 @@ function mapStateToProps(state) {
   return {
     currentProjectKey: getCurrentProjectKey(state),
     history: getConsoleHistory(state),
+    isEnabled: isExperimental(state),
     isOpen: !getHiddenUIComponents(state).includes('console'),
   };
 }

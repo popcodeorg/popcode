@@ -51,7 +51,17 @@ export default class Console extends Component {
   }
 
   render() {
-    const {currentProjectKey, history, isOpen, onToggleVisible} = this.props;
+    const {
+      currentProjectKey,
+      history,
+      isEnabled,
+      isOpen,
+      onToggleVisible,
+    } = this.props;
+
+    if (!isEnabled) {
+      return null;
+    }
 
     const console = (
       <div className="console__repl output__item">
@@ -83,6 +93,7 @@ export default class Console extends Component {
 Console.propTypes = {
   currentProjectKey: PropTypes.string.isRequired,
   history: ImmutablePropTypes.iterable.isRequired,
+  isEnabled: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onInput: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
