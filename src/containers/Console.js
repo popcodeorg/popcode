@@ -1,11 +1,17 @@
 import {connect} from 'react-redux';
 import Console from '../components/Console';
-import {getConsoleHistory} from '../selectors';
-import {evaluateConsoleEntry} from '../actions';
+import {
+  getConsoleHistory,
+  getCurrentProjectKey,
+  getHiddenUIComponents,
+} from '../selectors';
+import {evaluateConsoleEntry, toggleComponent} from '../actions';
 
 function mapStateToProps(state) {
   return {
+    currentProjectKey: getCurrentProjectKey(state),
     history: getConsoleHistory(state),
+    isOpen: !getHiddenUIComponents(state).includes('console'),
   };
 }
 
@@ -13,6 +19,10 @@ function mapDispatchToProps(dispatch) {
   return {
     onInput(input) {
       dispatch(evaluateConsoleEntry(input));
+    },
+
+    onToggleVisible(projectKey) {
+      dispatch(toggleComponent(projectKey, 'console'));
     },
   };
 }

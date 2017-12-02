@@ -13,7 +13,13 @@ import {isPristineProject} from '../util/projectUtils';
 const emptyMap = new Immutable.Map();
 
 function addProject(state, project) {
-  return state.set(project.projectKey, Project.fromJS(project));
+  return state.set(
+    project.projectKey,
+    Project.fromJS(project).update(
+      'hiddenUIComponents',
+      components => components.add('console'),
+    ),
+  );
 }
 
 function removePristineExcept(state, keepProjectKey) {

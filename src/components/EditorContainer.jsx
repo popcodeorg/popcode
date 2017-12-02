@@ -21,7 +21,7 @@ function EditorContainer({children, language, source, style, onHide, onRef}) {
       style={prefixAll(style)}
     >
       <div
-        className="editors__label editors__label_expanded"
+        className="label editors__label editors__label_expanded"
         onClick={onHide}
       >
         {t(`languages.${language}`)}

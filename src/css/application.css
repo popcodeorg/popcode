@@ -390,14 +390,7 @@ body {
 }
 
 .editors__label {
-  background-color: var(--color-chrome);
-  color: var(--color-dark-gray);
-  cursor: pointer;
-  font-family: 'Roboto';
-  font-size: var(--font-size-menu);
-  padding: 0.5em 1em;
   text-align: right;
-  user-select: none;
 }
 
 .editors__label_expanded {
@@ -464,10 +457,18 @@ body {
 /** @define console */
 
 .console {
-  font-family: 'Inconsolata';
-  flex: 0 0 40%;
-  border-top: 2px solid var(--color-light-gray);
+  flex: 0 0 auto;
+}
+
+.console__label {
+  cursor: pointer;
+  background-color: var(--color-low-contrast-gray);
+}
+
+.console__repl {
   padding: 0.5em;
+  font-family: 'Inconsolata';
+  height: 40vh;
 }
 
 .console__entry,
@@ -660,6 +661,18 @@ body {
 
 .pop-throbber path {
   fill: var(--color-low-contrast-gray) !important;
+}
+
+/** @define label */
+
+.label {
+  background-color: var(--color-chrome);
+  color: var(--color-dark-gray);
+  cursor: pointer;
+  font-family: 'Roboto';
+  font-size: var(--font-size-menu);
+  padding: 0.5em 1em;
+  user-select: none;
 }
 
 /** @define utilities */
