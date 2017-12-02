@@ -192,7 +192,7 @@ export default function ui(stateIn, action) {
       }
       return addNotification(
         state,
-        'project-export-error',
+        `${action.payload.exportType}-export-error`,
         'error',
         action.payload,
       );

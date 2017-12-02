@@ -6,6 +6,5 @@ export function createShareToClassroomUrl(snapshotKey) {
   const uri = document.createElement('a');
   uri.href = '/';
   uri.search = `snapshot=${snapshotKey}`;
-  const classroomShareUrl = BASE_URL + qs.stringify({url: uri.href});
-  return classroomShareUrl;
+  return BASE_URL + qs.stringify({url: uri.href});
 }

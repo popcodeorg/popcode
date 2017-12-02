@@ -3,7 +3,6 @@ import {t} from 'i18next';
 import tap from 'lodash/tap';
 import PropTypes from 'prop-types';
 import React from 'react';
-import partial from 'lodash/partial';
 import config from '../../config';
 import createMenu, {MenuItem} from './createMenu';
 import HamburgerMenuButton from './HamburgerMenuButton';
@@ -14,23 +13,25 @@ const HamburgerMenu = createMenu({
 
   renderItems({
     isExperimental,
-    isProjectExportInProgress,
+    isGistExportInProgress,
+    isRepoExportInProgress,
+    isClassroomExportInProgress,
     isUserAuthenticated,
-    onExportProject,
+    onExportGist,
+    onExportRepo,
+    onExportToClassroom,
   }) {
     return tap([], (items) => {
       items.push(
         <MenuItem
           key="exportGist"
-          onClick={isProjectExportInProgress ? noop :
-            partial(onExportProject, 'gist')}
+          onClick={isGistExportInProgress ? noop : onExportGist}
         >
           {t('top-bar.export-gist')}
         </MenuItem>,
         <MenuItem
           key="exportToClassroom"
-          onClick={isProjectExportInProgress ? noop :
-            partial(onExportProject, 'classroom')}
+          onClick={isClassroomExportInProgress ? noop : onExportToClassroom}
         >
           {t('top-bar.share-to-classroom')}
         </MenuItem>,
@@ -40,7 +41,7 @@ const HamburgerMenu = createMenu({
         items.push(
           <MenuItem
             key="exportRepo"
-            onClick={partial(onExportProject, 'repo')}
+            onClick={isRepoExportInProgress ? noop : onExportRepo}
           >
             {t('top-bar.export-repo')}
           </MenuItem>,
@@ -90,11 +91,15 @@ const HamburgerMenu = createMenu({
 
 
 HamburgerMenu.propTypes = {
+  isClassroomExportInProgress: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
+  isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  isProjectExportInProgress: PropTypes.bool.isRequired,
+  isRepoExportInProgress: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
-  onExportProject: PropTypes.func.isRequired,
+  onExportGist: PropTypes.func.isRequired,
+  onExportRepo: PropTypes.func.isRequired,
+  onExportToClassroom: PropTypes.func.isRequired,
 };
 
 export default HamburgerMenu;

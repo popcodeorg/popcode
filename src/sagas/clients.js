@@ -25,11 +25,10 @@ export function* createSnapshot() {
   }
 }
 
-export function* exportProject({payload}) {
+export function* exportProject({payload: {exportType}}) {
   const state = yield select();
   const project = getCurrentProject(state);
   const user = state.get('user').toJS();
-  const {exportType} = payload;
 
   try {
     if (exportType === 'gist') {

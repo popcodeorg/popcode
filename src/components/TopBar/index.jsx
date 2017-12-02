@@ -30,7 +30,9 @@ export default function TopBar({
   currentUser,
   enabledLibraries,
   isExperimental,
-  isProjectExportInProgress,
+  isGistExportInProgress,
+  isRepoExportInProgress,
+  isClassroomExportInProgress,
   isUserAuthenticated,
   isUserTyping,
   isSnapshotInProgress,
@@ -43,7 +45,9 @@ export default function TopBar({
   onCloseMenu,
   onCreateNewProject,
   onCreateSnapshot,
-  onExportProject,
+  onExportGist,
+  onExportRepo,
+  onExportToClassroom,
   onLogOut,
   onStartLogIn,
   onToggleLibrary,
@@ -88,12 +92,16 @@ export default function TopBar({
         onStartLogIn={onStartLogIn}
       />
       <HamburgerMenu
+        isClassroomExportInProgress={isClassroomExportInProgress}
         isExperimental={isExperimental}
+        isGistExportInProgress={isGistExportInProgress}
         isOpen={openMenu === 'hamburger'}
-        isProjectExportInProgress={isProjectExportInProgress}
+        isRepoExportInProgress={isRepoExportInProgress}
         isUserAuthenticated={isUserAuthenticated}
         onClick={partial(onClickMenu, 'hamburger')}
-        onExportProject={onExportProject}
+        onExportGist={onExportGist}
+        onExportRepo={onExportRepo}
+        onExportToClassroom={onExportToClassroom}
       />
     </header>
   );
@@ -103,8 +111,10 @@ TopBar.propTypes = {
   currentProjectKey: PropTypes.string,
   currentUser: PropTypes.object.isRequired,
   enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isClassroomExportInProgress: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
-  isProjectExportInProgress: PropTypes.bool.isRequired,
+  isGistExportInProgress: PropTypes.bool.isRequired,
+  isRepoExportInProgress: PropTypes.bool.isRequired,
   isSnapshotInProgress: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
@@ -117,7 +127,9 @@ TopBar.propTypes = {
   onCloseMenu: PropTypes.func.isRequired,
   onCreateNewProject: PropTypes.func.isRequired,
   onCreateSnapshot: PropTypes.func.isRequired,
-  onExportProject: PropTypes.func.isRequired,
+  onExportGist: PropTypes.func.isRequired,
+  onExportRepo: PropTypes.func.isRequired,
+  onExportToClassroom: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
   onToggleLibrary: PropTypes.func.isRequired,
