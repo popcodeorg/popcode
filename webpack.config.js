@@ -86,6 +86,11 @@ module.exports = (env = 'development') => {
       failOnError: true,
     }),
     new OfflinePlugin({
+      caches: {
+        main: [':rest:'],
+        additional: ['linters*.js'],
+      },
+      safeToUseOptionalCaches: true,
       publicPath: '/',
       responseStrategy: 'network-first',
       externals: [
@@ -117,13 +122,13 @@ module.exports = (env = 'development') => {
       template: path.resolve(__dirname, 'src/html/index.html'),
       chunksSortMode: 'dependency',
     }),
-    new InlineChunkManifestHtmlPlugin(),
   ];
 
   if (isTest) {
     plugins.push(new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}));
   } else {
     plugins.push(
+      new InlineChunkManifestHtmlPlugin(),
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         minChunks({context}) {

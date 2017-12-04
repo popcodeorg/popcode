@@ -1,7 +1,7 @@
 import find from 'lodash/find';
 import inRange from 'lodash/inRange';
 import Validator from '../Validator';
-import importLinters from '../importLinters';
+import retryingFailedImports from '../retryingFailedImports';
 
 const UNEXPECTED_TOKEN_EXPR = /^Unexpected token (.+)$/;
 
@@ -79,7 +79,10 @@ class EsprimaValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const {esprima} = await importLinters();
+    const esprima = await retryingFailedImports(() => import(
+      /* webpackChunkName: 'linters' */
+      'esprima',
+    ));
     try {
       esprima.parse(this._source);
     } catch (error) {

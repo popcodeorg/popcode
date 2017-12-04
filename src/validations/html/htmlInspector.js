@@ -2,7 +2,7 @@ import last from 'lodash/last';
 import isNull from 'lodash/isNull';
 import trim from 'lodash/trim';
 import {localizedArrayToSentence} from '../../util/arrayToSentence';
-import importLinters from '../importLinters';
+import retryingFailedImports from '../retryingFailedImports';
 import Validator from '../Validator';
 
 const specialCases = {
@@ -93,7 +93,10 @@ class HtmlInspectorValidator extends Validator {
       return Promise.resolve([]);
     }
 
-    const {HTMLInspector} = await importLinters();
+    const HTMLInspector = await retryingFailedImports(() => import(
+      /* webpackChunkName: 'linters' */
+      'html-inspector',
+    ));
 
     HTMLInspector.rules.add(
       'validate-list-children',
