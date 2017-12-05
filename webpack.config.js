@@ -17,6 +17,7 @@ const map = require('lodash/map');
 const includes = require('lodash/includes');
 const git = require('git-rev-sync');
 const babel = require('babel-core');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const babelLoaderVersion =
   require('./node_modules/babel-loader/package.json').version;
 
@@ -145,10 +146,12 @@ module.exports = (env = 'development') => {
   }
 
   if (isProduction) {
-    plugins.push(new webpack.optimize.UglifyJsPlugin({
-      compress: {warnings: false},
-      output: {comments: false},
+    plugins.push(new UglifyJsPlugin({
       sourceMap: true,
+      uglifyOptions: {
+        compress: {warnings: false},
+        output: {comments: false},
+      },
     }));
   }
 
@@ -267,6 +270,7 @@ module.exports = (env = 'development') => {
             matchModule('lodash-es'),
             matchModule('redux'),
             matchModule('stylelint'),
+            matchModule('postcss-html'),
           ],
           use: {loader: 'babel-loader', options: babelrc},
         },
