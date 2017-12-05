@@ -270,6 +270,7 @@ module.exports = (env = 'development') => {
             matchModule('lodash-es'),
             matchModule('redux'),
             matchModule('stylelint'),
+            matchModule('postcss-html'),
           ],
           use: {loader: 'babel-loader', options: babelrc},
         },
