@@ -114,10 +114,10 @@ export default class EditorsColumn extends React.Component {
             `editor.${language}`,
           )}
         >
-          <div className="editors__label editors__label_collapsed">
+          <div className="editors__label editors__label_collapsed sub-bar">
+            <span className="u__icon editors__chevron">&#xf077;</span>
             {t(`languages.${language}`)}
             {' '}
-            <span className="u__icon">&#xf077;</span>
           </div>
         </div>
       ));
