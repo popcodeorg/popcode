@@ -21,12 +21,12 @@ function EditorContainer({children, language, source, style, onHide, onRef}) {
       style={prefixAll(style)}
     >
       <div
-        className="editors__label editors__label_expanded"
+        className="editors__label editors__label_expanded sub-bar"
         onClick={onHide}
       >
+        <span className="u__icon editors__chevron">&#xf078;</span>
         {t(`languages.${language}`)}
         {' '}
-        <span className="u__icon">&#xf078;</span>
       </div>
       {helpText}
       {children}

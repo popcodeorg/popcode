@@ -28,16 +28,20 @@ export default function Preview({
 
   return (
     <div className="preview output__item">
-      <div className="preview__title-bar">
-        <span
-          className="preview__button preview__button_pop-out u__icon"
-          onClick={onPopOutProject}
-        >&#xf08e;</span>
-        {title}
-        <span
-          className="preview__button preview__button_reset u__icon"
-          onClick={onRefreshClick}
-        >&#xf021;</span>
+      <div className="preview__title-bar sub-bar">
+        <div className="sub-bar__left">
+          {title}
+        </div>
+        <div className="sub-bar__right">
+          <span
+            className="sub-bar__button"
+            onClick={onPopOutProject}
+          >Full screen</span>
+          <span
+            className="sub-bar__button"
+            onClick={onRefreshClick}
+          >Refresh</span>
+        </div>
       </div>
       {projectFrames}
     </div>
