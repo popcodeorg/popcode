@@ -13,6 +13,9 @@ const parser = new DOMParser();
 export const sourceDelimiter = '/*__POPCODESTART__*/';
 
 const errorHandlerScript = `(${function() {
+  const windowParent = window.parent;
+  const windowName = window.name;
+
   window.onerror = (fullMessage, _file, line, column, error) => {
     let name, message;
     if (error) {
@@ -27,10 +30,10 @@ const errorHandlerScript = `(${function() {
       }
     }
 
-    window.parent.postMessage(JSON.stringify({
+    windowParent.postMessage(JSON.stringify({
       type: 'org.popcode.error',
-      windowName: window.name,
-      error: {
+      windowName,
+      payload: {
         name,
         message,
         line,
@@ -38,6 +41,41 @@ const errorHandlerScript = `(${function() {
       },
     }), '*');
   };
+}.toString()}());`;
+
+const messageHandlerScript = `(${function() {
+  // eslint-disable-next-line no-eval
+  const globalEval = window.eval;
+  const windowName = window.name;
+  const windowParent = window.parent;
+
+  window.addEventListener('message', ({data: message}) => {
+    let type, expression, key;
+    try {
+      ({type, payload: {key, expression}} = JSON.parse(message));
+    } catch (_e) {
+      return;
+    }
+
+    if (type !== 'org.popcode.console.expression') {
+      return;
+    }
+
+    try {
+      const value = globalEval(expression);
+      windowParent.postMessage(JSON.stringify({
+        type: 'org.popcode.console.value',
+        windowName,
+        payload: {key, value},
+      }), '*');
+    } catch (error) {
+      windowParent.postMessage(JSON.stringify({
+        type: 'org.popcode.console.error',
+        windowName,
+        payload: {key, error: {name: error.name, message: error.message}},
+      }), '*');
+    }
+  });
 }.toString()}());`;
 
 const alertAndPromptReplacementScript = `(${function() {
@@ -80,6 +118,9 @@ export class PreviewGenerator {
     this._addCss();
     if (options.propagateErrorsToParent) {
       this._addErrorHandling();
+    }
+    if (options.listenForMessages) {
+      this._addMessageHandling();
     }
 
     if (options.nonBlockingAlertsAndPrompts) {
@@ -147,6 +188,12 @@ export class PreviewGenerator {
   _addErrorHandling() {
     const scriptTag = this._previewDocument.createElement('script');
     scriptTag.innerHTML = errorHandlerScript;
+    this.previewBody.appendChild(scriptTag);
+  }
+
+  _addMessageHandling() {
+    const scriptTag = this._previewDocument.createElement('script');
+    scriptTag.innerHTML = messageHandlerScript;
     this.previewBody.appendChild(scriptTag);
   }
 
