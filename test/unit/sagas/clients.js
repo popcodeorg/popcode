@@ -2,11 +2,11 @@ import test from 'tape';
 import {testSaga} from 'redux-saga-test-plan';
 import {
   createSnapshot as createSnapshotSaga,
-  exportGist as exportGistSaga,
+  exportProject as exportProjectSaga,
 } from '../../../src/sagas/clients';
 import {
-  gistExported,
-  gistExportError,
+  projectExported,
+  projectExportError,
   snapshotCreated,
   snapshotExportError,
 } from '../../../src/actions/clients';
@@ -44,13 +44,14 @@ test('createSnapshot()', (t) => {
   });
 });
 
-test('exportGist()', (t) => {
+test('exportProject()', (t) => {
   const url = 'https://gist.github.com/abc123';
+  const exportType = 'gist';
   const scenario = new Scenario();
   scenario.logIn();
 
   function initiateExport(assert) {
-    return testSaga(exportGistSaga).
+    return testSaga(exportProjectSaga, {payload: {exportType}}).
       next().inspect((effect) => {
         assert.ok(effect.SELECT, 'invokes select effect');
       }).
@@ -63,7 +64,7 @@ test('exportGist()', (t) => {
 
   t.test('with successful export', (assert) => {
     initiateExport(assert).
-      next({html_url: url}).put(gistExported(url)).
+      next({html_url: url}).put(projectExported(url, exportType)).
       next().isDone();
     assert.end();
   });
@@ -71,7 +72,7 @@ test('exportGist()', (t) => {
   t.test('with error', (assert) => {
     const error = new Error();
     initiateExport(assert).
-      throw(error).put(gistExportError(error)).
+      throw(error).put(projectExportError(exportType)).
       next().isDone();
     assert.end();
   });
