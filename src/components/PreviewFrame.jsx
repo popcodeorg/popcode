@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
 import {t} from 'i18next';
@@ -26,6 +27,21 @@ class PreviewFrame extends React.Component {
     window.addEventListener('message', this._onMessage);
   }
 
+  componentWillReceiveProps(newProps) {
+    const {consoleEntries: previousConsoleEntries, isActive} = this.props;
+
+    if (this._frame && isActive) {
+      for (const [key, {expression}] of newProps.consoleEntries) {
+        if (!previousConsoleEntries.has(key)) {
+          this._frame.contentWindow.postMessage(JSON.stringify({
+            type: 'org.popcode.console.expression',
+            payload: {key, expression},
+          }), '*');
+        }
+      }
+    }
+  }
+
   shouldComponentUpdate() {
     return false;
   }
@@ -42,36 +58,52 @@ class PreviewFrame extends React.Component {
   }
 
   _onMessage(message) {
+    if (!this.props.isActive) {
+      return;
+    }
+
     if (typeof message.data !== 'string') {
       return;
     }
 
-    let data;
+    let type, windowName, payload;
     try {
-      data = JSON.parse(message.data);
+      ({type, windowName, payload} = JSON.parse(message.data));
     } catch (_e) {
       return;
     }
 
-    if (data.type !== 'org.popcode.error') {
+    if (windowName !== this._frameName) {
       return;
     }
 
-    if (data.windowName !== this._frameName) {
-      return;
+    switch (type) {
+      case 'org.popcode.error':
+        this._handleErrorMessage(payload);
+        break;
+      case 'org.popcode.console.value':
+        this._handleConsoleValueMessage(payload);
+        break;
+      case 'org.popcode.console.error':
+        this._handleConsoleErrorMessage(payload);
+        break;
+      default:
+        break;
     }
+  }
 
-    let line = data.error.line - this._runtimeErrorLineOffset();
+  _handleErrorMessage(error) {
+    let line = error.line - this._runtimeErrorLineOffset();
 
-    if (data.error.message === 'Loop Broken!') {
+    if (error.message === 'Loop Broken!') {
       this._handleInfiniteLoop(line);
       return;
     }
 
-    const ErrorConstructor = window[data.error.name] || Error;
-    const error = new ErrorConstructor(data.error.message);
-
-    const normalizedError = normalizeError(error);
+    const ErrorConstructor = window[error.name] || Error;
+    const normalizedError = normalizeError(
+      new ErrorConstructor(error.message),
+    );
 
     if (Bowser.safari) {
       line = 1;
@@ -82,9 +114,17 @@ class PreviewFrame extends React.Component {
       text: normalizedError.message,
       raw: normalizedError.message,
       row: line - 1,
-      column: data.error.column,
+      column: error.column,
       type: 'error',
     });
+  }
+
+  _handleConsoleErrorMessage({key, error: {name, message}}) {
+    this.props.onConsoleError(key, name, message);
+  }
+
+  _handleConsoleValueMessage({key, value}) {
+    this.props.onConsoleValue(key, value);
   }
 
   _handleInfiniteLoop(line) {
@@ -100,6 +140,8 @@ class PreviewFrame extends React.Component {
   }
 
   _attachToFrame(frame) {
+    this._frame = frame;
+
     if (!frame) {
       return;
     }
@@ -131,7 +173,11 @@ class PreviewFrame extends React.Component {
 }
 
 PreviewFrame.propTypes = {
+  consoleEntries: ImmutablePropTypes.iterable.isRequired,
+  isActive: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
+  onConsoleError: PropTypes.func.isRequired,
+  onConsoleValue: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
 };
 

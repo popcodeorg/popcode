@@ -5,6 +5,8 @@ import bindAll from 'lodash/bindAll';
 import get from 'lodash/get';
 import throttle from 'lodash/throttle';
 import noop from 'lodash/noop';
+import createAceSessionWithoutWorker
+  from '../util/createAceSessionWithoutWorker';
 
 import 'brace/ext/searchbox';
 import 'brace/mode/html';
@@ -15,13 +17,6 @@ import 'brace/theme/monokai';
 const RESIZE_THROTTLE = 250;
 const NORMAL_FONTSIZE = 14;
 const LARGE_FONTSIZE = 20;
-
-function createSessionWithoutWorker(source, language) {
-  const session = ACE.createEditSession(source, null);
-  session.setUseWorker(false);
-  session.setMode(`ace/mode/${language}`);
-  return session;
-}
 
 class Editor extends React.Component {
   constructor() {
@@ -131,7 +126,7 @@ class Editor extends React.Component {
   }
 
   _startNewSession(source) {
-    const session = createSessionWithoutWorker(source, this.props.language);
+    const session = createAceSessionWithoutWorker(this.props.language, source);
     session.setUseWrapMode(true);
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());

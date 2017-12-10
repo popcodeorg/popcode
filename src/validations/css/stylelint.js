@@ -1,5 +1,5 @@
 import Validator from '../Validator';
-import importLinters from '../importLinters';
+import retryingFailedImports from '../retryingFailedImports';
 
 const errorMap = {
   'syntaxError/Unclosed block': () => ({
@@ -21,7 +21,10 @@ class StyleLintValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const {stylelint} = await importLinters();
+    const {'default': stylelint} = await retryingFailedImports(() => import(
+      /* webpackChunkName: 'linters' */
+      '../../util/minimalStylelint',
+    ));
     let result;
     try {
       result = await stylelint(this._source);

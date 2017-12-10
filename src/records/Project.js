@@ -12,7 +12,7 @@ export default class Project extends Record({
   projectKey: null,
   sources: new Sources(),
   enabledLibraries: new Set(),
-  hiddenUIComponents: new Set(),
+  hiddenUIComponents: new Set(['console']),
   updatedAt: null,
   instructions: '',
 }) {

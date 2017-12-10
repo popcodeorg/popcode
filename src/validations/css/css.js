@@ -1,5 +1,5 @@
 import Validator from '../Validator';
-import importLinters from '../importLinters';
+import retryingFailedImports from '../retryingFailedImports';
 
 const errorMap = {
   'missing \'{\'': () => ({reason: 'missing-opening-curly'}),
@@ -21,7 +21,10 @@ class CssValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const {css} = await importLinters();
+    const css = await retryingFailedImports(() => import(
+      /* webpackChunkName: 'linters' */
+      'css',
+    ));
     return css.parse(this._source, {silent: true}).stylesheet.parsingErrors;
   }
 

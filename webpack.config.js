@@ -17,6 +17,7 @@ const map = require('lodash/map');
 const includes = require('lodash/includes');
 const git = require('git-rev-sync');
 const babel = require('babel-core');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const babelLoaderVersion =
   require('./node_modules/babel-loader/package.json').version;
 
@@ -86,6 +87,11 @@ module.exports = (env = 'development') => {
       failOnError: true,
     }),
     new OfflinePlugin({
+      caches: {
+        main: [':rest:'],
+        additional: ['linters*.js'],
+      },
+      safeToUseOptionalCaches: true,
       publicPath: '/',
       responseStrategy: 'network-first',
       externals: [
@@ -117,13 +123,13 @@ module.exports = (env = 'development') => {
       template: path.resolve(__dirname, 'src/html/index.html'),
       chunksSortMode: 'dependency',
     }),
-    new InlineChunkManifestHtmlPlugin(),
   ];
 
   if (isTest) {
     plugins.push(new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}));
   } else {
     plugins.push(
+      new InlineChunkManifestHtmlPlugin(),
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         minChunks({context}) {
@@ -140,10 +146,12 @@ module.exports = (env = 'development') => {
   }
 
   if (isProduction) {
-    plugins.push(new webpack.optimize.UglifyJsPlugin({
-      compress: {warnings: false},
-      output: {comments: false},
+    plugins.push(new UglifyJsPlugin({
       sourceMap: true,
+      uglifyOptions: {
+        compress: {warnings: false},
+        output: {comments: false},
+      },
     }));
   }
 
@@ -262,6 +270,7 @@ module.exports = (env = 'development') => {
             matchModule('lodash-es'),
             matchModule('redux'),
             matchModule('stylelint'),
+            matchModule('postcss-html'),
           ],
           use: {loader: 'babel-loader', options: babelrc},
         },

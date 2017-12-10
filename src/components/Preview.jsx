@@ -6,7 +6,10 @@ import PreviewFrame from './PreviewFrame';
 
 export default function Preview({
   compiledProjects,
+  consoleEntries,
   showingErrors,
+  onConsoleError,
+  onConsoleValue,
   onPopOutProject,
   onRefreshClick,
   onRuntimeError,
@@ -15,10 +18,14 @@ export default function Preview({
     return null;
   }
 
-  const projectFrames = compiledProjects.map(({source, timestamp}) => (
+  const projectFrames = compiledProjects.map(({source, timestamp}, key) => (
     <PreviewFrame
+      consoleEntries={consoleEntries}
+      isActive={key === compiledProjects.keySeq().last()}
       key={timestamp}
       src={source}
+      onConsoleError={onConsoleError}
+      onConsoleValue={onConsoleValue}
       onRuntimeError={onRuntimeError}
     />
   ));
@@ -46,7 +53,10 @@ export default function Preview({
 
 Preview.propTypes = {
   compiledProjects: ImmutablePropTypes.iterable.isRequired,
+  consoleEntries: ImmutablePropTypes.iterable.isRequired,
   showingErrors: PropTypes.bool.isRequired,
+  onConsoleError: PropTypes.func.isRequired,
+  onConsoleValue: PropTypes.func.isRequired,
   onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,

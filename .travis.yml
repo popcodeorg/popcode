@@ -35,6 +35,7 @@ script:
 - yarn check
 - yarn test
 - gulp build
+- eslint --no-eslintrc --env es5 dist
 - bundlesize
 before_deploy:
 - gulp syncFirebase

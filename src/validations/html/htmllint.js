@@ -2,7 +2,7 @@ import clone from 'lodash/clone';
 import defaults from 'lodash/defaults';
 import reduce from 'lodash/reduce';
 import Validator from '../Validator';
-import importLinters from '../importLinters';
+import retryingFailedImports from '../retryingFailedImports';
 
 const errorMap = {
   E001: (error) => {
@@ -141,7 +141,12 @@ class HtmllintValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const {htmllint: {Linter, rules}} = await importLinters();
+    const {Linter, rules} = await retryingFailedImports(
+      () => import(
+        /* webpackChunkName: 'linters' */
+        'htmllint',
+      ),
+    );
     const linter = new Linter(rules);
     const options = reduce(
       linter.rules.options,

@@ -1,5 +1,5 @@
 import Validator from '../Validator';
-import importLinters from '../importLinters';
+import retryingFailedImports from '../retryingFailedImports';
 
 const errorMap = {
   ATTRIBUTE_IN_CLOSING_TAG: error => ({
@@ -125,7 +125,10 @@ class SlowparseValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const {Slowparse} = await importLinters();
+    const {'default': Slowparse} = await retryingFailedImports(() => import(
+      /* webpackChunkName: 'linters' */
+      '../../util/slowparse',
+    ));
     let error;
     try {
       ({error} = Slowparse.HTML(document, this._source, {errorDetectors}));
