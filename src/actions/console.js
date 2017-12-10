@@ -17,3 +17,7 @@ export const evaluateConsoleEntry = createAction(
   identity,
   (_input, key = uuid().toString()) => ({key}),
 );
+
+export const deactivateConsoleEntries = createAction(
+  'DEACTIVATE_CONSOLE_ENTRIES',
+);

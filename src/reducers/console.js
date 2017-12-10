@@ -26,7 +26,11 @@ export default function console(stateIn, {type, payload, meta}) {
     case 'EVALUATE_CONSOLE_ENTRY':
       return state.set(
         meta.key,
-        new ConsoleEntry({expression: payload}),
+        new ConsoleEntry({expression: payload, status: 'active'}),
+      );
+    case 'DEACTIVATE_CONSOLE_ENTRIES':
+      return state.map(item =>
+        item.set('status', 'inactive'),
       );
     default:
       return state;
