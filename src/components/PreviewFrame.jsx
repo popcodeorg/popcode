@@ -34,16 +34,23 @@ class PreviewFrame extends React.Component {
     const {compiledProject: {source}} = props;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     bindAll(this, '_attachToFrame', '_handleInfiniteLoop');
 =======
   componentWillReceiveProps(nextProps) {
     if (!includes(nextProps.focusedEditors, 'css')) {
+=======
+  componentWillReceiveProps(newProps) {
+    if (includes(this.props.focusedEditors, 'css') &&
+      !includes(newProps.focusedEditors, 'css')) {
+>>>>>>> 3cc1d22... Update selector at cursor and handle unfocused editor
       this._postRemoveHighlightToFrame();
     }
-    if (nextProps.focusedSelector !== this.props.focusedSelector ||
-      includes(nextProps.focusedEditors, 'css')) {
-      this._postFocusedSelectorToFrame(nextProps.focusedSelector);
+    if (newProps.focusedSelector !== this.props.focusedSelector ||
+      includes(newProps.focusedEditors, 'css')) {
+      this._postFocusedSelectorToFrame(newProps.focusedSelector);
     }
+<<<<<<< HEAD
   }
 >>>>>>> 23eb7f2... Updates to element highlighter
 
@@ -59,6 +66,10 @@ class PreviewFrame extends React.Component {
       </div>,
     );
   }
+=======
+
+    const {consoleEntries: previousConsoleEntries, isActive} = this.props;
+>>>>>>> 3cc1d22... Update selector at cursor and handle unfocused editor
 
   // componentWillReceiveProps(nextProps) {
   //   if (nextProps.highlighterSelector !== this.props.highlighterSelector) {
@@ -235,11 +246,16 @@ class PreviewFrame extends React.Component {
 PreviewFrame.propTypes = {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   compiledProject: PropTypes.instanceOf(CompiledProjectRecord).isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
 =======
   focusedEditors: PropTypes.array,
 >>>>>>> 23eb7f2... Updates to element highlighter
+=======
+  consoleEntries: ImmutablePropTypes.iterable.isRequired,
+  focusedEditors: PropTypes.array,
+>>>>>>> 3cc1d22... Update selector at cursor and handle unfocused editor
   focusedSelector: PropTypes.string,
   isActive: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,

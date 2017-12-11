@@ -24,6 +24,11 @@ import PreviewFrame from './PreviewFrame';
 
 export default function Preview({
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+  focusedEditors,
+  focusedSelector,
+>>>>>>> 3cc1d22... Update selector at cursor and handle unfocused editor
   compiledProjects,
   consoleEntries,
   highlighterSelector,
@@ -50,6 +55,8 @@ export default function Preview({
     <PreviewFrame
       compiledProject={compiledProject}
       consoleEntries={consoleEntries}
+      focusedEditors={focusedEditors}
+      focusedSelector={focusedSelector}
       isActive={key === compiledProjects.keySeq().last()}
       key={compiledProject.compiledProjectKey}
       onConsoleError={onConsoleError}
@@ -95,8 +102,14 @@ export default function Preview({
 Preview.propTypes = {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   compiledProjects: ImmutablePropTypes.iterable.isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
+=======
+  compiledProjects: ImmutablePropTypes.iterable.isRequired,
+  consoleEntries: ImmutablePropTypes.iterable.isRequired,
+  focusedEditors: PropTypes.array.isRequired,
+>>>>>>> 3cc1d22... Update selector at cursor and handle unfocused editor
   focusedSelector: PropTypes.string,
   showingErrors: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
@@ -125,9 +138,13 @@ Preview.propTypes = {
 
 Preview.defaultProps = {
 <<<<<<< HEAD
+<<<<<<< HEAD
   highlighterSelector: '',
 =======
   focusedSelector: null,
   lastRefreshTimestamp: null,
 >>>>>>> 621d5f6... Add saga, add ref to iframe element
+=======
+  focusedSelector: null,
+>>>>>>> 3cc1d22... Update selector at cursor and handle unfocused editor
 };

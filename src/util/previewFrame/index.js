@@ -12,6 +12,7 @@ import errorHandlerScript from './errorHandlerScript';
 import elementHighlighterScript from './elementHighlighterScript';
 import alertAndPromptReplacementScript
   from './alertAndPromptReplacementScript';
+import messageHandlerScript from './messageHandlerScript';
 
 const parser = new DOMParser();
 
@@ -115,7 +116,7 @@ class PreviewGenerator {
   }
 
   _addElementHighlighterHandling() {
-    const scriptTag = this.previewDocument.createElement('script');
+    const scriptTag = this._previewDocument.createElement('script');
     scriptTag.innerHTML = elementHighlighterScript;
     this.previewBody.appendChild(scriptTag);
   }
@@ -184,7 +185,7 @@ class PreviewGenerator {
   }
 
   _attachHighlighterCss() {
-    const styleTag = this.previewDocument.createElement('style');
+    const styleTag = this._previewDocument.createElement('style');
     styleTag.innerHTML = highlighterCss;
     this._previewHead.appendChild(styleTag);
   }

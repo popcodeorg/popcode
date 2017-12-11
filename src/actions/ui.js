@@ -12,27 +12,6 @@ export const editorFocusedRequestedLine = createAction(
   'EDITOR_FOCUSED_REQUESTED_LINE',
 );
 
-<<<<<<< HEAD
-=======
-export const editorFocused = createAction(
-  'EDITOR_FOCUSED',
-  language => ({language}),
-);
-
-export const editorBlurred = createAction(
-  'EDITOR_BLURRED',
-  language => ({language}),
-);
-
-export const dragRowDivider = createAction(
-  'DRAG_ROW_DIVIDER',
-);
-
-export const dragColumnDivider = createAction(
-  'DRAG_COLUMN_DIVIDER',
-);
-
->>>>>>> 23eb7f2... Updates to element highlighter
 export const startDragColumnDivider = createAction(
   'START_DRAG_COLUMN_DIVIDER',
 );

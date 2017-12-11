@@ -13,7 +13,9 @@ const elementHighlighterScript = `(${function() {
         removeCovers();
       }
     } catch (e) {
+      return e;
     }
+    return message;
   });
 
   function getOffsetFromBody(element) {
@@ -40,7 +42,8 @@ const elementHighlighterScript = `(${function() {
       for (let i = 0; i < elements.length; i++) {
         const element = elements[i];
         const offset = getOffsetFromBody(element);
-        const cover = document.body.appendChild(document.createElement('div'));
+        const cover =
+          document.body.appendChild(document.createElement('div'));
         cover.className = '__popcode-highlighter';
         cover.style.left = `${offset.left}px`;
         cover.style.top = `${offset.top}px`;

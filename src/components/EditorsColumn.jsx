@@ -42,25 +42,7 @@ export default function EditorsColumn({
     ),
   );
 
-<<<<<<< HEAD
   const children = [];
-=======
-  render() {
-    const {
-      currentProject,
-      editorsFlex,
-      errors,
-      onComponentHide,
-      onEditorBlurred,
-      onEditorCursorChange,
-      onEditorFocused,
-      onEditorInput,
-      onRef,
-      onRequestedLineFocused,
-      style,
-      ui,
-    } = this.props;
->>>>>>> 23eb7f2... Updates to element highlighter
 
   visibleLanguages.forEach(({language, index}) => {
     children.push(
@@ -83,58 +65,12 @@ export default function EditorsColumn({
           projectKey={currentProject.projectKey}
           requestedFocusedLine={requestedFocusedLine}
           source={currentProject.sources[language]}
-<<<<<<< HEAD
           textSizeIsLarge={isTextSizeLarge}
           onCursorChange={onEditorCursorChange}
           onInput={partial(
             onEditorInput,
             currentProject.projectKey,
             language,
-=======
-          style={{flex: editorsFlex[index]}}
-          onHide={partial(onComponentHide, `editor.${language}`)}
-          onRef={partial(this._storeEditorRef, index)}
-        >
-          <Editor
-            errors={errors[language].items}
-            language={language}
-            percentageOfHeight={1 / visibleLanguages.length}
-            projectKey={currentProject.projectKey}
-            requestedFocusedLine={ui.editors.requestedFocusedLine}
-            source={currentProject.sources[language]}
-            textSizeIsLarge={ui.editors.textSizeIsLarge}
-            onCursorChange={onEditorCursorChange}
-            onEditorBlurred={onEditorBlurred}
-            onEditorFocused={onEditorFocused}
-            onInput={partial(onEditorInput, language)}
-            onRequestedLineFocused={onRequestedLineFocused}
-          />
-        </EditorContainer>,
-      );
-      if (index < visibleLanguages.length - 1) {
-        children.push(
-          <DraggableCore
-            key={`divider:${language}`}
-            onDrag={partial(this._handleEditorDividerDrag, index)}
-          >
-            <div
-              className="editors__row-divider"
-              ref={partial(this._storeDividerRef, index)}
-            />
-          </DraggableCore>,
-        );
-      }
-    });
-
-    hiddenLanguages.forEach((language) => {
-      children.push((
-        <div
-          className="editors__collapsed-editor"
-          key={language}
-          onClick={partial(
-            this.props.onComponentUnhide,
-            `editor.${language}`,
->>>>>>> 23eb7f2... Updates to element highlighter
           )}
           onRequestedLineFocused={onRequestedLineFocused}
         />
@@ -199,11 +135,6 @@ EditorsColumn.propTypes = {
   style: PropTypes.object.isRequired,
   onComponentHide: PropTypes.func.isRequired,
   onComponentUnhide: PropTypes.func.isRequired,
-<<<<<<< HEAD
-=======
-  onDividerDrag: PropTypes.func.isRequired,
-  onEditorBlurred: PropTypes.func.isRequired,
->>>>>>> 23eb7f2... Updates to element highlighter
   onEditorCursorChange: PropTypes.func.isRequired,
   onEditorFocused: PropTypes.func.isRequired,
   onEditorInput: PropTypes.func.isRequired,

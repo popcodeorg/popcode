@@ -9,6 +9,7 @@ import {
   refreshPreview,
 } from '../actions';
 import {
+  getFocusedSelector,
   getCompiledProjects,
   getConsoleHistory,
   getFocusedSelector,
@@ -18,6 +19,7 @@ import {
 
 function mapStateToProps(state) {
   return {
+    focusedSelector: getFocusedSelector(state),
     compiledProjects: getCompiledProjects(state),
     consoleEntries: getConsoleHistory(state),
     showingErrors: (
