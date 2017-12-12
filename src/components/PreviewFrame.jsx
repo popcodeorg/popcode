@@ -124,7 +124,7 @@ class PreviewFrame extends React.Component {
   }
 
   _handleConsoleValueMessage({key, value}) {
-    this.props.onConsoleValue(key, value);
+    this.props.onConsoleValue(key, JSON.stringify(value));
   }
 
   _handleInfiniteLoop(line) {
