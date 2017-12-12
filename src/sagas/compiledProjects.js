@@ -4,6 +4,7 @@ import {
   put,
   select,
   throttle,
+  takeEvery,
 } from 'redux-saga/effects';
 
 import every from 'lodash/every';
@@ -32,5 +33,8 @@ export function* validatedSource() {
 }
 
 export default function* () {
-  yield all([throttle(100, 'VALIDATED_SOURCE', validatedSource)]);
+  yield all([
+    throttle(100, 'VALIDATED_SOURCE', validatedSource),
+    takeEvery('PROJECT_CREATED', validatedSource),
+  ]);
 }
