@@ -5,7 +5,7 @@ import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
 import {t} from 'i18next';
 import normalizeError from '../util/normalizeError';
-import {sourceDelimiter} from '../util/generatePreview';
+import {sourceDelimiter} from '../util/compileProject';
 
 const sandboxOptions = [
   'allow-forms',

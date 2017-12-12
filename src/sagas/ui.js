@@ -9,7 +9,7 @@ import {
   repoExportNotDisplayed,
 } from '../actions/clients';
 import {openWindowWithContent} from '../util';
-import generatePreview from '../util/generatePreview';
+import compileProject from '../util/compileProject';
 import spinnerPageHtml from '../../templates/github-export.html';
 
 export function* userDoneTyping() {
@@ -48,7 +48,7 @@ export function* exportGist() {
 
 export function* popOutProject() {
   const project = yield select(getCurrentProject);
-  const {source} = yield call(generatePreview, project);
+  const {source} = yield call(compileProject, project);
   yield call(openWindowWithContent, source);
 }
 
