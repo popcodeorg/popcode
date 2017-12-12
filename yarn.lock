@@ -5371,6 +5371,10 @@ jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
 
+jschannel@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/jschannel/-/jschannel-1.0.2.tgz#8932010e9c6042a27bc93b918dac2e267976ae14"
+
 jschardet@^1.4.2:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/jschardet/-/jschardet-1.5.1.tgz#c519f629f86b3a5bedba58a88d311309eec097f9"

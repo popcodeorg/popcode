@@ -1,3 +1,4 @@
+import Channel from 'jschannel';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -20,23 +21,16 @@ class PreviewFrame extends React.Component {
   constructor() {
     super();
     this._frameName = `preview-frame-${nextId++}`;
-    bindAll(this, '_attachToFrame', '_handleInfiniteLoop', '_onMessage');
-  }
-
-  componentDidMount() {
-    window.addEventListener('message', this._onMessage);
+    bindAll(this, '_attachToFrame', '_handleInfiniteLoop');
   }
 
   componentWillReceiveProps(newProps) {
     const {consoleEntries: previousConsoleEntries, isActive} = this.props;
 
-    if (this._frame && isActive) {
+    if (this._channel && isActive) {
       for (const [key, {expression}] of newProps.consoleEntries) {
         if (!previousConsoleEntries.has(key)) {
-          this._frame.contentWindow.postMessage(JSON.stringify({
-            type: 'org.popcode.console.expression',
-            payload: {key, expression},
-          }), '*');
+          this._evaluateConsoleExpression(key, expression);
         }
       }
     }
@@ -46,8 +40,18 @@ class PreviewFrame extends React.Component {
     return false;
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('message', this._onMessage);
+  _evaluateConsoleExpression(key, expression) {
+    // eslint-disable-next-line prefer-reflect
+    this._channel.call({
+      method: 'evaluateExpression',
+      params: expression,
+      success: (formattedResult) => {
+        this.props.onConsoleValue(key, formattedResult);
+      },
+      error: (name, message) => {
+        this.props.onConsoleError(key, name, message);
+      },
+    });
   }
 
   _runtimeErrorLineOffset() {
@@ -55,41 +59,6 @@ class PreviewFrame extends React.Component {
       split('\n').indexOf(sourceDelimiter) + 2;
 
     return firstSourceLine - 1;
-  }
-
-  _onMessage(message) {
-    if (!this.props.isActive) {
-      return;
-    }
-
-    if (typeof message.data !== 'string') {
-      return;
-    }
-
-    let type, windowName, payload;
-    try {
-      ({type, windowName, payload} = JSON.parse(message.data));
-    } catch (_e) {
-      return;
-    }
-
-    if (windowName !== this._frameName) {
-      return;
-    }
-
-    switch (type) {
-      case 'org.popcode.error':
-        this._handleErrorMessage(payload);
-        break;
-      case 'org.popcode.console.value':
-        this._handleConsoleValueMessage(payload);
-        break;
-      case 'org.popcode.console.error':
-        this._handleConsoleErrorMessage(payload);
-        break;
-      default:
-        break;
-    }
   }
 
   _handleErrorMessage(error) {
@@ -119,14 +88,6 @@ class PreviewFrame extends React.Component {
     });
   }
 
-  _handleConsoleErrorMessage({key, error: {name, message}}) {
-    this.props.onConsoleError(key, name, message);
-  }
-
-  _handleConsoleValueMessage({key, value}) {
-    this.props.onConsoleValue(key, JSON.stringify(value));
-  }
-
   _handleInfiniteLoop(line) {
     const message = t('errors.javascriptRuntime.infinite-loop');
     this.props.onRuntimeError({
@@ -143,21 +104,28 @@ class PreviewFrame extends React.Component {
     this._frame = frame;
 
     if (!frame) {
+      if (this._channel) {
+        this._channel.destroy();
+        Reflect.deleteProperty(this, '_channel');
+      }
       return;
     }
 
-    const {src} = this.props;
-
-    if (src) {
-      frame.addEventListener('load', () => {
+    this._channel = Channel.build({
+      window: frame.contentWindow,
+      origin: '*',
+      onReady() {
         frame.classList.add('preview__frame_loaded');
-      });
+      },
+    });
 
-      frame.srcdoc = src;
-    }
+    this._channel.bind('error', (_trans, params) => {
+      this._handleErrorMessage(params);
+    });
   }
 
   render() {
+    const {src} = this.props;
     return (
       <div className="preview__frame-container">
         <iframe
@@ -165,7 +133,7 @@ class PreviewFrame extends React.Component {
           name={this._frameName}
           ref={this._attachToFrame}
           sandbox={sandboxOptions}
-          src="about:blank"
+          srcDoc={src}
         />
       </div>
     );
@@ -180,6 +148,5 @@ PreviewFrame.propTypes = {
   onConsoleValue: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
 };
-
 
 export default PreviewFrame;
