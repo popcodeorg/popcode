@@ -15,8 +15,6 @@ import {
 } from '../../../src/actions/clients';
 import {clients as states} from '../../helpers/referenceStates';
 
-// const error = new Error();
-
 test('snapshot export', (t) => {
   t.test('createSnapshot', reducerTest(
     reducer,

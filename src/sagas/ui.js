@@ -35,13 +35,11 @@ function* projectExport(
   }
 }
 
-
 export function* popOutProject() {
   const project = yield select(getCurrentProject);
   const {source} = yield call(generatePreview, project);
   yield call(openWindowWithContent, source);
 }
-
 
 export function* exportProject() {
   yield* projectExport(
@@ -51,7 +49,6 @@ export function* exportProject() {
     projectExportDisplayed,
   );
 }
-
 
 export default function* () {
   yield all([

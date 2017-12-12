@@ -29,19 +29,18 @@ export function* exportProject({payload: {exportType}}) {
   const state = yield select();
   const project = getCurrentProject(state);
   const user = state.get('user').toJS();
+  let url;
 
   try {
     if (exportType === 'gist') {
-      const {html_url: url} = yield call(createGistFromProject, project, user);
-      yield put(projectExported(url, exportType));
+      ({html_url: url} = yield call(createGistFromProject, project, user));
     } else if (exportType === 'repo') {
-      const {html_url: url} = yield call(createRepoFromProject, project, user);
-      yield put(projectExported(url, exportType));
+      ({html_url: url} = yield call(createRepoFromProject, project, user));
     } else if (exportType === 'classroom') {
       const snapshotKey = yield call(createProjectSnapshot, project);
-      const url = yield call(createShareToClassroomUrl, snapshotKey);
-      yield put(projectExported(url, exportType));
+      url = yield call(createShareToClassroomUrl, snapshotKey);
     }
+    yield put(projectExported(url, exportType));
   } catch (e) {
     yield put(projectExportError(exportType));
   }
