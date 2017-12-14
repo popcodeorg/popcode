@@ -40,6 +40,11 @@ export default function console(stateIn, {type, payload, meta}) {
       );
     case 'CLEAR_CONSOLE_ENTRIES':
       return initialState;
+    case 'CONSOLE_LOG_PRODUCED':
+      return state.set(
+        payload.key,
+        new ConsoleEntry({expression: '', value: payload.value}),
+      );
     default:
       return state;
   }

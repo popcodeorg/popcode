@@ -30,7 +30,7 @@ class PreviewFrame extends React.Component {
 
     if (this._channel && isActive) {
       for (const [key, {expression}] of newProps.consoleEntries) {
-        if (!previousConsoleEntries.has(key)) {
+        if (!previousConsoleEntries.has(key) && expression) {
           this._evaluateConsoleExpression(key, expression);
         }
       }
@@ -110,6 +110,10 @@ class PreviewFrame extends React.Component {
     });
   }
 
+  _handleConsoleLog(output) {
+    this.props.onConsoleLog(output);
+  }
+
   _attachToFrame(frame) {
     this._frame = frame;
 
@@ -131,6 +135,9 @@ class PreviewFrame extends React.Component {
 
     this._channel.bind('error', (_trans, params) => {
       this._handleErrorMessage(params);
+    });
+    this._channel.bind('log', (_trans, params) => {
+      this._handleConsoleLog(params.output);
     });
   }
 
@@ -155,6 +162,7 @@ PreviewFrame.propTypes = {
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
   isActive: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
+  onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
 };
