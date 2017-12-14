@@ -20,7 +20,7 @@ import {
 } from '../../../src/actions/clients';
 import {openWindowWithContent} from '../../../src/util';
 import spinnerPageHtml from '../../../templates/github-export.html';
-import generatePreview from '../../../src/util/generatePreview';
+import compileProject from '../../../src/util/compileProject';
 
 test('userDoneTyping', (assert) => {
   testSaga(userDoneTypingSaga).
@@ -78,7 +78,7 @@ test('popOutProject', (assert) => {
   const preview = {src: '<html></html>'};
   testSaga(popOutProjectSaga, popOutProject()).
     next().select(getCurrentProject).
-    next(project).call(generatePreview, project).
+    next(project).call(compileProject, project).
     next({source: preview}).call(openWindowWithContent, preview).
     next(mockWindow).isDone();
   assert.end();

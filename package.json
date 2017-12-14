@@ -153,6 +153,7 @@
     "immutable": "^3.7.5",
     "inline-style-prefixer": "^3.0.8",
     "js-cookie": "^2.1.3",
+    "jschannel": "^1.0.2",
     "jshint": "^2.9.3",
     "keymirror": "^0.1.1",
     "lodash": "^4.15.0",
@@ -187,8 +188,10 @@
     "slowparse": "^1.1.4",
     "strip-markdown": "^3.0.0",
     "stylelint": "^8.0.0",
+    "sweetalert": "^2.0.8",
     "uuid": "^3.1.0",
-    "void-elements": "^3.1.0"
+    "void-elements": "^3.1.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "engines": {
     "node": "^8.5.0",
@@ -203,7 +206,7 @@
     "lint": "eslint --ext .js,.jsx --plugin react src test *.js && stylelint src/**/*.css",
     "fixlint": "eslint --ext .js,.jsx --plugin react --fix src test *.js",
     "toc": "doctoc README.md --github --title '## Table of Contents'",
-    "preview": "rm -rvf dist && gulp build --production && static dist",
+    "preview": "rm -rvf dist && NODE_ENV=production gulp build && static dist",
     "analyze-bundle": "gulp js --production && source-map-explorer ./dist/application.js"
   },
   "devDependencies": {
@@ -261,6 +264,7 @@
     "postcss-cssnext": "^3.0.2",
     "raw-loader": "^0.5.1",
     "redux-saga-test-plan": "^3.0.2",
+    "script-ext-html-webpack-plugin": "^1.8.8",
     "sinon": "^4.0.1",
     "source-map-explorer": "^1.4.0",
     "source-map-loader": "^0.2.2",
