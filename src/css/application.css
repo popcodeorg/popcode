@@ -471,27 +471,23 @@ body {
   height: 40vh;
 }
 
-.console__entry-active,
+.console__entry,
 .console__input {
   margin-bottom: 0.5em;
 }
 
-.console__entry-active {
+.console__entry {
   margin-left: 4px;
 }
 
-.console__error-active {
+.console__error {
   color: var(--color-red);
 }
 
-.console__entry-inactive {
+.console__entry_inactive * {
   margin-bottom: 0.5em;
   margin-left: 4px;
-  color: var(--color-low-contrast-gray);
-}
-
-.console__error-inactive {
-  color: var(--color-low-contrast-gray);
+  color: var(--color-light-gray);
 }
 
 /** @define preview */

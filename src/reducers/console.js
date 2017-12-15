@@ -8,13 +8,17 @@ export default function console(stateIn, {type, payload, meta}) {
   if (state === undefined) {
     state = initialState;
   }
-
+  //          input.set('projectKey', payload.projectKey);
   switch (type) {
     case 'CONSOLE_VALUE_PRODUCED':
       return state.update(
         payload.key,
         input => input.set('value', payload.value),
+      ).update(
+        payload.key,
+        input => input.set('projectKey', payload.projectKey),
       );
+
     case 'CONSOLE_ERROR_PRODUCED':
       return state.update(
         payload.key,
@@ -22,15 +26,14 @@ export default function console(stateIn, {type, payload, meta}) {
           'error',
           new ConsoleError({name: payload.name, message: payload.message}),
         ),
+      ).update(
+        payload.key,
+        input => input.set('projectKey', payload.projectKey),
       );
     case 'EVALUATE_CONSOLE_ENTRY':
       return state.set(
         meta.key,
-        new ConsoleEntry({expression: payload, status: 'active'}),
-      );
-    case 'DEACTIVATE_CONSOLE_ENTRIES':
-      return state.map(item =>
-        item.set('status', 'inactive'),
+        new ConsoleEntry({expression: payload}),
       );
     default:
       return state;

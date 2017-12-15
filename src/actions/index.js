@@ -56,7 +56,6 @@ import {
   consoleErrorProduced,
   consoleValueProduced,
   evaluateConsoleEntry,
-  deactivateConsoleEntries,
 } from './console';
 
 export {
@@ -98,5 +97,4 @@ export {
   logOut,
   evaluateConsoleEntry,
   projectCompiled,
-  deactivateConsoleEntries,
 };

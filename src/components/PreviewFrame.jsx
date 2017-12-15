@@ -120,11 +120,16 @@ class PreviewFrame extends React.Component {
   }
 
   _handleConsoleErrorMessage({key, error: {name, message}}) {
-    this.props.onConsoleError(key, name, message);
+    this.props.onConsoleError(
+      key,
+      name,
+      message,
+      this.props.compiledProjectKey,
+    );
   }
 
   _handleConsoleValueMessage({key, value}) {
-    this.props.onConsoleValue(key, value);
+    this.props.onConsoleValue(key, value, this.props.compiledProjectKey);
   }
 
   _handleInfiniteLoop(line) {
@@ -173,6 +178,7 @@ class PreviewFrame extends React.Component {
 }
 
 PreviewFrame.propTypes = {
+  compiledProjectKey: PropTypes.number.isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
   isActive: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,

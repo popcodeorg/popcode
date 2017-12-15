@@ -20,6 +20,7 @@ export default function Preview({
 
   const projectFrames = compiledProjects.map(({source, timestamp}, key) => (
     <PreviewFrame
+      compiledProjectKey={timestamp}
       consoleEntries={consoleEntries}
       isActive={key === compiledProjects.keySeq().last()}
       key={timestamp}

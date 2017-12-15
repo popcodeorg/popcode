@@ -4,20 +4,16 @@ import uuid from 'uuid/v4';
 
 export const consoleValueProduced = createAction(
   'CONSOLE_VALUE_PRODUCED',
-  (key, value) => ({key, value}),
+  (key, value, projectKey) => ({key, value, projectKey}),
 );
 
 export const consoleErrorProduced = createAction(
   'CONSOLE_ERROR_PRODUCED',
-  (key, name, message) => ({key, name, message}),
+  (key, name, message, projectKey) => ({key, name, message, projectKey}),
 );
 
 export const evaluateConsoleEntry = createAction(
   'EVALUATE_CONSOLE_ENTRY',
   identity,
   (_input, key = uuid().toString()) => ({key}),
-);
-
-export const deactivateConsoleEntries = createAction(
-  'DEACTIVATE_CONSOLE_ENTRIES',
 );

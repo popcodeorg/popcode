@@ -4,17 +4,13 @@ import {
   put,
   select,
   throttle,
-  takeEvery,
 } from 'redux-saga/effects';
 
 import every from 'lodash/every';
 
 import {getCurrentProject, getErrors} from '../selectors';
 import generatePreview from '../util/generatePreview';
-import {
-  projectCompiled,
-  deactivateConsoleEntries,
-} from '../actions';
+import {projectCompiled} from '../actions';
 
 export function* validatedSource() {
   const errors = yield select(getErrors);
@@ -35,13 +31,6 @@ export function* validatedSource() {
   }
 }
 
-export function* refreshPreview() {
-  yield put(deactivateConsoleEntries());
-}
-
 export default function* () {
-  yield all([
-    throttle(100, 'VALIDATED_SOURCE', validatedSource),
-    takeEvery('REFRESH_PREVIEW', refreshPreview),
-  ]);
+  yield all([throttle(100, 'VALIDATED_SOURCE', validatedSource)]);
 }

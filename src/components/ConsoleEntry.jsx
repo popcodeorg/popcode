@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import {ConsoleEntry as ConsoleEntryRecord} from '../records';
 import ConsoleOutput from './ConsoleOutput';
 
-export default function ConsoleEntry({entry}) {
-  const {expression, status} = entry;
-
+export default function ConsoleEntry({entry, compiledProjectKey}) {
+  const {expression, projectKey} = entry;
+  const isActive = projectKey === compiledProjectKey;
   return (
-    <div className={`console__entry-${status}`}>
+    <div className={isActive ? 'console__entry' : 'console__entry_inactive'}>
       <div className="console__expression">{expression}</div>
       <ConsoleOutput entry={entry} />
     </div>
@@ -15,5 +15,6 @@ export default function ConsoleEntry({entry}) {
 }
 
 ConsoleEntry.propTypes = {
+  compiledProjectKey: PropTypes.number.isRequired,
   entry: PropTypes.instanceOf(ConsoleEntryRecord).isRequired,
 };
