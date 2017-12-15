@@ -4,5 +4,5 @@ export default Record({
   expression: '',
   value: null,
   error: null,
-  projectKey: '',
+  compiledProjectKey: '',
 }, 'ConsoleEntry');

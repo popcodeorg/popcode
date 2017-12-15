@@ -20,14 +20,15 @@ export default function Console({
   }
 
   const mostRecentCompiledProject = compiledProjects.last();
-  const compiledProjectKey = get(mostRecentCompiledProject, 'timestamp', 0);
+  const currentCompiledProjectKey =
+    get(mostRecentCompiledProject, 'timestamp', 0);
 
   const console = (
     <div className="console__repl output__item">
       {history.map((entry, key) => (
         // eslint-disable-next-line react/no-array-index-key
         <ConsoleEntry
-          compiledProjectKey={compiledProjectKey}
+          currentCompiledProjectKey={currentCompiledProjectKey}
           entry={entry}
           key={key}
         />
