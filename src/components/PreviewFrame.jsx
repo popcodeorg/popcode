@@ -46,10 +46,19 @@ class PreviewFrame extends React.Component {
       method: 'evaluateExpression',
       params: expression,
       success: (formattedResult) => {
-        this.props.onConsoleValue(key, formattedResult);
+        this.props.onConsoleValue(
+          key,
+          formattedResult,
+          this.props.compiledProjectKey,
+        );
       },
       error: (name, message) => {
-        this.props.onConsoleError(key, name, message);
+        this.props.onConsoleError(
+          key,
+          name,
+          message,
+          this.props.compiledProjectKey,
+        );
       },
     });
   }
@@ -86,19 +95,6 @@ class PreviewFrame extends React.Component {
       column: error.column,
       type: 'error',
     });
-  }
-
-  _handleConsoleErrorMessage({key, error: {name, message}}) {
-    this.props.onConsoleError(
-      key,
-      name,
-      message,
-      this.props.compiledProjectKey,
-    );
-  }
-
-  _handleConsoleValueMessage({key, value}) {
-    this.props.onConsoleValue(key, value, this.props.compiledProjectKey);
   }
 
   _handleInfiniteLoop(line) {
