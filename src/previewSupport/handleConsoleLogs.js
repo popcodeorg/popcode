@@ -14,6 +14,16 @@ function reducer(accumulator, currentValue) {
   return `${accumulator} ${JSON.stringify(evaluatedValue)}`;
 }
 
+function notifyChannel(args) {
+  if (args.length > 0) {
+    const output = args.reduce(reducer);
+    channel.notify({
+      method: 'log',
+      params: {output},
+    });
+  }
+}
+
 export default function handleConsoleLogs() {
   /* eslint-disable no-console */
   const browserConsoleLog = console.log.bind(console);
@@ -23,35 +33,34 @@ export default function handleConsoleLogs() {
   const browserConsoleError = console.error.bind(console);
   /* eslint-enable no-console */
 
-
   Object.defineProperties(console, {
     log: {
       value: (...args) => {
-        const output = args.reduce(reducer);
-        channel.notify({
-          method: 'log',
-          params: {output},
-        });
+        notifyChannel(args);
         browserConsoleLog(...args);
       },
     },
     debug: {
       value: (...args) => {
+        notifyChannel(args);
         browserConsoleDebug(...args);
       },
     },
     info: {
       value: (...args) => {
+        notifyChannel(args);
         browserConsoleInfo(...args);
       },
     },
     warn: {
       value: (...args) => {
+        notifyChannel(args);
         browserConsoleWarn(...args);
       },
     },
     error: {
       value: (...args) => {
+        notifyChannel(args);
         browserConsoleError(...args);
       },
     },
