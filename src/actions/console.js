@@ -4,7 +4,8 @@ import uuid from 'uuid/v4';
 
 export const consoleValueProduced = createAction(
   'CONSOLE_VALUE_PRODUCED',
-  (key, value, compiledProjectKey) => ({key, value, compiledProjectKey}),
+  (key, value, compiledProjectKey) =>
+    ({key, value, compiledProjectKey}),
 );
 
 export const consoleErrorProduced = createAction(

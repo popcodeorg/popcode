@@ -16,7 +16,10 @@ export default function console(stateIn, {type, payload, meta}) {
         input => input.set('value', payload.value),
       ).update(
         payload.key,
-        input => input.set('compiledProjectKey', payload.compiledProjectKey),
+        input => input.set(
+          'evaluatedByCompiledProjectKey',
+          payload.compiledProjectKey,
+        ),
       );
 
     case 'CONSOLE_ERROR_PRODUCED':
@@ -28,7 +31,10 @@ export default function console(stateIn, {type, payload, meta}) {
         ),
       ).update(
         payload.key,
-        input => input.set('compiledProjectKey', payload.compiledProjectKey),
+        input => input.set(
+          'evaluatedByCompiledProjectKey',
+          payload.compiledProjectKey,
+        ),
       );
     case 'EVALUATE_CONSOLE_ENTRY':
       return state.set(

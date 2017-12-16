@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import Console from '../components/Console';
 import {
-  getCompiledProjects,
+  getCurrentCompiledProjectKey,
   getConsoleHistory,
   getCurrentProjectKey,
   getHiddenUIComponents,
@@ -11,7 +11,7 @@ import {evaluateConsoleEntry, toggleComponent} from '../actions';
 
 function mapStateToProps(state) {
   return {
-    compiledProjects: getCompiledProjects(state),
+    currentCompiledProjectKey: getCurrentCompiledProjectKey(state),
     currentProjectKey: getCurrentProjectKey(state),
     history: getConsoleHistory(state),
     isEnabled: isExperimental(state),

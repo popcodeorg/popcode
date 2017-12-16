@@ -27,12 +27,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onConsoleError(key, name, message, projectKey) {
-      dispatch(consoleErrorProduced(key, name, message, projectKey));
+    onConsoleError(key, name, message, compiledProjectKey) {
+      dispatch(consoleErrorProduced(key, name, message, compiledProjectKey));
     },
 
-    onConsoleValue(key, value, projectKey) {
-      dispatch(consoleValueProduced(key, value, projectKey));
+    onConsoleValue(key, value, compiledProjectKey) {
+      dispatch(consoleValueProduced(key, value, compiledProjectKey));
     },
 
     onPopOutProject() {

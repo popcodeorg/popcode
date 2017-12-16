@@ -1,5 +1,4 @@
 import partial from 'lodash/partial';
-import get from 'lodash/get';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -7,7 +6,7 @@ import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
 
 export default function Console({
-  compiledProjects,
+  currentCompiledProjectKey,
   currentProjectKey,
   history,
   isEnabled,
@@ -19,17 +18,13 @@ export default function Console({
     return null;
   }
 
-  const mostRecentCompiledProject = compiledProjects.last();
-  const currentCompiledProjectKey =
-    get(mostRecentCompiledProject, 'timestamp', 0);
-
   const console = (
     <div className="console__repl output__item">
       {history.map((entry, key) => (
-        // eslint-disable-next-line react/no-array-index-key
         <ConsoleEntry
           currentCompiledProjectKey={currentCompiledProjectKey}
           entry={entry}
+          // eslint-disable-next-line react/no-array-index-key
           key={key}
         />
       )).valueSeq()}
@@ -54,7 +49,7 @@ export default function Console({
 }
 
 Console.propTypes = {
-  compiledProjects: ImmutablePropTypes.iterable.isRequired,
+  currentCompiledProjectKey: PropTypes.number.isRequired,
   currentProjectKey: PropTypes.string.isRequired,
   history: ImmutablePropTypes.iterable.isRequired,
   isEnabled: PropTypes.bool.isRequired,

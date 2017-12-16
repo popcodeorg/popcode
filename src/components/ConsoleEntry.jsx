@@ -4,12 +4,22 @@ import {ConsoleEntry as ConsoleEntryRecord} from '../records';
 import ConsoleOutput from './ConsoleOutput';
 
 export default function ConsoleEntry({entry, currentCompiledProjectKey}) {
-  const {expression, compiledProjectKey} = entry;
-  const isActive = currentCompiledProjectKey === compiledProjectKey;
+  const {expression, evaluatedByCompiledProjectKey} = entry;
+  const isActive = currentCompiledProjectKey === evaluatedByCompiledProjectKey;
+
   return (
-    <div className={isActive ? 'console__entry' : 'console__entry_inactive'}>
-      <div className="console__expression">{expression}</div>
-      <ConsoleOutput entry={entry} />
+    <div className="console__entry">
+      <div
+        className={
+          isActive ? 'console__expression' : 'console__expression_inactive'
+        }
+      >
+        {expression}
+      </div>
+      <ConsoleOutput
+        currentCompiledProjectKey={currentCompiledProjectKey}
+        entry={entry}
+      />
     </div>
   );
 }

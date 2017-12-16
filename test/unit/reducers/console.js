@@ -22,16 +22,26 @@ test('evaluateConsoleEntry', reducerTest(
 test('consoleValueProduced', reducerTest(
   reducer,
   new OrderedMap({123: new ConsoleEntry({expression: '1+1'})}),
-  partial(consoleValueProduced, '123', 2),
+  partial(consoleValueProduced, '123', 2, 123456789),
   new OrderedMap({
-    123: new ConsoleEntry({expression: '1+1', value: 2}),
+    123: new ConsoleEntry({
+      expression: '1+1',
+      value: 2,
+      evaluatedByCompiledProjectKey: 123456789,
+    }),
   }),
 ));
 
 test('consoleErrorProduced', reducerTest(
   reducer,
   new OrderedMap({123: new ConsoleEntry({expression: 'bogus + 1'})}),
-  partial(consoleErrorProduced, '123', 'NameError', 'bogus is not defined'),
+  partial(
+    consoleErrorProduced,
+    '123',
+    'NameError',
+    'bogus is not defined',
+    123456789,
+  ),
   new OrderedMap({
     123: new ConsoleEntry({
       expression: 'bogus + 1',
@@ -39,6 +49,7 @@ test('consoleErrorProduced', reducerTest(
         name: 'NameError',
         message: 'bogus is not defined',
       }),
+      evaluatedByCompiledProjectKey: 123456789,
     }),
   }),
 ));

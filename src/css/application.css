@@ -484,9 +484,15 @@ body {
   color: var(--color-red);
 }
 
-.console__entry_inactive * {
-  margin-bottom: 0.5em;
-  margin-left: 4px;
+.console__expression_inactive {
+  color: var(--color-light-gray);
+}
+
+.console__value_inactive {
+  color: var(--color-light-gray);
+}
+
+.console__error_inactive {
   color: var(--color-light-gray);
 }
 
