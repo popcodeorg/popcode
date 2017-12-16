@@ -4,6 +4,7 @@ import test from 'tape';
 import {ConsoleEntry, ConsoleError} from '../../../src/records';
 import {
   consoleErrorProduced,
+  consoleLogProduced,
   consoleValueProduced,
   evaluateConsoleEntry,
 } from '../../../src/actions';
@@ -51,5 +52,14 @@ test('consoleErrorProduced', reducerTest(
       }),
       evaluatedByCompiledProjectKey: 123456789,
     }),
+  }),
+));
+
+test('consoleLogProduced', reducerTest(
+  reducer,
+  initialState,
+  partial(consoleLogProduced, 'A console message', '456'),
+  new OrderedMap({
+    456: new ConsoleEntry({expression: '', value: 'A console message'}),
   }),
 ));
