@@ -1,7 +1,7 @@
 import find from 'lodash/find';
 import inRange from 'lodash/inRange';
 import Validator from '../Validator';
-import retryingFailedImports from '../retryingFailedImports';
+import retryingFailedImports from '../../util/retryingFailedImports';
 
 const UNEXPECTED_TOKEN_EXPR = /^Unexpected token (.+)$/;
 

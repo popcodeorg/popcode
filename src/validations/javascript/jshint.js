@@ -3,10 +3,10 @@ import concat from 'lodash/concat';
 import clone from 'lodash/clone';
 import compact from 'lodash/compact';
 import defaults from 'lodash/defaults';
-import find from 'lodash/find';
+import findKey from 'lodash/findKey';
 import includes from 'lodash/includes';
 import libraries from '../../config/libraries';
-import retryingFailedImports from '../retryingFailedImports';
+import retryingFailedImports from '../../util/retryingFailedImports';
 import Validator from '../Validator';
 
 const jshintrc = {
