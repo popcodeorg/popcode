@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import partial from 'lodash/partial';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -10,6 +11,7 @@ export default function Console({
   history,
   isEnabled,
   isOpen,
+  isTextSizeLarge,
   onInput,
   onToggleVisible,
 }) {
@@ -19,8 +21,12 @@ export default function Console({
 
   const console = (
     <div className="console__scroll-container output__item">
-      <div className="console__repl">
-        <ConsoleInput onInput={onInput} />
+      <div
+        className={
+          classnames('console__repl', {console__repl_zoomed: isTextSizeLarge})
+        }
+      >
+        <ConsoleInput isTextSizeLarge={isTextSizeLarge} onInput={onInput} />
         {history.map((entry, key) => (
           // eslint-disable-next-line react/no-array-index-key
           <ConsoleEntry entry={entry} key={key} />
@@ -50,6 +56,11 @@ Console.propTypes = {
   history: ImmutablePropTypes.iterable.isRequired,
   isEnabled: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  isTextSizeLarge: PropTypes.bool,
   onInput: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
+};
+
+Console.defaultProps = {
+  isTextSizeLarge: false,
 };

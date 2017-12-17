@@ -480,6 +480,10 @@ body {
   overflow: auto;
 }
 
+.console__repl_zoomed {
+  font-size: 20px;
+}
+
 .console__entry,
 .console__input {
   margin-bottom: 0.5em;
