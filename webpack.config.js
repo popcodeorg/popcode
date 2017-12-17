@@ -90,7 +90,7 @@ module.exports = (env = 'development') => {
     new OfflinePlugin({
       caches: {
         main: [':rest:'],
-        additional: ['linters*.js'],
+        additional: ['linters*.js', 'previewLibraries*.js'],
       },
       safeToUseOptionalCaches: true,
       publicPath: '/',
@@ -154,8 +154,7 @@ module.exports = (env = 'development') => {
             return false;
           }
           const isNodeModule = context.indexOf('node_modules') !== -1;
-          const isBowerComponent = context.indexOf('bower_components') !== -1;
-          return isNodeModule || isBowerComponent;
+          return isNodeModule;
         },
       }),
       new webpack.optimize.CommonsChunkPlugin({
