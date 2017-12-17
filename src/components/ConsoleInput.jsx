@@ -2,12 +2,24 @@ import bindAll from 'lodash/bindAll';
 import isNil from 'lodash/isNil';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
+import {
+  createAceEditor,
+  createAceSessionWithoutWorker,
+  inheritFontStylesFromParentElement,
+} from '../util/ace';
 
 export default class ConsoleInput extends Component {
   constructor() {
     super();
     bindAll(this, '_ref');
+  }
+
+  componentWillReceiveProps({isTextSizeLarge}) {
+    if (isTextSizeLarge !== this.props.isTextSizeLarge) {
+      requestAnimationFrame(() => {
+        inheritFontStylesFromParentElement(this._editor);
+      });
+    }
   }
 
   _ref(containerElement) {
@@ -44,5 +56,10 @@ export default class ConsoleInput extends Component {
 }
 
 ConsoleInput.propTypes = {
+  isTextSizeLarge: PropTypes.bool,
   onInput: PropTypes.func.isRequired,
+};
+
+ConsoleInput.defaultProps = {
+  isTextSizeLarge: false,
 };
