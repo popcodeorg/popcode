@@ -18,12 +18,14 @@ export default function Console({
   }
 
   const console = (
-    <div className="console__repl output__item">
-      {history.map((entry, key) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <ConsoleEntry entry={entry} key={key} />
-      )).valueSeq()}
-      <ConsoleInput onInput={onInput} />
+    <div className="console__scroll-container output__item">
+      <div className="console__repl">
+        <ConsoleInput onInput={onInput} />
+        {history.map((entry, key) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <ConsoleEntry entry={entry} key={key} />
+        )).valueSeq().reverse()}
+      </div>
     </div>
   );
 
