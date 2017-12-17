@@ -1,10 +1,8 @@
-import ACE from 'brace';
 import bindAll from 'lodash/bindAll';
 import isNil from 'lodash/isNil';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import createAceSessionWithoutWorker
-  from '../util/createAceSessionWithoutWorker';
+import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
 
 export default class ConsoleInput extends Component {
   constructor() {
@@ -16,21 +14,16 @@ export default class ConsoleInput extends Component {
     const {onInput} = this.props;
 
     if (containerElement) {
-      const computedStyle = getComputedStyle(containerElement);
-      const editorOptions = {
-        fontFamily: computedStyle.getPropertyValue('font-family'),
-        fontSize: computedStyle.getPropertyValue('font-size'),
-        highlightActiveLine: false,
-        maxLines: 1,
-        minLines: 1,
-      };
-      const editor = this._editor = ACE.edit(containerElement);
+      const editor = this._editor = createAceEditor(containerElement);
       const session = createAceSessionWithoutWorker('javascript');
       editor.setSession(session);
       editor.renderer.setShowGutter(false);
-      session.setUseWrapMode(true);
       editor.moveCursorTo(0, 0);
-      editor.setOptions(editorOptions);
+      editor.setOptions({
+        highlightActiveLine: false,
+        maxLines: 1,
+        minLines: 1,
+      });
       editor.resize();
       editor.focus();
 
