@@ -68,6 +68,6 @@ Console.propTypes = {
 };
 
 Console.defaultProps = {
-  currentCompiledProjectKey: undefined,
+  currentCompiledProjectKey: null,
   isTextSizeLarge: false,
 };
