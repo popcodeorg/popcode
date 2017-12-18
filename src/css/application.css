@@ -484,14 +484,8 @@ body {
   color: var(--color-red);
 }
 
-.console__expression_inactive {
-  color: var(--color-light-gray);
-}
-
-.console__value_inactive {
-  color: var(--color-light-gray);
-}
-
+.console__expression_inactive,
+.console__value_inactive,
 .console__error_inactive {
   color: var(--color-light-gray);
 }

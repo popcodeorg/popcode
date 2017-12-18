@@ -6,8 +6,8 @@ import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
 
 export default function Console({
-  currentCompiledProjectKey,
   currentProjectKey,
+  currentCompiledProjectKey,
   history,
   isEnabled,
   isOpen,
@@ -20,14 +20,14 @@ export default function Console({
 
   const console = (
     <div className="console__repl output__item">
-      {history.map((entry, key) => (
-        <ConsoleEntry
-          currentCompiledProjectKey={currentCompiledProjectKey}
-          entry={entry}
-          // eslint-disable-next-line react/no-array-index-key
-          key={key}
-        />
-      )).valueSeq()}
+      {history.map((entry, key) => {
+        const isActive =
+          currentCompiledProjectKey === entry.evaluatedByCompiledProjectKey;
+        return (
+        // eslint-disable-next-line react/no-array-index-key
+          <ConsoleEntry entry={entry} isActive={isActive} key={key} />
+        );
+      }).valueSeq()}
       <ConsoleInput onInput={onInput} />
     </div>
   );
@@ -49,7 +49,7 @@ export default function Console({
 }
 
 Console.propTypes = {
-  currentCompiledProjectKey: PropTypes.number.isRequired,
+  currentCompiledProjectKey: PropTypes.number,
   currentProjectKey: PropTypes.string.isRequired,
   history: ImmutablePropTypes.iterable.isRequired,
   isEnabled: PropTypes.bool.isRequired,
@@ -57,3 +57,8 @@ Console.propTypes = {
   onInput: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };
+
+Console.defaultProps = {
+  currentCompiledProjectKey: undefined,
+};
+

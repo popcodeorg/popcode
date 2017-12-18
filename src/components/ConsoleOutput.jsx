@@ -1,15 +1,22 @@
 import isNil from 'lodash/isNil';
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import {ConsoleEntry} from '../records';
 
-export default function ConsoleOutput({entry, currentCompiledProjectKey}) {
-  const {value, error, evaluatedByCompiledProjectKey} = entry;
-  const isActive = currentCompiledProjectKey === evaluatedByCompiledProjectKey;
+export default function ConsoleOutput({entry, isActive}) {
+  const {value, error} = entry;
 
   if (!isNil(value)) {
     return (
-      <div className={isActive ? 'console__value' : 'console__value_inactive'}>
+      <div
+        className={
+          classnames(
+            'console__value',
+            {console__value_inactive: !isActive},
+          )
+        }
+      >
         =&gt; {value}
       </div>
     );
@@ -17,7 +24,14 @@ export default function ConsoleOutput({entry, currentCompiledProjectKey}) {
 
   if (!isNil(error)) {
     return (
-      <div className={isActive ? 'console__error' : 'console__error_inactive'}>
+      <div
+        className={
+          classnames(
+            'console__error',
+            {console__error_inactive: !isActive},
+          )
+        }
+      >
         {error.name}: {error.message}
       </div>
     );
@@ -27,6 +41,6 @@ export default function ConsoleOutput({entry, currentCompiledProjectKey}) {
 }
 
 ConsoleOutput.propTypes = {
-  currentCompiledProjectKey: PropTypes.number.isRequired,
   entry: PropTypes.instanceOf(ConsoleEntry).isRequired,
+  isActive: PropTypes.bool.isRequired,
 };

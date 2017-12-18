@@ -8,15 +8,15 @@ export default function console(stateIn, {type, payload, meta}) {
   if (state === undefined) {
     state = initialState;
   }
-  //          input.set('projectKey', payload.projectKey);
+
   switch (type) {
     case 'CONSOLE_VALUE_PRODUCED':
       return state.update(
         payload.key,
-        input => input.set('value', payload.value),
-      ).update(
-        payload.key,
         input => input.set(
+          'value',
+          payload.value,
+        ).set(
           'evaluatedByCompiledProjectKey',
           payload.compiledProjectKey,
         ),
@@ -28,10 +28,7 @@ export default function console(stateIn, {type, payload, meta}) {
         input => input.set(
           'error',
           new ConsoleError({name: payload.name, message: payload.message}),
-        ),
-      ).update(
-        payload.key,
-        input => input.set(
+        ).set(
           'evaluatedByCompiledProjectKey',
           payload.compiledProjectKey,
         ),

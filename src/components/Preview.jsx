@@ -18,13 +18,12 @@ export default function Preview({
     return null;
   }
 
-  const projectFrames = compiledProjects.map(({source, timestamp}, key) => (
+  const projectFrames = compiledProjects.map((compiledProject, key) => (
     <PreviewFrame
-      compiledProjectKey={timestamp}
+      compiledProject={compiledProject}
       consoleEntries={consoleEntries}
       isActive={key === compiledProjects.keySeq().last()}
-      key={timestamp}
-      src={source}
+      key={compiledProject.compiledProjectKey}
       onConsoleError={onConsoleError}
       onConsoleValue={onConsoleValue}
       onRuntimeError={onRuntimeError}
