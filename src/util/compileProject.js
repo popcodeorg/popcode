@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import uniq from 'lodash/uniq';
 import loopBreaker from 'loop-breaker';
 import config from '../config';
-import retryingFailedImports from '../util/retryingFailedImports';
+import libraries from '../config/libraries';
 
 const downloadingScript = downloadScript();
 
@@ -46,17 +46,11 @@ function ensureDocumentElement(doc) {
   }
 }
 
-async function attachLibraries(doc, project) {
+function attachLibraries(doc, project) {
   const enabledLibrariesWithDependencies =
-    await librariesWithDependencies(project.enabledLibraries);
+    librariesWithDependencies(project.enabledLibraries).reverse();
 
-  if (isEmpty(enabledLibrariesWithDependencies)) {
-    return;
-  }
-
-  const libraries = await importLibraries();
-
-  for (const libraryKey of enabledLibrariesWithDependencies.reverse()) {
+  for (const libraryKey of enabledLibrariesWithDependencies) {
     if (!(libraryKey in libraries)) {
       return;
     }
@@ -98,12 +92,10 @@ function attachJavascriptLibrary(doc, javascript) {
   }
 }
 
-async function librariesWithDependencies(libraryKeys) {
+function librariesWithDependencies(libraryKeys) {
   if (isEmpty(libraryKeys)) {
     return libraryKeys;
   }
-
-  const libraries = await importLibraries();
 
   const requestedLibraries =
     libraryKeys.map(libraryKey => libraries[libraryKey]);
@@ -113,13 +105,6 @@ async function librariesWithDependencies(libraryKeys) {
   return uniq(
     compact(librariesWithDependencies(dependencies)).concat(libraryKeys),
   );
-}
-
-async function importLibraries() {
-  return retryingFailedImports(() => import(
-    /* webpackChunkName: 'previewLibraries' */
-    '../config/libraryAssets',
-  ));
 }
 
 function addBase(doc) {
@@ -168,7 +153,7 @@ export default async function compileProject(
 ) {
   const doc = constructDocument(project);
 
-  await attachLibraries(doc, project);
+  attachLibraries(doc, project);
   if (isInlinePreview) {
     addBase(doc);
   }

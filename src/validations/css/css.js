@@ -1,5 +1,5 @@
 import Validator from '../Validator';
-import retryingFailedImports from '../../util/retryingFailedImports';
+import retryingFailedImports from '../retryingFailedImports';
 
 const errorMap = {
   'missing \'{\'': () => ({reason: 'missing-opening-curly'}),
