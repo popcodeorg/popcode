@@ -2,7 +2,7 @@ import clone from 'lodash/clone';
 import defaults from 'lodash/defaults';
 import reduce from 'lodash/reduce';
 import Validator from '../Validator';
-import retryingFailedImports from '../../util/retryingFailedImports';
+import retryingFailedImports from '../retryingFailedImports';
 
 const errorMap = {
   E001: (error) => {
