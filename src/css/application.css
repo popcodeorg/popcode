@@ -299,6 +299,22 @@ body {
   color: black;
   overflow: scroll;
   padding: 1rem;
+  line-height: 1.5em;
+
+  /* postcss-bem-linter: ignore */
+  & li {
+    margin-bottom: 0.5em;
+  }
+
+  /* postcss-bem-linter: ignore */
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
+    line-height: 1.2em;
+  }
 
   /* postcss-bem-linter: ignore */
   & img {
@@ -314,7 +330,8 @@ body {
   }
 
   /* postcss-bem-linter: ignore */
-  & p code.hljs {
+  & p code.hljs,
+  & li code.hljs {
     padding: 0;
   }
 }
