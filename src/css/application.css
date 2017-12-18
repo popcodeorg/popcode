@@ -519,6 +519,12 @@ body {
   color: var(--color-red);
 }
 
+.console__expression_inactive,
+.console__value_inactive,
+.console__error_inactive {
+  color: var(--color-light-gray);
+}
+
 /** @define preview */
 
 .preview {

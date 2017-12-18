@@ -13,14 +13,24 @@ export default function console(stateIn, {type, payload, meta}) {
     case 'CONSOLE_VALUE_PRODUCED':
       return state.update(
         payload.key,
-        input => input.set('value', payload.value),
+        input => input.set(
+          'value',
+          payload.value,
+        ).set(
+          'evaluatedByCompiledProjectKey',
+          payload.compiledProjectKey,
+        ),
       );
+
     case 'CONSOLE_ERROR_PRODUCED':
       return state.update(
         payload.key,
         input => input.set(
           'error',
           new ConsoleError({name: payload.name, message: payload.message}),
+        ).set(
+          'evaluatedByCompiledProjectKey',
+          payload.compiledProjectKey,
         ),
       );
     case 'EVALUATE_CONSOLE_ENTRY':

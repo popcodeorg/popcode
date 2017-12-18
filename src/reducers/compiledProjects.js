@@ -34,7 +34,7 @@ export default function compiledProjects(stateIn, action) {
         state.push(new CompiledProject({
           source,
           title,
-          timestamp: action.payload.timestamp,
+          compiledProjectKey: action.payload.timestamp,
         })),
       );
     }
@@ -44,7 +44,7 @@ export default function compiledProjects(stateIn, action) {
         state.push(new CompiledProject({
           source: action.payload.source,
           title: action.payload.title,
-          timestamp: action.meta.timestamp,
+          compiledProjectKey: action.meta.timestamp,
         })),
         2,
       );

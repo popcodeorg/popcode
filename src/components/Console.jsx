@@ -8,6 +8,7 @@ import ConsoleInput from './ConsoleInput';
 
 export default function Console({
   currentProjectKey,
+  currentCompiledProjectKey,
   history,
   isEnabled,
   isOpen,
@@ -27,10 +28,14 @@ export default function Console({
         }
       >
         <ConsoleInput isTextSizeLarge={isTextSizeLarge} onInput={onInput} />
-        {history.map((entry, key) => (
+        {history.map((entry, key) => {
+          const isActive =
+            currentCompiledProjectKey === entry.evaluatedByCompiledProjectKey;
+          return (
           // eslint-disable-next-line react/no-array-index-key
-          <ConsoleEntry entry={entry} key={key} />
-        )).valueSeq().reverse()}
+            <ConsoleEntry entry={entry} isActive={isActive} key={key} />
+          );
+        }).valueSeq().reverse()}
       </div>
     </div>
   );
@@ -52,6 +57,7 @@ export default function Console({
 }
 
 Console.propTypes = {
+  currentCompiledProjectKey: PropTypes.number,
   currentProjectKey: PropTypes.string.isRequired,
   history: ImmutablePropTypes.iterable.isRequired,
   isEnabled: PropTypes.bool.isRequired,
@@ -62,5 +68,6 @@ Console.propTypes = {
 };
 
 Console.defaultProps = {
+  currentCompiledProjectKey: null,
   isTextSizeLarge: false,
 };
