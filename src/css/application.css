@@ -368,6 +368,7 @@ body {
   display: flex;
   flex-direction: column;
   font-family: 'Inconsolata';
+  font-size: 14px;
 }
 
 .editors__editor-container {
@@ -457,7 +458,7 @@ body {
 /** @define console */
 
 .console {
-  flex: 0 0 auto;
+  flex: none;
 }
 
 .console__label {
@@ -465,15 +466,32 @@ body {
   background-color: var(--color-low-contrast-gray);
 }
 
-.console__repl {
-  padding: 0.5em;
-  font-family: 'Inconsolata';
+.console__scroll-container {
   height: 40vh;
+  padding: 0.5em;
+}
+
+.console__repl {
+  display: flex;
+  flex-direction: column-reverse;
+  font-family: 'Inconsolata';
+  font-size: 14px;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.console__repl_zoomed {
+  font-size: 20px;
 }
 
 .console__entry,
 .console__input {
   margin-bottom: 0.5em;
+  flex: none;
+}
+
+.console__input {
+  height: 1em;
 }
 
 .console__entry {

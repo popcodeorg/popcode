@@ -1,11 +1,13 @@
 import channel from './channel';
+import createScopedEvaluationChain from './createScopedEvaluationChain';
 
-// eslint-disable-next-line no-eval
-const globalEval = window.eval;
+let evalNext = createScopedEvaluationChain((next) => {
+  evalNext = next;
+});
 
 export default function handleConsoleExpressions() {
   channel.bind(
     'evaluateExpression',
-    (_trans, expression) => JSON.stringify(globalEval(expression)),
+    (_trans, expression) => evalNext(expression),
   );
 }

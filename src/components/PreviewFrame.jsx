@@ -46,10 +46,10 @@ class PreviewFrame extends React.Component {
     this._channel.call({
       method: 'evaluateExpression',
       params: expression,
-      success: (formattedResult) => {
+      success: (result) => {
         this.props.onConsoleValue(
           key,
-          formattedResult,
+          JSON.stringify(result),
           this.props.compiledProject.compiledProjectKey,
         );
       },
