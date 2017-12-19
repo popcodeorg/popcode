@@ -1,5 +1,5 @@
 import Validator from '../Validator';
-import retryingFailedImports from '../retryingFailedImports';
+import retryingFailedImports from '../../util/retryingFailedImports';
 
 const errorMap = {
   'syntaxError/Unclosed block': () => ({
