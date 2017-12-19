@@ -13,6 +13,7 @@ export default function Console({
   isEnabled,
   isOpen,
   isTextSizeLarge,
+  onClearConsoleEntries,
   onInput,
   onToggleVisible,
 }) {
@@ -50,6 +51,12 @@ export default function Console({
       >
         Console
         <span className="console__chevron u__icon">{chevron}</span>
+        <span
+          className="console__button console__button_clear u__icon"
+          onClick={onClearConsoleEntries}
+        >
+          {'\uf05e'}
+        </span>
       </div>
       {isOpen ? console : null}
     </div>
@@ -63,6 +70,7 @@ Console.propTypes = {
   isEnabled: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
+  onClearConsoleEntries: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };

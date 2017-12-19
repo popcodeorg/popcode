@@ -53,12 +53,14 @@ import {
 } from './compiledProjects';
 
 import {
+  clearConsoleEntries,
   consoleErrorProduced,
   consoleValueProduced,
   evaluateConsoleEntry,
 } from './console';
 
 export {
+  clearConsoleEntries,
   consoleValueProduced,
   consoleErrorProduced,
   createProject,

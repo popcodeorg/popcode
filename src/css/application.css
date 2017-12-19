@@ -483,6 +483,10 @@ body {
   background-color: var(--color-low-contrast-gray);
 }
 
+.console__button_clear {
+  float: right;
+}
+
 .console__scroll-container {
   height: 40vh;
   padding: 0.5em;

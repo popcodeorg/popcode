@@ -8,7 +8,11 @@ import {
   isExperimental,
   isTextSizeLarge,
 } from '../selectors';
-import {evaluateConsoleEntry, toggleComponent} from '../actions';
+import {
+  evaluateConsoleEntry,
+  toggleComponent,
+  clearConsoleEntries,
+} from '../actions';
 
 function mapStateToProps(state) {
   return {
@@ -23,6 +27,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    onClearConsoleEntries(e) {
+      e.stopPropagation();
+      dispatch(clearConsoleEntries());
+    },
+
     onInput(input) {
       dispatch(evaluateConsoleEntry(input));
     },
