@@ -2,7 +2,7 @@ import last from 'lodash/last';
 import isNull from 'lodash/isNull';
 import trim from 'lodash/trim';
 import {localizedArrayToSentence} from '../../util/arrayToSentence';
-import retryingFailedImports from '../retryingFailedImports';
+import retryingFailedImports from '../../util/retryingFailedImports';
 import Validator from '../Validator';
 
 const specialCases = {
