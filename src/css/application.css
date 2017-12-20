@@ -479,12 +479,10 @@ body {
 }
 
 .console__label {
+  display: flex;
+  justify-content: space-between;
   cursor: pointer;
   background-color: var(--color-low-contrast-gray);
-}
-
-.console__button_clear {
-  float: right;
 }
 
 .console__scroll-container {

@@ -49,13 +49,19 @@ export default function Console({
         className="label console__label"
         onClick={partial(onToggleVisible, currentProjectKey)}
       >
-        Console
-        <span className="console__chevron u__icon">{chevron}</span>
+        <div>
+          Console
+          <span className="console__chevron u__icon">{chevron}</span>
+        </div>
         <span
           className="console__button console__button_clear u__icon"
-          onClick={onClearConsoleEntries}
+          // eslint-disable-next-line react/jsx-no-bind
+          onClick={(e) => {
+            e.stopPropagation();
+            onClearConsoleEntries();
+          }}
         >
-          {'\uf05e'}
+          &#xf05e;
         </span>
       </div>
       {isOpen ? console : null}

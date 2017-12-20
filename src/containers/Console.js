@@ -27,8 +27,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onClearConsoleEntries(e) {
-      e.stopPropagation();
+    onClearConsoleEntries() {
       dispatch(clearConsoleEntries());
     },
 
