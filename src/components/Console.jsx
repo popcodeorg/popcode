@@ -26,6 +26,7 @@ export default function Console({
         className={
           classnames('console__repl', {console__repl_zoomed: isTextSizeLarge})
         }
+        onClick={focusLine}
       >
         <ConsoleInput isTextSizeLarge={isTextSizeLarge} onInput={onInput} />
         {history.map((entry, key) => {
