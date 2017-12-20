@@ -26,5 +26,6 @@ export const clearConsoleEntries = createAction(
 
 export const consoleLogProduced = createAction(
   'CONSOLE_LOG_PRODUCED',
-  (value, key = uuid().toString()) => ({key, value}),
+  value => ({value}),
+  (_value, key = uuid().toString()) => ({key}),
 );

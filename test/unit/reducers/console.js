@@ -60,6 +60,6 @@ test('consoleLogProduced', reducerTest(
   initialState,
   partial(consoleLogProduced, 'A console message', '456'),
   new OrderedMap({
-    456: new ConsoleEntry({expression: '', value: 'A console message'}),
+    456: new ConsoleEntry({value: 'A console message'}),
   }),
 ));

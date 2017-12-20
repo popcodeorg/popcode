@@ -42,8 +42,8 @@ export default function console(stateIn, {type, payload, meta}) {
       return initialState;
     case 'CONSOLE_LOG_PRODUCED':
       return state.set(
-        payload.key,
-        new ConsoleEntry({expression: '', value: payload.value}),
+        meta.key,
+        new ConsoleEntry({value: payload.value}),
       );
     default:
       return state;

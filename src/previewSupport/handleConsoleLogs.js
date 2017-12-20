@@ -1,22 +1,8 @@
-import isString from 'lodash/isString';
 import channel from './channel';
-// eslint-disable-next-line no-eval
-const globalEval = window.eval;
-
-function reducer(accumulator, currentValue) {
-  let evaluatedValue;
-  if (isString(currentValue)) {
-    evaluatedValue = currentValue;
-  } else {
-    evaluatedValue = globalEval(currentValue);
-  }
-
-  return `${accumulator} ${JSON.stringify(evaluatedValue)}`;
-}
 
 function notifyChannel(args) {
   if (args.length > 0) {
-    const output = args.reduce(reducer);
+    const output = args.map(arg => JSON.stringify(arg)).join(' ');
     channel.notify({
       method: 'log',
       params: {output},
@@ -25,44 +11,22 @@ function notifyChannel(args) {
 }
 
 export default function handleConsoleLogs() {
-  /* eslint-disable no-console */
-  const browserConsoleLog = console.log.bind(console);
-  const browserConsoleDebug = console.debug.bind(console);
-  const browserConsoleInfo = console.info.bind(console);
-  const browserConsoleWarn = console.warn.bind(console);
-  const browserConsoleError = console.error.bind(console);
-  /* eslint-enable no-console */
+  const consoleFunctions = ['log', 'info', 'warn', 'error'];
 
-  Object.defineProperties(console, {
-    log: {
+  // eslint-disable-next-line no-console
+  if (console.debug) {
+    consoleFunctions.push('debug');
+  }
+
+  consoleFunctions.forEach((functionName) => {
+    // eslint-disable-next-line no-console
+    const browserFunction = console[functionName].bind(console);
+    // eslint-disable-next-line prefer-reflect
+    Object.defineProperty(console, functionName, {
       value: (...args) => {
         notifyChannel(args);
-        browserConsoleLog(...args);
+        browserFunction(...args);
       },
-    },
-    debug: {
-      value: (...args) => {
-        notifyChannel(args);
-        browserConsoleDebug(...args);
-      },
-    },
-    info: {
-      value: (...args) => {
-        notifyChannel(args);
-        browserConsoleInfo(...args);
-      },
-    },
-    warn: {
-      value: (...args) => {
-        notifyChannel(args);
-        browserConsoleWarn(...args);
-      },
-    },
-    error: {
-      value: (...args) => {
-        notifyChannel(args);
-        browserConsoleError(...args);
-      },
-    },
+    });
   });
 }
