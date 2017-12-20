@@ -58,8 +58,11 @@ test('consoleErrorProduced', reducerTest(
 test('consoleLogProduced', reducerTest(
   reducer,
   initialState,
-  partial(consoleLogProduced, 'A console message', '456'),
+  partial(consoleLogProduced, 'A console message', 123456789, '456'),
   new OrderedMap({
-    456: new ConsoleEntry({value: 'A console message'}),
+    456: new ConsoleEntry({
+      value: 'A console message',
+      evaluatedByCompiledProjectKey: 123456789,
+    }),
   }),
 ));

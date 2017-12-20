@@ -111,7 +111,8 @@ class PreviewFrame extends React.Component {
   }
 
   _handleConsoleLog(output) {
-    this.props.onConsoleLog(output);
+    const {compiledProjectKey} = this.props.compiledProject;
+    this.props.onConsoleLog(output, compiledProjectKey);
   }
 
   _attachToFrame(frame) {

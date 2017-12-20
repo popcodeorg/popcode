@@ -36,8 +36,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(consoleValueProduced(key, value, compiledProjectKey));
     },
 
-    onConsoleLog(value) {
-      dispatch(consoleLogProduced(value));
+    onConsoleLog(value, compiledProjectKey) {
+      dispatch(consoleLogProduced(value, compiledProjectKey));
     },
 
     onPopOutProject() {
