@@ -74,7 +74,7 @@ class Editor extends React.Component {
 
     this._scrollToLine(requestedFocusedLine.line);
 
-    this._editor.clearSelection();
+    // this._editor.clearSelection();
     this._editor.focus();
     this.props.onRequestedLineFocused();
   }

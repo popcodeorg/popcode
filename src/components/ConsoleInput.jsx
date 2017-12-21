@@ -2,6 +2,7 @@ import bindAll from 'lodash/bindAll';
 import isNil from 'lodash/isNil';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import get from 'lodash/get';
 import {
   createAceEditor,
   createAceSessionWithoutWorker,
@@ -14,12 +15,33 @@ export default class ConsoleInput extends Component {
     bindAll(this, '_ref');
   }
 
-  componentWillReceiveProps({isTextSizeLarge}) {
-    if (isTextSizeLarge !== this.props.isTextSizeLarge) {
+  componentDidMount() {
+    this._focusRequestedLine(this.props.requestedFocusedLine);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isTextSizeLarge !== this.props.isTextSizeLarge) {
       requestAnimationFrame(() => {
         inheritFontStylesFromParentElement(this._editor);
       });
     }
+    this._focusRequestedLine(nextProps.requestedFocusedLine);
+  }
+
+  _focusRequestedLine(requestedFocusedLine) {
+    if (get(requestedFocusedLine, 'language') !== 'console') {
+      return;
+    }
+
+    this._editor.moveCursorTo(
+      requestedFocusedLine.line,
+      requestedFocusedLine.column,
+    );
+
+    this._editor.navigateLineEnd();
+    this._editor.clearSelection();
+    this._editor.focus();
+    this.props.onRequestedLineFocused();
   }
 
   _ref(containerElement) {
@@ -51,15 +73,25 @@ export default class ConsoleInput extends Component {
   }
 
   render() {
-    return <div className="console__input" ref={this._ref} />;
+    return (
+      <div
+        className="console__input"
+        ref={this._ref}
+        // eslint-disable-next-line react/jsx-no-bind
+        onClick={e => e.stopPropagation()}
+      />
+    );
   }
 }
 
 ConsoleInput.propTypes = {
   isTextSizeLarge: PropTypes.bool,
+  requestedFocusedLine: PropTypes.object,
   onInput: PropTypes.func.isRequired,
+  onRequestedLineFocused: PropTypes.func.isRequired,
 };
 
 ConsoleInput.defaultProps = {
+  requestedFocusedLine: null,
   isTextSizeLarge: false,
 };

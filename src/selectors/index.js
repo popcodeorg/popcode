@@ -15,6 +15,7 @@ import getHiddenUIComponents from './getHiddenUIComponents';
 import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
 import getProject from './getProject';
+import getRequestedFocusedLine from './getRequestedFocusedLine';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
   from './isCurrentProjectSyntacticallyValid';
@@ -44,6 +45,7 @@ export {
   getNotifications,
   getOpenTopBarMenu,
   getProject,
+  getRequestedFocusedLine,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isExperimental,

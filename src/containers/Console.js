@@ -5,10 +5,16 @@ import {
   getConsoleHistory,
   getCurrentProjectKey,
   getHiddenUIComponents,
+  getRequestedFocusedLine,
   isExperimental,
   isTextSizeLarge,
 } from '../selectors';
-import {evaluateConsoleEntry, toggleComponent} from '../actions';
+import {
+  evaluateConsoleEntry,
+  toggleComponent,
+  focusLine,
+  editorFocusedRequestedLine,
+} from '../actions';
 
 function mapStateToProps(state) {
   return {
@@ -18,6 +24,7 @@ function mapStateToProps(state) {
     isEnabled: isExperimental(state),
     isOpen: !getHiddenUIComponents(state).includes('console'),
     isTextSizeLarge: isTextSizeLarge(state),
+    requestedFocusedLine: getRequestedFocusedLine(state),
   };
 }
 
@@ -30,6 +37,16 @@ function mapDispatchToProps(dispatch) {
     onToggleVisible(projectKey) {
       dispatch(toggleComponent(projectKey, 'console'));
     },
+
+    onConsoleClicked() {
+      dispatch(focusLine('console', 0, 0));
+    },
+
+    onRequestedLineFocused() {
+      dispatch(editorFocusedRequestedLine());
+    },
+
+
   };
 }
 
