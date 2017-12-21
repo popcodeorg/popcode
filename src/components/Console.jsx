@@ -53,16 +53,15 @@ export default function Console({
           Console
           <span className="console__chevron u__icon">{chevron}</span>
         </div>
-        <span
+        <div
           className="console__button console__button_clear u__icon"
-          // eslint-disable-next-line react/jsx-no-bind
           onClick={(e) => {
             e.stopPropagation();
             onClearConsoleEntries();
           }}
         >
           &#xf05e;
-        </span>
+        </div>
       </div>
       {isOpen ? console : null}
     </div>
