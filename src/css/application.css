@@ -375,7 +375,7 @@ body {
   min-width: 300px;
 }
 
-.environment__columnContents {
+.environment__column-contents {
   position: absolute;
   top: 0;
   bottom: 0;
