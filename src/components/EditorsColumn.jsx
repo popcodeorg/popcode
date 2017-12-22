@@ -133,7 +133,7 @@ export default class EditorsColumn extends React.Component {
         ref={onRef}
         style={prefixAll(style)}
       >
-        <div className="environment__columnContents editors">{children}</div>
+        <div className="environment__column-contents editors">{children}</div>
       </div>
     );
   }
