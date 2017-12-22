@@ -638,9 +638,6 @@
         "react/jsx-key": [
           2
         ],
-        "react/jsx-no-bind": [
-          2
-        ],
         "react/jsx-no-comment-textnodes": [
           2
         ],

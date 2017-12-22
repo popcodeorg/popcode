@@ -14,6 +14,7 @@ import {
   toggleComponent,
   focusLine,
   editorFocusedRequestedLine,
+  clearConsoleEntries,
 } from '../actions';
 
 function mapStateToProps(state) {
@@ -30,6 +31,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    onClearConsoleEntries() {
+      dispatch(clearConsoleEntries());
+    },
+
     onInput(input) {
       dispatch(evaluateConsoleEntry(input));
     },

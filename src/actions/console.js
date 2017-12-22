@@ -19,3 +19,7 @@ export const evaluateConsoleEntry = createAction(
   identity,
   (_input, key = uuid().toString()) => ({key}),
 );
+
+export const clearConsoleEntries = createAction(
+  'CLEAR_CONSOLE_ENTRIES',
+);

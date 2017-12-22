@@ -38,6 +38,8 @@ export default function console(stateIn, {type, payload, meta}) {
         meta.key,
         new ConsoleEntry({expression: payload}),
       );
+    case 'CLEAR_CONSOLE_ENTRIES':
+      return initialState;
     default:
       return state;
   }
