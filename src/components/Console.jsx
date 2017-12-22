@@ -13,6 +13,7 @@ export default function Console({
   isEnabled,
   isOpen,
   isTextSizeLarge,
+  onClearConsoleEntries,
   onInput,
   onToggleVisible,
 }) {
@@ -48,8 +49,19 @@ export default function Console({
         className="label console__label"
         onClick={partial(onToggleVisible, currentProjectKey)}
       >
-        Console
-        <span className="console__chevron u__icon">{chevron}</span>
+        <div>
+          Console
+          <span className="console__chevron u__icon">{chevron}</span>
+        </div>
+        <div
+          className="console__button console__button_clear u__icon"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClearConsoleEntries();
+          }}
+        >
+          &#xf05e;
+        </div>
       </div>
       {isOpen ? console : null}
     </div>
@@ -63,6 +75,7 @@ Console.propTypes = {
   isEnabled: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
+  onClearConsoleEntries: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };

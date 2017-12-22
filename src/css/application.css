@@ -479,6 +479,8 @@ body {
 }
 
 .console__label {
+  display: flex;
+  justify-content: space-between;
   cursor: pointer;
   background-color: var(--color-low-contrast-gray);
 }
