@@ -110,7 +110,8 @@ class PreviewFrame extends React.Component {
     });
   }
 
-  _handleConsoleLog(output) {
+  _handleConsoleLog(consoleArgs) {
+    const output = consoleArgs.map(arg => JSON.stringify(arg)).join(' ');
     const {compiledProjectKey} = this.props.compiledProject;
     this.props.onConsoleLog(output, compiledProjectKey);
   }
@@ -138,7 +139,7 @@ class PreviewFrame extends React.Component {
       this._handleErrorMessage(params);
     });
     this._channel.bind('log', (_trans, params) => {
-      this._handleConsoleLog(params.output);
+      this._handleConsoleLog(params.args);
     });
   }
 
