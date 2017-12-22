@@ -1,6 +1,8 @@
 import getAllProjectKeys from './getAllProjectKeys';
 import getAllProjects from './getAllProjects';
 import getCompiledProjects from './getCompiledProjects';
+import getConsoleHistory from './getConsoleHistory';
+import getCurrentCompiledProjectKey from './getCurrentCompiledProjectKey';
 import getCurrentProject from './getCurrentProject';
 import getCurrentProjectInstructions from './getCurrentProjectInstructions';
 import getCurrentProjectKey from './getCurrentProjectKey';
@@ -28,6 +30,8 @@ export {
   getAllProjectKeys,
   getAllProjects,
   getCompiledProjects,
+  getConsoleHistory,
+  getCurrentCompiledProjectKey,
   getCurrentProject,
   getCurrentProjectInstructions,
   getCurrentProjectKey,

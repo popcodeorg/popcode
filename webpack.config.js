@@ -10,6 +10,7 @@ const MD5ChunkHash = require('webpack-chunk-hash');
 const InlineChunkManifestHtmlPlugin =
   require('inline-chunk-manifest-html-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
 const startsWith = require('lodash/startsWith');
@@ -89,7 +90,7 @@ module.exports = (env = 'development') => {
     new OfflinePlugin({
       caches: {
         main: [':rest:'],
-        additional: ['linters*.js'],
+        additional: ['linters*.js', 'previewLibraries*.js'],
       },
       safeToUseOptionalCaches: true,
       publicPath: '/',
@@ -123,6 +124,21 @@ module.exports = (env = 'development') => {
       template: path.resolve(__dirname, 'src/html/index.html'),
       chunksSortMode: 'dependency',
     }),
+    new ScriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'defer',
+      custom: [
+        {
+          test: /^preview/,
+          attribute: 'type',
+          value: 'ref',
+        },
+        {
+          test: /^preview/,
+          attribute: 'id',
+          value: 'preview-bundle',
+        },
+      ],
+    }),
   ];
 
   if (isTest) {
@@ -132,16 +148,19 @@ module.exports = (env = 'development') => {
       new InlineChunkManifestHtmlPlugin(),
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
+        chunks: ['main'],
         minChunks({context}) {
           if (!context) {
             return false;
           }
           const isNodeModule = context.indexOf('node_modules') !== -1;
-          const isBowerComponent = context.indexOf('bower_components') !== -1;
-          return isNodeModule || isBowerComponent;
+          return isNodeModule;
         },
       }),
-      new webpack.optimize.CommonsChunkPlugin({name: 'manifest'}),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'manifest',
+        chunks: ['main'],
+      }),
     );
   }
 
@@ -156,7 +175,10 @@ module.exports = (env = 'development') => {
   }
 
   return {
-    entry: './src/application.js',
+    entry: {
+      main: './src/application.js',
+      preview: './src/preview.js',
+    },
     output: {
       path: path.resolve(__dirname, './dist'),
       filename: isProduction ? '[name].[chunkhash].js' : '[name].js',

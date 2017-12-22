@@ -114,7 +114,7 @@ export default class EditorsColumn extends React.Component {
             `editor.${language}`,
           )}
         >
-          <div className="editors__label editors__label_collapsed">
+          <div className="label editors__label editors__label_collapsed">
             {t(`languages.${language}`)}
             {' '}
             <span className="u__icon">&#xf077;</span>
@@ -133,7 +133,7 @@ export default class EditorsColumn extends React.Component {
         ref={onRef}
         style={prefixAll(style)}
       >
-        <div className="environment__columnContents editors">{children}</div>
+        <div className="environment__column-contents editors">{children}</div>
       </div>
     );
   }

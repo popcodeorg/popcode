@@ -165,7 +165,7 @@ test('gistImported', (t) => {
         projectKey,
         {html, css, javascript: ''},
         ['jquery'],
-        ['output'],
+        ['output', 'console'],
       ),
     }),
   ));
@@ -218,8 +218,9 @@ tap(initProjects({1: true}), projects =>
     reducer,
     projects,
     partial(hideComponent, '1', 'output', now),
-    projects.update('1', projectIn =>
-      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    projects.updateIn(
+      ['1', 'hiddenUIComponents'],
+      components => components.add('output'),
     ),
   )),
 );
@@ -227,8 +228,9 @@ tap(initProjects({1: true}), projects =>
 tap(initProjects({1: true}), projects =>
   test('unhideComponent', reducerTest(
     reducer,
-    projects.update('1', projectIn =>
-      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    projects.updateIn(
+      ['1', 'hiddenUIComponents'],
+      components => components.add('output'),
     ),
     partial(unhideComponent, '1', 'output', now),
     projects,
@@ -242,15 +244,17 @@ test('toggleComponent', (t) => {
     reducer,
     projects,
     partial(toggleComponent, '1', 'output', now),
-    projects.update('1', projectIn =>
-      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    projects.updateIn(
+      ['1', 'hiddenUIComponents'],
+      components => components.add('output'),
     ),
   ));
 
   t.test('with component hidden', reducerTest(
     reducer,
-    projects.update('1', projectIn =>
-      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    projects.updateIn(
+      ['1', 'hiddenUIComponents'],
+      components => components.add('output'),
     ),
     partial(toggleComponent, '1', 'output', now),
     projects,
@@ -262,9 +266,9 @@ tap(initProjects({1: true}), (projects) => {
   test('focusLine', reducerTest(
     rootReducer,
     Immutable.fromJS({
-      projects: projects.setIn(
+      projects: projects.updateIn(
         ['1', 'hiddenUIComponents'],
-        new Immutable.Set(['editor.javascript']),
+        components => components.add('editor.javascript'),
       ),
       currentProject: {projectKey: '1'},
     }),
@@ -290,7 +294,7 @@ function initProjects(map = {}) {
 }
 
 function buildProject(
-  key, sources, enabledLibraries = [], hiddenUIComponents = [],
+  key, sources, enabledLibraries = [], hiddenUIComponents = ['console'],
 ) {
   return Project.fromJS({
     projectKey: key,

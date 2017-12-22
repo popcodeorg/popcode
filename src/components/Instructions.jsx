@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import {toReact as markdownToReact} from '../util/markdown';
 
 export default function Instructions({instructions, isOpen}) {
@@ -10,14 +9,11 @@ export default function Instructions({instructions, isOpen}) {
 
   return (
     <div
-      className={classnames(
-        'layout__instructions',
-        'instructions',
-        'u__flex-container',
-        'u__flex-container_column',
-      )}
+      className="layout__instructions"
     >
-      {instructions ? markdownToReact(instructions) : null}
+      <div className="instructions">
+        {instructions ? markdownToReact(instructions) : null}
+      </div>
     </div>
   );
 }

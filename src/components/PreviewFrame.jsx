@@ -1,10 +1,13 @@
+import Channel from 'jschannel';
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
 import {t} from 'i18next';
 import normalizeError from '../util/normalizeError';
-import {sourceDelimiter} from '../util/generatePreview';
+import {sourceDelimiter} from '../util/compileProject';
+import {CompiledProject as CompiledProjectRecord} from '../records';
 
 const sandboxOptions = [
   'allow-forms',
@@ -19,59 +22,67 @@ class PreviewFrame extends React.Component {
   constructor() {
     super();
     this._frameName = `preview-frame-${nextId++}`;
-    bindAll(this, '_attachToFrame', '_handleInfiniteLoop', '_onMessage');
+    bindAll(this, '_attachToFrame', '_handleInfiniteLoop');
   }
 
-  componentDidMount() {
-    window.addEventListener('message', this._onMessage);
+  componentWillReceiveProps(newProps) {
+    const {consoleEntries: previousConsoleEntries, isActive} = this.props;
+
+    if (this._channel && isActive) {
+      for (const [key, {expression}] of newProps.consoleEntries) {
+        if (!previousConsoleEntries.has(key)) {
+          this._evaluateConsoleExpression(key, expression);
+        }
+      }
+    }
   }
 
   shouldComponentUpdate() {
     return false;
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('message', this._onMessage);
+  _evaluateConsoleExpression(key, expression) {
+    // eslint-disable-next-line prefer-reflect
+    this._channel.call({
+      method: 'evaluateExpression',
+      params: expression,
+      success: (result) => {
+        this.props.onConsoleValue(
+          key,
+          JSON.stringify(result),
+          this.props.compiledProject.compiledProjectKey,
+        );
+      },
+      error: (name, message) => {
+        this.props.onConsoleError(
+          key,
+          name,
+          message,
+          this.props.compiledProject.compiledProjectKey,
+        );
+      },
+    });
   }
 
   _runtimeErrorLineOffset() {
-    const firstSourceLine = this.props.src.
+    const firstSourceLine = this.props.compiledProject.source.
       split('\n').indexOf(sourceDelimiter) + 2;
 
     return firstSourceLine - 1;
   }
 
-  _onMessage(message) {
-    if (typeof message.data !== 'string') {
-      return;
-    }
+  _handleErrorMessage(error) {
+    let line = error.line - this._runtimeErrorLineOffset();
 
-    let data;
-    try {
-      data = JSON.parse(message.data);
-    } catch (_e) {
-      return;
-    }
-
-    if (data.type !== 'org.popcode.error') {
-      return;
-    }
-
-    if (data.windowName !== this._frameName) {
-      return;
-    }
-
-    let line = data.error.line - this._runtimeErrorLineOffset();
-
-    if (data.error.message === 'Loop Broken!') {
+    if (error.message === 'Loop Broken!') {
       this._handleInfiniteLoop(line);
       return;
     }
 
-    const ErrorConstructor = window[data.error.name] || Error;
-    const error = new ErrorConstructor(data.error.message);
-
-    const normalizedError = normalizeError(error);
+    const ErrorConstructor = window[error.name] || Error;
+    const normalizedError = normalizeError(
+      new ErrorConstructor(error.message),
+    );
 
     if (Bowser.safari) {
       line = 1;
@@ -82,7 +93,7 @@ class PreviewFrame extends React.Component {
       text: normalizedError.message,
       raw: normalizedError.message,
       row: line - 1,
-      column: data.error.column,
+      column: error.column,
       type: 'error',
     });
   }
@@ -100,22 +111,31 @@ class PreviewFrame extends React.Component {
   }
 
   _attachToFrame(frame) {
+    this._frame = frame;
+
     if (!frame) {
+      if (this._channel) {
+        this._channel.destroy();
+        Reflect.deleteProperty(this, '_channel');
+      }
       return;
     }
 
-    const {src} = this.props;
-
-    if (src) {
-      frame.addEventListener('load', () => {
+    this._channel = Channel.build({
+      window: frame.contentWindow,
+      origin: '*',
+      onReady() {
         frame.classList.add('preview__frame_loaded');
-      });
+      },
+    });
 
-      frame.srcdoc = src;
-    }
+    this._channel.bind('error', (_trans, params) => {
+      this._handleErrorMessage(params);
+    });
   }
 
   render() {
+    const {source} = this.props.compiledProject;
     return (
       <div className="preview__frame-container">
         <iframe
@@ -123,7 +143,7 @@ class PreviewFrame extends React.Component {
           name={this._frameName}
           ref={this._attachToFrame}
           sandbox={sandboxOptions}
-          src="about:blank"
+          srcDoc={source}
         />
       </div>
     );
@@ -131,9 +151,12 @@ class PreviewFrame extends React.Component {
 }
 
 PreviewFrame.propTypes = {
-  src: PropTypes.string.isRequired,
+  compiledProject: PropTypes.instanceOf(CompiledProjectRecord).isRequired,
+  consoleEntries: ImmutablePropTypes.iterable.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  onConsoleError: PropTypes.func.isRequired,
+  onConsoleValue: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
 };
-
 
 export default PreviewFrame;

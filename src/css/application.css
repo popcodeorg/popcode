@@ -131,6 +131,7 @@ body {
 
 .layout__instructions {
   flex: 0 0 25%;
+  position: relative;
 }
 
 /** @define top-bar */
@@ -296,9 +297,30 @@ body {
 
 .instructions {
   background-color: var(--color-low-contrast-gray);
+  bottom: 0;
   color: black;
+  left: 0;
+  line-height: 1.5em;
   overflow: scroll;
   padding: 1rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  /* postcss-bem-linter: ignore */
+  & li {
+    margin-bottom: 0.5em;
+  }
+
+  /* postcss-bem-linter: ignore */
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
+    line-height: 1.2em;
+  }
 
   /* postcss-bem-linter: ignore */
   & img {
@@ -314,7 +336,8 @@ body {
   }
 
   /* postcss-bem-linter: ignore */
-  & p code.hljs {
+  & p code.hljs,
+  & li code.hljs {
     padding: 0;
   }
 }
@@ -352,7 +375,7 @@ body {
   min-width: 300px;
 }
 
-.environment__columnContents {
+.environment__column-contents {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -368,6 +391,7 @@ body {
   display: flex;
   flex-direction: column;
   font-family: 'Inconsolata';
+  font-size: 14px;
 }
 
 .editors__editor-container {
@@ -390,14 +414,7 @@ body {
 }
 
 .editors__label {
-  background-color: var(--color-chrome);
-  color: var(--color-dark-gray);
-  cursor: pointer;
-  font-family: 'Roboto';
-  font-size: var(--font-size-menu);
-  padding: 0.5em 1em;
   text-align: right;
-  user-select: none;
 }
 
 .editors__label_expanded {
@@ -459,6 +476,61 @@ body {
   z-index: 1;
   background: white;
   animation: 0.2s ease-in 0.1s both fadeIn;
+}
+
+/** @define console */
+
+.console {
+  flex: none;
+}
+
+.console__label {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  background-color: var(--color-low-contrast-gray);
+}
+
+.console__scroll-container {
+  height: 40vh;
+  padding: 0.5em;
+}
+
+.console__repl {
+  display: flex;
+  flex-direction: column-reverse;
+  font-family: 'Inconsolata';
+  font-size: 14px;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.console__repl_zoomed {
+  font-size: 20px;
+}
+
+.console__entry,
+.console__input {
+  margin-bottom: 0.5em;
+  flex: none;
+}
+
+.console__input {
+  height: 1em;
+}
+
+.console__entry {
+  margin-left: 4px;
+}
+
+.console__error {
+  color: var(--color-red);
+}
+
+.console__expression_inactive,
+.console__value_inactive,
+.console__error_inactive {
+  color: var(--color-light-gray);
 }
 
 /** @define preview */
@@ -638,6 +710,18 @@ body {
 
 .pop-throbber path {
   fill: var(--color-low-contrast-gray) !important;
+}
+
+/** @define label */
+
+.label {
+  background-color: var(--color-chrome);
+  color: var(--color-dark-gray);
+  cursor: pointer;
+  font-family: 'Roboto';
+  font-size: var(--font-size-menu);
+  padding: 0.5em 1em;
+  user-select: none;
 }
 
 /** @define utilities */

@@ -3,7 +3,7 @@ import GitHub from 'github-api';
 import isEmpty from 'lodash/isEmpty';
 import trim from 'lodash/trim';
 import performWithRetries from '../util/performWithRetries';
-import generatePreview from '../util/generatePreview';
+import compileProject from '../util/compileProject';
 
 const anonymousGithub = new GitHub({});
 const COMMIT_MESSAGE = 'Created using Popcode: https://popcode.org';
@@ -28,7 +28,7 @@ function normalizeTitle(title) {
 
 export async function createRepoFromProject(project, user) {
   const github = clientForUser(user);
-  const preview = generatePreview(project);
+  const preview = await compileProject(project);
   const title = normalizeTitle(preview.title);
 
   const REPO_NAME = `${title}-${Date.now()}`;
@@ -215,7 +215,7 @@ async function createJsFile(github, project, userName, repoName) {
 }
 
 async function createPreviewFile(github, project, userName, repoName) {
-  const preview = generatePreview(project);
+  const preview = await compileProject(project);
   await createSourceFileInRepo(
     github,
     userName,

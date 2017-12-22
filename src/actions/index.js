@@ -52,7 +52,17 @@ import {
   refreshPreview,
 } from './compiledProjects';
 
+import {
+  clearConsoleEntries,
+  consoleErrorProduced,
+  consoleValueProduced,
+  evaluateConsoleEntry,
+} from './console';
+
 export {
+  clearConsoleEntries,
+  consoleValueProduced,
+  consoleErrorProduced,
   createProject,
   createSnapshot,
   changeCurrentProject,
@@ -87,5 +97,6 @@ export {
   closeTopBarMenu,
   logIn,
   logOut,
+  evaluateConsoleEntry,
   projectCompiled,
 };

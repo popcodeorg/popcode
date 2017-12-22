@@ -2,37 +2,49 @@ import {connect} from 'react-redux';
 import Preview from '../components/Preview';
 import {
   addRuntimeError,
+  consoleErrorProduced,
+  consoleValueProduced,
   popOutProject,
   refreshPreview,
 } from '../actions';
 import {
   getCompiledProjects,
+  getConsoleHistory,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
 } from '../selectors';
 
 function mapStateToProps(state) {
   return {
+    compiledProjects: getCompiledProjects(state),
+    consoleEntries: getConsoleHistory(state),
     showingErrors: (
       !isUserTyping(state) &&
         !isCurrentProjectSyntacticallyValid(state)
     ),
-    compiledProjects: getCompiledProjects(state),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    onConsoleError(key, name, message, compiledProjectKey) {
+      dispatch(consoleErrorProduced(key, name, message, compiledProjectKey));
+    },
+
+    onConsoleValue(key, value, compiledProjectKey) {
+      dispatch(consoleValueProduced(key, value, compiledProjectKey));
+    },
+
     onPopOutProject() {
       dispatch(popOutProject());
     },
 
-    onRuntimeError(error) {
-      dispatch(addRuntimeError('javascript', error));
-    },
-
     onRefreshClick() {
       dispatch(refreshPreview(Date.now()));
+    },
+
+    onRuntimeError(error) {
+      dispatch(addRuntimeError('javascript', error));
     },
   };
 }
