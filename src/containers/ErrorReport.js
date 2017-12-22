@@ -18,8 +18,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onErrorClick(language, line, column) {
-      dispatch(focusLine(language, line, column));
+    onErrorClick(component, line, column) {
+      dispatch(focusLine(component, line, column));
     },
   };
 }

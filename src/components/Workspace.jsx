@@ -132,8 +132,8 @@ class Workspace extends React.Component {
     );
   }
 
-  _handleErrorClick(language, line, column) {
-    this.props.dispatch(focusLine(language, line, column));
+  _handleErrorClick(component, line, column) {
+    this.props.dispatch(focusLine(component, line, column));
   }
 
   _handleEditorInput(language, source) {

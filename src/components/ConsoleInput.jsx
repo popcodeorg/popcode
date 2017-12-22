@@ -3,6 +3,7 @@ import isNil from 'lodash/isNil';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import preventClickthrough from 'react-prevent-clickthrough';
 import {
   createAceEditor,
   createAceSessionWithoutWorker,
@@ -15,31 +16,21 @@ export default class ConsoleInput extends Component {
     bindAll(this, '_ref');
   }
 
-  componentDidMount() {
-    this._focusRequestedLine(this.props.requestedFocusedLine);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isTextSizeLarge !== this.props.isTextSizeLarge) {
+  componentWillReceiveProps({isTextSizeLarge, requestedFocusedLine}) {
+    if (isTextSizeLarge !== this.props.isTextSizeLarge) {
       requestAnimationFrame(() => {
         inheritFontStylesFromParentElement(this._editor);
       });
     }
-    this._focusRequestedLine(nextProps.requestedFocusedLine);
+    this._focusRequestedLine(requestedFocusedLine);
   }
 
   _focusRequestedLine(requestedFocusedLine) {
-    if (get(requestedFocusedLine, 'language') !== 'console') {
+    if (get(requestedFocusedLine, 'component') !== 'console') {
       return;
     }
 
-    this._editor.moveCursorTo(
-      requestedFocusedLine.line,
-      requestedFocusedLine.column,
-    );
-
     this._editor.navigateLineEnd();
-    this._editor.clearSelection();
     this._editor.focus();
     this.props.onRequestedLineFocused();
   }
@@ -77,8 +68,7 @@ export default class ConsoleInput extends Component {
       <div
         className="console__input"
         ref={this._ref}
-        // eslint-disable-next-line react/jsx-no-bind
-        onClick={e => e.stopPropagation()}
+        onClick={preventClickthrough}
       />
     );
   }

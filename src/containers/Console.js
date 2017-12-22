@@ -51,7 +51,6 @@ function mapDispatchToProps(dispatch) {
       dispatch(editorFocusedRequestedLine());
     },
 
-
   };
 }
 
