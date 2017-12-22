@@ -4,6 +4,7 @@ import prefixAll from 'inline-style-prefixer/static';
 import ErrorReport from '../containers/ErrorReport';
 import Preview from '../containers/Preview';
 import Console from '../containers/Console';
+import {DraggableCore} from 'react-draggable';
 
 export default function Output({
   ignorePointerEvents,
@@ -20,6 +21,16 @@ export default function Output({
     >
       <div className="environment__columnContents output">
         <Preview />
+        <DraggableCore
+          // onDrag={this._handleDividerDrag}
+          // onStart={this._handleDividerStart}
+          // onStop={this._handleDividerStop}
+        >
+          <div
+            className="editors__row-divider"
+            // ref={this._storeDividerRef}
+          />
+        </DraggableCore>
         <Console />
         <ErrorReport />
       </div>

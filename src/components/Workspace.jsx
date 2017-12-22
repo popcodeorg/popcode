@@ -167,6 +167,32 @@ class Workspace extends React.Component {
     return 'passed';
   }
 
+
+
+  _storeConsoleRef(index, column) {
+    this.consoleRefs[index] = column;
+  }
+
+  _handleConsoleStart() {
+    this.props.dispatch(startDragConsoleDivider());
+  }
+
+  _handleConsoleStop() {
+    this.props.dispatch(stopDragConsoleDivider());
+  }
+
+
+  _handleConsoleDividerDrag(index, _, {deltaY, lastY, y}) {
+    this.props.onDividerDrag({
+      index,
+      dividerHeight: getNodeHeights(this.dividerRefs),
+      consoleHeights: getNodeHeights(this.editorRefs),
+      deltaY,
+      lastY,
+      y,
+    });
+  }
+
   _renderOutput() {
     const {isDraggingColumnDivider, rowsFlex} = this.props;
     return (
@@ -177,6 +203,9 @@ class Workspace extends React.Component {
         }
         style={{flex: rowsFlex[1]}}
         onRef={partial(this._storeColumnRef, 1)}
+        onConsoleDividerDrag={this._handleConsoleDividerDrag}
+        onConsoleDividerStop={this._handleConsoleStop}
+        onConsoleDividerStart={this._handleConsoleStart}
       />
     );
   }
