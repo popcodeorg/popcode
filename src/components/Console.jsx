@@ -13,11 +13,12 @@ export default function Console({
   isEnabled,
   isOpen,
   isTextSizeLarge,
+  showingErrors,
   onClearConsoleEntries,
   onInput,
   onToggleVisible,
 }) {
-  if (!isEnabled) {
+  if (showingErrors || !isEnabled) {
     return null;
   }
 
@@ -75,6 +76,7 @@ Console.propTypes = {
   isEnabled: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
+  showingErrors: PropTypes.bool.isRequired,
   onClearConsoleEntries: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
