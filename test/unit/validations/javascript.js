@@ -27,6 +27,12 @@ test('invalid LHS error followed by comment', validationTest(
   {reason: 'invalid-left-hand-string', row: 1, payload: {value: '"str"'}},
 ));
 
+test('for loop with only initializer', validationTest(
+  'for(var count=1){',
+  partialRight(javascript, analyzer),
+  {reason: 'unexpected-token', row: 0, payload: {token: ')'}},
+));
+
 test('undeclared variable', validationTest(
   'TinyTurtle.whatever();',
   partialRight(javascript, analyzer),
