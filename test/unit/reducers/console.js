@@ -4,6 +4,7 @@ import test from 'tape';
 import {ConsoleEntry, ConsoleError} from '../../../src/records';
 import {
   consoleErrorProduced,
+  consoleLogProduced,
   consoleValueProduced,
   evaluateConsoleEntry,
 } from '../../../src/actions';
@@ -49,6 +50,18 @@ test('consoleErrorProduced', reducerTest(
         name: 'NameError',
         message: 'bogus is not defined',
       }),
+      evaluatedByCompiledProjectKey: 123456789,
+    }),
+  }),
+));
+
+test('consoleLogProduced', reducerTest(
+  reducer,
+  initialState,
+  partial(consoleLogProduced, 'A console message', 123456789, '456'),
+  new OrderedMap({
+    456: new ConsoleEntry({
+      value: 'A console message',
       evaluatedByCompiledProjectKey: 123456789,
     }),
   }),

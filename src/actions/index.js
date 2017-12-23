@@ -55,6 +55,7 @@ import {
 import {
   clearConsoleEntries,
   consoleErrorProduced,
+  consoleLogProduced,
   consoleValueProduced,
   evaluateConsoleEntry,
 } from './console';
@@ -63,6 +64,7 @@ export {
   clearConsoleEntries,
   consoleValueProduced,
   consoleErrorProduced,
+  consoleLogProduced,
   createProject,
   createSnapshot,
   changeCurrentProject,

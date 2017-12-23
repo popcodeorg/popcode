@@ -9,6 +9,7 @@ export default function Preview({
   consoleEntries,
   showingErrors,
   onConsoleError,
+  onConsoleLog,
   onConsoleValue,
   onPopOutProject,
   onRefreshClick,
@@ -25,6 +26,7 @@ export default function Preview({
       isActive={key === compiledProjects.keySeq().last()}
       key={compiledProject.compiledProjectKey}
       onConsoleError={onConsoleError}
+      onConsoleLog={onConsoleLog}
       onConsoleValue={onConsoleValue}
       onRuntimeError={onRuntimeError}
     />
@@ -56,6 +58,7 @@ Preview.propTypes = {
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
   showingErrors: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
+  onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
   onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,

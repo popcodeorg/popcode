@@ -23,3 +23,9 @@ export const evaluateConsoleEntry = createAction(
 export const clearConsoleEntries = createAction(
   'CLEAR_CONSOLE_ENTRIES',
 );
+
+export const consoleLogProduced = createAction(
+  'CONSOLE_LOG_PRODUCED',
+  (value, compiledProjectKey) => ({value, compiledProjectKey}),
+  (_value, _compiledProjectKey, key = uuid().toString()) => ({key}),
+);
