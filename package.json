@@ -158,7 +158,7 @@
     "inline-style-prefixer": "^3.0.8",
     "js-cookie": "^2.1.3",
     "jschannel": "^1.0.2",
-    "jshint": "^2.9.3",
+    "jshint": "2.9.4",
     "keymirror": "^0.1.1",
     "lodash": "^4.15.0",
     "loop-breaker": "^0.1.0-alpha.7",
