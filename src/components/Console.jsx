@@ -14,15 +14,17 @@ export default function Console({
   isEnabled,
   isOpen,
   isTextSizeLarge,
+  showingErrors,
   onClearConsoleEntries,
   onInput,
   onToggleVisible,
   onRef,
   outputColumnFlex,
 }) {
-  // if (!isEnabled) {
-  //   return null;
-  // }
+
+  if (showingErrors || !isEnabled) {
+    return null;
+  }
 
   const console = (
     <div className="console__scroll-container output__item">
@@ -84,6 +86,7 @@ Console.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
   outputColumnFlex: PropTypes.array.isRequired,
+  showingErrors: PropTypes.bool.isRequired,
   onClearConsoleEntries: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
