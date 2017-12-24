@@ -5,6 +5,7 @@ import {
   getConsoleHistory,
   getCurrentProjectKey,
   getHiddenUIComponents,
+  isCurrentProjectSyntacticallyValid,
   isExperimental,
   isTextSizeLarge,
 } from '../selectors';
@@ -22,6 +23,7 @@ function mapStateToProps(state) {
     isEnabled: isExperimental(state),
     isOpen: !getHiddenUIComponents(state).includes('console'),
     isTextSizeLarge: isTextSizeLarge(state),
+    showingErrors: !isCurrentProjectSyntacticallyValid(state),
   };
 }
 
