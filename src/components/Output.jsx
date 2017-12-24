@@ -1,15 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import prefixAll from 'inline-style-prefixer/static';
+import {DraggableCore} from 'react-draggable';
 import ErrorReport from '../containers/ErrorReport';
 import Preview from '../containers/Preview';
 import Console from '../containers/Console';
-import {DraggableCore} from 'react-draggable';
 
 export default function Output({
   ignorePointerEvents,
   style,
+  onOutputDividerDrag,
+  onOutputDividerStart,
+  onOutputDividerStop,
   onRef,
+  onStoreOutputDividerRef,
 }) {
   return (
     <div
@@ -22,13 +26,13 @@ export default function Output({
       <div className="environment__columnContents output">
         <Preview />
         <DraggableCore
-          // onDrag={this._handleDividerDrag}
-          // onStart={this._handleDividerStart}
-          // onStop={this._handleDividerStop}
+          onDrag={onOutputDividerDrag}
+          onStart={onOutputDividerStart}
+          onStop={onOutputDividerStop}
         >
           <div
-            className="editors__row-divider"
-            // ref={this._storeDividerRef}
+            className="output__row-divider"
+            ref={onStoreOutputDividerRef}
           />
         </DraggableCore>
         <Console />
@@ -41,5 +45,9 @@ export default function Output({
 Output.propTypes = {
   ignorePointerEvents: PropTypes.bool.isRequired,
   style: PropTypes.object.isRequired,
+  onOutputDividerDrag: PropTypes.func.isRequired,
+  onOutputDividerStart: PropTypes.func.isRequired,
+  onOutputDividerStop: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
+  onStoreOutputDividerRef: PropTypes.func.isRequired,
 };

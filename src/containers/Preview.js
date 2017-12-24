@@ -6,12 +6,15 @@ import {
   consoleValueProduced,
   popOutProject,
   refreshPreview,
+  storeOutputRowRef,
 } from '../actions';
 import {
   getCompiledProjects,
   getConsoleHistory,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
+  getOutputColumnFlex,
+  getHiddenUIComponents,
 } from '../selectors';
 
 function mapStateToProps(state) {
@@ -22,6 +25,8 @@ function mapStateToProps(state) {
       !isUserTyping(state) &&
         !isCurrentProjectSyntacticallyValid(state)
     ),
+    outputColumnFlex: getOutputColumnFlex(state),
+    isConsoleOpen: !getHiddenUIComponents(state).includes('console'),
   };
 }
 
@@ -45,6 +50,10 @@ function mapDispatchToProps(dispatch) {
 
     onRuntimeError(error) {
       dispatch(addRuntimeError('javascript', error));
+    },
+
+    onRef(ref) {
+      dispatch(storeOutputRowRef(0, ref));
     },
   };
 }

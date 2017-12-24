@@ -10,17 +10,16 @@ export function getNodeWidths(refs) {
   return refs.map(node => node ? getNodeWidth(node) : null);
 }
 
+export function getNodeHeight(node) {
+  const {minHeight} = window.getComputedStyle(node);
+  return {
+    height: node.offsetHeight,
+    minHeight: parseInt(minHeight.replace('px', ''), 10),
+  };
+}
+
 export function getNodeHeights(refs) {
-  return refs.map((node) => {
-    if (node) {
-      const {minHeight} = window.getComputedStyle(node);
-      return {
-        height: node.offsetHeight,
-        minHeight: parseInt(minHeight.replace('px', ''), 10),
-      };
-    }
-    return null;
-  });
+  return refs.map(node => node ? getNodeHeight(node) : null);
 }
 
 function isSecondDividerPushingFirstDivider(
@@ -51,6 +50,11 @@ function columnToContent(column) {
 
 function editorToContent(editor) {
   return editor ? {size: editor.height, minSize: editor.minHeight} : null;
+}
+
+function outputItemToContent(outputItem) {
+  return outputItem ?
+    {size: outputItem.height, minSize: outputItem.minHeight} : null;
 }
 
 export function updateEditorColumnFlex({
@@ -87,6 +91,24 @@ export function updateWorkspaceRowFlex({
     position: x,
   });
 }
+
+export function updateOutputColumnFlex({
+  rowHeights,
+  dividerHeight,
+  deltaY,
+  lastY,
+  y,
+}) {
+  return updateFlex({
+    index: 0,
+    contentSizes: rowHeights.map(outputItemToContent),
+    dividerSizes: [outputItemToContent(dividerHeight)],
+    deltaPosition: deltaY,
+    lastPosition: lastY,
+    position: y,
+  });
+}
+
 
 function updateFlex({
   deltaPosition,

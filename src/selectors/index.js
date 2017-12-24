@@ -25,6 +25,7 @@ import isTextSizeLarge from './isTextSizeLarge';
 import isUserAuthenticated from './isUserAuthenticated';
 import isUserTyping from './isUserTyping';
 import makeGetProjectPreview from './makeGetProjectPreview';
+import getOutputColumnFlex from './getOutputColumnFlex';
 
 export {
   getAllProjectKeys,
@@ -53,4 +54,5 @@ export {
   isUserAuthenticated,
   isUserTyping,
   makeGetProjectPreview,
+  getOutputColumnFlex,
 };

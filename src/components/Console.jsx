@@ -3,6 +3,7 @@ import partial from 'lodash/partial';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import prefixAll from 'inline-style-prefixer/static';
 import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
 
@@ -15,10 +16,12 @@ export default function Console({
   isTextSizeLarge,
   onInput,
   onToggleVisible,
+  onRef,
+  outputColumnFlex,
 }) {
-  if (!isEnabled) {
-    return null;
-  }
+  // if (!isEnabled) {
+  //   return null;
+  // }
 
   const console = (
     <div className="console__scroll-container output__item">
@@ -43,7 +46,12 @@ export default function Console({
   const chevron = isOpen ? ' \uf078' : ' \uf077';
 
   return (
-    <div className="console">
+    <div
+      className={isOpen ? 'output__row console' :
+        'output__row_collapsed console'}
+      ref={onRef}
+      style={isOpen ? prefixAll({flex: outputColumnFlex[1]}) : null}
+    >
       <div
         className="label console__label"
         onClick={partial(onToggleVisible, currentProjectKey)}
@@ -63,7 +71,9 @@ Console.propTypes = {
   isEnabled: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
+  outputColumnFlex: PropTypes.array.isRequired,
   onInput: PropTypes.func.isRequired,
+  onRef: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };
 

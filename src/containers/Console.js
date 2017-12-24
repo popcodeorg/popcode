@@ -7,8 +7,13 @@ import {
   getHiddenUIComponents,
   isExperimental,
   isTextSizeLarge,
+  getOutputColumnFlex,
 } from '../selectors';
-import {evaluateConsoleEntry, toggleComponent} from '../actions';
+import {
+  evaluateConsoleEntry,
+  toggleComponent,
+  storeOutputRowRef,
+} from '../actions';
 
 function mapStateToProps(state) {
   return {
@@ -18,6 +23,7 @@ function mapStateToProps(state) {
     isEnabled: isExperimental(state),
     isOpen: !getHiddenUIComponents(state).includes('console'),
     isTextSizeLarge: isTextSizeLarge(state),
+    outputColumnFlex: getOutputColumnFlex(state),
   };
 }
 
@@ -29,6 +35,10 @@ function mapDispatchToProps(dispatch) {
 
     onToggleVisible(projectKey) {
       dispatch(toggleComponent(projectKey, 'console'));
+    },
+
+    onRef(ref) {
+      dispatch(storeOutputRowRef(1, ref));
     },
   };
 }

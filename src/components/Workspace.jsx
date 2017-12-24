@@ -11,7 +11,12 @@ import partial from 'lodash/partial';
 import map from 'lodash/map';
 import {t} from 'i18next';
 import qs from 'qs';
-import {getNodeWidth, getNodeWidths} from '../util/resize';
+import {
+  getNodeWidth,
+  getNodeWidths,
+  getNodeHeight,
+  getNodeHeights,
+} from '../util/resize';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {
@@ -24,9 +29,11 @@ import {
   dragColumnDivider,
   startDragColumnDivider,
   stopDragColumnDivider,
+  dragOutputDivider,
+  startDragOutputDivider,
+  stopDragOutputDivider,
   toggleComponent,
   applicationLoaded,
-
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
@@ -46,6 +53,9 @@ function mapStateToProps(state) {
     isDraggingColumnDivider: state.getIn(
       ['ui', 'workspace', 'isDraggingColumnDivider'],
     ),
+    isDraggingOutputDivider: state.getIn(
+      ['ui', 'workspace', 'isDraggingOutputDivider'],
+    ),
     isUserTyping: state.getIn(['ui', 'editors', 'typing']),
     editorsFlex: state.getIn(['ui', 'workspace', 'columnFlex']).toJS(),
     rowsFlex: state.getIn(['ui', 'workspace', 'rowFlex']).toJS(),
@@ -62,6 +72,9 @@ class Workspace extends React.Component {
       '_handleClickInstructionsBar',
       '_handleComponentUnhide',
       '_handleComponentHide',
+      '_handleOutputDividerDrag',
+      '_handleOutputDividerStart',
+      '_handleOutputDividerStop',
       '_handleDividerDrag',
       '_handleDividerStart',
       '_handleDividerStop',
@@ -71,6 +84,7 @@ class Workspace extends React.Component {
       '_handleRequestedLineFocused',
       '_storeDividerRef',
       '_storeColumnRef',
+      '_handleStoreOutputDividerRef',
     );
     this.columnRefs = [null, null];
   }
@@ -167,45 +181,47 @@ class Workspace extends React.Component {
     return 'passed';
   }
 
-
-
-  _storeConsoleRef(index, column) {
-    this.consoleRefs[index] = column;
+  _handleStoreOutputDividerRef(divider) {
+    this.outputDividerRef = divider;
   }
 
-  _handleConsoleStart() {
-    this.props.dispatch(startDragConsoleDivider());
+  _handleOutputDividerStart() {
+    this.props.dispatch(startDragOutputDivider());
   }
 
-  _handleConsoleStop() {
-    this.props.dispatch(stopDragConsoleDivider());
+  _handleOutputDividerStop() {
+    this.props.dispatch(stopDragOutputDivider());
   }
 
 
-  _handleConsoleDividerDrag(index, _, {deltaY, lastY, y}) {
-    this.props.onDividerDrag({
-      index,
-      dividerHeight: getNodeHeights(this.dividerRefs),
-      consoleHeights: getNodeHeights(this.editorRefs),
+  _handleOutputDividerDrag(_, {deltaY, lastY, y}) {
+    this.props.dispatch(dragOutputDivider({
+      dividerHeight: getNodeHeight(this.outputDividerRef),
+      rowHeights: getNodeHeights(this.props.ui.workspace.outputRowRef),
       deltaY,
       lastY,
       y,
-    });
+    }));
   }
 
   _renderOutput() {
-    const {isDraggingColumnDivider, rowsFlex} = this.props;
+    const {
+      isDraggingColumnDivider,
+      isDraggingOutputDivider,
+      rowsFlex,
+    } = this.props;
     return (
       <Output
         ignorePointerEvents={
-          isDraggingColumnDivider ||
+          isDraggingColumnDivider || isDraggingOutputDivider ||
             Boolean(get(this, 'props.ui.topBar.openMenu'))
         }
         style={{flex: rowsFlex[1]}}
+        onOutputDividerDrag={this._handleOutputDividerDrag}
+        onOutputDividerStart={this._handleOutputDividerStart}
+        onOutputDividerStop={this._handleOutputDividerStop}
         onRef={partial(this._storeColumnRef, 1)}
-        onConsoleDividerDrag={this._handleConsoleDividerDrag}
-        onConsoleDividerStop={this._handleConsoleStop}
-        onConsoleDividerStart={this._handleConsoleStart}
+        onStoreOutputDividerRef={this._handleStoreOutputDividerRef}
       />
     );
   }
@@ -331,6 +347,7 @@ Workspace.propTypes = {
   editorsFlex: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
   isDraggingColumnDivider: PropTypes.bool.isRequired,
+  isDraggingOutputDivider: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool,
   rowsFlex: PropTypes.array.isRequired,
   ui: PropTypes.object.isRequired,
