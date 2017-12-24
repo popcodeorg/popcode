@@ -153,9 +153,9 @@ JSONStream@^1.0.4:
     jsonparse "^1.2.0"
     through ">=2.2.7 <3"
 
-PrettyCSS@^0.3.15:
+PrettyCSS@fidian/PrettyCSS#3516dfa69:
   version "0.3.16"
-  resolved "https://registry.yarnpkg.com/PrettyCSS/-/PrettyCSS-0.3.16.tgz#bbcecf47bdfb4fbd37fcde5a4b00eb8e192e3fce"
+  resolved "https://codeload.github.com/fidian/PrettyCSS/tar.gz/3516dfa6995869c3550541b1fe70b1a56209245e"
   dependencies:
     option-parser "~1.0.0"
 
@@ -5387,9 +5387,9 @@ jsesc@~0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
 
-jshint@^2.9.3:
-  version "2.9.5"
-  resolved "https://registry.yarnpkg.com/jshint/-/jshint-2.9.5.tgz#1e7252915ce681b40827ee14248c46d34e9aa62c"
+jshint@2.9.4:
+  version "2.9.4"
+  resolved "https://registry.yarnpkg.com/jshint/-/jshint-2.9.4.tgz#5e3ba97848d5290273db514aee47fe24cf592934"
   dependencies:
     cli "~1.0.0"
     console-browserify "1.1.x"

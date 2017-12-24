@@ -23,7 +23,7 @@ export default function Output({
         pointerEvents: ignorePointerEvents ? 'none' : 'all',
       }))}
     >
-      <div className="environment__columnContents output">
+      <div className="environment__column-contents output">
         <Preview />
         <DraggableCore
           onDrag={onOutputDividerDrag}

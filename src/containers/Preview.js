@@ -3,6 +3,7 @@ import Preview from '../components/Preview';
 import {
   addRuntimeError,
   consoleErrorProduced,
+  consoleLogProduced,
   consoleValueProduced,
   popOutProject,
   refreshPreview,
@@ -38,6 +39,10 @@ function mapDispatchToProps(dispatch) {
 
     onConsoleValue(key, value, compiledProjectKey) {
       dispatch(consoleValueProduced(key, value, compiledProjectKey));
+    },
+
+    onConsoleLog(value, compiledProjectKey) {
+      dispatch(consoleLogProduced(value, compiledProjectKey));
     },
 
     onPopOutProject() {

@@ -10,6 +10,7 @@ export default function Preview({
   consoleEntries,
   showingErrors,
   onConsoleError,
+  onConsoleLog,
   onConsoleValue,
   onPopOutProject,
   onRefreshClick,
@@ -29,6 +30,7 @@ export default function Preview({
       isActive={key === compiledProjects.keySeq().last()}
       key={compiledProject.compiledProjectKey}
       onConsoleError={onConsoleError}
+      onConsoleLog={onConsoleLog}
       onConsoleValue={onConsoleValue}
       onRuntimeError={onRuntimeError}
     />
@@ -66,6 +68,7 @@ Preview.propTypes = {
   outputColumnFlex: PropTypes.array.isRequired,
   showingErrors: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
+  onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
   onPopOutProject: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,

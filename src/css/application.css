@@ -131,6 +131,7 @@ body {
 
 .layout__instructions {
   flex: 0 0 25%;
+  position: relative;
 }
 
 /** @define top-bar */
@@ -296,10 +297,15 @@ body {
 
 .instructions {
   background-color: var(--color-low-contrast-gray);
+  bottom: 0;
   color: black;
+  left: 0;
+  line-height: 1.5em;
   overflow: scroll;
   padding: 1rem;
-  line-height: 1.5em;
+  position: absolute;
+  right: 0;
+  top: 0;
 
   /* postcss-bem-linter: ignore */
   & li {
@@ -369,7 +375,7 @@ body {
   min-width: 300px;
 }
 
-.environment__columnContents {
+.environment__column-contents {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -461,13 +467,14 @@ body {
 /*.output__item_shrink {
   flex: 0 1 auto;
 }*/
+
 .output__row {
   box-sizing: border-box;
   position: relative;
   z-index: 0;
   display: flex;
   flex-direction: column;
-  min-height: 85px;
+  min-height: 150px;
 }
 
 .output__row_collapsed {
@@ -498,6 +505,8 @@ body {
 }*/
 
 .console__label {
+  display: flex;
+  justify-content: space-between;
   cursor: pointer;
   background-color: var(--color-low-contrast-gray);
 }
