@@ -272,7 +272,7 @@ tap(initProjects({1: true}), (projects) => {
       ),
       currentProject: {projectKey: '1'},
     }),
-    partial(focusLine, 'javascript', 1, 1, timestamp),
+    partial(focusLine, 'editor.javascript', 1, 1, timestamp),
     Immutable.fromJS({
       projects: projects.setIn(['1', 'updatedAt'], timestamp),
       currentProject: {projectKey: '1'},

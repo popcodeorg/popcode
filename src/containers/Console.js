@@ -6,6 +6,7 @@ import {
   getCurrentProjectKey,
   getHiddenUIComponents,
   getRequestedFocusedLine,
+  isCurrentProjectSyntacticallyValid,
   isExperimental,
   isTextSizeLarge,
 } from '../selectors';
@@ -26,6 +27,7 @@ function mapStateToProps(state) {
     isOpen: !getHiddenUIComponents(state).includes('console'),
     isTextSizeLarge: isTextSizeLarge(state),
     requestedFocusedLine: getRequestedFocusedLine(state),
+    showingErrors: !isCurrentProjectSyntacticallyValid(state),
   };
 }
 

@@ -16,7 +16,7 @@ function ErrorList({errors, onErrorClick, language}) {
       key={[error.reason, error.row]}
       onClick={partial(
         onErrorClick,
-        `editor.${language}`,
+        language,
       )}
     />
   ));

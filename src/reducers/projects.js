@@ -84,7 +84,7 @@ export function reduceRoot(stateIn, action) {
         return unhideComponent(
           projects,
           stateIn.getIn(['currentProject', 'projectKey']),
-          `editor.${action.payload.language}`,
+          action.payload.component,
           action.meta.timestamp,
         );
     }

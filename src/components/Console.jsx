@@ -14,13 +14,14 @@ export default function Console({
   isEnabled,
   isOpen,
   isTextSizeLarge,
+  showingErrors,
   onClearConsoleEntries,
   onInput,
   onToggleVisible,
   onRequestedLineFocused,
   requestedFocusedLine,
 }) {
-  if (!isEnabled) {
+  if (showingErrors || !isEnabled) {
     return null;
   }
 
@@ -87,6 +88,7 @@ Console.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
   requestedFocusedLine: PropTypes.object,
+  showingErrors: PropTypes.bool.isRequired,
   onClearConsoleEntries: PropTypes.func.isRequired,
   onConsoleClicked: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,

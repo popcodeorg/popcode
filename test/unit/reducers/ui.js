@@ -240,7 +240,7 @@ test('repoExportError', (t) => {
 test('focusLine', reducerTest(
   reducer,
   initialState,
-  partial(focusLine, 'javascript', 4, 2),
+  partial(focusLine, 'editor.javascript', 4, 2),
   initialState.setIn(
     ['editors', 'requestedFocusedLine'],
     new Immutable.Map({component: 'editor.javascript', line: 4, column: 2}),
