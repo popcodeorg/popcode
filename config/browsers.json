@@ -1,5 +1,6 @@
 {
   "firefox": "28",
   "chrome": "23",
+  "chromium": "23",
   "safari": "7.1"
 }

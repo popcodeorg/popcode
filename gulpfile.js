@@ -37,6 +37,8 @@ forOwn(supportedBrowsers, (version, browser) => {
   let browserForCssnext = browser;
   if (browser === 'msie') {
     browserForCssnext = 'ie';
+  } else if (browser === 'chromium') {
+    return;
   }
   cssnextBrowsers.push(`${browserForCssnext} >= ${version}`);
 });
