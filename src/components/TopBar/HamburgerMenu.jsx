@@ -14,9 +14,12 @@ const HamburgerMenu = createMenu({
   renderItems({
     isExperimental,
     isGistExportInProgress,
+    isRepoExportInProgress,
+    isClassroomExportInProgress,
     isUserAuthenticated,
     onExportGist,
     onExportRepo,
+    onExportToClassroom,
   }) {
     return tap([], (items) => {
       items.push(
@@ -26,13 +29,19 @@ const HamburgerMenu = createMenu({
         >
           {t('top-bar.export-gist')}
         </MenuItem>,
+        <MenuItem
+          key="exportToClassroom"
+          onClick={isClassroomExportInProgress ? noop : onExportToClassroom}
+        >
+          {t('top-bar.share-to-classroom')}
+        </MenuItem>,
       );
 
       if (isUserAuthenticated && isExperimental) {
         items.push(
           <MenuItem
             key="exportRepo"
-            onClick={onExportRepo}
+            onClick={isRepoExportInProgress ? noop : onExportRepo}
           >
             {t('top-bar.export-repo')}
           </MenuItem>,
@@ -82,12 +91,15 @@ const HamburgerMenu = createMenu({
 
 
 HamburgerMenu.propTypes = {
+  isClassroomExportInProgress: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  isRepoExportInProgress: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
+  onExportToClassroom: PropTypes.func.isRequired,
 };
 
 export default HamburgerMenu;

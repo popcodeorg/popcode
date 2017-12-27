@@ -24,10 +24,8 @@ import {
   snapshotExportError,
   snapshotImportError,
   snapshotNotFound,
-  gistExportNotDisplayed,
-  gistExportError,
-  repoExportNotDisplayed,
-  repoExportError,
+  projectExportNotDisplayed,
+  projectExportError,
 } from '../../../src/actions/clients';
 import {EmptyGistError} from '../../../src/clients/github';
 import {
@@ -173,27 +171,31 @@ test('userLoggedOut', (t) => {
   ));
 });
 
-tap('https://gists.github.com/12345abc', (url) => {
-  test('gistExportNotDisplayed', reducerTest(
+tap({url: 'https://gists.github.com/12345abc', exportType: 'gist'}, (payload) => {
+  test('projectExportNotDisplayed', reducerTest(
     reducer,
     initialState,
-    partial(gistExportNotDisplayed, url),
-    withNotification('gist-export-complete', 'notice', {url}),
+    partial(projectExportNotDisplayed, payload.url, payload.exportType),
+    withNotification(
+      'project-export-complete',
+      'notice',
+      {url: payload.url, exportType: payload.exportType},
+    ),
   ));
 });
 
-test('gistExportError', (t) => {
+test('projectExportError', (t) => {
   t.test('with generic error', reducerTest(
     reducer,
     initialState,
-    partial(gistExportError, new Error()),
-    withNotification('gist-export-error', 'error'),
+    partial(projectExportError, 'gist'),
+    withNotification('gist-export-error', 'error', {exportType: 'gist'}),
   ));
 
   t.test('with empty gist error', reducerTest(
     reducer,
     initialState,
-    partial(gistExportError, new EmptyGistError()),
+    partial(projectExportError, new EmptyGistError()),
     withNotification('empty-gist', 'error'),
   ));
 });
@@ -218,24 +220,6 @@ test('snapshotNotFound', reducerTest(
   snapshotNotFound,
   withNotification('snapshot-not-found', 'error'),
 ));
-
-tap('https://popcode-mat.github.io/my-popcode-repo', (url) => {
-  test('repoExportNotDisplayed', reducerTest(
-    reducer,
-    initialState,
-    partial(repoExportNotDisplayed, url),
-    withNotification('repo-export-complete', 'notice', {url}),
-  ));
-});
-
-test('repoExportError', (t) => {
-  t.test('with generic error', reducerTest(
-    reducer,
-    initialState,
-    partial(repoExportError, new Error()),
-    withNotification('repo-export-error', 'error'),
-  ));
-});
 
 test('focusLine', reducerTest(
   reducer,

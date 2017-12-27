@@ -9,6 +9,8 @@ import {
   getAllProjectKeys,
   isExperimental,
   isGistExportInProgress,
+  isRepoExportInProgress,
+  isClassroomExportInProgress,
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserAuthenticated,
@@ -19,8 +21,7 @@ import {
   closeTopBarMenu,
   createProject,
   createSnapshot,
-  exportGist,
-  exportRepo,
+  exportProject,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
@@ -35,6 +36,8 @@ function mapStateToProps(state) {
     enabledLibraries: getEnabledLibraries(state),
     isExperimental: isExperimental(state),
     isGistExportInProgress: isGistExportInProgress(state),
+    isRepoExportInProgress: isRepoExportInProgress(state),
+    isClassroomExportInProgress: isClassroomExportInProgress(state),
     isSnapshotInProgress: isSnapshotInProgress(state),
     isTextSizeLarge: isTextSizeLarge(state),
     isUserAuthenticated: isUserAuthenticated(state),
@@ -68,11 +71,15 @@ function mapDispatchToProps(dispatch) {
     },
 
     onExportGist() {
-      dispatch(exportGist());
+      dispatch(exportProject('gist'));
     },
 
     onExportRepo() {
-      dispatch(exportRepo());
+      dispatch(exportProject('repo'));
+    },
+
+    onExportToClassroom() {
+      dispatch(exportProject('classroom'));
     },
 
     onToggleLibrary(projectKey, libraryKey) {
