@@ -5,7 +5,7 @@ import {
 } from '../../../src/sagas/compiledProjects';
 import {getCurrentProject, getErrors} from '../../../src/selectors';
 import {projectCompiled} from '../../../src/actions';
-import generatePreview from '../../../src/util/generatePreview';
+import compileProject from '../../../src/util/compileProject';
 import {errors} from '../../helpers/referenceStates';
 import {project as projectFactory} from '../../helpers/factory';
 
@@ -27,14 +27,9 @@ test('validatedSource', (t) => {
       next().select(getErrors).
       next(errors.noErrors.toJS()).select(getCurrentProject).
       next(project).call(
-        generatePreview,
+        compileProject,
         project,
-        {
-          nonBlockingAlertsAndPrompts: true,
-          targetBaseTop: true,
-          propagateErrorsToParent: true,
-          listenForMessages: true,
-        },
+        {isInlinePreview: true},
       ).
       next(preview).put(projectCompiled(preview, Date.now()));
 

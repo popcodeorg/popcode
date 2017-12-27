@@ -7,8 +7,8 @@ import {
   projectExportNotDisplayed,
 } from '../actions/clients';
 import {openWindowWithContent} from '../util';
-import generatePreview from '../util/generatePreview';
 import spinnerPageHtml from '../../templates/project-export.html';
+import compileProject from '../util/compileProject';
 
 export function* userDoneTyping() {
   yield put(userDoneTypingAction());
@@ -37,7 +37,7 @@ function* projectExport(
 
 export function* popOutProject() {
   const project = yield select(getCurrentProject);
-  const {source} = yield call(generatePreview, project);
+  const {source} = yield call(compileProject, project);
   yield call(openWindowWithContent, source);
 }
 

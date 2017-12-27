@@ -4,12 +4,13 @@ import {
   put,
   select,
   throttle,
+  takeEvery,
 } from 'redux-saga/effects';
 
 import every from 'lodash/every';
 
 import {getCurrentProject, getErrors} from '../selectors';
-import generatePreview from '../util/generatePreview';
+import compileProject from '../util/compileProject';
 import {projectCompiled} from '../actions';
 
 export function* validatedSource() {
@@ -18,19 +19,17 @@ export function* validatedSource() {
     const currentProject = yield select(getCurrentProject);
     const timestamp = Date.now();
     const preview = yield call(
-      generatePreview,
+      compileProject,
       currentProject,
-      {
-        nonBlockingAlertsAndPrompts: true,
-        targetBaseTop: true,
-        propagateErrorsToParent: true,
-        listenForMessages: true,
-      },
+      {isInlinePreview: true},
     );
     yield put(projectCompiled(preview, timestamp));
   }
 }
 
 export default function* () {
-  yield all([throttle(100, 'VALIDATED_SOURCE', validatedSource)]);
+  yield all([
+    throttle(100, 'VALIDATED_SOURCE', validatedSource),
+    takeEvery('PROJECT_CREATED', validatedSource),
+  ]);
 }
