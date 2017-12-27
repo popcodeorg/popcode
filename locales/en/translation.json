@@ -40,8 +40,8 @@
     "snapshot-export-error": "Something went wrong trying to create that snapshot. Please try again.",
     "snapshot-import-error": "Something went wrong trying to load that snapshot. Please try again.",
     "snapshot-not-found": "That snapshot doesn’t seem to exist. Check the link and try again.",
-    "classroom-export-complete": "Your project is ready to share to google classrooms",
-    "classroom-export-error": "Something went wrong trying to share to google classroom. Please try again."
+    "classroom-export-complete": "Your project is ready to share to Google Classroom",
+    "classroom-export-error": "Something went wrong trying to share to Google Classroom. Please try again."
   },
   "languages": {
     "html": "HTML",
