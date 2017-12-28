@@ -8,36 +8,37 @@ import {
 
 } from '../selectors';
 import {
-  dragOutputDivider,
-  startDragOutputDivider,
-  stopDragOutputDivider,
-  updateColumnRef,
-  storeOutputDividerRef,
+  dragDivider,
+  startDragDivider,
+  stopDragDivider,
+  storeResizableSectionRef,
+  storeDividerRef,
 } from '../actions';
 
 function mapStateToProps(state) {
   return {
     isDraggingColumnDivider: state.getIn(
-      ['ui', 'workspace', 'isDraggingColumnDivider'],
+      ['ui', 'workspace', 'columns','isDraggingDivider'],
     ),
     isDraggingOutputDivider: state.getIn(
-      ['ui', 'workspace', 'isDraggingOutputDivider'],
+      ['ui', 'workspace', 'output', 'isDraggingDivider'],
     ),
     isTopBarMenuOpen: false,
     style: null,
     outputDividerRef: state.getIn(
-      ['ui', 'workspace', 'outputDividerRef'],
+      ['ui', 'workspace', 'output','dividerRef'],
     ),
     outputRowRef: state.getIn(
-      ['ui', 'workspace', 'outputRowRef'],
+      ['ui', 'workspace', 'output', 'refs'],
     ).toJS(),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onOutputDividerDrag(outputDividerRef, outputRowRef, {deltaY, lastY, y}) {
-      dispatch(dragOutputDivider({
+    onDividerDrag(outputDividerRef, outputRowRef, {deltaY, lastY, y}) {
+      console.log(outputRowRef);
+      dispatch(dragDivider('output', {
         dividerHeight: getNodeHeight(outputDividerRef),
         rowHeights: getNodeHeights(outputRowRef),
         deltaY,
@@ -45,17 +46,18 @@ function mapDispatchToProps(dispatch) {
         y,
       }));
     },
-    onOutputDividerStart() {
-      dispatch(startDragOutputDivider());
+    onDividerStart() {
+      dispatch(startDragDivider('output'));
     },
-    onOutputDividerStop() {
-      dispatch(stopDragOutputDivider());
+    onDividerStop() {
+      dispatch(stopDragDivider('output'));
     },
-    onStoreColumnRef(column) {
-      dispatch(updateColumnRef(1, column));
+    onStoreColumnRef(ref) {
+      console.log(ref)
+      dispatch(storeResizableSectionRef('columns', 1, ref));
     },
-    onStoreOutputDividerRef(ref) {
-      dispatch(storeOutputDividerRef(ref));
+    onStoreDividerRef(ref) {
+      dispatch(storeDividerRef('output', ref));
     },
   }
 }

@@ -13,7 +13,7 @@ import {
 import {
   evaluateConsoleEntry,
   toggleComponent,
-  storeOutputRowRef,
+  storeResizableSectionRef,
   clearConsoleEntries,
 } from '../actions';
 
@@ -45,7 +45,7 @@ function mapDispatchToProps(dispatch) {
     },
 
     onRef(ref) {
-      dispatch(storeOutputRowRef(1, ref));
+      dispatch(storeResizableSectionRef('output', 1, ref));
     },
   };
 }

@@ -7,7 +7,7 @@ import {
   consoleValueProduced,
   popOutProject,
   refreshPreview,
-  storeOutputRowRef,
+  storeResizableSectionRef,
 } from '../actions';
 import {
   getCompiledProjects,
@@ -58,7 +58,7 @@ function mapDispatchToProps(dispatch) {
     },
 
     onRef(ref) {
-      dispatch(storeOutputRowRef(0, ref));
+      dispatch(storeResizableSectionRef('output', 0, ref));
     },
   };
 }

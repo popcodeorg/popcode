@@ -14,11 +14,11 @@ export default function Output({
   outputDividerRef,
   outputRowRef,
   style,
-  onOutputDividerDrag,
-  onOutputDividerStart,
-  onOutputDividerStop,
+  onDividerDrag,
+  onDividerStart,
+  onDividerStop,
   onStoreColumnRef,
-  onStoreOutputDividerRef,
+  onStoreDividerRef,
 }) {
   
   const ignorePointerEvents = isDraggingColumnDivider ||
@@ -35,13 +35,13 @@ export default function Output({
       <div className="environment__column-contents output">
         <Preview />
         <DraggableCore
-          onDrag={partial(onOutputDividerDrag, outputDividerRef, outputRowRef)}
-          onStart={onOutputDividerStart}
-          onStop={onOutputDividerStop}
+          onDrag={partial(onDividerDrag, outputDividerRef, outputRowRef)}
+          onStart={onDividerStart}
+          onStop={onDividerStop}
         >
           <div
             className="output__row-divider"
-            ref={onStoreOutputDividerRef}
+            ref={onStoreDividerRef}
           />
         </DraggableCore>
         <Console />

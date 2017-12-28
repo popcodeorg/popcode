@@ -12,46 +12,27 @@ export const editorFocusedRequestedLine = createAction(
   'EDITOR_FOCUSED_REQUESTED_LINE',
 );
 
-export const dragRowDivider = createAction(
-  'DRAG_ROW_DIVIDER',
+export const dragDivider = createAction(
+  'DRAG_DIVIDER',
+  (section, data) => ({section, data})
 );
 
-export const dragColumnDivider = createAction(
-  'DRAG_COLUMN_DIVIDER',
+export const startDragDivider = createAction(
+  'START_DRAG_DIVIDER',
 );
 
-export const startDragColumnDivider = createAction(
-  'START_DRAG_COLUMN_DIVIDER',
+export const stopDragDivider = createAction(
+  'STOP_DRAG_DIVIDER',
 );
 
-export const stopDragColumnDivider = createAction(
-  'STOP_DRAG_COLUMN_DIVIDER',
+export const storeResizableSectionRef = createAction(
+  'STORE_RESIZABLE_SECTION_REF',
+  (section, index, ref) => ({section, index, ref}),
 );
 
-export const updateColumnRef = createAction(
-  'UPDATE_COLUMN_REF',
-  (index, row) => ({index, row}),
-);
-
-export const dragOutputDivider = createAction(
-  'DRAG_OUTPUT_DIVIDER',
-);
-
-export const startDragOutputDivider = createAction(
-  'START_DRAG_OUTPUT_DIVIDER',
-);
-
-export const stopDragOutputDivider = createAction(
-  'STOP_DRAG_OUTPUT_DIVIDER',
-);
-
-export const storeOutputRowRef = createAction(
-  'STORE_OUTPUT_ROW_REF',
-  (index, row) => ({index, row}),
-);
-
-export const storeOutputDividerRef = createAction(
-  'STORE_OUTPUT_DIVIDER_REF',
+export const storeDividerRef = createAction(
+  'STORE_DIVIDER_REF',
+  (section, ref) => ({section, ref}),
 );
 
 export const popOutProject = createAction(

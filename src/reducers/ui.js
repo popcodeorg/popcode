@@ -11,14 +11,24 @@ const DEFAULT_ROW_FLEX = new Immutable.List(['1', '1']);
 const DEFAULT_OUTPUT_COLUMN_FLEX = new Immutable.List(['1', '1']);
 
 export const DEFAULT_WORKSPACE = new Immutable.Map({
-  columnFlex: DEFAULT_COLUMN_FLEX,
-  rowFlex: DEFAULT_ROW_FLEX,
-  outputColumnFlex: DEFAULT_OUTPUT_COLUMN_FLEX,
-  isDraggingColumnDivider: false,
-  isDraggingOutputDivider: false,
-  outputRowRef: new Immutable.List(),
-  outputDividerRef: null,
-  columnRefs: new Immutable.List(),
+  editors: new Immutable.Map({
+    flex: DEFAULT_COLUMN_FLEX,
+    isDraggingDivider: false,
+    refs: new Immutable.List(),
+  }),
+  columns: new Immutable.Map({
+    flex: DEFAULT_ROW_FLEX,
+    isDraggingDivider: false,
+    refs: new Immutable.List(),
+    dividerRef: null,
+  }),
+  output: new Immutable.Map({
+    flex: DEFAULT_OUTPUT_COLUMN_FLEX,
+    isDraggingDivider: false,
+    refs: new Immutable.List(),
+    dividerRef: null,
+  }),
+
 });
 
 const defaultState = new Immutable.Map().
@@ -82,51 +92,36 @@ export default function ui(stateIn, action) {
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.setIn(['editors', 'requestedFocusedLine'], null);
 
-    case 'DRAG_ROW_DIVIDER':
-      return state.updateIn(['workspace', 'columnFlex'], (prevFlex) => {
-        const newFlex = updateEditorColumnFlex(action.payload);
+    case 'DRAG_DIVIDER':
+      return state.updateIn(['workspace', action.payload.section, 'flex'], (prevFlex) => {  
+        let newFlex;
+        if (action.payload.section === 'editors'){
+          newFlex = updateEditorColumnFlex(action.payload.data);
+        }
+        else if (action.payload.section === 'columns') {
+          console.log(action.payload.data)
+          newFlex = updateWorkspaceRowFlex(action.payload.data);
+        }
+        else if (action.payload.section === 'output'){
+          newFlex = updateOutputColumnFlex(action.payload.data);
+        }
         return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
       });
 
-    case 'DRAG_COLUMN_DIVIDER':
-      return state.updateIn(['workspace', 'rowFlex'], (prevFlex) => {
-        const newFlex = updateWorkspaceRowFlex(action.payload);
-        return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
-      });
+    case 'START_DRAG_DIVIDER':
+      return state.setIn(['workspace', action.payload,'isDraggingColumnDivider'], true);
 
-    case 'START_DRAG_COLUMN_DIVIDER':
-      return state.setIn(['workspace', 'isDraggingColumnDivider'], true);
+    case 'STOP_DRAG_DIVIDER':
+      return state.setIn(['workspace', action.payload, 'isDraggingColumnDivider'], false);
 
-    case 'STOP_DRAG_COLUMN_DIVIDER':
-      return state.setIn(['workspace', 'isDraggingColumnDivider'], false);
-
-    case 'UPDATE_COLUMN_REF':
-      return state.setIn(['workspace', 'columnRefs', action.payload.index],
-        action.payload.row,
+    case 'STORE_RESIZABLE_SECTION_REF':
+      return state.setIn(['workspace', action.payload.section, 'refs', action.payload.index],
+        action.payload.ref,
       );
 
-    case 'DRAG_OUTPUT_DIVIDER':
-      return state.updateIn(['workspace', 'outputColumnFlex'], (prevFlex) => {
-        const newFlex = updateOutputColumnFlex(action.payload);
-        console.log(action.payload)
-        console.log(prevFlex)
-        console.log(newFlex)
-        return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
-      });
-
-    case 'START_DRAG_OUTPUT_DIVIDER':
-      return state.setIn(['workspace', 'isDraggingOutputDivider'], true);
-
-    case 'STOP_DRAG_OUTPUT_DIVIDER':
-      return state.setIn(['workspace', 'isDraggingOutputDivider'], false);
-
-    case 'STORE_OUTPUT_ROW_REF':
-      return state.setIn(['workspace', 'outputRowRef', action.payload.index],
-        action.payload.row,
-      );
-    case 'STORE_OUTPUT_DIVIDER_REF':
-      return state.setIn(['workspace', 'outputDividerRef'],
-        action.payload,
+    case 'STORE_DIVIDER_REF':
+      return state.setIn(['workspace', action.payload.section , 'dividerRef'],
+        action.payload.ref,
       );
 
     case 'GIST_NOT_FOUND':
