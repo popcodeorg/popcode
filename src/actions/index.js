@@ -46,6 +46,7 @@ import {
 
 import {
   projectCompiled,
+  projectCompilationFailed,
   refreshPreview,
 } from './compiledProjects';
 
@@ -95,4 +96,5 @@ export {
   logOut,
   evaluateConsoleEntry,
   projectCompiled,
+  projectCompilationFailed,
 };

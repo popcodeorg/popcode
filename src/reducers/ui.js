@@ -30,6 +30,13 @@ function addNotification(state, type, severity, payload = {}) {
   );
 }
 
+function dismissNotification(state, type) {
+  return state.update(
+    'notifications',
+    notifications => notifications.delete(type),
+  );
+}
+
 /* eslint-disable complexity */
 export default function ui(stateIn, action) {
   let state = stateIn;
@@ -117,10 +124,7 @@ export default function ui(stateIn, action) {
       );
 
     case 'USER_DISMISSED_NOTIFICATION':
-      return state.update(
-        'notifications',
-        notifications => notifications.delete(action.payload.type),
-      );
+      return dismissNotification(state, action.payload.type);
 
     case 'UPDATE_NOTIFICATION_METADATA':
       return state.setIn(
@@ -196,6 +200,16 @@ export default function ui(stateIn, action) {
         'error',
         action.payload,
       );
+
+    case 'PROJECT_COMPILATION_FAILED':
+      return addNotification(
+        state,
+        'project-compilation-failed',
+        'error',
+      );
+
+    case 'PROJECT_COMPILED':
+      return dismissNotification(state, 'project-compilation-failed');
 
     default:
       return state;
