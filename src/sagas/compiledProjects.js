@@ -11,19 +11,25 @@ import every from 'lodash/every';
 
 import {getCurrentProject, getErrors} from '../selectors';
 import compileProject from '../util/compileProject';
-import {projectCompiled} from '../actions';
+import Bugsnag from '../util/Bugsnag';
+import {projectCompiled, projectCompilationFailed} from '../actions';
 
 export function* validatedSource() {
   const errors = yield select(getErrors);
   if (every(errors, errorList => errorList.state === 'passed')) {
     const currentProject = yield select(getCurrentProject);
     const timestamp = Date.now();
-    const preview = yield call(
-      compileProject,
-      currentProject,
-      {isInlinePreview: true},
-    );
-    yield put(projectCompiled(preview, timestamp));
+    try {
+      const preview = yield call(
+        compileProject,
+        currentProject,
+        {isInlinePreview: true},
+      );
+      yield put(projectCompiled(preview, timestamp));
+    } catch (e) {
+      yield call([Bugsnag, 'notifyException'], e);
+      yield put(projectCompilationFailed(e));
+    }
   }
 }
 

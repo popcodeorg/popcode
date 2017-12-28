@@ -31,7 +31,11 @@ import {EmptyGistError} from '../../../src/clients/github';
 import {
   userLoggedOut,
 } from '../../../src/actions/user';
-import {applicationLoaded} from '../../../src/actions/';
+import {
+  applicationLoaded,
+  projectCompiled,
+  projectCompilationFailed,
+} from '../../../src/actions/';
 
 const initialState = Immutable.fromJS({
   editors: {
@@ -288,6 +292,20 @@ tap('123-456', snapshotKey =>
     withNotification('snapshot-created', 'notice', {snapshotKey}),
   )),
 );
+
+test('projectCompilationFailed', reducerTest(
+  reducer,
+  initialState,
+  partial(projectCompilationFailed, new Error()),
+  withNotification('project-compilation-failed', 'error'),
+));
+
+test('projectCompiled', reducerTest(
+  reducer,
+  withNotification('project-compilation-failed', 'error'),
+  partial(projectCompiled, new Error()),
+  initialState,
+));
 
 test('toggleTopBarMenu', (t) => {
   t.test('with no menu open', reducerTest(

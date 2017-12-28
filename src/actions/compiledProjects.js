@@ -7,6 +7,10 @@ export const projectCompiled = createAction(
   (_source, timestamp = Date.now()) => ({timestamp}),
 );
 
+export const projectCompilationFailed = createAction(
+  'PROJECT_COMPILATION_FAILED',
+);
+
 export const refreshPreview = createAction(
   'REFRESH_PREVIEW',
   timestamp => ({timestamp}),
