@@ -18,11 +18,7 @@ import {
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {
-  updateProjectSource,
-  hideComponent,
-  unhideComponent,
   focusLine,
-  editorFocusedRequestedLine,
   dragDivider,
   startDragDivider,
   stopDragDivider,
@@ -38,8 +34,8 @@ import {getCurrentProject} from '../selectors';
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
-import EditorsColumn from './EditorsColumn';
 import Output from '../containers/Output';
+import EditorsColumn from '../containers/EditorsColumn';
 import PopThrobber from './PopThrobber';
 
 function mapStateToProps(state) {
@@ -63,17 +59,11 @@ class Workspace extends React.Component {
       this,
       '_handleUnload',
       '_handleClickInstructionsBar',
-      '_handleComponentUnhide',
-      '_handleComponentHide',
       '_handleDividerDrag',
-      '_handleEditorsDividerDrag',
       '_handleDividerStart',
       '_handleDividerStop',
-      '_handleEditorInput',
       '_handleErrorClick',
-      '_handleRequestedLineFocused',
       '_storeDividerRef',
-      '_storeColumnRef',
       '_storeEditorRef',
     );
   }
@@ -117,37 +107,8 @@ class Workspace extends React.Component {
     }
   }
 
-  _handleComponentHide(componentName) {
-    console.log(componentName)
-    this.props.dispatch(
-      hideComponent(
-        this.props.currentProject.projectKey,
-        componentName,
-      ),
-    );
-  }
-
-  _handleComponentUnhide(componentName) {
-    this.props.dispatch(
-      unhideComponent(
-        this.props.currentProject.projectKey,
-        componentName,
-      ),
-    );
-  }
-
   _handleErrorClick(language, line, column) {
     this.props.dispatch(focusLine(language, line, column));
-  }
-
-  _handleEditorInput(language, source) {
-    this.props.dispatch(
-      updateProjectSource(
-        this.props.currentProject.projectKey,
-        language,
-        source,
-      ),
-    );
   }
 
   _getOverallValidationState() {
@@ -171,14 +132,6 @@ class Workspace extends React.Component {
     return 'passed';
   }
 
-  _handleEditorsDividerDrag(data) {
-    this.props.dispatch(dragDivider('editors', data));
-  }
-
-  _handleRequestedLineFocused() {
-    this.props.dispatch(editorFocusedRequestedLine());
-  }
-
   _handleClickInstructionsBar() {
     this.props.dispatch(toggleComponent(
       get(this.props, ['currentProject', 'projectKey']),
@@ -199,10 +152,6 @@ class Workspace extends React.Component {
         <span className="u__icon">&#xf05a;</span>
       </div>
     );
-  }
-
-  _storeColumnRef(ref) {
-    this.props.dispatch(storeResizableSectionRef('columns', 0, ref));
   }
 
   _storeDividerRef(ref) {
@@ -234,33 +183,13 @@ class Workspace extends React.Component {
   }
 
   _renderEnvironment() {
-    const {
-      currentProject,
-      editorsFlex,
-      errors,
-      rowsFlex,
-      ui,
-    } = this.props;
-    if (isNull(currentProject)) {
+    if (isNull(this.props.currentProject)) {
       return <PopThrobber message={t('workspace.loading')} />;
     }
 
     return (
       <div className="environment">
-        <EditorsColumn
-          currentProject={currentProject}
-          editorsFlex={editorsFlex}
-          errors={errors}
-          style={{flex: rowsFlex[0]}}
-          ui={ui}
-          onComponentHide={this._handleComponentHide}
-          onComponentUnhide={this._handleComponentUnhide}
-          onDividerDrag={this._handleEditorsDividerDrag}
-          onEditorInput={this._handleEditorInput}
-          onRef={this._storeColumnRef}
-          onRequestedLineFocused={this._handleRequestedLineFocused}
-          // onStoreEditorRef={this._storeEditorRef}
-        />
+        <EditorsColumn/>
         <DraggableCore
           onDrag={this._handleDividerDrag}
           onStart={this._handleDividerStart}

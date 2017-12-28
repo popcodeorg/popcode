@@ -54,7 +54,7 @@ export default class EditorsColumn extends React.Component {
       onEditorInput,
       onRef,
       onRequestedLineFocused,
-      style,
+      rowsFlex,
       ui,
     } = this.props;
 
@@ -73,7 +73,7 @@ export default class EditorsColumn extends React.Component {
           language={language}
           source={currentProject.sources[language]}
           style={{flex: editorsFlex[index]}}
-          onHide={partial(onComponentHide, `editor.${language}`)}
+          onHide={partial(onComponentHide, currentProject.projectKey, `editor.${language}`)}
           onRef={partial(this._storeEditorRef, index)}
         >
           <Editor
@@ -84,7 +84,7 @@ export default class EditorsColumn extends React.Component {
             requestedFocusedLine={ui.editors.requestedFocusedLine}
             source={currentProject.sources[language]}
             textSizeIsLarge={ui.editors.textSizeIsLarge}
-            onInput={partial(onEditorInput, language)}
+            onInput={partial(onEditorInput, currentProject.projectKey, language)}
             onRequestedLineFocused={onRequestedLineFocused}
           />
         </EditorContainer>,
@@ -111,6 +111,7 @@ export default class EditorsColumn extends React.Component {
           key={language}
           onClick={partial(
             this.props.onComponentUnhide,
+            currentProject.projectKey,
             `editor.${language}`,
           )}
         >
@@ -131,7 +132,7 @@ export default class EditorsColumn extends React.Component {
       <div
         className="environment__column"
         ref={onRef}
-        style={prefixAll(style)}
+        style={{flex: rowsFlex[0]}}
       >
         <div className="environment__column-contents editors">{children}</div>
       </div>
@@ -140,17 +141,17 @@ export default class EditorsColumn extends React.Component {
 }
 
 EditorsColumn.propTypes = {
-  currentProject: PropTypes.object.isRequired,
-  editorsFlex: PropTypes.array.isRequired,
-  errors: PropTypes.object.isRequired,
-  style: PropTypes.object.isRequired,
-  ui: PropTypes.shape({
-    editors: PropTypes.object.isRequired,
-  }).isRequired,
-  onComponentHide: PropTypes.func.isRequired,
-  onComponentUnhide: PropTypes.func.isRequired,
-  onDividerDrag: PropTypes.func.isRequired,
-  onEditorInput: PropTypes.func.isRequired,
-  onRef: PropTypes.func.isRequired,
-  onRequestedLineFocused: PropTypes.func.isRequired,
+  // currentProject: PropTypes.object.isRequired,
+  // editorsFlex: PropTypes.array.isRequired,
+  // errors: PropTypes.object.isRequired,
+  // rowsFlex: PropTypes.object.isRequired,
+  // ui: PropTypes.shape({
+  //   editors: PropTypes.object.isRequired,
+  // }).isRequired,
+  // onComponentHide: PropTypes.func.isRequired,
+  // onComponentUnhide: PropTypes.func.isRequired,
+  // onDividerDrag: PropTypes.func.isRequired,
+  // onEditorInput: PropTypes.func.isRequired,
+  // onRef: PropTypes.func.isRequired,
+  // onRequestedLineFocused: PropTypes.func.isRequired,
 };
