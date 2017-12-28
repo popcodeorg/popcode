@@ -22,9 +22,9 @@ export default function Console({
   outputColumnFlex,
 }) {
 
-  if (showingErrors || !isEnabled) {
-    return null;
-  }
+  // if (showingErrors || !isEnabled) {
+  //   return null;
+  // }
 
   const console = (
     <div className="console__scroll-container output__item">

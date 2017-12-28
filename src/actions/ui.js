@@ -28,6 +28,11 @@ export const stopDragColumnDivider = createAction(
   'STOP_DRAG_COLUMN_DIVIDER',
 );
 
+export const updateColumnRef = createAction(
+  'UPDATE_COLUMN_REF',
+  (index, row) => ({index, row}),
+);
+
 export const dragOutputDivider = createAction(
   'DRAG_OUTPUT_DIVIDER',
 );
@@ -43,6 +48,10 @@ export const stopDragOutputDivider = createAction(
 export const storeOutputRowRef = createAction(
   'STORE_OUTPUT_ROW_REF',
   (index, row) => ({index, row}),
+);
+
+export const storeOutputDividerRef = createAction(
+  'STORE_OUTPUT_DIVIDER_REF',
 );
 
 export const popOutProject = createAction(

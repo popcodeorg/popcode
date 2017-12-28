@@ -17,6 +17,8 @@ export const DEFAULT_WORKSPACE = new Immutable.Map({
   isDraggingColumnDivider: false,
   isDraggingOutputDivider: false,
   outputRowRef: new Immutable.List(),
+  outputDividerRef: null,
+  columnRefs: new Immutable.List(),
 });
 
 const defaultState = new Immutable.Map().
@@ -98,9 +100,17 @@ export default function ui(stateIn, action) {
     case 'STOP_DRAG_COLUMN_DIVIDER':
       return state.setIn(['workspace', 'isDraggingColumnDivider'], false);
 
+    case 'UPDATE_COLUMN_REF':
+      return state.setIn(['workspace', 'columnRefs', action.payload.index],
+        action.payload.row,
+      );
+
     case 'DRAG_OUTPUT_DIVIDER':
       return state.updateIn(['workspace', 'outputColumnFlex'], (prevFlex) => {
         const newFlex = updateOutputColumnFlex(action.payload);
+        console.log(action.payload)
+        console.log(prevFlex)
+        console.log(newFlex)
         return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
       });
 
@@ -113,6 +123,10 @@ export default function ui(stateIn, action) {
     case 'STORE_OUTPUT_ROW_REF':
       return state.setIn(['workspace', 'outputRowRef', action.payload.index],
         action.payload.row,
+      );
+    case 'STORE_OUTPUT_DIVIDER_REF':
+      return state.setIn(['workspace', 'outputDividerRef'],
+        action.payload,
       );
 
     case 'GIST_NOT_FOUND':

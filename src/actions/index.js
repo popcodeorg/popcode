@@ -38,6 +38,8 @@ import {
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
+  updateColumnRef,
+  storeOutputDividerRef,
 } from './ui';
 
 import {
@@ -109,4 +111,6 @@ export {
   logOut,
   evaluateConsoleEntry,
   projectCompiled,
+  updateColumnRef,
+  storeOutputDividerRef
 };

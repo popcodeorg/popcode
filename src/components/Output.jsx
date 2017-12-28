@@ -5,20 +5,29 @@ import {DraggableCore} from 'react-draggable';
 import ErrorReport from '../containers/ErrorReport';
 import Preview from '../containers/Preview';
 import Console from '../containers/Console';
+import partial from 'lodash/partial';
 
 export default function Output({
-  ignorePointerEvents,
+  isDraggingColumnDivider,
+  isDraggingOutputDivider,
+  isTopBarMenuOpen,
+  outputDividerRef,
+  outputRowRef,
   style,
   onOutputDividerDrag,
   onOutputDividerStart,
   onOutputDividerStop,
-  onRef,
+  onStoreColumnRef,
   onStoreOutputDividerRef,
 }) {
+  
+  const ignorePointerEvents = isDraggingColumnDivider ||
+    isDraggingOutputDivider || isTopBarMenuOpen
+
   return (
     <div
       className="environment__column"
-      ref={onRef}
+      ref={onStoreColumnRef}
       style={prefixAll(Object.assign({}, style, {
         pointerEvents: ignorePointerEvents ? 'none' : 'all',
       }))}
@@ -26,7 +35,7 @@ export default function Output({
       <div className="environment__column-contents output">
         <Preview />
         <DraggableCore
-          onDrag={onOutputDividerDrag}
+          onDrag={partial(onOutputDividerDrag, outputDividerRef, outputRowRef)}
           onStart={onOutputDividerStart}
           onStop={onOutputDividerStop}
         >
@@ -43,11 +52,10 @@ export default function Output({
 }
 
 Output.propTypes = {
-  ignorePointerEvents: PropTypes.bool.isRequired,
-  style: PropTypes.object.isRequired,
-  onOutputDividerDrag: PropTypes.func.isRequired,
-  onOutputDividerStart: PropTypes.func.isRequired,
-  onOutputDividerStop: PropTypes.func.isRequired,
-  onRef: PropTypes.func.isRequired,
-  onStoreOutputDividerRef: PropTypes.func.isRequired,
+  // style: PropTypes.object.isRequired,
+  // onOutputDividerDrag: PropTypes.func.isRequired,
+  // onOutputDividerStart: PropTypes.func.isRequired,
+  // onOutputDividerStop: PropTypes.func.isRequired,
+  // onStoreColumnRef: PropTypes.func.isRequired,
+  // onStoreOutputDividerRef: PropTypes.func.isRequired,
 };
