@@ -5,4 +5,5 @@ export default Record({
   value: null,
   error: null,
   evaluatedByCompiledProjectKey: null,
+  isConsoleLog: false
 }, 'ConsoleEntry');
