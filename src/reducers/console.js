@@ -46,6 +46,7 @@ export default function console(stateIn, {type, payload, meta}) {
         new ConsoleEntry({
           value: payload.value,
           evaluatedByCompiledProjectKey: payload.compiledProjectKey,
+          isConsoleLog: true
         }),
       );
     default:

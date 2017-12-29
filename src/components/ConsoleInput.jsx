@@ -14,16 +14,19 @@ export default class ConsoleInput extends Component {
     bindAll(this, '_ref');
   }
 
-  componentWillReceiveProps({isTextSizeLarge}) {
+  componentWillReceiveProps({isTextSizeLarge, shouldFocus}) {
     if (isTextSizeLarge !== this.props.isTextSizeLarge) {
       requestAnimationFrame(() => {
         inheritFontStylesFromParentElement(this._editor);
       });
     }
+    if (shouldFocus !== this.props.shouldFocus) {
+      shouldFocus ? this._editor.focus() : this._editor.blur()
+    }
   }
 
   _ref(containerElement) {
-    const {onInput} = this.props;
+    const {onInput, shouldFocus} = this.props;
 
     if (containerElement) {
       const editor = this._editor = createAceEditor(containerElement);
@@ -37,7 +40,7 @@ export default class ConsoleInput extends Component {
         minLines: 1,
       });
       editor.resize();
-      editor.focus();
+      shouldFocus ? editor.focus() : editor.blur();
 
       session.on('change', ({action, lines}) => {
         if (action === 'insert' && lines.length === 2) {
@@ -58,8 +61,10 @@ export default class ConsoleInput extends Component {
 ConsoleInput.propTypes = {
   isTextSizeLarge: PropTypes.bool,
   onInput: PropTypes.func.isRequired,
+  shouldFocus: PropTypes.bool
 };
 
 ConsoleInput.defaultProps = {
   isTextSizeLarge: false,
+  shouldFocus: false
 };

@@ -21,7 +21,11 @@ export default function Console({
   if (showingErrors || !isEnabled) {
     return null;
   }
-
+  const lastRecord = history.first()
+  let shouldFocus = true;
+  if (lastRecord && lastRecord.get('isConsoleLog')) {
+      shouldFocus = false;
+  }
   const console = (
     <div className="console__scroll-container output__item">
       <div
@@ -29,7 +33,8 @@ export default function Console({
           classnames('console__repl', {console__repl_zoomed: isTextSizeLarge})
         }
       >
-        <ConsoleInput isTextSizeLarge={isTextSizeLarge} onInput={onInput} />
+        <ConsoleInput isTextSizeLarge={isTextSizeLarge} onInput={onInput}
+        shouldFocus={shouldFocus}/>
         {history.map((entry, key) => {
           const isActive =
             currentCompiledProjectKey === entry.evaluatedByCompiledProjectKey;
