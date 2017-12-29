@@ -5,10 +5,10 @@ import {
   getConsoleHistory,
   getCurrentProjectKey,
   getHiddenUIComponents,
+  getResizableSectionFlex,
   isCurrentProjectSyntacticallyValid,
   isExperimental,
   isTextSizeLarge,
-  getOutputColumnFlex,
 } from '../selectors';
 import {
   evaluateConsoleEntry,
@@ -25,7 +25,7 @@ function mapStateToProps(state) {
     isEnabled: isExperimental(state),
     isOpen: !getHiddenUIComponents(state).includes('console'),
     isTextSizeLarge: isTextSizeLarge(state),
-    outputColumnFlex: getOutputColumnFlex(state),
+    outputRowFlex: getResizableSectionFlex(state, 'output'),
     showingErrors: !isCurrentProjectSyntacticallyValid(state),
   };
 }

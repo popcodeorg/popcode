@@ -3,6 +3,10 @@ import EditorsColumn from '../components/EditorsColumn';
 
 import {
   getCurrentProject,
+  getErrors,
+  getRequestedFocusedLine,
+  getResizableSectionFlex,
+  isTextSizeLarge,
 } from '../selectors';
 import {
   hideComponent,
@@ -10,16 +14,17 @@ import {
   dragDivider,
   updateProjectSource,
   editorFocusedRequestedLine,
-  storeResizableSectionRef
+  storeResizableSectionRef,
 } from '../actions';
 
 function mapStateToProps(state) {
   return {
     currentProject: getCurrentProject(state),
-    editorsFlex: state.getIn(['ui', 'workspace', 'editors', 'flex']).toJS(),
-    rowsFlex: state.getIn(['ui', 'workspace', 'columns', 'flex']).toJS(),
-    errors: state.get('errors').toJS(),
-    ui: state.get('ui').toJS(),
+    editorsFlex: getResizableSectionFlex(state, 'editors'),
+    environmentColumnFlex: getResizableSectionFlex(state, 'columns'),
+    errors: getErrors(state),
+    requestedFocusedLine: getRequestedFocusedLine(state),
+    textSizeIsLarge: isTextSizeLarge(state),
   };
 }
 
@@ -44,7 +49,7 @@ function mapDispatchToProps(dispatch) {
     },
 
     onDividerDrag(data) {
-       dispatch(dragDivider('editors', data));
+      dispatch(dragDivider('editors', data));
     },
 
     onEditorInput(currentProjectKey, language, source) {
@@ -64,7 +69,7 @@ function mapDispatchToProps(dispatch) {
     onRequestedLineFocused() {
       dispatch(editorFocusedRequestedLine());
     },
-  }
+  };
 }
 
 export default connect(

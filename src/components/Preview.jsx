@@ -16,7 +16,7 @@ export default function Preview({
   onRefreshClick,
   onRuntimeError,
   onRef,
-  outputColumnFlex,
+  outputRowFlex,
   isConsoleOpen,
 }) {
   if (showingErrors) {
@@ -43,7 +43,7 @@ export default function Preview({
     <div
       className="output__row preview"
       ref={onRef}
-      style={isConsoleOpen ? prefixAll({flex: outputColumnFlex[0]}) : null}
+      style={isConsoleOpen ? prefixAll({flex: outputRowFlex[0]}) : null}
     >
       <div className="preview__title-bar">
         <span
@@ -65,7 +65,7 @@ Preview.propTypes = {
   compiledProjects: ImmutablePropTypes.iterable.isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
   isConsoleOpen: PropTypes.bool.isRequired,
-  outputColumnFlex: PropTypes.array.isRequired,
+  outputRowFlex: PropTypes.array.isRequired,
   showingErrors: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
   onConsoleLog: PropTypes.func.isRequired,

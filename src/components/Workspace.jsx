@@ -7,7 +7,6 @@ import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
 import isNull from 'lodash/isNull';
 import get from 'lodash/get';
-import partial from 'lodash/partial';
 import map from 'lodash/map';
 import {t} from 'i18next';
 import qs from 'qs';
@@ -22,15 +21,19 @@ import {
   dragDivider,
   startDragDivider,
   stopDragDivider,
-  storeResizableSectionRef,
   storeDividerRef,
   toggleComponent,
   applicationLoaded,
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
-import {getCurrentProject} from '../selectors';
-
+import {
+  getCurrentProject,
+  getDividerRefs,
+  getErrors,
+  getResizableSectionRefs,
+  isUserTyping,
+} from '../selectors';
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
@@ -40,15 +43,11 @@ import PopThrobber from './PopThrobber';
 
 function mapStateToProps(state) {
   return {
+    environmentColumnDividerRefs: getDividerRefs(state, 'columns'),
+    environmentColumnRefs: getResizableSectionRefs(state, 'columns'),
     currentProject: getCurrentProject(state),
-    errors: state.get('errors').toJS(),
-    isDraggingColumnDivider: state.getIn(
-      ['ui', 'workspace', 'columns','isDraggingDivider'],
-    ),
-    isUserTyping: state.getIn(['ui', 'editors', 'typing']),
-    editorsFlex: state.getIn(['ui', 'workspace', 'editors', 'flex']).toJS(),
-    rowsFlex: state.getIn(['ui', 'workspace', 'columns', 'flex']).toJS(),
-    ui: state.get('ui').toJS(),
+    errors: getErrors(state),
+    isUserTyping: isUserTyping(state),
   };
 }
 
@@ -64,7 +63,6 @@ class Workspace extends React.Component {
       '_handleDividerStop',
       '_handleErrorClick',
       '_storeDividerRef',
-      '_storeEditorRef',
     );
   }
 
@@ -155,7 +153,7 @@ class Workspace extends React.Component {
   }
 
   _storeDividerRef(ref) {
-    this.props.dispatch(storeDividerRef('columns', ref));
+    this.props.dispatch(storeDividerRef('columns', 0, ref));
   }
 
   _handleDividerStart() {
@@ -167,19 +165,13 @@ class Workspace extends React.Component {
   }
 
   _handleDividerDrag(_, {deltaX, lastX, x}) {
-    console.log(this.props.ui.workspace.columns.refs);
     this.props.dispatch(dragDivider('columns', {
-      columnWidths: getNodeWidths(this.props.ui.workspace.columns.refs),
-      dividerWidth: getNodeWidth(this.props.ui.workspace.columns.dividerRef),
+      columnWidths: getNodeWidths(this.props.environmentColumnRefs),
+      dividerWidth: getNodeWidth(this.props.environmentColumnDividerRefs[0]),
       deltaX,
       lastX,
       x,
     }));
-  }
-
-  _storeEditorRef(index, ref) {
-      console.log(index, ref );
-      // this.props.dispatch(storeResizableSectionRef('editors', index, ref));
   }
 
   _renderEnvironment() {
@@ -189,7 +181,7 @@ class Workspace extends React.Component {
 
     return (
       <div className="environment">
-        <EditorsColumn/>
+        <EditorsColumn />
         <DraggableCore
           onDrag={this._handleDividerDrag}
           onStart={this._handleDividerStart}
@@ -225,12 +217,10 @@ class Workspace extends React.Component {
 Workspace.propTypes = {
   currentProject: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
-  editorsFlex: PropTypes.array.isRequired,
+  environmentColumnDividerRefs: PropTypes.array.isRequired,
+  environmentColumnRefs: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
-  isDraggingColumnDivider: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool,
-  rowsFlex: PropTypes.array.isRequired,
-  ui: PropTypes.object.isRequired,
 };
 
 Workspace.defaultProps = {

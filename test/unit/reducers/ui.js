@@ -10,8 +10,11 @@ import {
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {
-  dragColumnDivider,
-  dragRowDivider,
+  dragDivider,
+  startDragDivider,
+  stopDragDivider,
+  storeResizableSectionRef,
+  storeDividerRef,
   userDoneTyping,
   focusLine,
   editorFocusedRequestedLine,
@@ -57,70 +60,137 @@ const gistId = '12345';
 test('dragColumnDivider', reducerTest(
   reducer,
   initialState,
-  partial(dragColumnDivider, {
-    dividerWidth: {minWidth: 4},
-    columnWidths: [
-      {width: 400, minWidth: 300},
-      {width: 400, minWidth: 300},
-    ],
-    deltaX: 5,
-    lastX: 400,
-    x: 405,
-  }),
+  partial(
+    dragDivider,
+    'columns',
+    {
+      dividerWidth: {minWidth: 4},
+      columnWidths: [
+        {width: 400, minWidth: 300},
+        {width: 400, minWidth: 300},
+      ],
+      deltaX: 5,
+      lastX: 400,
+      x: 405,
+    },
+  ),
   initialState.setIn(
-    ['workspace', 'rowFlex'],
+    ['workspace', 'columns', 'flex'],
     new Immutable.List(['0 1 405px', '1', '1']),
   ),
 ));
 
-test('dragRowDivider', (t) => {
+test('dragEditorDivider', (t) => {
   t.test('dragging first divider down', reducerTest(
     reducer,
     initialState,
-    partial(dragRowDivider, {
-      index: 0,
-      dividerHeights: [
-        {minHeight: 4},
-        {minHeight: 4},
-      ],
-      editorHeights: [
-        {height: 100, minHeight: 85},
-        {height: 100, minHeight: 85},
-        {height: 100, minHeight: 85},
-      ],
-      deltaY: 5,
-      lastY: 100,
-      y: 105,
-    }),
+    partial(dragDivider,
+      'editors',
+      {
+        index: 0,
+        dividerHeights: [
+          {minHeight: 4},
+          {minHeight: 4},
+        ],
+        editorHeights: [
+          {height: 100, minHeight: 85},
+          {height: 100, minHeight: 85},
+          {height: 100, minHeight: 85},
+        ],
+        deltaY: 5,
+        lastY: 100,
+        y: 105,
+      },
+    ),
     initialState.setIn(
-      ['workspace', 'columnFlex'],
+      ['workspace', 'editors', 'flex'],
       new Immutable.List(['0 1 105px', '1', '0 1 100px']),
     ),
   ));
   t.test('dragging second divider down', reducerTest(
     reducer,
     initialState,
-    partial(dragRowDivider, {
-      index: 1,
-      dividerHeights: [
-        {minHeight: 4},
-        {minHeight: 4},
-      ],
-      editorHeights: [
-        {height: 100, minHeight: 85},
-        {height: 100, minHeight: 85},
-        {height: 100, minHeight: 85},
-      ],
-      deltaY: 5,
-      lastY: 204,
-      y: 209,
-    }),
+    partial(
+      dragDivider,
+      'editors',
+      {
+        index: 1,
+        dividerHeights: [
+          {minHeight: 4},
+          {minHeight: 4},
+        ],
+        editorHeights: [
+          {height: 100, minHeight: 85},
+          {height: 100, minHeight: 85},
+          {height: 100, minHeight: 85},
+        ],
+        deltaY: 5,
+        lastY: 204,
+        y: 209,
+      },
+    ),
     initialState.setIn(
-      ['workspace', 'columnFlex'],
+      ['workspace', 'editors', 'flex'],
       new Immutable.List(['0 1 100px', '0 1 105px', '1']),
     ),
   ));
 });
+
+test('startDragDivider', reducerTest(
+  reducer,
+  initialState,
+  partial(
+    startDragDivider,
+    'columns',
+  ),
+  initialState.setIn(
+    ['workspace', 'columns', 'isDraggingDivider'],
+    true,
+  ),
+));
+
+test('stopDragDivider', reducerTest(
+  reducer,
+  initialState,
+  partial(
+    stopDragDivider,
+    'columns',
+  ),
+  initialState.setIn(
+    ['workspace', 'columns', 'isDraggingDivider'],
+    false,
+  ),
+));
+
+test('storeResizableSectionRef', reducerTest(
+  reducer,
+  initialState,
+  partial(
+    storeResizableSectionRef,
+    'columns',
+    0,
+    'ref',
+  ),
+  initialState.setIn(
+    ['workspace', 'columns', 'refs'],
+    new Immutable.List(['ref']),
+  ),
+));
+
+test('storeDividerRef', reducerTest(
+  reducer,
+  initialState,
+  partial(
+    storeDividerRef,
+    'columns',
+    0,
+    'ref',
+  ),
+  initialState.setIn(
+    ['workspace', 'columns', 'dividerRefs'],
+    new Immutable.List(['ref']),
+  ),
+));
 
 test('gistNotFound', reducerTest(
   reducer,

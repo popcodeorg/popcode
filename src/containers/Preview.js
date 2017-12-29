@@ -14,7 +14,7 @@ import {
   getConsoleHistory,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
-  getOutputColumnFlex,
+  getResizableSectionFlex,
   getHiddenUIComponents,
 } from '../selectors';
 
@@ -26,7 +26,7 @@ function mapStateToProps(state) {
       !isUserTyping(state) &&
         !isCurrentProjectSyntacticallyValid(state)
     ),
-    outputColumnFlex: getOutputColumnFlex(state),
+    outputRowFlex: getResizableSectionFlex(state, 'output'),
     isConsoleOpen: !getHiddenUIComponents(state).includes('console'),
   };
 }

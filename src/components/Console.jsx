@@ -19,12 +19,11 @@ export default function Console({
   onInput,
   onToggleVisible,
   onRef,
-  outputColumnFlex,
+  outputRowFlex,
 }) {
-
-  // if (showingErrors || !isEnabled) {
-  //   return null;
-  // }
+  if (showingErrors || !isEnabled) {
+    return null;
+  }
 
   const console = (
     <div className="console__scroll-container output__item">
@@ -53,7 +52,7 @@ export default function Console({
       className={isOpen ? 'output__row console' :
         'output__row_collapsed console'}
       ref={onRef}
-      style={isOpen ? prefixAll({flex: outputColumnFlex[1]}) : null}
+      style={isOpen ? prefixAll({flex: outputRowFlex[1]}) : null}
     >
       <div
         className="label console__label"
@@ -85,7 +84,7 @@ Console.propTypes = {
   isEnabled: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
-  outputColumnFlex: PropTypes.array.isRequired,
+  outputRowFlex: PropTypes.array.isRequired,
   showingErrors: PropTypes.bool.isRequired,
   onClearConsoleEntries: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,

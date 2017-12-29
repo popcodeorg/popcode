@@ -9,7 +9,6 @@ import includes from 'lodash/includes';
 import partial from 'lodash/partial';
 import partition from 'lodash/partition';
 import {getNodeHeights} from '../util/resize';
-
 import EditorContainer from './EditorContainer';
 import Editor from './Editor';
 
@@ -49,13 +48,14 @@ export default class EditorsColumn extends React.Component {
     const {
       currentProject,
       editorsFlex,
+      environmentColumnFlex,
       errors,
+      requestedFocusedLine,
+      textSizeIsLarge,
       onComponentHide,
       onEditorInput,
       onRef,
       onRequestedLineFocused,
-      rowsFlex,
-      ui,
     } = this.props;
 
     const children = [];
@@ -72,8 +72,12 @@ export default class EditorsColumn extends React.Component {
           key={language}
           language={language}
           source={currentProject.sources[language]}
-          style={{flex: editorsFlex[index]}}
-          onHide={partial(onComponentHide, currentProject.projectKey, `editor.${language}`)}
+          style={prefixAll({flex: editorsFlex[index]})}
+          onHide={partial(
+            onComponentHide,
+            currentProject.projectKey,
+            `editor.${language}`,
+          )}
           onRef={partial(this._storeEditorRef, index)}
         >
           <Editor
@@ -81,10 +85,14 @@ export default class EditorsColumn extends React.Component {
             language={language}
             percentageOfHeight={1 / visibleLanguages.length}
             projectKey={currentProject.projectKey}
-            requestedFocusedLine={ui.editors.requestedFocusedLine}
+            requestedFocusedLine={requestedFocusedLine}
             source={currentProject.sources[language]}
-            textSizeIsLarge={ui.editors.textSizeIsLarge}
-            onInput={partial(onEditorInput, currentProject.projectKey, language)}
+            textSizeIsLarge={textSizeIsLarge}
+            onInput={partial(
+              onEditorInput,
+              currentProject.projectKey,
+              language,
+            )}
             onRequestedLineFocused={onRequestedLineFocused}
           />
         </EditorContainer>,
@@ -132,7 +140,7 @@ export default class EditorsColumn extends React.Component {
       <div
         className="environment__column"
         ref={onRef}
-        style={{flex: rowsFlex[0]}}
+        style={prefixAll({flex: environmentColumnFlex[0]})}
       >
         <div className="environment__column-contents editors">{children}</div>
       </div>
@@ -141,17 +149,20 @@ export default class EditorsColumn extends React.Component {
 }
 
 EditorsColumn.propTypes = {
-  // currentProject: PropTypes.object.isRequired,
-  // editorsFlex: PropTypes.array.isRequired,
-  // errors: PropTypes.object.isRequired,
-  // rowsFlex: PropTypes.object.isRequired,
-  // ui: PropTypes.shape({
-  //   editors: PropTypes.object.isRequired,
-  // }).isRequired,
-  // onComponentHide: PropTypes.func.isRequired,
-  // onComponentUnhide: PropTypes.func.isRequired,
-  // onDividerDrag: PropTypes.func.isRequired,
-  // onEditorInput: PropTypes.func.isRequired,
-  // onRef: PropTypes.func.isRequired,
-  // onRequestedLineFocused: PropTypes.func.isRequired,
+  currentProject: PropTypes.object.isRequired,
+  editorsFlex: PropTypes.array.isRequired,
+  environmentColumnFlex: PropTypes.array.isRequired,
+  errors: PropTypes.object.isRequired,
+  requestedFocusedLine: PropTypes.object,
+  textSizeIsLarge: PropTypes.bool.isRequired,
+  onComponentHide: PropTypes.func.isRequired,
+  onComponentUnhide: PropTypes.func.isRequired,
+  onDividerDrag: PropTypes.func.isRequired,
+  onEditorInput: PropTypes.func.isRequired,
+  onRef: PropTypes.func.isRequired,
+  onRequestedLineFocused: PropTypes.func.isRequired,
+};
+
+EditorsColumn.defaultProps = {
+  requestedFocusedLine: null,
 };

@@ -20,13 +20,13 @@ export const DEFAULT_WORKSPACE = new Immutable.Map({
     flex: DEFAULT_ROW_FLEX,
     isDraggingDivider: false,
     refs: new Immutable.List(),
-    dividerRef: null,
+    dividerRefs: new Immutable.List(),
   }),
   output: new Immutable.Map({
     flex: DEFAULT_OUTPUT_COLUMN_FLEX,
     isDraggingDivider: false,
     refs: new Immutable.List(),
-    dividerRef: null,
+    dividerRefs: new Immutable.List(),
   }),
 
 });
@@ -93,35 +93,56 @@ export default function ui(stateIn, action) {
       return state.setIn(['editors', 'requestedFocusedLine'], null);
 
     case 'DRAG_DIVIDER':
-      return state.updateIn(['workspace', action.payload.section, 'flex'], (prevFlex) => {  
-        let newFlex;
-        if (action.payload.section === 'editors'){
-          newFlex = updateEditorColumnFlex(action.payload.data);
-        }
-        else if (action.payload.section === 'columns') {
-          console.log(action.payload.data)
-          newFlex = updateWorkspaceRowFlex(action.payload.data);
-        }
-        else if (action.payload.section === 'output'){
-          newFlex = updateOutputColumnFlex(action.payload.data);
-        }
-        return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
-      });
+      return state.updateIn(['workspace', action.payload.section, 'flex'],
+        (prevFlex) => {
+          let newFlex;
+          if (action.payload.section === 'editors') {
+            newFlex = updateEditorColumnFlex(action.payload.data);
+          } else if (action.payload.section === 'columns') {
+            newFlex = updateWorkspaceRowFlex(action.payload.data);
+          } else if (action.payload.section === 'output') {
+            newFlex = updateOutputColumnFlex(action.payload.data);
+          }
+          return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
+        },
+      );
 
     case 'START_DRAG_DIVIDER':
-      return state.setIn(['workspace', action.payload,'isDraggingColumnDivider'], true);
+      return state.setIn([
+        'workspace',
+        action.payload,
+        'isDraggingDivider',
+      ],
+      true,
+      );
 
     case 'STOP_DRAG_DIVIDER':
-      return state.setIn(['workspace', action.payload, 'isDraggingColumnDivider'], false);
+      return state.setIn([
+        'workspace',
+        action.payload,
+        'isDraggingDivider',
+      ],
+      false,
+      );
 
     case 'STORE_RESIZABLE_SECTION_REF':
-      return state.setIn(['workspace', action.payload.section, 'refs', action.payload.index],
-        action.payload.ref,
+      return state.setIn([
+        'workspace',
+        action.payload.section,
+        'refs',
+        action.payload.index,
+      ],
+      action.payload.ref,
       );
 
     case 'STORE_DIVIDER_REF':
-      return state.setIn(['workspace', action.payload.section , 'dividerRef'],
-        action.payload.ref,
+      return state.setIn([
+        'workspace',
+        action.payload.section,
+        'dividerRefs',
+        action.payload.index,
+      ],
+      action.payload.ref,
       );
 
     case 'GIST_NOT_FOUND':

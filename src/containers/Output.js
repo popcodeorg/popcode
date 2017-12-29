@@ -5,7 +5,11 @@ import {
   getNodeHeights,
 } from '../util/resize';
 import {
-
+  getDividerRefs,
+  getResizableSectionRefs,
+  isDraggingDivider,
+  getOpenTopBarMenu,
+  getResizableSectionFlex,
 } from '../selectors';
 import {
   dragDivider,
@@ -17,30 +21,21 @@ import {
 
 function mapStateToProps(state) {
   return {
-    isDraggingColumnDivider: state.getIn(
-      ['ui', 'workspace', 'columns','isDraggingDivider'],
-    ),
-    isDraggingOutputDivider: state.getIn(
-      ['ui', 'workspace', 'output', 'isDraggingDivider'],
-    ),
-    isTopBarMenuOpen: false,
-    style: null,
-    outputDividerRef: state.getIn(
-      ['ui', 'workspace', 'output','dividerRef'],
-    ),
-    outputRowRef: state.getIn(
-      ['ui', 'workspace', 'output', 'refs'],
-    ).toJS(),
+    environmentColumnFlex: getResizableSectionFlex(state, 'columns'),
+    isDraggingColumnDivider: isDraggingDivider(state, 'columns'),
+    isDraggingOutputDivider: isDraggingDivider(state, 'output'),
+    openTopBarMenu: getOpenTopBarMenu(state),
+    outputDividerRefs: getDividerRefs(state, 'output'),
+    outputRowRefs: getResizableSectionRefs(state, 'output'),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onDividerDrag(outputDividerRef, outputRowRef, {deltaY, lastY, y}) {
-      console.log(outputRowRef);
+    onDividerDrag(outputDividerRef, outputRowRefs, {deltaY, lastY, y}) {
       dispatch(dragDivider('output', {
         dividerHeight: getNodeHeight(outputDividerRef),
-        rowHeights: getNodeHeights(outputRowRef),
+        rowHeights: getNodeHeights(outputRowRefs),
         deltaY,
         lastY,
         y,
@@ -53,13 +48,12 @@ function mapDispatchToProps(dispatch) {
       dispatch(stopDragDivider('output'));
     },
     onStoreColumnRef(ref) {
-      console.log(ref)
       dispatch(storeResizableSectionRef('columns', 1, ref));
     },
     onStoreDividerRef(ref) {
-      dispatch(storeDividerRef('output', ref));
+      dispatch(storeDividerRef('output', 0, ref));
     },
-  }
+  };
 }
 
 export default connect(

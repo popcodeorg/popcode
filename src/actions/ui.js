@@ -14,7 +14,7 @@ export const editorFocusedRequestedLine = createAction(
 
 export const dragDivider = createAction(
   'DRAG_DIVIDER',
-  (section, data) => ({section, data})
+  (section, data) => ({section, data}),
 );
 
 export const startDragDivider = createAction(
@@ -32,7 +32,7 @@ export const storeResizableSectionRef = createAction(
 
 export const storeDividerRef = createAction(
   'STORE_DIVIDER_REF',
-  (section, ref) => ({section, ref}),
+  (section, index, ref) => ({section, index, ref}),
 );
 
 export const popOutProject = createAction(

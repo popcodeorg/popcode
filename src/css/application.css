@@ -459,15 +459,6 @@ body {
   flex-direction: column;
 }
 
-/*.output__item {
-  flex: 1 1 auto;
-  min-height: 85px;
-}*/
-
-/*.output__item_shrink {
-  flex: 0 1 auto;
-}*/
-
 .output__row {
   box-sizing: border-box;
   position: relative;
@@ -499,10 +490,6 @@ body {
 }
 
 /** @define console */
-
-/*.console {
-  flex: none;
-}*/
 
 .console__label {
   display: flex;
