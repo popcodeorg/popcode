@@ -5,19 +5,24 @@ import classnames from 'classnames';
 import {ConsoleEntry} from '../records';
 
 export default function ConsoleOutput({entry, isActive}) {
-  const {value, error} = entry;
+  const {expression, value, error} = entry;
+  const chevron = expression ?
+    <div className="console__chevron console__chevron_outdent">&#xf053;</div> :
+    null;
 
   if (!isNil(value)) {
     return (
       <div
         className={
           classnames(
+            'console__row',
             'console__value',
             {console__value_inactive: !isActive},
           )
         }
       >
-        =&gt; {value}
+        {chevron}
+        {value}
       </div>
     );
   }
