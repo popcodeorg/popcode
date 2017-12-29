@@ -2,24 +2,19 @@ import test from 'tape';
 import {testSaga} from 'redux-saga-test-plan';
 import {
   userDoneTyping as userDoneTypingSaga,
-  exportGist as exportGistSaga,
+  exportProject as exportProjectSaga,
   popOutProject as popOutProjectSaga,
-  exportRepo as exportRepoSaga,
 } from '../../../src/sagas/ui';
 import {getCurrentProject} from '../../../src/selectors';
 import {userDoneTyping, popOutProject} from '../../../src/actions/ui';
 import {
-  gistExported,
-  gistExportDisplayed,
-  gistExportError,
-  gistExportNotDisplayed,
-  repoExported,
-  repoExportDisplayed,
-  repoExportError,
-  repoExportNotDisplayed,
+  projectExported,
+  projectExportDisplayed,
+  projectExportError,
+  projectExportNotDisplayed,
 } from '../../../src/actions/clients';
 import {openWindowWithContent} from '../../../src/util';
-import spinnerPageHtml from '../../../templates/github-export.html';
+import spinnerPageHtml from '../../../templates/project-export.html';
 import compileProject from '../../../src/util/compileProject';
 
 test('userDoneTyping', (assert) => {
@@ -30,14 +25,15 @@ test('userDoneTyping', (assert) => {
   assert.end();
 });
 
-test('exportGist', (t) => {
+test('exportProject', (t) => {
   t.test('with window still open', (assert) => {
     const mockWindow = {closed: false, location: {}};
     const url = 'https://gist.github.com/abc123';
-    testSaga(exportGistSaga).
+    const exportType = 'gist';
+    testSaga(exportProjectSaga).
       next().call(openWindowWithContent, spinnerPageHtml).
-      next(mockWindow).take(['GIST_EXPORTED', 'GIST_EXPORT_ERROR']).
-      next(gistExported(url)).put(gistExportDisplayed()).
+      next(mockWindow).take(['PROJECT_EXPORTED', 'PROJECT_EXPORT_ERROR']).
+      next(projectExported(url, exportType)).put(projectExportDisplayed()).
       next().isDone();
 
     assert.equal(mockWindow.location.href, url);
@@ -48,10 +44,12 @@ test('exportGist', (t) => {
   t.test('with window closed', (assert) => {
     const mockWindow = {closed: true, location: {}};
     const url = 'https://gist.github.com/abc123';
-    testSaga(exportGistSaga).
+    const exportType = 'gist';
+    testSaga(exportProjectSaga).
       next().call(openWindowWithContent, spinnerPageHtml).
-      next(mockWindow).take(['GIST_EXPORTED', 'GIST_EXPORT_ERROR']).
-      next(gistExported(url)).put(gistExportNotDisplayed(url)).
+      next(mockWindow).take(['PROJECT_EXPORTED', 'PROJECT_EXPORT_ERROR']).
+      next(projectExported(url, exportType)).put(
+        projectExportNotDisplayed(url, exportType)).
       next().isDone();
 
     assert.notOk(mockWindow.location.href);
@@ -59,12 +57,13 @@ test('exportGist', (t) => {
     assert.end();
   });
 
-  t.test('with gist export error', (assert) => {
+  t.test('with project export error', (assert) => {
     const mockWindow = {closed: false, close() { }};
-    testSaga(exportGistSaga).
+    const exportType = 'gist';
+    testSaga(exportProjectSaga).
       next().call(openWindowWithContent, spinnerPageHtml).
-      next(mockWindow).take(['GIST_EXPORTED', 'GIST_EXPORT_ERROR']).
-      next(gistExportError(new Error())).call([mockWindow, 'close']).
+      next(mockWindow).take(['PROJECT_EXPORTED', 'PROJECT_EXPORT_ERROR']).
+      next(projectExportError(exportType)).call([mockWindow, 'close']).
       next().isDone();
 
     assert.end();
@@ -82,45 +81,4 @@ test('popOutProject', (assert) => {
     next({source: preview}).call(openWindowWithContent, preview).
     next(mockWindow).isDone();
   assert.end();
-});
-
-test('exportRepo', (t) => {
-  t.test('with window still open', (assert) => {
-    const mockWindow = {closed: false, location: {}};
-    const url = 'https://popcode-mat.github.io/my-popcode-repo';
-    testSaga(exportRepoSaga).
-      next().call(openWindowWithContent, spinnerPageHtml).
-      next(mockWindow).take(['REPO_EXPORTED', 'REPO_EXPORT_ERROR']).
-      next(repoExported(url)).put(repoExportDisplayed()).
-      next().isDone();
-
-    assert.equal(mockWindow.location.href, url);
-
-    assert.end();
-  });
-
-  t.test('with window closed', (assert) => {
-    const mockWindow = {closed: true, location: {}};
-    const url = 'https://popcode-mat.github.io/my-popcode-repo';
-    testSaga(exportRepoSaga).
-      next().call(openWindowWithContent, spinnerPageHtml).
-      next(mockWindow).take(['REPO_EXPORTED', 'REPO_EXPORT_ERROR']).
-      next(repoExported(url)).put(repoExportNotDisplayed(url)).
-      next().isDone();
-
-    assert.notOk(mockWindow.location.href);
-
-    assert.end();
-  });
-
-  t.test('with repo export error', (assert) => {
-    const mockWindow = {closed: false, close() { }};
-    testSaga(exportRepoSaga).
-      next().call(openWindowWithContent, spinnerPageHtml).
-      next(mockWindow).take(['REPO_EXPORTED', 'REPO_EXPORT_ERROR']).
-      next(repoExportError(new Error())).call([mockWindow, 'close']).
-      next().isDone();
-
-    assert.end();
-  });
 });

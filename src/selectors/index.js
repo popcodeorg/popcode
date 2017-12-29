@@ -25,6 +25,8 @@ import isCurrentProjectSyntacticallyValid
 import isDraggingDivider from './isDraggingDivider';
 import isExperimental from './isExperimental';
 import isGistExportInProgress from './isGistExportInProgress';
+import isRepoExportInProgress from './isRepoExportInProgress';
+import isClassroomExportInProgress from './isClassroomExportInProgress';
 import isSnapshotInProgress from './isSnapshotInProgress';
 import isTextSizeLarge from './isTextSizeLarge';
 import isUserAuthenticated from './isUserAuthenticated';
@@ -59,6 +61,8 @@ export {
   isDraggingDivider,
   isExperimental,
   isGistExportInProgress,
+  isRepoExportInProgress,
+  isClassroomExportInProgress,
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserAuthenticated,

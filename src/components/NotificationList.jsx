@@ -4,24 +4,21 @@ import partial from 'lodash/partial';
 import NotificationContainer from './NotificationContainer';
 import {
   GenericNotification,
-  GistExportNotification,
   GistImportError,
-  RepoExportNotification,
   SnapshotNotification,
+  ProjectExportNotification,
 } from './notifications';
 
 const NOTIFICATION_COMPONENTS = {
-  'gist-export-complete': GistExportNotification,
   'gist-import-error': GistImportError,
-  'repo-export-complete': RepoExportNotification,
   'snapshot-created': SnapshotNotification,
+  'project-export-complete': ProjectExportNotification,
 };
 
 function chooseNotificationComponent(notification) {
   if (notification.type in NOTIFICATION_COMPONENTS) {
     return NOTIFICATION_COMPONENTS[notification.type];
   }
-
   return GenericNotification;
 }
 

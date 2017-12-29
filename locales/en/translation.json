@@ -3,6 +3,7 @@
     "create-snapshot": "Create Snapshot",
     "export-gist": "Export Gist",
     "export-repo": "Export Repo",
+    "share-to-classroom": "Share To Classroom",
     "libraries": "Libraries",
     "load-project": "Your Projects",
     "new-project": "New Project",
@@ -28,7 +29,7 @@
     "empty-gist": "You need some code in your project to export a gist!",
     "gist-export-error": "Something went wrong trying to create that gist. Please try again.",
     "gist-export-complete": "Your gist export is ready!",
-    "github-export-link": "Click here to open it",
+    "project-export-link": "Click here to open it",
     "gist-import-not-found": "Looks like that gist doesn’t exist. Check the URL and try again.",
     "gist-import-error": "There was a problem importing that gist.",
     "gist-import-link": "Click here to open it",
@@ -38,7 +39,10 @@
     "click-to-copy": "Click here to copy it",
     "snapshot-export-error": "Something went wrong trying to create that snapshot. Please try again.",
     "snapshot-import-error": "Something went wrong trying to load that snapshot. Please try again.",
-    "snapshot-not-found": "That snapshot doesn’t seem to exist. Check the link and try again."
+    "snapshot-not-found": "That snapshot doesn’t seem to exist. Check the link and try again.",
+    "classroom-export-complete": "Your project is ready to share to Google Classroom",
+    "classroom-export-error": "Something went wrong trying to share to Google Classroom. Please try again.",
+    "project-compilation-failed": "Something went wrong trying to display a preview of your project. This is a bug in Popcode and we have been notified. Making another change to your code will likely fix this error."
   },
   "languages": {
     "html": "HTML",
