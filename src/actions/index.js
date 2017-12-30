@@ -2,12 +2,9 @@ import applicationLoaded from './applicationLoaded';
 
 import {
   createSnapshot,
-  exportGist,
-  gistExportDisplayed,
-  gistExportNotDisplayed,
-  exportRepo,
-  repoExportDisplayed,
-  repoExportNotDisplayed,
+  exportProject,
+  projectExportDisplayed,
+  projectExportNotDisplayed,
 } from './clients';
 
 import {
@@ -49,6 +46,7 @@ import {
 
 import {
   projectCompiled,
+  projectCompilationFailed,
   refreshPreview,
 } from './compiledProjects';
 
@@ -85,15 +83,12 @@ export {
   notificationTriggered,
   userDismissedNotification,
   updateNotificationMetadata,
-  exportGist,
-  exportRepo,
-  gistExportDisplayed,
-  gistExportNotDisplayed,
+  exportProject,
+  projectExportDisplayed,
+  projectExportNotDisplayed,
   popOutProject,
   applicationLoaded,
   refreshPreview,
-  repoExportDisplayed,
-  repoExportNotDisplayed,
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
@@ -101,4 +96,5 @@ export {
   logOut,
   evaluateConsoleEntry,
   projectCompiled,
+  projectCompilationFailed,
 };

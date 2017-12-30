@@ -4,8 +4,9 @@ import {
   validatedSource as validatedSourceSaga,
 } from '../../../src/sagas/compiledProjects';
 import {getCurrentProject, getErrors} from '../../../src/selectors';
-import {projectCompiled} from '../../../src/actions';
+import {projectCompiled, projectCompilationFailed} from '../../../src/actions';
 import compileProject from '../../../src/util/compileProject';
+import Bugsnag from '../../../src/util/Bugsnag';
 import {errors} from '../../helpers/referenceStates';
 import {project as projectFactory} from '../../helpers/factory';
 
@@ -20,20 +21,34 @@ test('validatedSource', (t) => {
 
   t.test('with no errors', (assert) => {
     const clock = sinon.useFakeTimers();
-    const project = projectFactory();
     const preview = {source: '<html></html>'};
+    startCompilation(assert).
+      next(preview).put(projectCompiled(preview, Date.now()));
 
-    testSaga(validatedSourceSaga).
+    clock.restore();
+    assert.end();
+  });
+
+  t.test('with uncaught compilation error', (assert) => {
+    const error = new Error('Compilation failed.');
+    startCompilation(assert).
+      throw(error).call([Bugsnag, 'notifyException'], error).
+      next().put(projectCompilationFailed(error)).
+      next().isDone();
+
+    assert.end();
+  });
+
+  function startCompilation() {
+    const project = projectFactory();
+
+    return testSaga(validatedSourceSaga).
       next().select(getErrors).
       next(errors.noErrors.toJS()).select(getCurrentProject).
       next(project).call(
         compileProject,
         project,
         {isInlinePreview: true},
-      ).
-      next(preview).put(projectCompiled(preview, Date.now()));
-
-    clock.restore();
-    assert.end();
-  });
+      );
+  }
 });

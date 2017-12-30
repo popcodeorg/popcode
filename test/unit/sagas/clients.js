@@ -2,17 +2,21 @@ import test from 'tape';
 import {testSaga} from 'redux-saga-test-plan';
 import {
   createSnapshot as createSnapshotSaga,
-  exportGist as exportGistSaga,
+  exportProject as exportProjectSaga,
 } from '../../../src/sagas/clients';
 import {
-  gistExported,
-  gistExportError,
+  projectExported,
+  projectExportError,
   snapshotCreated,
   snapshotExportError,
 } from '../../../src/actions/clients';
 import Scenario from '../../helpers/Scenario';
-import {createGistFromProject} from '../../../src/clients/github';
+import {
+  createGistFromProject,
+  createRepoFromProject,
+} from '../../../src/clients/github';
 import {createProjectSnapshot} from '../../../src/clients/firebase';
+import {createShareToClassroomUrl} from '../../../src/clients/googleClassroom';
 import {getCurrentProject} from '../../../src/selectors';
 
 test('createSnapshot()', (t) => {
@@ -44,13 +48,14 @@ test('createSnapshot()', (t) => {
   });
 });
 
-test('exportGist()', (t) => {
+test('export gist', (t) => {
   const url = 'https://gist.github.com/abc123';
+  const exportType = 'gist';
   const scenario = new Scenario();
   scenario.logIn();
 
   function initiateExport(assert) {
-    return testSaga(exportGistSaga).
+    return testSaga(exportProjectSaga, {payload: {exportType}}).
       next().inspect((effect) => {
         assert.ok(effect.SELECT, 'invokes select effect');
       }).
@@ -63,7 +68,7 @@ test('exportGist()', (t) => {
 
   t.test('with successful export', (assert) => {
     initiateExport(assert).
-      next({html_url: url}).put(gistExported(url)).
+      next({html_url: url}).put(projectExported(url, exportType)).
       next().isDone();
     assert.end();
   });
@@ -71,7 +76,80 @@ test('exportGist()', (t) => {
   t.test('with error', (assert) => {
     const error = new Error();
     initiateExport(assert).
-      throw(error).put(gistExportError(error)).
+      throw(error).put(projectExportError(exportType)).
+      next().isDone();
+    assert.end();
+  });
+});
+
+test('export repo', (t) => {
+  const url = 'https://github.com/usernmaer/Page-Title-abc123';
+  const exportType = 'repo';
+  const scenario = new Scenario();
+  scenario.logIn();
+
+  function initiateExport(assert) {
+    return testSaga(exportProjectSaga, {payload: {exportType}}).
+      next().inspect((effect) => {
+        assert.ok(effect.SELECT, 'invokes select effect');
+      }).
+      next(scenario.state).call(
+        createRepoFromProject,
+        scenario.project.toJS(),
+        scenario.user.toJS(),
+      );
+  }
+
+  t.test('with successful export', (assert) => {
+    initiateExport(assert).
+      next({html_url: url}).put(projectExported(url, exportType)).
+      next().isDone();
+    assert.end();
+  });
+
+  t.test('with error', (assert) => {
+    const error = new Error();
+    initiateExport(assert).
+      throw(error).put(projectExportError(exportType)).
+      next().isDone();
+    assert.end();
+  });
+});
+
+test('export to classroom', (t) => {
+  const url =
+    'https://classroom.google.com/u/0/share?url=http://popcode.org';
+  const exportType = 'classroom';
+  const snapshotKey = '123-456';
+  const scenario = new Scenario();
+  scenario.logIn();
+
+  function initiateExport(assert) {
+    return testSaga(exportProjectSaga, {payload: {exportType}}).
+      next().inspect((effect) => {
+        assert.ok(effect.SELECT, 'invokes select effect');
+      }).
+      next(scenario.state).call(
+        createProjectSnapshot,
+        scenario.project.toJS(),
+      ).
+      next(snapshotKey).call(
+        createShareToClassroomUrl,
+        snapshotKey,
+      );
+  }
+
+  t.test('with successful export', (assert) => {
+    initiateExport(assert).
+      next(url).put(projectExported(url, exportType)).
+      next().isDone();
+    assert.end();
+  });
+
+  t.test('with error', (assert) => {
+    const error = new Error();
+    initiateExport(assert).
+      throw(error).put(projectExportError(exportType)).
       next().isDone();
     assert.end();
   });

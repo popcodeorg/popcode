@@ -34,7 +34,7 @@ export default function console(stateIn, {type, payload, meta}) {
         ),
       );
     case 'EVALUATE_CONSOLE_ENTRY':
-      return state.set(
+      return payload.trim(' ') === '' ? state : state.set(
         meta.key,
         new ConsoleEntry({expression: payload}),
       );

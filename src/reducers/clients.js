@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 
 const defaultState = new Immutable.Map({
   firebase: new Immutable.Map({exportingSnapshot: false}),
-  gists: new Immutable.Map({lastExport: null}),
+  projectExports: new Immutable.Map(),
 });
 
 export default function clients(stateIn, action) {
@@ -21,40 +21,22 @@ export default function clients(stateIn, action) {
     case 'SNAPSHOT_EXPORT_ERROR':
       return state.setIn(['firebase', 'exportingSnapshot'], false);
 
-    case 'EXPORT_GIST':
+    case 'EXPORT_PROJECT':
       return state.setIn(
-        ['gists', 'lastExport'],
+        ['projectExports', action.payload.exportType],
         new Immutable.Map({status: 'waiting'}),
       );
 
-    case 'GIST_EXPORTED':
+    case 'PROJECT_EXPORTED':
       return state.setIn(
-        ['gists', 'lastExport'],
-        new Immutable.Map({status: 'ready', url: action.payload}),
+        ['projectExports', action.payload.exportType],
+        new Immutable.Map({status: 'ready', url: action.payload.url}),
       );
 
-    case 'GIST_EXPORT_ERROR':
+    case 'PROJECT_EXPORT_ERROR':
       return state.setIn(
-        ['gists', 'lastExport'],
-        new Immutable.Map({status: 'error', error: action.payload}),
-      );
-
-    case 'EXPORT_REPO':
-      return state.setIn(
-        ['repos', 'lastExport'],
-        new Immutable.Map({status: 'waiting'}),
-      );
-
-    case 'REPO_EXPORTED':
-      return state.setIn(
-        ['repos', 'lastExport'],
-        new Immutable.Map({status: 'ready', url: action.payload}),
-      );
-
-    case 'REPO_EXPORT_ERROR':
-      return state.setIn(
-        ['repos', 'lastExport'],
-        new Immutable.Map({status: 'error', error: action.payload}),
+        ['projectExports', action.payload.exportType],
+        new Immutable.Map({status: 'error'}),
       );
   }
 
