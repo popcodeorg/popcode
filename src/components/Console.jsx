@@ -9,6 +9,7 @@ import ConsoleInput from './ConsoleInput';
 export default function Console({
   currentProjectKey,
   currentCompiledProjectKey,
+  onConsoleClicked,
   history,
   isEnabled,
   isOpen,
@@ -17,19 +18,29 @@ export default function Console({
   onClearConsoleEntries,
   onInput,
   onToggleVisible,
+  onRequestedLineFocused,
+  requestedFocusedLine,
 }) {
   if (showingErrors || !isEnabled) {
     return null;
   }
 
   const console = (
-    <div className="console__scroll-container output__item">
+    <div
+      className="console__scroll-container output__item"
+      onClick={onConsoleClicked}
+    >
       <div
         className={
           classnames('console__repl', {console__repl_zoomed: isTextSizeLarge})
         }
       >
-        <ConsoleInput isTextSizeLarge={isTextSizeLarge} onInput={onInput} />
+        <ConsoleInput
+          isTextSizeLarge={isTextSizeLarge}
+          requestedFocusedLine={requestedFocusedLine}
+          onInput={onInput}
+          onRequestedLineFocused={onRequestedLineFocused}
+        />
         {history.map((entry, key) => {
           const isActive =
             currentCompiledProjectKey === entry.evaluatedByCompiledProjectKey;
@@ -76,13 +87,17 @@ Console.propTypes = {
   isEnabled: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
+  requestedFocusedLine: PropTypes.object,
   showingErrors: PropTypes.bool.isRequired,
   onClearConsoleEntries: PropTypes.func.isRequired,
+  onConsoleClicked: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
+  onRequestedLineFocused: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };
 
 Console.defaultProps = {
   currentCompiledProjectKey: null,
+  requestedFocusedLine: null,
   isTextSizeLarge: false,
 };

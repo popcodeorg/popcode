@@ -18,7 +18,6 @@ import {
   updateProjectSource,
   hideComponent,
   unhideComponent,
-  focusLine,
   editorFocusedRequestedLine,
   dragRowDivider,
   dragColumnDivider,
@@ -67,7 +66,6 @@ class Workspace extends React.Component {
       '_handleDividerStop',
       '_handleEditorInput',
       '_handleEditorsDividerDrag',
-      '_handleErrorClick',
       '_handleRequestedLineFocused',
       '_storeDividerRef',
       '_storeColumnRef',
@@ -130,10 +128,6 @@ class Workspace extends React.Component {
         componentName,
       ),
     );
-  }
-
-  _handleErrorClick(language, line, column) {
-    this.props.dispatch(focusLine(language, line, column));
   }
 
   _handleEditorInput(language, source) {

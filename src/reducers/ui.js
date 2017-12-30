@@ -73,7 +73,7 @@ export default function ui(stateIn, action) {
       return state.setIn(
         ['editors', 'requestedFocusedLine'],
         new Immutable.Map().
-          set('language', action.payload.language).
+          set('component', action.payload.component).
           set('line', action.payload.line).
           set('column', action.payload.column),
       );
