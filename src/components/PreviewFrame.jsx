@@ -46,10 +46,10 @@ class PreviewFrame extends React.Component {
     this._channel.call({
       method: 'evaluateExpression',
       params: expression,
-      success: (result) => {
+      success: (printedResult) => {
         this.props.onConsoleValue(
           key,
-          JSON.stringify(result),
+          printedResult,
           this.props.compiledProject.compiledProjectKey,
         );
       },
@@ -110,10 +110,9 @@ class PreviewFrame extends React.Component {
     });
   }
 
-  _handleConsoleLog(consoleArgs) {
-    const output = consoleArgs.map(arg => JSON.stringify(arg)).join(' ');
+  _handleConsoleLog(printedValue) {
     const {compiledProjectKey} = this.props.compiledProject;
-    this.props.onConsoleLog(output, compiledProjectKey);
+    this.props.onConsoleLog(printedValue, compiledProjectKey);
   }
 
   _attachToFrame(frame) {
@@ -142,7 +141,7 @@ class PreviewFrame extends React.Component {
     });
     this._channel.bind('log', (_trans, params) => {
       if (this.props.isActive) {
-        this._handleConsoleLog(params.args);
+        this._handleConsoleLog(params);
       }
     });
   }

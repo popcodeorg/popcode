@@ -1,4 +1,5 @@
 import channel from './channel';
+import prettyPrint from './prettyPrint';
 
 const consoleFunctions = ['log', 'info', 'warn', 'error', 'debug'];
 
@@ -6,7 +7,7 @@ function notifyChannel(args) {
   if (args.length > 0) {
     channel.notify({
       method: 'log',
-      params: {args},
+      params: args.map(prettyPrint).join(' '),
     });
   }
 }
