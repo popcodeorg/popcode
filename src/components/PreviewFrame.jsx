@@ -136,10 +136,14 @@ class PreviewFrame extends React.Component {
     });
 
     this._channel.bind('error', (_trans, params) => {
-      this._handleErrorMessage(params);
+      if (this.props.isActive) {
+        this._handleErrorMessage(params);
+      }
     });
     this._channel.bind('log', (_trans, params) => {
-      this._handleConsoleLog(params.args);
+      if (this.props.isActive) {
+        this._handleConsoleLog(params.args);
+      }
     });
   }
 
