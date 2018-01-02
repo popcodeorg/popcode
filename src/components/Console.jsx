@@ -12,22 +12,26 @@ export default function Console({
   onConsoleClicked,
   history,
   isEnabled,
+  isHidden,
   isOpen,
   isTextSizeLarge,
-  showingErrors,
   onClearConsoleEntries,
   onInput,
   onToggleVisible,
   onRequestedLineFocused,
   requestedFocusedLine,
 }) {
-  if (showingErrors || !isEnabled) {
+  if (!isEnabled) {
     return null;
   }
 
   const console = (
     <div
-      className="console__scroll-container output__item"
+      className={classnames(
+        'console__scroll-container',
+        'output__item',
+        {u__hidden: isHidden},
+      )}
       onClick={onConsoleClicked}
     >
       <div
@@ -45,7 +49,7 @@ export default function Console({
           const isActive =
             currentCompiledProjectKey === entry.evaluatedByCompiledProjectKey;
           return (
-          // eslint-disable-next-line react/no-array-index-key
+            // eslint-disable-next-line react/no-array-index-key
             <ConsoleEntry entry={entry} isActive={isActive} key={key} />
           );
         }).valueSeq().reverse()}
@@ -85,10 +89,10 @@ Console.propTypes = {
   currentProjectKey: PropTypes.string.isRequired,
   history: ImmutablePropTypes.iterable.isRequired,
   isEnabled: PropTypes.bool.isRequired,
+  isHidden: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
   requestedFocusedLine: PropTypes.object,
-  showingErrors: PropTypes.bool.isRequired,
   onClearConsoleEntries: PropTypes.func.isRequired,
   onConsoleClicked: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,

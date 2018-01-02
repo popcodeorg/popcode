@@ -27,7 +27,7 @@ function mapStateToProps(state) {
     isOpen: !getHiddenUIComponents(state).includes('console'),
     isTextSizeLarge: isTextSizeLarge(state),
     requestedFocusedLine: getRequestedFocusedLine(state),
-    showingErrors: !isCurrentProjectSyntacticallyValid(state),
+    isHidden: !isCurrentProjectSyntacticallyValid(state),
   };
 }
 
