@@ -509,10 +509,34 @@ body {
   font-size: 20px;
 }
 
+.console__row {
+  padding-left: 1em;
+  position: relative;
+}
+
+.console__chevron {
+  color: var(--color-light-gray);
+  font-family: 'FontAwesome';
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: scale(0.6);
+  transform-origin: left center;
+}
+
+.console__chevron_blue {
+  color: var(--color-blue);
+}
+
+.console__chevron_outdent {
+  text-indent: -0.1em;
+}
+
 .console__entry,
 .console__input {
-  margin-bottom: 0.5em;
   flex: none;
+  margin-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 .console__input {
@@ -520,7 +544,11 @@ body {
 }
 
 .console__entry {
-  margin-left: 4px;
+  border-bottom: 1px solid var(--color-low-contrast-gray);
+}
+
+.console__editor {
+  margin-left: -4px;
 }
 
 .console__error {

@@ -67,7 +67,7 @@ export default function Console({
       >
         <div>
           Console
-          <span className="console__chevron u__icon">{chevron}</span>
+          <span className="u__icon">{chevron}</span>
         </div>
         <div
           className="console__button console__button_clear u__icon"

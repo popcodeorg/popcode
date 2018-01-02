@@ -66,10 +66,12 @@ export default class ConsoleInput extends Component {
   render() {
     return (
       <div
-        className="console__input"
-        ref={this._ref}
+        className="console__row console__input"
         onClick={preventClickthrough}
-      />
+      >
+        <div className="console__chevron console__chevron_blue">&#xf054;</div>
+        <div className="console__editor" ref={this._ref} />
+      </div>
     );
   }
 }
