@@ -551,6 +551,10 @@ body {
   margin-left: -4px;
 }
 
+.console__value {
+  white-space: pre-wrap;
+}
+
 .console__error {
   color: var(--color-red);
 }
