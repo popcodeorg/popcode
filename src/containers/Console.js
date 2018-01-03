@@ -35,6 +35,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onClearConsoleEntries() {
       dispatch(clearConsoleEntries());
+      dispatch(focusLine('console', 0, 0));
     },
 
     onInput(input) {
