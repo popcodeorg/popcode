@@ -11,7 +11,6 @@ export default function Console({
   currentCompiledProjectKey,
   onConsoleClicked,
   history,
-  isEnabled,
   isHidden,
   isOpen,
   isTextSizeLarge,
@@ -21,10 +20,6 @@ export default function Console({
   onRequestedLineFocused,
   requestedFocusedLine,
 }) {
-  if (!isEnabled) {
-    return null;
-  }
-
   const console = (
     <div
       className={classnames(
@@ -88,7 +83,6 @@ Console.propTypes = {
   currentCompiledProjectKey: PropTypes.number,
   currentProjectKey: PropTypes.string.isRequired,
   history: ImmutablePropTypes.iterable.isRequired,
-  isEnabled: PropTypes.bool.isRequired,
   isHidden: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
