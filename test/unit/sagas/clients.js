@@ -121,6 +121,7 @@ test('export to classroom', (t) => {
     'https://classroom.google.com/u/0/share?url=http://popcode.org';
   const exportType = 'classroom';
   const snapshotKey = '123-456';
+  const projectTitle = 'Page Title';
   const scenario = new Scenario();
   scenario.logIn();
 
@@ -136,6 +137,7 @@ test('export to classroom', (t) => {
       next(snapshotKey).call(
         createShareToClassroomUrl,
         snapshotKey,
+        projectTitle,
       );
   }
 
