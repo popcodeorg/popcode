@@ -172,7 +172,7 @@ class JsHintValidator extends Validator {
 
   async _getRawErrors() {
     const {JSHINT: jshint} = await retryingFailedImports(() => import(
-      /* webpackChunkName: 'linters' */
+      /* webpackChunkName: 'mainAsync' */
       'jshint',
     ));
     try {

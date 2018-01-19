@@ -90,7 +90,7 @@ module.exports = (env = 'development') => {
     new OfflinePlugin({
       caches: {
         main: [':rest:'],
-        additional: ['linters*.js', 'previewLibraries*.js'],
+        additional: ['mainAsync*.js', 'previewLibraries*.js'],
       },
       safeToUseOptionalCaches: true,
       publicPath: '/',
