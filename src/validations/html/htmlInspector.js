@@ -94,7 +94,7 @@ class HtmlInspectorValidator extends Validator {
     }
 
     const HTMLInspector = await retryingFailedImports(() => import(
-      /* webpackChunkName: 'linters' */
+      /* webpackChunkName: 'mainAsync' */
       'html-inspector',
     ));
 
