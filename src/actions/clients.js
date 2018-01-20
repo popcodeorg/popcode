@@ -4,7 +4,10 @@ export const createSnapshot = createAction('CREATE_SNAPSHOT');
 export const snapshotCreated = createAction('SNAPSHOT_CREATED');
 export const snapshotExportError = createAction('SNAPSHOT_EXPORT_ERROR');
 export const snapshotNotFound = createAction('SNAPSHOT_NOT_FOUND');
-export const snapshotImported = createAction('SNAPSHOT_IMPORTED');
+export const snapshotImported = createAction(
+  'SNAPSHOT_IMPORTED',
+  (projectKey, project) => ({projectKey, project}),
+);
 export const snapshotImportError = createAction('SNAPSHOT_IMPORT_ERROR');
 export const projectRestoredFromLastSession =
   createAction('PROJECT_RESTORED_FROM_LAST_SESSION');

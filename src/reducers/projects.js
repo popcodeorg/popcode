@@ -1,4 +1,5 @@
 import Immutable from 'immutable';
+import assign from 'lodash/assign';
 import isNil from 'lodash/isNil';
 import filter from 'lodash/filter';
 import find from 'lodash/find';
@@ -124,7 +125,14 @@ export default function reduceProjects(stateIn, action) {
       return removePristineExcept(state, action.payload.projectKey);
 
     case 'SNAPSHOT_IMPORTED':
-      return addProject(state, action.payload);
+      return addProject(
+        state,
+        assign(
+          {},
+          action.payload.project,
+          {projectKey: action.payload.projectKey, updatedAt: null},
+        ),
+      );
 
     case 'GIST_IMPORTED':
       return importGist(
