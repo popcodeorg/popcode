@@ -58,7 +58,8 @@ export function* importSnapshot({payload: {snapshotKey}}) {
     if (isNull(snapshot)) {
       yield put(snapshotNotFound());
     } else {
-      yield put(snapshotImported(snapshot));
+      const projectKey = generateProjectKey();
+      yield put(snapshotImported(projectKey, snapshot));
     }
   } catch (error) {
     yield put(snapshotImportError(error));
