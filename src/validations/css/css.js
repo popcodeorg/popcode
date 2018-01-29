@@ -22,7 +22,7 @@ class CssValidator extends Validator {
 
   async _getRawErrors() {
     const css = await retryingFailedImports(() => import(
-      /* webpackChunkName: 'linters' */
+      /* webpackChunkName: 'mainAsync' */
       'css',
     ));
     return css.parse(this._source, {silent: true}).stylesheet.parsingErrors;

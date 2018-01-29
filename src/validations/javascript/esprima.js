@@ -80,7 +80,7 @@ class EsprimaValidator extends Validator {
 
   async _getRawErrors() {
     const esprima = await retryingFailedImports(() => import(
-      /* webpackChunkName: 'linters' */
+      /* webpackChunkName: 'mainAsync' */
       'esprima',
     ));
     try {

@@ -134,7 +134,7 @@ class PrettyCssValidator extends Validator {
 
   async _getRawErrors() {
     const prettyCSS = await retryingFailedImports(() => import(
-      /* webpackChunkName: 'linters' */
+      /* webpackChunkName: 'mainAsync' */
       'PrettyCSS',
     ));
     try {

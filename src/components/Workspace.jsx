@@ -17,7 +17,10 @@ import {
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {
-  focusLine,
+  updateProjectSource,
+  hideComponent,
+  unhideComponent,
+  editorFocusedRequestedLine,
   dragDivider,
   startDragDivider,
   stopDragDivider,
@@ -61,7 +64,9 @@ class Workspace extends React.Component {
       '_handleDividerDrag',
       '_handleDividerStart',
       '_handleDividerStop',
-      '_handleErrorClick',
+      '_handleEditorInput',
+      '_handleEditorsDividerDrag',
+      '_handleRequestedLineFocused',
       '_storeDividerRef',
     );
   }
@@ -105,8 +110,32 @@ class Workspace extends React.Component {
     }
   }
 
-  _handleErrorClick(language, line, column) {
-    this.props.dispatch(focusLine(language, line, column));
+  _handleComponentHide(componentName) {
+    this.props.dispatch(
+      hideComponent(
+        this.props.currentProject.projectKey,
+        componentName,
+      ),
+    );
+  }
+
+  _handleComponentUnhide(componentName) {
+    this.props.dispatch(
+      unhideComponent(
+        this.props.currentProject.projectKey,
+        componentName,
+      ),
+    );
+  }
+
+  _handleEditorInput(language, source) {
+    this.props.dispatch(
+      updateProjectSource(
+        this.props.currentProject.projectKey,
+        language,
+        source,
+      ),
+    );
   }
 
   _getOverallValidationState() {

@@ -298,10 +298,10 @@ test('snapshotNotFound', reducerTest(
 test('focusLine', reducerTest(
   reducer,
   initialState,
-  partial(focusLine, 'javascript', 4, 2),
+  partial(focusLine, 'editor.javascript', 4, 2),
   initialState.setIn(
     ['editors', 'requestedFocusedLine'],
-    new Immutable.Map({language: 'javascript', line: 4, column: 2}),
+    new Immutable.Map({component: 'editor.javascript', line: 4, column: 2}),
   ),
 ));
 
@@ -309,7 +309,7 @@ test('editorFocusedRequestedLine', reducerTest(
   reducer,
   initialState.setIn(
     ['editors', 'requestedFocusedLine'],
-    new Immutable.Map({language: 'javascript', line: 4, column: 2}),
+    new Immutable.Map({component: 'editor.javascript', line: 4, column: 2}),
   ),
   editorFocusedRequestedLine,
   initialState,

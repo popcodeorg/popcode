@@ -10,34 +10,44 @@ import ConsoleInput from './ConsoleInput';
 export default function Console({
   currentProjectKey,
   currentCompiledProjectKey,
+  onConsoleClicked,
   history,
-  isEnabled,
+  isHidden,
   isOpen,
   isTextSizeLarge,
-  showingErrors,
   onClearConsoleEntries,
   onInput,
   onToggleVisible,
   onRef,
   outputRowFlex,
+  onRequestedLineFocused,
+  requestedFocusedLine,
 }) {
-  if (showingErrors || !isEnabled) {
-    return null;
-  }
-
   const console = (
-    <div className="console__scroll-container output__item">
+    <div
+      className={classnames(
+        'console__scroll-container',
+        'output__item',
+        {u__hidden: isHidden},
+      )}
+      onClick={onConsoleClicked}
+    >
       <div
         className={
           classnames('console__repl', {console__repl_zoomed: isTextSizeLarge})
         }
       >
-        <ConsoleInput isTextSizeLarge={isTextSizeLarge} onInput={onInput} />
+        <ConsoleInput
+          isTextSizeLarge={isTextSizeLarge}
+          requestedFocusedLine={requestedFocusedLine}
+          onInput={onInput}
+          onRequestedLineFocused={onRequestedLineFocused}
+        />
         {history.map((entry, key) => {
           const isActive =
             currentCompiledProjectKey === entry.evaluatedByCompiledProjectKey;
           return (
-          // eslint-disable-next-line react/no-array-index-key
+            // eslint-disable-next-line react/no-array-index-key
             <ConsoleEntry entry={entry} isActive={isActive} key={key} />
           );
         }).valueSeq().reverse()}
@@ -60,7 +70,7 @@ export default function Console({
       >
         <div>
           Console
-          <span className="console__chevron u__icon">{chevron}</span>
+          <span className="u__icon">{chevron}</span>
         </div>
         <div
           className="console__button console__button_clear u__icon"
@@ -81,18 +91,22 @@ Console.propTypes = {
   currentCompiledProjectKey: PropTypes.number,
   currentProjectKey: PropTypes.string.isRequired,
   history: ImmutablePropTypes.iterable.isRequired,
-  isEnabled: PropTypes.bool.isRequired,
+  isHidden: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
   outputRowFlex: PropTypes.array.isRequired,
   showingErrors: PropTypes.bool.isRequired,
+  requestedFocusedLine: PropTypes.object,
   onClearConsoleEntries: PropTypes.func.isRequired,
+  onConsoleClicked: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
+  onRequestedLineFocused: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };
 
 Console.defaultProps = {
   currentCompiledProjectKey: null,
+  requestedFocusedLine: null,
   isTextSizeLarge: false,
 };

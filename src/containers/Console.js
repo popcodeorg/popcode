@@ -6,14 +6,16 @@ import {
   getCurrentProjectKey,
   getHiddenUIComponents,
   getResizableSectionFlex,
+  getRequestedFocusedLine,
   isCurrentProjectSyntacticallyValid,
-  isExperimental,
   isTextSizeLarge,
 } from '../selectors';
 import {
   evaluateConsoleEntry,
   toggleComponent,
   storeResizableSectionRef,
+  focusLine,
+  editorFocusedRequestedLine,
   clearConsoleEntries,
 } from '../actions';
 
@@ -22,11 +24,11 @@ function mapStateToProps(state) {
     currentCompiledProjectKey: getCurrentCompiledProjectKey(state),
     currentProjectKey: getCurrentProjectKey(state),
     history: getConsoleHistory(state),
-    isEnabled: isExperimental(state),
     isOpen: !getHiddenUIComponents(state).includes('console'),
     isTextSizeLarge: isTextSizeLarge(state),
     outputRowFlex: getResizableSectionFlex(state, 'output'),
-    showingErrors: !isCurrentProjectSyntacticallyValid(state),
+    requestedFocusedLine: getRequestedFocusedLine(state),
+    isHidden: !isCurrentProjectSyntacticallyValid(state),
   };
 }
 
@@ -47,6 +49,15 @@ function mapDispatchToProps(dispatch) {
     onRef(ref) {
       dispatch(storeResizableSectionRef('output', 1, ref));
     },
+
+    onConsoleClicked() {
+      dispatch(focusLine('console', 0, 0));
+    },
+
+    onRequestedLineFocused() {
+      dispatch(editorFocusedRequestedLine());
+    },
+
   };
 }
 

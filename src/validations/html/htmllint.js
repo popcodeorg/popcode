@@ -143,7 +143,7 @@ class HtmllintValidator extends Validator {
   async _getRawErrors() {
     const {Linter, rules} = await retryingFailedImports(
       () => import(
-        /* webpackChunkName: 'linters' */
+        /* webpackChunkName: 'mainAsync' */
         'htmllint',
       ),
     );

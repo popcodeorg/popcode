@@ -19,7 +19,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onErrorClick(language, line, column) {
-      dispatch(focusLine(language, line, column));
+      dispatch(focusLine(`editor.${language}`, line, column));
     },
   };
 }

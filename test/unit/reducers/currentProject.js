@@ -36,7 +36,7 @@ test('changeCurrentProject', reducerTest(
 test('snapshotImported', reducerTest(
   reducer,
   initialState,
-  partial(snapshotImported, {projectKey}),
+  partial(snapshotImported, projectKey, {}),
   Immutable.fromJS({projectKey}),
 ));
 
