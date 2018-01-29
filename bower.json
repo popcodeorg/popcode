@@ -33,6 +33,7 @@
     "lodash": "^4.11.2",
     "mustache.js": "mustache#^2.2.1",
     "normalize-css": "normalize.css#^4.1.1",
+    "p5js": "^0.5.13",
     "react": "^15.0.1",
     "roboto-webfont-bower": "roboto-webfont#^0.1.1",
     "underscore": "^1.8.3"
