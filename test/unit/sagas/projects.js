@@ -1,3 +1,4 @@
+import omit from 'lodash/omit';
 import test from 'tape';
 import {testSaga} from 'redux-saga-test-plan';
 import {
@@ -18,7 +19,6 @@ import {
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {
-  snapshotImported,
   snapshotImportError,
   snapshotNotFound,
   projectRestoredFromLastSession,
@@ -121,10 +121,16 @@ test('importSnapshot()', (t) => {
   const snapshotKey = 'abc-123';
 
   t.test('with successful import', (assert) => {
-    const projectData = project();
+    const projectData = omit(project(), 'projectKey');
     testSaga(importSnapshotSaga, applicationLoaded({snapshotKey})).
       next().call(loadProjectSnapshot, snapshotKey).
-      next(projectData).put(snapshotImported(projectData)).
+      next(projectData).inspect(({
+        PUT: {action: {type, payload: {projectKey, project: payloadProject}}},
+      }) => {
+        assert.equal(type, 'SNAPSHOT_IMPORTED');
+        assert.same(payloadProject, projectData);
+        assert.ok(projectKey, 'payload should have a projectKey');
+      }).
       next().isDone();
 
     assert.end();

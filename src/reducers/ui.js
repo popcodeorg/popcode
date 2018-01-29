@@ -78,6 +78,15 @@ export default function ui(stateIn, action) {
           set('column', action.payload.column),
       );
 
+    case 'CLEAR_CONSOLE_ENTRIES':
+      return state.setIn(
+        ['editors', 'requestedFocusedLine'],
+        new Immutable.Map().
+          set('component', 'console').
+          set('line', 0).
+          set('column', 0),
+      );
+
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.setIn(['editors', 'requestedFocusedLine'], null);
 

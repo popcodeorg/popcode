@@ -77,6 +77,14 @@ module.exports = function(config) {
       reporters: ['dots', 'BrowserStack'],
     });
   } else if (isCi) {
-    config.set({browsers: ['ChromeHeadless']});
+    config.set({
+      browsers: ['ChromeHeadlessNoSandbox'],
+      customLaunchers: {
+        ChromeHeadlessNoSandbox: {
+          base: 'ChromeHeadless',
+          flags: ['--no-sandbox'],
+        },
+      },
+    });
   }
 };

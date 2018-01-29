@@ -1,3 +1,4 @@
+import assign from 'lodash/assign';
 import test from 'tape';
 import reduce from 'lodash/reduce';
 import tap from 'lodash/tap';
@@ -90,20 +91,29 @@ test('changeCurrentProject', (t) => {
   ));
 });
 
-tap(project(), importedProject =>
+tap(project(), (importedProject) => {
+  const snapshotProjectKey = '123454321';
+
   test('snapshotImported', reducerTest(
     reducer,
     states.initial,
     partial(
       snapshotImported,
+      snapshotProjectKey,
       importedProject,
     ),
     states.initial.set(
-      importedProject.projectKey,
-      Project.fromJS(importedProject),
+      snapshotProjectKey,
+      Project.fromJS(
+        assign(
+          {},
+          importedProject,
+          {projectKey: snapshotProjectKey, updatedAt: null},
+        ),
+      ),
     ),
-  )),
-);
+  ));
+});
 
 tap(project(), rehydratedProject =>
   test('projectRestoredFromLastSession', reducerTest(

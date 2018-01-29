@@ -6,6 +6,7 @@ import Bowser from 'bowser';
 import bindAll from 'lodash/bindAll';
 import {t} from 'i18next';
 import normalizeError from '../util/normalizeError';
+import retryingFailedImports from '../util/retryingFailedImports';
 import {sourceDelimiter} from '../util/compileProject';
 import {CompiledProject as CompiledProjectRecord} from '../records';
 
@@ -41,7 +42,13 @@ class PreviewFrame extends React.Component {
     return false;
   }
 
-  _evaluateConsoleExpression(key, expression) {
+  async _evaluateConsoleExpression(key, expression) {
+    const {hasExpressionStatement} = await retryingFailedImports(
+      () => import(
+        /* webpackChunkName: 'mainAsync' */
+        '../util/javascript',
+      ),
+    );
     // eslint-disable-next-line prefer-reflect
     this._channel.call({
       method: 'evaluateExpression',
@@ -49,7 +56,7 @@ class PreviewFrame extends React.Component {
       success: (printedResult) => {
         this.props.onConsoleValue(
           key,
-          printedResult,
+          hasExpressionStatement(expression) ? printedResult : null,
           this.props.compiledProject.compiledProjectKey,
         );
       },
