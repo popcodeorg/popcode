@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
+import AuthenticationStates from '../../enums/AuthenticationStates';
 import CurrentUserMenu from './CurrentUserMenu';
 
 export default function CurrentUser({
@@ -9,7 +10,7 @@ export default function CurrentUser({
   onLogOut,
   onStartLogIn,
 }) {
-  if (user.authenticated) {
+  if (user.authenticationState === AuthenticationStates.AUTHENTICATED) {
     return <CurrentUserMenu user={user} onLogOut={onLogOut} />;
   }
   return (
@@ -27,7 +28,7 @@ export default function CurrentUser({
 
 CurrentUser.propTypes = {
   user: PropTypes.shape({
-    authenticated: PropTypes.boolean,
+    authenticationState: PropTypes.oneOf(AuthenticationStates),
   }).isRequired,
   onLogOut: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,

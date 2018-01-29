@@ -96,6 +96,81 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+/** @define identity-confirmation */
+
+.identity-confirmation {
+  text-align: center;
+}
+
+.identity-confirmation__button {
+  border-radius: 2px;
+  border-width: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  padding: 1em;
+  position: relative;
+  transition: background-color 0.3s;
+}
+
+.identity-confirmation__button:active::before {
+  padding-top: 120%;
+  transition: width 0.2s ease-out, padding-top 0.2s ease-out;
+  width: 120%;
+}
+
+.identity-confirmation__button:before {
+  border-radius: 100%;
+  content: "";
+  display: block;
+  left: 50%;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+}
+
+.identity-confirmation__button_confirm {
+  background-color: #2ecc71;
+  color: #ecf0f1;
+  display: block;
+  margin: 30px auto;
+}
+
+.identity-confirmation__button_confirm:hover {
+  background-color: #27ae60;
+}
+
+.identity-confirmation__button_confirm::before,
+.identity-confirmation__button_reject::before {
+  background-color: rgba(236, 240, 241, 0.3);
+}
+
+.identity-confirmation__button_reject {
+  background-color: var(--color-chrome);
+  color: black;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.identity-confirmation__button_reject:hover {
+  background-color: var(--color-light-gray);
+}
+
+.identity-confirmation__text {
+  margin: 2em 0;
+}
+
+.identity-confirmation__title {
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 1.5em;
+  text-align: center;
+}
+
 /** @define layout */
 
 .layout {
@@ -132,6 +207,24 @@ body {
 .layout__instructions {
   flex: 0 0 25%;
   position: relative;
+}
+
+/** @define modal */
+
+.modal {
+  background: rgba(0, 0, 0, 0.48);
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
+  z-index: 3;
+}
+
+.modal__contents {
+  background: #fafafa;
+  box-shadow: 0 2px 8px #888;
+  margin: 10% auto 0;
+  padding: 1em 2em 2em;
+  width: 40vw;
 }
 
 /** @define top-bar */

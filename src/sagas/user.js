@@ -1,4 +1,6 @@
+// import {confirmIdentity} from '../actions/user';
 import Bugsnag from '../util/Bugsnag';
+import config from '../config';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import {all, call, put, take, takeEvery} from 'redux-saga/effects';
@@ -35,6 +37,7 @@ function* handleInitialAuth() {
       return;
     }
 
+    // yield put(confirmIdentity(userCredential));
     yield put(userAuthenticated(userCredential));
   }
 }
@@ -94,10 +97,16 @@ export function* logOut() {
   yield call(signOut);
 }
 
+export function* rejectIdentity() {
+  window.open(config.gitHubLogoutUrl, '_blank');
+  yield signOut();
+}
+
 export default function* () {
   yield all([
     takeEvery('APPLICATION_LOADED', applicationLoaded),
     takeEvery('LOG_IN', logIn),
     takeEvery('LOG_OUT', logOut),
+    takeEvery('REJECT_IDENTITY', rejectIdentity),
   ]);
 }

@@ -21,6 +21,11 @@
     "ie-message": "Popcode doesn’t work with Internet Explorer or IE Edge. Please use another browser.",
     "download": "Click here to download a new version."
   },
+  "identity-confirmation": {
+    "confirm-identity": "Yes, I am {{displayName}}. Log me into Popcode!",
+    "github-log-out-prompt": "I am not {{displayName}}. I need to sign out of Github!",
+    "title": "Are you {{displayName}}?"
+  },
   "notifications": {
     "user-cancelled-auth": "Looks like you didn’t finish linking GitHub to Popcode. Try again, and be sure to click the green “Authorize application” button.",
     "auth-network-error": "Looks like you’re having some internet trouble. Try signing in again.",
