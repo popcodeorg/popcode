@@ -39,7 +39,7 @@ export function* exportProject({payload: {exportType}}) {
       ({html_url: url} = yield call(createRepoFromProject, project, user));
     } else if (exportType === 'classroom') {
       const snapshotKey = yield call(createProjectSnapshot, project);
-      const projectTitle = generateTextPreview(project);
+      const projectTitle = yield call(generateTextPreview, project);
       url = yield call(createShareToClassroomUrl, snapshotKey, projectTitle);
     }
     yield put(projectExported(url, exportType));
