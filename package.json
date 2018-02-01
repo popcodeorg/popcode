@@ -197,7 +197,7 @@
     "slowparse": "^1.1.4",
     "strip-markdown": "^3.0.0",
     "stylelint": "^8.0.0",
-    "sweetalert": "^2.0.8",
+    "sweetalert2": "^7.8.6",
     "uuid": "^3.1.0",
     "void-elements": "^3.1.0",
     "whatwg-fetch": "^2.0.3"
