@@ -470,6 +470,7 @@ body {
 
 .output__row_collapsed {
   flex: none;
+  min-height: 0;
 }
 
 .output__row-divider {

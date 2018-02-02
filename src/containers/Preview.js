@@ -14,11 +14,12 @@ import {
   getConsoleHistory,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
-  getResizableSectionFlex,
+  makeGetResizableSectionFlex,
   getHiddenUIComponents,
 } from '../selectors';
 
 function mapStateToProps(state) {
+  const getResizableSectionFlex = makeGetResizableSectionFlex();
   return {
     compiledProjects: getCompiledProjects(state),
     consoleEntries: getConsoleHistory(state),

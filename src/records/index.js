@@ -4,6 +4,7 @@ import ConsoleError from './ConsoleError';
 import Error from './Error';
 import ErrorList from './ErrorList';
 import ErrorReport from './ErrorReport';
+import FlexContainer from './FlexContainer';
 import Project from './Project';
 
 export {
@@ -13,5 +14,6 @@ export {
   Error,
   ErrorList,
   ErrorReport,
+  FlexContainer,
   Project,
 };

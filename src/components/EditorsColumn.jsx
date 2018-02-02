@@ -19,25 +19,44 @@ export default class EditorsColumn extends React.Component {
     this.editorRefs = [null, null, null];
     bindAll(
       this,
-      '_storeDividerRef',
-      '_storeEditorRef',
+      '_stageDividerRef',
+      '_storeDividerRefs',
+      '_stageEditorRef',
+      '_storeEditorRefs',
       '_handleEditorDividerDrag',
     );
   }
 
-  _storeEditorRef(index, editor) {
-    this.editorRefs[index] = editor;
+  componentDidMount() {
+    this._storeDividerRefs();
+    this._storeEditorRefs();
   }
 
-  _storeDividerRef(index, divider) {
-    this.dividerRefs[index] = divider;
+  _stageEditorRef(index, ref) {
+    this.editorRefs[index] = ref;
+  }
+
+  _storeEditorRefs() {
+    for (const [index, ref] of this.editorRefs.entries()) {
+      this.props.onStoreEditorRef(index, ref);
+    }
+  }
+
+  _stageDividerRef(index, ref) {
+    this.dividerRefs[index] = ref;
+  }
+
+  _storeDividerRefs() {
+    for (const [index, ref] of this.dividerRefs.entries()) {
+      this.props.onStoreDividerRef(index, ref);
+    }
   }
 
   _handleEditorDividerDrag(index, _, {deltaY, lastY, y}) {
     this.props.onDividerDrag({
       index,
-      dividerHeights: getNodeHeights(this.dividerRefs),
-      editorHeights: getNodeHeights(this.editorRefs),
+      dividerHeights: getNodeHeights(this.props.editorDividerRefs),
+      editorHeights: getNodeHeights(this.props.editorRowRefs),
       deltaY,
       lastY,
       y,
@@ -78,7 +97,7 @@ export default class EditorsColumn extends React.Component {
             currentProject.projectKey,
             `editor.${language}`,
           )}
-          onRef={partial(this._storeEditorRef, index)}
+          onRef={partial(this._stageEditorRef, index)}
         >
           <Editor
             errors={errors[language].items}
@@ -105,7 +124,7 @@ export default class EditorsColumn extends React.Component {
           >
             <div
               className="editors__row-divider"
-              ref={partial(this._storeDividerRef, index)}
+              ref={partial(this._stageDividerRef, index)}
             />
           </DraggableCore>,
         );
@@ -150,6 +169,8 @@ export default class EditorsColumn extends React.Component {
 
 EditorsColumn.propTypes = {
   currentProject: PropTypes.object.isRequired,
+  editorDividerRefs: PropTypes.array.isRequired,
+  editorRowRefs: PropTypes.array.isRequired,
   editorsFlex: PropTypes.array.isRequired,
   environmentColumnFlex: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
@@ -161,6 +182,8 @@ EditorsColumn.propTypes = {
   onEditorInput: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
+  onStoreDividerRef: PropTypes.func.isRequired,
+  onStoreEditorRef: PropTypes.func.isRequired,
 };
 
 EditorsColumn.defaultProps = {

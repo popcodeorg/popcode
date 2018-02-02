@@ -17,10 +17,6 @@ import {
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {
-  updateProjectSource,
-  hideComponent,
-  unhideComponent,
-  editorFocusedRequestedLine,
   dragDivider,
   startDragDivider,
   stopDragDivider,
@@ -32,9 +28,9 @@ import {
 import {isPristineProject} from '../util/projectUtils';
 import {
   getCurrentProject,
-  getDividerRefs,
+  makeGetDividerRefs,
   getErrors,
-  getResizableSectionRefs,
+  makeGetResizableSectionRefs,
   isUserTyping,
 } from '../selectors';
 import TopBar from '../containers/TopBar';
@@ -45,6 +41,8 @@ import EditorsColumn from '../containers/EditorsColumn';
 import PopThrobber from './PopThrobber';
 
 function mapStateToProps(state) {
+  const getResizableSectionRefs = makeGetResizableSectionRefs();
+  const getDividerRefs = makeGetDividerRefs();
   return {
     environmentColumnDividerRefs: getDividerRefs(state, 'columns'),
     environmentColumnRefs: getResizableSectionRefs(state, 'columns'),
@@ -64,9 +62,6 @@ class Workspace extends React.Component {
       '_handleDividerDrag',
       '_handleDividerStart',
       '_handleDividerStop',
-      '_handleEditorInput',
-      '_handleEditorsDividerDrag',
-      '_handleRequestedLineFocused',
       '_storeDividerRef',
     );
   }
@@ -108,34 +103,6 @@ class Workspace extends React.Component {
     if (!isNull(currentProject) && !isPristineProject(currentProject)) {
       dehydrateProject(currentProject);
     }
-  }
-
-  _handleComponentHide(componentName) {
-    this.props.dispatch(
-      hideComponent(
-        this.props.currentProject.projectKey,
-        componentName,
-      ),
-    );
-  }
-
-  _handleComponentUnhide(componentName) {
-    this.props.dispatch(
-      unhideComponent(
-        this.props.currentProject.projectKey,
-        componentName,
-      ),
-    );
-  }
-
-  _handleEditorInput(language, source) {
-    this.props.dispatch(
-      updateProjectSource(
-        this.props.currentProject.projectKey,
-        language,
-        source,
-      ),
-    );
   }
 
   _getOverallValidationState() {

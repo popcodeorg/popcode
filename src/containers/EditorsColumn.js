@@ -5,8 +5,10 @@ import {
   getCurrentProject,
   getErrors,
   getRequestedFocusedLine,
-  getResizableSectionFlex,
+  makeGetResizableSectionFlex,
   isTextSizeLarge,
+  makeGetDividerRefs,
+  makeGetResizableSectionRefs,
 } from '../selectors';
 import {
   hideComponent,
@@ -15,11 +17,17 @@ import {
   updateProjectSource,
   editorFocusedRequestedLine,
   storeResizableSectionRef,
+  storeDividerRef,
 } from '../actions';
 
 function mapStateToProps(state) {
+  const getResizableSectionFlex = makeGetResizableSectionFlex();
+  const getDividerRefs = makeGetDividerRefs();
+  const getResizableSectionRefs = makeGetResizableSectionRefs();
   return {
     currentProject: getCurrentProject(state),
+    editorDividerRefs: getDividerRefs(state, 'editors'),
+    editorRowRefs: getResizableSectionRefs(state, 'editors'),
     editorsFlex: getResizableSectionFlex(state, 'editors'),
     environmentColumnFlex: getResizableSectionFlex(state, 'columns'),
     errors: getErrors(state),
@@ -64,6 +72,14 @@ function mapDispatchToProps(dispatch) {
 
     onRef(ref) {
       dispatch(storeResizableSectionRef('columns', 0, ref));
+    },
+
+    onStoreDividerRef(index, ref) {
+      dispatch(storeDividerRef('editors', index, ref));
+    },
+
+    onStoreEditorRef(index, ref) {
+      dispatch(storeResizableSectionRef('editors', index, ref));
     },
 
     onRequestedLineFocused() {

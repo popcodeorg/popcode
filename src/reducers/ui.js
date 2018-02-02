@@ -5,30 +5,16 @@ import {
   updateOutputColumnFlex,
 } from '../util/resize';
 
+import FlexContainer from '../records/FlexContainer';
 
 const DEFAULT_COLUMN_FLEX = new Immutable.List(['1', '1', '1']);
 const DEFAULT_ROW_FLEX = new Immutable.List(['1', '1']);
 const DEFAULT_OUTPUT_COLUMN_FLEX = new Immutable.List(['1', '1']);
 
 export const DEFAULT_WORKSPACE = new Immutable.Map({
-  editors: new Immutable.Map({
-    flex: DEFAULT_COLUMN_FLEX,
-    isDraggingDivider: false,
-    refs: new Immutable.List(),
-  }),
-  columns: new Immutable.Map({
-    flex: DEFAULT_ROW_FLEX,
-    isDraggingDivider: false,
-    refs: new Immutable.List(),
-    dividerRefs: new Immutable.List(),
-  }),
-  output: new Immutable.Map({
-    flex: DEFAULT_OUTPUT_COLUMN_FLEX,
-    isDraggingDivider: false,
-    refs: new Immutable.List(),
-    dividerRefs: new Immutable.List(),
-  }),
-
+  editors: new FlexContainer({flex: DEFAULT_COLUMN_FLEX}),
+  columns: new FlexContainer({flex: DEFAULT_ROW_FLEX}),
+  output: new FlexContainer({flex: DEFAULT_OUTPUT_COLUMN_FLEX}),
 });
 
 const defaultState = new Immutable.Map().

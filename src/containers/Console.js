@@ -5,7 +5,7 @@ import {
   getConsoleHistory,
   getCurrentProjectKey,
   getHiddenUIComponents,
-  getResizableSectionFlex,
+  makeGetResizableSectionFlex,
   getRequestedFocusedLine,
   isCurrentProjectSyntacticallyValid,
   isTextSizeLarge,
@@ -20,6 +20,7 @@ import {
 } from '../actions';
 
 function mapStateToProps(state) {
+  const getResizableSectionFlex = makeGetResizableSectionFlex();
   return {
     currentCompiledProjectKey: getCurrentCompiledProjectKey(state),
     currentProjectKey: getCurrentProjectKey(state),

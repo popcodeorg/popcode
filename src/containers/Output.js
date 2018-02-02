@@ -5,11 +5,11 @@ import {
   getNodeHeights,
 } from '../util/resize';
 import {
-  getDividerRefs,
-  getResizableSectionRefs,
-  isDraggingDivider,
+  makeGetDividerRefs,
+  makeGetResizableSectionRefs,
+  makeIsDraggingDivider,
   getOpenTopBarMenu,
-  getResizableSectionFlex,
+  makeGetResizableSectionFlex,
 } from '../selectors';
 import {
   dragDivider,
@@ -20,6 +20,10 @@ import {
 } from '../actions';
 
 function mapStateToProps(state) {
+  const isDraggingDivider = makeIsDraggingDivider();
+  const getResizableSectionRefs = makeGetResizableSectionRefs();
+  const getResizableSectionFlex = makeGetResizableSectionFlex();
+  const getDividerRefs = makeGetDividerRefs();
   return {
     environmentColumnFlex: getResizableSectionFlex(state, 'columns'),
     isDraggingColumnDivider: isDraggingDivider(state, 'columns'),

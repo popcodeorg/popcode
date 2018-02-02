@@ -59,8 +59,11 @@ export default function Console({
 
   return (
     <div
-      className={isOpen ? 'output__row console' :
-        'output__row_collapsed console'}
+      // className={isOpen ? 'output__row console' :
+      //   'output__row_collapsed console'}
+      className={
+        classnames('output__row console', {output__row_collapsed: !isOpen})
+      }
       ref={onRef}
       style={isOpen ? prefixAll({flex: outputRowFlex[1]}) : null}
     >
@@ -95,7 +98,6 @@ Console.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
   outputRowFlex: PropTypes.array.isRequired,
-  showingErrors: PropTypes.bool.isRequired,
   requestedFocusedLine: PropTypes.object,
   onClearConsoleEntries: PropTypes.func.isRequired,
   onConsoleClicked: PropTypes.func.isRequired,
