@@ -1,4 +1,4 @@
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 
 export default function overrideAlert() {
   Object.defineProperties(window, { // eslint-disable-line prefer-reflect
