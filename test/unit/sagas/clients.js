@@ -18,6 +18,7 @@ import {
 import {createProjectSnapshot} from '../../../src/clients/firebase';
 import {createShareToClassroomUrl} from '../../../src/clients/googleClassroom';
 import {getCurrentProject} from '../../../src/selectors';
+import {generateTextPreview} from '../../../src/util/compileProject';
 
 test('createSnapshot()', (t) => {
   const {project} = new Scenario();
@@ -135,6 +136,10 @@ test('export to classroom', (t) => {
         scenario.project.toJS(),
       ).
       next(snapshotKey).call(
+        generateTextPreview,
+        scenario.project.toJS(),
+      ).
+      next(projectTitle).call(
         createShareToClassroomUrl,
         snapshotKey,
         projectTitle,
