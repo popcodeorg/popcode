@@ -18,6 +18,7 @@ import {
 import {createProjectSnapshot} from '../../../src/clients/firebase';
 import {createShareToClassroomUrl} from '../../../src/clients/googleClassroom';
 import {getCurrentProject} from '../../../src/selectors';
+import {generateTextPreview} from '../../../src/util/compileProject';
 
 test('createSnapshot()', (t) => {
   const {project} = new Scenario();
@@ -121,6 +122,7 @@ test('export to classroom', (t) => {
     'https://classroom.google.com/u/0/share?url=http://popcode.org';
   const exportType = 'classroom';
   const snapshotKey = '123-456';
+  const projectTitle = 'Page Title';
   const scenario = new Scenario();
   scenario.logIn();
 
@@ -134,8 +136,13 @@ test('export to classroom', (t) => {
         scenario.project.toJS(),
       ).
       next(snapshotKey).call(
+        generateTextPreview,
+        scenario.project.toJS(),
+      ).
+      next(projectTitle).call(
         createShareToClassroomUrl,
         snapshotKey,
+        projectTitle,
       );
   }
 
