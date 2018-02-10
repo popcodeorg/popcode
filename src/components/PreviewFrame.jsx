@@ -28,10 +28,22 @@ const sandboxOptions = [
 let nextId = 1;
 
 class PreviewFrame extends React.Component {
+<<<<<<< HEAD
   constructor(props) {
     super(props);
 
     const {compiledProject: {source}} = props;
+=======
+  constructor() {
+    super();
+    this._frameName = `preview-frame-${nextId++}`;
+    bindAll(this, '_attachToFrame', '_handleInfiniteLoop');
+  }
+
+  componentDidMount() {
+    this._postFocusedSelectorToFrame(this.props.focusedSelector);
+  }
+>>>>>>> 8ca6c3c... update to js channel
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -51,6 +63,7 @@ class PreviewFrame extends React.Component {
       this._postFocusedSelectorToFrame(newProps.focusedSelector);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
   }
 >>>>>>> 23eb7f2... Updates to element highlighter
 
@@ -68,6 +81,8 @@ class PreviewFrame extends React.Component {
   }
 =======
 
+=======
+>>>>>>> 8ca6c3c... update to js channel
     const {consoleEntries: previousConsoleEntries, isActive} = this.props;
 >>>>>>> 3cc1d22... Update selector at cursor and handle unfocused editor
 
@@ -174,6 +189,7 @@ class PreviewFrame extends React.Component {
     });
   }
 
+<<<<<<< HEAD
   _handleConsoleLog(printedValue) {
     const {compiledProjectKey} = this.props.compiledProject;
     this.props.onConsoleLog(printedValue, compiledProjectKey);
@@ -184,6 +200,19 @@ class PreviewFrame extends React.Component {
       type: 'highlightElement',
       selector: {selector},
     }), '*');
+=======
+  _postFocusedSelectorToFrame(selector) {
+    this._channel.notify({
+      method: 'highlightElement',
+      params: selector,
+    });
+  }
+
+  _postRemoveHighlightToFrame() {
+    this._channel.notify({
+      method: 'removeHighlight',
+    });
+>>>>>>> 8ca6c3c... update to js channel
   }
 
   _postFocusedSelectorToFrame(selector) {
