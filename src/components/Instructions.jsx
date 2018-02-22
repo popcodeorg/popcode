@@ -12,7 +12,7 @@ export default function Instructions({instructions, isOpen}) {
       className="layout__instructions"
     >
       <div className="instructions">
-        {instructions ? markdownToReact(instructions) : null}
+        {markdownToReact(instructions)}
       </div>
     </div>
   );
