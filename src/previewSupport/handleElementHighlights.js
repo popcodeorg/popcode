@@ -18,6 +18,7 @@ function removeCovers() {
 }
 
 function updateCovers(selector) {
+  console.log(selector);
   removeCovers();
   if (selector !== '') {
     const elements = document.querySelectorAll(selector);
@@ -25,7 +26,10 @@ function updateCovers(selector) {
       const element = elements[i];
       const offset = getOffsetFromBody(element);
       const cover = document.createElement('div');
+      console.log(cover);
+      console.log(document.body);
       document.body.appendChild(cover);
+      console.log(document.body);
       cover.className = '__popcode-highlighter';
       cover.style.left = `${offset.left}px`;
       cover.style.top = `${offset.top}px`;
