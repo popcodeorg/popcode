@@ -1,8 +1,8 @@
+import HTMLInspector from 'html-inspector';
 import last from 'lodash/last';
 import isNull from 'lodash/isNull';
 import trim from 'lodash/trim';
 import {localizedArrayToSentence} from '../../util/arrayToSentence';
-import retryingFailedImports from '../../util/retryingFailedImports';
 import Validator from '../Validator';
 
 const specialCases = {
@@ -82,6 +82,11 @@ function noListsWithTextChildrenValidator(listener, reporter) {
   });
 }
 
+HTMLInspector.rules.add(
+  'validate-list-children',
+  noListsWithTextChildrenValidator,
+);
+
 class HtmlInspectorValidator extends Validator {
   constructor(source) {
     super(source, 'html', errorMap);
@@ -92,16 +97,6 @@ class HtmlInspectorValidator extends Validator {
     if (isNull(this._doc.documentElement)) {
       return Promise.resolve([]);
     }
-
-    const HTMLInspector = await retryingFailedImports(() => import(
-      /* webpackChunkName: 'mainAsync' */
-      'html-inspector',
-    ));
-
-    HTMLInspector.rules.add(
-      'validate-list-children',
-      noListsWithTextChildrenValidator,
-    );
 
     return new Promise((resolve) => {
       HTMLInspector.inspect({
