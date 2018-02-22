@@ -87,64 +87,62 @@ module.exports = (env = 'development') => {
       exclude: /node_modules/,
       failOnError: true,
     }),
-    new OfflinePlugin({
-      caches: {
-        main: [':rest:'],
-        additional: ['mainAsync*.js', 'previewLibraries*.js'],
-      },
-      safeToUseOptionalCaches: true,
-      publicPath: '/',
-      responseStrategy: 'network-first',
-      externals: [
-        'index.html',
-        'application.css',
-        'fonts/Roboto-Regular-webfont.woff',
-        'fonts/Roboto-Regular-webfont.ttf',
-        'fonts/Roboto-Regular-webfont.eot',
-        'fonts/Roboto-Bold-webfont.woff',
-        'fonts/Roboto-Bold-webfont.ttf',
-        'fonts/Roboto-Bold-webfont.eot',
-        'fonts/inconsolata-regular.woff2',
-        'fonts/inconsolata-regular.woff',
-        'fonts/inconsolata-regular.ttf',
-        'fonts/inconsolata-regular.eot',
-        'fonts/fontawesome-webfont.woff2',
-        'fonts/fontawesome-webfont.woff',
-        'fonts/fontawesome-webfont.ttf',
-        'fonts/fontawesome-webfont.eot',
-        'images/pop/thinking.svg',
-      ],
-      ServiceWorker: {navigateFallbackURL: '/'},
-    }),
-    isProduction ?
-      new webpack.HashedModuleIdsPlugin() :
-      new webpack.NamedModulesPlugin(),
-    new MD5ChunkHash(),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src/html/index.html'),
-      chunksSortMode: 'dependency',
-    }),
-    new ScriptExtHtmlWebpackPlugin({
-      defaultAttribute: 'defer',
-      custom: [
-        {
-          test: /^preview/,
-          attribute: 'type',
-          value: 'ref',
-        },
-        {
-          test: /^preview/,
-          attribute: 'id',
-          value: 'preview-bundle',
-        },
-      ],
-    }),
   ];
 
-  if (isTest) {
-    plugins.push(new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}));
-  } else {
+  if (!isTest) {
     plugins.push(
+      new OfflinePlugin({
+        caches: {
+          main: [':rest:'],
+          additional: ['mainAsync*.js', 'previewLibraries*.js'],
+        },
+        safeToUseOptionalCaches: true,
+        publicPath: '/',
+        responseStrategy: 'network-first',
+        externals: [
+          'index.html',
+          'application.css',
+          'fonts/Roboto-Regular-webfont.woff',
+          'fonts/Roboto-Regular-webfont.ttf',
+          'fonts/Roboto-Regular-webfont.eot',
+          'fonts/Roboto-Bold-webfont.woff',
+          'fonts/Roboto-Bold-webfont.ttf',
+          'fonts/Roboto-Bold-webfont.eot',
+          'fonts/inconsolata-regular.woff2',
+          'fonts/inconsolata-regular.woff',
+          'fonts/inconsolata-regular.ttf',
+          'fonts/inconsolata-regular.eot',
+          'fonts/fontawesome-webfont.woff2',
+          'fonts/fontawesome-webfont.woff',
+          'fonts/fontawesome-webfont.ttf',
+          'fonts/fontawesome-webfont.eot',
+          'images/pop/thinking.svg',
+        ],
+        ServiceWorker: {navigateFallbackURL: '/'},
+      }),
+      isProduction ?
+        new webpack.HashedModuleIdsPlugin() :
+        new webpack.NamedModulesPlugin(),
+      new MD5ChunkHash(),
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'src/html/index.html'),
+        chunksSortMode: 'dependency',
+      }),
+      new ScriptExtHtmlWebpackPlugin({
+        defaultAttribute: 'defer',
+        custom: [
+          {
+            test: /^preview/,
+            attribute: 'type',
+            value: 'ref',
+          },
+          {
+            test: /^preview/,
+            attribute: 'id',
+            value: 'preview-bundle',
+          },
+        ],
+      }),
       new InlineChunkManifestHtmlPlugin(),
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
