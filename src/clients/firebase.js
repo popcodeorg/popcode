@@ -4,7 +4,7 @@ import isNil from 'lodash/isNil';
 import isNull from 'lodash/isNull';
 import values from 'lodash/values';
 import uuid from 'uuid/v4';
-import {auth, database, githubAuthProvider} from '../services/appFirebase';
+import {auth, database, githubAuthProvider, googleAuthProvider} from '../services/appFirebase';
 
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
 const SESSION_TTL_MS = 5 * 60 * 1000;
@@ -99,7 +99,7 @@ export async function signIn() {
   window.onerror = message => message.toLowerCase().includes('network error');
 
   try {
-    const userCredential = await auth.signInWithPopup(githubAuthProvider);
+    const userCredential = await auth.signInWithPopup(googleAuthProvider);
     await saveUserCredential(userCredential);
     return userCredential;
   } finally {

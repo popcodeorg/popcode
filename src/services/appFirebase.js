@@ -12,7 +12,8 @@ const appFirebase = firebase.initializeApp({
 const auth = firebase.auth(appFirebase);
 const database = firebase.database(appFirebase);
 const githubAuthProvider = new firebase.auth.GithubAuthProvider();
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 githubAuthProvider.addScope('gist');
 githubAuthProvider.addScope('public_repo');
 
-export {auth, database, githubAuthProvider};
+export {auth, database, githubAuthProvider, googleAuthProvider};
