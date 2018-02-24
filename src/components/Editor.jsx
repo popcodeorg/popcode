@@ -125,6 +125,7 @@ class Editor extends React.Component {
       this._resizeEditor();
       this._editor.on('focus', this._resizeEditor);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       this._editor.on('blur', () => {
         this.props.onEditorBlurred();
@@ -132,6 +133,8 @@ class Editor extends React.Component {
       this._editor.on('focus', () => {
         this.props.onEditorFocused(this.props.language);
       });
+=======
+>>>>>>> ec49c81... Handle fixed potion, handle body and html, handle resize, handle editor refocus to same line
       this._editor.setOptions({
         fontFamily: 'Inconsolata',
         fontSize: '14px',
@@ -152,12 +155,22 @@ class Editor extends React.Component {
 
   _startNewSession(source) {
     const session = createAceSessionWithoutWorker(this.props.language, source);
+    const cursor = session.selection.lead;
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
     });
     session.selection.on('changeCursor', () => {
-      const cursor = session.selection.lead;
       this.props.onCursorChange(
+        this._editor.getValue(),
+        cursor,
+        this.props.language,
+      );
+    });
+    this._editor.on('blur', () => {
+      this.props.onEditorBlurred();
+    });
+    this._editor.on('focus', () => {
+      this.props.onEditorFocused(
         this._editor.getValue(),
         cursor,
         this.props.language,

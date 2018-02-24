@@ -14,7 +14,7 @@ export const editorFocusedRequestedLine = createAction(
 
 export const editorFocused = createAction(
   'EDITOR_FOCUSED',
-  language => ({language}),
+  (source, cursor, language) => ({source, cursor, language}),
 );
 
 export const editorBlurred = createAction(

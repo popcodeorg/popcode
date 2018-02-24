@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {Map} from 'immutable';
 
 import {EditorLocation, Notification, UiState} from '../records';
@@ -6,37 +5,6 @@ import {EditorLocation, Notification, UiState} from '../records';
 const defaultState = new UiState();
 
 function addNotification(state, type, severity, metadata = {}) {
-=======
-import Immutable from 'immutable';
-import {
-  updateEditorColumnFlex,
-  updateWorkspaceRowFlex,
-} from '../util/resize';
-
-
-const DEFAULT_COLUMN_FLEX = new Immutable.List(['1', '1', '1']);
-const DEFAULT_ROW_FLEX = new Immutable.List(['1', '1']);
-export const DEFAULT_WORKSPACE = new Immutable.Map({
-  columnFlex: DEFAULT_COLUMN_FLEX,
-  rowFlex: DEFAULT_ROW_FLEX,
-  isDraggingColumnDivider: false,
-});
-
-const defaultState = new Immutable.Map().
-  set('editors', new Immutable.Map({
-    typing: false,
-    requestedFocusedLine: null,
-    textSizeIsLarge: false,
-    focusedSelector: null,
-    focusedEditor: null,
-  })).
-  set('workspace', DEFAULT_WORKSPACE).
-  set('notifications', new Immutable.Map()).
-  set('topBar', new Immutable.Map({openMenu: null})).
-  set('lastRefreshTimestamp', null);
-
-function addNotification(state, type, severity, payload = {}) {
->>>>>>> 54c9f3a... Update Element Highlighter
   return state.setIn(
     ['notifications', type],
     new Notification({type, severity, metadata: new Map(metadata)}),
@@ -72,9 +40,10 @@ export default function ui(stateIn, action) {
     case 'UPDATE_PROJECT_SOURCE':
       return state.set('isTyping', true);
 
-    case 'CURRENT_FOCUSED_SELECTOR_CHANGED':
+    case 'UPDATE_HIGHLIGHTER_SELECTOR':
       return state.setIn(
-        ['editors', 'focusedSelector'], action.payload,
+        ['editors', 'highlighterSelector'],
+        action.payload.selector,
       );
 
     case 'USER_DONE_TYPING':
@@ -90,7 +59,6 @@ export default function ui(stateIn, action) {
         }),
       );
 
-<<<<<<< HEAD
     case 'CLEAR_CONSOLE_ENTRIES':
       return state.set(
         'requestedFocusedLine',
@@ -100,34 +68,6 @@ export default function ui(stateIn, action) {
           column: 0,
         }),
       );
-=======
-    case 'EDITOR_FOCUSED_REQUESTED_LINE':
-      return state.setIn(['editors', 'requestedFocusedLine'], null);
-
-    case 'EDITOR_FOCUSED':
-      return state.setIn(
-        ['editors', 'focusedEditor'],
-        action.payload.language,
-      );
-
-    case 'EDITOR_BLURRED':
-      return state.setIn(
-        ['editors', 'focusedEditor'],
-        null,
-      );
-
-    case 'EDITOR_RESIZED':
-      return state.setIn(
-        ['editors', 'focusedSelector'],
-        null,
-      );
-
-    case 'DRAG_ROW_DIVIDER':
-      return state.updateIn(['workspace', 'columnFlex'], (prevFlex) => {
-        const newFlex = updateEditorColumnFlex(action.payload);
-        return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
-      });
->>>>>>> 23eb7f2... Updates to element highlighter
 
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.set('requestedFocusedLine', null);
