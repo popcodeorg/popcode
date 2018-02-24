@@ -4,16 +4,9 @@ import {
   validatedSource as validatedSourceSaga,
 } from '../../../src/sagas/compiledProjects';
 import {getCurrentProject, getErrors} from '../../../src/selectors';
-<<<<<<< HEAD
 import {projectCompiled, projectCompilationFailed} from '../../../src/actions';
 import compileProject from '../../../src/util/compileProject';
 import {bugsnagClient} from '../../../src/util/bugsnag';
-=======
-
-import {projectCompiled, projectCompilationFailed} from '../../../src/actions';
-import compileProject from '../../../src/util/compileProject';
-import Bugsnag from '../../../src/util/Bugsnag';
->>>>>>> 8ca6c3c... update to js channel
 import {errors} from '../../helpers/referenceStates';
 import {project as projectFactory} from '../../helpers/factory';
 

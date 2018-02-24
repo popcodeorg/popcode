@@ -3,13 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Bowser from 'bowser';
-<<<<<<< HEAD
 import bindAll from 'lodash-es/bindAll';
 import constant from 'lodash-es/constant';
-=======
-import bindAll from 'lodash/bindAll';
-import includes from 'lodash/includes';
->>>>>>> 23eb7f2... Updates to element highlighter
 import {t} from 'i18next';
 
 import normalizeError from '../util/normalizeError';
@@ -23,49 +18,18 @@ const sandboxOptions = [
   'allow-popups-to-escape-sandbox',
   'allow-scripts',
   'allow-top-navigation',
+  'allow-same-origin',
 ].join(' ');
 
 let nextId = 1;
 
 class PreviewFrame extends React.Component {
-<<<<<<< HEAD
   constructor(props) {
     super(props);
 
     const {compiledProject: {source}} = props;
-=======
-  constructor() {
-    super();
-    this._frameName = `preview-frame-${nextId++}`;
-    bindAll(this, '_attachToFrame', '_handleInfiniteLoop');
-  }
 
-  componentDidMount() {
-    this._postFocusedSelectorToFrame(this.props.focusedSelector);
-  }
->>>>>>> 8ca6c3c... update to js channel
-
-<<<<<<< HEAD
-<<<<<<< HEAD
     bindAll(this, '_attachToFrame', '_handleInfiniteLoop');
-=======
-  componentWillReceiveProps(nextProps) {
-    if (!includes(nextProps.focusedEditors, 'css')) {
-=======
-  componentWillReceiveProps(newProps) {
-    if (includes(this.props.focusedEditors, 'css') &&
-      !includes(newProps.focusedEditors, 'css')) {
->>>>>>> 3cc1d22... Update selector at cursor and handle unfocused editor
-      this._postRemoveHighlightToFrame();
-    }
-    if (newProps.focusedSelector !== this.props.focusedSelector ||
-      includes(newProps.focusedEditors, 'css')) {
-      this._postFocusedSelectorToFrame(newProps.focusedSelector);
-    }
-<<<<<<< HEAD
-<<<<<<< HEAD
-  }
->>>>>>> 23eb7f2... Updates to element highlighter
 
     this.render = constant(
       <div className="preview__frame-container">
@@ -79,12 +43,6 @@ class PreviewFrame extends React.Component {
       </div>,
     );
   }
-=======
-
-=======
->>>>>>> 8ca6c3c... update to js channel
-    const {consoleEntries: previousConsoleEntries, isActive} = this.props;
->>>>>>> 3cc1d22... Update selector at cursor and handle unfocused editor
 
   // componentWillReceiveProps(nextProps) {
   //   if (nextProps.highlighterSelector !== this.props.highlighterSelector) {
@@ -189,7 +147,6 @@ class PreviewFrame extends React.Component {
     });
   }
 
-<<<<<<< HEAD
   _handleConsoleLog(printedValue) {
     const {compiledProjectKey} = this.props.compiledProject;
     this.props.onConsoleLog(printedValue, compiledProjectKey);
@@ -200,19 +157,6 @@ class PreviewFrame extends React.Component {
       type: 'highlightElement',
       selector: {selector},
     }), '*');
-=======
-  _postFocusedSelectorToFrame(selector) {
-    this._channel.notify({
-      method: 'highlightElement',
-      params: selector,
-    });
-  }
-
-  _postRemoveHighlightToFrame() {
-    this._channel.notify({
-      method: 'removeHighlight',
-    });
->>>>>>> 8ca6c3c... update to js channel
   }
 
   _postFocusedSelectorToFrame(selector) {
@@ -222,7 +166,6 @@ class PreviewFrame extends React.Component {
     }), '*');
   }
 
-<<<<<<< HEAD
   _attachToFrame(frame) {
     if (!frame) {
       if (this._channel) {
@@ -230,25 +173,6 @@ class PreviewFrame extends React.Component {
         Reflect.deleteProperty(this, '_channel');
       }
       return;
-=======
-  _postRemoveHighlightToFrame() {
-    this._frame_element.contentWindow.postMessage(JSON.stringify({
-      type: 'org.popcode.removeHighlight',
-    }), '*');
-  }
-
-  _setFrameElement(frame) {
-    this._frame_element = frame;
-  }
-
-  render() {
-    let srcProps;
-
-    if (this.props.src) {
-      srcProps = {srcDoc: this.props.src};
-    } else {
-      srcProps = {src: 'about:blank'};
->>>>>>> 23eb7f2... Updates to element highlighter
     }
 
     this._channel = Channel.build({
@@ -273,31 +197,17 @@ class PreviewFrame extends React.Component {
 }
 
 PreviewFrame.propTypes = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   compiledProject: PropTypes.instanceOf(CompiledProjectRecord).isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
-=======
-  focusedEditors: PropTypes.array,
->>>>>>> 23eb7f2... Updates to element highlighter
-=======
-  consoleEntries: ImmutablePropTypes.iterable.isRequired,
-  focusedEditors: PropTypes.array,
->>>>>>> 3cc1d22... Update selector at cursor and handle unfocused editor
   focusedSelector: PropTypes.string,
   isActive: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
   onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
-=======
-  src: PropTypes.string.isRequired,
->>>>>>> 621d5f6... Add saga, add ref to iframe element
   onRuntimeError: PropTypes.func.isRequired,
 };
 
 PreviewFrame.defaultProps = {
-  focusedEditors: null,
   focusedSelector: null,
 };
 

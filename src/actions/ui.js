@@ -12,6 +12,19 @@ export const editorFocusedRequestedLine = createAction(
   'EDITOR_FOCUSED_REQUESTED_LINE',
 );
 
+export const editorFocused = createAction(
+  'EDITOR_FOCUSED',
+  language => ({language}),
+);
+
+export const editorBlurred = createAction(
+  'EDITOR_BLURRED',
+);
+
+export const editorResized = createAction(
+  'EDITOR_RESIZED',
+);
+
 export const startDragColumnDivider = createAction(
   'START_DRAG_COLUMN_DIVIDER',
 );

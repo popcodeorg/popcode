@@ -35,6 +35,7 @@ class Editor extends React.Component {
     this._handleWindowResize = throttle(() => {
       if (this._editor) {
         this._resizeEditor();
+        this.props.onEditorResized();
       }
     }, RESIZE_THROTTLE);
 
@@ -126,7 +127,7 @@ class Editor extends React.Component {
 <<<<<<< HEAD
 =======
       this._editor.on('blur', () => {
-        this.props.onEditorBlurred(this.props.language);
+        this.props.onEditorBlurred();
       });
       this._editor.on('focus', () => {
         this.props.onEditorFocused(this.props.language);
@@ -189,6 +190,7 @@ Editor.propTypes = {
   onCursorChange: PropTypes.func.isRequired,
   onEditorBlurred: PropTypes.func.isRequired,
   onEditorFocused: PropTypes.func.isRequired,
+  onEditorResized: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };

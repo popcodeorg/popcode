@@ -27,6 +27,12 @@ import {
   editorBlurred,
   editorFocused,
   editorFocusedRequestedLine,
+<<<<<<< HEAD
+=======
+  editorResized,
+  dragRowDivider,
+  dragColumnDivider,
+>>>>>>> 66eba11... changes
   startDragColumnDivider,
   stopDragColumnDivider,
   notificationTriggered,
@@ -105,8 +111,14 @@ export {
   editorBlurred,
   editorFocused,
   editorFocusedRequestedLine,
+<<<<<<< HEAD
   previousConsoleHistory,
   nextConsoleHistory,
+=======
+  editorResized,
+  dragRowDivider,
+  dragColumnDivider,
+>>>>>>> 66eba11... changes
   startDragColumnDivider,
   stopDragColumnDivider,
   notificationTriggered,

@@ -67,6 +67,9 @@ export default function EditorsColumn({
           source={currentProject.sources[language]}
           textSizeIsLarge={isTextSizeLarge}
           onCursorChange={onEditorCursorChange}
+          onEditorBlurred={onEditorBlurred}
+          onEditorFocused={onEditorFocused}
+          onEditorResized={onEditorResized}
           onInput={partial(
             onEditorInput,
             currentProject.projectKey,
@@ -138,6 +141,7 @@ EditorsColumn.propTypes = {
   onEditorCursorChange: PropTypes.func.isRequired,
   onEditorFocused: PropTypes.func.isRequired,
   onEditorInput: PropTypes.func.isRequired,
+  onEditorResized: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
   onResizableFlexDividerDrag: PropTypes.func.isRequired,

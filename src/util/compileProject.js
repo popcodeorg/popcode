@@ -9,6 +9,7 @@ import uniq from 'lodash-es/uniq';
 import config from '../config';
 
 import retryingFailedImports from './retryingFailedImports';
+import highlighterCss from '../../templates/highlighter.css';
 
 const downloadingScript = downloadScript();
 
@@ -180,6 +181,12 @@ async function addJavascript(
   doc.body.appendChild(scriptTag);
 }
 
+function addHighlighterCss(doc) {
+  const styleTag = doc.createElement('style');
+  styleTag.innerHTML = highlighterCss;
+  doc.head.appendChild(styleTag);
+}
+
 export function generateTextPreview(project) {
   const {title} = constructDocument(project);
   return (title || '').trim();
@@ -201,6 +208,7 @@ export default async function compileProject(
     await addPreviewSupportScript(doc);
   }
   await addJavascript(doc, project, {breakLoops: isInlinePreview});
+  addHighlighterCss(doc);
 
   return {
     title: (doc.title || '').trim(),

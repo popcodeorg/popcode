@@ -28,7 +28,7 @@ const defaultState = new Immutable.Map().
     requestedFocusedLine: null,
     textSizeIsLarge: false,
     focusedSelector: null,
-    focusedEditors: new Immutable.Set(),
+    focusedEditor: null,
   })).
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Map()).
@@ -105,24 +105,21 @@ export default function ui(stateIn, action) {
       return state.setIn(['editors', 'requestedFocusedLine'], null);
 
     case 'EDITOR_FOCUSED':
-      return state.updateIn(
-        ['editors', 'focusedEditors'],
-        (focusedEditors) => {
-          const componentName = action.payload.language;
-          return focusedEditors.add(componentName);
-        },
+      return state.setIn(
+        ['editors', 'focusedEditor'],
+        action.payload.language,
       );
 
     case 'EDITOR_BLURRED':
-      return state.updateIn(
-        ['editors', 'focusedEditors'],
-        (focusedEditors) => {
-          const componentName = action.payload.language;
-          if (focusedEditors.has(componentName)) {
-            return focusedEditors.delete(componentName);
-          }
-          return focusedEditors;
-        },
+      return state.setIn(
+        ['editors', 'focusedEditor'],
+        null,
+      );
+
+    case 'EDITOR_RESIZED':
+      return state.setIn(
+        ['editors', 'focusedSelector'],
+        null,
       );
 
     case 'DRAG_ROW_DIVIDER':
