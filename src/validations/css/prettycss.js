@@ -1,7 +1,7 @@
+import prettyCSS from 'PrettyCSS';
 import trim from 'lodash/trim';
 import endsWith from 'lodash/endsWith';
 import Validator from '../Validator';
-import retryingFailedImports from '../../util/retryingFailedImports';
 
 const RADIAL_GRADIENT_EXPR =
   /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/;
@@ -133,10 +133,6 @@ class PrettyCssValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const prettyCSS = await retryingFailedImports(() => import(
-      /* webpackChunkName: 'mainAsync' */
-      'PrettyCSS',
-    ));
     try {
       const result = prettyCSS.parse(this._source);
       return result.getProblems();
