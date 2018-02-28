@@ -121,23 +121,27 @@ class Editor extends React.Component {
     }
   }
 
+  _addMarkerToOpeningBracket() {
+    const {row, column} = this._editor.getCursorPosition();
+    const token = this._editor.session.getTokenAt(row, column);
+    this._editor.session.removeMarker(this._editor.session.$highlightMarker);
+    if (token && includes(BRACKETTYPES, token.type)) {
+      this._editor.session.$highlightMarker =
+        this._editor.session.addMarker(
+          new Range(row, token.start, row, token.start + token.value.length),
+          'ace_bracket',
+          'text',
+        );
+    }
+  }
+
   _startNewSession(source) {
     const session = createAceSessionWithoutWorker(this.props.language, source);
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
     });
     session.selection.on('changeCursor', () => {
-      const {row, column} = this._editor.getCursorPosition();
-      const token = this._editor.session.getTokenAt(row, column);
-      this._editor.session.removeMarker(this._editor.session.$highlightMarker);
-      if (token && includes(BRACKETTYPES, token.type)) {
-        this._editor.session.$highlightMarker =
-          this._editor.session.addMarker(
-            new Range(row, token.start, row, token.start + token.value.length),
-            'ace_bracket',
-            'text',
-          );
-      }
+      this._addMarkerToOpeningBracket();
     });
     session.setAnnotations(this.props.errors);
     this._editor.setSession(session);

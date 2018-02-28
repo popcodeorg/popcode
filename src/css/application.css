@@ -452,10 +452,6 @@ body {
   pointer-events: none;
 }
 
-div.ace_bracket.ace_start.ace_br15 {
-  border: 1px solid #00ff85;
-}
-
 /** @define output */
 
 .output {
