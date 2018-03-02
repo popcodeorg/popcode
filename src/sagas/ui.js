@@ -76,5 +76,3 @@ export default function* () {
     takeEvery('CURRENT_CURSOR_CHANGED', updateFocusedSelector),
   ]);
 }
-
-

@@ -1,4 +1,14 @@
+import throttle from 'lodash/throttle';
 import channel from './channel';
+
+const RESIZE_THROTTLE = 250;
+let highlightSelector = null;
+
+const handleWindowResize = throttle(() => {
+  updateCovers(highlightSelector);
+}, RESIZE_THROTTLE);
+
+window.addEventListener('resize', handleWindowResize);
 
 function getOffsetFromBody(element) {
   if (element === document.body) {
@@ -10,19 +20,16 @@ function getOffsetFromBody(element) {
 
 function removeCovers() {
   const highlighterElements =
-  window.document.querySelectorAll('.__popcode-highlighter');
-  for (let i = 0; i < highlighterElements.length; i++) {
-    const highlighterElement = highlighterElements[i];
+    document.querySelectorAll('.__popcode-highlighter');
+  for (const highlighterElement of highlighterElements) {
     highlighterElement.remove();
   }
 }
 
 function addCovers(selector) {
   const elements = document.querySelectorAll(selector);
-  for (let i = 0; i < elements.length; i++) {
-    const element = elements[i];
+  for (const element of elements) {
     const cover = document.createElement('div');
-    document.body.appendChild(cover);
     const rect = element.getBoundingClientRect();
     let offset = {top: rect.top, left: rect.left};
     if (element.offsetParent === null) {
@@ -31,17 +38,20 @@ function addCovers(selector) {
       element !== document.documentElement) {
       offset = getOffsetFromBody(element);
     }
-    cover.className = '__popcode-highlighter';
+    document.body.appendChild(cover);
+    cover.classList = '__popcode-highlighter';
     cover.style.left = `${offset.left}px`;
     cover.style.top = `${offset.top}px`;
     cover.style.width = `${element.offsetWidth}px`;
     cover.style.height = `${element.offsetHeight}px`;
+    cover.classList.add('fade');
   }
 }
 
 function updateCovers(selector) {
   removeCovers();
-  if (selector !== '') {
+  if (selector !== null) {
+    highlightSelector = selector;
     addCovers(selector);
   }
 }

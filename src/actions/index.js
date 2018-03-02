@@ -28,8 +28,11 @@ import {
   editorFocused,
   editorFocusedRequestedLine,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   editorResized,
+=======
+>>>>>>> e90fafb... update window resize, update element highlighter, write unit test
   dragRowDivider,
   dragColumnDivider,
 >>>>>>> 66eba11... changes
@@ -112,10 +115,13 @@ export {
   editorFocused,
   editorFocusedRequestedLine,
 <<<<<<< HEAD
+<<<<<<< HEAD
   previousConsoleHistory,
   nextConsoleHistory,
 =======
   editorResized,
+=======
+>>>>>>> e90fafb... update window resize, update element highlighter, write unit test
   dragRowDivider,
   dragColumnDivider,
 >>>>>>> 66eba11... changes
