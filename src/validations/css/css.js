@@ -1,5 +1,5 @@
+import css from 'css';
 import Validator from '../Validator';
-import retryingFailedImports from '../../util/retryingFailedImports';
 
 const errorMap = {
   'missing \'{\'': () => ({reason: 'missing-opening-curly'}),
@@ -21,10 +21,6 @@ class CssValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const css = await retryingFailedImports(() => import(
-      /* webpackChunkName: 'mainAsync' */
-      'css',
-    ));
     return css.parse(this._source, {silent: true}).stylesheet.parsingErrors;
   }
 

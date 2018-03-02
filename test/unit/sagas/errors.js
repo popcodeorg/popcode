@@ -3,7 +3,7 @@ import isEqual from 'lodash/isEqual';
 import {createMockTask} from 'redux-saga/utils';
 import {testSaga} from 'redux-saga-test-plan';
 import Scenario from '../../helpers/Scenario';
-import validations from '../../../src/validations';
+import {javascript} from '../../../src/validations';
 import {
   updateProjectSource,
   toggleLibrary,
@@ -14,6 +14,7 @@ import {
   updateProjectSource as updateProjectSourceSaga,
   validateCurrentProject as validateCurrentProjectSaga,
   validateSource as validateSourceSaga,
+  importValidations,
 } from '../../../src/sagas/errors';
 
 test('validateCurrentProject()', (assert) => {
@@ -57,7 +58,8 @@ test('validateSource()', (t) => {
     const tasks = new Map();
     const task = createMockTask();
     testSaga(validateSourceSaga, tasks, action).
-      next().fork(validations.javascript, source, projectAttributes).
+      next().call(importValidations).
+      next({javascript}).fork(javascript, source, projectAttributes).
       next(task).join(task).
       next(errors).put(validatedSource(language, errors)).
       next().isDone();
@@ -69,12 +71,14 @@ test('validateSource()', (t) => {
     const firstTask = createMockTask();
     const secondTask = createMockTask();
     testSaga(validateSourceSaga, tasks, action).
-      next().fork(validations.javascript, source, projectAttributes).
+      next().call(importValidations).
+      next({javascript}).fork(javascript, source, projectAttributes).
       next(firstTask).join(firstTask);
 
     testSaga(validateSourceSaga, tasks, action).
       next().cancel(firstTask).
-      next().fork(validations.javascript, source, projectAttributes).
+      next().call(importValidations).
+      next({javascript}).fork(javascript, source, projectAttributes).
       next(secondTask).join(secondTask).
       next(errors).put(validatedSource(language, errors)).
       next().isDone();
