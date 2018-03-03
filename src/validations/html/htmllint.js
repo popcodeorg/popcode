@@ -1,8 +1,8 @@
 import clone from 'lodash/clone';
 import defaults from 'lodash/defaults';
+import {Linter, rules} from 'htmllint';
 import reduce from 'lodash/reduce';
 import Validator from '../Validator';
-import retryingFailedImports from '../../util/retryingFailedImports';
 
 const errorMap = {
   E001: (error) => {
@@ -135,25 +135,19 @@ const htmlLintOptions = {
   'title-no-dup': true,
 };
 
+const linter = new Linter(rules);
+const options = reduce(
+  linter.rules.options,
+  (acc, {name}) => defaults(acc, {[name]: false}),
+  clone(htmlLintOptions),
+);
+
 class HtmllintValidator extends Validator {
   constructor(source) {
     super(source, 'html', errorMap);
   }
 
   async _getRawErrors() {
-    const {Linter, rules} = await retryingFailedImports(
-      () => import(
-        /* webpackChunkName: 'mainAsync' */
-        'htmllint',
-      ),
-    );
-    const linter = new Linter(rules);
-    const options = reduce(
-      linter.rules.options,
-      (acc, {name}) => defaults(acc, {[name]: false}),
-      clone(htmlLintOptions),
-    );
-
     try {
       const results = await linter.lint(this._source, options);
       return results;
