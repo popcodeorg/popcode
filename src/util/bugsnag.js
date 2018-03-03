@@ -1,14 +1,18 @@
-import 'bugsnag-js';
+import bugsnag from 'bugsnag-js';
 import config from '../config';
 import {getCurrentProject} from '../selectors';
 
-const Bugsnag = window.Bugsnag.noConflict();
-Bugsnag.apiKey = config.bugsnagApiKey;
-Bugsnag.releaseStage = config.nodeEnv;
-Bugsnag.appVersion = config.gitRevision;
+let store;
 
-export function includeStoreInBugReports(store) {
-  Bugsnag.beforeNotify = (payload) => {
+export const bugsnagClient = bugsnag({
+  apiKey: config.bugsnagApiKey,
+  appVersion: config.gitRevision,
+  releaseStage: config.nodeEnv,
+  beforeSend(payload) {
+    if (!store) {
+      return;
+    }
+
     const state = store.getState();
     if (state.get('user')) {
       payload.user = state.get('user').toJS();
@@ -20,9 +24,9 @@ export function includeStoreInBugReports(store) {
     if (currentProject) {
       payload.metaData.currentProject = currentProject;
     }
-  };
+  },
+});
+
+export function includeStoreInBugReports(storeIn) {
+  store = storeIn;
 }
-
-Bugsnag.enableNotifyUnhandledRejections();
-
-export default Bugsnag;
