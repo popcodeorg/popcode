@@ -1,4 +1,4 @@
-import Bugsnag from '../util/Bugsnag';
+import {bugsnagClient} from '../util/bugsnag';
 import isError from 'lodash/isError';
 import isString from 'lodash/isString';
 import {all, call, put, take, takeEvery} from 'redux-saga/effects';
@@ -81,9 +81,9 @@ export function* logIn() {
         yield put(notificationTriggered('auth-error'));
 
         if (isError(e)) {
-          yield call([Bugsnag, 'notifyException'], e, e.code);
+          yield call([bugsnagClient, 'notify'], e, {metaData: {code: e.code}});
         } else if (isString(e)) {
-          yield call([Bugsnag, 'notifyException'], new Error(e));
+          yield call([bugsnagClient, 'notify'], new Error(e));
         }
         break;
     }

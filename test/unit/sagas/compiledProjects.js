@@ -6,7 +6,7 @@ import {
 import {getCurrentProject, getErrors} from '../../../src/selectors';
 import {projectCompiled, projectCompilationFailed} from '../../../src/actions';
 import compileProject from '../../../src/util/compileProject';
-import Bugsnag from '../../../src/util/Bugsnag';
+import {bugsnagClient} from '../../../src/util/bugsnag';
 import {errors} from '../../helpers/referenceStates';
 import {project as projectFactory} from '../../helpers/factory';
 
@@ -32,7 +32,7 @@ test('validatedSource', (t) => {
   t.test('with uncaught compilation error', (assert) => {
     const error = new Error('Compilation failed.');
     startCompilation(assert).
-      throw(error).call([Bugsnag, 'notifyException'], error).
+      throw(error).call([bugsnagClient, 'notify'], error).
       next().put(projectCompilationFailed(error)).
       next().isDone();
 

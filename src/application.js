@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
 import installDevTools from 'immutable-devtools';
 import {install as installOfflinePlugin} from 'offline-plugin/runtime';
-import Bugsnag from './util/Bugsnag';
+import {bugsnagClient} from './util/bugsnag';
 import Application from './components/Application';
 import initI18n from './util/initI18n';
 import {init as initAnalytics, logPageview} from './clients/googleAnalytics';
@@ -12,7 +12,7 @@ import {init as initAnalytics, logPageview} from './clients/googleAnalytics';
 installDevTools(Immutable);
 installOfflinePlugin({
   onUpdateFailed() {
-    Bugsnag.notify('ServiceWorker update failed');
+    bugsnagClient.notify('ServiceWorker update failed');
   },
 });
 
