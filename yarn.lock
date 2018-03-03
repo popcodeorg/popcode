@@ -517,9 +517,9 @@ array-slice@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/array-slice/-/array-slice-1.1.0.tgz#e368ea15f89bc7069f7ffb89aec3a6c7d4ac22d4"
 
-array-to-sentence@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/array-to-sentence/-/array-to-sentence-1.1.0.tgz#c804956dafa53232495b205a9452753a258d39fc"
+array-to-sentence@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/array-to-sentence/-/array-to-sentence-2.0.0.tgz#1e57691fdc18ba24a47e3ebabda9324baac960b4"
 
 array-union@^1.0.1:
   version "1.0.2"

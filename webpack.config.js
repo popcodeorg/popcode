@@ -348,7 +348,7 @@ module.exports = (env = 'development') => {
         'github-api': 'github-api/dist/components',
         'html-inspector$': 'html-inspector/html-inspector.js',
       },
-      extensions: ['.js', '.jsx', '.json'],
+      extensions: ['.mjs', '.js', '.jsx', '.json'],
     },
     devtool: isTest ? 'inline-source-map' : 'source-map',
   };

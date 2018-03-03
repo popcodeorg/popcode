@@ -120,7 +120,8 @@
           "always",
           {
             "js": "never",
-            "jsx": "never"
+            "jsx": "never",
+            "mjs": "never"
           }
         ],
         "import/first": [
