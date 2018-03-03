@@ -6,9 +6,6 @@ const fs = require('fs');
 const path = require('path');
 const OfflinePlugin = require('offline-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-const MD5ChunkHash = require('webpack-chunk-hash');
-const InlineChunkManifestHtmlPlugin =
-  require('inline-chunk-manifest-html-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const webpack = require('webpack');
@@ -18,7 +15,6 @@ const map = require('lodash/map');
 const includes = require('lodash/includes');
 const git = require('git-rev-sync');
 const babel = require('babel-core');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const babelLoaderVersion =
   require('./node_modules/babel-loader/package.json').version;
 
@@ -69,7 +65,7 @@ function directoryContentsExcept(directory, exceptions) {
       !includes(fullExceptions, filePath);
 }
 
-module.exports = (env = 'development') => {
+module.exports = (env = process.env.NODE_ENV || 'development') => {
   const isProduction = env === 'production';
   const isTest = env === 'test';
 
@@ -120,10 +116,6 @@ module.exports = (env = 'development') => {
         ],
         ServiceWorker: {navigateFallbackURL: '/'},
       }),
-      isProduction ?
-        new webpack.HashedModuleIdsPlugin() :
-        new webpack.NamedModulesPlugin(),
-      new MD5ChunkHash(),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'src/html/index.html'),
         chunksSortMode: 'dependency',
@@ -143,39 +135,19 @@ module.exports = (env = 'development') => {
           },
         ],
       }),
-      new InlineChunkManifestHtmlPlugin(),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        chunks: ['main'],
-        minChunks({context}) {
-          if (!context) {
-            return false;
-          }
-          const isNodeModule = context.indexOf('node_modules') !== -1;
-          return isNodeModule;
-        },
-      }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'manifest',
-        chunks: ['main'],
-      }),
     );
   }
 
-  if (isProduction) {
-    plugins.push(new UglifyJsPlugin({
-      sourceMap: true,
-      uglifyOptions: {
-        compress: {warnings: false},
-        output: {comments: false},
-      },
-    }));
-  }
-
   return {
+    mode: isProduction ? 'production' : 'development',
     entry: {
       main: './src/application.js',
       preview: './src/preview.js',
+    },
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
     },
     output: {
       path: path.resolve(__dirname, './dist'),
@@ -199,10 +171,6 @@ module.exports = (env = 'development') => {
           test: /\.js$/,
           use: ['source-map-loader'],
           enforce: 'pre',
-        },
-        {
-          test: /\.json$/,
-          use: ['json-loader'],
         },
         {
           include: [
