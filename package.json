@@ -239,7 +239,7 @@
     "brfs": "^1.4.3",
     "browser-sync": "^2.14.3",
     "bulkify": "^1.4.2",
-    "bundlesize": "^0.15.2",
+    "bundlesize": "^0.16.0",
     "check-dependencies": "^1.0.1",
     "circular-dependency-plugin": "^4.2.0",
     "cloudflare": "^2.1.1",
