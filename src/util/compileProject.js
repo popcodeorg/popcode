@@ -90,7 +90,8 @@ function attachJavascriptLibrary(doc, javascript) {
   const scriptTag = doc.createElement('script');
   const javascriptText = String(javascript);
   scriptTag.innerHTML = javascriptText.replace(/<\/script>/g, '<\\/script>');
-  const [firstScriptTag] = doc.scripts;
+  // eslint-disable-next-line prefer-destructuring
+  const firstScriptTag = doc.scripts[0];
   if (firstScriptTag) {
     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag);
   } else {
@@ -126,7 +127,8 @@ function addBase(doc) {
   const {head} = doc;
   const baseTag = doc.createElement('base');
   baseTag.target = '_top';
-  const [firstChild] = head.childNodes;
+  // eslint-disable-next-line prefer-destructuring
+  const firstChild = head.childNodes[0];
   if (firstChild) {
     head.insertBefore(baseTag, firstChild);
   } else {
