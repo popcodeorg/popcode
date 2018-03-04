@@ -6064,9 +6064,9 @@ karma-sourcemap-loader@^0.3.7:
   dependencies:
     graceful-fs "^4.1.2"
 
-karma-tap@^3.1.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/karma-tap/-/karma-tap-3.2.1.tgz#63eb4a703c7bedba45df2d1296a2502b87aad4d9"
+karma-tap@^4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/karma-tap/-/karma-tap-4.1.3.tgz#46955eea8c8503b6331fec06c07b2d1db4301e66"
 
 karma-webpack@^2.0.4:
   version "2.0.13"
