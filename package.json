@@ -260,7 +260,7 @@
     "gulp-sourcemaps": "^2.6.0",
     "html-webpack-plugin": "^3.0.4",
     "i18next-resource-store-loader": "^0.1.1",
-    "immutable-devtools": "0.0.7",
+    "immutable-devtools": "0.1.3",
     "imports-loader": "^0.8.0",
     "inline-chunk-manifest-html-webpack-plugin": "^2.0.0",
     "json-loader": "^0.5.4",
