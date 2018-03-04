@@ -34,7 +34,7 @@ before_script:
 - sh -e /etc/init.d/xvfb start
 script:
 - yarn check
-- yarn test
+- NODE_ENV=test yarn test
 - gulp build
 - eslint --no-eslintrc --env es5 dist
 - bundlesize
