@@ -283,7 +283,7 @@
     "sinon": "^4.0.1",
     "source-map-explorer": "^1.4.0",
     "source-map-loader": "^0.2.2",
-    "string-replace-loader": "^1.0.5",
+    "string-replace-loader": "^2.1.1",
     "stylelint-selector-bem-pattern": "^2.0.0",
     "substitute-loader": "^1.0.0",
     "svg-react-loader": "^0.4.4",
