@@ -213,9 +213,9 @@ JSONStream@^1.0.3, JSONStream@^1.0.4:
     jsonparse "^1.2.0"
     through ">=2.2.7 <3"
 
-PrettyCSS@fidian/PrettyCSS#3516dfa69:
-  version "0.3.16"
-  resolved "https://codeload.github.com/fidian/PrettyCSS/tar.gz/3516dfa6995869c3550541b1fe70b1a56209245e"
+PrettyCSS@^0.3.17:
+  version "0.3.17"
+  resolved "https://registry.yarnpkg.com/PrettyCSS/-/PrettyCSS-0.3.17.tgz#46ab47815220e5e6dc45f74ace27a5cf63d3f5a6"
   dependencies:
     option-parser "~1.0.0"
 
