@@ -252,16 +252,16 @@
     "eslint-plugin-promise": "^3.4.2",
     "eslint-plugin-react": "^7.0.1",
     "eslint_d": "^5.1.0",
-    "exports-loader": "^0.6.3",
+    "exports-loader": "^0.7.0",
     "git-rev-sync": "^1.6.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-postcss": "^7.0.0",
     "gulp-sourcemaps": "^2.6.0",
-    "html-webpack-plugin": "^2.30.1",
+    "html-webpack-plugin": "^3.0.4",
     "i18next-resource-store-loader": "^0.1.1",
     "immutable-devtools": "0.0.7",
-    "imports-loader": "^0.7.1",
+    "imports-loader": "^0.8.0",
     "inline-chunk-manifest-html-webpack-plugin": "^2.0.0",
     "json-loader": "^0.5.4",
     "karma": "^2.0.0",
@@ -283,7 +283,7 @@
     "sinon": "^4.0.1",
     "source-map-explorer": "^1.4.0",
     "source-map-loader": "^0.2.2",
-    "string-replace-loader": "^1.0.5",
+    "string-replace-loader": "^2.1.1",
     "stylelint-selector-bem-pattern": "^2.0.0",
     "substitute-loader": "^1.0.0",
     "svg-react-loader": "^0.4.4",
@@ -294,8 +294,7 @@
     "uglifyjs-webpack-plugin": "^1.1.2",
     "webpack": "^3.1.0",
     "webpack-chunk-hash": "^0.5.0",
-    "webpack-dev-middleware": "^1.8.2",
-    "webpack-hot-middleware": "^2.12.2"
+    "webpack-dev-middleware": "^2.0.6"
   },
   "optionalDependencies": {
     "fsevents": "*"
