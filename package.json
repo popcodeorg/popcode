@@ -175,7 +175,7 @@
     "moment": "^2.14.1",
     "object-inspect": "^1.5.0",
     "offline-plugin": "^4.8.1",
-    "parse5": "^3.0.2",
+    "parse5": "^4.0.0",
     "pify": "^3.0.0",
     "promise-retry": "^1.1.1",
     "prop-types": "^15.5.10",
