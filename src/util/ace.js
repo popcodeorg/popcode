@@ -1,4 +1,5 @@
 import ACE from 'brace';
+import 'brace/theme/sqlserver';
 
 function disableAutoClosing(editor) {
   editor.setBehavioursEnabled(false);
@@ -10,6 +11,7 @@ export function inheritFontStylesFromParentElement(editor) {
   editor.setOptions({
     fontFamily: computedStyle.getPropertyValue('font-family'),
     fontSize: computedStyle.getPropertyValue('font-size'),
+    theme: 'ace/theme/sqlserver',
   });
 }
 
