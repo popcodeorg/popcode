@@ -1,4 +1,4 @@
-import esprima from 'esprima';
+import {parse, tokenize} from 'esprima';
 import find from 'lodash/find';
 import inRange from 'lodash/inRange';
 import Validator from '../Validator';
@@ -80,10 +80,10 @@ class EsprimaValidator extends Validator {
 
   async _getRawErrors() {
     try {
-      esprima.parse(this._source);
+      parse(this._source);
     } catch (error) {
       try {
-        const tokens = esprima.tokenize(
+        const tokens = tokenize(
           this._source,
           {range: true, comment: true},
         );

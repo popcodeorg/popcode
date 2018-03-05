@@ -160,7 +160,7 @@
     "css": "^2.2.1",
     "enumify": "^1.0.4",
     "es6-set": "^0.1.4",
-    "esprima": "^3.0.0",
+    "esprima": "^4.0.0",
     "github-api": "^3.0.0",
     "hast-util-sanitize": "^1.1.1",
     "highlight.js": "^9.12.0",
