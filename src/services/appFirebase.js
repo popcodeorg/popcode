@@ -12,8 +12,10 @@ const appFirebase = firebase.initializeApp({
 const auth = firebase.auth(appFirebase);
 const database = firebase.database(appFirebase);
 const githubAuthProvider = new firebase.auth.GithubAuthProvider();
-const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 githubAuthProvider.addScope('gist');
 githubAuthProvider.addScope('public_repo');
+
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+googleAuthProvider.addScope('https://www.googleapis.com/auth/classroom.courses.readonly');
 
 export {auth, database, githubAuthProvider, googleAuthProvider};
