@@ -11,7 +11,7 @@ import every from 'lodash/every';
 
 import {getCurrentProject, getErrors} from '../selectors';
 import compileProject from '../util/compileProject';
-import Bugsnag from '../util/Bugsnag';
+import {bugsnagClient} from '../util/bugsnag';
 import {projectCompiled, projectCompilationFailed} from '../actions';
 
 export function* validatedSource() {
@@ -27,7 +27,7 @@ export function* validatedSource() {
       );
       yield put(projectCompiled(preview, timestamp));
     } catch (e) {
-      yield call([Bugsnag, 'notifyException'], e);
+      yield call([bugsnagClient, 'notify'], e);
       yield put(projectCompilationFailed(e));
     }
   }

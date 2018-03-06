@@ -25,7 +25,7 @@ addons:
     - g++-4.8
   chrome: stable
 before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.0.2
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.5.1
   - export PATH="$HOME/.yarn/bin:$PATH"
 install:
   - yarn install --production=false --frozen-lockfile --non-interactive
@@ -34,7 +34,7 @@ before_script:
 - sh -e /etc/init.d/xvfb start
 script:
 - yarn check
-- yarn test
+- NODE_ENV=test yarn test
 - gulp build
 - eslint --no-eslintrc --env es5 dist
 - bundlesize

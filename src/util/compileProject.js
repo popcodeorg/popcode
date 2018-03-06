@@ -2,8 +2,8 @@ import castArray from 'lodash/castArray';
 import compact from 'lodash/compact';
 import flatMap from 'lodash/flatMap';
 import isEmpty from 'lodash/isEmpty';
+import trim from 'lodash/trim';
 import uniq from 'lodash/uniq';
-import loopBreaker from 'loop-breaker';
 import config from '../config';
 import retryingFailedImports from '../util/retryingFailedImports';
 
@@ -90,7 +90,8 @@ function attachJavascriptLibrary(doc, javascript) {
   const scriptTag = doc.createElement('script');
   const javascriptText = String(javascript);
   scriptTag.innerHTML = javascriptText.replace(/<\/script>/g, '<\\/script>');
-  const [firstScriptTag] = doc.scripts;
+  // eslint-disable-next-line prefer-destructuring
+  const firstScriptTag = doc.scripts[0];
   if (firstScriptTag) {
     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag);
   } else {
@@ -126,7 +127,8 @@ function addBase(doc) {
   const {head} = doc;
   const baseTag = doc.createElement('base');
   baseTag.target = '_top';
-  const [firstChild] = head.childNodes;
+  // eslint-disable-next-line prefer-destructuring
+  const firstChild = head.childNodes[0];
   if (firstChild) {
     head.insertBefore(baseTag, firstChild);
   } else {
@@ -147,9 +149,23 @@ async function addPreviewSupportScript(doc) {
   doc.head.appendChild(scriptTag);
 }
 
-function addJavascript(doc, project, {breakLoops = false}) {
-  let source = `\n${sourceDelimiter}\n${project.sources.javascript}`;
+async function addJavascript(
+  doc,
+  {sources: {javascript}},
+  {breakLoops = false},
+) {
+  if (trim(javascript).length === 0) {
+    return;
+  }
+
+  let source = `\n${sourceDelimiter}\n${javascript}`;
   if (breakLoops) {
+    const loopBreaker = await retryingFailedImports(
+      () => import(
+        /* webpackChunkName: 'mainAsync' */
+        'loop-breaker',
+      ),
+    );
     source = loopBreaker(source);
   }
   const scriptTag = doc.createElement('script');
@@ -177,7 +193,7 @@ export default async function compileProject(
   if (isInlinePreview) {
     await addPreviewSupportScript(doc);
   }
-  addJavascript(doc, project, {breakLoops: isInlinePreview});
+  await addJavascript(doc, project, {breakLoops: isInlinePreview});
 
   return {
     title: (doc.title || '').trim(),

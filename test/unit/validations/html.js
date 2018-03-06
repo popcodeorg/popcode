@@ -177,7 +177,7 @@ test('li not inside ul', validationTest(
   {
     reason: 'invalid-tag-parent',
     row: htmlWithBody.offset,
-    payload: {tag: 'li', parent: '<ul>, <ol> and <menu> tags'},
+    payload: {tag: 'li', parent: '<ul>, <ol> or <menu> tags'},
   },
 ));
 
@@ -187,7 +187,7 @@ test('li inside div', validationTest(
   {
     reason: 'invalid-tag-parent',
     row: htmlWithBody.offset,
-    payload: {tag: 'li', parent: '<ul>, <ol> and <menu> tags'},
+    payload: {tag: 'li', parent: '<ul>, <ol> or <menu> tags'},
   },
 ));
 

@@ -1,4 +1,4 @@
-import {SAXParser} from 'parse5';
+import SAXParser from 'parse5/lib/sax';
 import voidElements from 'void-elements';
 
 // Runs `rules` on `source` and promises an iterable of all errors.
