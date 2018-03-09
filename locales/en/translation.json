@@ -61,7 +61,10 @@
         "css": "CSS",
         "javascript": "JS"
       },
-      "output": "Output"
+      "output": "Output",
+      "instructions": {
+        "cancel": "Cancel"
+      }
     }
   },
   "utility": {
