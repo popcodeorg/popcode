@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {toReact as markdownToReact} from '../util/markdown';
+import InstructionsEditor from './InstructionsEditor';
 
 export default function Instructions({instructions, isEditing, isOpen}) {
   if (!isEditing && !instructions || !isOpen) {
@@ -11,15 +12,13 @@ export default function Instructions({instructions, isEditing, isOpen}) {
     <div
       className="layout__instructions"
     >
-      {
-        isEditing ?
-          <pre contentEditable className="instructions instructions_editing">
-            {instructions}
-          </pre> :
-          <div className="instructions">
-            {markdownToReact(instructions)}
-          </div>
-      }
+      <div className="instructions">
+        {
+          isEditing ?
+            <InstructionsEditor instructions={instructions} /> :
+            markdownToReact(instructions)
+        }
+      </div>
     </div>
   );
 }
