@@ -31,6 +31,17 @@ const HamburgerMenu = createMenu({
         </MenuItem>,
       );
 
+      if (isExperimental) {
+        items.push(
+          <MenuItem
+            key="addOrEditInstructions"
+            onClick={noop}
+          >
+            {t('top-bar.add-or-edit-instructions')}
+          </MenuItem>,
+        );
+      }
+
       if (isUserAuthenticated) {
         items.push(
           <MenuItem
