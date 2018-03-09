@@ -5,6 +5,7 @@ import {
   getHiddenUIComponents,
   isEditingInstructions,
 } from '../selectors';
+import {stopEditingInstructions} from '../actions';
 
 function mapStateToProps(state) {
   return {
@@ -14,6 +15,15 @@ function mapStateToProps(state) {
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    onCancelEditing() {
+      dispatch(stopEditingInstructions());
+    },
+  };
+}
+
 export default connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(Instructions);

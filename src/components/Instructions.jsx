@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import {toReact as markdownToReact} from '../util/markdown';
 import InstructionsEditor from './InstructionsEditor';
 
-export default function Instructions({instructions, isEditing, isOpen}) {
+export default function Instructions({
+  instructions,
+  isEditing,
+  isOpen,
+  onCancelEditing,
+}) {
   if (!isEditing && !instructions || !isOpen) {
     return null;
   }
@@ -15,7 +20,10 @@ export default function Instructions({instructions, isEditing, isOpen}) {
       <div className="instructions">
         {
           isEditing ?
-            <InstructionsEditor instructions={instructions} /> :
+            <InstructionsEditor
+              instructions={instructions}
+              onCancelEditing={onCancelEditing}
+            /> :
             markdownToReact(instructions)
         }
       </div>
@@ -27,4 +35,5 @@ Instructions.propTypes = {
   instructions: PropTypes.string.isRequired,
   isEditing: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  onCancelEditing: PropTypes.func.isRequired,
 };
