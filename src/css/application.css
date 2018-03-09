@@ -342,6 +342,14 @@ body {
   }
 }
 
+.instructions_editing {
+  margin: 0;
+  outline: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
 /** @define project-preview */
 
 .project-preview__label {
