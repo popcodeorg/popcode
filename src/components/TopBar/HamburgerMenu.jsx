@@ -12,6 +12,7 @@ const HamburgerMenu = createMenu({
   name: 'hamburger',
 
   renderItems({
+    isEditingInstructions,
     isExperimental,
     isGistExportInProgress,
     isRepoExportInProgress,
@@ -20,6 +21,7 @@ const HamburgerMenu = createMenu({
     onExportGist,
     onExportRepo,
     onExportToClassroom,
+    onStartEditingInstructions,
   }) {
     return tap([], (items) => {
       items.push(
@@ -35,7 +37,7 @@ const HamburgerMenu = createMenu({
         items.push(
           <MenuItem
             key="addOrEditInstructions"
-            onClick={noop}
+            onClick={isEditingInstructions ? noop : onStartEditingInstructions}
           >
             {t('top-bar.add-or-edit-instructions')}
           </MenuItem>,
@@ -108,6 +110,7 @@ const HamburgerMenu = createMenu({
 
 HamburgerMenu.propTypes = {
   isClassroomExportInProgress: PropTypes.bool.isRequired,
+  isEditingInstructions: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
@@ -116,6 +119,7 @@ HamburgerMenu.propTypes = {
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onExportToClassroom: PropTypes.func.isRequired,
+  onStartEditingInstructions: PropTypes.func.isRequired,
 };
 
 export default HamburgerMenu;

@@ -29,6 +29,7 @@ export default function TopBar({
   currentProjectKey,
   currentUser,
   enabledLibraries,
+  isEditingInstructions,
   isExperimental,
   isGistExportInProgress,
   isRepoExportInProgress,
@@ -49,6 +50,7 @@ export default function TopBar({
   onExportRepo,
   onExportToClassroom,
   onLogOut,
+  onStartEditingInstructions,
   onStartLogIn,
   onToggleLibrary,
   onToggleTextSize,
@@ -93,6 +95,7 @@ export default function TopBar({
       />
       <HamburgerMenu
         isClassroomExportInProgress={isClassroomExportInProgress}
+        isEditingInstructions={isEditingInstructions}
         isExperimental={isExperimental}
         isGistExportInProgress={isGistExportInProgress}
         isOpen={openMenu === 'hamburger'}
@@ -102,6 +105,7 @@ export default function TopBar({
         onExportGist={onExportGist}
         onExportRepo={onExportRepo}
         onExportToClassroom={onExportToClassroom}
+        onStartEditingInstructions={onStartEditingInstructions}
       />
     </header>
   );
@@ -112,6 +116,7 @@ TopBar.propTypes = {
   currentUser: PropTypes.object.isRequired,
   enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
+  isEditingInstructions: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,
@@ -131,6 +136,7 @@ TopBar.propTypes = {
   onExportRepo: PropTypes.func.isRequired,
   onExportToClassroom: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
+  onStartEditingInstructions: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
   onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,
