@@ -31,6 +31,8 @@ import {
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
+  startEditingInstructions,
+  stopEditingInstructions,
 } from './ui';
 
 import {
@@ -92,6 +94,8 @@ export {
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
+  startEditingInstructions,
+  stopEditingInstructions,
   logIn,
   logOut,
   evaluateConsoleEntry,
