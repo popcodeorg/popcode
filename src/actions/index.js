@@ -15,6 +15,7 @@ import {
   unhideComponent,
   toggleComponent,
   updateProjectSource,
+  updateProjectInstructions,
 } from './projects';
 
 import {
@@ -69,6 +70,7 @@ export {
   createSnapshot,
   changeCurrentProject,
   updateProjectSource,
+  updateProjectInstructions,
   toggleLibrary,
   userAuthenticated,
   userLoggedOut,

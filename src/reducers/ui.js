@@ -225,6 +225,7 @@ export default function ui(stateIn, action) {
       return state.setIn(['workspace', 'isEditingInstructions'], true);
 
     case 'STOP_EDITING_INSTRUCTIONS':
+    case 'UPDATE_PROJECT_INSTRUCTIONS':
       return state.setIn(['workspace', 'isEditingInstructions'], false);
 
     default:
