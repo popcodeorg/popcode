@@ -7,7 +7,9 @@ export default function Instructions({
   instructions,
   isEditing,
   isOpen,
+  projectKey,
   onCancelEditing,
+  onSaveChanges,
 }) {
   if (!isEditing && !instructions || !isOpen) {
     return null;
@@ -22,7 +24,9 @@ export default function Instructions({
           isEditing ?
             <InstructionsEditor
               instructions={instructions}
+              projectKey={projectKey}
               onCancelEditing={onCancelEditing}
+              onSaveChanges={onSaveChanges}
             /> :
             markdownToReact(instructions)
         }
@@ -35,5 +39,7 @@ Instructions.propTypes = {
   instructions: PropTypes.string.isRequired,
   isEditing: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  projectKey: PropTypes.string.isRequired,
   onCancelEditing: PropTypes.func.isRequired,
+  onSaveChanges: PropTypes.func.isRequired,
 };

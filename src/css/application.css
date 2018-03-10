@@ -351,8 +351,7 @@ body {
     margin: 0;
     outline: 0;
     word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
+    white-space: pre-wrap;
   }
 }
 
@@ -365,6 +364,10 @@ body {
   margin-bottom: 100%;
   text-align: right;
   background-color: var(--color-light-gray);
+
+  & button:not(:last-child) {
+    margin-right: .5em;
+  }
 }
 
 /** @define project-preview */

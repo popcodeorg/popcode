@@ -63,7 +63,8 @@
       },
       "output": "Output",
       "instructions": {
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "save": "Save"
       }
     }
   },
