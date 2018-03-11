@@ -29,6 +29,7 @@ export default function TopBar({
   currentProjectKey,
   currentUser,
   enabledLibraries,
+  hasInstructions,
   isEditingInstructions,
   isExperimental,
   isGistExportInProgress,
@@ -94,6 +95,7 @@ export default function TopBar({
         onStartLogIn={onStartLogIn}
       />
       <HamburgerMenu
+        hasInstructions={hasInstructions}
         isClassroomExportInProgress={isClassroomExportInProgress}
         isEditingInstructions={isEditingInstructions}
         isExperimental={isExperimental}
@@ -115,6 +117,7 @@ TopBar.propTypes = {
   currentProjectKey: PropTypes.string,
   currentUser: PropTypes.object.isRequired,
   enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
+  hasInstructions: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,

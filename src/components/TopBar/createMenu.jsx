@@ -11,12 +11,13 @@ import React from 'react';
 import {closeTopBarMenu, toggleTopBarMenu} from '../../actions';
 import {getOpenTopBarMenu} from '../../selectors';
 
-export function MenuItem({children, isEnabled, onClick}) {
+export function MenuItem({children, isDisabled, isEnabled, onClick}) {
   return (
     <div
-      className={classnames('top-bar__menu-item',
-        {'top-bar__menu-item_active': isEnabled},
-      )}
+      className={classnames('top-bar__menu-item', {
+        'top-bar__menu-item_active': isEnabled,
+        'top-bar__menu-item_disabled': isDisabled,
+      })}
       onClick={onClick}
     >
       {children}
@@ -26,11 +27,13 @@ export function MenuItem({children, isEnabled, onClick}) {
 
 MenuItem.propTypes = {
   children: PropTypes.node.isRequired,
+  isDisabled: PropTypes.bool,
   isEnabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
 };
 
 MenuItem.defaultProps = {
+  isDisabled: false,
   isEnabled: false,
 };
 

@@ -12,6 +12,7 @@ const HamburgerMenu = createMenu({
   name: 'hamburger',
 
   renderItems({
+    hasInstructions,
     isEditingInstructions,
     isExperimental,
     isGistExportInProgress,
@@ -36,10 +37,15 @@ const HamburgerMenu = createMenu({
       if (isExperimental) {
         items.push(
           <MenuItem
+            isDisabled={isEditingInstructions}
             key="addOrEditInstructions"
             onClick={isEditingInstructions ? noop : onStartEditingInstructions}
           >
-            {t('top-bar.add-or-edit-instructions')}
+            {
+              hasInstructions ?
+                t('top-bar.edit-instructions') :
+                t('top-bar.add-instructions')
+            }
           </MenuItem>,
         );
       }
@@ -109,6 +115,7 @@ const HamburgerMenu = createMenu({
 
 
 HamburgerMenu.propTypes = {
+  hasInstructions: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,

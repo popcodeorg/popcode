@@ -285,6 +285,12 @@ body {
   font-weight: bold;
 }
 
+.top-bar__menu-item_disabled {
+  font-style: italic;
+  color: var(--color-gray);
+  cursor: default;
+}
+
 .top-bar__drop-down-button {
   padding-left: 0.5em;
 }
