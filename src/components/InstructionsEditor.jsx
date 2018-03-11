@@ -26,15 +26,25 @@ export default class InstructionsEditor extends React.Component {
   render() {
     return (
       <div className="instructions-editor">
-        <div className="instructions-editor-menu">
-          <button onClick={this._handleSaveChanges}>
+        <div className="instructions-editor__menu">
+          <button
+            className="instructions-editor__menu-button"
+            onClick={this._handleSaveChanges}
+          >
             {t('workspace.components.instructions.save')}
           </button>
-          <button onClick={this._handleCancelEditing}>
+          <button
+            className="instructions-editor__menu-button"
+            onClick={this._handleCancelEditing}
+          >
             {t('workspace.components.instructions.cancel')}
           </button>
         </div>
-        <pre contentEditable ref={this._ref}>
+        <pre
+          contentEditable
+          className="instructions-editor__input"
+          ref={this._ref}
+        >
           {this.state.instructions}
         </pre>
       </div>

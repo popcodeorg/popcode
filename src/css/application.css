@@ -342,32 +342,34 @@ body {
   }
 }
 
+/** @define instructions-editor */
+
 .instructions-editor {
   height: 100%;
   padding-top: calc(28px + 1rem);
-
-  & pre {
-    height: 100%;
-    margin: 0;
-    outline: 0;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-  }
 }
 
-.instructions-editor-menu {
+.instructions-editor__input {
+  height: 100%;
+  margin: 0;
+  outline: 0;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.instructions-editor__menu {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  padding: .5rem;
+  padding: 0.5rem;
   margin-bottom: 100%;
   text-align: right;
   background-color: var(--color-light-gray);
+}
 
-  & button:not(:last-child) {
-    margin-right: .5em;
-  }
+.instructions-editor__menu-button:not(:last-child) {
+  margin-right: 0.5em;
 }
 
 /** @define project-preview */
