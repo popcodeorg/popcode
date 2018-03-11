@@ -21,7 +21,11 @@ const defaultState = new Immutable.Map().
   })).
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Map()).
-  set('topBar', new Immutable.Map({openMenu: null}));
+  set('topBar', new Immutable.Map({openMenu: null})).
+  set('courseWorkSelector', new Immutable.Map({
+    openModal: false,
+    selectedCourse: '',
+  }));
 
 function addNotification(state, type, severity, payload = {}) {
   return state.setIn(
@@ -219,6 +223,40 @@ export default function ui(stateIn, action) {
 
     case 'PROJECT_COMPILED':
       return dismissNotification(state, 'project-compilation-failed');
+
+    case 'COURSE_WORK_SELECTOR_OPENED':
+      return state.setIn(
+        ['courseWorkSelector', 'openModal'],
+        true,
+      );
+
+    case 'COURSE_WORK_SELECTOR_CLOSED':
+      return state.setIn(
+        ['courseWorkSelector', 'openModal'],
+        false,
+      );
+
+    case 'COURSE_WORK_DISPLAYED':
+      return addNotification(
+        state,
+        'project-export-complete',
+        'notice',
+        action.payload,
+      );
+
+    case 'COURSE_SELECTED':
+      return state.setIn(
+        ['courseWorkSelector', 'selectedCourse'],
+        action.payload,
+      );
+
+    case 'ASSIGNMENT_SUBMISSION_DISPLAYED':
+      return addNotification(
+        state,
+        'project-export-complete',
+        'notice',
+        action.payload,
+      );
 
     default:
       return state;

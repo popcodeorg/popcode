@@ -2,40 +2,39 @@
 import $S from 'scriptjs';
 import config from '../config';
 
-export function initGapi({credential}) {
-  $S('https://apis.google.com/js/client.js', () => {
-    loadGapi(credential);
+export async function initGapi() {
+  return new Promise((resolve) => {
+    $S('https://apis.google.com/js/client.js', () => {
+      resolve(gapi);
+    });
   });
 }
 
-function loadGapi(credential) {
-  gapi.load('client', {
-    callback: () => {
-      // Handle gapi.client initialization.
-      initGapiClient(credential);
-    },
-    onerror: () => {
-      // Handle loading error.
-    },
-    timeout: 5000,
-    ontimeout: () => {
-      // Handle timeout.
-    },
+
+export async function initGapiClient(gapi) {
+  return new Promise((resolve, reject) => {
+    gapi.load('client', {
+      callback: () => {
+        resolve(gapi.client);
+      },
+      onerror: (e) => {
+        reject(e);
+      },
+      timeout: 5000,
+      ontimeout: () => {
+        reject(new Error('Timed out'));
+      },
+    });
   });
 }
 
-async function initGapiClient({accessToken}) {
-  await gapi.client.setApiKey(config.firebaseApiKey);
-  await gapi.client.setToken({
+export async function initGapiClientClassroom(client, accessToken) {
+  client.setApiKey(config.firebaseApiKey);
+  client.setToken({
     access_token: accessToken,
   });
-  await gapi.client.load(
+  await client.load(
     'https://www.googleapis.com/discovery/v1/apis/classroom/v1/rest',
   );
-  listCourses();
-}
-
-async function listCourses() {
-  const courses = await gapi.client.classroom.courses.list();
-  console.log(courses);
+  return client.classroom;
 }

@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 const defaultState = new Immutable.Map({
   firebase: new Immutable.Map({exportingSnapshot: false}),
   projectExports: new Immutable.Map(),
+  courses: new Immutable.List(),
 });
 
 export default function clients(stateIn, action) {
@@ -37,6 +38,12 @@ export default function clients(stateIn, action) {
       return state.setIn(
         ['projectExports', action.payload.exportType],
         new Immutable.Map({status: 'error'}),
+      );
+
+    case 'UPDATE_COURSES':
+      return state.setIn(
+        ['courses'],
+        new Immutable.List(action.payload.courses),
       );
   }
 

@@ -5,6 +5,13 @@ import {
   exportProject,
   projectExportDisplayed,
   projectExportNotDisplayed,
+  createCourseWork,
+  updateCourses,
+  courseWorkCreated,
+  courseWorkDisplayed,
+  submitAssignment,
+  assignmentSubmitted,
+  assignmentSubmissionDisplayed,
 } from './clients';
 
 import {
@@ -31,6 +38,10 @@ import {
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
+  courseWorkSelectorOpened,
+  openCourseWorkSelector,
+  courseWorkSelectorClosed,
+  courseSelected,
 } from './ui';
 
 import {
@@ -97,4 +108,15 @@ export {
   evaluateConsoleEntry,
   projectCompiled,
   projectCompilationFailed,
+  openCourseWorkSelector,
+  courseWorkSelectorClosed,
+  createCourseWork,
+  updateCourses,
+  courseWorkSelectorOpened,
+  courseWorkCreated,
+  courseWorkDisplayed,
+  courseSelected,
+  submitAssignment,
+  assignmentSubmitted,
+  assignmentSubmissionDisplayed,
 };

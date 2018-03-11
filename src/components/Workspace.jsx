@@ -34,6 +34,7 @@ import {getCurrentProject} from '../selectors';
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
+import CourseWorkSelector from '../containers/CourseWorkSelector';
 import EditorsColumn from './EditorsColumn';
 import Output from './Output';
 import PopThrobber from './PopThrobber';
@@ -276,6 +277,7 @@ class Workspace extends React.Component {
   render() {
     return (
       <div className="layout">
+        <CourseWorkSelector />
         <TopBar />
         <NotificationList />
         <main className="layout__columns">

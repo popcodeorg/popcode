@@ -29,3 +29,35 @@ export const projectExportNotDisplayed = createAction(
   (url, exportType) => ({url, exportType}),
 );
 
+export const updateCourses = createAction(
+  'UPDATE_COURSES',
+  courses => ({courses}),
+);
+
+export const createCourseWork = createAction(
+  'CREATE_COURSE_WORK',
+  (type, selectedCourse) => ({type, selectedCourse}),
+);
+
+export const courseWorkDisplayed = createAction(
+  'COURSE_WORK_DISPLAYED',
+  courseWork => (courseWork),
+);
+
+export const courseWorkCreated = createAction(
+  'COURSE_WORK_CREATED',
+  courseWork => ({courseWork}),
+);
+
+export const submitAssignment = createAction(
+  'SUBMIT_ASSIGNMENT',
+);
+
+export const assignmentSubmitted = createAction(
+  'ASSIGNMENT_SUBMITTED',
+  assignment => ({assignment}),
+);
+
+export const assignmentSubmissionDisplayed = createAction(
+  'ASSIGNMENT_SUBMISSION_DISPLAYED',
+);

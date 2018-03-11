@@ -7,10 +7,9 @@ import uuid from 'uuid/v4';
 import {
   auth,
   database,
-  githubAuthProvider,
+  // githubAuthProvider,
   googleAuthProvider,
 } from '../services/appFirebase';
-import {initGapi} from '../services/gapi';
 
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
 const SESSION_TTL_MS = 5 * 60 * 1000;
@@ -55,6 +54,7 @@ async function loadProject(uid, projectKey) {
 
 export async function createProjectSnapshot(project) {
   const snapshotKey = uuid().toString();
+
   await snapshots.child(snapshotKey).set(project);
   return snapshotKey;
 }
@@ -108,7 +108,6 @@ export async function signIn() {
     // const userCredential = await auth.signInWithPopup(githubAuthProvider);
     const userCredential = await auth.signInWithPopup(googleAuthProvider);
     await saveUserCredential(userCredential);
-    initGapi(userCredential);
     return userCredential;
   } finally {
     setTimeout(() => {
@@ -165,4 +164,12 @@ export function setSessionUid() {
       {expires: new Date(Date.now() + SESSION_TTL_MS)},
     );
   }
+}
+
+export async function addAssignmentToSnapshot(snapshotKey, courseWork) {
+  await snapshots.child(snapshotKey).child('assignment').set({
+    courseId: courseWork.courseId,
+    id: courseWork.id,
+    alternateLink: courseWork.alternateLink,
+  });
 }

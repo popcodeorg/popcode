@@ -5,6 +5,8 @@ import {getCurrentProject} from '../selectors';
 import {
   projectExportDisplayed,
   projectExportNotDisplayed,
+  courseWorkDisplayed,
+  assignmentSubmissionDisplayed,
 } from '../actions/clients';
 import {openWindowWithContent} from '../util';
 import spinnerPageHtml from '../../templates/project-export.html';
@@ -50,10 +52,26 @@ export function* exportProject() {
   );
 }
 
+export function* courseWorkCreated({payload: {courseWork}}) {
+  yield put(courseWorkDisplayed({
+    url: courseWork.alternateLink,
+    exportType: 'assignment',
+  }));
+}
+
+export function* assignmentSubmitted({payload: {assignment}}) {
+  yield put(assignmentSubmissionDisplayed({
+    url: assignment.alternateLink,
+    exportType: 'assignment-submission',
+  }));
+}
+
 export default function* () {
   yield all([
     debounceFor('UPDATE_PROJECT_SOURCE', userDoneTyping, 1000),
     takeEvery('POP_OUT_PROJECT', popOutProject),
     takeEvery('EXPORT_PROJECT', exportProject),
+    takeEvery('COURSE_WORK_CREATED', courseWorkCreated),
+    takeEvery('ASSIGNMENT_SUBMITTED', assignmentSubmitted),
   ]);
 }

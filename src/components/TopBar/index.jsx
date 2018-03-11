@@ -10,6 +10,7 @@ import LibraryPicker from './LibraryPicker';
 import NewProjectButton from './NewProjectButton';
 import ProjectPicker from './ProjectPicker';
 import SnapshotButton from './SnapshotButton';
+import SubmitButton from './SubmitButton';
 import TextSize from './TextSize';
 
 function uiVariants({validationState, isUserTyping}) {
@@ -26,6 +27,7 @@ function uiVariants({validationState, isUserTyping}) {
 }
 
 export default function TopBar({
+  assignment,
   currentProjectKey,
   currentUser,
   enabledLibraries,
@@ -49,6 +51,8 @@ export default function TopBar({
   onExportRepo,
   onExportToClassroom,
   onLogOut,
+  onOpenCourseWorkSelector,
+  onSumbitAssignment,
   onStartLogIn,
   onToggleLibrary,
   onToggleTextSize,
@@ -71,6 +75,13 @@ export default function TopBar({
         isInProgress={isSnapshotInProgress}
         onClick={onCreateSnapshot}
       />
+
+      {assignment && isUserAuthenticated ? (
+        <SubmitButton onClick={onSumbitAssignment} />
+      ) :
+        null
+      }
+
       <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
       <div className="top-bar__spacer" />
       <NewProjectButton
@@ -102,12 +113,14 @@ export default function TopBar({
         onExportGist={onExportGist}
         onExportRepo={onExportRepo}
         onExportToClassroom={onExportToClassroom}
+        onOpenCourseWorkSelector={onOpenCourseWorkSelector}
       />
     </header>
   );
 }
 
 TopBar.propTypes = {
+  assignment: PropTypes.object,
   currentProjectKey: PropTypes.string,
   currentUser: PropTypes.object.isRequired,
   enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -131,12 +144,15 @@ TopBar.propTypes = {
   onExportRepo: PropTypes.func.isRequired,
   onExportToClassroom: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
+  onOpenCourseWorkSelector: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
+  onSumbitAssignment: PropTypes.func.isRequired,
   onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,
 };
 
 TopBar.defaultProps = {
+  assignment: null,
   currentProjectKey: null,
   openMenu: null,
 };

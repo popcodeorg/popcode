@@ -17,5 +17,7 @@ githubAuthProvider.addScope('public_repo');
 
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 googleAuthProvider.addScope('https://www.googleapis.com/auth/classroom.courses.readonly');
+googleAuthProvider.addScope('https://www.googleapis.com/auth/classroom.coursework.students');
+googleAuthProvider.addScope('https://www.googleapis.com/auth/classroom.coursework.me');
 
 export {auth, database, githubAuthProvider, googleAuthProvider};

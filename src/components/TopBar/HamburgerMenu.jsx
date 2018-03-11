@@ -20,6 +20,7 @@ const HamburgerMenu = createMenu({
     onExportGist,
     onExportRepo,
     onExportToClassroom,
+    onOpenCourseWorkSelector,
   }) {
     return tap([], (items) => {
       items.push(
@@ -36,6 +37,17 @@ const HamburgerMenu = createMenu({
           {t('top-bar.share-to-classroom')}
         </MenuItem>,
       );
+
+      if (isUserAuthenticated) {
+        items.push(
+          <MenuItem
+            key="openCourseWorkSelector"
+            onClick={onOpenCourseWorkSelector}
+          >
+            Google Classroom
+          </MenuItem>,
+        );
+      }
 
       if (isUserAuthenticated && isExperimental) {
         items.push(
@@ -100,6 +112,7 @@ HamburgerMenu.propTypes = {
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onExportToClassroom: PropTypes.func.isRequired,
+  onOpenCourseWorkSelector: PropTypes.func.isRequired,
 };
 
 export default HamburgerMenu;

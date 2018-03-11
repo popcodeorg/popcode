@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import TopBar from '../components/TopBar';
 import {
+  getAssignment,
   getCurrentProjectKey,
   getCurrentUser,
   getCurrentValidationState,
@@ -22,6 +23,8 @@ import {
   createProject,
   createSnapshot,
   exportProject,
+  openCourseWorkSelector,
+  submitAssignment,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
@@ -31,6 +34,7 @@ import {
 
 function mapStateToProps(state) {
   return {
+    assignment: getAssignment(state),
     currentProjectKey: getCurrentProjectKey(state),
     currentUser: getCurrentUser(state),
     enabledLibraries: getEnabledLibraries(state),
@@ -90,6 +94,10 @@ function mapDispatchToProps(dispatch) {
       dispatch(logOut());
     },
 
+    onOpenCourseWorkSelector() {
+      dispatch(openCourseWorkSelector());
+    },
+
     onStartLogIn() {
       dispatch(logIn());
     },
@@ -97,6 +105,11 @@ function mapDispatchToProps(dispatch) {
     onToggleTextSize() {
       dispatch(toggleEditorTextSize());
     },
+
+    onSumbitAssignment() {
+      dispatch(submitAssignment());
+    },
+
   };
 }
 

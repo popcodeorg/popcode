@@ -28,12 +28,18 @@ import isTextSizeLarge from './isTextSizeLarge';
 import isUserAuthenticated from './isUserAuthenticated';
 import isUserTyping from './isUserTyping';
 import makeGetProjectPreview from './makeGetProjectPreview';
+import isCourseWorkSelectorOpen from './isCourseWorkSelectorOpen';
+import getCourses from './getCourses';
+import getSelectedCourse from './getSelectedCourse';
+import getAssignment from './getAssignment';
 
 export {
   getAllProjectKeys,
   getAllProjects,
+  getAssignment,
   getCompiledProjects,
   getConsoleHistory,
+  getCourses,
   getCurrentCompiledProjectKey,
   getCurrentProject,
   getCurrentProjectInstructions,
@@ -48,6 +54,7 @@ export {
   getOpenTopBarMenu,
   getProject,
   getRequestedFocusedLine,
+  getSelectedCourse,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isExperimental,
@@ -59,4 +66,5 @@ export {
   isUserAuthenticated,
   isUserTyping,
   makeGetProjectPreview,
+  isCourseWorkSelectorOpen,
 };
