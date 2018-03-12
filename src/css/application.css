@@ -83,6 +83,7 @@
   --size-rounded-corners: 0.2em;
   --size-top-bar: 4em;
   --size-top-bar-menu-button: 2.8em;
+  --size-instructions-menu-padding: calc(28px + 1rem);
   --box-shadow: 0 0 0.1em 0 rgba(0, 0, 0, 0.5);
   --font-size-menu: 1.7vh;
 }
@@ -351,16 +352,22 @@ body {
 /** @define instructions-editor */
 
 .instructions-editor {
-  height: 100%;
-  padding-top: calc(28px + 1rem);
+  height: calc(100% - var(--size-instructions-menu-padding) - 1rem);
+  padding-top: var(--size-instructions-menu-padding);
 }
 
 .instructions-editor__input {
-  height: 100%;
+  width: 100%;
+  height: calc(100% - 1rem);
   margin: 0;
+  font-family: monospace;
+  font-size: 1rem;
+  background-color: transparent;
+  border: 0;
   outline: 0;
   word-wrap: break-word;
   white-space: pre-wrap;
+  resize: none;
 }
 
 .instructions-editor__menu {
@@ -369,7 +376,6 @@ body {
   right: 0;
   left: 0;
   padding: 0.5rem;
-  margin-bottom: 100%;
   text-align: right;
   background-color: var(--color-light-gray);
 }

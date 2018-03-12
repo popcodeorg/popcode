@@ -4,9 +4,8 @@ import {t} from 'i18next';
 import bindAll from 'lodash/bindAll';
 
 export default class InstructionsEditor extends React.Component {
-  constructor({instructions}) {
+  constructor() {
     super();
-    this.state = {instructions};
     bindAll(this, '_handleCancelEditing', '_handleSaveChanges', '_ref');
   }
 
@@ -15,12 +14,12 @@ export default class InstructionsEditor extends React.Component {
   }
 
   _handleSaveChanges() {
-    const newValue = this.editor.innerText.trim();
+    const newValue = this.editor.value.trim();
     this.props.onSaveChanges(this.props.projectKey, newValue);
   }
 
-  _ref(preElement) {
-    this.editor = preElement;
+  _ref(editorElement) {
+    this.editor = editorElement;
   }
 
   render() {
@@ -40,13 +39,11 @@ export default class InstructionsEditor extends React.Component {
             {t('workspace.components.instructions.cancel')}
           </button>
         </div>
-        <pre
-          contentEditable
+        <textarea
           className="instructions-editor__input"
+          defaultValue={this.props.instructions}
           ref={this._ref}
-        >
-          {this.state.instructions}
-        </pre>
+        />
       </div>
     );
   }
