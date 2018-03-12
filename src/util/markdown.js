@@ -1,6 +1,7 @@
 import memoize from 'lodash/memoize';
 import remark from 'remark';
 import remarkReact from 'remark-react';
+import externalLinks from 'remark-external-links';
 import remarkLowlight from 'remark-react-lowlight';
 import css from 'highlight.js/lib/languages/css';
 import xml from 'highlight.js/lib/languages/xml';
@@ -17,12 +18,14 @@ const remarkWithHighlighting = memoize(() => {
     }),
   });
 
-  return remark().use(remarkReact, {
-    sanitize: schema,
-    remarkReactComponents: {
-      code: remarkLowlight({css, js, xml}),
-    },
-  });
+  return remark().
+    use(externalLinks).
+    use(remarkReact, {
+      sanitize: schema,
+      remarkReactComponents: {
+        code: remarkLowlight({css, js, xml}),
+      },
+    });
 });
 
 export function toReact(markdown) {
