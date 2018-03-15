@@ -24,12 +24,6 @@ const HamburgerMenu = createMenu({
     return tap([], (items) => {
       items.push(
         <MenuItem
-          key="exportGist"
-          onClick={isGistExportInProgress ? noop : onExportGist}
-        >
-          {t('top-bar.export-gist')}
-        </MenuItem>,
-        <MenuItem
           key="exportToClassroom"
           onClick={isClassroomExportInProgress ? noop : onExportToClassroom}
         >
@@ -37,15 +31,26 @@ const HamburgerMenu = createMenu({
         </MenuItem>,
       );
 
-      if (isUserAuthenticated && isExperimental) {
+      if (isUserAuthenticated) {
         items.push(
           <MenuItem
-            key="exportRepo"
-            onClick={isRepoExportInProgress ? noop : onExportRepo}
+            key="exportGist"
+            onClick={isGistExportInProgress ? noop : onExportGist}
           >
-            {t('top-bar.export-repo')}
+            {t('top-bar.export-gist')}
           </MenuItem>,
         );
+
+        if (isExperimental) {
+          items.push(
+            <MenuItem
+              key="exportRepo"
+              onClick={isRepoExportInProgress ? noop : onExportRepo}
+            >
+              {t('top-bar.export-repo')}
+            </MenuItem>,
+          );
+        }
       }
 
       items.push(
