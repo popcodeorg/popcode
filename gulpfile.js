@@ -159,7 +159,6 @@ gulp.task('browserSync', ['static'], () => {
           compiler,
           {
             lazy: false,
-            stats: 'errors-only',
           },
         ),
       ],

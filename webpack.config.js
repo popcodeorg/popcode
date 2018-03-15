@@ -140,14 +140,12 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
 
   return {
     mode: isProduction ? 'production' : 'development',
-    entry: {
+    entry: isTest ? undefined : {
       main: './src/application.js',
       preview: './src/preview.js',
     },
     optimization: {
-      splitChunks: {
-        chunks: 'all',
-      },
+      splitChunks: isTest ? false : {chunks: 'all'},
     },
     output: {
       path: path.resolve(__dirname, './dist'),
