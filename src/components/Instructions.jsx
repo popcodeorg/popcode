@@ -19,18 +19,18 @@ export default function Instructions({
     <div
       className="layout__instructions"
     >
-      <div className="instructions">
-        {
-          isEditing ?
-            <InstructionsEditor
-              instructions={instructions}
-              projectKey={projectKey}
-              onCancelEditing={onCancelEditing}
-              onSaveChanges={onSaveChanges}
-            /> :
-            markdownToReact(instructions)
-        }
-      </div>
+      {
+        isEditing ?
+          <InstructionsEditor
+            instructions={instructions}
+            projectKey={projectKey}
+            onCancelEditing={onCancelEditing}
+            onSaveChanges={onSaveChanges}
+          /> :
+          <div className="instructions">
+            {markdownToReact(instructions)}
+          </div>
+      }
     </div>
   );
 }

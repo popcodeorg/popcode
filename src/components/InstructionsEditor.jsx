@@ -39,11 +39,15 @@ export default class InstructionsEditor extends React.Component {
             {t('workspace.components.instructions.cancel')}
           </button>
         </div>
-        <textarea
-          className="instructions-editor__input"
-          defaultValue={this.props.instructions}
-          ref={this._ref}
-        />
+        <div className="instructions-editor__input">
+          <textarea
+            defaultValue={this.props.instructions}
+            ref={this._ref}
+          />
+        </div>
+        <div className="instructions-editor__footer">
+          Styling with Markdown is supported
+        </div>
       </div>
     );
   }

@@ -352,32 +352,43 @@ body {
 /** @define instructions-editor */
 
 .instructions-editor {
-  height: calc(100% - var(--size-instructions-menu-padding) - 1rem);
-  padding-top: var(--size-instructions-menu-padding);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-low-contrast-gray);
 }
 
 .instructions-editor__input {
-  width: 100%;
-  height: calc(100% - 1rem);
-  margin: 0;
-  font-family: monospace;
-  font-size: 1rem;
-  background-color: transparent;
-  border: 0;
-  outline: 0;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-  resize: none;
+  padding: 1rem 1rem 0;
+  flex-grow: 1;
+  overflow-y: scroll;
+
+  /* postcss-bem-linter: ignore */
+  & textarea {
+    height: 100%;
+    width: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 1rem;
+    border: 0;
+    outline: 0;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    resize: none;
+  }
 }
 
 .instructions-editor__menu {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
   padding: 0.5rem;
   text-align: right;
   background-color: var(--color-light-gray);
+}
+
+.instructions-editor__footer {
+  margin: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-light-gray);
 }
 
 .instructions-editor__menu-button:not(:last-child) {
