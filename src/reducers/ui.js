@@ -2,15 +2,19 @@ import Immutable from 'immutable';
 import {
   updateEditorColumnFlex,
   updateWorkspaceRowFlex,
+  updateOutputColumnFlex,
 } from '../util/resize';
 
+import FlexContainer from '../records/FlexContainer';
 
 const DEFAULT_COLUMN_FLEX = new Immutable.List(['1', '1', '1']);
 const DEFAULT_ROW_FLEX = new Immutable.List(['1', '1']);
+const DEFAULT_OUTPUT_COLUMN_FLEX = new Immutable.List(['1', '1']);
+
 export const DEFAULT_WORKSPACE = new Immutable.Map({
-  columnFlex: DEFAULT_COLUMN_FLEX,
-  rowFlex: DEFAULT_ROW_FLEX,
-  isDraggingColumnDivider: false,
+  editors: new FlexContainer({flex: DEFAULT_COLUMN_FLEX}),
+  columns: new FlexContainer({flex: DEFAULT_ROW_FLEX}),
+  output: new FlexContainer({flex: DEFAULT_OUTPUT_COLUMN_FLEX}),
 });
 
 const defaultState = new Immutable.Map().
@@ -90,23 +94,58 @@ export default function ui(stateIn, action) {
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.setIn(['editors', 'requestedFocusedLine'], null);
 
-    case 'DRAG_ROW_DIVIDER':
-      return state.updateIn(['workspace', 'columnFlex'], (prevFlex) => {
-        const newFlex = updateEditorColumnFlex(action.payload);
-        return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
-      });
+    case 'DRAG_DIVIDER':
+      return state.updateIn(['workspace', action.payload.section, 'flex'],
+        (prevFlex) => {
+          let newFlex;
+          if (action.payload.section === 'editors') {
+            newFlex = updateEditorColumnFlex(action.payload.data);
+          } else if (action.payload.section === 'columns') {
+            newFlex = updateWorkspaceRowFlex(action.payload.data);
+          } else if (action.payload.section === 'output') {
+            newFlex = updateOutputColumnFlex(action.payload.data);
+          }
+          return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
+        },
+      );
 
-    case 'DRAG_COLUMN_DIVIDER':
-      return state.updateIn(['workspace', 'rowFlex'], (prevFlex) => {
-        const newFlex = updateWorkspaceRowFlex(action.payload);
-        return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
-      });
+    case 'START_DRAG_DIVIDER':
+      return state.setIn([
+        'workspace',
+        action.payload,
+        'isDraggingDivider',
+      ],
+      true,
+      );
 
-    case 'START_DRAG_COLUMN_DIVIDER':
-      return state.setIn(['workspace', 'isDraggingColumnDivider'], true);
+    case 'STOP_DRAG_DIVIDER':
+      return state.setIn([
+        'workspace',
+        action.payload,
+        'isDraggingDivider',
+      ],
+      false,
+      );
 
-    case 'STOP_DRAG_COLUMN_DIVIDER':
-      return state.setIn(['workspace', 'isDraggingColumnDivider'], false);
+    case 'STORE_RESIZABLE_SECTION_REF':
+      return state.setIn([
+        'workspace',
+        action.payload.section,
+        'refs',
+        action.payload.index,
+      ],
+      action.payload.ref,
+      );
+
+    case 'STORE_DIVIDER_REF':
+      return state.setIn([
+        'workspace',
+        action.payload.section,
+        'dividerRefs',
+        action.payload.index,
+      ],
+      action.payload.ref,
+      );
 
     case 'GIST_NOT_FOUND':
       return addNotification(

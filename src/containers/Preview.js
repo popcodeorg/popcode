@@ -7,15 +7,19 @@ import {
   consoleValueProduced,
   popOutProject,
   refreshPreview,
+  storeResizableSectionRef,
 } from '../actions';
 import {
   getCompiledProjects,
   getConsoleHistory,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
+  makeGetResizableSectionFlex,
+  getHiddenUIComponents,
 } from '../selectors';
 
 function mapStateToProps(state) {
+  const getResizableSectionFlex = makeGetResizableSectionFlex();
   return {
     compiledProjects: getCompiledProjects(state),
     consoleEntries: getConsoleHistory(state),
@@ -23,6 +27,8 @@ function mapStateToProps(state) {
       !isUserTyping(state) &&
         !isCurrentProjectSyntacticallyValid(state)
     ),
+    outputRowFlex: getResizableSectionFlex(state, 'output'),
+    isConsoleOpen: !getHiddenUIComponents(state).includes('console'),
   };
 }
 
@@ -50,6 +56,10 @@ function mapDispatchToProps(dispatch) {
 
     onRuntimeError(error) {
       dispatch(addRuntimeError('javascript', error));
+    },
+
+    onRef(ref) {
+      dispatch(storeResizableSectionRef('output', 0, ref));
     },
   };
 }

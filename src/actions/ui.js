@@ -12,20 +12,27 @@ export const editorFocusedRequestedLine = createAction(
   'EDITOR_FOCUSED_REQUESTED_LINE',
 );
 
-export const dragRowDivider = createAction(
-  'DRAG_ROW_DIVIDER',
+export const dragDivider = createAction(
+  'DRAG_DIVIDER',
+  (section, data) => ({section, data}),
 );
 
-export const dragColumnDivider = createAction(
-  'DRAG_COLUMN_DIVIDER',
+export const startDragDivider = createAction(
+  'START_DRAG_DIVIDER',
 );
 
-export const startDragColumnDivider = createAction(
-  'START_DRAG_COLUMN_DIVIDER',
+export const stopDragDivider = createAction(
+  'STOP_DRAG_DIVIDER',
 );
 
-export const stopDragColumnDivider = createAction(
-  'STOP_DRAG_COLUMN_DIVIDER',
+export const storeResizableSectionRef = createAction(
+  'STORE_RESIZABLE_SECTION_REF',
+  (section, index, ref) => ({section, index, ref}),
+);
+
+export const storeDividerRef = createAction(
+  'STORE_DIVIDER_REF',
+  (section, index, ref) => ({section, index, ref}),
 );
 
 export const popOutProject = createAction(

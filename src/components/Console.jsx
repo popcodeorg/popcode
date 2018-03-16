@@ -3,6 +3,7 @@ import partial from 'lodash/partial';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import prefixAll from 'inline-style-prefixer/static';
 import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
 
@@ -17,6 +18,8 @@ export default function Console({
   onClearConsoleEntries,
   onInput,
   onToggleVisible,
+  onRef,
+  outputRowFlex,
   onRequestedLineFocused,
   requestedFocusedLine,
 }) {
@@ -55,7 +58,15 @@ export default function Console({
   const chevron = isOpen ? ' \uf078' : ' \uf077';
 
   return (
-    <div className="console">
+    <div
+      // className={isOpen ? 'output__row console' :
+      //   'output__row_collapsed console'}
+      className={
+        classnames('output__row console', {output__row_collapsed: !isOpen})
+      }
+      ref={onRef}
+      style={isOpen ? prefixAll({flex: outputRowFlex[1]}) : null}
+    >
       <div
         className="label console__label"
         onClick={partial(onToggleVisible, currentProjectKey)}
@@ -86,10 +97,12 @@ Console.propTypes = {
   isHidden: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
+  outputRowFlex: PropTypes.array.isRequired,
   requestedFocusedLine: PropTypes.object,
   onClearConsoleEntries: PropTypes.func.isRequired,
   onConsoleClicked: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
+  onRef: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };

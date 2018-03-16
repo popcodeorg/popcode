@@ -7,48 +7,48 @@ import bindAll from 'lodash/bindAll';
 import includes from 'lodash/includes';
 import isNull from 'lodash/isNull';
 import get from 'lodash/get';
-import partial from 'lodash/partial';
 import map from 'lodash/map';
 import {t} from 'i18next';
 import qs from 'qs';
-import {getNodeWidth, getNodeWidths} from '../util/resize';
+import {
+  getNodeWidth,
+  getNodeWidths,
+} from '../util/resize';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {
-  updateProjectSource,
-  hideComponent,
-  unhideComponent,
-  editorFocusedRequestedLine,
-  dragRowDivider,
-  dragColumnDivider,
-  startDragColumnDivider,
-  stopDragColumnDivider,
+  dragDivider,
+  startDragDivider,
+  stopDragDivider,
+  storeDividerRef,
   toggleComponent,
   applicationLoaded,
-
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
-import {getCurrentProject} from '../selectors';
-
+import {
+  getCurrentProject,
+  makeGetDividerRefs,
+  getErrors,
+  makeGetResizableSectionRefs,
+  isUserTyping,
+} from '../selectors';
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
-import EditorsColumn from './EditorsColumn';
-import Output from './Output';
+import Output from '../containers/Output';
+import EditorsColumn from '../containers/EditorsColumn';
 import PopThrobber from './PopThrobber';
 
 function mapStateToProps(state) {
+  const getResizableSectionRefs = makeGetResizableSectionRefs();
+  const getDividerRefs = makeGetDividerRefs();
   return {
+    environmentColumnDividerRefs: getDividerRefs(state, 'columns'),
+    environmentColumnRefs: getResizableSectionRefs(state, 'columns'),
     currentProject: getCurrentProject(state),
-    errors: state.get('errors').toJS(),
-    isDraggingColumnDivider: state.getIn(
-      ['ui', 'workspace', 'isDraggingColumnDivider'],
-    ),
-    isUserTyping: state.getIn(['ui', 'editors', 'typing']),
-    editorsFlex: state.getIn(['ui', 'workspace', 'columnFlex']).toJS(),
-    rowsFlex: state.getIn(['ui', 'workspace', 'rowFlex']).toJS(),
-    ui: state.get('ui').toJS(),
+    errors: getErrors(state),
+    isUserTyping: isUserTyping(state),
   };
 }
 
@@ -59,18 +59,11 @@ class Workspace extends React.Component {
       this,
       '_handleUnload',
       '_handleClickInstructionsBar',
-      '_handleComponentUnhide',
-      '_handleComponentHide',
       '_handleDividerDrag',
       '_handleDividerStart',
       '_handleDividerStop',
-      '_handleEditorInput',
-      '_handleEditorsDividerDrag',
-      '_handleRequestedLineFocused',
       '_storeDividerRef',
-      '_storeColumnRef',
     );
-    this.columnRefs = [null, null];
   }
 
   componentWillMount() {
@@ -112,34 +105,6 @@ class Workspace extends React.Component {
     }
   }
 
-  _handleComponentHide(componentName) {
-    this.props.dispatch(
-      hideComponent(
-        this.props.currentProject.projectKey,
-        componentName,
-      ),
-    );
-  }
-
-  _handleComponentUnhide(componentName) {
-    this.props.dispatch(
-      unhideComponent(
-        this.props.currentProject.projectKey,
-        componentName,
-      ),
-    );
-  }
-
-  _handleEditorInput(language, source) {
-    this.props.dispatch(
-      updateProjectSource(
-        this.props.currentProject.projectKey,
-        language,
-        source,
-      ),
-    );
-  }
-
   _getOverallValidationState() {
     const errorStates = map(values(this.props.errors), 'state');
 
@@ -159,28 +124,6 @@ class Workspace extends React.Component {
     }
 
     return 'passed';
-  }
-
-  _renderOutput() {
-    const {isDraggingColumnDivider, rowsFlex} = this.props;
-    return (
-      <Output
-        ignorePointerEvents={
-          isDraggingColumnDivider ||
-            Boolean(get(this, 'props.ui.topBar.openMenu'))
-        }
-        style={{flex: rowsFlex[1]}}
-        onRef={partial(this._storeColumnRef, 1)}
-      />
-    );
-  }
-
-  _handleEditorsDividerDrag(data) {
-    this.props.dispatch(dragRowDivider(data));
-  }
-
-  _handleRequestedLineFocused() {
-    this.props.dispatch(editorFocusedRequestedLine());
   }
 
   _handleClickInstructionsBar() {
@@ -205,26 +148,22 @@ class Workspace extends React.Component {
     );
   }
 
-  _storeColumnRef(index, column) {
-    this.columnRefs[index] = column;
-  }
-
-  _storeDividerRef(divider) {
-    this.dividerRef = divider;
+  _storeDividerRef(ref) {
+    this.props.dispatch(storeDividerRef('columns', 0, ref));
   }
 
   _handleDividerStart() {
-    this.props.dispatch(startDragColumnDivider());
+    this.props.dispatch(startDragDivider('columns'));
   }
 
   _handleDividerStop() {
-    this.props.dispatch(stopDragColumnDivider());
+    this.props.dispatch(stopDragDivider('columns'));
   }
 
   _handleDividerDrag(_, {deltaX, lastX, x}) {
-    this.props.dispatch(dragColumnDivider({
-      columnWidths: getNodeWidths(this.columnRefs),
-      dividerWidth: getNodeWidth(this.dividerRef),
+    this.props.dispatch(dragDivider('columns', {
+      columnWidths: getNodeWidths(this.props.environmentColumnRefs),
+      dividerWidth: getNodeWidth(this.props.environmentColumnDividerRefs[0]),
       deltaX,
       lastX,
       x,
@@ -232,32 +171,13 @@ class Workspace extends React.Component {
   }
 
   _renderEnvironment() {
-    const {
-      currentProject,
-      editorsFlex,
-      errors,
-      rowsFlex,
-      ui,
-    } = this.props;
-    if (isNull(currentProject)) {
+    if (isNull(this.props.currentProject)) {
       return <PopThrobber message={t('workspace.loading')} />;
     }
 
     return (
       <div className="environment">
-        <EditorsColumn
-          currentProject={currentProject}
-          editorsFlex={editorsFlex}
-          errors={errors}
-          style={{flex: rowsFlex[0]}}
-          ui={ui}
-          onComponentHide={this._handleComponentHide}
-          onComponentUnhide={this._handleComponentUnhide}
-          onDividerDrag={this._handleEditorsDividerDrag}
-          onEditorInput={this._handleEditorInput}
-          onRef={partial(this._storeColumnRef, 0)}
-          onRequestedLineFocused={this._handleRequestedLineFocused}
-        />
+        <EditorsColumn />
         <DraggableCore
           onDrag={this._handleDividerDrag}
           onStart={this._handleDividerStart}
@@ -268,7 +188,7 @@ class Workspace extends React.Component {
             ref={this._storeDividerRef}
           />
         </DraggableCore>
-        {this._renderOutput()}
+        <Output />
       </div>
     );
   }
@@ -293,12 +213,10 @@ class Workspace extends React.Component {
 Workspace.propTypes = {
   currentProject: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
-  editorsFlex: PropTypes.array.isRequired,
+  environmentColumnDividerRefs: PropTypes.array.isRequired,
+  environmentColumnRefs: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
-  isDraggingColumnDivider: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool,
-  rowsFlex: PropTypes.array.isRequired,
-  ui: PropTypes.object.isRequired,
 };
 
 Workspace.defaultProps = {

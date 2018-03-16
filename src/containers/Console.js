@@ -5,6 +5,7 @@ import {
   getConsoleHistory,
   getCurrentProjectKey,
   getHiddenUIComponents,
+  makeGetResizableSectionFlex,
   getRequestedFocusedLine,
   isCurrentProjectSyntacticallyValid,
   isTextSizeLarge,
@@ -12,18 +13,21 @@ import {
 import {
   evaluateConsoleEntry,
   toggleComponent,
+  storeResizableSectionRef,
   focusLine,
   editorFocusedRequestedLine,
   clearConsoleEntries,
 } from '../actions';
 
 function mapStateToProps(state) {
+  const getResizableSectionFlex = makeGetResizableSectionFlex();
   return {
     currentCompiledProjectKey: getCurrentCompiledProjectKey(state),
     currentProjectKey: getCurrentProjectKey(state),
     history: getConsoleHistory(state),
     isOpen: !getHiddenUIComponents(state).includes('console'),
     isTextSizeLarge: isTextSizeLarge(state),
+    outputRowFlex: getResizableSectionFlex(state, 'output'),
     requestedFocusedLine: getRequestedFocusedLine(state),
     isHidden: !isCurrentProjectSyntacticallyValid(state),
   };
@@ -41,6 +45,10 @@ function mapDispatchToProps(dispatch) {
 
     onToggleVisible(projectKey) {
       dispatch(toggleComponent(projectKey, 'console'));
+    },
+
+    onRef(ref) {
+      dispatch(storeResizableSectionRef('output', 1, ref));
     },
 
     onConsoleClicked() {

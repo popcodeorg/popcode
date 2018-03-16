@@ -794,7 +794,7 @@
             "never"
         ],
         "switch-colon-spacing": [
-          2,
+          2
         ],
         "use-isnan": [
           2
