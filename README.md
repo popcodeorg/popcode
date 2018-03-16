@@ -132,8 +132,15 @@ feedback from dozens of instructors.
 
 ### Running locally ###
 
-Pretty easy. Just check out the code. You’ll need [Yarn](https://yarnpkg.com/),
-which is the cool new NPM. It’s [easy to
+#### With Docker
+
+If you already use Docker, your best bet is to use it for Popcode development
+too. A simple `docker-compose up` will do the trick.
+
+#### Without Docker
+
+Still pretty easy. Just check out the code. You’ll need
+[Yarn](https://yarnpkg.com/), which is the cool new NPM. It’s [easy to
 install](https://yarnpkg.com/en/docs/install).
 
 Once you’ve got it just run:
