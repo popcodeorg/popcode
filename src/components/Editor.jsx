@@ -4,6 +4,8 @@ import bindAll from 'lodash/bindAll';
 import get from 'lodash/get';
 import throttle from 'lodash/throttle';
 import noop from 'lodash/noop';
+import includes from 'lodash/includes';
+import ace from 'brace';
 import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
 
 import 'brace/ext/searchbox';
@@ -15,6 +17,13 @@ import 'brace/theme/monokai';
 const RESIZE_THROTTLE = 250;
 const NORMAL_FONTSIZE = 14;
 const LARGE_FONTSIZE = 20;
+const {Range} = ace.acequire('ace/range');
+const BRACKETTYPES = [
+  'meta.tag.tag-name.xml',
+  'paren.lparen',
+  'paren.rparen',
+];
+
 
 class Editor extends React.Component {
   constructor() {
@@ -112,10 +121,27 @@ class Editor extends React.Component {
     }
   }
 
+  _addMarkerToOpeningBracket() {
+    const {row, column} = this._editor.getCursorPosition();
+    const token = this._editor.session.getTokenAt(row, column);
+    this._editor.session.removeMarker(this._editor.session.$highlightMarker);
+    if (token && includes(BRACKETTYPES, token.type)) {
+      this._editor.session.$highlightMarker =
+        this._editor.session.addMarker(
+          new Range(row, token.start, row, token.start + token.value.length),
+          'ace_bracket',
+          'text',
+        );
+    }
+  }
+
   _startNewSession(source) {
     const session = createAceSessionWithoutWorker(this.props.language, source);
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
+    });
+    session.selection.on('changeCursor', () => {
+      this._addMarkerToOpeningBracket();
     });
     session.setAnnotations(this.props.errors);
     this._editor.setSession(session);

@@ -452,6 +452,11 @@ body {
   pointer-events: none;
 }
 
+/* postcss-bem-linter: ignore */
+div.ace_bracket.ace_start.ace_br15 {
+  border: 1px solid #68685b;
+}
+
 /** @define output */
 
 .output {
