@@ -1,4 +1,6 @@
 import qs from 'qs';
+import remark from 'remark';
+import stripMarkdown from 'strip-markdown';
 import {
   initGapi,
   initGapiClient,
@@ -35,14 +37,18 @@ export async function createClassroomCourseWork(
   courseId,
   url,
   title,
+  instructions,
 ) {
   const gapi = await initGapi();
   const client = await initGapiClient(gapi);
   const classroom = await initGapiClientClassroom(client, accessToken);
+  const description =
+    remark().use(stripMarkdown).processSync(instructions).toString();
   const newCoursework = await classroom.courses.courseWork.create({
     courseId,
     title,
     workType,
+    description,
     state: 'PUBLISHED',
     dueDate: {
       year: 2018,

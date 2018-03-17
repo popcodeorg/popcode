@@ -84,6 +84,7 @@ export function* createCourseWork({payload: {type, selectedCourse}}) {
     selectedCourse,
     snapshotUrl,
     projectTitle,
+    project.instructions,
   );
   yield call(addAssignmentToSnapshot, snapshotKey, courseWork);
   yield put(courseWorkCreated(courseWork));
