@@ -5,7 +5,6 @@ import trim from 'lodash/trim';
 import performWithRetries from '../util/performWithRetries';
 import compileProject from '../util/compileProject';
 
-const anonymousGithub = new GitHub({});
 const COMMIT_MESSAGE = 'Created using Popcode: https://popcode.org';
 const MASTER = 'master';
 const GH_PAGES = 'gh-pages';
@@ -70,11 +69,7 @@ export async function createGistFromProject(project, user) {
   const response =
     await performWithRetryNetworkErrors(() => github.getGist().create(gist));
 
-  const gistData = response.data;
-  if (canUpdateGist(user)) {
-    return updateGistWithImportUrl(github, gistData);
-  }
-  return gistData;
+  return updateGistWithImportUrl(github, response.data);
 }
 
 export async function loadGistFromId(gistId, user) {
@@ -253,19 +248,7 @@ function githubWithAccessToken(token) {
   return new GitHub({auth: 'oauth', token});
 }
 
-function getGithubToken(user) {
-  return get(user, ['accessTokens', 'github.com']);
-}
-
 function clientForUser(user) {
-  const githubToken = getGithubToken(user);
-  if (githubToken) {
-    return githubWithAccessToken(githubToken);
-  }
-
-  return anonymousGithub;
-}
-
-function canUpdateGist(user) {
-  return Boolean(getGithubToken(user));
+  const githubToken = get(user, ['accessTokens', 'github.com']);
+  return githubWithAccessToken(githubToken);
 }

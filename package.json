@@ -200,6 +200,7 @@
     "redux-saga": "^0.16.0",
     "redux-saga-debounce-effect": "^0.2.2",
     "remark": "^9.0.0",
+    "remark-external-links": "^1.0.1",
     "remark-react": "^4.0.0",
     "remark-react-lowlight": "^0.7.0",
     "reselect": "^3.0.1",
