@@ -34,21 +34,19 @@ const HamburgerMenu = createMenu({
         </MenuItem>,
       );
 
-      if (isExperimental) {
-        items.push(
-          <MenuItem
-            isDisabled={isEditingInstructions}
-            key="addOrEditInstructions"
-            onClick={isEditingInstructions ? noop : onStartEditingInstructions}
-          >
-            {
-              hasInstructions ?
-                t('top-bar.edit-instructions') :
-                t('top-bar.add-instructions')
-            }
-          </MenuItem>,
-        );
-      }
+      items.push(
+        <MenuItem
+          isDisabled={isEditingInstructions}
+          key="addOrEditInstructions"
+          onClick={isEditingInstructions ? noop : onStartEditingInstructions}
+        >
+          {
+            hasInstructions ?
+              t('top-bar.edit-instructions') :
+              t('top-bar.add-instructions')
+          }
+        </MenuItem>,
+      );
 
       if (isUserAuthenticated) {
         items.push(
