@@ -23,6 +23,13 @@ const defaultState = new Immutable.Map().
   set('notifications', new Immutable.Map()).
   set('topBar', new Immutable.Map({openMenu: null}));
 
+function restoreComponentsSizes(componentName, state) {
+  if (componentName === 'output') {
+    return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
+  }
+  return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
+}
+
 function addNotification(state, type, severity, payload = {}) {
   return state.setIn(
     ['notifications', type],
@@ -58,10 +65,8 @@ export default function ui(stateIn, {type, payload}) {
 
     case 'HIDE_COMPONENT':
     case 'UNHIDE_COMPONENT':
-      if (payload.componentName === 'output') {
-        return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
-      }
-      return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
+      return restoreComponentsSizes(payload.componentName, state);
+
 
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(['editors', 'typing'], true);
