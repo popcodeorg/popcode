@@ -6,7 +6,10 @@ import {
   getHiddenUIComponents,
   isEditingInstructions,
 } from '../selectors';
-import {stopEditingInstructions, updateProjectInstructions} from '../actions';
+import {
+  cancelEditingInstructions,
+  updateProjectInstructions,
+} from '../actions';
 
 function mapStateToProps(state) {
   return {
@@ -20,7 +23,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onCancelEditing() {
-      dispatch(stopEditingInstructions());
+      dispatch(cancelEditingInstructions());
     },
     onSaveChanges(projectKey, newValue) {
       dispatch(updateProjectInstructions(projectKey, newValue));

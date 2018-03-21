@@ -20,7 +20,7 @@ import {
   userDismissedNotification,
   toggleTopBarMenu,
   startEditingInstructions,
-  stopEditingInstructions,
+  cancelEditingInstructions,
 } from '../../../src/actions/ui';
 import {
   snapshotCreated,
@@ -137,7 +137,7 @@ test('startEditingInstructions', reducerTest(
 test('startEditingInstructions', reducerTest(
   reducer,
   initialState.setIn(['workspace', 'isEditingInstructions'], true),
-  stopEditingInstructions,
+  cancelEditingInstructions,
   initialState,
 ));
 

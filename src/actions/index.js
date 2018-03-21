@@ -33,7 +33,7 @@ import {
   toggleTopBarMenu,
   closeTopBarMenu,
   startEditingInstructions,
-  stopEditingInstructions,
+  cancelEditingInstructions,
 } from './ui';
 
 import {
@@ -97,7 +97,7 @@ export {
   toggleTopBarMenu,
   closeTopBarMenu,
   startEditingInstructions,
-  stopEditingInstructions,
+  cancelEditingInstructions,
   logIn,
   logOut,
   evaluateConsoleEntry,
