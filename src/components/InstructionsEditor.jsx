@@ -39,8 +39,9 @@ export default class InstructionsEditor extends React.Component {
             {t('workspace.components.instructions.cancel')}
           </button>
         </div>
-        <div className="instructions-editor__input">
+        <div className="instructions-editor__input-container">
           <textarea
+            className="instructions-editor__input"
             defaultValue={this.props.instructions}
             ref={this._ref}
           />
