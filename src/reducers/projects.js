@@ -8,25 +8,34 @@ import map from 'lodash/map';
 import sortBy from 'lodash/sortBy';
 import values from 'lodash/values';
 
-import {Project} from '../records';
+import {Project, HiddenUIComponent} from '../records';
 import {isPristineProject} from '../util/projectUtils';
+import {migrateProjectJS} from '../util/migrations';
 
 const emptyMap = new Immutable.Map();
 
 function addProject(state, project) {
-  return state.set(
-    project.projectKey,
-    Project.fromJS(project).update(
-      'hiddenUIComponents',
-      components => components.add('console'),
-    ),
-  );
+  const validatedProjectJS = migrateProjectJS(project);
+  return state.set(project.projectKey, Project.fromJS(validatedProjectJS));
 }
 
 function removePristineExcept(state, keepProjectKey) {
   return state.filter((project, projectKey) => (
     projectKey === keepProjectKey || !isPristineProject(project)
   ));
+}
+
+function hideComponent(
+  state,
+  projectKey,
+  componentName,
+  timestamp,
+  currentLineNumber = null,
+) {
+  return state.setIn(
+    [projectKey, 'hiddenUIComponents', componentName],
+    new HiddenUIComponent({componentName, currentLineNumber}),
+  ).setIn([projectKey, 'updatedAt'], timestamp);
 }
 
 function unhideComponent(state, projectKey, component, timestamp) {
@@ -59,7 +68,7 @@ function importGist(state, projectKey, gistData) {
         javascript: contentForLanguage(files, 'JavaScript'),
       },
       enabledLibraries: popcodeJson.enabledLibraries || [],
-      hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
+      hiddenUIComponents: popcodeJson.hiddenUIComponents || {},
       instructions: contentForLanguage(files, 'Markdown'),
     },
   );
@@ -160,12 +169,10 @@ export default function reduceProjects(stateIn, action) {
       );
 
     case 'HIDE_COMPONENT':
-      return state.updateIn(
-        [action.payload.projectKey, 'hiddenUIComponents'],
-        hiddenUIComponents =>
-          hiddenUIComponents.add(action.payload.componentName),
-      ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
+      return hideComponent(
+        state,
+        action.payload.projectKey,
+        action.payload.componentName,
         action.meta.timestamp,
       );
 
@@ -178,17 +185,20 @@ export default function reduceProjects(stateIn, action) {
       );
 
     case 'TOGGLE_COMPONENT':
-      return state.updateIn(
+      if (state.getIn(
         [action.payload.projectKey, 'hiddenUIComponents'],
-        (hiddenUIComponents) => {
-          const {componentName} = action.payload;
-          if (hiddenUIComponents.includes(componentName)) {
-            return hiddenUIComponents.remove(action.payload.componentName);
-          }
-          return hiddenUIComponents.add(action.payload.componentName);
-        },
-      ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
+      ).has(action.payload.componentName)) {
+        return unhideComponent(
+          state,
+          action.payload.projectKey,
+          action.payload.componentName,
+          action.meta.timestamp,
+        );
+      }
+      return hideComponent(
+        state,
+        action.payload.projectKey,
+        action.payload.componentName,
         action.meta.timestamp,
       );
 

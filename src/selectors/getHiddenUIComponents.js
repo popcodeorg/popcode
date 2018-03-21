@@ -4,5 +4,5 @@ import getCurrentProject from './getCurrentProject';
 
 export default createSelector(
   [getCurrentProject],
-  currentProject => get(currentProject, 'hiddenUIComponents', []),
+  currentProject => get(currentProject, 'hiddenUIComponents', {}),
 );

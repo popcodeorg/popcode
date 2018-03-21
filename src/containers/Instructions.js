@@ -8,7 +8,7 @@ import {
 function mapStateToProps(state) {
   return {
     instructions: getCurrentProjectInstructions(state),
-    isOpen: !getHiddenUIComponents(state).includes('instructions'),
+    isOpen: !getHiddenUIComponents(state).instructions,
   };
 }
 

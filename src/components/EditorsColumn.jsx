@@ -5,7 +5,6 @@ import {t} from 'i18next';
 import {DraggableCore} from 'react-draggable';
 import bindAll from 'lodash/bindAll';
 import isEmpty from 'lodash/isEmpty';
-import includes from 'lodash/includes';
 import partial from 'lodash/partial';
 import partition from 'lodash/partition';
 import {getNodeHeights} from '../util/resize';
@@ -61,10 +60,7 @@ export default class EditorsColumn extends React.Component {
     const children = [];
     const [hiddenLanguages, visibleLanguages] = partition(
       ['html', 'css', 'javascript'],
-      language => includes(
-        currentProject.hiddenUIComponents,
-        `editor.${language}`,
-      ),
+      language => currentProject.hiddenUIComponents[`editor.${language}`],
     );
     visibleLanguages.forEach((language, index) => {
       children.push(
