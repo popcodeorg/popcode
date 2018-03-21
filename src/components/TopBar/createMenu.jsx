@@ -3,6 +3,7 @@
 import classnames from 'classnames';
 import {connect} from 'react-redux';
 import constant from 'lodash/constant';
+import noop from 'lodash/noop';
 import onClickOutside from 'react-onclickoutside';
 import preventClickthrough from 'react-prevent-clickthrough';
 import property from 'lodash/property';
@@ -18,7 +19,7 @@ export function MenuItem({children, isDisabled, isEnabled, onClick}) {
         'top-bar__menu-item_active': isEnabled,
         'top-bar__menu-item_disabled': isDisabled,
       })}
-      onClick={onClick}
+      onClick={isDisabled ? noop : onClick}
     >
       {children}
     </div>

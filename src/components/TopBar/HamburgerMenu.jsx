@@ -38,7 +38,7 @@ const HamburgerMenu = createMenu({
         <MenuItem
           isDisabled={isEditingInstructions}
           key="addOrEditInstructions"
-          onClick={isEditingInstructions ? noop : onStartEditingInstructions}
+          onClick={onStartEditingInstructions}
         >
           {
             hasInstructions ?
