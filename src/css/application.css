@@ -276,7 +276,7 @@ body {
   padding-right: 0.75em;
 }
 
-.top-bar__menu-item:hover:not(.top-bar__menu-item_active) {
+.top-bar__menu-item:hover:not(.top-bar__menu-item_active):not(.top-bar__menu-item_disabled) {
   background-color: var(--color-low-contrast-gray);
 }
 
