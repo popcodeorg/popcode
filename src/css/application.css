@@ -125,6 +125,10 @@ body {
   padding: 0.25em;
 }
 
+.layout__instructions-bar_disabled {
+  cursor: default;
+}
+
 .layout__main {
   flex: 1 1 100vw;
   position: relative;
@@ -851,4 +855,8 @@ body {
   font-weight: normal;
   user-select: none;
   text-decoration: none;
+}
+
+.u__icon_disabled {
+  cursor: default;
 }

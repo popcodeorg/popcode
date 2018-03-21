@@ -11,6 +11,7 @@ import partial from 'lodash/partial';
 import map from 'lodash/map';
 import {t} from 'i18next';
 import qs from 'qs';
+import classnames from 'classnames';
 import {getNodeWidth, getNodeWidths} from '../util/resize';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
@@ -204,10 +205,17 @@ class Workspace extends React.Component {
 
     return (
       <div
-        className="layout__instructions-bar"
+        className={classnames('layout__instructions-bar', {
+          'layout__instructions-bar_disabled':
+            this.props.isEditingInstructions,
+        })}
         onClick={this._handleClickInstructionsBar}
       >
-        <span className="u__icon">&#xf05a;</span>
+        <span
+          className={classnames('u__icon', {
+            u__icon_disabled: this.props.isEditingInstructions,
+          })}
+        >&#xf05a;</span>
       </div>
     );
   }
