@@ -83,7 +83,6 @@
   --size-rounded-corners: 0.2em;
   --size-top-bar: 4em;
   --size-top-bar-menu-button: 2.8em;
-  --size-instructions-menu-padding: calc(28px + 1rem);
   --box-shadow: 0 0 0.1em 0 rgba(0, 0, 0, 0.5);
   --font-size-menu: 1.7vh;
 }
