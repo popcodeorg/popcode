@@ -14,12 +14,12 @@ export default class InstructionsEditor extends React.Component {
   }
 
   _handleSaveChanges() {
-    const newValue = this.editor.value.trim();
+    const newValue = this._editor.value.trim();
     this.props.onSaveChanges(this.props.projectKey, newValue);
   }
 
   _ref(editorElement) {
-    this.editor = editorElement;
+    this._editor = editorElement;
   }
 
   render() {
