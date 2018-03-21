@@ -47,7 +47,14 @@ export default class InstructionsEditor extends React.Component {
           />
         </div>
         <div className="instructions-editor__footer">
-          Styling with Markdown is supported
+          <a
+            className="instructions-editor__footer-link"
+            href="https://guides.github.com/features/mastering-markdown/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Styling with Markdown is supported
+          </a>
         </div>
       </div>
     );

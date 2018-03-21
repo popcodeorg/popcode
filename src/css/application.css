@@ -395,6 +395,10 @@ body {
   font-size: 0.875rem;
 }
 
+.instructions-editor__footer-link {
+  color: black;
+}
+
 .instructions-editor__menu-button:not(:last-child) {
   margin-right: 0.5em;
 }
