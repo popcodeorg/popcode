@@ -63,8 +63,7 @@ class Editor extends React.Component {
   }
 
   _focusRequestedLine(requestedFocusedLine) {
-    if (get(requestedFocusedLine, 'component') !==
-      `editor.${this.props.language}`) {
+    if (get(requestedFocusedLine, 'component') !== this.props.language) {
       return;
     }
 

@@ -6,9 +6,11 @@ export function hiddenUIArrayToObject(hiddenUIComponents) {
   if (isPlainObject(hiddenUIComponents)) {
     obj = hiddenUIComponents;
   } else if (isArray(hiddenUIComponents)) {
-    let componentName;
-    for (componentName of hiddenUIComponents) {
-      obj[componentName] = {componentName};
+    let component;
+    for (component of hiddenUIComponents) {
+      const [componentType, language] = component.split('.');
+      const componentName = language || componentType;
+      obj[componentName] = {componentType, language};
     }
   }
   return obj;

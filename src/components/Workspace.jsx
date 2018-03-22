@@ -112,11 +112,12 @@ class Workspace extends React.Component {
     }
   }
 
-  _handleComponentHide(componentName) {
+  _handleComponentHide(language) {
     this.props.dispatch(
       hideComponent(
         this.props.currentProject.projectKey,
-        componentName,
+        'editor',
+        language,
       ),
     );
   }

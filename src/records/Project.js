@@ -14,7 +14,7 @@ export default class Project extends Record({
   sources: new Sources(),
   enabledLibraries: new Set(),
   hiddenUIComponents: new Map({
-    console: new HiddenUIComponent({componentName: 'console'}),
+    console: new HiddenUIComponent({componentType: 'console'}),
   }),
   updatedAt: null,
   instructions: '',

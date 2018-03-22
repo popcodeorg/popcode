@@ -24,22 +24,35 @@ export const toggleLibrary = createAction(
   (_projectKey, _libraryKey, timestamp = Date.now()) => ({timestamp}),
 );
 
+function hideUnhidePayload(projectKey, componentType, language) {
+  return {projectKey, componentType, language};
+}
+
+function hideUnhideMeta(
+  _projectKey,
+  _componentType,
+  _language,
+  timestamp = Date.now(),
+) {
+  return {timestamp};
+}
+
 export const hideComponent = createAction(
   'HIDE_COMPONENT',
-  (projectKey, componentName) => ({projectKey, componentName}),
-  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+  hideUnhidePayload,
+  hideUnhideMeta,
 );
 
 export const unhideComponent = createAction(
   'UNHIDE_COMPONENT',
-  (projectKey, componentName) => ({projectKey, componentName}),
-  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+  hideUnhidePayload,
+  hideUnhideMeta,
 );
 
 export const toggleComponent = createAction(
   'TOGGLE_COMPONENT',
-  (projectKey, componentName) => ({projectKey, componentName}),
-  (_projectKey, _componentName, timestamp = Date.now()) => ({timestamp}),
+  hideUnhidePayload,
+  hideUnhideMeta,
 );
 
 export const gistImported = createAction(

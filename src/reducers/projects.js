@@ -27,21 +27,27 @@ function removePristineExcept(state, keepProjectKey) {
 
 function hideComponent(
   state,
-  projectKey,
-  componentName,
+  payload,
   timestamp,
-  currentLineNumber = null,
 ) {
+  const {projectKey, language, componentType} = payload;
+  const componentName = language || componentType;
   return state.setIn(
     [projectKey, 'hiddenUIComponents', componentName],
-    new HiddenUIComponent({componentName, currentLineNumber}),
+    new HiddenUIComponent({componentType, language}),
   ).setIn([projectKey, 'updatedAt'], timestamp);
 }
 
-function unhideComponent(state, projectKey, component, timestamp) {
+function unhideComponent(
+  state,
+  payload,
+  timestamp,
+) {
+  const {projectKey, language, componentType} = payload;
+  const componentName = language || componentType;
   return state.updateIn(
     [projectKey, 'hiddenUIComponents'],
-    hiddenUIComponents => hiddenUIComponents.delete(component),
+    hiddenUIComponents => hiddenUIComponents.delete(componentName),
   ).setIn([projectKey, 'updatedAt'], timestamp);
 }
 
@@ -171,34 +177,30 @@ export default function reduceProjects(stateIn, action) {
     case 'HIDE_COMPONENT':
       return hideComponent(
         state,
-        action.payload.projectKey,
-        action.payload.componentName,
+        action.payload,
         action.meta.timestamp,
       );
 
     case 'UNHIDE_COMPONENT':
       return unhideComponent(
         state,
-        action.payload.projectKey,
-        action.payload.componentName,
+        action.payload,
         action.meta.timestamp,
       );
 
     case 'TOGGLE_COMPONENT':
       if (state.getIn(
         [action.payload.projectKey, 'hiddenUIComponents'],
-      ).has(action.payload.componentName)) {
+      ).has(action.payload.language || action.payload.componentType)) {
         return unhideComponent(
           state,
-          action.payload.projectKey,
-          action.payload.componentName,
+          action.payload,
           action.meta.timestamp,
         );
       }
       return hideComponent(
         state,
-        action.payload.projectKey,
-        action.payload.componentName,
+        action.payload,
         action.meta.timestamp,
       );
 

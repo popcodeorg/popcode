@@ -60,7 +60,7 @@ export default class EditorsColumn extends React.Component {
     const children = [];
     const [hiddenLanguages, visibleLanguages] = partition(
       ['html', 'css', 'javascript'],
-      language => currentProject.hiddenUIComponents[`editor.${language}`],
+      language => currentProject.hiddenUIComponents[language],
     );
     visibleLanguages.forEach((language, index) => {
       children.push(
@@ -69,7 +69,7 @@ export default class EditorsColumn extends React.Component {
           language={language}
           source={currentProject.sources[language]}
           style={{flex: editorsFlex[index]}}
-          onHide={partial(onComponentHide, `editor.${language}`)}
+          onHide={partial(onComponentHide, language)}
           onRef={partial(this._storeEditorRef, index)}
         >
           <Editor
@@ -107,7 +107,7 @@ export default class EditorsColumn extends React.Component {
           key={language}
           onClick={partial(
             this.props.onComponentUnhide,
-            `editor.${language}`,
+            language,
           )}
         >
           <div className="label editors__label editors__label_collapsed">
