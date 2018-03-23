@@ -23,13 +23,6 @@ const defaultState = new Immutable.Map().
   set('notifications', new Immutable.Map()).
   set('topBar', new Immutable.Map({openMenu: null}));
 
-function restoreComponentsSizes(componentName, state) {
-  if (componentName === 'output') {
-    return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
-  }
-  return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
-}
-
 function addNotification(state, type, severity, payload = {}) {
   return state.setIn(
     ['notifications', type],
@@ -65,8 +58,10 @@ export default function ui(stateIn, {type, payload}) {
 
     case 'HIDE_COMPONENT':
     case 'UNHIDE_COMPONENT':
-      return restoreComponentsSizes(payload.componentName, state);
-
+      if (payload.componentType === 'output') {
+        return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
+      }
+      return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
 
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(['editors', 'typing'], true);
@@ -77,17 +72,18 @@ export default function ui(stateIn, {type, payload}) {
     case 'FOCUS_LINE':
       return state.setIn(
         ['editors', 'requestedFocusedLine'],
-        new Immutable.Map().
-          set('component', payload.component).
-          set('line', payload.line).
-          set('column', payload.column),
+        new Immutable.Map({
+          componentKey: payload.componentKey,
+          line: payload.line,
+          column: payload.column,
+        }),
       );
 
     case 'CLEAR_CONSOLE_ENTRIES':
       return state.setIn(
         ['editors', 'requestedFocusedLine'],
         new Immutable.Map().
-          set('component', 'console').
+          set('componentKey', 'console').
           set('line', 0).
           set('column', 0),
       );

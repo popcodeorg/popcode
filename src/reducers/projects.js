@@ -25,29 +25,21 @@ function removePristineExcept(state, keepProjectKey) {
   ));
 }
 
-function hideComponent(
-  state,
-  payload,
-  timestamp,
-) {
+function hideComponent(state, payload, timestamp) {
   const {projectKey, language, componentType} = payload;
-  const componentName = language || componentType;
+  const componentKey = language || componentType;
   return state.setIn(
-    [projectKey, 'hiddenUIComponents', componentName],
+    [projectKey, 'hiddenUIComponents', componentKey],
     new HiddenUIComponent({componentType, language}),
   ).setIn([projectKey, 'updatedAt'], timestamp);
 }
 
-function unhideComponent(
-  state,
-  payload,
-  timestamp,
-) {
+function unhideComponent(state, payload, timestamp) {
   const {projectKey, language, componentType} = payload;
-  const componentName = language || componentType;
+  const componentKey = language || componentType;
   return state.updateIn(
     [projectKey, 'hiddenUIComponents'],
-    hiddenUIComponents => hiddenUIComponents.delete(componentName),
+    hiddenUIComponents => hiddenUIComponents.delete(componentKey),
   ).setIn([projectKey, 'updatedAt'], timestamp);
 }
 
@@ -99,8 +91,10 @@ export function reduceRoot(stateIn, action) {
       case 'FOCUS_LINE':
         return unhideComponent(
           projects,
-          stateIn.getIn(['currentProject', 'projectKey']),
-          action.payload.component,
+          {
+            projectKey: stateIn.getIn(['currentProject', 'projectKey']),
+            componentType: action.payload.componentKey,
+          },
           action.meta.timestamp,
         );
     }

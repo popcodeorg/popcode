@@ -26,7 +26,7 @@ export default class ConsoleInput extends Component {
   }
 
   _focusRequestedLine(requestedFocusedLine) {
-    if (get(requestedFocusedLine, 'component') !== 'console') {
+    if (get(requestedFocusedLine, 'componentKey') !== 'console') {
       return;
     }
 

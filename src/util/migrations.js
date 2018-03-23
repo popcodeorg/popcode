@@ -9,8 +9,8 @@ export function hiddenUIArrayToObject(hiddenUIComponents) {
     let component;
     for (component of hiddenUIComponents) {
       const [componentType, language] = component.split('.');
-      const componentName = language || componentType;
-      obj[componentName] = {componentType, language};
+      const componentKey = language || componentType;
+      obj[componentKey] = {componentType, language};
     }
   }
   return obj;
@@ -18,6 +18,6 @@ export function hiddenUIArrayToObject(hiddenUIComponents) {
 
 export function migrateProjectJS(js) {
   js.hiddenUIComponents = hiddenUIArrayToObject(js.hiddenUIComponents);
-  js.hiddenUIComponents.console = {componentName: 'console'};
+  js.hiddenUIComponents.console = {componentType: 'console'};
   return js;
 }
