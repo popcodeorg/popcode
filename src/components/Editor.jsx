@@ -58,6 +58,9 @@ class Editor extends React.Component {
   }
 
   componentWillUnmount() {
+    const {onComponentHidden, language} = this.props;
+    const {row, column} = this._editor.getCursorPosition();
+    onComponentHidden(language, row, column);
     this._editor.destroy();
     window.removeEventListener('resize', this._handleWindowResize);
   }
@@ -140,6 +143,7 @@ Editor.propTypes = {
   requestedFocusedLine: PropTypes.object,
   source: PropTypes.string.isRequired,
   textSizeIsLarge: PropTypes.bool.isRequired,
+  onComponentHidden: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };

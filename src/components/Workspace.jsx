@@ -17,7 +17,6 @@ import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 import {
   updateProjectSource,
   hideComponent,
-  unhideComponent,
   editorFocusedRequestedLine,
   dragRowDivider,
   dragColumnDivider,
@@ -25,11 +24,12 @@ import {
   stopDragColumnDivider,
   toggleComponent,
   applicationLoaded,
-
+  storeHiddenComponentLine,
+  focusLine,
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
-import {getCurrentProject} from '../selectors';
+import {getCurrentProject, getHiddenUIComponents} from '../selectors';
 
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
@@ -41,6 +41,7 @@ import PopThrobber from './PopThrobber';
 function mapStateToProps(state) {
   return {
     currentProject: getCurrentProject(state),
+    hiddenUIComponents: getHiddenUIComponents(state),
     errors: state.get('errors').toJS(),
     isDraggingColumnDivider: state.getIn(
       ['ui', 'workspace', 'isDraggingColumnDivider'],
@@ -59,6 +60,7 @@ class Workspace extends React.Component {
       this,
       '_handleUnload',
       '_handleClickInstructionsBar',
+      '_handleComponentHidden',
       '_handleComponentUnhide',
       '_handleComponentHide',
       '_handleDividerDrag',
@@ -112,6 +114,13 @@ class Workspace extends React.Component {
     }
   }
 
+  _handleComponentHidden(componentKey, line, column) {
+    const {projectKey} = this.props.currentProject;
+    this.props.dispatch(
+      storeHiddenComponentLine(projectKey, componentKey, line, column),
+    );
+  }
+
   _handleComponentHide(language) {
     this.props.dispatch(
       hideComponent(
@@ -122,13 +131,10 @@ class Workspace extends React.Component {
     );
   }
 
-  _handleComponentUnhide(componentName) {
-    this.props.dispatch(
-      unhideComponent(
-        this.props.currentProject.projectKey,
-        componentName,
-      ),
-    );
+  _handleComponentUnhide(componentKey) {
+    const {dispatch, hiddenUIComponents} = this.props;
+    const {line, column} = hiddenUIComponents[componentKey];
+    dispatch(focusLine(componentKey, line, column));
   }
 
   _handleEditorInput(language, source) {
@@ -252,6 +258,7 @@ class Workspace extends React.Component {
           errors={errors}
           style={{flex: rowsFlex[0]}}
           ui={ui}
+          onComponentHidden={this._handleComponentHidden}
           onComponentHide={this._handleComponentHide}
           onComponentUnhide={this._handleComponentUnhide}
           onDividerDrag={this._handleEditorsDividerDrag}
@@ -296,6 +303,7 @@ Workspace.propTypes = {
   dispatch: PropTypes.func.isRequired,
   editorsFlex: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
+  hiddenUIComponents: PropTypes.object.isRequired,
   isDraggingColumnDivider: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool,
   rowsFlex: PropTypes.array.isRequired,

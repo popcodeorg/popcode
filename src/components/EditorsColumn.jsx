@@ -49,6 +49,7 @@ export default class EditorsColumn extends React.Component {
       currentProject,
       editorsFlex,
       errors,
+      onComponentHidden,
       onComponentHide,
       onEditorInput,
       onRef,
@@ -80,6 +81,7 @@ export default class EditorsColumn extends React.Component {
             requestedFocusedLine={ui.editors.requestedFocusedLine}
             source={currentProject.sources[language]}
             textSizeIsLarge={ui.editors.textSizeIsLarge}
+            onComponentHidden={onComponentHidden}
             onInput={partial(onEditorInput, language)}
             onRequestedLineFocused={onRequestedLineFocused}
           />
@@ -143,6 +145,7 @@ EditorsColumn.propTypes = {
   ui: PropTypes.shape({
     editors: PropTypes.object.isRequired,
   }).isRequired,
+  onComponentHidden: PropTypes.func.isRequired,
   onComponentHide: PropTypes.func.isRequired,
   onComponentUnhide: PropTypes.func.isRequired,
   onDividerDrag: PropTypes.func.isRequired,
