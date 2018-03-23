@@ -4,6 +4,8 @@
     "export-gist": "Export Gist",
     "export-repo": "Export Repo",
     "share-to-classroom": "Share To Classroom",
+    "add-instructions": "Add Instructions",
+    "edit-instructions": "Edit Instructions",
     "libraries": "Libraries",
     "load-project": "Your Projects",
     "new-project": "New Project",
@@ -60,7 +62,11 @@
         "css": "CSS",
         "javascript": "JS"
       },
-      "output": "Output"
+      "output": "Output",
+      "instructions": {
+        "cancel": "Cancel",
+        "save": "Save"
+      }
     }
   },
   "utility": {

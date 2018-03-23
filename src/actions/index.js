@@ -15,6 +15,7 @@ import {
   unhideComponent,
   toggleComponent,
   updateProjectSource,
+  updateProjectInstructions,
 } from './projects';
 
 import {
@@ -31,6 +32,8 @@ import {
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
+  startEditingInstructions,
+  cancelEditingInstructions,
 } from './ui';
 
 import {
@@ -67,6 +70,7 @@ export {
   createSnapshot,
   changeCurrentProject,
   updateProjectSource,
+  updateProjectInstructions,
   toggleLibrary,
   userAuthenticated,
   userLoggedOut,
@@ -92,6 +96,8 @@ export {
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
+  startEditingInstructions,
+  cancelEditingInstructions,
   logIn,
   logOut,
   evaluateConsoleEntry,

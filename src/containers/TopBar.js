@@ -2,11 +2,13 @@ import {connect} from 'react-redux';
 import TopBar from '../components/TopBar';
 import {
   getCurrentProjectKey,
+  getCurrentProjectInstructions,
   getCurrentUser,
   getCurrentValidationState,
   getEnabledLibraries,
   getOpenTopBarMenu,
   getAllProjectKeys,
+  isEditingInstructions,
   isExperimental,
   isGistExportInProgress,
   isRepoExportInProgress,
@@ -22,6 +24,7 @@ import {
   createProject,
   createSnapshot,
   exportProject,
+  startEditingInstructions,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
@@ -34,6 +37,8 @@ function mapStateToProps(state) {
     currentProjectKey: getCurrentProjectKey(state),
     currentUser: getCurrentUser(state),
     enabledLibraries: getEnabledLibraries(state),
+    hasInstructions: Boolean(getCurrentProjectInstructions(state)),
+    isEditingInstructions: isEditingInstructions(state),
     isExperimental: isExperimental(state),
     isGistExportInProgress: isGistExportInProgress(state),
     isRepoExportInProgress: isRepoExportInProgress(state),
@@ -88,6 +93,10 @@ function mapDispatchToProps(dispatch) {
 
     onLogOut() {
       dispatch(logOut());
+    },
+
+    onStartEditingInstructions() {
+      dispatch(startEditingInstructions());
     },
 
     onStartLogIn() {

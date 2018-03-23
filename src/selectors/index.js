@@ -19,6 +19,7 @@ import getRequestedFocusedLine from './getRequestedFocusedLine';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
   from './isCurrentProjectSyntacticallyValid';
+import isEditingInstructions from './isEditingInstructions';
 import isExperimental from './isExperimental';
 import isGistExportInProgress from './isGistExportInProgress';
 import isRepoExportInProgress from './isRepoExportInProgress';
@@ -50,6 +51,7 @@ export {
   getRequestedFocusedLine,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
+  isEditingInstructions,
   isExperimental,
   isGistExportInProgress,
   isRepoExportInProgress,

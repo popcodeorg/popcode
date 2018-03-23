@@ -11,6 +11,7 @@ export const DEFAULT_WORKSPACE = new Immutable.Map({
   columnFlex: DEFAULT_COLUMN_FLEX,
   rowFlex: DEFAULT_ROW_FLEX,
   isDraggingColumnDivider: false,
+  isEditingInstructions: false,
 });
 
 const defaultState = new Immutable.Map().
@@ -219,6 +220,13 @@ export default function ui(stateIn, action) {
 
     case 'PROJECT_COMPILED':
       return dismissNotification(state, 'project-compilation-failed');
+
+    case 'START_EDITING_INSTRUCTIONS':
+      return state.setIn(['workspace', 'isEditingInstructions'], true);
+
+    case 'CANCEL_EDITING_INSTRUCTIONS':
+    case 'UPDATE_PROJECT_INSTRUCTIONS':
+      return state.setIn(['workspace', 'isEditingInstructions'], false);
 
     default:
       return state;

@@ -124,6 +124,10 @@ body {
   padding: 0.25em;
 }
 
+.layout__instructions-bar_disabled {
+  cursor: default;
+}
+
 .layout__main {
   flex: 1 1 100vw;
   position: relative;
@@ -272,7 +276,7 @@ body {
   padding-right: 0.75em;
 }
 
-.top-bar__menu-item:hover:not(.top-bar__menu-item_active) {
+.top-bar__menu-item:hover:not(.top-bar__menu-item_active):not(.top-bar__menu-item_disabled) {
   background-color: var(--color-low-contrast-gray);
 }
 
@@ -283,6 +287,12 @@ body {
 
 .top-bar__menu-item_active {
   font-weight: bold;
+}
+
+.top-bar__menu-item_disabled {
+  font-style: italic;
+  color: var(--color-gray);
+  cursor: default;
 }
 
 .top-bar__drop-down-button {
@@ -340,6 +350,57 @@ body {
   & li code.hljs {
     padding: 0;
   }
+}
+
+/** @define instructions-editor */
+
+.instructions-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-low-contrast-gray);
+}
+
+.instructions-editor__input-container {
+  position: relative;
+  width: 100%;
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.instructions-editor__input {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border: 0;
+  outline: 0;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+}
+
+.instructions-editor__menu {
+  padding: 0.5rem;
+  text-align: right;
+  background-color: var(--color-light-gray);
+}
+
+.instructions-editor__footer {
+  margin: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.instructions-editor__footer-link {
+  color: black;
+}
+
+.instructions-editor__menu-button:not(:last-child) {
+  margin-right: 0.5em;
 }
 
 /** @define project-preview */
@@ -798,4 +859,8 @@ body {
   font-weight: normal;
   user-select: none;
   text-decoration: none;
+}
+
+.u__icon_disabled {
+  cursor: default;
 }

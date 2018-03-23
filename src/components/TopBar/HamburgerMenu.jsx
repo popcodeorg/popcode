@@ -12,6 +12,8 @@ const HamburgerMenu = createMenu({
   name: 'hamburger',
 
   renderItems({
+    hasInstructions,
+    isEditingInstructions,
     isExperimental,
     isGistExportInProgress,
     isRepoExportInProgress,
@@ -20,6 +22,7 @@ const HamburgerMenu = createMenu({
     onExportGist,
     onExportRepo,
     onExportToClassroom,
+    onStartEditingInstructions,
   }) {
     return tap([], (items) => {
       items.push(
@@ -28,6 +31,20 @@ const HamburgerMenu = createMenu({
           onClick={isClassroomExportInProgress ? noop : onExportToClassroom}
         >
           {t('top-bar.share-to-classroom')}
+        </MenuItem>,
+      );
+
+      items.push(
+        <MenuItem
+          isDisabled={isEditingInstructions}
+          key="addOrEditInstructions"
+          onClick={onStartEditingInstructions}
+        >
+          {
+            hasInstructions ?
+              t('top-bar.edit-instructions') :
+              t('top-bar.add-instructions')
+          }
         </MenuItem>,
       );
 
@@ -96,7 +113,9 @@ const HamburgerMenu = createMenu({
 
 
 HamburgerMenu.propTypes = {
+  hasInstructions: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
+  isEditingInstructions: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
@@ -105,6 +124,7 @@ HamburgerMenu.propTypes = {
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onExportToClassroom: PropTypes.func.isRequired,
+  onStartEditingInstructions: PropTypes.func.isRequired,
 };
 
 export default HamburgerMenu;
