@@ -2,6 +2,7 @@ import {Record} from 'immutable';
 
 export default Record({
   componentType: '',
-  currentLineNumber: null,
   language: null,
+  line: null,
+  column: null,
 }, 'HiddenUIComponent');

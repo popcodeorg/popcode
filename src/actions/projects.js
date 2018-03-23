@@ -37,6 +37,12 @@ function hideUnhideMeta(
   return {timestamp};
 }
 
+export const storeHiddenComponentLine = createAction(
+  'STORE_HIDDEN_LINE',
+  (projectKey, componentKey, line, column) =>
+    ({projectKey, componentKey, line, column}),
+);
+
 export const hideComponent = createAction(
   'HIDE_COMPONENT',
   hideUnhidePayload,
