@@ -49,6 +49,7 @@ export default class InstructionsEditor extends React.Component {
           <textarea
             className="instructions-editor__input"
             defaultValue={this.props.instructions}
+            placeholder="Type here..."
             ref={this._ref}
           />
         </div>
