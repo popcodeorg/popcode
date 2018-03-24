@@ -8,6 +8,7 @@ import {
   gistNotFound,
   gistImportError,
   updateProjectSource,
+  updateProjectInstructions,
 } from '../../../src/actions/projects';
 import {
   dragColumnDivider,
@@ -18,6 +19,8 @@ import {
   notificationTriggered,
   userDismissedNotification,
   toggleTopBarMenu,
+  startEditingInstructions,
+  cancelEditingInstructions,
 } from '../../../src/actions/ui';
 import {
   snapshotCreated,
@@ -123,6 +126,27 @@ test('dragRowDivider', (t) => {
     ),
   ));
 });
+
+test('startEditingInstructions', reducerTest(
+  reducer,
+  initialState,
+  startEditingInstructions,
+  initialState.setIn(['workspace', 'isEditingInstructions'], true),
+));
+
+test('startEditingInstructions', reducerTest(
+  reducer,
+  initialState.setIn(['workspace', 'isEditingInstructions'], true),
+  cancelEditingInstructions,
+  initialState,
+));
+
+test('updateProjectInstructions', reducerTest(
+  reducer,
+  initialState.setIn(['workspace', 'isEditingInstructions'], true),
+  updateProjectInstructions,
+  initialState,
+));
 
 test('gistNotFound', reducerTest(
   reducer,

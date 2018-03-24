@@ -3,6 +3,7 @@
 import classnames from 'classnames';
 import {connect} from 'react-redux';
 import constant from 'lodash/constant';
+import noop from 'lodash/noop';
 import onClickOutside from 'react-onclickoutside';
 import preventClickthrough from 'react-prevent-clickthrough';
 import property from 'lodash/property';
@@ -11,13 +12,14 @@ import React from 'react';
 import {closeTopBarMenu, toggleTopBarMenu} from '../../actions';
 import {getOpenTopBarMenu} from '../../selectors';
 
-export function MenuItem({children, isEnabled, onClick}) {
+export function MenuItem({children, isDisabled, isEnabled, onClick}) {
   return (
     <div
-      className={classnames('top-bar__menu-item',
-        {'top-bar__menu-item_active': isEnabled},
-      )}
-      onClick={onClick}
+      className={classnames('top-bar__menu-item', {
+        'top-bar__menu-item_active': isEnabled,
+        'top-bar__menu-item_disabled': isDisabled,
+      })}
+      onClick={isDisabled ? noop : onClick}
     >
       {children}
     </div>
@@ -26,11 +28,13 @@ export function MenuItem({children, isEnabled, onClick}) {
 
 MenuItem.propTypes = {
   children: PropTypes.node.isRequired,
+  isDisabled: PropTypes.bool,
   isEnabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
 };
 
 MenuItem.defaultProps = {
+  isDisabled: false,
   isEnabled: false,
 };
 
