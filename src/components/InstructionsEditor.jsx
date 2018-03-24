@@ -9,6 +9,12 @@ export default class InstructionsEditor extends React.Component {
     bindAll(this, '_handleCancelEditing', '_handleSaveChanges', '_ref');
   }
 
+  componentDidMount() {
+    if (!this.props.instructions) {
+      this._editor.focus();
+    }
+  }
+
   _handleCancelEditing() {
     this.props.onCancelEditing();
   }
