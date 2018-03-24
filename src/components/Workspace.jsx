@@ -30,11 +30,7 @@ import {
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
-import {
-  getCurrentProject,
-  isEditingInstructions,
-  getHiddenUIComponents,
-} from '../selectors';
+import {getCurrentProject, isEditingInstructions} from '../selectors';
 
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
@@ -46,7 +42,6 @@ import PopThrobber from './PopThrobber';
 function mapStateToProps(state) {
   return {
     currentProject: getCurrentProject(state),
-    hiddenUIComponents: getHiddenUIComponents(state),
     errors: state.get('errors').toJS(),
     isDraggingColumnDivider: state.getIn(
       ['ui', 'workspace', 'isDraggingColumnDivider'],
@@ -138,8 +133,8 @@ class Workspace extends React.Component {
   }
 
   _handleComponentUnhide(componentKey) {
-    const {dispatch, hiddenUIComponents} = this.props;
-    const {line, column} = hiddenUIComponents[componentKey];
+    const {dispatch, currentProject} = this.props;
+    const {line, column} = currentProject.hiddenUIComponents[componentKey];
     dispatch(focusLine(componentKey, line, column));
   }
 
@@ -322,7 +317,6 @@ Workspace.propTypes = {
   dispatch: PropTypes.func.isRequired,
   editorsFlex: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
-  hiddenUIComponents: PropTypes.object.isRequired,
   isDraggingColumnDivider: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool,
