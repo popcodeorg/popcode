@@ -1,6 +1,7 @@
 import {Record, Set, Map} from 'immutable';
 
 import HTML_TEMPLATE from '../../templates/new.html';
+import {hiddenUIArrayToObject} from '../util/migrations';
 import HiddenUIComponent from './HiddenUIComponent';
 
 const Sources = Record({
@@ -31,7 +32,7 @@ export default class Project extends Record({
       projectKey,
       sources: new Sources(sources),
       enabledLibraries: new Set(enabledLibraries),
-      hiddenUIComponents: new Map(hiddenUIComponents),
+      hiddenUIComponents: new Map(hiddenUIArrayToObject(hiddenUIComponents)),
       updatedAt,
       instructions,
     });

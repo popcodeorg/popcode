@@ -13,11 +13,7 @@ export function hiddenUIArrayToObject(hiddenUIComponents) {
       obj[componentKey] = {componentType, language};
     }
   }
+  obj.console = {componentType: 'console'};
   return obj;
 }
 
-export function migrateProjectJS(js) {
-  js.hiddenUIComponents = hiddenUIArrayToObject(js.hiddenUIComponents);
-  js.hiddenUIComponents.console = {componentType: 'console'};
-  return js;
-}

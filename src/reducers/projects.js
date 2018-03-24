@@ -10,13 +10,11 @@ import values from 'lodash/values';
 
 import {Project, HiddenUIComponent} from '../records';
 import {isPristineProject} from '../util/projectUtils';
-import {migrateProjectJS} from '../util/migrations';
 
 const emptyMap = new Immutable.Map();
 
 function addProject(state, project) {
-  const validatedProjectJS = migrateProjectJS(project);
-  return state.set(project.projectKey, Project.fromJS(validatedProjectJS));
+  return state.set(project.projectKey, Project.fromJS(project));
 }
 
 function removePristineExcept(state, keepProjectKey) {
