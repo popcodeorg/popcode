@@ -7,6 +7,7 @@ import bindAll from 'lodash/bindAll';
 import isEmpty from 'lodash/isEmpty';
 import partial from 'lodash/partial';
 import partition from 'lodash/partition';
+import find from 'lodash/find';
 import {getNodeHeights} from '../util/resize';
 
 import EditorContainer from './EditorContainer';
@@ -61,7 +62,7 @@ export default class EditorsColumn extends React.Component {
     const children = [];
     const [hiddenLanguages, visibleLanguages] = partition(
       ['html', 'css', 'javascript'],
-      language => currentProject.hiddenUIComponents[language],
+      language => find(currentProject.hiddenUIComponents, {language}),
     );
     visibleLanguages.forEach((language, index) => {
       children.push(
