@@ -38,6 +38,13 @@ function dismissNotification(state, type) {
   );
 }
 
+function restoreComponentSizes(state, {componentKey}) {
+  if (componentKey === 'output') {
+    return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
+  }
+  return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
+}
+
 /* eslint-disable complexity */
 export default function ui(stateIn, {type, payload}) {
   let state = stateIn;
@@ -57,12 +64,8 @@ export default function ui(stateIn, {type, payload}) {
     case 'PROJECT_CREATED':
       return state.set('workspace', DEFAULT_WORKSPACE);
 
-    case 'HIDE_COMPONENT':
-    case 'UNHIDE_COMPONENT':
-      if (payload.componentType === 'output') {
-        return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
-      }
-      return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
+    case 'TOGGLE_COMPONENT':
+      return restoreComponentSizes(state, payload);
 
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(['editors', 'typing'], true);
@@ -71,7 +74,7 @@ export default function ui(stateIn, {type, payload}) {
       return state.setIn(['editors', 'typing'], false);
 
     case 'FOCUS_LINE':
-      return state.setIn(
+      return restoreComponentSizes(state, payload).setIn(
         ['editors', 'requestedFocusedLine'],
         new Immutable.Map({
           componentKey: payload.componentKey,

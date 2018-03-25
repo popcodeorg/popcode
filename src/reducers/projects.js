@@ -24,17 +24,15 @@ function removePristineExcept(state, keepProjectKey) {
 }
 
 function hideComponent(state, payload, timestamp) {
-  const {projectKey, language, componentType} = payload;
-  const componentKey = language || componentType;
+  const {projectKey, componentKey, hiddenUIComponent} = payload;
   return state.setIn(
     [projectKey, 'hiddenUIComponents', componentKey],
-    new HiddenUIComponent({componentType, language}),
+    hiddenUIComponent || new HiddenUIComponent({componentType: componentKey}),
   ).setIn([projectKey, 'updatedAt'], timestamp);
 }
 
 function unhideComponent(state, payload, timestamp) {
-  const {projectKey, language, componentType} = payload;
-  const componentKey = language || componentType;
+  const {projectKey, componentKey} = payload;
   return state.updateIn(
     [projectKey, 'hiddenUIComponents'],
     hiddenUIComponents => hiddenUIComponents.delete(componentKey),
@@ -91,7 +89,7 @@ export function reduceRoot(stateIn, action) {
           projects,
           {
             projectKey: stateIn.getIn(['currentProject', 'projectKey']),
-            componentType: action.payload.componentKey,
+            componentKey: action.payload.componentKey,
           },
           action.meta.timestamp,
         );
@@ -172,6 +170,14 @@ export default function reduceProjects(stateIn, action) {
         action.meta.timestamp,
       );
 
+    case 'TOGGLE_COMPONENT':
+      if (state.getIn(
+        [action.payload.projectKey, 'hiddenUIComponents'],
+      ).has(action.payload.componentKey)) {
+        return unhideComponent(state, action.payload, action.meta.timestamp);
+      }
+      return hideComponent(state, action.payload, action.meta.timestamp);
+
     case 'STORE_HIDDEN_LINE':
       return state.mergeIn([
         action.payload.projectKey,
@@ -181,36 +187,6 @@ export default function reduceProjects(stateIn, action) {
         line: action.payload.line,
         column: action.payload.column,
       });
-
-    case 'HIDE_COMPONENT':
-      return hideComponent(
-        state,
-        action.payload,
-        action.meta.timestamp,
-      );
-
-    case 'UNHIDE_COMPONENT':
-      return unhideComponent(
-        state,
-        action.payload,
-        action.meta.timestamp,
-      );
-
-    case 'TOGGLE_COMPONENT':
-      if (state.getIn(
-        [action.payload.projectKey, 'hiddenUIComponents'],
-      ).has(action.payload.language || action.payload.componentType)) {
-        return unhideComponent(
-          state,
-          action.payload,
-          action.meta.timestamp,
-        );
-      }
-      return hideComponent(
-        state,
-        action.payload,
-        action.meta.timestamp,
-      );
 
     default:
       return state;

@@ -17,7 +17,6 @@ import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {
   updateProjectSource,
-  hideComponent,
   editorFocusedRequestedLine,
   dragRowDivider,
   dragColumnDivider,
@@ -31,6 +30,7 @@ import {
 
 import {isPristineProject} from '../util/projectUtils';
 import {getCurrentProject, isEditingInstructions} from '../selectors';
+import {HiddenUIComponent} from '../records';
 
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
@@ -124,10 +124,10 @@ class Workspace extends React.Component {
 
   _handleComponentHide(language) {
     this.props.dispatch(
-      hideComponent(
+      toggleComponent(
         this.props.currentProject.projectKey,
-        'editor',
         language,
+        new HiddenUIComponent({componentType: 'editor', language}),
       ),
     );
   }

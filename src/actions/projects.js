@@ -29,41 +29,18 @@ export const toggleLibrary = createAction(
   (_projectKey, _libraryKey, timestamp = Date.now()) => ({timestamp}),
 );
 
-function hideUnhidePayload(projectKey, componentType, language) {
-  return {projectKey, componentType, language};
-}
-
-function hideUnhideMeta(
-  _projectKey,
-  _componentType,
-  _language,
-  timestamp = Date.now(),
-) {
-  return {timestamp};
-}
-
 export const storeHiddenComponentLine = createAction(
   'STORE_HIDDEN_LINE',
   (projectKey, componentKey, line, column) =>
     ({projectKey, componentKey, line, column}),
 );
 
-export const hideComponent = createAction(
-  'HIDE_COMPONENT',
-  hideUnhidePayload,
-  hideUnhideMeta,
-);
-
-export const unhideComponent = createAction(
-  'UNHIDE_COMPONENT',
-  hideUnhidePayload,
-  hideUnhideMeta,
-);
-
 export const toggleComponent = createAction(
   'TOGGLE_COMPONENT',
-  hideUnhidePayload,
-  hideUnhideMeta,
+  (projectKey, componentKey, hiddenUIComponent) =>
+    ({projectKey, componentKey, hiddenUIComponent}),
+  (projectKey, componentKey, hiddenUIComponent, timestamp = Date.now()) =>
+    ({timestamp}),
 );
 
 export const gistImported = createAction(
