@@ -9,6 +9,12 @@ export default class InstructionsEditor extends React.Component {
     bindAll(this, '_handleCancelEditing', '_handleSaveChanges', '_ref');
   }
 
+  componentDidMount() {
+    if (!this.props.instructions) {
+      this._editor.focus();
+    }
+  }
+
   _handleCancelEditing() {
     this.props.onCancelEditing();
   }
@@ -43,6 +49,7 @@ export default class InstructionsEditor extends React.Component {
           <textarea
             className="instructions-editor__input"
             defaultValue={this.props.instructions}
+            placeholder="Type here..."
             ref={this._ref}
           />
         </div>

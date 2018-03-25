@@ -119,6 +119,9 @@ export default function reduceProjects(stateIn, action) {
       return state.setIn(
         [action.payload.projectKey, 'instructions'],
         action.payload.newValue,
+      ).setIn(
+        [action.payload.projectKey, 'updatedAt'],
+        action.meta.timestamp,
       );
 
     case 'PROJECT_CREATED':

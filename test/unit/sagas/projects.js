@@ -16,6 +16,7 @@ import {
   gistNotFound,
   projectsLoaded,
   toggleLibrary,
+  updateProjectInstructions,
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {
@@ -223,6 +224,18 @@ test('updateProjectSource', (assert) => {
   testSaga(
     updateProjectSourceSaga,
     updateProjectSource(scenario.projectKey, 'css', 'p {}'),
+  ).
+    next().select().
+    next(scenario.state).call(saveCurrentProject, scenario.state).
+    next().isDone();
+  assert.end();
+});
+
+test('updateProjectInstructions', (assert) => {
+  const scenario = new Scenario();
+  testSaga(
+    updateProjectSourceSaga,
+    updateProjectInstructions(scenario.projectKey, '# Instructions'),
   ).
     next().select().
     next(scenario.state).call(saveCurrentProject, scenario.state).

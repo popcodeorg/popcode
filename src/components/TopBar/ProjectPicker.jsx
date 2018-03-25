@@ -20,7 +20,7 @@ const ProjectPicker = createMenu({
   renderItems({currentProjectKey, projectKeys, onChangeCurrentProject}) {
     return map(projectKeys, projectKey => (
       <MenuItem
-        isEnabled={projectKey === currentProjectKey}
+        isActive={projectKey === currentProjectKey}
         key={projectKey}
         onClick={partial(onChangeCurrentProject, projectKey)}
       >

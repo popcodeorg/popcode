@@ -110,7 +110,10 @@ export default function* () {
     takeEvery('APPLICATION_LOADED', applicationLoaded),
     takeEvery('CREATE_PROJECT', createProject),
     takeEvery('CHANGE_CURRENT_PROJECT', changeCurrentProject),
-    throttle(500, 'UPDATE_PROJECT_SOURCE', updateProjectSource),
+    throttle(500, [
+      'UPDATE_PROJECT_SOURCE',
+      'UPDATE_PROJECT_INSTRUCTIONS',
+    ], updateProjectSource),
     takeEvery('USER_AUTHENTICATED', userAuthenticated),
     takeEvery('TOGGLE_LIBRARY', toggleLibrary),
   ]);

@@ -13,15 +13,15 @@ const LibraryPicker = createMenu({
 
   renderItems({enabledLibraries, onToggleLibrary}) {
     return map(libraries, (library, key) => {
-      const isEnabled = enabledLibraries.includes(key);
+      const isActive = enabledLibraries.includes(key);
 
       return (
         <MenuItem
-          isEnabled={isEnabled}
+          isActive={isActive}
           key={key}
           onClick={partial(onToggleLibrary, key)}
         >
-          <span className={classnames('u__icon', {u__invisible: !isEnabled})}>
+          <span className={classnames('u__icon', {u__invisible: !isActive})}>
             &#xf00c;{' '}
           </span>
           {library.name}
