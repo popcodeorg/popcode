@@ -1,5 +1,4 @@
 import Immutable from 'immutable';
-import {makeComponentName} from '../util/componentName';
 import {
   updateEditorColumnFlex,
   updateWorkspaceRowFlex,
@@ -24,33 +23,6 @@ const defaultState = new Immutable.Map().
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Map()).
   set('topBar', new Immutable.Map({openMenu: null}));
-
-function restoreDefaultColumnFlex(state) {
-  return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
-}
-
-function restoreDefaultRowFlex(state) {
-  return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
-}
-
-function restoreFlexOnComponentToggle(state, component) {
-  const componentName = makeComponentName(component);
-  if (componentName === 'output') {
-    return restoreDefaultRowFlex(state);
-  }
-  return restoreDefaultColumnFlex(state);
-}
-
-function focusEditor(state, {language, line, column}) {
-  return state.setIn(
-    ['editors', 'requestedFocusedLine'],
-    Immutable.fromJS({
-      language,
-      line,
-      column,
-    }),
-  );
-}
 
 function addNotification(state, type, severity, payload = {}) {
   return state.setIn(

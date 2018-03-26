@@ -10,7 +10,6 @@ import values from 'lodash/values';
 
 import {Project, HiddenUIComponent} from '../records';
 import {isPristineProject} from '../util/projectUtils';
-import {makeComponentName} from '../util/componentName';
 
 const emptyMap = new Immutable.Map();
 
