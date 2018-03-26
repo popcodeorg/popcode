@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
@@ -12,13 +13,14 @@ export default function CurrentUser({
     return <CurrentUserMenu user={user} onLogOut={onLogOut} />;
   }
   return (
-    <div className="top-bar__current-user">
-      <span
-        className="top-bar__log-in-prompt"
-        onClick={onStartLogIn}
-      >
-        {t('top-bar.session.log-in-prompt')}
-      </span>
+    <div
+      className={classnames('top-bar__current-user',
+        'top-bar__menu-button',
+        'top-bar__menu-button_primary',
+      )}
+      onClick={onStartLogIn}
+    >
+      {t('top-bar.session.log-in-prompt')}
     </div>
   );
 }

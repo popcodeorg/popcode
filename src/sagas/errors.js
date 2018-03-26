@@ -10,8 +10,17 @@ import {
 } from 'redux-saga/effects';
 import Analyzer from '../analyzers';
 import {getCurrentProject} from '../selectors';
-import validations from '../validations';
 import {validatedSource} from '../actions/errors';
+import retryingFailedImports from '../util/retryingFailedImports';
+
+export async function importValidations() {
+  return retryingFailedImports(
+    () => import(
+      /* webpackChunkName: 'mainAsync' */
+      '../validations',
+    ),
+  );
+}
 
 export function* toggleLibrary(tasks) {
   yield call(validateCurrentProject, tasks);
@@ -49,6 +58,7 @@ export function* validateSource(
   if (tasks.has(language)) {
     yield cancel(tasks.get(language));
   }
+  const validations = yield call(importValidations);
   const task = yield fork(validations[language], source, projectAttributes);
   tasks.set(language, task);
   const errors = yield join(task);

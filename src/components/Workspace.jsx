@@ -11,14 +11,12 @@ import partial from 'lodash/partial';
 import map from 'lodash/map';
 import {t} from 'i18next';
 import qs from 'qs';
+import classnames from 'classnames';
 import {getNodeWidth, getNodeWidths} from '../util/resize';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {
   updateProjectSource,
-  hideComponent,
-  unhideComponent,
-  focusLine,
   editorFocusedRequestedLine,
   dragRowDivider,
   dragColumnDivider,
@@ -26,11 +24,13 @@ import {
   stopDragColumnDivider,
   toggleComponent,
   applicationLoaded,
-
+  storeHiddenComponentLine,
+  focusLine,
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
-import {getCurrentProject} from '../selectors';
+import {getCurrentProject, isEditingInstructions} from '../selectors';
+import {HiddenUIComponent} from '../records';
 
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
@@ -46,6 +46,7 @@ function mapStateToProps(state) {
     isDraggingColumnDivider: state.getIn(
       ['ui', 'workspace', 'isDraggingColumnDivider'],
     ),
+    isEditingInstructions: isEditingInstructions(state),
     isUserTyping: state.getIn(['ui', 'editors', 'typing']),
     editorsFlex: state.getIn(['ui', 'workspace', 'columnFlex']).toJS(),
     rowsFlex: state.getIn(['ui', 'workspace', 'rowFlex']).toJS(),
@@ -60,6 +61,7 @@ class Workspace extends React.Component {
       this,
       '_handleUnload',
       '_handleClickInstructionsBar',
+      '_handleComponentHidden',
       '_handleComponentUnhide',
       '_handleComponentHide',
       '_handleDividerDrag',
@@ -67,7 +69,6 @@ class Workspace extends React.Component {
       '_handleDividerStop',
       '_handleEditorInput',
       '_handleEditorsDividerDrag',
-      '_handleErrorClick',
       '_handleRequestedLineFocused',
       '_storeDividerRef',
       '_storeColumnRef',
@@ -114,26 +115,27 @@ class Workspace extends React.Component {
     }
   }
 
-  _handleComponentHide(component) {
+  _handleComponentHidden(componentKey, line, column) {
+    const {projectKey} = this.props.currentProject;
     this.props.dispatch(
-      hideComponent(
+      storeHiddenComponentLine(projectKey, componentKey, line, column),
+    );
+  }
+
+  _handleComponentHide(language) {
+    this.props.dispatch(
+      toggleComponent(
         this.props.currentProject.projectKey,
-        component,
+        language,
+        new HiddenUIComponent({componentType: 'editor', language}),
       ),
     );
   }
 
-  _handleComponentUnhide(component) {
-    this.props.dispatch(
-      unhideComponent(
-        this.props.currentProject.projectKey,
-        component,
-      ),
-    );
-  }
-
-  _handleErrorClick(language, line, column) {
-    this.props.dispatch(focusLine(language, line, column));
+  _handleComponentUnhide(componentKey) {
+    const {dispatch, currentProject} = this.props;
+    const {line, column} = currentProject.hiddenUIComponents[componentKey];
+    dispatch(focusLine(componentKey, line, column));
   }
 
   _handleEditorInput(language, source) {
@@ -190,23 +192,36 @@ class Workspace extends React.Component {
   }
 
   _handleClickInstructionsBar() {
-    this.props.dispatch(toggleComponent(
-      get(this.props, ['currentProject', 'projectKey']),
-      {componentType: 'instructions'},
-    ));
+    if (!this.props.isEditingInstructions) {
+      this.props.dispatch(toggleComponent(
+        get(this.props, ['currentProject', 'projectKey']),
+        'instructions',
+      ));
+    }
   }
 
   _renderInstructionsBar() {
-    if (!get(this.props, ['currentProject', 'instructions'])) {
+    const currentInstructions = get(
+      this.props,
+      ['currentProject', 'instructions'],
+    );
+    if (!this.props.isEditingInstructions && !currentInstructions) {
       return null;
     }
 
     return (
       <div
-        className="layout__instructions-bar"
+        className={classnames('layout__instructions-bar', {
+          'layout__instructions-bar_disabled':
+            this.props.isEditingInstructions,
+        })}
         onClick={this._handleClickInstructionsBar}
       >
-        <span className="u__icon">&#xf05a;</span>
+        <span
+          className={classnames('u__icon', {
+            u__icon_disabled: this.props.isEditingInstructions,
+          })}
+        >&#xf05a;</span>
       </div>
     );
   }
@@ -257,6 +272,7 @@ class Workspace extends React.Component {
           errors={errors}
           style={{flex: rowsFlex[0]}}
           ui={ui}
+          onComponentHidden={this._handleComponentHidden}
           onComponentHide={this._handleComponentHide}
           onComponentUnhide={this._handleComponentUnhide}
           onDividerDrag={this._handleEditorsDividerDrag}
@@ -284,13 +300,13 @@ class Workspace extends React.Component {
       <div className="layout">
         <TopBar />
         <NotificationList />
-        <div className="layout__columns">
+        <main className="layout__columns">
           <Instructions />
           {this._renderInstructionsBar()}
           <div className="workspace layout__main">
             {this._renderEnvironment()}
           </div>
-        </div>
+        </main>
       </div>
     );
   }
@@ -302,6 +318,7 @@ Workspace.propTypes = {
   editorsFlex: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
   isDraggingColumnDivider: PropTypes.bool.isRequired,
+  isEditingInstructions: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool,
   rowsFlex: PropTypes.array.isRequired,
   ui: PropTypes.object.isRequired,

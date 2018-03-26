@@ -5,8 +5,8 @@ import compact from 'lodash/compact';
 import defaults from 'lodash/defaults';
 import find from 'lodash/find';
 import includes from 'lodash/includes';
+import {JSHINT as jshint} from 'jshint';
 import libraries from '../../config/libraries';
-import importLinters from '../importLinters';
 import Validator from '../Validator';
 
 const jshintrc = {
@@ -171,7 +171,6 @@ class JsHintValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const {jshint} = await importLinters();
     try {
       jshint(this._source, this._jshintOptions);
     } catch (e) {

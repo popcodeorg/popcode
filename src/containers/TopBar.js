@@ -2,13 +2,17 @@ import {connect} from 'react-redux';
 import TopBar from '../components/TopBar';
 import {
   getCurrentProjectKey,
+  getCurrentProjectInstructions,
   getCurrentUser,
   getCurrentValidationState,
   getEnabledLibraries,
   getOpenTopBarMenu,
   getAllProjectKeys,
+  isEditingInstructions,
   isExperimental,
   isGistExportInProgress,
+  isRepoExportInProgress,
+  isClassroomExportInProgress,
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserAuthenticated,
@@ -19,8 +23,8 @@ import {
   closeTopBarMenu,
   createProject,
   createSnapshot,
-  exportGist,
-  exportRepo,
+  exportProject,
+  startEditingInstructions,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
@@ -33,8 +37,12 @@ function mapStateToProps(state) {
     currentProjectKey: getCurrentProjectKey(state),
     currentUser: getCurrentUser(state),
     enabledLibraries: getEnabledLibraries(state),
+    hasInstructions: Boolean(getCurrentProjectInstructions(state)),
+    isEditingInstructions: isEditingInstructions(state),
     isExperimental: isExperimental(state),
     isGistExportInProgress: isGistExportInProgress(state),
+    isRepoExportInProgress: isRepoExportInProgress(state),
+    isClassroomExportInProgress: isClassroomExportInProgress(state),
     isSnapshotInProgress: isSnapshotInProgress(state),
     isTextSizeLarge: isTextSizeLarge(state),
     isUserAuthenticated: isUserAuthenticated(state),
@@ -68,11 +76,15 @@ function mapDispatchToProps(dispatch) {
     },
 
     onExportGist() {
-      dispatch(exportGist());
+      dispatch(exportProject('gist'));
     },
 
     onExportRepo() {
-      dispatch(exportRepo());
+      dispatch(exportProject('repo'));
+    },
+
+    onExportToClassroom() {
+      dispatch(exportProject('classroom'));
     },
 
     onToggleLibrary(projectKey, libraryKey) {
@@ -81,6 +93,10 @@ function mapDispatchToProps(dispatch) {
 
     onLogOut() {
       dispatch(logOut());
+    },
+
+    onStartEditingInstructions() {
+      dispatch(startEditingInstructions());
     },
 
     onStartLogIn() {

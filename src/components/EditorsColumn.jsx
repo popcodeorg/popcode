@@ -5,9 +5,9 @@ import {t} from 'i18next';
 import {DraggableCore} from 'react-draggable';
 import bindAll from 'lodash/bindAll';
 import isEmpty from 'lodash/isEmpty';
-import includes from 'lodash/includes';
 import partial from 'lodash/partial';
 import partition from 'lodash/partition';
+import find from 'lodash/find';
 import {getNodeHeights} from '../util/resize';
 
 import EditorContainer from './EditorContainer';
@@ -50,6 +50,7 @@ export default class EditorsColumn extends React.Component {
       currentProject,
       editorsFlex,
       errors,
+      onComponentHidden,
       onComponentHide,
       onEditorInput,
       onRef,
@@ -61,10 +62,7 @@ export default class EditorsColumn extends React.Component {
     const children = [];
     const [hiddenLanguages, visibleLanguages] = partition(
       ['html', 'css', 'javascript'],
-      language => includes(
-        currentProject.hiddenUIComponents,
-        `editor.${language}`,
-      ),
+      language => find(currentProject.hiddenUIComponents, {language}),
     );
     visibleLanguages.forEach((language, index) => {
       children.push(
@@ -73,10 +71,7 @@ export default class EditorsColumn extends React.Component {
           language={language}
           source={currentProject.sources[language]}
           style={{flex: editorsFlex[index]}}
-          onHide={partial(onComponentHide, {
-            componentType: 'editor',
-            componentId: language,
-          })}
+          onHide={partial(onComponentHide, language)}
           onRef={partial(this._storeEditorRef, index)}
         >
           <Editor
@@ -87,6 +82,7 @@ export default class EditorsColumn extends React.Component {
             requestedFocusedLine={ui.editors.requestedFocusedLine}
             source={currentProject.sources[language]}
             textSizeIsLarge={ui.editors.textSizeIsLarge}
+            onComponentHidden={onComponentHidden}
             onInput={partial(onEditorInput, language)}
             onRequestedLineFocused={onRequestedLineFocused}
           />
@@ -114,13 +110,10 @@ export default class EditorsColumn extends React.Component {
           key={language}
           onClick={partial(
             this.props.onComponentUnhide,
-            {
-              componentType: 'editor',
-              componentId: language,
-            },
+            language,
           )}
         >
-          <div className="editors__label editors__label_collapsed">
+          <div className="label editors__label editors__label_collapsed">
             {t(`languages.${language}`)}
             {' '}
             <span className="u__icon">&#xf077;</span>
@@ -139,7 +132,7 @@ export default class EditorsColumn extends React.Component {
         ref={onRef}
         style={prefixAll(style)}
       >
-        <div className="environment__columnContents editors">{children}</div>
+        <div className="environment__column-contents editors">{children}</div>
       </div>
     );
   }
@@ -153,6 +146,7 @@ EditorsColumn.propTypes = {
   ui: PropTypes.shape({
     editors: PropTypes.object.isRequired,
   }).isRequired,
+  onComponentHidden: PropTypes.func.isRequired,
   onComponentHide: PropTypes.func.isRequired,
   onComponentUnhide: PropTypes.func.isRequired,
   onDividerDrag: PropTypes.func.isRequired,

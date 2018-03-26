@@ -2,22 +2,19 @@ import applicationLoaded from './applicationLoaded';
 
 import {
   createSnapshot,
-  exportGist,
-  gistExportDisplayed,
-  gistExportNotDisplayed,
-  exportRepo,
-  repoExportDisplayed,
-  repoExportNotDisplayed,
+  exportProject,
+  projectExportDisplayed,
+  projectExportNotDisplayed,
 } from './clients';
 
 import {
   createProject,
   changeCurrentProject,
   toggleLibrary,
-  hideComponent,
-  unhideComponent,
+  storeHiddenComponentLine,
   toggleComponent,
   updateProjectSource,
+  updateProjectInstructions,
 } from './projects';
 
 import {
@@ -30,11 +27,12 @@ import {
   notificationTriggered,
   userDismissedNotification,
   updateNotificationMetadata,
-  refreshPreview,
   popOutProject,
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
+  startEditingInstructions,
+  cancelEditingInstructions,
 } from './ui';
 
 import {
@@ -48,17 +46,35 @@ import {
   userLoggedOut,
 } from './user';
 
+import {
+  projectCompiled,
+  projectCompilationFailed,
+  refreshPreview,
+} from './compiledProjects';
+
+import {
+  clearConsoleEntries,
+  consoleErrorProduced,
+  consoleLogProduced,
+  consoleValueProduced,
+  evaluateConsoleEntry,
+} from './console';
+
 export {
+  clearConsoleEntries,
+  consoleValueProduced,
+  consoleErrorProduced,
+  consoleLogProduced,
   createProject,
   createSnapshot,
   changeCurrentProject,
   updateProjectSource,
+  updateProjectInstructions,
   toggleLibrary,
   userAuthenticated,
   userLoggedOut,
   addRuntimeError,
-  hideComponent,
-  unhideComponent,
+  storeHiddenComponentLine,
   toggleComponent,
   focusLine,
   editorFocusedRequestedLine,
@@ -69,18 +85,20 @@ export {
   notificationTriggered,
   userDismissedNotification,
   updateNotificationMetadata,
-  exportGist,
-  exportRepo,
-  gistExportDisplayed,
-  gistExportNotDisplayed,
+  exportProject,
+  projectExportDisplayed,
+  projectExportNotDisplayed,
   popOutProject,
   applicationLoaded,
   refreshPreview,
-  repoExportDisplayed,
-  repoExportNotDisplayed,
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
+  startEditingInstructions,
+  cancelEditingInstructions,
   logIn,
   logOut,
+  evaluateConsoleEntry,
+  projectCompiled,
+  projectCompilationFailed,
 };

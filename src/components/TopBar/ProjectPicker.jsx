@@ -8,6 +8,7 @@ import ProjectPickerButton from './ProjectPickerButton';
 import createMenu, {MenuItem} from './createMenu';
 
 const ProjectPicker = createMenu({
+  menuClass: 'top-bar__menu_right top-bar__menu_project-picker',
   name: 'projectPicker',
 
   isVisible({currentProjectKey, isUserAuthenticated, projectKeys}) {

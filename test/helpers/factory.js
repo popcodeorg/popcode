@@ -67,7 +67,7 @@ export function project(projectIn) {
       javascript: 'alert("Hi")',
     },
     enabledLibraries: [],
-    hiddenUIComponents: [],
+    hiddenUIComponents: ['console'],
     updatedAt: Date.now(),
   });
 }

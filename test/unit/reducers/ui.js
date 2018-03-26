@@ -8,6 +8,7 @@ import {
   gistNotFound,
   gistImportError,
   updateProjectSource,
+  updateProjectInstructions,
 } from '../../../src/actions/projects';
 import {
   dragColumnDivider,
@@ -17,24 +18,27 @@ import {
   editorFocusedRequestedLine,
   notificationTriggered,
   userDismissedNotification,
-  refreshPreview,
   toggleTopBarMenu,
+  startEditingInstructions,
+  cancelEditingInstructions,
 } from '../../../src/actions/ui';
 import {
   snapshotCreated,
   snapshotExportError,
   snapshotImportError,
   snapshotNotFound,
-  gistExportNotDisplayed,
-  gistExportError,
-  repoExportNotDisplayed,
-  repoExportError,
+  projectExportNotDisplayed,
+  projectExportError,
 } from '../../../src/actions/clients';
 import {EmptyGistError} from '../../../src/clients/github';
 import {
   userLoggedOut,
 } from '../../../src/actions/user';
-import {applicationLoaded} from '../../../src/actions/';
+import {
+  applicationLoaded,
+  projectCompiled,
+  projectCompilationFailed,
+} from '../../../src/actions/';
 
 const initialState = Immutable.fromJS({
   editors: {
@@ -43,7 +47,6 @@ const initialState = Immutable.fromJS({
   },
   workspace: DEFAULT_WORKSPACE,
   notifications: new Immutable.Map(),
-  lastRefreshTimestamp: null,
   topBar: {openMenu: null},
 });
 
@@ -124,6 +127,27 @@ test('dragRowDivider', (t) => {
   ));
 });
 
+test('startEditingInstructions', reducerTest(
+  reducer,
+  initialState,
+  startEditingInstructions,
+  initialState.setIn(['workspace', 'isEditingInstructions'], true),
+));
+
+test('startEditingInstructions', reducerTest(
+  reducer,
+  initialState.setIn(['workspace', 'isEditingInstructions'], true),
+  cancelEditingInstructions,
+  initialState,
+));
+
+test('updateProjectInstructions', reducerTest(
+  reducer,
+  initialState.setIn(['workspace', 'isEditingInstructions'], true),
+  updateProjectInstructions,
+  initialState,
+));
+
 test('gistNotFound', reducerTest(
   reducer,
   initialState,
@@ -175,27 +199,31 @@ test('userLoggedOut', (t) => {
   ));
 });
 
-tap('https://gists.github.com/12345abc', (url) => {
-  test('gistExportNotDisplayed', reducerTest(
+tap({url: 'https://gists.github.com/12345abc', exportType: 'gist'}, (payload) => {
+  test('projectExportNotDisplayed', reducerTest(
     reducer,
     initialState,
-    partial(gistExportNotDisplayed, url),
-    withNotification('gist-export-complete', 'notice', {url}),
+    partial(projectExportNotDisplayed, payload.url, payload.exportType),
+    withNotification(
+      'project-export-complete',
+      'notice',
+      {url: payload.url, exportType: payload.exportType},
+    ),
   ));
 });
 
-test('gistExportError', (t) => {
+test('projectExportError', (t) => {
   t.test('with generic error', reducerTest(
     reducer,
     initialState,
-    partial(gistExportError, new Error()),
-    withNotification('gist-export-error', 'error'),
+    partial(projectExportError, 'gist'),
+    withNotification('gist-export-error', 'error', {exportType: 'gist'}),
   ));
 
   t.test('with empty gist error', reducerTest(
     reducer,
     initialState,
-    partial(gistExportError, new EmptyGistError()),
+    partial(projectExportError, new EmptyGistError()),
     withNotification('empty-gist', 'error'),
   ));
 });
@@ -221,31 +249,13 @@ test('snapshotNotFound', reducerTest(
   withNotification('snapshot-not-found', 'error'),
 ));
 
-tap('https://popcode-mat.github.io/my-popcode-repo', (url) => {
-  test('repoExportNotDisplayed', reducerTest(
-    reducer,
-    initialState,
-    partial(repoExportNotDisplayed, url),
-    withNotification('repo-export-complete', 'notice', {url}),
-  ));
-});
-
-test('repoExportError', (t) => {
-  t.test('with generic error', reducerTest(
-    reducer,
-    initialState,
-    partial(repoExportError, new Error()),
-    withNotification('repo-export-error', 'error'),
-  ));
-});
-
 test('focusLine', reducerTest(
   reducer,
   initialState,
   partial(focusLine, 'javascript', 4, 2),
   initialState.setIn(
     ['editors', 'requestedFocusedLine'],
-    new Immutable.Map({language: 'javascript', line: 4, column: 2}),
+    new Immutable.Map({componentKey: 'javascript', line: 4, column: 2}),
   ),
 ));
 
@@ -253,7 +263,7 @@ test('editorFocusedRequestedLine', reducerTest(
   reducer,
   initialState.setIn(
     ['editors', 'requestedFocusedLine'],
-    new Immutable.Map({language: 'javascript', line: 4, column: 2}),
+    new Immutable.Map({componentKey: 'javascript', line: 4, column: 2}),
   ),
   editorFocusedRequestedLine,
   initialState,
@@ -282,13 +292,6 @@ test('userDismissedNotification', reducerTest(
   initialState,
 ));
 
-test('refreshPreview', reducerTest(
-  reducer,
-  initialState,
-  partial(refreshPreview, 1),
-  initialState.set('lastRefreshTimestamp', 1),
-));
-
 test('applicationLoaded', (t) => {
   t.test('isExperimental = true', reducerTest(
     reducer,
@@ -313,6 +316,20 @@ tap('123-456', snapshotKey =>
     withNotification('snapshot-created', 'notice', {snapshotKey}),
   )),
 );
+
+test('projectCompilationFailed', reducerTest(
+  reducer,
+  initialState,
+  partial(projectCompilationFailed, new Error()),
+  withNotification('project-compilation-failed', 'error'),
+));
+
+test('projectCompiled', reducerTest(
+  reducer,
+  withNotification('project-compilation-failed', 'error'),
+  partial(projectCompiled, new Error()),
+  initialState,
+));
 
 test('toggleTopBarMenu', (t) => {
   t.test('with no menu open', reducerTest(

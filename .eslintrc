@@ -120,7 +120,8 @@
           "always",
           {
             "js": "never",
-            "jsx": "never"
+            "jsx": "never",
+            "mjs": "never"
           }
         ],
         "import/first": [
@@ -636,9 +637,6 @@
             2
         ],
         "react/jsx-key": [
-          2
-        ],
-        "react/jsx-no-bind": [
           2
         ],
         "react/jsx-no-comment-textnodes": [

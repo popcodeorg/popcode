@@ -41,6 +41,9 @@ function errors(stateIn, action) {
     case 'GIST_IMPORTED':
       return validatingErrors;
 
+    case 'SNAPSHOT_IMPORTED':
+      return validatingErrors;
+
     case 'TOGGLE_LIBRARY':
       return validatingErrors;
 
@@ -64,6 +67,17 @@ function errors(stateIn, action) {
         );
       }
       return state.set(action.payload.language, passedLanguageErrors);
+
+    case 'REFRESH_PREVIEW':
+      return state.update(
+        'javascript',
+        (errorList) => {
+          if (errorList.state === 'runtime-error') {
+            return passedLanguageErrors;
+          }
+          return errorList;
+        },
+      );
 
     default:
       return state;

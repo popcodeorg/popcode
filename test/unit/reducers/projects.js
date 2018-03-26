@@ -1,3 +1,4 @@
+import assign from 'lodash/assign';
 import test from 'tape';
 import reduce from 'lodash/reduce';
 import tap from 'lodash/tap';
@@ -6,7 +7,7 @@ import Immutable from 'immutable';
 import reducerTest from '../../helpers/reducerTest';
 import {projects as states} from '../../helpers/referenceStates';
 import {gistData, project} from '../../helpers/factory';
-import {Project} from '../../../src/records';
+import {Project, HiddenUIComponent} from '../../../src/records';
 import reducer, {
   reduceRoot as rootReducer,
 } from '../../../src/reducers/projects';
@@ -16,10 +17,9 @@ import {
   projectCreated,
   projectsLoaded,
   toggleLibrary,
-  hideComponent,
-  unhideComponent,
   toggleComponent,
   updateProjectSource,
+  updateProjectInstructions,
 } from '../../../src/actions/projects';
 import {
   snapshotImported,
@@ -64,6 +64,17 @@ test('updateProjectSource', reducerTest(
     ),
 ));
 
+tap(initProjects({1: false}), projects =>
+  test('updateProjectInstructions', reducerTest(
+    reducer,
+    projects,
+    partial(updateProjectInstructions, '1', '# Instructions\n\nHello.'),
+    projects.update('1', projectIn =>
+      projectIn.set('instructions', '# Instructions\n\nHello.'),
+    ),
+  )),
+);
+
 test('changeCurrentProject', (t) => {
   t.test('from modified to pristine', reducerTest(
     reducer,
@@ -90,20 +101,29 @@ test('changeCurrentProject', (t) => {
   ));
 });
 
-tap(project(), importedProject =>
+tap(project(), (importedProject) => {
+  const snapshotProjectKey = '123454321';
+
   test('snapshotImported', reducerTest(
     reducer,
     states.initial,
     partial(
       snapshotImported,
+      snapshotProjectKey,
       importedProject,
     ),
     states.initial.set(
-      importedProject.projectKey,
-      Project.fromJS(importedProject),
+      snapshotProjectKey,
+      Project.fromJS(
+        assign(
+          {},
+          importedProject,
+          {projectKey: snapshotProjectKey, updatedAt: null},
+        ),
+      ),
     ),
-  )),
-);
+  ));
+});
 
 tap(project(), rehydratedProject =>
   test('projectRestoredFromLastSession', reducerTest(
@@ -165,7 +185,7 @@ test('gistImported', (t) => {
         projectKey,
         {html, css, javascript: ''},
         ['jquery'],
-        ['output'],
+        ['output', 'console'],
       ),
     }),
   ));
@@ -213,46 +233,26 @@ tap(initProjects({1: false}), projects =>
   )),
 );
 
-tap(initProjects({1: true}), projects =>
-  test('hideComponent', reducerTest(
-    reducer,
-    projects,
-    partial(hideComponent, '1', {componentType: 'output'}, now),
-    projects.update('1', projectIn =>
-      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
-    ),
-  )),
-);
-
-tap(initProjects({1: true}), projects =>
-  test('unhideComponent', reducerTest(
-    reducer,
-    projects.update('1', projectIn =>
-      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
-    ),
-    partial(unhideComponent, '1', {componentType: 'output'}, now),
-    projects,
-  )),
-);
-
 test('toggleComponent', (t) => {
   const projects = initProjects({1: true});
 
   t.test('with component visible', reducerTest(
     reducer,
     projects,
-    partial(toggleComponent, '1', {componentType: 'output'}, now),
-    projects.update('1', projectIn =>
-      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    partial(toggleComponent, '1', 'output', null, now),
+    projects.setIn(
+      ['1', 'hiddenUIComponents', 'output'],
+      new HiddenUIComponent({componentType: 'output'}),
     ),
   ));
 
   t.test('with component hidden', reducerTest(
     reducer,
-    projects.update('1', projectIn =>
-      projectIn.set('hiddenUIComponents', new Immutable.Set(['output'])),
+    projects.setIn(
+      ['1', 'hiddenUIComponents', 'output'],
+      new HiddenUIComponent({componentType: 'output'}),
     ),
-    partial(toggleComponent, '1', {componentType: 'output'}, now),
+    partial(toggleComponent, '1', 'output', null, now),
     projects,
   ));
 });
@@ -263,8 +263,11 @@ tap(initProjects({1: true}), (projects) => {
     rootReducer,
     Immutable.fromJS({
       projects: projects.setIn(
-        ['1', 'hiddenUIComponents'],
-        new Immutable.Set(['editor.javascript']),
+        ['1', 'hiddenUIComponents', 'javascript'],
+        new HiddenUIComponent({
+          componentType: 'editor',
+          language: 'javascript',
+        }),
       ),
       currentProject: {projectKey: '1'},
     }),
@@ -290,7 +293,7 @@ function initProjects(map = {}) {
 }
 
 function buildProject(
-  key, sources, enabledLibraries = [], hiddenUIComponents = [],
+  key, sources, enabledLibraries = [], hiddenUIComponents = ['console'],
 ) {
   return Project.fromJS({
     projectKey: key,

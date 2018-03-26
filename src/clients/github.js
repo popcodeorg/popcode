@@ -3,14 +3,12 @@ import GitHub from 'github-api';
 import isEmpty from 'lodash/isEmpty';
 import trim from 'lodash/trim';
 import performWithRetries from '../util/performWithRetries';
-import generatePreview from '../util/generatePreview';
+import compileProject from '../util/compileProject';
 
-const anonymousGithub = new GitHub({});
 const COMMIT_MESSAGE = 'Created using Popcode: https://popcode.org';
 const MASTER = 'master';
 const GH_PAGES = 'gh-pages';
 const NETWORK_ERROR = 'Network Error';
-const parser = new DOMParser();
 
 export function EmptyGistError(message) {
   this.name = 'EmptyGistError';
@@ -19,10 +17,8 @@ export function EmptyGistError(message) {
 }
 EmptyGistError.prototype = Object.create(Error.prototype);
 
-function getPageTitle(preview) {
-  const parsedDocument = parser.parseFromString(preview, 'text/html');
-
-  const titleWithoutPunctuationAndWhitespace = parsedDocument.title.
+function normalizeTitle(title) {
+  const titleWithoutPunctuationAndWhitespace = title.
     replace(/[^\w\s]|_/g, '').
     replace(/\W/g, '-');
 
@@ -31,8 +27,8 @@ function getPageTitle(preview) {
 
 export async function createRepoFromProject(project, user) {
   const github = clientForUser(user);
-  const preview = generatePreview(project);
-  const title = getPageTitle(preview);
+  const preview = await compileProject(project);
+  const title = normalizeTitle(preview.title);
 
   const REPO_NAME = `${title}-${Date.now()}`;
 
@@ -73,11 +69,7 @@ export async function createGistFromProject(project, user) {
   const response =
     await performWithRetryNetworkErrors(() => github.getGist().create(gist));
 
-  const gistData = response.data;
-  if (canUpdateGist(user)) {
-    return updateGistWithImportUrl(github, gistData);
-  }
-  return gistData;
+  return updateGistWithImportUrl(github, response.data);
 }
 
 export async function loadGistFromId(gistId, user) {
@@ -114,7 +106,8 @@ function buildGistFromProject(project) {
       language: 'Markdown',
     };
   }
-  if (project.enabledLibraries.length || project.hiddenUIComponents.length) {
+  if (project.enabledLibraries.length ||
+    !isEmpty(project.hiddenUIComponents)) {
     files['popcode.json'] = {
       content: createPopcodeJson(project),
       language: 'JSON',
@@ -145,7 +138,7 @@ function createPopcodeJson(project) {
   if (project.enabledLibraries.length) {
     json.enabledLibraries = project.enabledLibraries;
   }
-  if (project.hiddenUIComponents.length) {
+  if (!isEmpty(project.hiddenUIComponents)) {
     json.hiddenUIComponents = project.hiddenUIComponents;
   }
   return JSON.stringify(json);
@@ -218,14 +211,14 @@ async function createJsFile(github, project, userName, repoName) {
 }
 
 async function createPreviewFile(github, project, userName, repoName) {
-  const preview = generatePreview(project);
+  const preview = await compileProject(project);
   await createSourceFileInRepo(
     github,
     userName,
     repoName,
     GH_PAGES,
     'index.html',
-    preview,
+    preview.source,
   );
 }
 
@@ -256,19 +249,7 @@ function githubWithAccessToken(token) {
   return new GitHub({auth: 'oauth', token});
 }
 
-function getGithubToken(user) {
-  return get(user, ['accessTokens', 'github.com']);
-}
-
 function clientForUser(user) {
-  const githubToken = getGithubToken(user);
-  if (githubToken) {
-    return githubWithAccessToken(githubToken);
-  }
-
-  return anonymousGithub;
-}
-
-function canUpdateGist(user) {
-  return Boolean(getGithubToken(user));
+  const githubToken = get(user, ['accessTokens', 'github.com']);
+  return githubWithAccessToken(githubToken);
 }

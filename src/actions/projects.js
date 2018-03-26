@@ -18,28 +18,29 @@ export const updateProjectSource = createAction(
   (_projectKey, _language, _newValue, timestamp = Date.now()) => ({timestamp}),
 );
 
+export const updateProjectInstructions = createAction(
+  'UPDATE_PROJECT_INSTRUCTIONS',
+  (projectKey, newValue) => ({projectKey, newValue}),
+);
+
 export const toggleLibrary = createAction(
   'TOGGLE_LIBRARY',
   (projectKey, libraryKey) => ({projectKey, libraryKey}),
   (_projectKey, _libraryKey, timestamp = Date.now()) => ({timestamp}),
 );
 
-export const hideComponent = createAction(
-  'HIDE_COMPONENT',
-  (projectKey, component) => ({projectKey, component}),
-  (_projectKey, _component, timestamp = Date.now()) => ({timestamp}),
-);
-
-export const unhideComponent = createAction(
-  'UNHIDE_COMPONENT',
-  (projectKey, component) => ({projectKey, component}),
-  (_projectKey, _component, timestamp = Date.now()) => ({timestamp}),
+export const storeHiddenComponentLine = createAction(
+  'STORE_HIDDEN_LINE',
+  (projectKey, componentKey, line, column) =>
+    ({projectKey, componentKey, line, column}),
 );
 
 export const toggleComponent = createAction(
   'TOGGLE_COMPONENT',
-  (projectKey, component) => ({projectKey, component}),
-  (_projectKey, _component, timestamp = Date.now()) => ({timestamp}),
+  (projectKey, componentKey, hiddenUIComponent) =>
+    ({projectKey, componentKey, hiddenUIComponent}),
+  (projectKey, componentKey, hiddenUIComponent, timestamp = Date.now()) =>
+    ({timestamp}),
 );
 
 export const gistImported = createAction(

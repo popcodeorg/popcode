@@ -1,4 +1,5 @@
 import Immutable from 'immutable';
+import assign from 'lodash/assign';
 import isNil from 'lodash/isNil';
 import filter from 'lodash/filter';
 import find from 'lodash/find';
@@ -7,7 +8,7 @@ import map from 'lodash/map';
 import sortBy from 'lodash/sortBy';
 import values from 'lodash/values';
 
-import {Project} from '../records';
+import {Project, HiddenUIComponent} from '../records';
 import {isPristineProject} from '../util/projectUtils';
 import {makeComponentName} from '../util/componentName';
 
@@ -23,10 +24,19 @@ function removePristineExcept(state, keepProjectKey) {
   ));
 }
 
-function unhideComponent(state, projectKey, component, timestamp) {
+function hideComponent(state, payload, timestamp) {
+  const {projectKey, componentKey, hiddenUIComponent} = payload;
+  return state.setIn(
+    [projectKey, 'hiddenUIComponents', componentKey],
+    hiddenUIComponent || new HiddenUIComponent({componentType: componentKey}),
+  ).setIn([projectKey, 'updatedAt'], timestamp);
+}
+
+function unhideComponent(state, payload, timestamp) {
+  const {projectKey, componentKey} = payload;
   return state.updateIn(
     [projectKey, 'hiddenUIComponents'],
-    hiddenUIComponents => hiddenUIComponents.delete(component),
+    hiddenUIComponents => hiddenUIComponents.delete(componentKey),
   ).setIn([projectKey, 'updatedAt'], timestamp);
 }
 
@@ -53,7 +63,7 @@ function importGist(state, projectKey, gistData) {
         javascript: contentForLanguage(files, 'JavaScript'),
       },
       enabledLibraries: popcodeJson.enabledLibraries || [],
-      hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
+      hiddenUIComponents: popcodeJson.hiddenUIComponents || {},
       instructions: contentForLanguage(files, 'Markdown'),
     },
   );
@@ -78,11 +88,10 @@ export function reduceRoot(stateIn, action) {
       case 'FOCUS_LINE':
         return unhideComponent(
           projects,
-          stateIn.getIn(['currentProject', 'projectKey']),
-          makeComponentName({
-            componentType: 'editor',
-            componentId: action.payload.language,
-          }),
+          {
+            projectKey: stateIn.getIn(['currentProject', 'projectKey']),
+            componentKey: action.payload.componentKey,
+          },
           action.meta.timestamp,
         );
     }
@@ -113,6 +122,12 @@ export default function reduceProjects(stateIn, action) {
         action.meta.timestamp,
       );
 
+    case 'UPDATE_PROJECT_INSTRUCTIONS':
+      return state.setIn(
+        [action.payload.projectKey, 'instructions'],
+        action.payload.newValue,
+      );
+
     case 'PROJECT_CREATED':
       return removePristineExcept(state, payload.projectKey).set(
         payload.projectKey,
@@ -123,7 +138,14 @@ export default function reduceProjects(stateIn, action) {
       return removePristineExcept(state, payload.projectKey);
 
     case 'SNAPSHOT_IMPORTED':
-      return addProject(state, payload);
+      return addProject(
+        state,
+        assign(
+          {},
+          action.payload.project,
+          {projectKey: action.payload.projectKey, updatedAt: null},
+        ),
+      );
 
     case 'GIST_IMPORTED':
       return importGist(
@@ -150,38 +172,23 @@ export default function reduceProjects(stateIn, action) {
         action.meta.timestamp,
       );
 
-    case 'HIDE_COMPONENT':
-      return state.updateIn(
-        [payload.projectKey, 'hiddenUIComponents'],
-        hiddenUIComponents =>
-          hiddenUIComponents.add(makeComponentName(payload.component)),
-      ).setIn(
-        [payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
-      );
-
-    case 'UNHIDE_COMPONENT':
-      return unhideComponent(
-        state,
-        payload.projectKey,
-        makeComponentName(payload.component),
-        action.meta.timestamp,
-      );
-
     case 'TOGGLE_COMPONENT':
-      return state.updateIn(
-        [payload.projectKey, 'hiddenUIComponents'],
-        (hiddenUIComponents) => {
-          const componentName = makeComponentName(payload.component);
-          if (hiddenUIComponents.includes(componentName)) {
-            return hiddenUIComponents.remove(componentName);
-          }
-          return hiddenUIComponents.add(componentName);
-        },
-      ).setIn(
-        [payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
-      );
+      if (state.getIn(
+        [action.payload.projectKey, 'hiddenUIComponents'],
+      ).has(action.payload.componentKey)) {
+        return unhideComponent(state, action.payload, action.meta.timestamp);
+      }
+      return hideComponent(state, action.payload, action.meta.timestamp);
+
+    case 'STORE_HIDDEN_LINE':
+      return state.mergeIn([
+        action.payload.projectKey,
+        'hiddenUIComponents',
+        action.payload.componentKey,
+      ], {
+        line: action.payload.line,
+        column: action.payload.column,
+      });
 
     default:
       return state;

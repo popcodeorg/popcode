@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import find from 'lodash/find';
 import ErrorList from './ErrorList';
+import PopThrobber from './PopThrobber';
 
 function ErrorReport({errors, isValidating, onErrorClick}) {
   if (isValidating) {
-    return <div className="output__delayed-error-overlay" />;
+    return (
+      <div className="output__delayed-error-overlay">
+        <PopThrobber />
+      </div>
+    );
   }
 
   const hasErrors = Boolean(find(errors, list => list.items.length));

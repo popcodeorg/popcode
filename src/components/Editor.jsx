@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ACE from 'brace';
 import bindAll from 'lodash/bindAll';
 import get from 'lodash/get';
 import throttle from 'lodash/throttle';
 import noop from 'lodash/noop';
+import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
 
 import 'brace/ext/searchbox';
 import 'brace/mode/html';
@@ -15,13 +15,6 @@ import 'brace/theme/monokai';
 const RESIZE_THROTTLE = 250;
 const NORMAL_FONTSIZE = 14;
 const LARGE_FONTSIZE = 20;
-
-function createSessionWithoutWorker(source, language) {
-  const session = ACE.createEditSession(source, null);
-  session.setUseWorker(false);
-  session.setMode(`ace/mode/${language}`);
-  return session;
-}
 
 class Editor extends React.Component {
   constructor() {
@@ -65,12 +58,15 @@ class Editor extends React.Component {
   }
 
   componentWillUnmount() {
+    const {onComponentHidden, language} = this.props;
+    const {row, column} = this._editor.getCursorPosition();
+    onComponentHidden(language, row, column);
     this._editor.destroy();
     window.removeEventListener('resize', this._handleWindowResize);
   }
 
   _focusRequestedLine(requestedFocusedLine) {
-    if (get(requestedFocusedLine, 'language') !== this.props.language) {
+    if (get(requestedFocusedLine, 'componentKey') !== this.props.language) {
       return;
     }
 
@@ -80,8 +76,6 @@ class Editor extends React.Component {
     );
 
     this._scrollToLine(requestedFocusedLine.line);
-
-    this._editor.clearSelection();
     this._editor.focus();
     this.props.onRequestedLineFocused();
   }
@@ -103,16 +97,10 @@ class Editor extends React.Component {
 
   _setupEditor(containerElement) {
     if (containerElement) {
-      this._editor = ACE.edit(containerElement);
-      this._editor.$blockScrolling = Infinity;
+      this._editor = createAceEditor(containerElement);
       this._startNewSession(this.props.source);
-      this._disableAutoClosing();
       this._resizeEditor();
       this._editor.on('focus', this._resizeEditor);
-      this._editor.setOptions({
-        fontFamily: 'Inconsolata',
-        fontSize: '14px',
-      });
     } else {
       this._editor.destroy();
     }
@@ -126,13 +114,8 @@ class Editor extends React.Component {
     }
   }
 
-  _disableAutoClosing() {
-    this._editor.setBehavioursEnabled(false);
-  }
-
   _startNewSession(source) {
-    const session = createSessionWithoutWorker(source, this.props.language);
-    session.setUseWrapMode(true);
+    const session = createAceSessionWithoutWorker(this.props.language, source);
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
     });
@@ -160,6 +143,7 @@ Editor.propTypes = {
   requestedFocusedLine: PropTypes.object,
   source: PropTypes.string.isRequired,
   textSizeIsLarge: PropTypes.bool.isRequired,
+  onComponentHidden: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };

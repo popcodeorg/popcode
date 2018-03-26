@@ -10,6 +10,7 @@ const MD5ChunkHash = require('webpack-chunk-hash');
 const InlineChunkManifestHtmlPlugin =
   require('inline-chunk-manifest-html-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
 const startsWith = require('lodash/startsWith');
@@ -17,6 +18,7 @@ const map = require('lodash/map');
 const includes = require('lodash/includes');
 const git = require('git-rev-sync');
 const babel = require('babel-core');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const babelLoaderVersion =
   require('./node_modules/babel-loader/package.json').version;
 
@@ -77,7 +79,7 @@ module.exports = (env = 'development') => {
       FIREBASE_API_KEY: 'AIzaSyCHlo2RhOkRFFh48g779YSZrLwKjoyCcws',
       GIT_REVISION: git.short(),
       LOG_REDUX_ACTIONS: 'false',
-      NODE_ENV: 'development',
+      NODE_ENV: env,
       WARN_ON_DROPPED_ERRORS: 'false',
       GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2',
     }),
@@ -85,71 +87,96 @@ module.exports = (env = 'development') => {
       exclude: /node_modules/,
       failOnError: true,
     }),
-    new OfflinePlugin({
-      publicPath: '/',
-      responseStrategy: 'network-first',
-      externals: [
-        'index.html',
-        'application.css',
-        'fonts/Roboto-Regular-webfont.woff',
-        'fonts/Roboto-Regular-webfont.ttf',
-        'fonts/Roboto-Regular-webfont.eot',
-        'fonts/Roboto-Bold-webfont.woff',
-        'fonts/Roboto-Bold-webfont.ttf',
-        'fonts/Roboto-Bold-webfont.eot',
-        'fonts/inconsolata-regular.woff2',
-        'fonts/inconsolata-regular.woff',
-        'fonts/inconsolata-regular.ttf',
-        'fonts/inconsolata-regular.eot',
-        'fonts/fontawesome-webfont.woff2',
-        'fonts/fontawesome-webfont.woff',
-        'fonts/fontawesome-webfont.ttf',
-        'fonts/fontawesome-webfont.eot',
-        'images/pop/thinking.svg',
-        'images/large-spinner.gif',
-      ],
-      ServiceWorker: {navigateFallbackURL: '/'},
-    }),
-    isProduction ?
-      new webpack.HashedModuleIdsPlugin() :
-      new webpack.NamedModulesPlugin(),
-    new MD5ChunkHash(),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src/html/index.html'),
-      chunksSortMode: 'dependency',
-    }),
-    new InlineChunkManifestHtmlPlugin(),
   ];
 
-  if (isTest) {
-    plugins.push(new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}));
-  } else {
+  if (!isTest) {
     plugins.push(
+      new OfflinePlugin({
+        caches: {
+          main: [':rest:'],
+          additional: ['mainAsync*.js', 'previewLibraries*.js'],
+        },
+        safeToUseOptionalCaches: true,
+        publicPath: '/',
+        responseStrategy: 'network-first',
+        externals: [
+          'index.html',
+          'application.css',
+          'fonts/Roboto-Regular-webfont.woff',
+          'fonts/Roboto-Regular-webfont.ttf',
+          'fonts/Roboto-Regular-webfont.eot',
+          'fonts/Roboto-Bold-webfont.woff',
+          'fonts/Roboto-Bold-webfont.ttf',
+          'fonts/Roboto-Bold-webfont.eot',
+          'fonts/inconsolata-regular.woff2',
+          'fonts/inconsolata-regular.woff',
+          'fonts/inconsolata-regular.ttf',
+          'fonts/inconsolata-regular.eot',
+          'fonts/fontawesome-webfont.woff2',
+          'fonts/fontawesome-webfont.woff',
+          'fonts/fontawesome-webfont.ttf',
+          'fonts/fontawesome-webfont.eot',
+          'images/pop/thinking.svg',
+        ],
+        ServiceWorker: {navigateFallbackURL: '/'},
+      }),
+      isProduction ?
+        new webpack.HashedModuleIdsPlugin() :
+        new webpack.NamedModulesPlugin(),
+      new MD5ChunkHash(),
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'src/html/index.html'),
+        chunksSortMode: 'dependency',
+      }),
+      new ScriptExtHtmlWebpackPlugin({
+        defaultAttribute: 'defer',
+        custom: [
+          {
+            test: /^preview/,
+            attribute: 'type',
+            value: 'ref',
+          },
+          {
+            test: /^preview/,
+            attribute: 'id',
+            value: 'preview-bundle',
+          },
+        ],
+      }),
+      new InlineChunkManifestHtmlPlugin(),
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
+        chunks: ['main'],
         minChunks({context}) {
           if (!context) {
             return false;
           }
           const isNodeModule = context.indexOf('node_modules') !== -1;
-          const isBowerComponent = context.indexOf('bower_components') !== -1;
-          return isNodeModule || isBowerComponent;
+          return isNodeModule;
         },
       }),
-      new webpack.optimize.CommonsChunkPlugin({name: 'manifest'}),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'manifest',
+        chunks: ['main'],
+      }),
     );
   }
 
   if (isProduction) {
-    plugins.push(new webpack.optimize.UglifyJsPlugin({
-      compress: {warnings: false},
-      output: {comments: false},
+    plugins.push(new UglifyJsPlugin({
       sourceMap: true,
+      uglifyOptions: {
+        compress: {warnings: false},
+        output: {comments: false},
+      },
     }));
   }
 
   return {
-    entry: './src/application.js',
+    entry: {
+      main: './src/application.js',
+      preview: './src/preview.js',
+    },
     output: {
       path: path.resolve(__dirname, './dist'),
       filename: isProduction ? '[name].[chunkhash].js' : '[name].js',
@@ -194,6 +221,9 @@ module.exports = (env = 'development') => {
                 plugins: [
                   {
                     removeXMLNS: true,
+                  },
+                  {
+                    removeViewBox: false,
                   },
                   {
                     removeAttrs: {
@@ -256,8 +286,11 @@ module.exports = (env = 'development') => {
           test: /\.js$/,
           include: [
             matchModule('ansi-styles'),
+            matchModule('ast-types'),
             matchModule('chalk'),
             matchModule('lodash-es'),
+            matchModule('postcss-html'),
+            matchModule('recast'),
             matchModule('redux'),
             matchModule('stylelint'),
           ],
@@ -317,7 +350,7 @@ module.exports = (env = 'development') => {
         'github-api': 'github-api/dist/components',
         'html-inspector$': 'html-inspector/html-inspector.js',
       },
-      extensions: ['.js', '.jsx', '.json'],
+      extensions: ['.mjs', '.js', '.jsx', '.json'],
     },
     devtool: isTest ? 'inline-source-map' : 'source-map',
   };

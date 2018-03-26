@@ -4,8 +4,8 @@ export const userDoneTyping = createAction('USER_DONE_TYPING');
 
 export const focusLine = createAction(
   'FOCUS_LINE',
-  (language, line, column) => ({language, line, column}),
-  (_language, _line, _column, timestamp = Date.now()) => ({timestamp}),
+  (componentKey, line, column) => ({componentKey, line, column}),
+  (_component, _line, _column, timestamp = Date.now()) => ({timestamp}),
 );
 
 export const editorFocusedRequestedLine = createAction(
@@ -47,11 +47,6 @@ export const updateNotificationMetadata = createAction(
   (type, metadata) => ({type, metadata}),
 );
 
-export const refreshPreview = createAction(
-  'REFRESH_PREVIEW',
-  timestamp => ({timestamp}),
-);
-
 export const toggleEditorTextSize = createAction(
   'TOGGLE_EDITOR_TEXT_SIZE',
 );
@@ -62,4 +57,12 @@ export const toggleTopBarMenu = createAction(
 
 export const closeTopBarMenu = createAction(
   'CLOSE_TOP_BAR_MENU',
+);
+
+export const startEditingInstructions = createAction(
+  'START_EDITING_INSTRUCTIONS',
+);
+
+export const cancelEditingInstructions = createAction(
+  'CANCEL_EDITING_INSTRUCTIONS',
 );

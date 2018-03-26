@@ -13,7 +13,7 @@ module.exports = {
 
   feedbackUrl: 'https://gitreports.com/issue/popcodeorg/popcode',
 
-  bugsnagApiKey: '400134511e506b91ae6c24ac962af962',
+  bugsnagApiKey: '3cc590a735bc2e50d2a21e467cf62fee',
 
   gitRevision: process.env.GIT_REVISION,
 

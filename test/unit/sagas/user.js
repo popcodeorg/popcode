@@ -19,7 +19,7 @@ import {
 } from '../../../src/sagas/user';
 import {loginState} from '../../../src/channels';
 import {userCredential as createUserCredential} from '../../helpers/factory';
-import Bugsnag from '../../../src/util/Bugsnag';
+import {bugsnagClient} from '../../../src/util/bugsnag';
 
 class MockFirebaseError extends Error {
   constructor(code) {
@@ -33,7 +33,7 @@ test('applicationLoaded', (t) => {
     testSaga(applicationLoadedSaga, applicationLoaded()).
       next().call(startSessionHeartbeat).
       next().take(loginState).
-      next({}).put(userLoggedOut());
+      next({userCredential: null}).put(userLoggedOut());
 
     assert.end();
   });
@@ -43,7 +43,7 @@ test('applicationLoaded', (t) => {
     testSaga(applicationLoadedSaga, applicationLoaded()).
       next().call(startSessionHeartbeat).
       next().take(loginState).
-      next(userCredential).call(getSessionUid).
+      next({userCredential}).call(getSessionUid).
       next(userCredential.user.uid).put(userAuthenticated(userCredential));
 
     assert.end();
@@ -54,7 +54,7 @@ test('applicationLoaded', (t) => {
     testSaga(applicationLoadedSaga, applicationLoaded()).
       next().call(startSessionHeartbeat).
       next().take(loginState).
-      next(userCredential).call(getSessionUid).
+      next({userCredential}).call(getSessionUid).
       next(undefined).call(signOut);
 
     assert.end();
@@ -135,7 +135,11 @@ test('logIn', (t) => {
     testSaga(logInSaga, logIn()).
       next().call(signIn).
       throw(e).put(notificationTriggered('auth-error')).
-      next().call([Bugsnag, 'notifyException'], e, 'auth/bogus-error').
+      next().call(
+        [bugsnagClient, 'notify'],
+        e,
+        {metaData: {code: 'auth/bogus-error'}},
+      ).
       next().isDone();
 
     assert.end();

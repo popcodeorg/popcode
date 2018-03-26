@@ -17,7 +17,7 @@ function uiVariants({validationState, isUserTyping}) {
     return {popVariant: 'neutral'};
   }
   if (validationState === 'validating') {
-    return {popVariant: 'thinking', modifier: 'top-bar_yellow'};
+    return {popVariant: 'neutral', modifier: 'top-bar_yellow'};
   }
   if (validationState === 'validation-error' && isUserTyping) {
     return {popVariant: 'thinking', modifier: 'top-bar_yellow'};
@@ -29,8 +29,12 @@ export default function TopBar({
   currentProjectKey,
   currentUser,
   enabledLibraries,
+  hasInstructions,
+  isEditingInstructions,
   isExperimental,
   isGistExportInProgress,
+  isRepoExportInProgress,
+  isClassroomExportInProgress,
   isUserAuthenticated,
   isUserTyping,
   isSnapshotInProgress,
@@ -45,7 +49,9 @@ export default function TopBar({
   onCreateSnapshot,
   onExportGist,
   onExportRepo,
+  onExportToClassroom,
   onLogOut,
+  onStartEditingInstructions,
   onStartLogIn,
   onToggleLibrary,
   onToggleTextSize,
@@ -53,22 +59,22 @@ export default function TopBar({
   const {popVariant, modifier} = uiVariants({validationState, isUserTyping});
 
   return (
-    <div className={classnames('top-bar', modifier)}>
-      <HamburgerMenu
-        isExperimental={isExperimental}
-        isGistExportInProgress={isGistExportInProgress}
-        isOpen={openMenu === 'hamburger'}
-        isUserAuthenticated={isUserAuthenticated}
-        onClick={partial(onClickMenu, 'hamburger')}
-        onExportGist={onExportGist}
-        onExportRepo={onExportRepo}
-      />
+    <header className={classnames('top-bar', modifier)}>
       <div className="top-bar__logo-container">
         <Pop variant={popVariant} />
       </div>
       <div className="top-bar__wordmark-container">
         <Wordmark />
       </div>
+      <LibraryPicker
+        enabledLibraries={enabledLibraries}
+        onToggleLibrary={partial(onToggleLibrary, currentProjectKey)}
+      />
+      <SnapshotButton
+        isInProgress={isSnapshotInProgress}
+        onClick={onCreateSnapshot}
+      />
+      <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
       <div className="top-bar__spacer" />
       <NewProjectButton
         isUserAuthenticated={isUserAuthenticated}
@@ -80,15 +86,6 @@ export default function TopBar({
         projectKeys={projectKeys}
         onChangeCurrentProject={onChangeCurrentProject}
       />
-      <LibraryPicker
-        enabledLibraries={enabledLibraries}
-        onToggleLibrary={partial(onToggleLibrary, currentProjectKey)}
-      />
-      <SnapshotButton
-        isInProgress={isSnapshotInProgress}
-        onClick={onCreateSnapshot}
-      />
-      <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
       <CurrentUser
         isOpen={openMenu === 'currentUser'}
         user={currentUser}
@@ -97,7 +94,22 @@ export default function TopBar({
         onLogOut={onLogOut}
         onStartLogIn={onStartLogIn}
       />
-    </div>
+      <HamburgerMenu
+        hasInstructions={hasInstructions}
+        isClassroomExportInProgress={isClassroomExportInProgress}
+        isEditingInstructions={isEditingInstructions}
+        isExperimental={isExperimental}
+        isGistExportInProgress={isGistExportInProgress}
+        isOpen={openMenu === 'hamburger'}
+        isRepoExportInProgress={isRepoExportInProgress}
+        isUserAuthenticated={isUserAuthenticated}
+        onClick={partial(onClickMenu, 'hamburger')}
+        onExportGist={onExportGist}
+        onExportRepo={onExportRepo}
+        onExportToClassroom={onExportToClassroom}
+        onStartEditingInstructions={onStartEditingInstructions}
+      />
+    </header>
   );
 }
 
@@ -105,8 +117,12 @@ TopBar.propTypes = {
   currentProjectKey: PropTypes.string,
   currentUser: PropTypes.object.isRequired,
   enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
+  hasInstructions: PropTypes.bool.isRequired,
+  isClassroomExportInProgress: PropTypes.bool.isRequired,
+  isEditingInstructions: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
+  isRepoExportInProgress: PropTypes.bool.isRequired,
   isSnapshotInProgress: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
@@ -121,7 +137,9 @@ TopBar.propTypes = {
   onCreateSnapshot: PropTypes.func.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
+  onExportToClassroom: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
+  onStartEditingInstructions: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
   onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,

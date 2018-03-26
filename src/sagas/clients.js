@@ -3,16 +3,18 @@ import {
   createGistFromProject,
   createRepoFromProject,
 } from '../clients/github';
+import {
+  createShareToClassroomUrl,
+} from '../clients/googleClassroom';
 import {createProjectSnapshot} from '../clients/firebase';
 import {
   snapshotCreated,
   snapshotExportError,
-  gistExported,
-  gistExportError,
-  repoExported,
-  repoExportError,
+  projectExported,
+  projectExportError,
 } from '../actions/clients';
 import {getCurrentProject} from '../selectors';
+import {generateTextPreview} from '../util/compileProject';
 
 export function* createSnapshot() {
   const project = yield select(getCurrentProject);
@@ -24,34 +26,31 @@ export function* createSnapshot() {
   }
 }
 
-export function* exportGist() {
+export function* exportProject({payload: {exportType}}) {
   const state = yield select();
   const project = getCurrentProject(state);
   const user = state.get('user').toJS();
-  try {
-    const {html_url} = yield call(createGistFromProject, project, user);
-    yield put(gistExported(html_url));
-  } catch (e) {
-    yield put(gistExportError(e));
-  }
-}
+  let url;
 
-export function* exportRepo() {
-  const state = yield select();
-  const project = getCurrentProject(state);
-  const user = state.get('user').toJS();
   try {
-    const {html_url} = yield call(createRepoFromProject, project, user);
-    yield put(repoExported(html_url));
+    if (exportType === 'gist') {
+      ({html_url: url} = yield call(createGistFromProject, project, user));
+    } else if (exportType === 'repo') {
+      ({html_url: url} = yield call(createRepoFromProject, project, user));
+    } else if (exportType === 'classroom') {
+      const snapshotKey = yield call(createProjectSnapshot, project);
+      const projectTitle = yield call(generateTextPreview, project);
+      url = yield call(createShareToClassroomUrl, snapshotKey, projectTitle);
+    }
+    yield put(projectExported(url, exportType));
   } catch (e) {
-    yield put(repoExportError(e));
+    yield put(projectExportError(exportType));
   }
 }
 
 export default function* () {
   yield all([
-    takeEvery('EXPORT_GIST', exportGist),
-    takeEvery('EXPORT_REPO', exportRepo),
     takeEvery('CREATE_SNAPSHOT', createSnapshot),
+    takeEvery('EXPORT_PROJECT', exportProject),
   ]);
 }

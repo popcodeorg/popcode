@@ -1,3 +1,4 @@
+import Slowparse from '../../util/slowparse';
 import Validator from '../Validator';
 
 const errorMap = {
@@ -124,7 +125,6 @@ class SlowparseValidator extends Validator {
   }
 
   async _getRawErrors() {
-    const {Slowparse} = await System.import('../linters');
     let error;
     try {
       ({error} = Slowparse.HTML(document, this._source, {errorDetectors}));

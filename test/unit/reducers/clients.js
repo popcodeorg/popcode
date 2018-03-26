@@ -7,15 +7,13 @@ import {
   createSnapshot,
   snapshotCreated,
   snapshotExportError,
-  exportGist,
-  gistExported,
-  gistExportError,
-  gistExportDisplayed,
-  gistExportNotDisplayed,
+  exportProject,
+  projectExported,
+  projectExportError,
+  projectExportDisplayed,
+  projectExportNotDisplayed,
 } from '../../../src/actions/clients';
 import {clients as states} from '../../helpers/referenceStates';
-
-const error = new Error();
 
 test('snapshot export', (t) => {
   t.test('createSnapshot', reducerTest(
@@ -43,54 +41,55 @@ test('snapshot export', (t) => {
   ));
 });
 
-test('gist export', (t) => {
+test('project export', (t) => {
   const url = 'https://gist.github.com/abc123';
+  const exportType = 'gist';
   const readyState = states.waitingForGist.setIn(
-    ['gists', 'lastExport'],
+    ['projectExports', exportType],
     Immutable.fromJS({status: 'ready', url}),
   );
 
   const errorState = states.waitingForGist.setIn(
-    ['gists', 'lastExport'],
-    Immutable.fromJS({status: 'error', error}),
+    ['projectExports', exportType],
+    Immutable.fromJS({status: 'error'}),
   );
 
-  t.test('exportGist', reducerTest(
+  t.test('exportProject', reducerTest(
     reducer,
     states.initial,
-    exportGist,
+    partial(exportProject, exportType),
     states.waitingForGist,
     'sets gists.lastExport.status to "waiting"',
   ));
 
-  t.test('gistExported', reducerTest(
+  t.test('projectExported', reducerTest(
     reducer,
     states.waitingForGist,
-    partial(gistExported, url),
+    partial(projectExported, url, exportType),
     readyState,
     'it sets last export status to ready with gist URL',
   ));
 
-  t.test('gistExportError', reducerTest(
+  t.test('projectExportError', reducerTest(
     reducer,
     states.waitingForGist,
-    partial(gistExportError, error),
+    partial(projectExportError, exportType),
     errorState,
     'it sets last export state to error with error object',
   ));
 
-  t.test('gistExportDisplayed', reducerTest(
+  t.test('projectExportDisplayed', reducerTest(
     reducer,
     readyState,
-    gistExportDisplayed,
+    projectExportDisplayed,
     readyState,
     'it does not change last export state',
   ));
 
-  t.test('gistExportNotDisplayed', reducerTest(
+  t.test('projectExportNotDisplayed', reducerTest(
     reducer,
     readyState,
-    gistExportNotDisplayed,
+    projectExportNotDisplayed,
     readyState,
     'it does not change last export state',
   ));

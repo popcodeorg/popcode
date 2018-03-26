@@ -1,10 +1,13 @@
 {
   "top-bar": {
-    "create-snapshot": "Snapshot",
+    "create-snapshot": "Create Snapshot",
     "export-gist": "Export Gist",
     "export-repo": "Export Repo",
+    "share-to-classroom": "Share To Classroom",
+    "add-instructions": "Add Instructions",
+    "edit-instructions": "Edit Instructions",
     "libraries": "Libraries",
-    "load-project": "My Projects",
+    "load-project": "Your Projects",
     "new-project": "New Project",
     "send-feedback": "Send Feedback",
     "session": {
@@ -28,7 +31,7 @@
     "empty-gist": "You need some code in your project to export a gist!",
     "gist-export-error": "Something went wrong trying to create that gist. Please try again.",
     "gist-export-complete": "Your gist export is ready!",
-    "github-export-link": "Click here to open it",
+    "project-export-link": "Click here to open it",
     "gist-import-not-found": "Looks like that gist doesn’t exist. Check the URL and try again.",
     "gist-import-error": "There was a problem importing that gist.",
     "gist-import-link": "Click here to open it",
@@ -38,7 +41,10 @@
     "click-to-copy": "Click here to copy it",
     "snapshot-export-error": "Something went wrong trying to create that snapshot. Please try again.",
     "snapshot-import-error": "Something went wrong trying to load that snapshot. Please try again.",
-    "snapshot-not-found": "That snapshot doesn’t seem to exist. Check the link and try again."
+    "snapshot-not-found": "That snapshot doesn’t seem to exist. Check the link and try again.",
+    "classroom-export-complete": "Your project is ready to share to Google Classroom",
+    "classroom-export-error": "Something went wrong trying to share to Google Classroom. Please try again.",
+    "project-compilation-failed": "Something went wrong trying to display a preview of your project. This is a bug in Popcode and we have been notified. Making another change to your code will likely fix this error."
   },
   "languages": {
     "html": "HTML",
@@ -56,7 +62,11 @@
         "css": "CSS",
         "javascript": "JS"
       },
-      "output": "Output"
+      "output": "Output",
+      "instructions": {
+        "cancel": "Cancel",
+        "save": "Save"
+      }
     }
   },
   "utility": {
@@ -80,13 +90,14 @@
         "width": "Don't use the `width` attribute. Instead, use the CSS `width` property"
       },
       "lower-case-attribute-name": "Use lower case for attribute names",
+      "text-elements-as-list-children": "The text `{{-textContent}}` inside the `<{{-tag}}>` tag must be surrounded by `<{{-children}}>` tags",
       "invalid-tag-location": "The `<{{-tag}}>` tag can’t go inside the `<{{-parent}}>` tag.",
       "invalid-tag-parent": "The `<{{-tag}}>` tag needs to be inside the `{{-parent}}`",
       "attribute-quotes": "You need to put the value of the `{{-attribute}}` attribute in quotation marks\nTry: `{{-attribute}}=\"myvalue\"`",
       "attribute-value": "Every attribute needs a value.\nTry: `myattribute=\"myvalue\"`",
       "doctype": "The first line of your HTML should always be:\n`<!DOCTYPE html>`",
       "duplicated-id": "You can't use the id \"{{-id}}\" more than once in your HTML",
-      "img-src": "`<img>` tags need a `src` attribute, with the URL of the image you want to display.\nTry: `<img src=\"http://coolimages.com/image.jpg\">`",
+      "img-src": "`<img>` tags need a `src` attribute, with the URL of the image you want to display.",
       "deprecated-tag": {
         "b": "You shouldn't use the `<b>` tag. Use the `<strong>` tag or the CSS `font-weight` property instead",
         "big": "You shouldn't use the `<big>` tag. Use the CSS `font-size` property instead",
@@ -135,7 +146,7 @@
       "invalid-value": "`{{-error}}` isn't a meaningful value for this property. Double-check what values you can use here.",
       "invalid-negative-value": "This property can’t have a negative value.",
       "invalid-fractional-value": "This property needs a whole number for a value.",
-      "missing-semicolon": "Looks like you’re missing a semicolon at the end of this line.",
+      "missing-semicolon": "Looks like you’re missing a semicolon (;) at the end of this line.",
       "require-value": "Put a value for `{{-error}}` after the colon.",
       "selector-expected": "Use a comma to separate multiple tag names, classes, or IDs.",
       "unknown-property": "`{{-error}}` isn't a property that CSS understands. Double-check the name of the property that you want to use."
