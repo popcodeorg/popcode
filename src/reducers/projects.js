@@ -98,9 +98,8 @@ export function reduceRoot(stateIn, action) {
   });
 }
 
-export default function reduceProjects(stateIn, action) {
+export default function reduceProjects(stateIn, {type, payload, meta}) {
   let state;
-  const {payload} = action;
 
   if (stateIn === undefined) {
     state = emptyMap;
@@ -108,7 +107,7 @@ export default function reduceProjects(stateIn, action) {
     state = stateIn;
   }
 
-  switch (action.type) {
+  switch (type) {
     case 'PROJECTS_LOADED':
       return payload.reduce(addProject, state);
 
@@ -118,13 +117,13 @@ export default function reduceProjects(stateIn, action) {
         payload.newValue,
       ).setIn(
         [payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
+        meta.timestamp,
       );
 
     case 'UPDATE_PROJECT_INSTRUCTIONS':
       return state.setIn(
-        [action.payload.projectKey, 'instructions'],
-        action.payload.newValue,
+        [payload.projectKey, 'instructions'],
+        payload.newValue,
       );
 
     case 'PROJECT_CREATED':
@@ -141,8 +140,8 @@ export default function reduceProjects(stateIn, action) {
         state,
         assign(
           {},
-          action.payload.project,
-          {projectKey: action.payload.projectKey, updatedAt: null},
+          payload.project,
+          {projectKey: payload.projectKey, updatedAt: null},
         ),
       );
 
@@ -168,25 +167,25 @@ export default function reduceProjects(stateIn, action) {
         },
       ).setIn(
         [payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
+        meta.timestamp,
       );
 
     case 'TOGGLE_COMPONENT':
       if (state.getIn(
-        [action.payload.projectKey, 'hiddenUIComponents'],
-      ).has(action.payload.componentKey)) {
-        return unhideComponent(state, action.payload, action.meta.timestamp);
+        [payload.projectKey, 'hiddenUIComponents'],
+      ).has(payload.componentKey)) {
+        return unhideComponent(state, payload, meta.timestamp);
       }
-      return hideComponent(state, action.payload, action.meta.timestamp);
+      return hideComponent(state, payload, meta.timestamp);
 
     case 'STORE_HIDDEN_LINE':
       return state.mergeIn([
-        action.payload.projectKey,
+        payload.projectKey,
         'hiddenUIComponents',
-        action.payload.componentKey,
+        payload.componentKey,
       ], {
-        line: action.payload.line,
-        column: action.payload.column,
+        line: payload.line,
+        column: payload.column,
       });
 
     default:
