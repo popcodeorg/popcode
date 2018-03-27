@@ -124,6 +124,9 @@ export default function reduceProjects(stateIn, {type, payload, meta}) {
       return state.setIn(
         [payload.projectKey, 'instructions'],
         payload.newValue,
+      ).setIn(
+        [payload.projectKey, 'updatedAt'],
+        meta.timestamp,
       );
 
     case 'PROJECT_CREATED':

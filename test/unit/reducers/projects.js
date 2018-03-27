@@ -64,16 +64,16 @@ test('updateProjectSource', reducerTest(
     ),
 ));
 
-tap(initProjects({1: false}), projects =>
-  test('updateProjectInstructions', reducerTest(
-    reducer,
-    projects,
-    partial(updateProjectInstructions, '1', '# Instructions\n\nHello.'),
-    projects.update('1', projectIn =>
-      projectIn.set('instructions', '# Instructions\n\nHello.'),
+test('updateProjectInstructions', reducerTest(
+  reducer,
+  initProjects({[projectKey]: false}),
+  partial(updateProjectInstructions, projectKey, '# Instructions', now),
+  initProjects({[projectKey]: true}).
+    update(
+      projectKey,
+      editedProject => editedProject.set('instructions', '# Instructions'),
     ),
-  )),
-);
+));
 
 test('changeCurrentProject', (t) => {
   t.test('from modified to pristine', reducerTest(

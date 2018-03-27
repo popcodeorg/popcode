@@ -21,6 +21,7 @@ export const updateProjectSource = createAction(
 export const updateProjectInstructions = createAction(
   'UPDATE_PROJECT_INSTRUCTIONS',
   (projectKey, newValue) => ({projectKey, newValue}),
+  (_projectKey, _newValue, timestamp = Date.now()) => ({timestamp}),
 );
 
 export const toggleLibrary = createAction(
