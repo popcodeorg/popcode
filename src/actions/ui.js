@@ -5,7 +5,7 @@ export const userDoneTyping = createAction('USER_DONE_TYPING');
 export const focusLine = createAction(
   'FOCUS_LINE',
   (componentKey, line, column) => ({componentKey, line, column}),
-  (_component, _line, _column, timestamp = Date.now()) => ({timestamp}),
+  (_componentKey, _line, _column, timestamp = Date.now()) => ({timestamp}),
 );
 
 export const editorFocusedRequestedLine = createAction(
