@@ -34,19 +34,20 @@ export const updateCourses = createAction(
   courses => ({courses}),
 );
 
-export const createCourseWork = createAction(
-  'CREATE_COURSE_WORK',
-  (type, selectedCourse) => ({type, selectedCourse}),
+export const createAssignment = createAction(
+  'CREATE_ASSIGNMENT',
+  (type, projectKey, selectedCourse, selectedDate) => ({type, projectKey, selectedCourse, selectedDate}),
 );
 
-export const courseWorkDisplayed = createAction(
-  'COURSE_WORK_DISPLAYED',
-  courseWork => (courseWork),
+export const assignmentDisplayed = createAction(
+  'ASSIGNMENT_DISPLAYED',
+  assignment => (assignment),
 );
 
-export const courseWorkCreated = createAction(
-  'COURSE_WORK_CREATED',
-  courseWork => ({courseWork}),
+export const assignmentCreated = createAction(
+  'ASSIGNMENT_CREATED',
+  (projectKey, assignmentKey, snapshotKey, assignment, assignerId) =>
+    ({projectKey, assignmentKey, snapshotKey, assignment, assignerId}),
 );
 
 export const submitAssignment = createAction(
@@ -61,3 +62,16 @@ export const assignmentSubmitted = createAction(
 export const assignmentSubmissionDisplayed = createAction(
   'ASSIGNMENT_SUBMISSION_DISPLAYED',
 );
+
+export const assignmentNotFound = createAction('ASSIGNMENT_NOT_FOUND');
+export const assignmentImported = createAction(
+  'ASSIGNMENT_IMPORTED',
+  (projectKey, assignment) => ({projectKey, assignment}),
+);
+export const assignmentImportError = createAction('ASSIGNMENT_IMPORT_ERROR');
+
+export const updateAssignment = createAction(
+  'UPDATE_ASSIGNMENT',
+);
+
+export const assignmentsLoaded = createAction('ASSIGNMENTS_LOADED');

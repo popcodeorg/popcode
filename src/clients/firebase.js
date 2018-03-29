@@ -7,7 +7,7 @@ import uuid from 'uuid/v4';
 import {
   auth,
   database,
-  // githubAuthProvider,
+  githubAuthProvider,
   googleAuthProvider,
 } from '../services/appFirebase';
 
@@ -30,6 +30,7 @@ function workspace(uid) {
 }
 
 const snapshots = database.ref('snapshots');
+const assignments = database.ref('assignments');
 
 async function getCurrentProjectKey(uid) {
   const event =
@@ -100,13 +101,16 @@ async function userCredentialForUserData(user) {
   return {user, credential, additionalUserInfo};
 }
 
-export async function signIn() {
+export async function signIn(provider) {
   const originalOnerror = window.onerror;
   window.onerror = message => message.toLowerCase().includes('network error');
-
   try {
-    // const userCredential = await auth.signInWithPopup(githubAuthProvider);
-    const userCredential = await auth.signInWithPopup(googleAuthProvider);
+    let userCredential;
+    if (provider === 'github') {
+      userCredential = await auth.signInWithPopup(githubAuthProvider);
+    } else if (provider === 'google') {
+      userCredential = await auth.signInWithPopup(googleAuthProvider);
+    }
     await saveUserCredential(userCredential);
     return userCredential;
   } finally {
@@ -166,10 +170,42 @@ export function setSessionUid() {
   }
 }
 
-export async function addAssignmentToSnapshot(snapshotKey, courseWork) {
-  await snapshots.child(snapshotKey).child('assignment').set({
-    courseId: courseWork.courseId,
-    id: courseWork.id,
-    alternateLink: courseWork.alternateLink,
+export async function createProjectAssignment(
+  assignmentKey,
+  snapshotKey,
+  assignment,
+  assignerId,
+) {
+  await assignments.child(assignmentKey).set({
+    courseId: assignment.courseId,
+    id: assignment.id,
+    snapshotKey,
+    alternateLink: assignment.alternateLink,
+    assignerId,
+    assignmentKey,
   });
+}
+
+export async function loadAllAssignments(projects) {
+  const promises = projects.filter((project) => {;
+    return project.assignmentKey;
+  }).map((project) => {
+    return loadProjectAssignment(project.assignmentKey);
+  });
+  const allAssignments = await Promise.all(promises);
+  return allAssignments;
+}
+
+export async function loadProjectAssignment(assignmentKey) {
+  const event = await assignments.child(assignmentKey).once('value');
+  return event.val();
+}
+
+export async function updateAssignmentSnapshot(
+  assignmentKey,
+  snapshotKey,
+) {
+  await assignments.child(assignmentKey).child('snapshotKey').set(
+    snapshotKey,
+  );
 }

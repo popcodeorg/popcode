@@ -34,7 +34,7 @@ import {getCurrentProject} from '../selectors';
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
-import CourseWorkSelector from '../containers/CourseWorkSelector';
+import AssignmentSelector from '../containers/AssignmentSelector';
 import EditorsColumn from './EditorsColumn';
 import Output from './Output';
 import PopThrobber from './PopThrobber';
@@ -77,6 +77,7 @@ class Workspace extends React.Component {
   componentWillMount() {
     let gistId = null;
     let snapshotKey = null;
+    let assignmentKey = null;
     let isExperimental = false;
     if (location.search) {
       const query = qs.parse(location.search.slice(1));
@@ -85,6 +86,9 @@ class Workspace extends React.Component {
       }
       if (query.snapshot) {
         snapshotKey = query.snapshot;
+      }
+      if (query.assignment) {
+        assignmentKey = query.assignment;
       }
       isExperimental = Object.keys(query).includes('experimental');
     }
@@ -95,6 +99,7 @@ class Workspace extends React.Component {
       gistId,
       isExperimental,
       rehydratedProject,
+      assignmentKey,
     }));
   }
 
@@ -277,7 +282,7 @@ class Workspace extends React.Component {
   render() {
     return (
       <div className="layout">
-        <CourseWorkSelector />
+        <AssignmentSelector />
         <TopBar />
         <NotificationList />
         <main className="layout__columns">

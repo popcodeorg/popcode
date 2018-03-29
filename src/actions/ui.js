@@ -59,18 +59,22 @@ export const closeTopBarMenu = createAction(
   'CLOSE_TOP_BAR_MENU',
 );
 
-export const courseWorkSelectorOpened = createAction(
-  'COURSE_WORK_SELECTOR_OPENED',
+export const assignmentSelectorOpened = createAction(
+  'ASSIGNMENT_SELECTOR_OPENED',
 );
 
-export const openCourseWorkSelector = createAction(
-  'OPEN_COURSE_WORK_SELECTOR',
+export const openAssignmentSelector = createAction(
+  'OPEN_ASSIGNMENT_SELECTOR',
 );
 
-export const courseWorkSelectorClosed = createAction(
-  'COURSE_WORK_SELECTOR_CLOSED',
+export const assignmentSelectorClosed = createAction(
+  'ASSIGNMENT_SELECTOR_CLOSED',
 );
 
 export const courseSelected = createAction(
   'COURSE_SELECTED',
+);
+
+export const dateSelected = createAction(
+  'DATE_SELECTED',
 );

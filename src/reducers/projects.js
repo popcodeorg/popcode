@@ -192,6 +192,18 @@ export default function reduceProjects(stateIn, action) {
         action.meta.timestamp,
       );
 
+    case 'ASSIGNMENT_CREATED':
+      return state.setIn(
+        [action.payload.projectKey, 'assignmentKey'],
+        action.payload.assignmentKey,
+      );
+
+    case 'ASSIGNMENT_IMPORTED':
+      return state.setIn(
+        [action.payload.projectKey, 'assignmentKey'],
+        action.payload.assignment.assignmentKey,
+      );
+
     default:
       return state;
   }

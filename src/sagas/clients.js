@@ -1,21 +1,23 @@
 import {all, call, put, select, takeEvery} from 'redux-saga/effects';
+import uuid from 'uuid/v4';
 import {
   createGistFromProject,
   createRepoFromProject,
 } from '../clients/github';
 import {
-  createShareToClassroomUrl,
   getCourses,
-  createClassroomCourseWork,
+  createClassroomAssignment,
   createSnapshotUrl,
+  createAssignmentUrl,
   submitClassroomAssignment,
 } from '../clients/googleClassroom';
 import {
   createProjectSnapshot,
-  addAssignmentToSnapshot,
+  createProjectAssignment,
+  updateAssignmentSnapshot,
 } from '../clients/firebase';
 import {
-  courseWorkCreated,
+  assignmentCreated,
   snapshotCreated,
   snapshotExportError,
   projectExported,
@@ -24,10 +26,15 @@ import {
   assignmentSubmitted,
 } from '../actions/clients';
 import {
-  courseWorkSelectorOpened,
-  courseWorkSelectorClosed,
+  assignmentSelectorOpened,
+  assignmentSelectorClosed,
+  // assignmentUpdated,
 } from '../actions/ui';
-import {getCurrentProject, getAssignment} from '../selectors';
+import {
+  getCurrentProject,
+  getCurrentAssignment,
+  getCurrentAssignmentKey,
+} from '../selectors';
 import {generateTextPreview} from '../util/compileProject';
 
 export function* createSnapshot() {
@@ -51,10 +58,6 @@ export function* exportProject({payload: {exportType}}) {
       ({html_url: url} = yield call(createGistFromProject, project, user));
     } else if (exportType === 'repo') {
       ({html_url: url} = yield call(createRepoFromProject, project, user));
-    } else if (exportType === 'classroom') {
-      const snapshotKey = yield call(createProjectSnapshot, project);
-      const projectTitle = yield call(generateTextPreview, project);
-      url = yield call(createShareToClassroomUrl, snapshotKey, projectTitle);
     }
     yield put(projectExported(url, exportType));
   } catch (e) {
@@ -62,39 +65,48 @@ export function* exportProject({payload: {exportType}}) {
   }
 }
 
-export function* openCourseWorkSelector() {
+export function* openAssignmentSelector() {
   const state = yield select();
   const user = state.get('user').toJS();
   const courses = yield call(getCourses, user.accessTokens['google.com']);
   yield put(updateCourses(courses));
-  yield put(courseWorkSelectorOpened());
+  yield put(assignmentSelectorOpened());
 }
 
-export function* createCourseWork({payload: {type, selectedCourse}}) {
+export function* createAssignment({payload: {type, projectKey, selectedCourse, selectedDate}}) {
   const state = yield select();
   const user = state.get('user').toJS();
   const project = getCurrentProject(state);
   const projectTitle = yield call(generateTextPreview, project);
-  const snapshotKey = yield call(createProjectSnapshot, project);
-  const snapshotUrl = yield call(createSnapshotUrl, snapshotKey);
-  const courseWork = yield call(
-    createClassroomCourseWork,
+  const assignmentKey = uuid().toString();
+  const assignmentUrl = yield call(createAssignmentUrl, assignmentKey);
+  const assignment = yield call(
+    createClassroomAssignment,
     user.accessTokens['google.com'],
     type,
     selectedCourse,
-    snapshotUrl,
+    selectedDate,
+    assignmentUrl,
     projectTitle,
-    project.instructions,
   );
-  yield call(addAssignmentToSnapshot, snapshotKey, courseWork);
-  yield put(courseWorkCreated(courseWork));
-  yield put(courseWorkSelectorClosed());
+  const snapshotKey = yield call(createProjectSnapshot, project);
+  yield call(
+    createProjectAssignment,
+    assignmentKey,
+    snapshotKey,
+    assignment,
+    user.id,
+  );
+  yield put(
+    assignmentCreated(projectKey, assignmentKey, snapshotKey, assignment, user.id),
+  );
+  yield put(assignmentSelectorClosed());
 }
 
 export function* submitAssignment() {
   const state = yield select();
   const user = state.get('user').toJS();
-  const assignment = getAssignment(state);
+  const assignment = getCurrentAssignment(state);
   const project = getCurrentProject(state);
   const snapshotKey = yield call(createProjectSnapshot, project);
   const snapshotUrl = yield call(createSnapshotUrl, snapshotKey);
@@ -108,13 +120,22 @@ export function* submitAssignment() {
   yield put(assignmentSubmitted(assignment));
 }
 
+export function* updateAssignment() {
+  const state = yield select();
+  const assignmentKey = getCurrentAssignmentKey(state);
+  const project = getCurrentProject(state);
+  const snapshotKey = yield call(createProjectSnapshot, project);
+  yield call(updateAssignmentSnapshot, assignmentKey, snapshotKey);
+  // yield put(assignmentUpdated());
+}
 
 export default function* () {
   yield all([
     takeEvery('CREATE_SNAPSHOT', createSnapshot),
     takeEvery('EXPORT_PROJECT', exportProject),
-    takeEvery('OPEN_COURSE_WORK_SELECTOR', openCourseWorkSelector),
-    takeEvery('CREATE_COURSE_WORK', createCourseWork),
+    takeEvery('OPEN_ASSIGNMENT_SELECTOR', openAssignmentSelector),
+    takeEvery('CREATE_ASSIGNMENT', createAssignment),
     takeEvery('SUBMIT_ASSIGNMENT', submitAssignment),
+    takeEvery('UPDATE_ASSIGNMENT', updateAssignment),
   ]);
 }

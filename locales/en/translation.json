@@ -3,7 +3,6 @@
     "create-snapshot": "Create Snapshot",
     "export-gist": "Export Gist",
     "export-repo": "Export Repo",
-    "share-to-classroom": "Share To Classroom",
     "libraries": "Libraries",
     "load-project": "Your Projects",
     "new-project": "New Project",
@@ -12,7 +11,8 @@
       "log-in-prompt": "Log in to save",
       "log-out-prompt": "Log out"
     },
-    "submit-assignment": "Submit"
+    "submit-assignment": "Submit",
+    "assign-to-classroom": "Create Assignment"
   },
   "editors": {
     "help-text": "Type in your $t(languages.{{language}}) code here."
@@ -41,8 +41,6 @@
     "snapshot-export-error": "Something went wrong trying to create that snapshot. Please try again.",
     "snapshot-import-error": "Something went wrong trying to load that snapshot. Please try again.",
     "snapshot-not-found": "That snapshot doesn’t seem to exist. Check the link and try again.",
-    "classroom-export-complete": "Your project is ready to share to Google Classroom",
-    "classroom-export-error": "Something went wrong trying to share to Google Classroom. Please try again.",
     "assignment-export-complete": "Your assignment is created on Google Classroom",
     "assignment-submission-export-complete": "Your assignment is submitted on Google Classroom",
     "project-compilation-failed": "Something went wrong trying to display a preview of your project. This is a bug in Popcode and we have been notified. Making another change to your code will likely fix this error."

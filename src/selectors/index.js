@@ -22,21 +22,24 @@ import isCurrentProjectSyntacticallyValid
 import isExperimental from './isExperimental';
 import isGistExportInProgress from './isGistExportInProgress';
 import isRepoExportInProgress from './isRepoExportInProgress';
-import isClassroomExportInProgress from './isClassroomExportInProgress';
 import isSnapshotInProgress from './isSnapshotInProgress';
 import isTextSizeLarge from './isTextSizeLarge';
 import isUserAuthenticated from './isUserAuthenticated';
 import isUserTyping from './isUserTyping';
 import makeGetProjectPreview from './makeGetProjectPreview';
-import isCourseWorkSelectorOpen from './isCourseWorkSelectorOpen';
+import isAssignmentSelectorOpen from './isAssignmentSelectorOpen';
 import getCourses from './getCourses';
 import getSelectedCourse from './getSelectedCourse';
-import getAssignment from './getAssignment';
+import getSelectedDate from './getSelectedDate';
+import getCurrentAssignment from './getCurrentAssignment';
+import getCurrentAssignmentKey from './getCurrentAssignmentKey';
+
 
 export {
   getAllProjectKeys,
   getAllProjects,
-  getAssignment,
+  getCurrentAssignment,
+  getCurrentAssignmentKey,
   getCompiledProjects,
   getConsoleHistory,
   getCourses,
@@ -55,16 +58,16 @@ export {
   getProject,
   getRequestedFocusedLine,
   getSelectedCourse,
+  getSelectedDate,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isExperimental,
   isGistExportInProgress,
   isRepoExportInProgress,
-  isClassroomExportInProgress,
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserAuthenticated,
   isUserTyping,
   makeGetProjectPreview,
-  isCourseWorkSelectorOpen,
+  isAssignmentSelectorOpen,
 };

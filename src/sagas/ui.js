@@ -5,7 +5,7 @@ import {getCurrentProject} from '../selectors';
 import {
   projectExportDisplayed,
   projectExportNotDisplayed,
-  courseWorkDisplayed,
+  assignmentDisplayed,
   assignmentSubmissionDisplayed,
 } from '../actions/clients';
 import {openWindowWithContent} from '../util';
@@ -52,9 +52,9 @@ export function* exportProject() {
   );
 }
 
-export function* courseWorkCreated({payload: {courseWork}}) {
-  yield put(courseWorkDisplayed({
-    url: courseWork.alternateLink,
+export function* assignmentCreated({payload: {assignment}}) {
+  yield put(assignmentDisplayed({
+    url: assignment.alternateLink,
     exportType: 'assignment',
   }));
 }
@@ -71,7 +71,7 @@ export default function* () {
     debounceFor('UPDATE_PROJECT_SOURCE', userDoneTyping, 1000),
     takeEvery('POP_OUT_PROJECT', popOutProject),
     takeEvery('EXPORT_PROJECT', exportProject),
-    takeEvery('COURSE_WORK_CREATED', courseWorkCreated),
+    takeEvery('ASSIGNMENT_CREATED', assignmentCreated),
     takeEvery('ASSIGNMENT_SUBMITTED', assignmentSubmitted),
   ]);
 }

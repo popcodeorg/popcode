@@ -1,5 +1,6 @@
 /* global gapi */
 import $S from 'scriptjs';
+import once from 'lodash/once';
 import config from '../config';
 
 export async function initGapi() {
@@ -10,9 +11,8 @@ export async function initGapi() {
   });
 }
 
-
 export async function initGapiClient(gapi) {
-  return new Promise((resolve, reject) => {
+  const client = await new Promise((resolve, reject) => {
     gapi.load('client', {
       callback: () => {
         resolve(gapi.client);
@@ -26,15 +26,17 @@ export async function initGapiClient(gapi) {
       },
     });
   });
+  await client.load(
+    'https://www.googleapis.com/discovery/v1/apis/classroom/v1/rest',
+  );
+
+  return client;
 }
 
-export async function initGapiClientClassroom(client, accessToken) {
+export function authenticateGapiClient(client, accessToken) {
   client.setApiKey(config.firebaseApiKey);
   client.setToken({
     access_token: accessToken,
   });
-  await client.load(
-    'https://www.googleapis.com/discovery/v1/apis/classroom/v1/rest',
-  );
-  return client.classroom;
+  return client;
 }

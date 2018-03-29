@@ -5,13 +5,16 @@ import map from 'lodash/map';
 import partial from 'lodash/partial';
 
 
-function CourseWorkSelector({
+function AssignmentSelector({
   courses,
+  currentProjectKey,
   isOpen,
   selectedCourse,
+  selectedDate,
   onCreateAssignment,
-  onCloseCourseWorkSelector,
+  onCloseAssignmentSelector,
   onSelectCourse,
+  onSelectDate,
 }) {
   if (!isOpen) {
     return null;
@@ -19,7 +22,6 @@ function CourseWorkSelector({
   const courseOptions = map(courses, course => (
     <option key={course.id} value={course.id}>{course.name}</option>
   ));
-  const today = new Date().toISOString().slice(0, 10);
 
   return (
     <div className="modal">
@@ -30,14 +32,14 @@ function CourseWorkSelector({
           </h1>
           <p> Select Your Class: </p>
           <select
-            id="dropdown"
             value={selectedCourse}
             onChange={onSelectCourse}
           >
+            <option value=""> Select Class </option>
             {courseOptions}
           </select>
           <p> Due Date: </p>
-          <input defaultValue={today} id="date" type="date" />
+          <input type="date" value={selectedDate} onChange={onSelectDate} />
           <p> Action </p>
           <button
             className={classnames(
@@ -45,7 +47,7 @@ function CourseWorkSelector({
               'course-work-selector__button_reject',
             )}
             type="button"
-            onClick={onCloseCourseWorkSelector}
+            onClick={onCloseAssignmentSelector}
           >
             Cancel
           </button>
@@ -55,7 +57,7 @@ function CourseWorkSelector({
               'course-work-selector__button_confirm',
             )}
             type="button"
-            onClick={partial(onCreateAssignment, selectedCourse)}
+            onClick={partial(onCreateAssignment, currentProjectKey, selectedCourse, selectedDate)}
           >
             Assign
           </button>
@@ -65,13 +67,16 @@ function CourseWorkSelector({
   );
 }
 
-CourseWorkSelector.propTypes = {
+AssignmentSelector.propTypes = {
   courses: PropTypes.array.isRequired,
+  currentProjectKey: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   selectedCourse: PropTypes.string.isRequired,
-  onCloseCourseWorkSelector: PropTypes.func.isRequired,
+  selectedDate: PropTypes.string.isRequired,
+  onCloseAssignmentSelector: PropTypes.func.isRequired,
   onCreateAssignment: PropTypes.func.isRequired,
   onSelectCourse: PropTypes.func.isRequired,
+  onSelectDate: PropTypes.func.isRequired,
 };
 
-export default CourseWorkSelector;
+export default AssignmentSelector;

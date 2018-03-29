@@ -13,6 +13,8 @@ export const DEFAULT_WORKSPACE = new Immutable.Map({
   isDraggingColumnDivider: false,
 });
 
+const today = new Date().toISOString().slice(0, 10);
+
 const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({
     typing: false,
@@ -22,9 +24,10 @@ const defaultState = new Immutable.Map().
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Map()).
   set('topBar', new Immutable.Map({openMenu: null})).
-  set('courseWorkSelector', new Immutable.Map({
+  set('assignmentSelector', new Immutable.Map({
     openModal: false,
     selectedCourse: '',
+    selectedDate: today,
   }));
 
 function addNotification(state, type, severity, payload = {}) {
@@ -224,19 +227,19 @@ export default function ui(stateIn, action) {
     case 'PROJECT_COMPILED':
       return dismissNotification(state, 'project-compilation-failed');
 
-    case 'COURSE_WORK_SELECTOR_OPENED':
+    case 'ASSIGNMENT_SELECTOR_OPENED':
       return state.setIn(
-        ['courseWorkSelector', 'openModal'],
+        ['assignmentSelector', 'openModal'],
         true,
       );
 
-    case 'COURSE_WORK_SELECTOR_CLOSED':
+    case 'ASSIGNMENT_SELECTOR_CLOSED':
       return state.setIn(
-        ['courseWorkSelector', 'openModal'],
+        ['assignmentSelector', 'openModal'],
         false,
       );
 
-    case 'COURSE_WORK_DISPLAYED':
+    case 'ASSIGNMENT_DISPLAYED':
       return addNotification(
         state,
         'project-export-complete',
@@ -246,7 +249,13 @@ export default function ui(stateIn, action) {
 
     case 'COURSE_SELECTED':
       return state.setIn(
-        ['courseWorkSelector', 'selectedCourse'],
+        ['assignmentSelector', 'selectedCourse'],
+        action.payload,
+      );
+
+    case 'DATE_SELECTED':
+      return state.setIn(
+        ['assignmentSelector', 'selectedDate'],
         action.payload,
       );
 

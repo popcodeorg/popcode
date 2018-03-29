@@ -1,59 +1,52 @@
-import qs from 'qs';
-import remark from 'remark';
-import stripMarkdown from 'strip-markdown';
 import {
   initGapi,
   initGapiClient,
-  initGapiClientClassroom,
+  authenticateGapiClient,
 } from '../services/gapi';
 
-const BASE_URL = 'https://classroom.google.com/u/0/share?';
-
-export function createShareToClassroomUrl(snapshotKey, title) {
+export function createSnapshotUrl(snapshotKey) {
   const uri = document.createElement('a');
   uri.href = '/';
   uri.search = `snapshot=${snapshotKey}`;
-  return BASE_URL + qs.stringify({url: uri.href, title});
+  return uri.href;
 }
 
-export function createSnapshotUrl(assignemtnKey) {
+export function createAssignmentUrl(assignemtnKey) {
   const uri = document.createElement('a');
   uri.href = '/';
-  uri.search = `snapshot=${assignemtnKey}`;
+  uri.search = `assignment=${assignemtnKey}`;
   return uri.href;
 }
 
 export async function getCourses(accessToken) {
   const gapi = await initGapi();
-  const client = await initGapiClient(gapi);
-  const classroom = await initGapiClientClassroom(client, accessToken);
-  const courses = await classroom.courses.list();
+  const unauthorizedClient = await initGapiClient(gapi);
+  const client = authenticateGapiClient(unauthorizedClient, accessToken);
+  const courses = await client.classroom.courses.list();
   return courses.result.courses;
 }
 
-export async function createClassroomCourseWork(
+export async function createClassroomAssignment(
   accessToken,
   workType,
   courseId,
+  selectedDate,
   url,
   title,
-  instructions,
 ) {
   const gapi = await initGapi();
-  const client = await initGapiClient(gapi);
-  const classroom = await initGapiClientClassroom(client, accessToken);
-  const description =
-    remark().use(stripMarkdown).processSync(instructions).toString();
-  const newCoursework = await classroom.courses.courseWork.create({
+  const unautherizedClient = await initGapiClient(gapi);
+  const client = authenticateGapiClient(unautherizedClient, accessToken);
+  const date = selectedDate.split('-');
+  const newAssignment = await client.classroom.courses.courseWork.create({
     courseId,
     title,
     workType,
-    description,
     state: 'PUBLISHED',
     dueDate: {
-      year: 2018,
-      month: 3,
-      day: 28,
+      year: date[0],
+      month: date[1],
+      day: date[2],
     },
     dueTime: {
       hours: 23,
@@ -69,7 +62,7 @@ export async function createClassroomCourseWork(
       },
     },
   });
-  return newCoursework.result;
+  return newAssignment.result;
 }
 
 export async function submitClassroomAssignment(
@@ -79,18 +72,19 @@ export async function submitClassroomAssignment(
   snapshotUrl,
 ) {
   const gapi = await initGapi();
-  const client = await initGapiClient(gapi);
-  const classroom = await initGapiClientClassroom(client, accessToken);
-  const submissions =
-    await classroom.courses.courseWork.studentSubmissions.list({
+  const unautherizedClient = await initGapiClient(gapi);
+  const client = authenticateGapiClient(unautherizedClient, accessToken);
+  const {result: {studentSubmissions: [submission]}} =
+    await client.classroom.courses.courseWork.studentSubmissions.list({
       courseId,
       courseWorkId,
       userId: 'me',
     });
-  await classroom.courses.courseWork.studentSubmissions.modifyAttachments({
+  // ADD handler if no assignments in array
+  await client.classroom.courses.courseWork.studentSubmissions.modifyAttachments({
     courseId,
     courseWorkId,
-    id: submissions.result.studentSubmissions[0].id,
+    id: submission.id,
     addAttachments: [
       {
         link: {
@@ -100,9 +94,9 @@ export async function submitClassroomAssignment(
     ],
   });
 
-  await classroom.courses.courseWork.studentSubmissions.turnIn({
+  await client.classroom.courses.courseWork.studentSubmissions.turnIn({
     courseId,
     courseWorkId,
-    id: submissions.result.studentSubmissions[0].id,
+    id: submission.id,
   });
 }
