@@ -31,9 +31,10 @@ import makeGetProjectPreview from './makeGetProjectPreview';
 import isAssignmentSelectorOpen from './isAssignmentSelectorOpen';
 import getCourses from './getCourses';
 import getSelectedCourse from './getSelectedCourse';
-import getSelectedDate from './getSelectedDate';
 import getCurrentAssignment from './getCurrentAssignment';
 import getCurrentAssignmentKey from './getCurrentAssignmentKey';
+import getDateInput from './getDateInput';
+import getParsedDate from './getParsedDate';
 
 
 export {
@@ -59,7 +60,6 @@ export {
   getProject,
   getRequestedFocusedLine,
   getSelectedCourse,
-  getSelectedDate,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isEditingInstructions,
@@ -72,4 +72,6 @@ export {
   isUserTyping,
   makeGetProjectPreview,
   isAssignmentSelectorOpen,
+  getDateInput,
+  getParsedDate,
 };

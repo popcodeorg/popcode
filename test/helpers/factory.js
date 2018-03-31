@@ -72,6 +72,16 @@ export function project(projectIn) {
   });
 }
 
+export function assignment(assignmentIn) {
+  return defaultsDeep({}, assignmentIn, {
+    alternateLink: 'http://classroom.google.com',
+    assignerId: 'abcd1234',
+    courseId: 'abcd1234',
+    id: 'abcd1234',
+    snapshotKey: 'abcd1234',
+  });
+}
+
 export function credential(credentialIn) {
   return merge({
     accessToken: '0123456789abcdef',

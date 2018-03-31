@@ -19,6 +19,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const cloudflare = require('cloudflare');
 const BrowserSync = require('browser-sync');
 const pify = require('pify');
+const isDocker = require('is-docker');
 const config = require('./src/config');
 const webpackConfiguration = require('./webpack.config');
 
@@ -87,9 +88,29 @@ gulp.task('css', () => {
     pipe(browserSync.stream());
 });
 
-gulp.task('js', ['env'], () =>
-  pify(webpack)(webpackConfiguration(process.env.NODE_ENV)),
-);
+gulp.task('js', ['env'], () => new Promise((resolve, reject) => {
+  webpack(
+    webpackConfiguration(process.env.NODE_ENV),
+    (error, stats) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+
+      if (stats.hasErrors()) {
+        reject(new Error(stats.errors.join('\n')));
+        return;
+      }
+
+      if (stats.hasWarnings()) {
+        // eslint-disable-next-line no-console
+        console.warn(stats.warnings);
+      }
+
+      resolve(stats);
+    },
+  );
+}));
 
 gulp.task('build', ['static', 'fonts', 'css', 'js']);
 
@@ -130,6 +151,7 @@ gulp.task('browserSync', ['static'], () => {
   const compiler = webpack(webpackConfiguration(process.env.NODE_ENV));
   compiler.plugin('invalid', browserSync.reload);
   browserSync.init({
+    open: !isDocker(),
     server: {
       baseDir: distDir,
       middleware: [
@@ -137,7 +159,6 @@ gulp.task('browserSync', ['static'], () => {
           compiler,
           {
             lazy: false,
-            stats: 'errors-only',
           },
         ),
       ],

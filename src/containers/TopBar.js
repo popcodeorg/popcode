@@ -98,16 +98,16 @@ function mapDispatchToProps(dispatch) {
       dispatch(openAssignmentSelector());
     },
 
+    onStartEditingInstructions(projectKey) {
+      dispatch(startEditingInstructions(projectKey));
+    },
+
     onStartGithubLogIn() {
       dispatch(logIn('github'));
     },
 
     onStartGoogleLogIn() {
       dispatch(logIn('google'));
-    },
-
-    onStartEditingInstructions() {
-      dispatch(startEditingInstructions());
     },
 
     onToggleTextSize() {

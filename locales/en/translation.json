@@ -46,6 +46,8 @@
     "snapshot-not-found": "That snapshot doesn’t seem to exist. Check the link and try again.",
     "assignment-export-complete": "Your assignment is created on Google Classroom",
     "assignment-submission-export-complete": "Your assignment is submitted on Google Classroom",
+    "assignment-draft-export-complete": "Your assignment draft has been created on Google Classroom",
+    "assignment-update-export-complete": "Your assignment has been updated on Google Classroom",
     "project-compilation-failed": "Something went wrong trying to display a preview of your project. This is a bug in Popcode and we have been notified. Making another change to your code will likely fix this error."
   },
   "languages": {

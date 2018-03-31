@@ -21,10 +21,6 @@ import {
   snapshotImported,
   snapshotImportError,
   snapshotNotFound,
-  // assignmentImported,
-  // assignmentImportError,
-  // assignmentsLoaded,
-  // assignmentNotFound,
   projectRestoredFromLastSession,
 } from '../actions/clients';
 import {
@@ -83,6 +79,7 @@ export function* importSnapshot({payload: {snapshotKey}}) {
   } catch (error) {
     yield put(snapshotImportError(error));
   }
+  return null;
 }
 
 export function* importAssignment({payload: {assignmentKey}}) {
@@ -124,7 +121,6 @@ export function* updateProjectSource() {
 export function* userAuthenticated() {
   const state = yield select();
   yield fork(saveCurrentProject, state);
-
   const projects = yield call(loadAllProjects, getCurrentUserId(state));
   const assignments = yield call(loadAllAssignments, projects);
   yield put(projectsLoaded(projects));

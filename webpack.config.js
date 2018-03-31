@@ -6,9 +6,6 @@ const fs = require('fs');
 const path = require('path');
 const OfflinePlugin = require('offline-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-const MD5ChunkHash = require('webpack-chunk-hash');
-const InlineChunkManifestHtmlPlugin =
-  require('inline-chunk-manifest-html-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const webpack = require('webpack');
@@ -18,7 +15,6 @@ const map = require('lodash/map');
 const includes = require('lodash/includes');
 const git = require('git-rev-sync');
 const babel = require('babel-core');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const babelLoaderVersion =
   require('./node_modules/babel-loader/package.json').version;
 
@@ -69,7 +65,7 @@ function directoryContentsExcept(directory, exceptions) {
       !includes(fullExceptions, filePath);
 }
 
-module.exports = (env = 'development') => {
+module.exports = (env = process.env.NODE_ENV || 'development') => {
   const isProduction = env === 'production';
   const isTest = env === 'test';
 
@@ -77,6 +73,9 @@ module.exports = (env = 'development') => {
     new webpack.EnvironmentPlugin({
       FIREBASE_APP: 'popcode-development',
       FIREBASE_API_KEY: 'AIzaSyCHlo2RhOkRFFh48g779YSZrLwKjoyCcws',
+      FIREBASE_CLIENT_ID:
+      /* eslint-disable max-len */
+        '488497217137-c0mdq8uca6ot5o9u9avo3j5mfsi1q9v5.apps.googleusercontent.com',
       GIT_REVISION: git.short(),
       LOG_REDUX_ACTIONS: 'false',
       NODE_ENV: env,
@@ -89,18 +88,29 @@ module.exports = (env = 'development') => {
     }),
   ];
 
+  let devtool;
+  if (isProduction) {
+    devtool = 'source-map';
+  } else if (isTest) {
+    devtool = 'inline-source-map';
+  } else {
+    devtool = 'eval';
+  }
+
   if (!isTest) {
     plugins.push(
       new OfflinePlugin({
         caches: {
-          main: [':rest:'],
-          additional: ['mainAsync*.js', 'previewLibraries*.js'],
+          main: [/(?:^|~)(?:main|preview)[-.~]/, ':externals:'],
+          additional: [':rest:'],
         },
-        safeToUseOptionalCaches: true,
+        AppCache: {
+          caches: ['main', 'additional', 'optional'],
+        },
         publicPath: '/',
         responseStrategy: 'network-first',
         externals: [
-          'index.html',
+          '/',
           'application.css',
           'fonts/Roboto-Regular-webfont.woff',
           'fonts/Roboto-Regular-webfont.ttf',
@@ -118,12 +128,7 @@ module.exports = (env = 'development') => {
           'fonts/fontawesome-webfont.eot',
           'images/pop/thinking.svg',
         ],
-        ServiceWorker: {navigateFallbackURL: '/'},
       }),
-      isProduction ?
-        new webpack.HashedModuleIdsPlugin() :
-        new webpack.NamedModulesPlugin(),
-      new MD5ChunkHash(),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'src/html/index.html'),
         chunksSortMode: 'dependency',
@@ -132,50 +137,38 @@ module.exports = (env = 'development') => {
         defaultAttribute: 'defer',
         custom: [
           {
-            test: /^preview/,
+            test: /^(?!(|.*~)main[.~-])/,
             attribute: 'type',
             value: 'ref',
           },
           {
-            test: /^preview/,
-            attribute: 'id',
+            test: /(^|~)preview[.~-]/,
+            attribute: 'class',
             value: 'preview-bundle',
           },
         ],
       }),
-      new InlineChunkManifestHtmlPlugin(),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        chunks: ['main'],
-        minChunks({context}) {
-          if (!context) {
-            return false;
-          }
-          const isNodeModule = context.indexOf('node_modules') !== -1;
-          return isNodeModule;
-        },
-      }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'manifest',
-        chunks: ['main'],
-      }),
     );
   }
 
-  if (isProduction) {
-    plugins.push(new UglifyJsPlugin({
-      sourceMap: true,
-      uglifyOptions: {
-        compress: {warnings: false},
-        output: {comments: false},
-      },
-    }));
-  }
-
   return {
+    mode: isProduction ? 'production' : 'development',
+<<<<<<< HEAD
+    entry: isTest ? undefined : {
+=======
     entry: {
+>>>>>>> 0fc0a38... Upgrade to Webpack 4
       main: './src/application.js',
       preview: './src/preview.js',
+    },
+    optimization: {
+<<<<<<< HEAD
+      splitChunks: isTest ? false : {chunks: 'all'},
+=======
+      splitChunks: {
+        chunks: 'all',
+      },
+>>>>>>> 0fc0a38... Upgrade to Webpack 4
     },
     output: {
       path: path.resolve(__dirname, './dist'),
@@ -199,10 +192,6 @@ module.exports = (env = 'development') => {
           test: /\.js$/,
           use: ['source-map-loader'],
           enforce: 'pre',
-        },
-        {
-          test: /\.json$/,
-          use: ['json-loader'],
         },
         {
           include: [
@@ -352,6 +341,6 @@ module.exports = (env = 'development') => {
       },
       extensions: ['.mjs', '.js', '.jsx', '.json'],
     },
-    devtool: isTest ? 'inline-source-map' : 'source-map',
+    devtool,
   };
 };

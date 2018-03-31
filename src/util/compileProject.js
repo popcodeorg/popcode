@@ -2,6 +2,7 @@ import castArray from 'lodash/castArray';
 import compact from 'lodash/compact';
 import flatMap from 'lodash/flatMap';
 import isEmpty from 'lodash/isEmpty';
+import map from 'lodash/map';
 import trim from 'lodash/trim';
 import uniq from 'lodash/uniq';
 import config from '../config';
@@ -18,8 +19,12 @@ async function downloadScript() {
     return '';
   }
 
-  const response = await fetch(document.getElementById('preview-bundle').src);
-  return response.text();
+  const responses = await Promise.all(
+    map(document.querySelectorAll('.preview-bundle'), el => fetch(el.src)),
+  );
+  const scripts =
+    await Promise.all(responses.map(response => response.text()));
+  return scripts.join('\n');
 }
 
 function constructDocument(project) {
@@ -160,7 +165,7 @@ async function addJavascript(
 
   let source = `\n${sourceDelimiter}\n${javascript}`;
   if (breakLoops) {
-    const loopBreaker = await retryingFailedImports(
+    const {'default': loopBreaker} = await retryingFailedImports(
       () => import(
         /* webpackChunkName: 'mainAsync' */
         'loop-breaker',

@@ -123,7 +123,8 @@ export default function TopBar({
         onExportGist={onExportGist}
         onExportRepo={onExportRepo}
         onOpenAssignmentSelector={onOpenAssignmentSelector}
-        onStartEditingInstructions={onStartEditingInstructions}
+        onStartEditingInstructions={
+          partial(onStartEditingInstructions, currentProjectKey)}
         onStartGoogleLogIn={onStartGoogleLogIn}
         onUpdateAssignment={onUpdateAssignment}
       />

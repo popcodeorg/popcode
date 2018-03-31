@@ -2,6 +2,7 @@
 /* eslint-disable import/unambiguous */
 /* eslint-disable import/no-commonjs */
 
+const isDocker = require('is-docker');
 const webpackConfiguration = require('./webpack.config.js');
 
 const isCi = Boolean(process.env.TRAVIS);
@@ -28,10 +29,6 @@ module.exports = function(config) {
     },
 
     webpack: webpackConfiguration('test'),
-
-    webpackMiddleware: {
-      stats: 'errors-only',
-    },
 
     reporters: ['dots'],
 
@@ -76,7 +73,7 @@ module.exports = function(config) {
 
       reporters: ['dots', 'BrowserStack'],
     });
-  } else if (isCi) {
+  } else if (isCi || isDocker()) {
     config.set({
       browsers: ['ChromeHeadlessNoSandbox'],
       customLaunchers: {

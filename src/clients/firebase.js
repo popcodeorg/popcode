@@ -4,6 +4,7 @@ import isNil from 'lodash/isNil';
 import isNull from 'lodash/isNull';
 import values from 'lodash/values';
 import uuid from 'uuid/v4';
+import {getGapi} from '../services/gapi';
 import {
   auth,
   database,
@@ -109,7 +110,12 @@ export async function signIn(provider) {
     if (provider === 'github') {
       userCredential = await auth.signInWithPopup(githubAuthProvider);
     } else if (provider === 'google') {
-      userCredential = await auth.signInWithPopup(googleAuthProvider);
+      const gapi = await getGapi();
+      const googleUser = await gapi.auth2.getAuthInstance().signIn();
+      const credential =
+        googleAuthProvider.credential(googleUser.getAuthResponse().id_token);
+      userCredential =
+        await auth.signInAndRetrieveDataWithCredential(credential);
     }
     await saveUserCredential(userCredential);
     return userCredential;
@@ -120,7 +126,9 @@ export async function signIn(provider) {
   }
 }
 
-export function signOut() {
+export async function signOut() {
+  const gapi = await getGapi();
+  await gapi.auth2.getAuthInstance().signOut();
   return auth.signOut();
 }
 
@@ -180,18 +188,15 @@ export async function createProjectAssignment(
     courseId: assignment.courseId,
     id: assignment.id,
     snapshotKey,
-    alternateLink: assignment.alternateLink,
+    alternateLink: assignment.alternateLink || null,
     assignerId,
     assignmentKey,
   });
 }
 
 export async function loadAllAssignments(projects) {
-  const promises = projects.filter((project) => {
-    return project.assignmentKey;
-  }).map((project) => {
-    return loadProjectAssignment(project.assignmentKey);
-  });
+  const promises = projects.filter(project => project.assignmentKey).
+    map(project => loadProjectAssignment(project.assignmentKey));
   const allAssignments = await Promise.all(promises);
   return allAssignments;
 }

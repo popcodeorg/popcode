@@ -213,6 +213,14 @@ export default function reduceProjects(stateIn, action) {
         action.payload.assignment.assignmentKey,
       );
 
+    case 'START_EDITING_INSTRUCTIONS':
+      return unhideComponent(
+        state,
+        action.payload.projectKey,
+        'instructions',
+        action.meta.timestamp,
+      );
+
     default:
       return state;
   }

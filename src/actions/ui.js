@@ -75,10 +75,6 @@ export const courseSelected = createAction(
   'COURSE_SELECTED',
 );
 
-export const dateSelected = createAction(
-  'DATE_SELECTED',
-);
-
 export const updateCourses = createAction(
   'UPDATE_COURSES',
   courses => ({courses}),
@@ -86,8 +82,22 @@ export const updateCourses = createAction(
 
 export const startEditingInstructions = createAction(
   'START_EDITING_INSTRUCTIONS',
+  projectKey => ({projectKey}),
+  (_projectKey, timestamp = Date.now()) => ({timestamp}),
 );
 
 export const cancelEditingInstructions = createAction(
   'CANCEL_EDITING_INSTRUCTIONS',
+);
+
+export const updateDate = createAction(
+  'UPDATE_DATE',
+);
+
+export const dateInputUpdated = createAction(
+  'DATE_INPUT_UPDATED',
+);
+
+export const parsedDateUpdated = createAction(
+  'PARSED_DATE_UPDATED',
 );

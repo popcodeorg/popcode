@@ -17,7 +17,6 @@ import {
 } from '../../../src/clients/github';
 import {createProjectSnapshot} from '../../../src/clients/firebase';
 import {getCurrentProject} from '../../../src/selectors';
-import {generateTextPreview} from '../../../src/util/compileProject';
 
 test('createSnapshot()', (t) => {
   const {project} = new Scenario();

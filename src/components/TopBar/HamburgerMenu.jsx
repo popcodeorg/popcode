@@ -29,6 +29,17 @@ const HamburgerMenu = createMenu({
 
   }) {
     return tap([], (items) => {
+      if (!isUserAuthenticated && isExperimental) {
+        items.push(
+          <MenuItem
+            key="startGoogleLogIn"
+            onClick={onStartGoogleLogIn}
+          >
+            Login with Google
+          </MenuItem>,
+        );
+      }
+
       items.push(
         <MenuItem
           isDisabled={isEditingInstructions}
@@ -55,14 +66,6 @@ const HamburgerMenu = createMenu({
 
       if (isUserAuthenticated) {
         if (user.accessTokens['google.com']) {
-          items.push(
-            <MenuItem
-              key="openAssignmentSelector"
-              onClick={onOpenAssignmentSelector}
-            >
-              {t('top-bar.assign-to-classroom')}
-            </MenuItem>,
-          );
           if (assignment) {
             if (user.id === assignment.assignerId) {
               items.push(
@@ -74,6 +77,15 @@ const HamburgerMenu = createMenu({
                 </MenuItem>,
               );
             }
+          } else {
+            items.push(
+              <MenuItem
+                key="openAssignmentSelector"
+                onClick={onOpenAssignmentSelector}
+              >
+                {t('top-bar.assign-to-classroom')}
+              </MenuItem>,
+            );
           }
         }
 

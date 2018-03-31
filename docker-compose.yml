@@ -8,5 +8,11 @@ services:
     volumes:
       - .:/app:cached
       - node_modules:/app/node_modules
+      - npm_cache:/root/.npm
+      - yarn_cache:/usr/local/share/.cache/yarn
+    tmpfs:
+      - /app/dist
 volumes:
   node_modules:
+  npm_cache:
+  yarn_cache:

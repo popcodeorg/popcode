@@ -1,6 +1,8 @@
 import applicationLoaded from './applicationLoaded';
 
 import {
+  assignAssignment,
+  draftAssignment,
   assignmentCreated,
   assignmentsLoaded,
   assignmentImported,
@@ -9,6 +11,8 @@ import {
   assignmentImportError,
   assignmentNotFound,
   assignmentSubmissionDisplayed,
+  assignmentUpdateDisplayed,
+  assignmentUpdated,
 } from './assignments';
 
 import {
@@ -16,17 +20,8 @@ import {
   exportProject,
   projectExportDisplayed,
   projectExportNotDisplayed,
-  createAssignment,
   updateAssignment,
-  // assignmentCreated,
-  // assignmentDisplayed,
   submitAssignment,
-  // assignmentSubmitted,
-  // assignmentSubmissionDisplayed,
-  // assignmentImported,
-  // assignmentImportError,
-  // assignmentNotFound,
-  // assignmentsLoaded,
 } from './clients';
 
 import {
@@ -58,10 +53,12 @@ import {
   openAssignmentSelector,
   assignmentSelectorClosed,
   courseSelected,
-  dateSelected,
   updateCourses,
   startEditingInstructions,
   cancelEditingInstructions,
+  dateInputUpdated,
+  parsedDateUpdated,
+  updateDate,
 } from './ui';
 
 import {
@@ -133,14 +130,14 @@ export {
   projectCompilationFailed,
   openAssignmentSelector,
   assignmentSelectorClosed,
-  createAssignment,
+  assignAssignment,
+  draftAssignment,
   updateAssignment,
   updateCourses,
   assignmentSelectorOpened,
   assignmentCreated,
   assignmentDisplayed,
   courseSelected,
-  dateSelected,
   submitAssignment,
   assignmentSubmitted,
   assignmentSubmissionDisplayed,
@@ -148,4 +145,9 @@ export {
   assignmentImportError,
   assignmentNotFound,
   assignmentsLoaded,
+  dateInputUpdated,
+  parsedDateUpdated,
+  updateDate,
+  assignmentUpdateDisplayed,
+  assignmentUpdated,
 };

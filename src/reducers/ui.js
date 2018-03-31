@@ -14,8 +14,6 @@ export const DEFAULT_WORKSPACE = new Immutable.Map({
   isEditingInstructions: false,
 });
 
-const today = new Date().toISOString().slice(0, 10);
-
 const defaultState = new Immutable.Map().
   set('editors', new Immutable.Map({
     typing: false,
@@ -28,8 +26,9 @@ const defaultState = new Immutable.Map().
   set('assignmentSelector', new Immutable.Map({
     openModal: false,
     selectedCourse: '',
-    selectedDate: today,
     courses: new Immutable.List(),
+    dateInput: '',
+    parsedDate: null,
   }));
 
 function addNotification(state, type, severity, payload = {}) {
@@ -255,9 +254,15 @@ export default function ui(stateIn, action) {
         action.payload,
       );
 
-    case 'DATE_SELECTED':
+    case 'DATE_INPUT_UPDATED':
       return state.setIn(
-        ['assignmentSelector', 'selectedDate'],
+        ['assignmentSelector', 'dateInput'],
+        action.payload,
+      );
+
+    case 'PARSED_DATE_UPDATED':
+      return state.setIn(
+        ['assignmentSelector', 'parsedDate'],
         action.payload,
       );
 
@@ -268,6 +273,15 @@ export default function ui(stateIn, action) {
         'notice',
         action.payload,
       );
+
+    case 'ASSIGNMENT_UPDATE_DISPLAYED':
+      return addNotification(
+        state,
+        'project-export-complete',
+        'notice',
+        action.payload,
+      );
+
     case 'UPDATE_COURSES':
       return state.setIn(
         ['assignmentSelector', 'courses'],

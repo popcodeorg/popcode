@@ -3,19 +3,18 @@ import $S from 'scriptjs';
 import once from 'lodash/once';
 import config from '../config';
 
-export async function initGapi() {
-  return new Promise((resolve) => {
-    $S('https://apis.google.com/js/client.js', () => {
-      resolve(gapi);
-    });
+export const loadGapi = once(async() => new Promise((resolve) => {
+  $S('https://apis.google.com/js/client.js', async() => {
+    resolve(gapi);
   });
-}
+}));
 
-export async function initGapiClient(gapi) {
-  const client = await new Promise((resolve, reject) => {
-    gapi.load('client', {
+export const getGapi = once(async() => {
+  let gapi = await loadGapi();
+  gapi = await new Promise((resolve, reject) => {
+    gapi.load('client:auth2', {
       callback: () => {
-        resolve(gapi.client);
+        resolve(gapi);
       },
       onerror: (e) => {
         reject(e);
@@ -26,17 +25,12 @@ export async function initGapiClient(gapi) {
       },
     });
   });
-  await client.load(
-    'https://www.googleapis.com/discovery/v1/apis/classroom/v1/rest',
-  );
-
-  return client;
-}
-
-export function authenticateGapiClient(client, accessToken) {
-  client.setApiKey(config.firebaseApiKey);
-  client.setToken({
-    access_token: accessToken,
+  await gapi.client.init({
+    apiKey: config.firebaseApiKey,
+    clientId: config.firebaseClientId,
+    discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/classroom/v1/rest'],
+    scope: 'https://www.googleapis.com/auth/classroom.courses.readonly https://www.googleapis.com/auth/classroom.coursework.students https://www.googleapis.com/auth/classroom.coursework.me',
   });
-  return client;
-}
+
+  return gapi;
+});

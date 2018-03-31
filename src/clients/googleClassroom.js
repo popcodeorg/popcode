@@ -1,7 +1,5 @@
 import {
-  initGapi,
-  initGapiClient,
-  authenticateGapiClient,
+  getGapi,
 } from '../services/gapi';
 
 export function createSnapshotUrl(snapshotKey) {
@@ -18,11 +16,9 @@ export function createAssignmentUrl(assignemtnKey) {
   return uri.href;
 }
 
-export async function getCourses(accessToken) {
-  const gapi = await initGapi();
-  const unauthorizedClient = await initGapiClient(gapi);
-  const client = authenticateGapiClient(unauthorizedClient, accessToken);
-  const courses = await client.classroom.courses.list();
+export async function getCourses() {
+  const gapi = await getGapi();
+  const courses = await gapi.client.classroom.courses.list();
   return courses.result.courses;
 }
 
@@ -33,24 +29,22 @@ export async function createClassroomAssignment(
   selectedDate,
   url,
   title,
+  assignmentState,
 ) {
-  const gapi = await initGapi();
-  const unautherizedClient = await initGapiClient(gapi);
-  const client = authenticateGapiClient(unautherizedClient, accessToken);
-  const date = selectedDate.split('-');
-  const newAssignment = await client.classroom.courses.courseWork.create({
+  const gapi = await getGapi();
+  const newAssignment = await gapi.client.classroom.courses.courseWork.create({
     courseId,
     title,
     workType,
-    state: 'PUBLISHED',
+    state: assignmentState,
     dueDate: {
-      year: date[0],
-      month: date[1],
-      day: date[2],
+      year: selectedDate.getUTCFullYear(),
+      month: selectedDate.getUTCMonth() + 1,
+      day: selectedDate.getUTCDate(),
     },
     dueTime: {
-      hours: 23,
-      minutes: 59,
+      hours: selectedDate.getUTCHours(),
+      minutes: selectedDate.getUTCMinutes(),
       seconds: 0,
       nanos: 0,
     },
@@ -71,30 +65,29 @@ export async function submitClassroomAssignment(
   courseWorkId,
   snapshotUrl,
 ) {
-  const gapi = await initGapi();
-  const unautherizedClient = await initGapiClient(gapi);
-  const client = authenticateGapiClient(unautherizedClient, accessToken);
+  const gapi = await getGapi();
   const {result: {studentSubmissions: [submission]}} =
-    await client.classroom.courses.courseWork.studentSubmissions.list({
+    await gapi.client.classroom.courses.courseWork.studentSubmissions.list({
       courseId,
       courseWorkId,
       userId: 'me',
     });
   // ADD handler if no assignments in array
-  await client.classroom.courses.courseWork.studentSubmissions.modifyAttachments({
-    courseId,
-    courseWorkId,
-    id: submission.id,
-    addAttachments: [
-      {
-        link: {
-          url: snapshotUrl,
+  await gapi.client.classroom.courses.courseWork.
+    studentSubmissions.modifyAttachments({
+      courseId,
+      courseWorkId,
+      id: submission.id,
+      addAttachments: [
+        {
+          link: {
+            url: snapshotUrl,
+          },
         },
-      },
-    ],
-  });
+      ],
+    });
 
-  await client.classroom.courses.courseWork.studentSubmissions.turnIn({
+  await gapi.client.classroom.courses.courseWork.studentSubmissions.turnIn({
     courseId,
     courseWorkId,
     id: submission.id,

@@ -22,7 +22,7 @@ function user(stateIn, action) {
         avatarUrl: profileData.photoURL,
         accessTokens: new Immutable.Map().set(
           credential.providerId,
-          credential.accessToken,
+          credential.accessToken || credential.idToken,
         ),
       });
     }
