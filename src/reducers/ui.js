@@ -28,6 +28,7 @@ const defaultState = new Immutable.Map().
     openModal: false,
     selectedCourse: '',
     selectedDate: today,
+    courses: new Immutable.List(),
   }));
 
 function addNotification(state, type, severity, payload = {}) {
@@ -265,6 +266,11 @@ export default function ui(stateIn, action) {
         'project-export-complete',
         'notice',
         action.payload,
+      );
+    case 'UPDATE_COURSES':
+      return state.setIn(
+        ['assignmentSelector', 'courses'],
+        new Immutable.List(action.payload.courses),
       );
 
     default:

@@ -1,5 +1,5 @@
 export default function getAssignments(state) {
-  const assignments = state.getIn(['clients', 'assignments']);
+  const assignments = state.getIn(['assignments']);
   if (assignments) {
     return assignments;
   }

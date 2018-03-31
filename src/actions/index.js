@@ -1,22 +1,32 @@
 import applicationLoaded from './applicationLoaded';
 
 import {
+  assignmentCreated,
+  assignmentsLoaded,
+  assignmentImported,
+  assignmentSubmitted,
+  assignmentDisplayed,
+  assignmentImportError,
+  assignmentNotFound,
+  assignmentSubmissionDisplayed,
+} from './assignments';
+
+import {
   createSnapshot,
   exportProject,
   projectExportDisplayed,
   projectExportNotDisplayed,
   createAssignment,
   updateAssignment,
-  updateCourses,
-  assignmentCreated,
-  assignmentDisplayed,
+  // assignmentCreated,
+  // assignmentDisplayed,
   submitAssignment,
-  assignmentSubmitted,
-  assignmentSubmissionDisplayed,
-  assignmentImported,
-  assignmentImportError,
-  assignmentNotFound,
-  assignmentsLoaded,
+  // assignmentSubmitted,
+  // assignmentSubmissionDisplayed,
+  // assignmentImported,
+  // assignmentImportError,
+  // assignmentNotFound,
+  // assignmentsLoaded,
 } from './clients';
 
 import {
@@ -48,6 +58,7 @@ import {
   assignmentSelectorClosed,
   courseSelected,
   dateSelected,
+  updateCourses,
 } from './ui';
 
 import {

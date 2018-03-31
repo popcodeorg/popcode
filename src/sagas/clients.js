@@ -17,17 +17,22 @@ import {
   updateAssignmentSnapshot,
 } from '../clients/firebase';
 import {
-  assignmentCreated,
+  // assignmentCreated,
   snapshotCreated,
   snapshotExportError,
   projectExported,
   projectExportError,
-  updateCourses,
-  assignmentSubmitted,
+  // updateCourses,
+  // assignmentSubmitted,
 } from '../actions/clients';
+import {
+  assignmentCreated,
+  assignmentSubmitted,
+} from '../actions/assignments';
 import {
   assignmentSelectorOpened,
   assignmentSelectorClosed,
+  updateCourses,
   // assignmentUpdated,
 } from '../actions/ui';
 import {

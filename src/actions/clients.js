@@ -29,49 +29,46 @@ export const projectExportNotDisplayed = createAction(
   (url, exportType) => ({url, exportType}),
 );
 
-export const updateCourses = createAction(
-  'UPDATE_COURSES',
-  courses => ({courses}),
-);
-
 export const createAssignment = createAction(
   'CREATE_ASSIGNMENT',
   (type, projectKey, selectedCourse, selectedDate) => ({type, projectKey, selectedCourse, selectedDate}),
 );
 
-export const assignmentDisplayed = createAction(
-  'ASSIGNMENT_DISPLAYED',
-  assignment => (assignment),
-);
-
-export const assignmentCreated = createAction(
-  'ASSIGNMENT_CREATED',
-  (projectKey, assignmentKey, snapshotKey, assignment, assignerId) =>
-    ({projectKey, assignmentKey, snapshotKey, assignment, assignerId}),
+export const updateAssignment = createAction(
+  'UPDATE_ASSIGNMENT',
 );
 
 export const submitAssignment = createAction(
   'SUBMIT_ASSIGNMENT',
 );
 
-export const assignmentSubmitted = createAction(
-  'ASSIGNMENT_SUBMITTED',
-  assignment => ({assignment}),
-);
+// export const assignmentDisplayed = createAction(
+//   'ASSIGNMENT_DISPLAYED',
+//   assignment => (assignment),
+// );
 
-export const assignmentSubmissionDisplayed = createAction(
-  'ASSIGNMENT_SUBMISSION_DISPLAYED',
-);
+// export const assignmentSubmissionDisplayed = createAction(
+//   'ASSIGNMENT_SUBMISSION_DISPLAYED',
+// );
 
-export const assignmentNotFound = createAction('ASSIGNMENT_NOT_FOUND');
-export const assignmentImported = createAction(
-  'ASSIGNMENT_IMPORTED',
-  (projectKey, assignment) => ({projectKey, assignment}),
-);
-export const assignmentImportError = createAction('ASSIGNMENT_IMPORT_ERROR');
+// export const assignmentNotFound = createAction('ASSIGNMENT_NOT_FOUND');
 
-export const updateAssignment = createAction(
-  'UPDATE_ASSIGNMENT',
-);
+// export const assignmentImportError = createAction('ASSIGNMENT_IMPORT_ERROR');
 
-export const assignmentsLoaded = createAction('ASSIGNMENTS_LOADED');
+// export const assignmentImported = createAction(
+//   'ASSIGNMENT_IMPORTED',
+//   (projectKey, assignment) => ({projectKey, assignment}),
+// );
+
+// export const assignmentCreated = createAction(
+//   'ASSIGNMENT_CREATED',
+//   (projectKey, assignmentKey, snapshotKey, assignment, assignerId) =>
+//     ({projectKey, assignmentKey, snapshotKey, assignment, assignerId}),
+// );
+
+// export const assignmentsLoaded = createAction('ASSIGNMENTS_LOADED');
+
+// export const assignmentSubmitted = createAction(
+//   'ASSIGNMENT_SUBMITTED',
+//   assignment => ({assignment}),
+// );

@@ -1,5 +1,5 @@
 export default function getCourses(state) {
-  const courses = state.getIn(['clients', 'courses']);
+  const courses = state.getIn(['ui', 'assignmentSelector', 'courses']);
   if (courses) {
     return courses.toJS();
   }

@@ -5,9 +5,11 @@ import {getCurrentProject} from '../selectors';
 import {
   projectExportDisplayed,
   projectExportNotDisplayed,
+} from '../actions/clients';
+import {
   assignmentDisplayed,
   assignmentSubmissionDisplayed,
-} from '../actions/clients';
+} from '../actions/assignments';
 import {openWindowWithContent} from '../util';
 import spinnerPageHtml from '../../templates/project-export.html';
 import compileProject from '../util/compileProject';

@@ -78,3 +78,8 @@ export const courseSelected = createAction(
 export const dateSelected = createAction(
   'DATE_SELECTED',
 );
+
+export const updateCourses = createAction(
+  'UPDATE_COURSES',
+  courses => ({courses}),
+);

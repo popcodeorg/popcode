@@ -21,12 +21,19 @@ import {
   snapshotImported,
   snapshotImportError,
   snapshotNotFound,
-  assignmentImported,
-  assignmentImportError,
-  assignmentsLoaded,
-  assignmentNotFound,
+  // assignmentImported,
+  // assignmentImportError,
+  // assignmentsLoaded,
+  // assignmentNotFound,
   projectRestoredFromLastSession,
 } from '../actions/clients';
+import {
+  assignmentImported,
+  assignmentsLoaded,
+  assignmentImportError,
+  assignmentNotFound,
+} from '../actions/assignments';
+
 import {saveCurrentProject} from '../util/projectUtils';
 import {loadGistFromId} from '../clients/github';
 import {
