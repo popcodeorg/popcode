@@ -115,6 +115,15 @@ export default function reduceProjects(stateIn, action) {
         action.meta.timestamp,
       );
 
+    case 'UPDATE_PROJECT_INSTRUCTIONS':
+      return state.setIn(
+        [action.payload.projectKey, 'instructions'],
+        action.payload.newValue,
+      ).setIn(
+        [action.payload.projectKey, 'updatedAt'],
+        action.meta.timestamp,
+      );
+
     case 'PROJECT_CREATED':
       return removePristineExcept(state, action.payload.projectKey).set(
         action.payload.projectKey,

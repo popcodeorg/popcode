@@ -187,7 +187,7 @@ export async function createProjectAssignment(
 }
 
 export async function loadAllAssignments(projects) {
-  const promises = projects.filter((project) => {;
+  const promises = projects.filter((project) => {
     return project.assignmentKey;
   }).map((project) => {
     return loadProjectAssignment(project.assignmentKey);

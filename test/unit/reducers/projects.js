@@ -21,6 +21,7 @@ import {
   unhideComponent,
   toggleComponent,
   updateProjectSource,
+  updateProjectInstructions,
 } from '../../../src/actions/projects';
 import {
   snapshotImported,
@@ -62,6 +63,17 @@ test('updateProjectSource', reducerTest(
     update(
       projectKey,
       editedProject => editedProject.setIn(['sources', 'css'], css),
+    ),
+));
+
+test('updateProjectInstructions', reducerTest(
+  reducer,
+  initProjects({[projectKey]: false}),
+  partial(updateProjectInstructions, projectKey, '# Instructions', now),
+  initProjects({[projectKey]: true}).
+    update(
+      projectKey,
+      editedProject => editedProject.set('instructions', '# Instructions'),
     ),
 ));
 

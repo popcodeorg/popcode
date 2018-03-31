@@ -18,6 +18,12 @@ export const updateProjectSource = createAction(
   (_projectKey, _language, _newValue, timestamp = Date.now()) => ({timestamp}),
 );
 
+export const updateProjectInstructions = createAction(
+  'UPDATE_PROJECT_INSTRUCTIONS',
+  (projectKey, newValue) => ({projectKey, newValue}),
+  (_projectKey, _newValue, timestamp = Date.now()) => ({timestamp}),
+);
+
 export const toggleLibrary = createAction(
   'TOGGLE_LIBRARY',
   (projectKey, libraryKey) => ({projectKey, libraryKey}),

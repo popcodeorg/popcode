@@ -11,6 +11,7 @@ import partial from 'lodash/partial';
 import map from 'lodash/map';
 import {t} from 'i18next';
 import qs from 'qs';
+import classnames from 'classnames';
 import {getNodeWidth, getNodeWidths} from '../util/resize';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
@@ -29,7 +30,7 @@ import {
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
-import {getCurrentProject} from '../selectors';
+import {getCurrentProject, isEditingInstructions} from '../selectors';
 
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
@@ -46,6 +47,7 @@ function mapStateToProps(state) {
     isDraggingColumnDivider: state.getIn(
       ['ui', 'workspace', 'isDraggingColumnDivider'],
     ),
+    isEditingInstructions: isEditingInstructions(state),
     isUserTyping: state.getIn(['ui', 'editors', 'typing']),
     editorsFlex: state.getIn(['ui', 'workspace', 'columnFlex']).toJS(),
     rowsFlex: state.getIn(['ui', 'workspace', 'rowFlex']).toJS(),
@@ -190,23 +192,36 @@ class Workspace extends React.Component {
   }
 
   _handleClickInstructionsBar() {
-    this.props.dispatch(toggleComponent(
-      get(this.props, ['currentProject', 'projectKey']),
-      'instructions',
-    ));
+    if (!this.props.isEditingInstructions) {
+      this.props.dispatch(toggleComponent(
+        get(this.props, ['currentProject', 'projectKey']),
+        'instructions',
+      ));
+    }
   }
 
   _renderInstructionsBar() {
-    if (!get(this.props, ['currentProject', 'instructions'])) {
+    const currentInstructions = get(
+      this.props,
+      ['currentProject', 'instructions'],
+    );
+    if (!this.props.isEditingInstructions && !currentInstructions) {
       return null;
     }
 
     return (
       <div
-        className="layout__instructions-bar"
+        className={classnames('layout__instructions-bar', {
+          'layout__instructions-bar_disabled':
+            this.props.isEditingInstructions,
+        })}
         onClick={this._handleClickInstructionsBar}
       >
-        <span className="u__icon">&#xf05a;</span>
+        <span
+          className={classnames('u__icon', {
+            u__icon_disabled: this.props.isEditingInstructions,
+          })}
+        >&#xf05a;</span>
       </div>
     );
   }
@@ -303,6 +318,7 @@ Workspace.propTypes = {
   editorsFlex: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
   isDraggingColumnDivider: PropTypes.bool.isRequired,
+  isEditingInstructions: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool,
   rowsFlex: PropTypes.array.isRequired,
   ui: PropTypes.object.isRequired,

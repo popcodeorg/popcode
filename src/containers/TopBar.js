@@ -3,11 +3,13 @@ import TopBar from '../components/TopBar';
 import {
   getCurrentAssignment,
   getCurrentProjectKey,
+  getCurrentProjectInstructions,
   getCurrentUser,
   getCurrentValidationState,
   getEnabledLibraries,
   getOpenTopBarMenu,
   getAllProjectKeys,
+  isEditingInstructions,
   isExperimental,
   isGistExportInProgress,
   isRepoExportInProgress,
@@ -24,6 +26,7 @@ import {
   exportProject,
   openAssignmentSelector,
   submitAssignment,
+  startEditingInstructions,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
@@ -38,6 +41,8 @@ function mapStateToProps(state) {
     currentProjectKey: getCurrentProjectKey(state),
     currentUser: getCurrentUser(state),
     enabledLibraries: getEnabledLibraries(state),
+    hasInstructions: Boolean(getCurrentProjectInstructions(state)),
+    isEditingInstructions: isEditingInstructions(state),
     isExperimental: isExperimental(state),
     isGistExportInProgress: isGistExportInProgress(state),
     isRepoExportInProgress: isRepoExportInProgress(state),
@@ -99,6 +104,10 @@ function mapDispatchToProps(dispatch) {
 
     onStartGoogleLogIn() {
       dispatch(logIn('google'));
+    },
+
+    onStartEditingInstructions() {
+      dispatch(startEditingInstructions());
     },
 
     onToggleTextSize() {

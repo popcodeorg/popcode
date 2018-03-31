@@ -11,6 +11,7 @@ export const DEFAULT_WORKSPACE = new Immutable.Map({
   columnFlex: DEFAULT_COLUMN_FLEX,
   rowFlex: DEFAULT_ROW_FLEX,
   isDraggingColumnDivider: false,
+  isEditingInstructions: false,
 });
 
 const today = new Date().toISOString().slice(0, 10);
@@ -272,6 +273,13 @@ export default function ui(stateIn, action) {
         ['assignmentSelector', 'courses'],
         new Immutable.List(action.payload.courses),
       );
+
+    case 'START_EDITING_INSTRUCTIONS':
+      return state.setIn(['workspace', 'isEditingInstructions'], true);
+
+    case 'CANCEL_EDITING_INSTRUCTIONS':
+    case 'UPDATE_PROJECT_INSTRUCTIONS':
+      return state.setIn(['workspace', 'isEditingInstructions'], false);
 
     default:
       return state;

@@ -83,3 +83,11 @@ export const updateCourses = createAction(
   'UPDATE_COURSES',
   courses => ({courses}),
 );
+
+export const startEditingInstructions = createAction(
+  'START_EDITING_INSTRUCTIONS',
+);
+
+export const cancelEditingInstructions = createAction(
+  'CANCEL_EDITING_INSTRUCTIONS',
+);

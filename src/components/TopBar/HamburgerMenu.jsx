@@ -13,6 +13,8 @@ const HamburgerMenu = createMenu({
 
   renderItems({
     assignment,
+    hasInstructions,
+    isEditingInstructions,
     isExperimental,
     isGistExportInProgress,
     isRepoExportInProgress,
@@ -23,8 +25,23 @@ const HamburgerMenu = createMenu({
     onOpenAssignmentSelector,
     onStartGoogleLogIn,
     onUpdateAssignment,
+    onStartEditingInstructions,
+
   }) {
     return tap([], (items) => {
+      items.push(
+        <MenuItem
+          isDisabled={isEditingInstructions}
+          key="addOrEditInstructions"
+          onClick={onStartEditingInstructions}
+        >
+          {
+            hasInstructions ?
+              t('top-bar.edit-instructions') :
+              t('top-bar.add-instructions')
+          }
+        </MenuItem>,
+      );
       if (!isUserAuthenticated) {
         items.push(
           <MenuItem
@@ -127,6 +144,8 @@ const HamburgerMenu = createMenu({
 
 HamburgerMenu.propTypes = {
   assignment: PropTypes.object,
+  hasInstructions: PropTypes.bool.isRequired,
+  isEditingInstructions: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
@@ -136,6 +155,7 @@ HamburgerMenu.propTypes = {
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onOpenAssignmentSelector: PropTypes.func.isRequired,
+  onStartEditingInstructions: PropTypes.func.isRequired,
   onStartGoogleLogIn: PropTypes.func.isRequired,
   onUpdateAssignment: PropTypes.func.isRequired,
 };
