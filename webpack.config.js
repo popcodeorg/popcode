@@ -124,13 +124,13 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         defaultAttribute: 'defer',
         custom: [
           {
-            test: /^preview/,
+            test: /^(?!(|.*~)main[.~-])/,
             attribute: 'type',
             value: 'ref',
           },
           {
-            test: /^preview/,
-            attribute: 'id',
+            test: /(^|~)preview[.~-]/,
+            attribute: 'class',
             value: 'preview-bundle',
           },
         ],
