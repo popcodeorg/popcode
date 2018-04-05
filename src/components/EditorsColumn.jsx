@@ -107,7 +107,7 @@ export default class EditorsColumn extends React.Component {
           className="editors__collapsed-editor"
           key={language}
           onClick={partial(
-            this.props.onComponentUnhide,
+            this.props.onEditorUnhide,
             language,
           )}
         >
@@ -144,10 +144,10 @@ EditorsColumn.propTypes = {
   ui: PropTypes.shape({
     editors: PropTypes.object.isRequired,
   }).isRequired,
-  onComponentUnhide: PropTypes.func.isRequired,
   onDividerDrag: PropTypes.func.isRequired,
   onEditorHide: PropTypes.func.isRequired,
   onEditorInput: PropTypes.func.isRequired,
+  onEditorUnhide: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };

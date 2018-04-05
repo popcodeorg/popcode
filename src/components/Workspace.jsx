@@ -61,7 +61,7 @@ class Workspace extends React.Component {
       this,
       '_handleUnload',
       '_handleClickInstructionsBar',
-      '_handleComponentUnhide',
+      '_handleEditorUnhide',
       '_handleEditorHide',
       '_handleDividerDrag',
       '_handleDividerStart',
@@ -124,7 +124,7 @@ class Workspace extends React.Component {
     );
   }
 
-  _handleComponentUnhide(componentKey) {
+  _handleEditorUnhide(componentKey) {
     this.props.dispatch(
       unhideComponent(
         this.props.currentProject.projectKey,
@@ -267,10 +267,10 @@ class Workspace extends React.Component {
           errors={errors}
           style={{flex: rowsFlex[0]}}
           ui={ui}
-          onComponentUnhide={this._handleComponentUnhide}
           onDividerDrag={this._handleEditorsDividerDrag}
           onEditorHide={this._handleEditorHide}
           onEditorInput={this._handleEditorInput}
+          onEditorUnhide={this._handleEditorUnhide}
           onRef={partial(this._storeColumnRef, 0)}
           onRequestedLineFocused={this._handleRequestedLineFocused}
         />
