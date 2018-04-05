@@ -65,15 +65,18 @@ export default function ui(stateIn, {type, payload}) {
       return state.set('workspace', DEFAULT_WORKSPACE);
 
     case 'HIDE_COMPONENT':
-    case 'UNHIDE_COMPONENT':
     case 'TOGGLE_COMPONENT':
       return restoreComponentSizes(state, payload);
 
-    case 'UPDATE_PROJECT_SOURCE':
-      return state.setIn(['editors', 'typing'], true);
-
-    case 'USER_DONE_TYPING':
-      return state.setIn(['editors', 'typing'], false);
+    case 'UNHIDE_COMPONENT':
+      return restoreComponentSizes(state, payload).setIn(
+        ['editors', 'requestedFocusedLine'],
+        new Immutable.Map({
+          componentKey: payload.componentKey,
+          line: 0,
+          column: 0,
+        }),
+      );
 
     case 'FOCUS_LINE':
       return restoreComponentSizes(state, payload).setIn(
@@ -84,6 +87,12 @@ export default function ui(stateIn, {type, payload}) {
           column: payload.column,
         }),
       );
+
+    case 'UPDATE_PROJECT_SOURCE':
+      return state.setIn(['editors', 'typing'], true);
+
+    case 'USER_DONE_TYPING':
+      return state.setIn(['editors', 'typing'], false);
 
     case 'CLEAR_CONSOLE_ENTRIES':
       return state.setIn(
