@@ -105,11 +105,19 @@ function generateProjectKey() {
   return (date.getTime() * 1000 + date.getMilliseconds()).toString();
 }
 
+export function* projectExported({payload: {exportType}}) {
+  if (exportType === 'repo') {
+    const state = yield select();
+    yield call(saveCurrentProject, state);
+  }
+}
+
 export default function* () {
   yield all([
     takeEvery('APPLICATION_LOADED', applicationLoaded),
     takeEvery('CREATE_PROJECT', createProject),
     takeEvery('CHANGE_CURRENT_PROJECT', changeCurrentProject),
+    takeEvery('PROJECT_EXPORTED', projectExported),
     throttle(500, [
       'UPDATE_PROJECT_SOURCE',
       'UPDATE_PROJECT_INSTRUCTIONS',

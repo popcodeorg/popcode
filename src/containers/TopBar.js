@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import TopBar from '../components/TopBar';
 import {
+  getCurrentProjectExportedRepoName,
   getCurrentProjectKey,
   getCurrentProjectInstructions,
   getCurrentUser,
@@ -38,6 +39,7 @@ function mapStateToProps(state) {
     currentUser: getCurrentUser(state),
     enabledLibraries: getEnabledLibraries(state),
     hasInstructions: Boolean(getCurrentProjectInstructions(state)),
+    hasExportedRepo: Boolean(getCurrentProjectExportedRepoName(state)),
     isEditingInstructions: isEditingInstructions(state),
     isExperimental: isExperimental(state),
     isGistExportInProgress: isGistExportInProgress(state),
@@ -51,6 +53,10 @@ function mapStateToProps(state) {
     projectKeys: getAllProjectKeys(state),
     validationState: getCurrentValidationState(state),
   };
+}
+
+function exportRepo(dispatch) {
+  dispatch(exportProject('repo'));
 }
 
 function mapDispatchToProps(dispatch) {
@@ -80,7 +86,11 @@ function mapDispatchToProps(dispatch) {
     },
 
     onExportRepo() {
-      dispatch(exportProject('repo'));
+      exportRepo(dispatch);
+    },
+
+    onUpdateRepo() {
+      exportRepo(dispatch);
     },
 
     onExportToClassroom() {

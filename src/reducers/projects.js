@@ -209,6 +209,19 @@ export default function reduceProjects(stateIn, action) {
         action.meta.timestamp,
       );
 
+    case 'PROJECT_EXPORTED':
+      if (action.payload.exportType === 'repo' &&
+        action.payload.exportData.name) {
+        return state.setIn(
+          [action.payload.projectKey, 'externalLocations', 'githubRepoName'],
+          action.payload.exportData.name,
+        ).setIn(
+          [action.payload.projectKey, 'updatedAt'],
+          action.meta.timestamp,
+        );
+      }
+      return state;
+
     default:
       return state;
   }

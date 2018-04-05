@@ -8,6 +8,10 @@ const Sources = Record({
   javascript: '',
 });
 
+const ExternalLocations = Record({
+  githubRepoName: null,
+});
+
 export default class Project extends Record({
   projectKey: null,
   sources: new Sources(),
@@ -15,6 +19,7 @@ export default class Project extends Record({
   hiddenUIComponents: new Set(['console']),
   updatedAt: null,
   instructions: '',
+  externalLocations: new ExternalLocations(),
 }) {
   static fromJS({
     projectKey = null,
@@ -23,6 +28,7 @@ export default class Project extends Record({
     hiddenUIComponents = [],
     updatedAt = null,
     instructions = '',
+    externalLocations = {},
   }) {
     return new Project({
       projectKey,
@@ -31,6 +37,7 @@ export default class Project extends Record({
       hiddenUIComponents: new Set(hiddenUIComponents),
       updatedAt,
       instructions,
+      externalLocations: new ExternalLocations(externalLocations),
     });
   }
 }

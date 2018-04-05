@@ -25,37 +25,74 @@ function normalizeTitle(title) {
   return titleWithoutPunctuationAndWhitespace;
 }
 
-export async function createRepoFromProject(project, user) {
+export async function createOrUpdateRepoFromProject(project, user) {
+  const repoAlreadyExists = Boolean(project.externalLocations.githubRepoName);
+  if (repoAlreadyExists) {
+    return updateRepoFromProject(project, user);
+  }
+  return createRepoFromProject(project, user);
+}
+
+async function createRepoFromProject(project, user) {
   const github = await clientForUser(user);
   const preview = await compileProject(project);
   const title = normalizeTitle(preview.title);
 
-  const REPO_NAME = `${title}-${Date.now()}`;
+  const repoName = `${title}-${Date.now()}`;
 
   const {data} =
     await performWithRetryNetworkErrors(
-      () => github.getUser().createRepo({name: REPO_NAME, auto_init: true}),
+      () => github.getUser().createRepo({name: repoName, auto_init: true}),
     );
 
   const userName = data.owner.login;
 
   await performWithRetryNetworkErrors(
-    () => github.getRepo(userName, REPO_NAME).deleteFile(MASTER, 'README.md'),
+    () => github.getRepo(userName, repoName).deleteFile(MASTER, 'README.md'),
   );
 
-  await createBranch(github, userName, REPO_NAME, MASTER, GH_PAGES);
+  await createBranch(github, userName, repoName, MASTER, GH_PAGES);
 
-  await createHtmlFile(github, project, userName, REPO_NAME);
+  await createRepoFiles(github, project, userName, repoName);
 
-  await createCssFile(github, project, userName, REPO_NAME);
+  await updateRepoDescription(github, userName, repoName);
 
-  await createJsFile(github, project, userName, REPO_NAME);
+  return {
+    url: data.html_url,
+    name: repoName,
+  };
+}
 
-  await createPreviewFile(github, project, userName, REPO_NAME);
+export async function updateRepoFromProject(project, user) {
+  const github = await clientForUser(user);
+  const repoName = project.externalLocations.githubRepoName;
 
-  await updateRepoDescription(github, userName, REPO_NAME);
+  const {data: userData} = await performWithRetryNetworkErrors(
+    () => github.getUser().getProfile(),
+  );
 
-  return data;
+  const userName = userData.login;
+
+  await createRepoFiles(github, project, userName, repoName);
+
+  const {data} = await performWithRetryNetworkErrors(
+    () => github.getRepo(userName, repoName).getDetails(),
+  );
+
+  return {
+    url: data.html_url,
+    name: repoName,
+  };
+}
+
+async function createRepoFiles(github, project, userName, repoName) {
+  await createHtmlFile(github, project, userName, repoName);
+
+  await createCssFile(github, project, userName, repoName);
+
+  await createJsFile(github, project, userName, repoName);
+
+  await createPreviewFile(github, project, userName, repoName);
 }
 
 export async function createGistFromProject(project, user) {
@@ -159,14 +196,15 @@ async function createSourceFileInRepo(
   fileName,
   source,
 ) {
-  await performWithRetryNetworkErrors(() => github.getRepo(userName, repoName).
-    writeFile(
-      branchName,
-      fileName,
-      source,
-      COMMIT_MESSAGE,
-      {},
-    ),
+  await performWithRetryNetworkErrors(
+    () => github.getRepo(userName, repoName).
+      writeFile(
+        branchName,
+        fileName,
+        source,
+        COMMIT_MESSAGE,
+        {},
+      ),
   );
 }
 

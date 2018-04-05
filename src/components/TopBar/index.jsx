@@ -30,6 +30,7 @@ export default function TopBar({
   currentUser,
   enabledLibraries,
   hasInstructions,
+  hasExportedRepo,
   isEditingInstructions,
   isExperimental,
   isGistExportInProgress,
@@ -55,9 +56,9 @@ export default function TopBar({
   onStartLogIn,
   onToggleLibrary,
   onToggleTextSize,
+  onUpdateRepo,
 }) {
   const {popVariant, modifier} = uiVariants({validationState, isUserTyping});
-
   return (
     <header className={classnames('top-bar', modifier)}>
       <div className="top-bar__logo-container">
@@ -95,6 +96,7 @@ export default function TopBar({
         onStartLogIn={onStartLogIn}
       />
       <HamburgerMenu
+        hasExportedRepo={hasExportedRepo}
         hasInstructions={hasInstructions}
         isClassroomExportInProgress={isClassroomExportInProgress}
         isEditingInstructions={isEditingInstructions}
@@ -109,6 +111,7 @@ export default function TopBar({
         onExportToClassroom={onExportToClassroom}
         onStartEditingInstructions={
           partial(onStartEditingInstructions, currentProjectKey)}
+        onUpdateRepo={onUpdateRepo}
       />
     </header>
   );
@@ -118,6 +121,7 @@ TopBar.propTypes = {
   currentProjectKey: PropTypes.string,
   currentUser: PropTypes.object.isRequired,
   enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
+  hasExportedRepo: PropTypes.bool.isRequired,
   hasInstructions: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
@@ -144,6 +148,7 @@ TopBar.propTypes = {
   onStartLogIn: PropTypes.func.isRequired,
   onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,
+  onUpdateRepo: PropTypes.func.isRequired,
 };
 
 TopBar.defaultProps = {

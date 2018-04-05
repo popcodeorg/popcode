@@ -17,7 +17,14 @@ export const exportProject = createAction(
 );
 export const projectExported = createAction(
   'PROJECT_EXPORTED',
-  (url, exportType) => ({url, exportType}),
+  (url, exportType, projectKey, exportData) => ({
+    url,
+    exportType,
+    projectKey,
+    exportData,
+  }),
+  (_url, _exportType, _projectKey, _exportData, timestamp = Date.now()) =>
+    ({timestamp}),
 );
 export const projectExportError = createAction(
   'PROJECT_EXPORT_ERROR',

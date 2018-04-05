@@ -13,7 +13,7 @@ import {
 import Scenario from '../../helpers/Scenario';
 import {
   createGistFromProject,
-  createRepoFromProject,
+  createOrUpdateRepoFromProject,
 } from '../../../src/clients/github';
 import {createProjectSnapshot} from '../../../src/clients/firebase';
 import {createShareToClassroomUrl} from '../../../src/clients/googleClassroom';
@@ -68,9 +68,18 @@ test('export gist', (t) => {
   }
 
   t.test('with successful export', (assert) => {
+    const clock = sinon.useFakeTimers();
     initiateExport(assert).
-      next({html_url: url}).put(projectExported(url, exportType)).
+      next({html_url: url}).
+      put(projectExported(
+        url,
+        exportType,
+        scenario.project.projectKey,
+        {},
+        Date.now(),
+      )).
       next().isDone();
+    clock.restore();
     assert.end();
   });
 
@@ -84,6 +93,50 @@ test('export gist', (t) => {
 });
 
 test('export repo', (t) => {
+  const name = 'Page-Title-abc123';
+  const url = `https://github.com/usernmaer/${name}`;
+  const exportType = 'repo';
+  const scenario = new Scenario();
+  scenario.logIn();
+
+  function initiateExport(assert) {
+    return testSaga(exportProjectSaga, {payload: {exportType}}).
+      next().inspect((effect) => {
+        assert.ok(effect.SELECT, 'invokes select effect');
+      }).
+      next(scenario.state).call(
+        createOrUpdateRepoFromProject,
+        scenario.project.toJS(),
+        scenario.user.toJS(),
+      );
+  }
+
+  t.test('with successful export', (assert) => {
+    const clock = sinon.useFakeTimers();
+    initiateExport(assert).
+      next({url, name}).
+      put(projectExported(
+        url,
+        exportType,
+        scenario.project.projectKey,
+        {name},
+        Date.now(),
+      )).
+      next().isDone();
+    clock.restore();
+    assert.end();
+  });
+
+  t.test('with error', (assert) => {
+    const error = new Error();
+    initiateExport(assert).
+      throw(error).put(projectExportError(exportType)).
+      next().isDone();
+    assert.end();
+  });
+});
+
+test('update repo', (t) => {
   const url = 'https://github.com/usernmaer/Page-Title-abc123';
   const exportType = 'repo';
   const scenario = new Scenario();
@@ -95,16 +148,25 @@ test('export repo', (t) => {
         assert.ok(effect.SELECT, 'invokes select effect');
       }).
       next(scenario.state).call(
-        createRepoFromProject,
+        createOrUpdateRepoFromProject,
         scenario.project.toJS(),
         scenario.user.toJS(),
       );
   }
 
   t.test('with successful export', (assert) => {
+    const clock = sinon.useFakeTimers();
     initiateExport(assert).
-      next({html_url: url}).put(projectExported(url, exportType)).
+      next({url}).
+      put(projectExported(
+        url,
+        exportType,
+        scenario.project.projectKey,
+        {},
+        Date.now(),
+      )).
       next().isDone();
+    clock.restore();
     assert.end();
   });
 
@@ -147,9 +209,12 @@ test('export to classroom', (t) => {
   }
 
   t.test('with successful export', (assert) => {
+    const clock = sinon.useFakeTimers();
     initiateExport(assert).
-      next(url).put(projectExported(url, exportType)).
+      next(url).
+      put(projectExported(url, exportType, scenario.project.projectKey, {})).
       next().isDone();
+    clock.restore();
     assert.end();
   });
 

@@ -25,6 +25,7 @@ import {
 } from '../../../src/actions/projects';
 import {
   snapshotImported,
+  projectExported,
   projectRestoredFromLastSession,
 } from '../../../src/actions/clients';
 import {
@@ -299,6 +300,39 @@ tap(initProjects({1: true}), (projects) => {
       projects: projects.setIn(['1', 'updatedAt'], timestamp),
       currentProject: {projectKey: '1'},
     }),
+  ));
+});
+
+tap(initProjects({1: true}), (projects) => {
+  const timestamp = Date.now();
+  const repoName = 'Page-Title-abc123';
+  test('gist export', reducerTest(
+    reducer,
+    projects,
+    partial(
+      projectExported,
+      'https://gist.github.com/abc123',
+      'gist',
+      '1',
+      timestamp,
+    ),
+    projects,
+    'is a no-op',
+  ));
+  test('repo export', reducerTest(
+    reducer,
+    projects,
+    partial(
+      projectExported,
+      'https://github.com/usernmaer/Page-Title-abc123',
+      'repo',
+      '1',
+      {name: repoName},
+      timestamp,
+    ),
+    projects.setIn(['1', 'updatedAt'], timestamp).
+      setIn(['1', 'externalLocations', 'githubRepoName'], repoName),
+    'stores the repo name',
   ));
 });
 

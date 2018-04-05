@@ -1,5 +1,5 @@
+import isProjectExportInProgress from './isProjectExportInProgress';
+
 export default function isClassroomExportInProgress(state) {
-  return state.getIn(
-    ['clients', 'projectExports', 'classroom', 'status'],
-  ) === 'waiting';
+  return isProjectExportInProgress(state, 'classroom');
 }
