@@ -17,6 +17,8 @@ import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {
   updateProjectSource,
+  hideComponent,
+  unhideComponent,
   editorFocusedRequestedLine,
   dragRowDivider,
   dragColumnDivider,
@@ -24,8 +26,6 @@ import {
   stopDragColumnDivider,
   toggleComponent,
   applicationLoaded,
-  storeHiddenComponentLine,
-  focusLine,
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
@@ -61,9 +61,8 @@ class Workspace extends React.Component {
       this,
       '_handleUnload',
       '_handleClickInstructionsBar',
-      '_handleComponentHidden',
       '_handleComponentUnhide',
-      '_handleComponentHide',
+      '_handleEditorHide',
       '_handleDividerDrag',
       '_handleDividerStart',
       '_handleDividerStop',
@@ -115,16 +114,9 @@ class Workspace extends React.Component {
     }
   }
 
-  _handleComponentHidden(componentKey, line, column) {
-    const {projectKey} = this.props.currentProject;
+  _handleEditorHide(language) {
     this.props.dispatch(
-      storeHiddenComponentLine(projectKey, componentKey, line, column),
-    );
-  }
-
-  _handleComponentHide(language) {
-    this.props.dispatch(
-      toggleComponent(
+      hideComponent(
         this.props.currentProject.projectKey,
         language,
         new HiddenUIComponent({componentType: 'editor', language}),
@@ -133,9 +125,12 @@ class Workspace extends React.Component {
   }
 
   _handleComponentUnhide(componentKey) {
-    const {dispatch, currentProject} = this.props;
-    const {line, column} = currentProject.hiddenUIComponents[componentKey];
-    dispatch(focusLine(componentKey, line, column));
+    this.props.dispatch(
+      unhideComponent(
+        this.props.currentProject.projectKey,
+        componentKey,
+      ),
+    );
   }
 
   _handleEditorInput(language, source) {
@@ -272,10 +267,9 @@ class Workspace extends React.Component {
           errors={errors}
           style={{flex: rowsFlex[0]}}
           ui={ui}
-          onComponentHidden={this._handleComponentHidden}
-          onComponentHide={this._handleComponentHide}
           onComponentUnhide={this._handleComponentUnhide}
           onDividerDrag={this._handleEditorsDividerDrag}
+          onEditorHide={this._handleEditorHide}
           onEditorInput={this._handleEditorInput}
           onRef={partial(this._storeColumnRef, 0)}
           onRequestedLineFocused={this._handleRequestedLineFocused}

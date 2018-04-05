@@ -173,6 +173,12 @@ export default function reduceProjects(stateIn, {type, payload, meta}) {
         meta.timestamp,
       );
 
+    case 'UNHIDE_COMPONENT':
+      return unhideComponent(state, payload, meta.timestamp);
+
+    case 'HIDE_COMPONENT':
+      return hideComponent(state, payload, meta.timestamp);
+
     case 'TOGGLE_COMPONENT':
       if (state.getIn(
         [payload.projectKey, 'hiddenUIComponents'],

@@ -30,17 +30,25 @@ export const toggleLibrary = createAction(
   (_projectKey, _libraryKey, timestamp = Date.now()) => ({timestamp}),
 );
 
-export const storeHiddenComponentLine = createAction(
-  'STORE_HIDDEN_LINE',
-  (projectKey, componentKey, line, column) =>
-    ({projectKey, componentKey, line, column}),
+export const hideComponent = createAction(
+  'HIDE_COMPONENT',
+  (projectKey, componentKey, hiddenUIComponent) =>
+    ({projectKey, componentKey, hiddenUIComponent}),
+  (_projectKey, _componentKey, hiddenUIComponent, timestamp = Date.now()) =>
+    ({timestamp}),
+);
+
+export const unhideComponent = createAction(
+  'UNHIDE_COMPONENT',
+  (projectKey, componentKey) => ({projectKey, componentKey}),
+  (_projectKey, _componentKey, timestamp = Date.now()) => ({timestamp}),
 );
 
 export const toggleComponent = createAction(
   'TOGGLE_COMPONENT',
   (projectKey, componentKey, hiddenUIComponent) =>
     ({projectKey, componentKey, hiddenUIComponent}),
-  (projectKey, componentKey, hiddenUIComponent, timestamp = Date.now()) =>
+  (_projectKey, _componentKey, hiddenUIComponent, timestamp = Date.now()) =>
     ({timestamp}),
 );
 

@@ -64,6 +64,8 @@ export default function ui(stateIn, {type, payload}) {
     case 'PROJECT_CREATED':
       return state.set('workspace', DEFAULT_WORKSPACE);
 
+    case 'HIDE_COMPONENT':
+    case 'UNHIDE_COMPONENT':
     case 'TOGGLE_COMPONENT':
       return restoreComponentSizes(state, payload);
 
