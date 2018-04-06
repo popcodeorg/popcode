@@ -10,9 +10,9 @@ import get from 'lodash/get';
 import partial from 'lodash/partial';
 import map from 'lodash/map';
 import {t} from 'i18next';
-import qs from 'qs';
 import classnames from 'classnames';
 import {getNodeWidth, getNodeWidths} from '../util/resize';
+import {getQueryParameters, setQueryParameters} from '../util/queryParams';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {
@@ -76,21 +76,13 @@ class Workspace extends React.Component {
   }
 
   componentWillMount() {
-    let gistId = null;
-    let snapshotKey = null;
-    let isExperimental = false;
-    if (location.search) {
-      const query = qs.parse(location.search.slice(1));
-      if (query.gist) {
-        gistId = query.gist;
-      }
-      if (query.snapshot) {
-        snapshotKey = query.snapshot;
-      }
-      isExperimental = Object.keys(query).includes('experimental');
-    }
+    const {
+      gistId,
+      snapshotKey,
+      isExperimental,
+    } = getQueryParameters(location.search);
     const rehydratedProject = rehydrateProject();
-    history.replaceState({}, '', location.pathname);
+    setQueryParameters({isExperimental});
     this.props.dispatch(applicationLoaded({
       snapshotKey,
       gistId,
