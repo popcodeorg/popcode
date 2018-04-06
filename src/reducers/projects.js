@@ -187,16 +187,6 @@ export default function reduceProjects(stateIn, {type, payload, meta}) {
       }
       return hideComponent(state, payload, meta.timestamp);
 
-    case 'STORE_HIDDEN_LINE':
-      return state.mergeIn([
-        payload.projectKey,
-        'hiddenUIComponents',
-        payload.componentKey,
-      ], {
-        line: payload.line,
-        column: payload.column,
-      });
-
     default:
       return state;
   }
