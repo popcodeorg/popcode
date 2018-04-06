@@ -17,6 +17,8 @@ import {
   projectCreated,
   projectsLoaded,
   toggleLibrary,
+  hideComponent,
+  unhideComponent,
   toggleComponent,
   updateProjectSource,
   updateProjectInstructions,
@@ -35,6 +37,7 @@ const projectKey = '12345';
 
 const html = '<!doctype html>Hey';
 const css = 'p {}';
+const hiddenOutputRecord = new HiddenUIComponent({componentType: 'output'});
 
 test('projectCreated', (t) => {
   t.test('from pristine state', reducerTest(
@@ -233,6 +236,42 @@ tap(initProjects({1: false}), projects =>
   )),
 );
 
+tap(initProjects({1: true}), projects =>
+  test('hideComponent without record arg', reducerTest(
+    reducer,
+    projects,
+    partial(hideComponent, '1', 'output', null, now),
+    projects.setIn(
+      ['1', 'hiddenUIComponents', 'output'],
+      hiddenOutputRecord,
+    ),
+  )),
+);
+
+tap(initProjects({1: true}), projects =>
+  test('hideComponent with record arg', reducerTest(
+    reducer,
+    projects,
+    partial(hideComponent, '1', 'output', hiddenOutputRecord, now),
+    projects.setIn(
+      ['1', 'hiddenUIComponents', 'output'],
+      hiddenOutputRecord,
+    ),
+  )),
+);
+
+tap(initProjects({1: true}), projects =>
+  test('unhideComponent', reducerTest(
+    reducer,
+    projects.setIn(
+      ['1', 'hiddenUIComponents', 'output'],
+      hiddenOutputRecord,
+    ),
+    partial(unhideComponent, '1', 'output', now),
+    projects,
+  )),
+);
+
 test('toggleComponent', (t) => {
   const projects = initProjects({1: true});
 
@@ -242,7 +281,7 @@ test('toggleComponent', (t) => {
     partial(toggleComponent, '1', 'output', null, now),
     projects.setIn(
       ['1', 'hiddenUIComponents', 'output'],
-      new HiddenUIComponent({componentType: 'output'}),
+      hiddenOutputRecord,
     ),
   ));
 
@@ -250,7 +289,7 @@ test('toggleComponent', (t) => {
     reducer,
     projects.setIn(
       ['1', 'hiddenUIComponents', 'output'],
-      new HiddenUIComponent({componentType: 'output'}),
+      hiddenOutputRecord,
     ),
     partial(toggleComponent, '1', 'output', null, now),
     projects,
