@@ -52,6 +52,7 @@ export default class EditorsColumn extends React.Component {
       errors,
       onEditorHide,
       onEditorInput,
+      onEditorUnhide,
       onRef,
       onRequestedLineFocused,
       style,
@@ -106,10 +107,7 @@ export default class EditorsColumn extends React.Component {
         <div
           className="editors__collapsed-editor"
           key={language}
-          onClick={partial(
-            this.props.onEditorUnhide,
-            language,
-          )}
+          onClick={partial(onEditorUnhide, language)}
         >
           <div className="label editors__label editors__label_collapsed">
             {t(`languages.${language}`)}
