@@ -95,8 +95,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(logOut());
     },
 
-    onStartEditingInstructions() {
-      dispatch(startEditingInstructions());
+    onStartEditingInstructions(projectKey) {
+      dispatch(startEditingInstructions(projectKey));
     },
 
     onStartLogIn() {

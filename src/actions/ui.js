@@ -61,6 +61,8 @@ export const closeTopBarMenu = createAction(
 
 export const startEditingInstructions = createAction(
   'START_EDITING_INSTRUCTIONS',
+  projectKey => ({projectKey}),
+  (_projectKey, timestamp = Date.now()) => ({timestamp}),
 );
 
 export const cancelEditingInstructions = createAction(
