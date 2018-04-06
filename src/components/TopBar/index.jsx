@@ -107,7 +107,8 @@ export default function TopBar({
         onExportGist={onExportGist}
         onExportRepo={onExportRepo}
         onExportToClassroom={onExportToClassroom}
-        onStartEditingInstructions={onStartEditingInstructions}
+        onStartEditingInstructions={
+          partial(onStartEditingInstructions, currentProjectKey)}
       />
     </header>
   );
