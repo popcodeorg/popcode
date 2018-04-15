@@ -13,6 +13,7 @@ import {CompiledProject as CompiledProjectRecord} from '../records';
 const sandboxOptions = [
   'allow-forms',
   'allow-popups',
+  'allow-popups-to-escape-sandbox',
   'allow-scripts',
   'allow-top-navigation',
 ].join(' ');
