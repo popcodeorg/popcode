@@ -41,7 +41,7 @@ export default class InstructionsEditor extends React.Component {
             {t('workspace.components.instructions.cancel')}
           </button>
         </div>
-        <div className="">
+        <div className="instructions-editor__input-container">
           <SimpleMDE
             id="your-custom-id"
             options={{
