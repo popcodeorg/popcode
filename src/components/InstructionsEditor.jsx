@@ -43,7 +43,6 @@ export default class InstructionsEditor extends React.Component {
         </div>
         <div className="instructions-editor__input-container">
           <SimpleMDE
-            id="your-custom-id"
             options={{
               autofocus: true,
               spellChecker: false,
