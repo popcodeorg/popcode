@@ -134,7 +134,7 @@ test('startEditingInstructions', reducerTest(
   initialState.setIn(['workspace', 'isEditingInstructions'], true),
 ));
 
-test('startEditingInstructions', reducerTest(
+test('cancelEditingInstructions', reducerTest(
   reducer,
   initialState.setIn(['workspace', 'isEditingInstructions'], true),
   cancelEditingInstructions,
@@ -145,6 +145,14 @@ test('updateProjectInstructions', reducerTest(
   reducer,
   initialState.setIn(['workspace', 'isEditingInstructions'], true),
   updateProjectInstructions,
+  initialState,
+));
+
+test('cancelEditingInstructions after updating', reducerTest(
+  reducer,
+  initialState.setIn(['workspace', 'isEditingInstructions'], true).
+    setIn(['workspace', 'displayedInstructions'], 'foo'),
+  cancelEditingInstructions,
   initialState,
 ));
 

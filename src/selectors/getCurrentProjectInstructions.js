@@ -15,7 +15,7 @@ export default createSelector(
       return '';
     }
 
-    if (isEditing) {
+    if (isEditing && instructionUnsaved) {
       return instructionUnsaved;
     }
 
