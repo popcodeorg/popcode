@@ -24,6 +24,6 @@ export default createSelector(
     }
 
     // else show the current project saved instructions
-    return projects.getIn([projectKey, 'instructions']) ;
+    return projects.getIn([projectKey, 'instructions']);
   },
 );
