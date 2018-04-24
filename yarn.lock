@@ -8556,9 +8556,9 @@ react-draggable@^3.0.3:
     classnames "^2.2.5"
     prop-types "^15.6.0"
 
-react-ga@^2.1.2:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-2.4.1.tgz#dfbd5f028ed39a07067f7a8bf57dc0d240000767"
+react-ga@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.npmjs.org/react-ga/-/react-ga-2.5.0.tgz#fbba2b33d41ce727f7d4cf383d54dbbfbf96c507"
   optionalDependencies:
     prop-types "^15.6.0"
     react "^15.6.2 || ^16.0"
@@ -8593,9 +8593,9 @@ react-redux@^5.0.3:
     loose-envify "^1.1.0"
     prop-types "^15.6.0"
 
-"react@^15.6.2 || ^16.0", react@^16.0.0:
-  version "16.2.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.2.0.tgz#a31bd2dab89bff65d42134fa187f24d054c273ba"
+"react@^15.6.2 || ^16.0", react@^16.3.2:
+  version "16.3.2"
+  resolved "https://registry.npmjs.org/react/-/react-16.3.2.tgz#fdc8420398533a1e58872f59091b272ce2f91ea9"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
