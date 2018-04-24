@@ -11,7 +11,7 @@ export const DEFAULT_WORKSPACE = new Immutable.Map({
   columnFlex: DEFAULT_COLUMN_FLEX,
   rowFlex: DEFAULT_ROW_FLEX,
   isDraggingColumnDivider: false,
-  displayedInstructions: '',
+  draftInstructions: '',
   isEditingInstructions: false,
 });
 
@@ -227,13 +227,13 @@ export default function ui(stateIn, action) {
 
     case 'CONTINUE_EDITING_INSTRUCTIONS':
       return state.setIn(
-        ['workspace', 'displayedInstructions'],
+        ['workspace', 'draftInstructions'],
         action.payload.content,
       );
 
     case 'CANCEL_EDITING_INSTRUCTIONS':
       return state.setIn(['workspace', 'isEditingInstructions'], false).
-        setIn(['workspace', 'displayedInstructions'], '');
+        setIn(['workspace', 'draftInstructions'], '');
 
     case 'UPDATE_PROJECT_INSTRUCTIONS':
       return state.setIn(['workspace', 'isEditingInstructions'], false);

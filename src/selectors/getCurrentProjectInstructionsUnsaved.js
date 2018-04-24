@@ -1,3 +1,3 @@
 export default function getCurrentProjectinstructionsUnsaved(state) {
-  return state.getIn(['ui', 'workspace', 'displayedInstructions']);
+  return state.getIn(['ui', 'workspace', 'draftInstructions']);
 }
