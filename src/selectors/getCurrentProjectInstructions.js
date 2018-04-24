@@ -7,8 +7,10 @@ import getProjects from './getProjects';
 
 export default createSelector(
   [
-    getCurrentProjectKey, getProjects,
-    isEditingInstructions, getCurrentProjectInstructionsUnsaved,
+    getCurrentProjectKey,
+    getProjects,
+    isEditingInstructions,
+    getCurrentProjectInstructionsUnsaved,
   ],
   (projectKey, projects, isEditing, instructionUnsaved) => {
     if (!projectKey) {

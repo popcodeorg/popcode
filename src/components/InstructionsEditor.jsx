@@ -8,8 +8,12 @@ import SimpleMDE from 'react-simplemde-editor';
 export default class InstructionsEditor extends React.Component {
   constructor() {
     super();
-    bindAll(this, '_handleCancelEditing', '_handleContinueEditing',
-      '_handleSaveChanges');
+    bindAll(
+      this,
+      '_handleCancelEditing',
+      '_handleContinueEditing',
+      '_handleSaveChanges',
+    );
   }
 
   _handleCancelEditing() {
@@ -58,7 +62,7 @@ export default class InstructionsEditor extends React.Component {
             rel="noopener noreferrer"
             target="_blank"
           >
-            Styling with Markdown is supported
+              Styling with Markdown is supported
           </a>
         </div>
       </div>

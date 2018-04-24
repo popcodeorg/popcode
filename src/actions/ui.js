@@ -68,7 +68,6 @@ export const startEditingInstructions = createAction(
 export const continueEditingInstructions = createAction(
   'CONTINUE_EDITING_INSTRUCTIONS',
   (projectKey, content) => ({projectKey, content}),
-  (_projectKey, timestamp = Date.now()) => ({timestamp}),
 );
 
 export const cancelEditingInstructions = createAction(
