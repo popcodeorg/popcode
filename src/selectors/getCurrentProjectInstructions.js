@@ -17,10 +17,13 @@ export default createSelector(
       return '';
     }
 
+    // if you are editing and unsaved instructions exist,
+    // show the unsaved instructions
     if (isEditing && instructionUnsaved) {
       return instructionUnsaved;
     }
 
-    return projectKey ? projects.getIn([projectKey, 'instructions']) : '';
+    // else show the current project saved instructions
+    return projects.getIn([projectKey, 'instructions']) ;
   },
 );
