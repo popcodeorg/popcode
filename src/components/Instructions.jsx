@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {toReact as markdownToReact} from '../util/markdown';
-import InstructionsEditor from './InstructionsEditor';
+import InstructionsEditor from './InstructionsEditorAsync';
 
 export default function Instructions({
   instructions,

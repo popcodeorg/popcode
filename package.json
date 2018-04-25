@@ -194,6 +194,7 @@
     "qs": "^6.1.0",
     "react": "^16.3.2",
     "react-copy-to-clipboard": "^5.0.0",
+    "react-coroutine": "^2.0.2",
     "react-dom": "^16.0.0",
     "react-draggable": "^3.0.3",
     "react-ga": "^2.5.0",
