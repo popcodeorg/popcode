@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {toReact as markdownToReact} from '../util/markdown';
-import InstructionsEditor from './InstructionsEditor';
+import InstructionsEditor from './InstructionsEditorAsync';
 
 export default function Instructions({
   instructions,
@@ -9,6 +9,7 @@ export default function Instructions({
   isOpen,
   projectKey,
   onCancelEditing,
+  onContinueEditing,
   onSaveChanges,
 }) {
   if (!isEditing && !instructions || !isOpen) {
@@ -25,6 +26,7 @@ export default function Instructions({
             instructions={instructions}
             projectKey={projectKey}
             onCancelEditing={onCancelEditing}
+            onContinueEditing={onContinueEditing}
             onSaveChanges={onSaveChanges}
           /> :
           <div className="instructions">
@@ -41,5 +43,6 @@ Instructions.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   projectKey: PropTypes.string.isRequired,
   onCancelEditing: PropTypes.func.isRequired,
+  onContinueEditing: PropTypes.func.isRequired,
   onSaveChanges: PropTypes.func.isRequired,
 };

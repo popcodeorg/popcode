@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 import {t} from 'i18next';
 import bindAll from 'lodash/bindAll';
 
+import SimpleMDE from 'react-simplemde-editor';
+
 export default class InstructionsEditor extends React.Component {
   constructor() {
     super();
-    bindAll(this, '_handleCancelEditing', '_handleSaveChanges', '_ref');
-  }
-
-  componentDidMount() {
-    if (!this.props.instructions) {
-      this._editor.focus();
-    }
+    bindAll(
+      this,
+      '_handleCancelEditing',
+      '_handleContinueEditing',
+      '_handleSaveChanges',
+    );
   }
 
   _handleCancelEditing() {
@@ -20,12 +21,11 @@ export default class InstructionsEditor extends React.Component {
   }
 
   _handleSaveChanges() {
-    const newValue = this._editor.value.trim();
-    this.props.onSaveChanges(this.props.projectKey, newValue);
+    this.props.onSaveChanges(this.props.projectKey, this.props.instructions);
   }
 
-  _ref(editorElement) {
-    this._editor = editorElement;
+  _handleContinueEditing(newValue) {
+    this.props.onContinueEditing(this.props.projectKey, newValue);
   }
 
   render() {
@@ -46,11 +46,13 @@ export default class InstructionsEditor extends React.Component {
           </button>
         </div>
         <div className="instructions-editor__input-container">
-          <textarea
-            className="instructions-editor__input"
-            defaultValue={this.props.instructions}
-            placeholder="Type here..."
-            ref={this._ref}
+          <SimpleMDE
+            options={{
+              autofocus: true,
+              spellChecker: false,
+            }}
+            value={this.props.instructions}
+            onChange={this._handleContinueEditing}
           />
         </div>
         <div className="instructions-editor__footer">
@@ -60,7 +62,7 @@ export default class InstructionsEditor extends React.Component {
             rel="noopener noreferrer"
             target="_blank"
           >
-            Styling with Markdown is supported
+              Styling with Markdown is supported
           </a>
         </div>
       </div>
@@ -72,5 +74,6 @@ InstructionsEditor.propTypes = {
   instructions: PropTypes.string.isRequired,
   projectKey: PropTypes.string.isRequired,
   onCancelEditing: PropTypes.func.isRequired,
+  onContinueEditing: PropTypes.func.isRequired,
   onSaveChanges: PropTypes.func.isRequired,
 };

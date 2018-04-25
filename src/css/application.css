@@ -136,6 +136,7 @@ body {
 .layout__instructions {
   flex: 0 0 25%;
   position: relative;
+  animation: 0.2s ease-in 0.1s both fadeIn;
 }
 
 /** @define top-bar */
@@ -388,7 +389,7 @@ body {
 .instructions-editor__menu {
   padding: 0.5rem;
   text-align: right;
-  background-color: var(--color-light-gray);
+  background-color: var(--color-low-contrast-gray);
 }
 
 .instructions-editor__footer {
