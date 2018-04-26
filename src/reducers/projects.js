@@ -190,9 +190,9 @@ export default function reduceProjects(stateIn, {type, payload, meta}) {
     case 'START_EDITING_INSTRUCTIONS':
       return unhideComponent(
         state,
-        action.payload.projectKey,
+        payload.projectKey,
         'instructions',
-        action.meta.timestamp,
+        meta.timestamp,
       );
 
     default:
