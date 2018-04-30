@@ -89,14 +89,16 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     plugins.push(
       new OfflinePlugin({
         caches: {
-          main: [':rest:'],
-          additional: ['mainAsync*.js', 'previewLibraries*.js'],
+          main: [/(?:^|~)(?:main|preview)[-.~]/, ':externals:'],
+          additional: [':rest:'],
         },
-        safeToUseOptionalCaches: true,
+        AppCache: {
+          caches: ['main', 'additional', 'optional'],
+        },
         publicPath: '/',
         responseStrategy: 'network-first',
         externals: [
-          'index.html',
+          '/',
           'application.css',
           'fonts/Roboto-Regular-webfont.woff',
           'fonts/Roboto-Regular-webfont.ttf',
@@ -114,7 +116,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           'fonts/fontawesome-webfont.eot',
           'images/pop/thinking.svg',
         ],
-        ServiceWorker: {navigateFallbackURL: '/'},
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'src/html/index.html'),
