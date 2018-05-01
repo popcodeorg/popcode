@@ -85,6 +85,15 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     }),
   ];
 
+  let devtool;
+  if (isProduction) {
+    devtool = 'source-map';
+  } else if (isTest) {
+    devtool = 'inline-source-map';
+  } else {
+    devtool = 'eval';
+  }
+
   if (!isTest) {
     plugins.push(
       new OfflinePlugin({
@@ -319,6 +328,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       },
       extensions: ['.mjs', '.js', '.jsx', '.json'],
     },
-    devtool: isTest ? 'inline-source-map' : 'source-map',
+    devtool,
   };
 };
