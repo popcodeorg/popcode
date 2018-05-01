@@ -19,6 +19,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const cloudflare = require('cloudflare');
 const BrowserSync = require('browser-sync');
 const pify = require('pify');
+const isDocker = require('is-docker');
 const config = require('./src/config');
 const webpackConfiguration = require('./webpack.config');
 
@@ -130,6 +131,7 @@ gulp.task('browserSync', ['static'], () => {
   const compiler = webpack(webpackConfiguration(process.env.NODE_ENV));
   compiler.plugin('invalid', browserSync.reload);
   browserSync.init({
+    open: !isDocker(),
     server: {
       baseDir: distDir,
       middleware: [
