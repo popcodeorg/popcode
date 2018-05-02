@@ -1570,8 +1570,8 @@ bower-config@^1.4.0:
     untildify "^2.1.0"
 
 bower@^1.7.9:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/bower/-/bower-1.8.2.tgz#adf53529c8d4af02ef24fb8d5341c1419d33e2f7"
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/bower/-/bower-1.8.4.tgz#e7876a076deb8137f7d06525dc5e8c66db82f28a"
 
 bowser@^1.4.5, bowser@^1.7.3:
   version "1.9.2"
