@@ -88,9 +88,29 @@ gulp.task('css', () => {
     pipe(browserSync.stream());
 });
 
-gulp.task('js', ['env'], () =>
-  pify(webpack)(webpackConfiguration(process.env.NODE_ENV)),
-);
+gulp.task('js', ['env'], () => new Promise((resolve, reject) => {
+  webpack(
+    webpackConfiguration(process.env.NODE_ENV),
+    (error, stats) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+
+      if (stats.hasErrors()) {
+        reject(new Error(stats.errors.join('\n')));
+        return;
+      }
+
+      if (stats.hasWarnings()) {
+        // eslint-disable-next-line no-console
+        console.warn(stats.warnings);
+      }
+
+      resolve(stats);
+    },
+  );
+}));
 
 gulp.task('build', ['static', 'fonts', 'css', 'js']);
 
@@ -139,7 +159,6 @@ gulp.task('browserSync', ['static'], () => {
           compiler,
           {
             lazy: false,
-            stats: 'errors-only',
           },
         ),
       ],

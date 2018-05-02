@@ -30,10 +30,6 @@ module.exports = function(config) {
 
     webpack: webpackConfiguration('test'),
 
-    webpackMiddleware: {
-      stats: 'errors-only',
-    },
-
     reporters: ['dots'],
 
     port: 9876,
