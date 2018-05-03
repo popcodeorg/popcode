@@ -15,7 +15,7 @@ function mapStateToProps(state) {
   return {
     instructions: getCurrentProjectInstructions(state),
     isEditing: isEditingInstructions(state),
-    isOpen: !getHiddenUIComponents(state).includes('instructions'),
+    isOpen: !getHiddenUIComponents(state).instructions,
     projectKey: getCurrentProjectKey(state),
   };
 }

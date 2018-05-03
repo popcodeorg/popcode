@@ -26,11 +26,11 @@ import {
   stopDragColumnDivider,
   toggleComponent,
   applicationLoaded,
-
 } from '../actions';
 
 import {isPristineProject} from '../util/projectUtils';
 import {getCurrentProject, isEditingInstructions} from '../selectors';
+import {HiddenUIComponent} from '../records';
 
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
@@ -61,8 +61,8 @@ class Workspace extends React.Component {
       this,
       '_handleUnload',
       '_handleClickInstructionsBar',
-      '_handleComponentUnhide',
-      '_handleComponentHide',
+      '_handleEditorUnhide',
+      '_handleEditorHide',
       '_handleDividerDrag',
       '_handleDividerStart',
       '_handleDividerStop',
@@ -106,20 +106,21 @@ class Workspace extends React.Component {
     }
   }
 
-  _handleComponentHide(componentName) {
+  _handleEditorHide(language) {
     this.props.dispatch(
       hideComponent(
         this.props.currentProject.projectKey,
-        componentName,
+        language,
+        new HiddenUIComponent({componentType: 'editor', language}),
       ),
     );
   }
 
-  _handleComponentUnhide(componentName) {
+  _handleEditorUnhide(componentKey) {
     this.props.dispatch(
       unhideComponent(
         this.props.currentProject.projectKey,
-        componentName,
+        componentKey,
       ),
     );
   }
@@ -258,10 +259,10 @@ class Workspace extends React.Component {
           errors={errors}
           style={{flex: rowsFlex[0]}}
           ui={ui}
-          onComponentHide={this._handleComponentHide}
-          onComponentUnhide={this._handleComponentUnhide}
           onDividerDrag={this._handleEditorsDividerDrag}
+          onEditorHide={this._handleEditorHide}
           onEditorInput={this._handleEditorInput}
+          onEditorUnhide={this._handleEditorUnhide}
           onRef={partial(this._storeColumnRef, 0)}
           onRequestedLineFocused={this._handleRequestedLineFocused}
         />

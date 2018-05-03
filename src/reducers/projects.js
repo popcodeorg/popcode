@@ -8,19 +8,13 @@ import map from 'lodash/map';
 import sortBy from 'lodash/sortBy';
 import values from 'lodash/values';
 
-import {Project} from '../records';
+import {Project, HiddenUIComponent} from '../records';
 import {isPristineProject} from '../util/projectUtils';
 
 const emptyMap = new Immutable.Map();
 
 function addProject(state, project) {
-  return state.set(
-    project.projectKey,
-    Project.fromJS(project).update(
-      'hiddenUIComponents',
-      components => components.add('console'),
-    ),
-  );
+  return state.set(project.projectKey, Project.fromJS(project));
 }
 
 function removePristineExcept(state, keepProjectKey) {
@@ -29,10 +23,19 @@ function removePristineExcept(state, keepProjectKey) {
   ));
 }
 
-function unhideComponent(state, projectKey, component, timestamp) {
+function hideComponent(state, payload, timestamp) {
+  const {projectKey, componentKey, hiddenUIComponent} = payload;
+  return state.setIn(
+    [projectKey, 'hiddenUIComponents', componentKey],
+    hiddenUIComponent || new HiddenUIComponent({componentType: componentKey}),
+  ).setIn([projectKey, 'updatedAt'], timestamp);
+}
+
+function unhideComponent(state, payload, timestamp) {
+  const {projectKey, componentKey} = payload;
   return state.updateIn(
     [projectKey, 'hiddenUIComponents'],
-    hiddenUIComponents => hiddenUIComponents.delete(component),
+    hiddenUIComponents => hiddenUIComponents.delete(componentKey),
   ).setIn([projectKey, 'updatedAt'], timestamp);
 }
 
@@ -59,7 +62,7 @@ function importGist(state, projectKey, gistData) {
         javascript: contentForLanguage(files, 'JavaScript'),
       },
       enabledLibraries: popcodeJson.enabledLibraries || [],
-      hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
+      hiddenUIComponents: popcodeJson.hiddenUIComponents || {},
       instructions: contentForLanguage(files, 'Markdown'),
     },
   );
@@ -84,8 +87,10 @@ export function reduceRoot(stateIn, action) {
       case 'FOCUS_LINE':
         return unhideComponent(
           projects,
-          stateIn.getIn(['currentProject', 'projectKey']),
-          action.payload.component,
+          {
+            projectKey: stateIn.getIn(['currentProject', 'projectKey']),
+            componentKey: action.payload.componentKey,
+          },
           action.meta.timestamp,
         );
     }
@@ -93,7 +98,7 @@ export function reduceRoot(stateIn, action) {
   });
 }
 
-export default function reduceProjects(stateIn, action) {
+export default function reduceProjects(stateIn, {type, payload, meta}) {
   let state;
 
   if (stateIn === undefined) {
@@ -102,111 +107,92 @@ export default function reduceProjects(stateIn, action) {
     state = stateIn;
   }
 
-  switch (action.type) {
+  switch (type) {
     case 'PROJECTS_LOADED':
-      return action.payload.reduce(addProject, state);
+      return payload.reduce(addProject, state);
 
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(
-        [action.payload.projectKey, 'sources', action.payload.language],
-        action.payload.newValue,
+        [payload.projectKey, 'sources', payload.language],
+        payload.newValue,
       ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
+        [payload.projectKey, 'updatedAt'],
+        meta.timestamp,
       );
 
     case 'UPDATE_PROJECT_INSTRUCTIONS':
       return state.setIn(
-        [action.payload.projectKey, 'instructions'],
-        action.payload.newValue,
+        [payload.projectKey, 'instructions'],
+        payload.newValue,
       ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
+        [payload.projectKey, 'updatedAt'],
+        meta.timestamp,
       );
 
     case 'PROJECT_CREATED':
-      return removePristineExcept(state, action.payload.projectKey).set(
-        action.payload.projectKey,
-        new Project({projectKey: action.payload.projectKey}),
+      return removePristineExcept(state, payload.projectKey).set(
+        payload.projectKey,
+        new Project({projectKey: payload.projectKey}),
       );
 
     case 'CHANGE_CURRENT_PROJECT':
-      return removePristineExcept(state, action.payload.projectKey);
+      return removePristineExcept(state, payload.projectKey);
 
     case 'SNAPSHOT_IMPORTED':
       return addProject(
         state,
         assign(
           {},
-          action.payload.project,
-          {projectKey: action.payload.projectKey, updatedAt: null},
+          payload.project,
+          {projectKey: payload.projectKey, updatedAt: null},
         ),
       );
 
     case 'GIST_IMPORTED':
       return importGist(
         state,
-        action.payload.projectKey,
-        action.payload.gistData,
+        payload.projectKey,
+        payload.gistData,
       );
 
     case 'PROJECT_RESTORED_FROM_LAST_SESSION':
-      return addProject(state, action.payload);
+      return addProject(state, payload);
 
     case 'TOGGLE_LIBRARY':
       return state.updateIn(
-        [action.payload.projectKey, 'enabledLibraries'],
+        [payload.projectKey, 'enabledLibraries'],
         (enabledLibraries) => {
-          const {libraryKey} = action.payload;
+          const {libraryKey} = payload;
           if (enabledLibraries.has(libraryKey)) {
             return enabledLibraries.delete(libraryKey);
           }
           return enabledLibraries.add(libraryKey);
         },
       ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
-      );
-
-    case 'HIDE_COMPONENT':
-      return state.updateIn(
-        [action.payload.projectKey, 'hiddenUIComponents'],
-        hiddenUIComponents =>
-          hiddenUIComponents.add(action.payload.componentName),
-      ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
+        [payload.projectKey, 'updatedAt'],
+        meta.timestamp,
       );
 
     case 'UNHIDE_COMPONENT':
-      return unhideComponent(
-        state,
-        action.payload.projectKey,
-        action.payload.componentName,
-        action.meta.timestamp,
-      );
+      return unhideComponent(state, payload, meta.timestamp);
+
+    case 'HIDE_COMPONENT':
+      return hideComponent(state, payload, meta.timestamp);
 
     case 'TOGGLE_COMPONENT':
-      return state.updateIn(
-        [action.payload.projectKey, 'hiddenUIComponents'],
-        (hiddenUIComponents) => {
-          const {componentName} = action.payload;
-          if (hiddenUIComponents.includes(componentName)) {
-            return hiddenUIComponents.remove(action.payload.componentName);
-          }
-          return hiddenUIComponents.add(action.payload.componentName);
-        },
-      ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
-      );
+      if (state.getIn(
+        [payload.projectKey, 'hiddenUIComponents'],
+      ).has(payload.componentKey)) {
+        return unhideComponent(state, payload, meta.timestamp);
+      }
+      return hideComponent(state, payload, meta.timestamp);
 
     case 'START_EDITING_INSTRUCTIONS':
       return unhideComponent(
         state,
-        action.payload.projectKey,
+        payload.projectKey,
         'instructions',
-        action.meta.timestamp,
+        meta.timestamp,
       );
 
     default:

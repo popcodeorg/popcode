@@ -38,14 +38,21 @@ function dismissNotification(state, type) {
   );
 }
 
+function restoreComponentSizes(state, {componentKey}) {
+  if (componentKey === 'output') {
+    return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
+  }
+  return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
+}
+
 /* eslint-disable complexity */
-export default function ui(stateIn, action) {
+export default function ui(stateIn, {type, payload}) {
   let state = stateIn;
   if (state === undefined) {
     state = defaultState;
   }
 
-  switch (action.type) {
+  switch (type) {
     case 'CHANGE_CURRENT_PROJECT':
       return state.
         set('workspace', DEFAULT_WORKSPACE).
@@ -58,11 +65,28 @@ export default function ui(stateIn, action) {
       return state.set('workspace', DEFAULT_WORKSPACE);
 
     case 'HIDE_COMPONENT':
+    case 'TOGGLE_COMPONENT':
+      return restoreComponentSizes(state, payload);
+
     case 'UNHIDE_COMPONENT':
-      if (action.payload.componentName === 'output') {
-        return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
-      }
-      return state.setIn(['workspace', 'columnFlex'], DEFAULT_COLUMN_FLEX);
+      return restoreComponentSizes(state, payload).setIn(
+        ['editors', 'requestedFocusedLine'],
+        new Immutable.Map({
+          componentKey: payload.componentKey,
+          line: 0,
+          column: 0,
+        }),
+      );
+
+    case 'FOCUS_LINE':
+      return restoreComponentSizes(state, payload).setIn(
+        ['editors', 'requestedFocusedLine'],
+        new Immutable.Map({
+          componentKey: payload.componentKey,
+          line: payload.line,
+          column: payload.column,
+        }),
+      );
 
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(['editors', 'typing'], true);
@@ -70,20 +94,11 @@ export default function ui(stateIn, action) {
     case 'USER_DONE_TYPING':
       return state.setIn(['editors', 'typing'], false);
 
-    case 'FOCUS_LINE':
-      return state.setIn(
-        ['editors', 'requestedFocusedLine'],
-        new Immutable.Map().
-          set('component', action.payload.component).
-          set('line', action.payload.line).
-          set('column', action.payload.column),
-      );
-
     case 'CLEAR_CONSOLE_ENTRIES':
       return state.setIn(
         ['editors', 'requestedFocusedLine'],
         new Immutable.Map().
-          set('component', 'console').
+          set('componentKey', 'console').
           set('line', 0).
           set('column', 0),
       );
@@ -93,13 +108,13 @@ export default function ui(stateIn, action) {
 
     case 'DRAG_ROW_DIVIDER':
       return state.updateIn(['workspace', 'columnFlex'], (prevFlex) => {
-        const newFlex = updateEditorColumnFlex(action.payload);
+        const newFlex = updateEditorColumnFlex(payload);
         return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
       });
 
     case 'DRAG_COLUMN_DIVIDER':
       return state.updateIn(['workspace', 'rowFlex'], (prevFlex) => {
-        const newFlex = updateWorkspaceRowFlex(action.payload);
+        const newFlex = updateWorkspaceRowFlex(payload);
         return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
       });
 
@@ -114,7 +129,7 @@ export default function ui(stateIn, action) {
         state,
         'gist-import-not-found',
         'error',
-        {gistId: action.payload.gistId},
+        {gistId: payload.gistId},
       );
 
     case 'GIST_IMPORT_ERROR':
@@ -122,24 +137,24 @@ export default function ui(stateIn, action) {
         state,
         'gist-import-error',
         'error',
-        {gistId: action.payload.gistId},
+        {gistId: payload.gistId},
       );
 
     case 'NOTIFICATION_TRIGGERED':
       return addNotification(
         state,
-        action.payload.type,
-        action.payload.severity,
-        action.payload.payload,
+        payload.type,
+        payload.severity,
+        payload.payload,
       );
 
     case 'USER_DISMISSED_NOTIFICATION':
-      return dismissNotification(state, action.payload.type);
+      return dismissNotification(state, payload.type);
 
     case 'UPDATE_NOTIFICATION_METADATA':
       return state.setIn(
-        ['notifications', action.payload.type, 'metadata'],
-        Immutable.fromJS(action.payload.metadata),
+        ['notifications', payload.type, 'metadata'],
+        Immutable.fromJS(payload.metadata),
       );
 
     case 'USER_LOGGED_OUT':
@@ -153,11 +168,11 @@ export default function ui(stateIn, action) {
         state,
         'snapshot-created',
         'notice',
-        {snapshotKey: action.payload},
+        {snapshotKey: payload},
       );
 
     case 'APPLICATION_LOADED':
-      if (action.payload.isExperimental) {
+      if (payload.isExperimental) {
         return state.set('experimental', true);
       }
       return state.set('experimental', false);
@@ -179,13 +194,13 @@ export default function ui(stateIn, action) {
     case 'TOGGLE_TOP_BAR_MENU':
       return state.updateIn(
         ['topBar', 'openMenu'],
-        menu => menu === action.payload ? null : action.payload,
+        menu => menu === payload ? null : payload,
       );
 
     case 'CLOSE_TOP_BAR_MENU':
       return state.updateIn(
         ['topBar', 'openMenu'],
-        menu => menu === action.payload ? null : menu,
+        menu => menu === payload ? null : menu,
       );
 
     case 'PROJECT_EXPORT_NOT_DISPLAYED':
@@ -193,11 +208,11 @@ export default function ui(stateIn, action) {
         state,
         'project-export-complete',
         'notice',
-        action.payload,
+        payload,
       );
 
     case 'PROJECT_EXPORT_ERROR':
-      if (action.payload.name === 'EmptyGistError') {
+      if (payload.name === 'EmptyGistError') {
         return addNotification(
           state,
           'empty-gist',
@@ -206,9 +221,9 @@ export default function ui(stateIn, action) {
       }
       return addNotification(
         state,
-        `${action.payload.exportType}-export-error`,
+        `${payload.exportType}-export-error`,
         'error',
-        action.payload,
+        payload,
       );
 
     case 'PROJECT_COMPILATION_FAILED':

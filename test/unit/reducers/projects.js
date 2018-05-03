@@ -7,7 +7,7 @@ import Immutable from 'immutable';
 import reducerTest from '../../helpers/reducerTest';
 import {projects as states} from '../../helpers/referenceStates';
 import {gistData, project} from '../../helpers/factory';
-import {Project} from '../../../src/records';
+import {Project, HiddenUIComponent} from '../../../src/records';
 import reducer, {
   reduceRoot as rootReducer,
 } from '../../../src/reducers/projects';
@@ -37,6 +37,7 @@ const projectKey = '12345';
 
 const html = '<!doctype html>Hey';
 const css = 'p {}';
+const hiddenOutputRecord = new HiddenUIComponent({componentType: 'output'});
 
 test('projectCreated', (t) => {
   t.test('from pristine state', reducerTest(
@@ -236,13 +237,25 @@ tap(initProjects({1: false}), projects =>
 );
 
 tap(initProjects({1: true}), projects =>
-  test('hideComponent', reducerTest(
+  test('hideComponent without record arg', reducerTest(
     reducer,
     projects,
-    partial(hideComponent, '1', 'output', now),
-    projects.updateIn(
-      ['1', 'hiddenUIComponents'],
-      components => components.add('output'),
+    partial(hideComponent, '1', 'output', null, now),
+    projects.setIn(
+      ['1', 'hiddenUIComponents', 'output'],
+      hiddenOutputRecord,
+    ),
+  )),
+);
+
+tap(initProjects({1: true}), projects =>
+  test('hideComponent with record arg', reducerTest(
+    reducer,
+    projects,
+    partial(hideComponent, '1', 'output', hiddenOutputRecord, now),
+    projects.setIn(
+      ['1', 'hiddenUIComponents', 'output'],
+      hiddenOutputRecord,
     ),
   )),
 );
@@ -250,9 +263,9 @@ tap(initProjects({1: true}), projects =>
 tap(initProjects({1: true}), projects =>
   test('unhideComponent', reducerTest(
     reducer,
-    projects.updateIn(
-      ['1', 'hiddenUIComponents'],
-      components => components.add('output'),
+    projects.setIn(
+      ['1', 'hiddenUIComponents', 'output'],
+      hiddenOutputRecord,
     ),
     partial(unhideComponent, '1', 'output', now),
     projects,
@@ -265,20 +278,20 @@ test('toggleComponent', (t) => {
   t.test('with component visible', reducerTest(
     reducer,
     projects,
-    partial(toggleComponent, '1', 'output', now),
-    projects.updateIn(
-      ['1', 'hiddenUIComponents'],
-      components => components.add('output'),
+    partial(toggleComponent, '1', 'output', null, now),
+    projects.setIn(
+      ['1', 'hiddenUIComponents', 'output'],
+      hiddenOutputRecord,
     ),
   ));
 
   t.test('with component hidden', reducerTest(
     reducer,
-    projects.updateIn(
-      ['1', 'hiddenUIComponents'],
-      components => components.add('output'),
+    projects.setIn(
+      ['1', 'hiddenUIComponents', 'output'],
+      hiddenOutputRecord,
     ),
-    partial(toggleComponent, '1', 'output', now),
+    partial(toggleComponent, '1', 'output', null, now),
     projects,
   ));
 });
@@ -288,13 +301,16 @@ tap(initProjects({1: true}), (projects) => {
   test('focusLine', reducerTest(
     rootReducer,
     Immutable.fromJS({
-      projects: projects.updateIn(
-        ['1', 'hiddenUIComponents'],
-        components => components.add('editor.javascript'),
+      projects: projects.setIn(
+        ['1', 'hiddenUIComponents', 'javascript'],
+        new HiddenUIComponent({
+          componentType: 'editor',
+          language: 'javascript',
+        }),
       ),
       currentProject: {projectKey: '1'},
     }),
-    partial(focusLine, 'editor.javascript', 1, 1, timestamp),
+    partial(focusLine, 'javascript', 1, 1, timestamp),
     Immutable.fromJS({
       projects: projects.setIn(['1', 'updatedAt'], timestamp),
       currentProject: {projectKey: '1'},

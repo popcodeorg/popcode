@@ -22,7 +22,7 @@ function mapStateToProps(state) {
     currentCompiledProjectKey: getCurrentCompiledProjectKey(state),
     currentProjectKey: getCurrentProjectKey(state),
     history: getConsoleHistory(state),
-    isOpen: !getHiddenUIComponents(state).includes('console'),
+    isOpen: !getHiddenUIComponents(state).console,
     isTextSizeLarge: isTextSizeLarge(state),
     requestedFocusedLine: getRequestedFocusedLine(state),
     isHidden: !isCurrentProjectSyntacticallyValid(state),

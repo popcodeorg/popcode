@@ -5,9 +5,9 @@ import {t} from 'i18next';
 import {DraggableCore} from 'react-draggable';
 import bindAll from 'lodash/bindAll';
 import isEmpty from 'lodash/isEmpty';
-import includes from 'lodash/includes';
 import partial from 'lodash/partial';
 import partition from 'lodash/partition';
+import find from 'lodash/find';
 import {getNodeHeights} from '../util/resize';
 
 import EditorContainer from './EditorContainer';
@@ -50,8 +50,9 @@ export default class EditorsColumn extends React.Component {
       currentProject,
       editorsFlex,
       errors,
-      onComponentHide,
+      onEditorHide,
       onEditorInput,
+      onEditorUnhide,
       onRef,
       onRequestedLineFocused,
       style,
@@ -61,10 +62,7 @@ export default class EditorsColumn extends React.Component {
     const children = [];
     const [hiddenLanguages, visibleLanguages] = partition(
       ['html', 'css', 'javascript'],
-      language => includes(
-        currentProject.hiddenUIComponents,
-        `editor.${language}`,
-      ),
+      language => find(currentProject.hiddenUIComponents, {language}),
     );
     visibleLanguages.forEach((language, index) => {
       children.push(
@@ -73,7 +71,7 @@ export default class EditorsColumn extends React.Component {
           language={language}
           source={currentProject.sources[language]}
           style={{flex: editorsFlex[index]}}
-          onHide={partial(onComponentHide, `editor.${language}`)}
+          onHide={partial(onEditorHide, language)}
           onRef={partial(this._storeEditorRef, index)}
         >
           <Editor
@@ -109,10 +107,7 @@ export default class EditorsColumn extends React.Component {
         <div
           className="editors__collapsed-editor"
           key={language}
-          onClick={partial(
-            this.props.onComponentUnhide,
-            `editor.${language}`,
-          )}
+          onClick={partial(onEditorUnhide, language)}
         >
           <div className="label editors__label editors__label_collapsed">
             {t(`languages.${language}`)}
@@ -147,10 +142,10 @@ EditorsColumn.propTypes = {
   ui: PropTypes.shape({
     editors: PropTypes.object.isRequired,
   }).isRequired,
-  onComponentHide: PropTypes.func.isRequired,
-  onComponentUnhide: PropTypes.func.isRequired,
   onDividerDrag: PropTypes.func.isRequired,
+  onEditorHide: PropTypes.func.isRequired,
   onEditorInput: PropTypes.func.isRequired,
+  onEditorUnhide: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };

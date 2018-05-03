@@ -165,6 +165,8 @@ When you're done, lint and make sure tests pass before opening a pull request:
 $ yarn test
 ```
 
+If you're using homebrew and the latest version of yarn is incompatible with the current one used by popcode, you can check out this [stack overflow to install an older version of yarn](https://stackoverflow.com/questions/39187812/homebrew-how-to-install-older-versions)
+
 ### Debug Mode ###
 
 By default, Popcode’s JavaScript code  is compiled to ES5 to support a wide

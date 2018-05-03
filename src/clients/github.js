@@ -106,7 +106,8 @@ function buildGistFromProject(project) {
       language: 'Markdown',
     };
   }
-  if (project.enabledLibraries.length || project.hiddenUIComponents.length) {
+  if (project.enabledLibraries.length ||
+    !isEmpty(project.hiddenUIComponents)) {
     files['popcode.json'] = {
       content: createPopcodeJson(project),
       language: 'JSON',
@@ -137,7 +138,7 @@ function createPopcodeJson(project) {
   if (project.enabledLibraries.length) {
     json.enabledLibraries = project.enabledLibraries;
   }
-  if (project.hiddenUIComponents.length) {
+  if (!isEmpty(project.hiddenUIComponents)) {
     json.hiddenUIComponents = project.hiddenUIComponents;
   }
   return JSON.stringify(json);
