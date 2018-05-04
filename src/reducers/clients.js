@@ -39,6 +39,5 @@ export default function clients(stateIn, action) {
         new Immutable.Map({status: 'error'}),
       );
   }
-
   return state;
 }

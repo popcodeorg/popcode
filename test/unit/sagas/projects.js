@@ -20,6 +20,9 @@ import {
   updateProjectSource,
 } from '../../../src/actions/projects';
 import {
+  assignmentsLoaded,
+} from '../../../src/actions/assignments';
+import {
   snapshotImportError,
   snapshotNotFound,
   projectRestoredFromLastSession,
@@ -31,9 +34,15 @@ import {loadGistFromId} from '../../../src/clients/github';
 import {
   loadAllProjects,
   loadProjectSnapshot,
+  loadAllAssignments,
 } from '../../../src/clients/firebase';
 import Scenario from '../../helpers/Scenario';
-import {gistData, project, userCredential} from '../../helpers/factory';
+import {
+  gistData,
+  project,
+  userCredential,
+  assignment,
+} from '../../helpers/factory';
 
 test('createProject()', (assert) => {
   let firstProjectKey;
@@ -211,11 +220,14 @@ test('importGist()', (t) => {
 test('userAuthenticated', (assert) => {
   const scenario = new Scenario().logIn();
   const projects = [project()];
+  const assignments = [assignment()];
   testSaga(userAuthenticatedSaga, userAuthenticated(userCredential())).
     next().inspect(effect => assert.ok(effect.SELECT)).
     next(scenario.state).fork(saveCurrentProject, scenario.state).
     next().call(loadAllProjects, scenario.user.get('id')).
-    next(projects).put(projectsLoaded(projects));
+    next(projects).call(loadAllAssignments, projects).
+    next(assignments).put(projectsLoaded(projects)).
+    next().put(assignmentsLoaded(assignments));
   assert.end();
 });
 

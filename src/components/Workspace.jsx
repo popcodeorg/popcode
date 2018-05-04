@@ -35,6 +35,7 @@ import {getCurrentProject, isEditingInstructions} from '../selectors';
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
+import AssignmentSelector from '../containers/AssignmentSelector';
 import EditorsColumn from './EditorsColumn';
 import Output from './Output';
 import PopThrobber from './PopThrobber';
@@ -80,6 +81,7 @@ class Workspace extends React.Component {
       gistId,
       snapshotKey,
       isExperimental,
+      assignmentKey,
     } = getQueryParameters(location.search);
     const rehydratedProject = rehydrateProject();
     setQueryParameters({isExperimental});
@@ -88,6 +90,7 @@ class Workspace extends React.Component {
       gistId,
       isExperimental,
       rehydratedProject,
+      assignmentKey,
     }));
   }
 
@@ -283,6 +286,7 @@ class Workspace extends React.Component {
   render() {
     return (
       <div className="layout">
+        <AssignmentSelector />
         <TopBar />
         <NotificationList />
         <main className="layout__columns">

@@ -4,7 +4,13 @@ import isNil from 'lodash/isNil';
 import isNull from 'lodash/isNull';
 import values from 'lodash/values';
 import uuid from 'uuid/v4';
-import {auth, database, githubAuthProvider} from '../services/appFirebase';
+import {getGapi} from '../services/gapi';
+import {
+  auth,
+  database,
+  githubAuthProvider,
+  googleAuthProvider,
+} from '../services/appFirebase';
 
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
 const SESSION_TTL_MS = 5 * 60 * 1000;
@@ -25,6 +31,7 @@ function workspace(uid) {
 }
 
 const snapshots = database.ref('snapshots');
+const assignments = database.ref('assignments');
 
 async function getCurrentProjectKey(uid) {
   const event =
@@ -49,6 +56,7 @@ async function loadProject(uid, projectKey) {
 
 export async function createProjectSnapshot(project) {
   const snapshotKey = uuid().toString();
+
   await snapshots.child(snapshotKey).set(project);
   return snapshotKey;
 }
@@ -94,12 +102,21 @@ async function userCredentialForUserData(user) {
   return {user, credential, additionalUserInfo};
 }
 
-export async function signIn() {
+export async function signIn(provider) {
   const originalOnerror = window.onerror;
   window.onerror = message => message.toLowerCase().includes('network error');
-
   try {
-    const userCredential = await auth.signInWithPopup(githubAuthProvider);
+    let userCredential;
+    if (provider === 'github') {
+      userCredential = await auth.signInWithPopup(githubAuthProvider);
+    } else if (provider === 'google') {
+      const gapi = await getGapi();
+      const googleUser = await gapi.auth2.getAuthInstance().signIn();
+      const credential =
+        googleAuthProvider.credential(googleUser.getAuthResponse().id_token);
+      userCredential =
+        await auth.signInAndRetrieveDataWithCredential(credential);
+    }
     await saveUserCredential(userCredential);
     return userCredential;
   } finally {
@@ -109,7 +126,9 @@ export async function signIn() {
   }
 }
 
-export function signOut() {
+export async function signOut() {
+  const gapi = await getGapi();
+  await gapi.auth2.getAuthInstance().signOut();
   return auth.signOut();
 }
 
@@ -157,4 +176,41 @@ export function setSessionUid() {
       {expires: new Date(Date.now() + SESSION_TTL_MS)},
     );
   }
+}
+
+export async function createProjectAssignment(
+  assignmentKey,
+  snapshotKey,
+  assignment,
+  assignerId,
+) {
+  await assignments.child(assignmentKey).set({
+    courseId: assignment.courseId,
+    id: assignment.id,
+    snapshotKey,
+    alternateLink: assignment.alternateLink || null,
+    assignerId,
+    assignmentKey,
+  });
+}
+
+export async function loadAllAssignments(projects) {
+  const promises = projects.filter(project => project.assignmentKey).
+    map(project => loadProjectAssignment(project.assignmentKey));
+  const allAssignments = await Promise.all(promises);
+  return allAssignments;
+}
+
+export async function loadProjectAssignment(assignmentKey) {
+  const event = await assignments.child(assignmentKey).once('value');
+  return event.val();
+}
+
+export async function updateAssignmentSnapshot(
+  assignmentKey,
+  snapshotKey,
+) {
+  await assignments.child(assignmentKey).child('snapshotKey').set(
+    snapshotKey,
+  );
 }

@@ -10,6 +10,7 @@ import LibraryPicker from './LibraryPicker';
 import NewProjectButton from './NewProjectButton';
 import ProjectPicker from './ProjectPicker';
 import SnapshotButton from './SnapshotButton';
+import SubmitButton from './SubmitButton';
 import TextSize from './TextSize';
 
 function uiVariants({validationState, isUserTyping}) {
@@ -26,6 +27,7 @@ function uiVariants({validationState, isUserTyping}) {
 }
 
 export default function TopBar({
+  assignment,
   currentProjectKey,
   currentUser,
   enabledLibraries,
@@ -34,7 +36,6 @@ export default function TopBar({
   isExperimental,
   isGistExportInProgress,
   isRepoExportInProgress,
-  isClassroomExportInProgress,
   isUserAuthenticated,
   isUserTyping,
   isSnapshotInProgress,
@@ -49,12 +50,15 @@ export default function TopBar({
   onCreateSnapshot,
   onExportGist,
   onExportRepo,
-  onExportToClassroom,
   onLogOut,
+  onOpenAssignmentSelector,
+  onSumbitAssignment,
+  onStartGithubLogIn,
+  onStartGoogleLogIn,
   onStartEditingInstructions,
-  onStartLogIn,
   onToggleLibrary,
   onToggleTextSize,
+  onUpdateAssignment,
 }) {
   const {popVariant, modifier} = uiVariants({validationState, isUserTyping});
 
@@ -74,6 +78,17 @@ export default function TopBar({
         isInProgress={isSnapshotInProgress}
         onClick={onCreateSnapshot}
       />
+
+      {isUserAuthenticated &&
+        currentUser.accessTokens['google.com'] &&
+        assignment &&
+        currentUser.id !== assignment.assignerId ? (
+          <SubmitButton onClick={onSumbitAssignment} />
+        ) : (
+          null
+        )
+      }
+
       <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
       <div className="top-bar__spacer" />
       <NewProjectButton
@@ -92,34 +107,37 @@ export default function TopBar({
         onClick={partial(onClickMenu, 'currentUser')}
         onClose={partial(onCloseMenu, 'currentUser')}
         onLogOut={onLogOut}
-        onStartLogIn={onStartLogIn}
+        onStartGithubLogIn={onStartGithubLogIn}
       />
       <HamburgerMenu
+        assignment={assignment}
         hasInstructions={hasInstructions}
-        isClassroomExportInProgress={isClassroomExportInProgress}
         isEditingInstructions={isEditingInstructions}
         isExperimental={isExperimental}
         isGistExportInProgress={isGistExportInProgress}
         isOpen={openMenu === 'hamburger'}
         isRepoExportInProgress={isRepoExportInProgress}
         isUserAuthenticated={isUserAuthenticated}
+        user={currentUser}
         onClick={partial(onClickMenu, 'hamburger')}
         onExportGist={onExportGist}
         onExportRepo={onExportRepo}
-        onExportToClassroom={onExportToClassroom}
+        onOpenAssignmentSelector={onOpenAssignmentSelector}
         onStartEditingInstructions={
           partial(onStartEditingInstructions, currentProjectKey)}
+        onStartGoogleLogIn={onStartGoogleLogIn}
+        onUpdateAssignment={onUpdateAssignment}
       />
     </header>
   );
 }
 
 TopBar.propTypes = {
+  assignment: PropTypes.object,
   currentProjectKey: PropTypes.string,
   currentUser: PropTypes.object.isRequired,
   enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
   hasInstructions: PropTypes.bool.isRequired,
-  isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
@@ -138,15 +156,19 @@ TopBar.propTypes = {
   onCreateSnapshot: PropTypes.func.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
-  onExportToClassroom: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
+  onOpenAssignmentSelector: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
-  onStartLogIn: PropTypes.func.isRequired,
+  onStartGithubLogIn: PropTypes.func.isRequired,
+  onStartGoogleLogIn: PropTypes.func.isRequired,
+  onSumbitAssignment: PropTypes.func.isRequired,
   onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,
+  onUpdateAssignment: PropTypes.func.isRequired,
 };
 
 TopBar.defaultProps = {
+  assignment: null,
   currentProjectKey: null,
   openMenu: null,
 };

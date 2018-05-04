@@ -15,4 +15,9 @@ const githubAuthProvider = new firebase.auth.GithubAuthProvider();
 githubAuthProvider.addScope('gist');
 githubAuthProvider.addScope('public_repo');
 
-export {auth, database, githubAuthProvider};
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+googleAuthProvider.addScope('https://www.googleapis.com/auth/classroom.courses.readonly');
+googleAuthProvider.addScope('https://www.googleapis.com/auth/classroom.coursework.students');
+googleAuthProvider.addScope('https://www.googleapis.com/auth/classroom.coursework.me');
+
+export {auth, database, githubAuthProvider, googleAuthProvider};

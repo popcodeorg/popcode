@@ -12,27 +12,33 @@ const HamburgerMenu = createMenu({
   name: 'hamburger',
 
   renderItems({
+    assignment,
     hasInstructions,
     isEditingInstructions,
     isExperimental,
     isGistExportInProgress,
     isRepoExportInProgress,
-    isClassroomExportInProgress,
     isUserAuthenticated,
+    user,
     onExportGist,
     onExportRepo,
-    onExportToClassroom,
+    onOpenAssignmentSelector,
+    onStartGoogleLogIn,
+    onUpdateAssignment,
     onStartEditingInstructions,
+
   }) {
     return tap([], (items) => {
-      items.push(
-        <MenuItem
-          key="exportToClassroom"
-          onClick={isClassroomExportInProgress ? noop : onExportToClassroom}
-        >
-          {t('top-bar.share-to-classroom')}
-        </MenuItem>,
-      );
+      if (!isUserAuthenticated && isExperimental) {
+        items.push(
+          <MenuItem
+            key="startGoogleLogIn"
+            onClick={onStartGoogleLogIn}
+          >
+            Login with Google
+          </MenuItem>,
+        );
+      }
 
       items.push(
         <MenuItem
@@ -47,16 +53,52 @@ const HamburgerMenu = createMenu({
           }
         </MenuItem>,
       );
-
-      if (isUserAuthenticated) {
+      if (!isUserAuthenticated) {
         items.push(
           <MenuItem
-            key="exportGist"
-            onClick={isGistExportInProgress ? noop : onExportGist}
+            key="startGoogleLogIn"
+            onClick={onStartGoogleLogIn}
           >
-            {t('top-bar.export-gist')}
+            Log in with Google
           </MenuItem>,
         );
+      }
+
+      if (isUserAuthenticated) {
+        if (user.accessTokens['google.com']) {
+          if (assignment) {
+            if (user.id === assignment.assignerId) {
+              items.push(
+                <MenuItem
+                  key="updateAssignment"
+                  onClick={onUpdateAssignment}
+                >
+                  Update Assignment
+                </MenuItem>,
+              );
+            }
+          } else {
+            items.push(
+              <MenuItem
+                key="openAssignmentSelector"
+                onClick={onOpenAssignmentSelector}
+              >
+                {t('top-bar.assign-to-classroom')}
+              </MenuItem>,
+            );
+          }
+        }
+
+        if (user.accessTokens['github.com']) {
+          items.push(
+            <MenuItem
+              key="exportGist"
+              onClick={isGistExportInProgress ? noop : onExportGist}
+            >
+              {t('top-bar.export-gist')}
+            </MenuItem>,
+          );
+        }
 
         if (isExperimental) {
           items.push(
@@ -113,18 +155,26 @@ const HamburgerMenu = createMenu({
 
 
 HamburgerMenu.propTypes = {
+  assignment: PropTypes.object,
   hasInstructions: PropTypes.bool.isRequired,
-  isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
-  onExportToClassroom: PropTypes.func.isRequired,
+  onOpenAssignmentSelector: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
+  onStartGoogleLogIn: PropTypes.func.isRequired,
+  onUpdateAssignment: PropTypes.func.isRequired,
 };
+
+HamburgerMenu.defaultProps = {
+  assignment: null,
+};
+
 
 export default HamburgerMenu;

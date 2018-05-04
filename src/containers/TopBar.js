@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import TopBar from '../components/TopBar';
 import {
+  getCurrentAssignment,
   getCurrentProjectKey,
   getCurrentProjectInstructions,
   getCurrentUser,
@@ -12,7 +13,6 @@ import {
   isExperimental,
   isGistExportInProgress,
   isRepoExportInProgress,
-  isClassroomExportInProgress,
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserAuthenticated,
@@ -24,16 +24,20 @@ import {
   createProject,
   createSnapshot,
   exportProject,
+  openAssignmentSelector,
+  submitAssignment,
   startEditingInstructions,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
   logIn,
   logOut,
+  updateAssignment,
 } from '../actions';
 
 function mapStateToProps(state) {
   return {
+    assignment: getCurrentAssignment(state),
     currentProjectKey: getCurrentProjectKey(state),
     currentUser: getCurrentUser(state),
     enabledLibraries: getEnabledLibraries(state),
@@ -42,7 +46,6 @@ function mapStateToProps(state) {
     isExperimental: isExperimental(state),
     isGistExportInProgress: isGistExportInProgress(state),
     isRepoExportInProgress: isRepoExportInProgress(state),
-    isClassroomExportInProgress: isClassroomExportInProgress(state),
     isSnapshotInProgress: isSnapshotInProgress(state),
     isTextSizeLarge: isTextSizeLarge(state),
     isUserAuthenticated: isUserAuthenticated(state),
@@ -83,10 +86,6 @@ function mapDispatchToProps(dispatch) {
       dispatch(exportProject('repo'));
     },
 
-    onExportToClassroom() {
-      dispatch(exportProject('classroom'));
-    },
-
     onToggleLibrary(projectKey, libraryKey) {
       dispatch(toggleLibrary(projectKey, libraryKey));
     },
@@ -95,17 +94,34 @@ function mapDispatchToProps(dispatch) {
       dispatch(logOut());
     },
 
+    onOpenAssignmentSelector() {
+      dispatch(openAssignmentSelector());
+    },
+
     onStartEditingInstructions(projectKey) {
       dispatch(startEditingInstructions(projectKey));
     },
 
-    onStartLogIn() {
-      dispatch(logIn());
+    onStartGithubLogIn() {
+      dispatch(logIn('github'));
+    },
+
+    onStartGoogleLogIn() {
+      dispatch(logIn('google'));
     },
 
     onToggleTextSize() {
       dispatch(toggleEditorTextSize());
     },
+
+    onSumbitAssignment() {
+      dispatch(submitAssignment());
+    },
+
+    onUpdateAssignment() {
+      dispatch(updateAssignment());
+    },
+
   };
 }
 

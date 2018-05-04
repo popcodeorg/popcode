@@ -1,3 +1,4 @@
+import Assignment from './Assignment';
 import CompiledProject from './CompiledProject';
 import ConsoleEntry from './ConsoleEntry';
 import ConsoleError from './ConsoleError';
@@ -7,6 +8,7 @@ import ErrorReport from './ErrorReport';
 import Project from './Project';
 
 export {
+  Assignment,
   CompiledProject,
   ConsoleEntry,
   ConsoleError,

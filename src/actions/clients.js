@@ -29,3 +29,10 @@ export const projectExportNotDisplayed = createAction(
   (url, exportType) => ({url, exportType}),
 );
 
+export const updateAssignment = createAction(
+  'UPDATE_ASSIGNMENT',
+);
+
+export const submitAssignment = createAction(
+  'SUBMIT_ASSIGNMENT',
+);

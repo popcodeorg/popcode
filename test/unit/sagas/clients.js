@@ -16,9 +16,7 @@ import {
   createRepoFromProject,
 } from '../../../src/clients/github';
 import {createProjectSnapshot} from '../../../src/clients/firebase';
-import {createShareToClassroomUrl} from '../../../src/clients/googleClassroom';
 import {getCurrentProject} from '../../../src/selectors';
-import {generateTextPreview} from '../../../src/util/compileProject';
 
 test('createSnapshot()', (t) => {
   const {project} = new Scenario();
@@ -117,47 +115,3 @@ test('export repo', (t) => {
   });
 });
 
-test('export to classroom', (t) => {
-  const url =
-    'https://classroom.google.com/u/0/share?url=http://popcode.org';
-  const exportType = 'classroom';
-  const snapshotKey = '123-456';
-  const projectTitle = 'Page Title';
-  const scenario = new Scenario();
-  scenario.logIn();
-
-  function initiateExport(assert) {
-    return testSaga(exportProjectSaga, {payload: {exportType}}).
-      next().inspect((effect) => {
-        assert.ok(effect.SELECT, 'invokes select effect');
-      }).
-      next(scenario.state).call(
-        createProjectSnapshot,
-        scenario.project.toJS(),
-      ).
-      next(snapshotKey).call(
-        generateTextPreview,
-        scenario.project.toJS(),
-      ).
-      next(projectTitle).call(
-        createShareToClassroomUrl,
-        snapshotKey,
-        projectTitle,
-      );
-  }
-
-  t.test('with successful export', (assert) => {
-    initiateExport(assert).
-      next(url).put(projectExported(url, exportType)).
-      next().isDone();
-    assert.end();
-  });
-
-  t.test('with error', (assert) => {
-    const error = new Error();
-    initiateExport(assert).
-      throw(error).put(projectExportError(exportType)).
-      next().isDone();
-    assert.end();
-  });
-});

@@ -59,6 +59,27 @@ export const closeTopBarMenu = createAction(
   'CLOSE_TOP_BAR_MENU',
 );
 
+export const assignmentSelectorOpened = createAction(
+  'ASSIGNMENT_SELECTOR_OPENED',
+);
+
+export const openAssignmentSelector = createAction(
+  'OPEN_ASSIGNMENT_SELECTOR',
+);
+
+export const assignmentSelectorClosed = createAction(
+  'ASSIGNMENT_SELECTOR_CLOSED',
+);
+
+export const courseSelected = createAction(
+  'COURSE_SELECTED',
+);
+
+export const updateCourses = createAction(
+  'UPDATE_COURSES',
+  courses => ({courses}),
+);
+
 export const startEditingInstructions = createAction(
   'START_EDITING_INSTRUCTIONS',
   projectKey => ({projectKey}),
@@ -67,4 +88,16 @@ export const startEditingInstructions = createAction(
 
 export const cancelEditingInstructions = createAction(
   'CANCEL_EDITING_INSTRUCTIONS',
+);
+
+export const updateDate = createAction(
+  'UPDATE_DATE',
+);
+
+export const dateInputUpdated = createAction(
+  'DATE_INPUT_UPDATED',
+);
+
+export const parsedDateUpdated = createAction(
+  'PARSED_DATE_UPDATED',
 );

@@ -50,9 +50,9 @@ function* handleAuthChange() {
   }
 }
 
-export function* logIn() {
+export function* logIn({payload: {provider}}) {
   try {
-    yield call(signIn);
+    yield call(signIn, provider);
   } catch (e) {
     switch (e.code) {
       case 'auth/popup-closed-by-user':

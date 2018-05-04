@@ -1,10 +1,27 @@
 import applicationLoaded from './applicationLoaded';
 
 import {
+  assignAssignment,
+  draftAssignment,
+  assignmentCreated,
+  assignmentsLoaded,
+  assignmentImported,
+  assignmentSubmitted,
+  assignmentDisplayed,
+  assignmentImportError,
+  assignmentNotFound,
+  assignmentSubmissionDisplayed,
+  assignmentUpdateDisplayed,
+  assignmentUpdated,
+} from './assignments';
+
+import {
   createSnapshot,
   exportProject,
   projectExportDisplayed,
   projectExportNotDisplayed,
+  updateAssignment,
+  submitAssignment,
 } from './clients';
 
 import {
@@ -32,8 +49,16 @@ import {
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
+  assignmentSelectorOpened,
+  openAssignmentSelector,
+  assignmentSelectorClosed,
+  courseSelected,
+  updateCourses,
   startEditingInstructions,
   cancelEditingInstructions,
+  dateInputUpdated,
+  parsedDateUpdated,
+  updateDate,
 } from './ui';
 
 import {
@@ -103,4 +128,26 @@ export {
   evaluateConsoleEntry,
   projectCompiled,
   projectCompilationFailed,
+  openAssignmentSelector,
+  assignmentSelectorClosed,
+  assignAssignment,
+  draftAssignment,
+  updateAssignment,
+  updateCourses,
+  assignmentSelectorOpened,
+  assignmentCreated,
+  assignmentDisplayed,
+  courseSelected,
+  submitAssignment,
+  assignmentSubmitted,
+  assignmentSubmissionDisplayed,
+  assignmentImported,
+  assignmentImportError,
+  assignmentNotFound,
+  assignmentsLoaded,
+  dateInputUpdated,
+  parsedDateUpdated,
+  updateDate,
+  assignmentUpdateDisplayed,
+  assignmentUpdated,
 };

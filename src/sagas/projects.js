@@ -23,9 +23,21 @@ import {
   snapshotNotFound,
   projectRestoredFromLastSession,
 } from '../actions/clients';
+import {
+  assignmentImported,
+  assignmentsLoaded,
+  assignmentImportError,
+  assignmentNotFound,
+} from '../actions/assignments';
+
 import {saveCurrentProject} from '../util/projectUtils';
 import {loadGistFromId} from '../clients/github';
-import {loadAllProjects, loadProjectSnapshot} from '../clients/firebase';
+import {
+  loadAllProjects,
+  loadProjectSnapshot,
+  loadProjectAssignment,
+  loadAllAssignments,
+} from '../clients/firebase';
 import {getCurrentUserId} from '../selectors';
 
 export function* applicationLoaded(action) {
@@ -33,6 +45,8 @@ export function* applicationLoaded(action) {
     yield call(importGist, action);
   } else if (isString(action.payload.snapshotKey)) {
     yield call(importSnapshot, action);
+  } else if (isString(action.payload.assignmentKey)) {
+    yield call(importAssignment, action);
   } else if (action.payload.rehydratedProject) {
     yield put(
       projectRestoredFromLastSession(action.payload.rehydratedProject),
@@ -60,9 +74,28 @@ export function* importSnapshot({payload: {snapshotKey}}) {
     } else {
       const projectKey = generateProjectKey();
       yield put(snapshotImported(projectKey, snapshot));
+      return projectKey;
     }
   } catch (error) {
     yield put(snapshotImportError(error));
+  }
+  return null;
+}
+
+export function* importAssignment({payload: {assignmentKey}}) {
+  try {
+    const assignment = yield call(loadProjectAssignment, assignmentKey);
+    if (isNull(assignment)) {
+      yield put(assignmentNotFound());
+    } else {
+      const projectKey = yield call(
+        importSnapshot,
+        {payload: {snapshotKey: assignment.snapshotKey}},
+      );
+      yield put(assignmentImported(projectKey, assignment));
+    }
+  } catch (error) {
+    yield put(assignmentImportError(error));
   }
 }
 
@@ -88,10 +121,10 @@ export function* updateProjectSource() {
 export function* userAuthenticated() {
   const state = yield select();
   yield fork(saveCurrentProject, state);
-
   const projects = yield call(loadAllProjects, getCurrentUserId(state));
-
+  const assignments = yield call(loadAllAssignments, projects);
   yield put(projectsLoaded(projects));
+  yield put(assignmentsLoaded(assignments));
 }
 
 export function* toggleLibrary() {
