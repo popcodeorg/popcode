@@ -308,9 +308,6 @@
     "webpack": "^4.0.1",
     "webpack-dev-middleware": "^3.0.0"
   },
-  "optionalDependencies": {
-    "fsevents": "*"
-  },
   "bundlesize": [
     {
       "path": "./dist/*.js"
