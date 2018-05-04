@@ -153,22 +153,12 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
 
   return {
     mode: isProduction ? 'production' : 'development',
-<<<<<<< HEAD
     entry: isTest ? undefined : {
-=======
-    entry: {
->>>>>>> 0fc0a38... Upgrade to Webpack 4
       main: './src/application.js',
       preview: './src/preview.js',
     },
     optimization: {
-<<<<<<< HEAD
       splitChunks: isTest ? false : {chunks: 'all'},
-=======
-      splitChunks: {
-        chunks: 'all',
-      },
->>>>>>> 0fc0a38... Upgrade to Webpack 4
     },
     output: {
       path: path.resolve(__dirname, './dist'),
