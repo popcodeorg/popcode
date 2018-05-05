@@ -101,6 +101,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           main: [/(?:^|~)(?:main|preview)[-.~]/, ':externals:'],
           additional: [':rest:'],
         },
+        safeToUseOptionalCaches: isProduction,
         AppCache: {
           caches: ['main', 'additional', 'optional'],
         },
