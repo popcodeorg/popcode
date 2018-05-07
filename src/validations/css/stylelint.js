@@ -1,4 +1,5 @@
-import stylelint from '../../util/minimalStylelint';
+import checkAgainstRule from 'stylelint/lib/utils/checkAgainstRule';
+import parse from 'postcss/lib/parse';
 import Validator from '../Validator';
 
 const errorMap = {
@@ -21,13 +22,20 @@ class StyleLintValidator extends Validator {
   }
 
   async _getRawErrors() {
-    let result;
     try {
-      result = await stylelint(this._source);
+      const warnings = [];
+      checkAgainstRule(
+        {
+          ruleName: 'declaration-block-trailing-semicolon',
+          ruleSettings: ['always'],
+          root: parse(this._source),
+        },
+        warning => warnings.push(warning),
+      );
+      return warnings;
     } catch (syntaxError) {
       return [syntaxError];
     }
-    return result.messages;
   }
 
   _keyForError(error) {
