@@ -10,9 +10,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
-const startsWith = require('lodash/startsWith');
-const map = require('lodash/map');
-const includes = require('lodash/includes');
 const git = require('git-rev-sync');
 const babel = require('babel-core');
 const babelLoaderVersion =
@@ -54,17 +51,6 @@ function matchModule(modulePath) {
     modulePattern.test(filePath) && !moduleDependencyPattern.test(filePath);
 }
 
-function directoryContentsExcept(directory, exceptions) {
-  const fullExceptions = map(
-    exceptions,
-    exception => path.resolve(directory, exception),
-  );
-
-  return filePath =>
-    startsWith(filePath, path.resolve(directory)) &&
-      !includes(fullExceptions, filePath);
-}
-
 module.exports = (env = process.env.NODE_ENV || 'development') => {
   const isProduction = env === 'production';
   const isTest = env === 'test';
@@ -83,6 +69,10 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       exclude: /node_modules/,
       failOnError: true,
     }),
+    new webpack.NormalModuleReplacementPlugin(
+      /node_modules\/stylelint\/lib\/requireRule.js$/,
+      path.resolve(__dirname, 'src/patches/stylelint/lib/requireRule.js'),
+    ),
   ];
 
   let devtool;
@@ -247,21 +237,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         {
           test: /\.js$/,
           include: [
-            path.resolve(
-              __dirname,
-              'node_modules/stylelint/lib/utils/isAutoprefixable',
-            ),
-          ],
-          use: [
-            {
-              loader: 'substitute-loader',
-              options: {content: '() => false'},
-            },
-          ],
-        },
-        {
-          test: /\.js$/,
-          include: [
             matchModule('ansi-styles'),
             matchModule('ast-types'),
             matchModule('chalk'),
@@ -291,20 +266,8 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
             matchModule('postcss-scss'),
             matchModule('postcss-less'),
             matchModule('sugarss'),
-            matchModule('stylelint/lib/dynamicRequire'),
             matchModule('css/lib/stringify/source-map-support'),
           ],
-          use: ['null-loader'],
-        },
-        {
-          test: /\.js$/,
-          include: directoryContentsExcept(
-            'node_modules/stylelint/lib/rules',
-            [
-              'index.js',
-              'declaration-block-trailing-semicolon/index.js',
-            ],
-          ),
           use: ['null-loader'],
         },
         {
