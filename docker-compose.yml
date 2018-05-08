@@ -12,6 +12,8 @@ services:
       - yarn_cache:/usr/local/share/.cache/yarn
     tmpfs:
       - /app/dist
+    environment:
+      - DEBUG
 volumes:
   node_modules:
   npm_cache:
