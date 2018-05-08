@@ -98,13 +98,13 @@ gulp.task('js', ['env'], () => new Promise((resolve, reject) => {
       }
 
       if (stats.hasErrors()) {
-        reject(new Error(stats.errors.join('\n')));
+        reject(new Error(stats.toJson().errors.join('\n\n')));
         return;
       }
 
       if (stats.hasWarnings()) {
         // eslint-disable-next-line no-console
-        console.warn(stats.warnings);
+        console.warn(stats.toJson().warnings);
       }
 
       resolve(stats);
