@@ -62,7 +62,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       FIREBASE_APP: 'popcode-development',
       FIREBASE_API_KEY: 'AIzaSyCHlo2RhOkRFFh48g779YSZrLwKjoyCcws',
       GIT_REVISION: git.short(),
-      LOG_REDUX_ACTIONS: 'false',
       NODE_ENV: env,
       WARN_ON_DROPPED_ERRORS: 'false',
       GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2',
