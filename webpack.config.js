@@ -8,6 +8,7 @@ const OfflinePlugin = require('offline-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash/escapeRegExp');
 const git = require('git-rev-sync');
@@ -54,6 +55,7 @@ function matchModule(modulePath) {
 module.exports = (env = process.env.NODE_ENV || 'development') => {
   const isProduction = env === 'production';
   const isTest = env === 'test';
+  const isCi = Boolean(process.env.TRAVIS);
 
   const plugins = [
     new webpack.EnvironmentPlugin({
@@ -135,6 +137,14 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
             value: 'preview-bundle',
           },
         ],
+      }),
+    );
+  }
+  if (!isTest && !isCi) {
+    plugins.push(
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        reportFilename: 'bundle.html',
       }),
     );
   }

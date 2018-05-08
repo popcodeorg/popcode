@@ -305,6 +305,7 @@
     "tape": "^4.6.3",
     "transform-loader": "^0.2.3",
     "webpack": "^4.0.1",
+    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-middleware": "^3.0.0"
   },
   "bundlesize": [
