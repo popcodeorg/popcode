@@ -124,6 +124,10 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       }),
       new ScriptExtHtmlWebpackPlugin({
         defaultAttribute: 'defer',
+        prefetch: {
+          chunks: 'async',
+          test: /\.js$/,
+        },
         custom: [
           {
             test: /^(?!(|.*~)main[.~-])/,
