@@ -8,6 +8,7 @@ const OfflinePlugin = require('offline-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const StatsPlugin = require('stats-webpack-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash.escaperegexp');
@@ -74,6 +75,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       /node_modules\/stylelint\/lib\/requireRule.js$/,
       path.resolve(__dirname, 'src/patches/stylelint/lib/requireRule.js'),
     ),
+    new StatsPlugin('stats.json'),
   ];
 
   let devtool;
@@ -166,6 +168,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       filename: isProduction ? '[name].[chunkhash].js' : '[name].js',
       chunkFilename: isProduction ? '[name].[chunkhash].js' : '[name].js',
     },
+    profile: !isTest,
     module: {
       rules: [
         {
