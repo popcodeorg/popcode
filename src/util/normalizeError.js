@@ -1,8 +1,8 @@
 import Bowser from 'bowser';
-import get from 'lodash/get';
-import keys from 'lodash/keys';
-import isEmpty from 'lodash/isEmpty';
-import assign from 'lodash/assign';
+import get from 'lodash-es/get';
+import keys from 'lodash-es/keys';
+import isEmpty from 'lodash-es/isEmpty';
+import assign from 'lodash-es/assign';
 import {t} from 'i18next';
 
 const normalizers = {

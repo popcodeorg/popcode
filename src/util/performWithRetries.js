@@ -1,4 +1,4 @@
-import assign from 'lodash/assign';
+import assign from 'lodash-es/assign';
 import promiseRetry from 'promise-retry';
 
 export default function performWithRetries(

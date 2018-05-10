@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import bindAll from 'lodash/bindAll';
-import get from 'lodash/get';
-import throttle from 'lodash/throttle';
-import noop from 'lodash/noop';
+import bindAll from 'lodash-es/bindAll';
+import get from 'lodash-es/get';
+import throttle from 'lodash-es/throttle';
+import noop from 'lodash-es/noop';
 import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
 
 import 'brace/ext/searchbox';

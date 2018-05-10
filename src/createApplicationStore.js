@@ -4,7 +4,7 @@ import {
   applyMiddleware,
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import get from 'lodash/get';
+import get from 'lodash-es/get';
 import reducers from './reducers';
 import rootSaga from './sagas';
 

@@ -1,8 +1,8 @@
-import bindAll from 'lodash/bindAll';
-import isNil from 'lodash/isNil';
+import bindAll from 'lodash-es/bindAll';
+import isNil from 'lodash-es/isNil';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import get from 'lodash/get';
+import get from 'lodash-es/get';
 import preventClickthrough from 'react-prevent-clickthrough';
 import {
   createAceEditor,

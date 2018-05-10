@@ -1,6 +1,6 @@
-import defaultsDeep from 'lodash/defaultsDeep';
-import isNil from 'lodash/isNil';
-import merge from 'lodash/merge';
+import defaultsDeep from 'lodash-es/defaultsDeep';
+import isNil from 'lodash-es/isNil';
+import merge from 'lodash-es/merge';
 
 export function gistData({
   html, css, javascript, enabledLibraries, hiddenUIComponents,

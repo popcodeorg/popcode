@@ -1,5 +1,5 @@
 import {firebase} from '@firebase/app';
-import once from 'lodash/once';
+import once from 'lodash-es/once';
 import '@firebase/auth';
 import config from '../config';
 import retryingFailedImports from '../util/retryingFailedImports';

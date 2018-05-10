@@ -1,8 +1,8 @@
 import Cookies from 'js-cookie';
-import get from 'lodash/get';
-import isNil from 'lodash/isNil';
-import isNull from 'lodash/isNull';
-import values from 'lodash/values';
+import get from 'lodash-es/get';
+import isNil from 'lodash-es/isNil';
+import isNull from 'lodash-es/isNull';
+import values from 'lodash-es/values';
 import uuid from 'uuid/v4';
 import {auth, loadDatabase, githubAuthProvider} from '../services/appFirebase';
 

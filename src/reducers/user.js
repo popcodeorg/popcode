@@ -1,5 +1,5 @@
 import Immutable from 'immutable';
-import get from 'lodash/get';
+import get from 'lodash-es/get';
 
 const init = new Immutable.Map({authenticated: false});
 
