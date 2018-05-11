@@ -1,6 +1,6 @@
-import map from 'lodash/map';
-import orderBy from 'lodash/orderBy';
-import pick from 'lodash/pick';
+import map from 'lodash-es/map';
+import orderBy from 'lodash-es/orderBy';
+import pick from 'lodash-es/pick';
 
 export default function validationTest(input, validate, ...expectedErrors) {
   return async(assert) => {

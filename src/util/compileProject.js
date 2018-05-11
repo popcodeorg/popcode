@@ -1,10 +1,10 @@
-import castArray from 'lodash/castArray';
-import compact from 'lodash/compact';
-import flatMap from 'lodash/flatMap';
-import isEmpty from 'lodash/isEmpty';
-import map from 'lodash/map';
-import trim from 'lodash/trim';
-import uniq from 'lodash/uniq';
+import castArray from 'lodash-es/castArray';
+import compact from 'lodash-es/compact';
+import flatMap from 'lodash-es/flatMap';
+import isEmpty from 'lodash-es/isEmpty';
+import map from 'lodash-es/map';
+import trim from 'lodash-es/trim';
+import uniq from 'lodash-es/uniq';
 import config from '../config';
 import retryingFailedImports from '../util/retryingFailedImports';
 

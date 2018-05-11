@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import map from 'lodash/map';
-import partial from 'lodash/partial';
+import map from 'lodash-es/map';
+import partial from 'lodash-es/partial';
 import {t} from 'i18next';
 import ErrorItem from './ErrorItem';
 

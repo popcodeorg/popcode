@@ -19,7 +19,7 @@
 //
 // so yield UNOPENED_TAG.
 
-import findLastIndex from 'lodash/findLastIndex';
+import findLastIndex from 'lodash-es/findLastIndex';
 import Code from '../rules/Code';
 
 export default class {

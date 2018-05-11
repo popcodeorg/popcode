@@ -1,7 +1,8 @@
 import {firebase} from '@firebase/app';
+import once from 'lodash-es/once';
 import '@firebase/auth';
-import '@firebase/database';
 import config from '../config';
+import retryingFailedImports from '../util/retryingFailedImports';
 
 const appFirebase = firebase.initializeApp({
   apiKey: config.firebaseApiKey,
@@ -9,10 +10,17 @@ const appFirebase = firebase.initializeApp({
   databaseURL: `https://${config.firebaseApp}.firebaseio.com`,
 });
 
-const auth = firebase.auth(appFirebase);
-const database = firebase.database(appFirebase);
-const githubAuthProvider = new firebase.auth.GithubAuthProvider();
+export const auth = firebase.auth(appFirebase);
+export const githubAuthProvider = new firebase.auth.GithubAuthProvider();
 githubAuthProvider.addScope('gist');
 githubAuthProvider.addScope('public_repo');
 
-export {auth, database, githubAuthProvider};
+export const loadDatabase = once(async() => {
+  await retryingFailedImports(() =>
+    import(
+      /* webpackChunkName: 'mainAsync' */
+      '@firebase/database',
+    ),
+  );
+  return firebase.database(appFirebase);
+});

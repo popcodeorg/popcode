@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import prefixAll from 'inline-style-prefixer/static';
 import {t} from 'i18next';
 import {DraggableCore} from 'react-draggable';
-import bindAll from 'lodash/bindAll';
-import isEmpty from 'lodash/isEmpty';
-import includes from 'lodash/includes';
-import partial from 'lodash/partial';
-import partition from 'lodash/partition';
+import bindAll from 'lodash-es/bindAll';
+import isEmpty from 'lodash-es/isEmpty';
+import includes from 'lodash-es/includes';
+import partial from 'lodash-es/partial';
+import partition from 'lodash-es/partition';
 import {getNodeHeights} from '../util/resize';
 
 import EditorContainer from './EditorContainer';

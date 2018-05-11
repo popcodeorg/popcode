@@ -1,5 +1,5 @@
 import {List} from 'immutable';
-import map from 'lodash/map';
+import map from 'lodash-es/map';
 import {Error, ErrorList, ErrorReport} from '../records';
 
 const passedLanguageErrors = new ErrorList();
