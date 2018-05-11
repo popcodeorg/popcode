@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Bowser from 'bowser';
-import bindAll from 'lodash/bindAll';
+import bindAll from 'lodash-es/bindAll';
 import {t} from 'i18next';
 import normalizeError from '../util/normalizeError';
 import retryingFailedImports from '../util/retryingFailedImports';

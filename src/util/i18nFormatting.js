@@ -1,6 +1,6 @@
-import capitalize from 'lodash/capitalize';
-import get from 'lodash/get';
-import identity from 'lodash/identity';
+import capitalize from 'lodash-es/capitalize';
+import get from 'lodash-es/get';
+import identity from 'lodash-es/identity';
 
 const vowelishLetters = new Set(['a', 'e', 'i', 'o', 'u', 'h']);
 
