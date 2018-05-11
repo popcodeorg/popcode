@@ -308,6 +308,7 @@
     "transform-loader": "^0.2.3",
     "webpack": "^4.8.1",
     "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-dev-middleware": "^3.0.0"
+    "webpack-dev-middleware": "^3.0.0",
+    "webpack-visualizer-plugin": "^0.1.11"
   }
 }

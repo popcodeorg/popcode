@@ -9,6 +9,7 @@ const CircularDependencyPlugin = require('circular-dependency-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
+const VisualizerPlugin = require('webpack-visualizer-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash.escaperegexp');
@@ -56,7 +57,7 @@ function matchModule(modulePath) {
 module.exports = (env = process.env.NODE_ENV || 'development') => {
   const isProduction = env === 'production';
   const isTest = env === 'test';
-  const isCi = Boolean(process.env.TRAVIS);
+  const shouldProfileBuild = Boolean(process.env.PROFILE_BUILD);
 
   const plugins = [
     new webpack.EnvironmentPlugin({
@@ -75,8 +76,20 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       /node_modules\/stylelint\/lib\/requireRule.js$/,
       path.resolve(__dirname, 'src/patches/stylelint/lib/requireRule.js'),
     ),
-    new StatsPlugin('stats.json'),
   ];
+
+  if (shouldProfileBuild) {
+    plugins.push(
+      new StatsPlugin('profile/stats.json'),
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        reportFilename: 'profile/bundle-analyzer.html',
+      }),
+      new VisualizerPlugin({
+        filename: 'profile/webpack-visualizer.html',
+      }),
+    );
+  }
 
   let devtool;
   if (isProduction) {
@@ -145,14 +158,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       }),
     );
   }
-  if (!isTest && !isCi) {
-    plugins.push(
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        reportFilename: 'bundle.html',
-      }),
-    );
-  }
 
   return {
     mode: isProduction ? 'production' : 'development',
@@ -168,7 +173,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       filename: isProduction ? '[name].[chunkhash].js' : '[name].js',
       chunkFilename: isProduction ? '[name].[chunkhash].js' : '[name].js',
     },
-    profile: !isTest,
+    profile: shouldProfileBuild,
     module: {
       rules: [
         {
