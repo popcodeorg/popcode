@@ -266,4 +266,3 @@ src="https://cloud.githubusercontent.com/assets/14214/19059115/428a80f4-89ab-11e
 Feel free to email me at [mat.a.brown@gmail.com](mailto:mat.a.brown@gmail.com) if you have any questions.
 
 You can find our Slack team, including our #dev channel, [here](https://slack.popcode.org). 
-
