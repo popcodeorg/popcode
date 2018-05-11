@@ -1,7 +1,5 @@
 import {Map} from 'immutable';
-import {
-  saveCurrentProject as saveCurrentProjectToFirebase,
-} from '../clients/firebase';
+import {saveProject} from '../clients/firebase';
 import {getCurrentProject, getCurrentUserId} from '../selectors';
 
 export function getProjectKeys(state) {
@@ -20,7 +18,7 @@ export function saveCurrentProject(state) {
   const currentProject = getCurrentProject(state);
 
   if (userId && currentProject && !isPristineProject(currentProject)) {
-    saveCurrentProjectToFirebase(userId, currentProject);
+    saveProject(userId, currentProject);
     return true;
   }
 

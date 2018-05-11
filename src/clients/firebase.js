@@ -25,28 +25,10 @@ async function workspace(uid) {
   return database.ref(`workspaces/${uid}`);
 }
 
-async function getCurrentProjectKey(uid) {
-  const userWorkspace = await workspace(uid);
-  const event = await userWorkspace.child('currentProjectKey').once('value');
-  return event.val();
-}
-
-export async function setCurrentProjectKey(uid, projectKey) {
-  const userWorkspace = await workspace(uid);
-  await userWorkspace.child('currentProjectKey').set(projectKey);
-}
-
 export async function loadAllProjects(uid) {
   const userWorkspace = await workspace(uid);
   const projects = await userWorkspace.child('projects').once('value');
   return values(projects.val() || {});
-}
-
-async function loadProject(uid, projectKey) {
-  const userWorkspace = await workspace(uid);
-  const event =
-    await userWorkspace.child('projects').child(projectKey).once('value');
-  return event.val();
 }
 
 export async function createProjectSnapshot(project) {
@@ -63,25 +45,10 @@ export async function loadProjectSnapshot(snapshotKey) {
   return event.val();
 }
 
-export async function loadCurrentProject(uid) {
-  const projectKey = await getCurrentProjectKey(uid);
-  if (projectKey) {
-    return loadProject(uid, projectKey);
-  }
-  return null;
-}
-
-async function saveProject(uid, project) {
+export async function saveProject(uid, project) {
   const userWorkspace = await workspace(uid);
   await userWorkspace.child('projects').child(project.projectKey).
     setWithPriority(project, -Date.now());
-}
-
-export async function saveCurrentProject(uid, project) {
-  return Promise.all([
-    saveProject(uid, project),
-    setCurrentProjectKey(uid, project.projectKey),
-  ]);
 }
 
 async function userCredentialForUserData(user) {
