@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import partial from 'lodash/partial';
+import partial from 'lodash-es/partial';
 import remark from 'remark';
 import remarkReact from 'remark-react';
 

@@ -1,4 +1,4 @@
-import isNil from 'lodash/isNil';
+import isNil from 'lodash-es/isNil';
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
