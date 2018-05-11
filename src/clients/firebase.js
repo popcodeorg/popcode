@@ -1,10 +1,10 @@
 import Cookies from 'js-cookie';
-import get from 'lodash-es/get';
-import isNil from 'lodash-es/isNil';
-import isNull from 'lodash-es/isNull';
-import values from 'lodash-es/values';
+import get from 'lodash/get';
+import isNil from 'lodash/isNil';
+import isNull from 'lodash/isNull';
+import values from 'lodash/values';
 import uuid from 'uuid/v4';
-import {auth, loadDatabase, githubAuthProvider} from '../services/appFirebase';
+import {auth, database, githubAuthProvider} from '../services/appFirebase';
 
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
 const SESSION_TTL_MS = 5 * 60 * 1000;
@@ -20,10 +20,11 @@ export function onAuthStateChanged(listener) {
   return unsubscribe;
 }
 
-async function workspace(uid) {
-  const database = await loadDatabase();
+function workspace(uid) {
   return database.ref(`workspaces/${uid}`);
 }
+
+const snapshots = database.ref('snapshots');
 
 async function getCurrentProjectKey(uid) {
   const event =
@@ -48,15 +49,12 @@ async function loadProject(uid, projectKey) {
 
 export async function createProjectSnapshot(project) {
   const snapshotKey = uuid().toString();
-  const database = await loadDatabase();
-  await database.ref('snapshots').child(snapshotKey).set(project);
+  await snapshots.child(snapshotKey).set(project);
   return snapshotKey;
 }
 
 export async function loadProjectSnapshot(snapshotKey) {
-  const database = await loadDatabase();
-  const event =
-    await database.ref('snapshots').child(snapshotKey).once('value');
+  const event = await snapshots.child(snapshotKey).once('value');
   return event.val();
 }
 
@@ -81,7 +79,6 @@ export async function saveCurrentProject(uid, project) {
 }
 
 async function userCredentialForUserData(user) {
-  const database = await loadDatabase();
   const path = providerPath(user.uid, user.providerData[0].providerId);
   const [credentialEvent, providerInfoEvent] = await Promise.all([
     database.ref(`authTokens/${path}`).once('value'),
@@ -128,14 +125,12 @@ async function saveUserCredential({
 }
 
 async function saveCredentials(uid, credential) {
-  const database = await loadDatabase();
   await database.
     ref(`authTokens/${providerPath(uid, credential.providerId)}`).
     set(credential);
 }
 
 async function saveProviderInfo(uid, providerInfo) {
-  const database = await loadDatabase();
   await database.
     ref(`providerInfo/${providerPath(uid, providerInfo.providerId)}`).
     set(providerInfo);

@@ -2,11 +2,11 @@
 
 import classnames from 'classnames';
 import {connect} from 'react-redux';
-import constant from 'lodash-es/constant';
-import noop from 'lodash-es/noop';
+import constant from 'lodash/constant';
+import noop from 'lodash/noop';
 import onClickOutside from 'react-onclickoutside';
 import preventClickthrough from 'react-prevent-clickthrough';
-import property from 'lodash-es/property';
+import property from 'lodash/property';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {closeTopBarMenu, toggleTopBarMenu} from '../../actions';

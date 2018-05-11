@@ -1,8 +1,8 @@
 import {bugsnagClient} from '../util/bugsnag';
-import isError from 'lodash-es/isError';
-import isString from 'lodash-es/isString';
+import isError from 'lodash/isError';
+import isString from 'lodash/isString';
 import {all, call, put, take, takeEvery} from 'redux-saga/effects';
-import isNil from 'lodash-es/isNil';
+import isNil from 'lodash/isNil';
 import {notificationTriggered} from '../actions/ui';
 import {userAuthenticated, userLoggedOut} from '../actions/user';
 import loginState from '../channels/loginState';
