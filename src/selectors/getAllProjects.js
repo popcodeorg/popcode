@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect';
-import sortBy from 'lodash/sortBy';
-import values from 'lodash/values';
+import sortBy from 'lodash-es/sortBy';
+import values from 'lodash-es/values';
 
 export default createSelector(
   state => state.get('projects'),

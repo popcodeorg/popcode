@@ -7,9 +7,9 @@ import {
   takeEvery,
   throttle,
 } from 'redux-saga/effects';
-import isNull from 'lodash/isNull';
-import isString from 'lodash/isString';
-import get from 'lodash/get';
+import isNull from 'lodash-es/isNull';
+import isString from 'lodash-es/isString';
+import get from 'lodash-es/get';
 import {
   gistImported,
   gistImportError,

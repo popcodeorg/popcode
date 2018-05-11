@@ -1,6 +1,6 @@
 import prettyCSS from 'PrettyCSS';
-import trim from 'lodash/trim';
-import endsWith from 'lodash/endsWith';
+import trim from 'lodash-es/trim';
+import endsWith from 'lodash-es/endsWith';
 import Validator from '../Validator';
 
 const RADIAL_GRADIENT_EXPR =

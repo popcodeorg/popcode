@@ -1,5 +1,5 @@
 import {createAction} from 'redux-actions';
-import identity from 'lodash/identity';
+import identity from 'lodash-es/identity';
 
 export const projectCompiled = createAction(
   'PROJECT_COMPILED',

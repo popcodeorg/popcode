@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import find from 'lodash/find';
+import find from 'lodash-es/find';
 import ErrorList from './ErrorList';
 import PopThrobber from './PopThrobber';
 

@@ -1,10 +1,10 @@
 import Cookies from 'js-cookie';
-import get from 'lodash/get';
-import isNil from 'lodash/isNil';
-import isNull from 'lodash/isNull';
-import values from 'lodash/values';
+import get from 'lodash-es/get';
+import isNil from 'lodash-es/isNil';
+import isNull from 'lodash-es/isNull';
+import values from 'lodash-es/values';
 import uuid from 'uuid/v4';
-import {auth, database, githubAuthProvider} from '../services/appFirebase';
+import {auth, loadDatabase, githubAuthProvider} from '../services/appFirebase';
 
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
 const SESSION_TTL_MS = 5 * 60 * 1000;
@@ -20,65 +20,39 @@ export function onAuthStateChanged(listener) {
   return unsubscribe;
 }
 
-function workspace(uid) {
+async function workspace(uid) {
+  const database = await loadDatabase();
   return database.ref(`workspaces/${uid}`);
 }
 
-const snapshots = database.ref('snapshots');
-
-async function getCurrentProjectKey(uid) {
-  const event =
-    await workspace(uid).child('currentProjectKey').once('value');
-  return event.val();
-}
-
-export async function setCurrentProjectKey(uid, projectKey) {
-  await workspace(uid).child('currentProjectKey').set(projectKey);
-}
-
 export async function loadAllProjects(uid) {
-  const projects = await workspace(uid).child('projects').once('value');
+  const userWorkspace = await workspace(uid);
+  const projects = await userWorkspace.child('projects').once('value');
   return values(projects.val() || {});
-}
-
-async function loadProject(uid, projectKey) {
-  const event =
-    await workspace(uid).child('projects').child(projectKey).once('value');
-  return event.val();
 }
 
 export async function createProjectSnapshot(project) {
   const snapshotKey = uuid().toString();
-  await snapshots.child(snapshotKey).set(project);
+  const database = await loadDatabase();
+  await database.ref('snapshots').child(snapshotKey).set(project);
   return snapshotKey;
 }
 
 export async function loadProjectSnapshot(snapshotKey) {
-  const event = await snapshots.child(snapshotKey).once('value');
+  const database = await loadDatabase();
+  const event =
+    await database.ref('snapshots').child(snapshotKey).once('value');
   return event.val();
 }
 
-export async function loadCurrentProject(uid) {
-  const projectKey = await getCurrentProjectKey(uid);
-  if (projectKey) {
-    return loadProject(uid, projectKey);
-  }
-  return null;
-}
-
-async function saveProject(uid, project) {
-  await workspace(uid).child('projects').child(project.projectKey).
+export async function saveProject(uid, project) {
+  const userWorkspace = await workspace(uid);
+  await userWorkspace.child('projects').child(project.projectKey).
     setWithPriority(project, -Date.now());
 }
 
-export async function saveCurrentProject(uid, project) {
-  return Promise.all([
-    saveProject(uid, project),
-    setCurrentProjectKey(uid, project.projectKey),
-  ]);
-}
-
 async function userCredentialForUserData(user) {
+  const database = await loadDatabase();
   const path = providerPath(user.uid, user.providerData[0].providerId);
   const [credentialEvent, providerInfoEvent] = await Promise.all([
     database.ref(`authTokens/${path}`).once('value'),
@@ -125,12 +99,14 @@ async function saveUserCredential({
 }
 
 async function saveCredentials(uid, credential) {
+  const database = await loadDatabase();
   await database.
     ref(`authTokens/${providerPath(uid, credential.providerId)}`).
     set(credential);
 }
 
 async function saveProviderInfo(uid, providerInfo) {
+  const database = await loadDatabase();
   await database.
     ref(`providerInfo/${providerPath(uid, providerInfo.providerId)}`).
     set(providerInfo);

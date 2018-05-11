@@ -1,4 +1,4 @@
-import get from 'lodash/get';
+import get from 'lodash-es/get';
 import {createSelector} from 'reselect';
 import getCurrentProject from './getCurrentProject';
 

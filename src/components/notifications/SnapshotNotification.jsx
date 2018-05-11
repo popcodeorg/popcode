@@ -1,6 +1,6 @@
 import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import partial from 'lodash/partial';
+import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
 
