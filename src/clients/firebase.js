@@ -26,23 +26,26 @@ async function workspace(uid) {
 }
 
 async function getCurrentProjectKey(uid) {
-  const event =
-    await workspace(uid).child('currentProjectKey').once('value');
+  const userWorkspace = await workspace(uid);
+  const event = await userWorkspace.child('currentProjectKey').once('value');
   return event.val();
 }
 
 export async function setCurrentProjectKey(uid, projectKey) {
-  await workspace(uid).child('currentProjectKey').set(projectKey);
+  const userWorkspace = await workspace(uid);
+  await userWorkspace.child('currentProjectKey').set(projectKey);
 }
 
 export async function loadAllProjects(uid) {
-  const projects = await workspace(uid).child('projects').once('value');
+  const userWorkspace = await workspace(uid);
+  const projects = await userWorkspace.child('projects').once('value');
   return values(projects.val() || {});
 }
 
 async function loadProject(uid, projectKey) {
+  const userWorkspace = await workspace(uid);
   const event =
-    await workspace(uid).child('projects').child(projectKey).once('value');
+    await userWorkspace.child('projects').child(projectKey).once('value');
   return event.val();
 }
 
@@ -69,7 +72,8 @@ export async function loadCurrentProject(uid) {
 }
 
 async function saveProject(uid, project) {
-  await workspace(uid).child('projects').child(project.projectKey).
+  const userWorkspace = await workspace(uid);
+  await userWorkspace.child('projects').child(project.projectKey).
     setWithPriority(project, -Date.now());
 }
 
