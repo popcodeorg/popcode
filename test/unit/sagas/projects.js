@@ -1,4 +1,4 @@
-import omit from 'lodash-es/omit';
+import omit from 'lodash/omit';
 import test from 'tape';
 import {testSaga} from 'redux-saga-test-plan';
 import {

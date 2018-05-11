@@ -1,4 +1,4 @@
-import isUndefined from 'lodash-es/isUndefined';
+import isUndefined from 'lodash/isUndefined';
 
 const domParser = new DOMParser();
 

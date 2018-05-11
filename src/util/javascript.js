@@ -1,5 +1,5 @@
 import {parse} from 'esprima';
-import find from 'lodash-es/find';
+import find from 'lodash/find';
 
 function tryParse(javascript) {
   try {

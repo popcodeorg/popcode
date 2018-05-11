@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import get from 'lodash-es/get';
+import get from 'lodash/get';
 import getCurrentProject from './getCurrentProject';
 
 export default createSelector(

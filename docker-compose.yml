@@ -14,7 +14,6 @@ services:
       - /app/dist
     environment:
       - DEBUG
-      - PROFILE_BUILD
 volumes:
   node_modules:
   npm_cache:

@@ -1,7 +1,7 @@
 import test from 'tape';
 import Immutable from 'immutable';
-import tap from 'lodash-es/tap';
-import partial from 'lodash-es/partial';
+import tap from 'lodash/tap';
+import partial from 'lodash/partial';
 import reducerTest from '../../helpers/reducerTest';
 import reducer, {DEFAULT_WORKSPACE} from '../../../src/reducers/ui';
 import {

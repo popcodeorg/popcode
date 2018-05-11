@@ -1,5 +1,5 @@
 import {createAction} from 'redux-actions';
-import identity from 'lodash-es/identity';
+import identity from 'lodash/identity';
 
 export const logIn = createAction('LOG_IN');
 

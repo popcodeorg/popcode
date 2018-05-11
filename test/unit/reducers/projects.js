@@ -1,8 +1,8 @@
-import assign from 'lodash-es/assign';
+import assign from 'lodash/assign';
 import test from 'tape';
-import reduce from 'lodash-es/reduce';
-import tap from 'lodash-es/tap';
-import partial from 'lodash-es/partial';
+import reduce from 'lodash/reduce';
+import tap from 'lodash/tap';
+import partial from 'lodash/partial';
 import Immutable from 'immutable';
 import reducerTest from '../../helpers/reducerTest';
 import {projects as states} from '../../helpers/referenceStates';

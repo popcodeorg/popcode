@@ -1,4 +1,4 @@
-import memoize from 'lodash-es/memoize';
+import memoize from 'lodash/memoize';
 import remark from 'remark';
 import remarkReact from 'remark-react';
 import externalLinks from 'remark-external-links';
