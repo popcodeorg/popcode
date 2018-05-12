@@ -595,6 +595,12 @@
         "prefer-template": [
           2
         ],
+        "private-props/no-unused-or-undeclared": [
+          2
+        ],
+        "private-props/no-use-outside": [
+          2
+        ],
         "promise/no-callback-in-promise": [
           2
         ],
@@ -854,7 +860,8 @@
     "plugins": [
       "import",
       "react",
-      "promise"
+      "promise",
+      "private-props"
     ],
     "settings": {
       "import/resolver": "webpack"
