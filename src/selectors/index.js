@@ -9,6 +9,7 @@ import getCurrentProjectKey from './getCurrentProjectKey';
 import getCurrentUser from './getCurrentUser';
 import getCurrentUserId from './getCurrentUserId';
 import getCurrentValidationState from './getCurrentValidationState';
+import getEditorsFlex from './getEditorsFlex';
 import getEnabledLibraries from './getEnabledLibraries';
 import getErrors from './getErrors';
 import getHiddenUIComponents from './getHiddenUIComponents';
@@ -42,6 +43,7 @@ export {
   getCurrentUser,
   getCurrentUserId,
   getCurrentValidationState,
+  getEditorsFlex,
   getEnabledLibraries,
   getErrors,
   getHiddenUIComponents,

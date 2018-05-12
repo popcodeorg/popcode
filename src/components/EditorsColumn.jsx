@@ -50,12 +50,13 @@ export default class EditorsColumn extends React.Component {
       currentProject,
       editorsFlex,
       errors,
+      isTextSizeLarge,
+      requestedFocusedLine,
       onComponentHide,
       onEditorInput,
       onRef,
       onRequestedLineFocused,
       style,
-      ui,
     } = this.props;
 
     const children = [];
@@ -73,7 +74,11 @@ export default class EditorsColumn extends React.Component {
           language={language}
           source={currentProject.sources[language]}
           style={{flex: editorsFlex[index]}}
-          onHide={partial(onComponentHide, `editor.${language}`)}
+          onHide={partial(
+            onComponentHide,
+            currentProject.projectKey,
+            `editor.${language}`,
+          )}
           onRef={partial(this._storeEditorRef, index)}
         >
           <Editor
@@ -81,10 +86,14 @@ export default class EditorsColumn extends React.Component {
             language={language}
             percentageOfHeight={1 / visibleLanguages.length}
             projectKey={currentProject.projectKey}
-            requestedFocusedLine={ui.editors.requestedFocusedLine}
+            requestedFocusedLine={requestedFocusedLine}
             source={currentProject.sources[language]}
-            textSizeIsLarge={ui.editors.textSizeIsLarge}
-            onInput={partial(onEditorInput, language)}
+            textSizeIsLarge={isTextSizeLarge}
+            onInput={partial(
+              onEditorInput,
+              currentProject.projectKey,
+              language,
+            )}
             onRequestedLineFocused={onRequestedLineFocused}
           />
         </EditorContainer>,
@@ -111,6 +120,7 @@ export default class EditorsColumn extends React.Component {
           key={language}
           onClick={partial(
             this.props.onComponentUnhide,
+            currentProject.projectKey,
             `editor.${language}`,
           )}
         >
@@ -143,14 +153,17 @@ EditorsColumn.propTypes = {
   currentProject: PropTypes.object.isRequired,
   editorsFlex: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
+  isTextSizeLarge: PropTypes.bool.isRequired,
+  requestedFocusedLine: PropTypes.object,
   style: PropTypes.object.isRequired,
-  ui: PropTypes.shape({
-    editors: PropTypes.object.isRequired,
-  }).isRequired,
   onComponentHide: PropTypes.func.isRequired,
   onComponentUnhide: PropTypes.func.isRequired,
   onDividerDrag: PropTypes.func.isRequired,
   onEditorInput: PropTypes.func.isRequired,
   onRef: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
+};
+
+EditorsColumn.defaultProps = {
+  requestedFocusedLine: null,
 };
