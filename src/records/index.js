@@ -5,6 +5,7 @@ import Error from './Error';
 import ErrorList from './ErrorList';
 import ErrorReport from './ErrorReport';
 import Project from './Project';
+import UiState from './UiState';
 import User from './User';
 import UserAccount from './UserAccount';
 
@@ -18,4 +19,5 @@ export {
   Project,
   User,
   UserAccount,
+  UiState,
 };

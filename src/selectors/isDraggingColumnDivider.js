@@ -1,3 +1,3 @@
 export default function isDraggingColumnDivider(state) {
-  return state.getIn(['ui', 'workspace', 'isDraggingColumnDivider']);
+  return state.getIn(['ui', 'isDraggingColumnDivider']);
 }

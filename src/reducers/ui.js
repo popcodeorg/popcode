@@ -1,20 +1,8 @@
 import Immutable from 'immutable';
 
-export const DEFAULT_WORKSPACE = new Immutable.Map({
-  isDraggingColumnDivider: false,
-  isEditingInstructions: false,
-});
+import {UiState} from '../records';
 
-const defaultState = new Immutable.Map().
-  set('editors', new Immutable.Map({
-    typing: false,
-    requestedFocusedLine: null,
-    textSizeIsLarge: false,
-  })).
-  set('workspace', DEFAULT_WORKSPACE).
-  set('notifications', new Immutable.Map()).
-  set('topBar', new Immutable.Map({openMenu: null})).
-  set('saveIndicatorShown', false);
+const defaultState = new UiState();
 
 function addNotification(state, type, severity, payload = {}) {
   return state.setIn(
@@ -40,47 +28,49 @@ export default function ui(stateIn, action) {
   switch (action.type) {
     case 'CHANGE_CURRENT_PROJECT':
       return state.
-        set('workspace', DEFAULT_WORKSPACE).
-        updateIn(
-          ['topBar', 'openMenu'],
+        set('isEditingInstructions', false).
+        update(
+          'openTopBarMenu',
           menu => menu === 'projectPicker' ? null : menu,
         );
 
     case 'PROJECT_CREATED':
-      return state.set('workspace', DEFAULT_WORKSPACE);
+      return state.set('isEditingInstructions', false);
 
     case 'UPDATE_PROJECT_SOURCE':
-      return state.setIn(['editors', 'typing'], true);
+      return state.set('isTyping', true);
 
     case 'USER_DONE_TYPING':
-      return state.setIn(['editors', 'typing'], false);
+      return state.set('isTyping', false);
 
     case 'FOCUS_LINE':
-      return state.setIn(
-        ['editors', 'requestedFocusedLine'],
-        new Immutable.Map().
-          set('component', action.payload.component).
-          set('line', action.payload.line).
-          set('column', action.payload.column),
+      return state.set(
+        'requestedFocusedLine',
+        new Immutable.Map({
+          component: action.payload.component,
+          line: action.payload.line,
+          column: action.payload.column,
+        }),
       );
 
     case 'CLEAR_CONSOLE_ENTRIES':
-      return state.setIn(
-        ['editors', 'requestedFocusedLine'],
-        new Immutable.Map().
-          set('component', 'console').
-          set('line', 0).
-          set('column', 0),
+      return state.set(
+        'requestedFocusedLine',
+        new Immutable.Map({
+          component: 'console',
+          line: 0,
+          column: 0,
+        }),
       );
 
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
-      return state.setIn(['editors', 'requestedFocusedLine'], null);
+      return state.set('requestedFocusedLine', null);
 
     case 'START_DRAG_COLUMN_DIVIDER':
-      return state.setIn(['workspace', 'isDraggingColumnDivider'], true);
+      return state.set('isDraggingColumnDivider', true);
 
     case 'STOP_DRAG_COLUMN_DIVIDER':
-      return state.setIn(['workspace', 'isDraggingColumnDivider'], false);
+      return state.set('isDraggingColumnDivider', false);
 
     case 'GIST_NOT_FOUND':
       return addNotification(
@@ -117,8 +107,8 @@ export default function ui(stateIn, action) {
 
     case 'USER_LOGGED_OUT':
     case 'LINK_GITHUB_IDENTITY':
-      return state.updateIn(
-        ['topBar', 'openMenu'],
+      return state.update(
+        'openTopBarMenu',
         menu => menu === 'currentUser' ? null : menu,
       );
 
@@ -132,9 +122,9 @@ export default function ui(stateIn, action) {
 
     case 'APPLICATION_LOADED':
       if (action.payload.isExperimental) {
-        return state.set('experimental', true);
+        return state.set('isExperimental', true);
       }
-      return state.set('experimental', false);
+      return state;
 
     case 'SNAPSHOT_EXPORT_ERROR':
       return addNotification(state, 'snapshot-export-error', 'error');
@@ -146,19 +136,20 @@ export default function ui(stateIn, action) {
       return addNotification(state, 'snapshot-not-found', 'error');
 
     case 'TOGGLE_EDITOR_TEXT_SIZE':
-      return state.updateIn(['editors', 'textSizeIsLarge'],
-        textSizeIsLarge => !textSizeIsLarge,
+      return state.update(
+        'isTextSizeLarge',
+        isTextSizeLarge => !isTextSizeLarge,
       );
 
     case 'TOGGLE_TOP_BAR_MENU':
-      return state.updateIn(
-        ['topBar', 'openMenu'],
+      return state.update(
+        'openTopBarMenu',
         menu => menu === action.payload ? null : action.payload,
       );
 
     case 'CLOSE_TOP_BAR_MENU':
-      return state.updateIn(
-        ['topBar', 'openMenu'],
+      return state.update(
+        'openTopBarMenu',
         menu => menu === action.payload ? null : menu,
       );
 
@@ -196,11 +187,11 @@ export default function ui(stateIn, action) {
       return dismissNotification(state, 'project-compilation-failed');
 
     case 'START_EDITING_INSTRUCTIONS':
-      return state.setIn(['workspace', 'isEditingInstructions'], true);
+      return state.set('isEditingInstructions', true);
 
     case 'CANCEL_EDITING_INSTRUCTIONS':
     case 'UPDATE_PROJECT_INSTRUCTIONS':
-      return state.setIn(['workspace', 'isEditingInstructions'], false);
+      return state.set('isEditingInstructions', false);
 
     case 'SHOW_SAVE_INDICATOR':
       return state.set('saveIndicatorShown', true);
