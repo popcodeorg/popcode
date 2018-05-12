@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {DraggableCore} from 'react-draggable';
-import {connect} from 'react-redux';
 import bindAll from 'lodash-es/bindAll';
 import isNull from 'lodash-es/isNull';
 import get from 'lodash-es/get';
@@ -12,17 +11,7 @@ import {getNodeWidth, getNodeWidths} from '../util/resize';
 import {getQueryParameters, setQueryParameters} from '../util/queryParams';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
-import {
-  dragColumnDivider,
-  startDragColumnDivider,
-  stopDragColumnDivider,
-  toggleComponent,
-  applicationLoaded,
-
-} from '../actions';
-
 import {isPristineProject} from '../util/projectUtils';
-import {getCurrentProject, isEditingInstructions} from '../selectors';
 
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
@@ -31,18 +20,7 @@ import EditorsColumn from '../containers/EditorsColumn';
 import Output from './Output';
 import PopThrobber from './PopThrobber';
 
-function mapStateToProps(state) {
-  return {
-    currentProject: getCurrentProject(state),
-    isDraggingColumnDivider: state.getIn(
-      ['ui', 'workspace', 'isDraggingColumnDivider'],
-    ),
-    isEditingInstructions: isEditingInstructions(state),
-    rowsFlex: state.getIn(['ui', 'workspace', 'rowFlex']).toJS(),
-  };
-}
-
-class Workspace extends React.Component {
+export default class Workspace extends React.Component {
   constructor() {
     super();
     bindAll(
@@ -50,8 +28,6 @@ class Workspace extends React.Component {
       '_handleUnload',
       '_handleClickInstructionsBar',
       '_handleDividerDrag',
-      '_handleDividerStart',
-      '_handleDividerStop',
       '_storeDividerRef',
       '_storeColumnRef',
     );
@@ -59,6 +35,7 @@ class Workspace extends React.Component {
   }
 
   componentWillMount() {
+    const {onApplicationLoaded} = this.props;
     const {
       gistId,
       snapshotKey,
@@ -66,12 +43,12 @@ class Workspace extends React.Component {
     } = getQueryParameters(location.search);
     const rehydratedProject = rehydrateProject();
     setQueryParameters({isExperimental});
-    this.props.dispatch(applicationLoaded({
+    onApplicationLoaded({
       snapshotKey,
       gistId,
       isExperimental,
       rehydratedProject,
-    }));
+    });
   }
 
   componentDidMount() {
@@ -104,11 +81,12 @@ class Workspace extends React.Component {
   }
 
   _handleClickInstructionsBar() {
-    if (!this.props.isEditingInstructions) {
-      this.props.dispatch(toggleComponent(
+    const {isEditingInstructions, onComponentToggle} = this.props;
+    if (!isEditingInstructions) {
+      onComponentToggle(
         get(this.props, ['currentProject', 'projectKey']),
         'instructions',
-      ));
+      );
     }
   }
 
@@ -146,26 +124,24 @@ class Workspace extends React.Component {
     this.dividerRef = divider;
   }
 
-  _handleDividerStart() {
-    this.props.dispatch(startDragColumnDivider());
-  }
-
-  _handleDividerStop() {
-    this.props.dispatch(stopDragColumnDivider());
-  }
-
   _handleDividerDrag(_, {deltaX, lastX, x}) {
-    this.props.dispatch(dragColumnDivider({
+    const {onDragColumnDivider} = this.props;
+    onDragColumnDivider({
       columnWidths: getNodeWidths(this.columnRefs),
       dividerWidth: getNodeWidth(this.dividerRef),
       deltaX,
       lastX,
       x,
-    }));
+    });
   }
 
   _renderEnvironment() {
-    const {currentProject, rowsFlex} = this.props;
+    const {
+      currentProject,
+      onStartDragColumnDivider,
+      onStopDragColumnDivider,
+      rowsFlex,
+    } = this.props;
     if (isNull(currentProject)) {
       return <PopThrobber message={t('workspace.loading')} />;
     }
@@ -178,8 +154,8 @@ class Workspace extends React.Component {
         />
         <DraggableCore
           onDrag={this._handleDividerDrag}
-          onStart={this._handleDividerStart}
-          onStop={this._handleDividerStop}
+          onStart={onStartDragColumnDivider}
+          onStop={onStopDragColumnDivider}
         >
           <div
             className="editors__column-divider"
@@ -210,14 +186,16 @@ class Workspace extends React.Component {
 
 Workspace.propTypes = {
   currentProject: PropTypes.object,
-  dispatch: PropTypes.func.isRequired,
   isDraggingColumnDivider: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   rowsFlex: PropTypes.array.isRequired,
+  onApplicationLoaded: PropTypes.func.isRequired,
+  onComponentToggle: PropTypes.func.isRequired,
+  onDragColumnDivider: PropTypes.func.isRequired,
+  onStartDragColumnDivider: PropTypes.func.isRequired,
+  onStopDragColumnDivider: PropTypes.func.isRequired,
 };
 
 Workspace.defaultProps = {
   currentProject: null,
 };
-
-export default connect(mapStateToProps)(Workspace);
