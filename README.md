@@ -199,9 +199,6 @@ for all the sordid details.
 
 ## Contributors ##
 
-If you can't reach Mat with an urgent production issue, contact Alex Pelan or
-Peter Jablonski.
-
 * [Mat Brown](https://github.com/outoftime) (maintainer)
 * [Alejandro AR](https://github.com/kinduff)
 * [Vaibhav Verma](https://github.com/v)
