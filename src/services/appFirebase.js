@@ -24,3 +24,17 @@ export const loadDatabase = once(async() => {
   );
   return firebase.database(appFirebase);
 });
+
+export const GOOGLE_SCOPES = [
+  'https://www.googleapis.com/auth/classroom.courses.readonly',
+  'https://www.googleapis.com/auth/classroom.coursework.students',
+  'https://www.googleapis.com/auth/classroom.coursework.me',
+];
+
+export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
+for (const scope in GOOGLE_SCOPES) {
+  if (scope) {
+    googleAuthProvider.addScope(scope);
+  }
+}

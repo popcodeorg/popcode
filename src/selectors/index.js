@@ -19,20 +19,21 @@ import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
 import getProject from './getProject';
 import getRequestedFocusedLine from './getRequestedFocusedLine';
+import isClassroomExportInProgress from './isClassroomExportInProgress';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
   from './isCurrentProjectSyntacticallyValid';
 import isDraggingColumnDivider from './isDraggingColumnDivider';
 import isEditingInstructions from './isEditingInstructions';
 import isExperimental from './isExperimental';
+import isGapiReady from './isGapiReady';
 import isGistExportInProgress from './isGistExportInProgress';
 import isRepoExportInProgress from './isRepoExportInProgress';
-import isClassroomExportInProgress from './isClassroomExportInProgress';
 import isSnapshotInProgress from './isSnapshotInProgress';
 import isTextSizeLarge from './isTextSizeLarge';
-import isUserAuthenticated from './isUserAuthenticated';
 import isUserTyping from './isUserTyping';
 import makeGetProjectPreview from './makeGetProjectPreview';
+import makeUserIsAuthenticatedWith from './makeUserIsAuthenticatedWith';
 
 export {
   getAllProjectKeys,
@@ -55,17 +56,18 @@ export {
   getOpenTopBarMenu,
   getProject,
   getRequestedFocusedLine,
+  isClassroomExportInProgress,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isDraggingColumnDivider,
   isEditingInstructions,
   isExperimental,
+  isGapiReady,
   isGistExportInProgress,
   isRepoExportInProgress,
-  isClassroomExportInProgress,
   isSnapshotInProgress,
   isTextSizeLarge,
-  isUserAuthenticated,
   isUserTyping,
   makeGetProjectPreview,
+  makeUserIsAuthenticatedWith,
 };

@@ -2,8 +2,12 @@ import {t} from 'i18next';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function NewProjectButton({isUserAuthenticated, onClick}) {
-  if (!isUserAuthenticated) {
+export default function NewProjectButton({
+  onClick,
+  isUserAuthenticatedWithGithub,
+  isUserAuthenticatedWithGoogle,
+}) {
+  if (!isUserAuthenticatedWithGithub && !isUserAuthenticatedWithGoogle) {
     return false;
   }
 
@@ -18,6 +22,7 @@ export default function NewProjectButton({isUserAuthenticated, onClick}) {
 }
 
 NewProjectButton.propTypes = {
-  isUserAuthenticated: PropTypes.bool.isRequired,
+  isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
+  isUserAuthenticatedWithGoogle: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };

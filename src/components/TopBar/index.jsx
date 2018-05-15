@@ -32,10 +32,13 @@ export default function TopBar({
   hasInstructions,
   hasExportedRepo,
   isEditingInstructions,
+  isExperimental,
+  isGapiReady,
   isGistExportInProgress,
   isRepoExportInProgress,
   isClassroomExportInProgress,
-  isUserAuthenticated,
+  isUserAuthenticatedWithGithub,
+  isUserAuthenticatedWithGoogle,
   isUserTyping,
   isSnapshotInProgress,
   isTextSizeLarge,
@@ -51,8 +54,9 @@ export default function TopBar({
   onExportRepo,
   onExportToClassroom,
   onLogOut,
+  onStartGithubLogIn,
+  onStartGoogleLogIn,
   onStartEditingInstructions,
-  onStartLogIn,
   onToggleLibrary,
   onToggleTextSize,
   onUpdateRepo,
@@ -77,12 +81,14 @@ export default function TopBar({
       <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
       <div className="top-bar__spacer" />
       <NewProjectButton
-        isUserAuthenticated={isUserAuthenticated}
+        isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
+        isUserAuthenticatedWithGoogle={isUserAuthenticatedWithGoogle}
         onClick={onCreateNewProject}
       />
       <ProjectPicker
         currentProjectKey={currentProjectKey}
-        isUserAuthenticated={isUserAuthenticated}
+        isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
+        isUserAuthenticatedWithGoogle={isUserAuthenticatedWithGoogle}
         projectKeys={projectKeys}
         onChangeCurrentProject={onChangeCurrentProject}
       />
@@ -92,23 +98,27 @@ export default function TopBar({
         onClick={partial(onClickMenu, 'currentUser')}
         onClose={partial(onCloseMenu, 'currentUser')}
         onLogOut={onLogOut}
-        onStartLogIn={onStartLogIn}
+        onStartGithubLogIn={onStartGithubLogIn}
       />
       <HamburgerMenu
         hasExportedRepo={hasExportedRepo}
         hasInstructions={hasInstructions}
         isClassroomExportInProgress={isClassroomExportInProgress}
         isEditingInstructions={isEditingInstructions}
+        isExperimental={isExperimental}
+        isGapiReady={isGapiReady}
         isGistExportInProgress={isGistExportInProgress}
         isOpen={openMenu === 'hamburger'}
         isRepoExportInProgress={isRepoExportInProgress}
-        isUserAuthenticated={isUserAuthenticated}
+        isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
+        isUserAuthenticatedWithGoogle={isUserAuthenticatedWithGoogle}
         onClick={partial(onClickMenu, 'hamburger')}
         onExportGist={onExportGist}
         onExportRepo={onExportRepo}
         onExportToClassroom={onExportToClassroom}
         onStartEditingInstructions={
           partial(onStartEditingInstructions, currentProjectKey)}
+        onStartGoogleLogIn={onStartGoogleLogIn}
         onUpdateRepo={onUpdateRepo}
       />
     </header>
@@ -123,11 +133,14 @@ TopBar.propTypes = {
   hasInstructions: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
+  isExperimental: PropTypes.bool.isRequired,
+  isGapiReady: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,
   isSnapshotInProgress: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
-  isUserAuthenticated: PropTypes.bool.isRequired,
+  isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
+  isUserAuthenticatedWithGoogle: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool.isRequired,
   openMenu: PropTypes.string,
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -142,7 +155,8 @@ TopBar.propTypes = {
   onExportToClassroom: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
-  onStartLogIn: PropTypes.func.isRequired,
+  onStartGithubLogIn: PropTypes.func.isRequired,
+  onStartGoogleLogIn: PropTypes.func.isRequired,
   onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,
   onUpdateRepo: PropTypes.func.isRequired,
