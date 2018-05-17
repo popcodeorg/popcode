@@ -1,5 +1,5 @@
+import isProjectExportInProgress from './isProjectExportInProgress';
+
 export default function isGistExportInProgress(state) {
-  return state.getIn(
-    ['clients', 'projectExports', 'gist', 'status'],
-  ) === 'waiting';
+  return isProjectExportInProgress(state, 'gist');
 }

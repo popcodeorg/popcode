@@ -5,6 +5,8 @@ import getConsoleHistory from './getConsoleHistory';
 import getCurrentCompiledProjectKey from './getCurrentCompiledProjectKey';
 import getCurrentProject from './getCurrentProject';
 import getCurrentProjectInstructions from './getCurrentProjectInstructions';
+import getCurrentProjectExportedRepoName
+  from './getCurrentProjectExportedRepoName';
 import getCurrentProjectKey from './getCurrentProjectKey';
 import getCurrentUser from './getCurrentUser';
 import getCurrentUserId from './getCurrentUserId';
@@ -38,6 +40,7 @@ export {
   getConsoleHistory,
   getCurrentCompiledProjectKey,
   getCurrentProject,
+  getCurrentProjectExportedRepoName,
   getCurrentProjectInstructions,
   getCurrentProjectKey,
   getCurrentUser,

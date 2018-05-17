@@ -1,4 +1,3 @@
-import noop from 'lodash-es/noop';
 import {t} from 'i18next';
 import tap from 'lodash-es/tap';
 import PropTypes from 'prop-types';
@@ -12,6 +11,7 @@ const HamburgerMenu = createMenu({
   name: 'hamburger',
 
   renderItems({
+    hasExportedRepo,
     hasInstructions,
     isEditingInstructions,
     isExperimental,
@@ -21,14 +21,16 @@ const HamburgerMenu = createMenu({
     isUserAuthenticated,
     onExportGist,
     onExportRepo,
+    onUpdateRepo,
     onExportToClassroom,
     onStartEditingInstructions,
   }) {
     return tap([], (items) => {
       items.push(
         <MenuItem
+          isDisabled={isClassroomExportInProgress}
           key="exportToClassroom"
-          onClick={isClassroomExportInProgress ? noop : onExportToClassroom}
+          onClick={onExportToClassroom}
         >
           {t('top-bar.share-to-classroom')}
         </MenuItem>,
@@ -51,22 +53,36 @@ const HamburgerMenu = createMenu({
       if (isUserAuthenticated) {
         items.push(
           <MenuItem
+            idDisabled={isGistExportInProgress}
             key="exportGist"
-            onClick={isGistExportInProgress ? noop : onExportGist}
+            onClick={onExportGist}
           >
             {t('top-bar.export-gist')}
           </MenuItem>,
         );
 
         if (isExperimental) {
-          items.push(
-            <MenuItem
-              key="exportRepo"
-              onClick={isRepoExportInProgress ? noop : onExportRepo}
-            >
-              {t('top-bar.export-repo')}
-            </MenuItem>,
-          );
+          if (hasExportedRepo) {
+            items.push(
+              <MenuItem
+                isDisabled={isRepoExportInProgress}
+                key="updateRepo"
+                onClick={onUpdateRepo}
+              >
+                {t('top-bar.update-repo')}
+              </MenuItem>,
+            );
+          } else {
+            items.push(
+              <MenuItem
+                isDisabled={isRepoExportInProgress}
+                key="exportRepo"
+                onClick={onExportRepo}
+              >
+                {t('top-bar.export-repo')}
+              </MenuItem>,
+            );
+          }
         }
       }
 
@@ -113,6 +129,7 @@ const HamburgerMenu = createMenu({
 
 
 HamburgerMenu.propTypes = {
+  hasExportedRepo: PropTypes.bool.isRequired,
   hasInstructions: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
@@ -125,6 +142,7 @@ HamburgerMenu.propTypes = {
   onExportRepo: PropTypes.func.isRequired,
   onExportToClassroom: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
+  onUpdateRepo: PropTypes.func.isRequired,
 };
 
 export default HamburgerMenu;
