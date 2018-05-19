@@ -43,6 +43,7 @@ export default function createMenu({
   renderItems,
   name,
   menuClass,
+  buttonClass,
 }) {
   function mapStateToProps(state) {
     const isOpen = getOpenTopBarMenu(state) === name;
@@ -80,11 +81,11 @@ export default function createMenu({
             {renderItems(props)}
           </div>
         ) : null;
-
       return (
         <div
           className={classnames(
             'top-bar__menu-button',
+            buttonClass,
             {'top-bar__menu-button_active': isOpen},
           )}
           onClick={onToggle}
