@@ -17,7 +17,7 @@ import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
 import EditorsColumn from '../containers/EditorsColumn';
-import Output from './Output';
+import Output from '../containers/Output';
 import PopThrobber from './PopThrobber';
 
 export default class Workspace extends React.Component {
@@ -64,20 +64,6 @@ export default class Workspace extends React.Component {
     if (!isNull(currentProject) && !isPristineProject(currentProject)) {
       dehydrateProject(currentProject);
     }
-  }
-
-  _renderOutput() {
-    const {isDraggingColumnDivider, rowsFlex} = this.props;
-    return (
-      <Output
-        ignorePointerEvents={
-          isDraggingColumnDivider ||
-            Boolean(get(this, 'props.ui.topBar.openMenu'))
-        }
-        style={{flex: rowsFlex[1]}}
-        onRef={partial(this._storeColumnRef, 1)}
-      />
-    );
   }
 
   _handleClickInstructionsBar() {
@@ -162,7 +148,10 @@ export default class Workspace extends React.Component {
             ref={this._storeDividerRef}
           />
         </DraggableCore>
-        {this._renderOutput()}
+        <Output
+          style={{flex: rowsFlex[1]}}
+          onRef={partial(this._storeColumnRef, 1)}
+        />
       </div>
     );
   }
@@ -186,7 +175,6 @@ export default class Workspace extends React.Component {
 
 Workspace.propTypes = {
   currentProject: PropTypes.object,
-  isDraggingColumnDivider: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   rowsFlex: PropTypes.array.isRequired,
   onApplicationLoaded: PropTypes.func.isRequired,
