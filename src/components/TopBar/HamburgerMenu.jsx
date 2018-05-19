@@ -14,7 +14,6 @@ const HamburgerMenu = createMenu({
     hasExportedRepo,
     hasInstructions,
     isEditingInstructions,
-    isExperimental,
     isGistExportInProgress,
     isRepoExportInProgress,
     isClassroomExportInProgress,
@@ -61,28 +60,26 @@ const HamburgerMenu = createMenu({
           </MenuItem>,
         );
 
-        if (isExperimental) {
-          if (hasExportedRepo) {
-            items.push(
-              <MenuItem
-                isDisabled={isRepoExportInProgress}
-                key="updateRepo"
-                onClick={onUpdateRepo}
-              >
-                {t('top-bar.update-repo')}
-              </MenuItem>,
-            );
-          } else {
-            items.push(
-              <MenuItem
-                isDisabled={isRepoExportInProgress}
-                key="exportRepo"
-                onClick={onExportRepo}
-              >
-                {t('top-bar.export-repo')}
-              </MenuItem>,
-            );
-          }
+        if (hasExportedRepo) {
+          items.push(
+            <MenuItem
+              isDisabled={isRepoExportInProgress}
+              key="updateRepo"
+              onClick={onUpdateRepo}
+            >
+              {t('top-bar.update-repo')}
+            </MenuItem>,
+          );
+        } else {
+          items.push(
+            <MenuItem
+              isDisabled={isRepoExportInProgress}
+              key="exportRepo"
+              onClick={onExportRepo}
+            >
+              {t('top-bar.export-repo')}
+            </MenuItem>,
+          );
         }
       }
 
@@ -133,7 +130,6 @@ HamburgerMenu.propTypes = {
   hasInstructions: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
-  isExperimental: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,
