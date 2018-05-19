@@ -12,9 +12,6 @@ import {
 function mapStateToProps(state) {
   return {
     currentProject: getCurrentProject(state),
-    isDraggingColumnDivider: state.getIn(
-      ['ui', 'workspace', 'isDraggingColumnDivider'],
-    ),
     isEditingInstructions: isEditingInstructions(state),
     rowsFlex: state.getIn(['ui', 'workspace', 'rowFlex']).toJS(),
   };

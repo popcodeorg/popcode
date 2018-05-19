@@ -22,6 +22,7 @@ import getRequestedFocusedLine from './getRequestedFocusedLine';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
   from './isCurrentProjectSyntacticallyValid';
+import isDraggingColumnDivider from './isDraggingColumnDivider';
 import isEditingInstructions from './isEditingInstructions';
 import isExperimental from './isExperimental';
 import isGistExportInProgress from './isGistExportInProgress';
@@ -56,6 +57,7 @@ export {
   getRequestedFocusedLine,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
+  isDraggingColumnDivider,
   isEditingInstructions,
   isExperimental,
   isGistExportInProgress,
