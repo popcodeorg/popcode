@@ -33,8 +33,7 @@ export const GOOGLE_SCOPES = [
 
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
+// eslint-disable-next-line guard-for-in
 for (const scope in GOOGLE_SCOPES) {
-  if (scope) {
-    googleAuthProvider.addScope(scope);
-  }
+  googleAuthProvider.addScope(scope);
 }

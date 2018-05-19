@@ -17,7 +17,9 @@ import {
   isClassroomExportInProgress,
   isSnapshotInProgress,
   isTextSizeLarge,
-  makeUserIsAuthenticatedWith,
+  isUserAuthenticatedWithGithub,
+  isUserAuthenticatedWithGoogle,
+  isUserAuthenticated,
   isUserTyping,
 } from '../selectors';
 import {
@@ -35,7 +37,6 @@ import {
 } from '../actions';
 
 function mapStateToProps(state) {
-  const getUserIsAuthenticatedWith = makeUserIsAuthenticatedWith();
   return {
     currentProjectKey: getCurrentProjectKey(state),
     currentUser: getCurrentUser(state),
@@ -50,10 +51,9 @@ function mapStateToProps(state) {
     isClassroomExportInProgress: isClassroomExportInProgress(state),
     isSnapshotInProgress: isSnapshotInProgress(state),
     isTextSizeLarge: isTextSizeLarge(state),
-    isUserAuthenticatedWithGithub:
-      getUserIsAuthenticatedWith(state) === 'github.com',
-    isUserAuthenticatedWithGoogle:
-      getUserIsAuthenticatedWith(state) === 'google.com',
+    isUserAuthenticated: isUserAuthenticated(state),
+    isUserAuthenticatedWithGithub: isUserAuthenticatedWithGithub(state),
+    isUserAuthenticatedWithGoogle: isUserAuthenticatedWithGoogle(state),
     isUserTyping: isUserTyping(state),
     openMenu: getOpenTopBarMenu(state),
     projectKeys: getAllProjectKeys(state),

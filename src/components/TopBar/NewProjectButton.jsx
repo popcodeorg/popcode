@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 
 export default function NewProjectButton({
   onClick,
-  isUserAuthenticatedWithGithub,
-  isUserAuthenticatedWithGoogle,
+  isUserAuthenticated,
 }) {
-  if (!isUserAuthenticatedWithGithub && !isUserAuthenticatedWithGoogle) {
+  if (!isUserAuthenticated) {
     return false;
   }
 
@@ -22,7 +21,6 @@ export default function NewProjectButton({
 }
 
 NewProjectButton.propTypes = {
-  isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
-  isUserAuthenticatedWithGoogle: PropTypes.bool.isRequired,
+  isUserAuthenticated: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };

@@ -37,8 +37,8 @@ export default function TopBar({
   isGistExportInProgress,
   isRepoExportInProgress,
   isClassroomExportInProgress,
+  isUserAuthenticated,
   isUserAuthenticatedWithGithub,
-  isUserAuthenticatedWithGoogle,
   isUserTyping,
   isSnapshotInProgress,
   isTextSizeLarge,
@@ -81,14 +81,12 @@ export default function TopBar({
       <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
       <div className="top-bar__spacer" />
       <NewProjectButton
-        isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
-        isUserAuthenticatedWithGoogle={isUserAuthenticatedWithGoogle}
+        isUserAuthenticated={isUserAuthenticated}
         onClick={onCreateNewProject}
       />
       <ProjectPicker
         currentProjectKey={currentProjectKey}
-        isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
-        isUserAuthenticatedWithGoogle={isUserAuthenticatedWithGoogle}
+        isUserAuthenticated={isUserAuthenticated}
         projectKeys={projectKeys}
         onChangeCurrentProject={onChangeCurrentProject}
       />
@@ -110,8 +108,8 @@ export default function TopBar({
         isGistExportInProgress={isGistExportInProgress}
         isOpen={openMenu === 'hamburger'}
         isRepoExportInProgress={isRepoExportInProgress}
+        isUserAuthenticated={isUserAuthenticated}
         isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
-        isUserAuthenticatedWithGoogle={isUserAuthenticatedWithGoogle}
         onClick={partial(onClickMenu, 'hamburger')}
         onExportGist={onExportGist}
         onExportRepo={onExportRepo}
@@ -139,8 +137,8 @@ TopBar.propTypes = {
   isRepoExportInProgress: PropTypes.bool.isRequired,
   isSnapshotInProgress: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
+  isUserAuthenticated: PropTypes.bool.isRequired,
   isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
-  isUserAuthenticatedWithGoogle: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool.isRequired,
   openMenu: PropTypes.string,
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,

@@ -19,8 +19,8 @@ const HamburgerMenu = createMenu({
     isGapiReady,
     isGistExportInProgress,
     isRepoExportInProgress,
+    isUserAuthenticated,
     isUserAuthenticatedWithGithub,
-    isUserAuthenticatedWithGoogle,
     onExportGist,
     onExportRepo,
     onUpdateRepo,
@@ -31,8 +31,7 @@ const HamburgerMenu = createMenu({
   }) {
     return tap([], (items) => {
       if (
-        !isUserAuthenticatedWithGithub &&
-        !isUserAuthenticatedWithGoogle &&
+        !isUserAuthenticated &&
         isExperimental &&
         isGapiReady
       ) {
@@ -155,16 +154,12 @@ HamburgerMenu.propTypes = {
   isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,
+  isUserAuthenticated: PropTypes.bool.isRequired,
   isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
-  isUserAuthenticatedWithGoogle: PropTypes.bool.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onExportToClassroom: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
-  onUpdateRepo: PropTypes.func.isRequired,
-};
-
-HamburgerMenu.defaultProps = {
   onStartGoogleLogIn: PropTypes.func.isRequired,
   onUpdateRepo: PropTypes.func.isRequired,
 };

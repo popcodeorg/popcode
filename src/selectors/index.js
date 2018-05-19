@@ -32,8 +32,10 @@ import isRepoExportInProgress from './isRepoExportInProgress';
 import isSnapshotInProgress from './isSnapshotInProgress';
 import isTextSizeLarge from './isTextSizeLarge';
 import isUserTyping from './isUserTyping';
+import isUserAuthenticated from './isUserAuthenticated';
+import isUserAuthenticatedWithGithub from './isUserAuthenticatedWithGithub';
+import isUserAuthenticatedWithGoogle from './isUserAuthenticatedWithGoogle';
 import makeGetProjectPreview from './makeGetProjectPreview';
-import makeUserIsAuthenticatedWith from './makeUserIsAuthenticatedWith';
 
 export {
   getAllProjectKeys,
@@ -68,6 +70,8 @@ export {
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserTyping,
+  isUserAuthenticated,
+  isUserAuthenticatedWithGithub,
+  isUserAuthenticatedWithGoogle,
   makeGetProjectPreview,
-  makeUserIsAuthenticatedWith,
 };

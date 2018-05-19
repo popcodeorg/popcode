@@ -13,13 +13,12 @@ const ProjectPicker = createMenu({
 
   isVisible({
     currentProjectKey,
-    isUserAuthenticatedWithGithub,
-    isUserAuthenticatedWithGoogle,
+    isUserAuthenticated,
     projectKeys,
   }) {
     return Boolean(currentProjectKey) &&
       !isEmpty(projectKeys) &&
-      (isUserAuthenticatedWithGithub || isUserAuthenticatedWithGoogle);
+      isUserAuthenticated;
   },
 
   renderItems({currentProjectKey, projectKeys, onChangeCurrentProject}) {
