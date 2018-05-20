@@ -12,9 +12,12 @@ import {
   snapshotExportError,
   projectExported,
   projectExportError,
+  gapiClientReady,
 } from '../actions/clients';
 import {getCurrentProject} from '../selectors';
 import {generateTextPreview} from '../util/compileProject';
+import {loadAndConfigureGapi} from '../services/gapi';
+
 
 export function* createSnapshot() {
   const project = yield select(getCurrentProject);
@@ -57,9 +60,15 @@ export function* exportProject({payload: {exportType}}) {
   }
 }
 
+export function* applicationLoaded() {
+  yield loadAndConfigureGapi();
+  yield put(gapiClientReady());
+}
+
 export default function* () {
   yield all([
     takeEvery('CREATE_SNAPSHOT', createSnapshot),
     takeEvery('EXPORT_PROJECT', exportProject),
+    takeEvery('APPLICATION_LOADED', applicationLoaded),
   ]);
 }

@@ -50,11 +50,12 @@ function* handleAuthChange() {
   }
 }
 
-export function* logIn() {
+export function* logIn({payload: {provider}}) {
   try {
-    yield call(signIn);
+    yield call(signIn, provider);
   } catch (e) {
     switch (e.code) {
+      case 'popup-closed-by-user':
       case 'auth/popup-closed-by-user':
         yield put(notificationTriggered('user-cancelled-auth'));
         break;
@@ -73,6 +74,7 @@ export function* logIn() {
         );
         break;
 
+      case 'access_denied':
       case 'auth/internal-error':
         yield put(notificationTriggered('auth-error'));
         break;
