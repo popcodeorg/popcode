@@ -3,11 +3,15 @@ import Immutable from 'immutable';
 import partial from 'lodash-es/partial';
 import reducerTest from '../../helpers/reducerTest';
 import {user as states} from '../../helpers/referenceStates';
-import {userCredential} from '../../helpers/factory';
+import {
+  additionalUserInfo,
+  userCredential,
+} from '../../helpers/factory';
 import reducer from '../../../src/reducers/user';
 import {userAuthenticated, userLoggedOut} from '../../../src/actions/user';
 
 const userCredentialIn = userCredential();
+const additionalUserInfoIn = additionalUserInfo();
 
 const loggedInState = Immutable.fromJS({
   authenticated: true,
@@ -17,6 +21,7 @@ const loggedInState = Immutable.fromJS({
   accessTokens: {
     'github.com': userCredentialIn.credential.accessToken,
   },
+  githubUsername: additionalUserInfoIn.username,
 });
 
 test('userAuthenticated', (t) => {
@@ -34,7 +39,7 @@ test('userAuthenticated', (t) => {
       userAuthenticated,
       userCredential({user: {providerData: [{displayName: null}]}}),
     ),
-    loggedInState.set('displayName', 'popcoder'),
+    loggedInState.set('displayName', additionalUserInfoIn.username),
   ));
 });
 

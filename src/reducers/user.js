@@ -11,19 +11,18 @@ function user(stateIn, action) {
       const {user: userData, credential, additionalUserInfo} = action.payload;
 
       const profileData = get(userData, ['providerData', 0], userData);
+      const githubUsername = get(additionalUserInfo, 'username');
 
       return state.merge({
         authenticated: true,
         id: userData.uid,
-        displayName: profileData.displayName || get(
-          additionalUserInfo,
-          'username',
-        ),
+        displayName: profileData.displayName || githubUsername,
         avatarUrl: profileData.photoURL,
         accessTokens: new Immutable.Map().set(
           credential.providerId,
           credential.accessToken,
         ),
+        githubUsername,
       });
     }
 
