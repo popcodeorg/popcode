@@ -10,11 +10,14 @@ import {
   getOpenTopBarMenu,
   getAllProjectKeys,
   isEditingInstructions,
+  isExperimental,
+  isGapiReady,
   isGistExportInProgress,
   isRepoExportInProgress,
   isClassroomExportInProgress,
   isSnapshotInProgress,
   isTextSizeLarge,
+  isUserAuthenticatedWithGithub,
   isUserAuthenticated,
   isUserTyping,
 } from '../selectors';
@@ -40,12 +43,15 @@ function mapStateToProps(state) {
     hasInstructions: Boolean(getCurrentProjectInstructions(state)),
     hasExportedRepo: Boolean(getCurrentProjectExportedRepoName(state)),
     isEditingInstructions: isEditingInstructions(state),
+    isExperimental: isExperimental(state),
+    isGapiReady: isGapiReady(state),
     isGistExportInProgress: isGistExportInProgress(state),
     isRepoExportInProgress: isRepoExportInProgress(state),
     isClassroomExportInProgress: isClassroomExportInProgress(state),
     isSnapshotInProgress: isSnapshotInProgress(state),
     isTextSizeLarge: isTextSizeLarge(state),
     isUserAuthenticated: isUserAuthenticated(state),
+    isUserAuthenticatedWithGithub: isUserAuthenticatedWithGithub(state),
     isUserTyping: isUserTyping(state),
     openMenu: getOpenTopBarMenu(state),
     projectKeys: getAllProjectKeys(state),
@@ -107,8 +113,12 @@ function mapDispatchToProps(dispatch) {
       dispatch(startEditingInstructions(projectKey));
     },
 
-    onStartLogIn() {
-      dispatch(logIn());
+    onStartGithubLogIn() {
+      dispatch(logIn('github'));
+    },
+
+    onStartGoogleLogIn() {
+      dispatch(logIn('google'));
     },
 
     onToggleTextSize() {
