@@ -5,7 +5,6 @@ import {
   exportProject,
   projectExportDisplayed,
   projectExportNotDisplayed,
-  gapiClientReady,
 } from './clients';
 
 import {
@@ -104,5 +103,4 @@ export {
   evaluateConsoleEntry,
   projectCompiled,
   projectCompilationFailed,
-  gapiClientReady,
 };

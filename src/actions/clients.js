@@ -36,4 +36,3 @@ export const projectExportNotDisplayed = createAction(
   (url, exportType) => ({url, exportType}),
 );
 
-export const gapiClientReady = createAction('GAPI_CLIENT_READY');

@@ -7,7 +7,7 @@ import CurrentUserMenu from './CurrentUserMenu';
 export default function CurrentUser({
   user,
   onLogOut,
-  onStartGithubLogIn,
+  onStartLogIn,
 }) {
   if (user.authenticated) {
     return <CurrentUserMenu user={user} onLogOut={onLogOut} />;
@@ -18,7 +18,7 @@ export default function CurrentUser({
         'top-bar__menu-button',
         'top-bar__menu-button_primary',
       )}
-      onClick={onStartGithubLogIn}
+      onClick={onStartLogIn}
     >
       {t('top-bar.session.log-in-prompt')}
     </div>
@@ -30,5 +30,5 @@ CurrentUser.propTypes = {
     authenticated: PropTypes.boolean,
   }).isRequired,
   onLogOut: PropTypes.func.isRequired,
-  onStartGithubLogIn: PropTypes.func.isRequired,
+  onStartLogIn: PropTypes.func.isRequired,
 };

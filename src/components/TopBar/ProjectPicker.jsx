@@ -11,11 +11,7 @@ const ProjectPicker = createMenu({
   menuClass: 'top-bar__menu_right top-bar__menu_project-picker',
   name: 'projectPicker',
 
-  isVisible({
-    currentProjectKey,
-    isUserAuthenticated,
-    projectKeys,
-  }) {
+  isVisible({currentProjectKey, isUserAuthenticated, projectKeys}) {
     return Boolean(currentProjectKey) &&
       !isEmpty(projectKeys) &&
       isUserAuthenticated;

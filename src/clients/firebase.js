@@ -4,13 +4,7 @@ import isNil from 'lodash-es/isNil';
 import isNull from 'lodash-es/isNull';
 import values from 'lodash-es/values';
 import uuid from 'uuid/v4';
-import {getGapiSync} from '../services/gapi';
-import {
-  auth,
-  loadDatabase,
-  githubAuthProvider,
-  googleAuthProvider,
-} from '../services/appFirebase';
+import {auth, loadDatabase, githubAuthProvider} from '../services/appFirebase';
 
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
 const SESSION_TTL_MS = 5 * 60 * 1000;
@@ -74,16 +68,12 @@ async function userCredentialForUserData(user) {
   return {user, credential, additionalUserInfo};
 }
 
-export async function signIn(provider) {
+export async function signIn() {
   const originalOnerror = window.onerror;
   window.onerror = message => message.toLowerCase().includes('network error');
+
   try {
-    let userCredential;
-    if (provider === 'github') {
-      userCredential = await signInWithGithub();
-    } else if (provider === 'google') {
-      userCredential = await signInWithGoogle();
-    }
+    const userCredential = await auth.signInWithPopup(githubAuthProvider);
     await saveUserCredential(userCredential);
     return userCredential;
   } finally {
@@ -93,24 +83,7 @@ export async function signIn(provider) {
   }
 }
 
-async function signInWithGithub() {
-  return auth.signInWithPopup(githubAuthProvider);
-}
-
-async function signInWithGoogle() {
-  const gapi = getGapiSync();
-  const googleUser =
-    await gapi.auth2.getAuthInstance().signIn({prompt: 'select_account'});
-  const googleCredential =
-    googleAuthProvider.credential(googleUser.getAuthResponse().id_token);
-  return auth.signInAndRetrieveDataWithCredential(googleCredential);
-}
-
-export async function signOut() {
-  const gapi = getGapiSync();
-  if (await gapi.auth2.getAuthInstance().isSignedIn.get()) {
-    gapi.auth2.getAuthInstance().signOut();
-  }
+export function signOut() {
   return auth.signOut();
 }
 
