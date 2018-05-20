@@ -18,7 +18,6 @@ import {
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserAuthenticatedWithGithub,
-  isUserAuthenticatedWithGoogle,
   isUserAuthenticated,
   isUserTyping,
 } from '../selectors';
@@ -53,7 +52,6 @@ function mapStateToProps(state) {
     isTextSizeLarge: isTextSizeLarge(state),
     isUserAuthenticated: isUserAuthenticated(state),
     isUserAuthenticatedWithGithub: isUserAuthenticatedWithGithub(state),
-    isUserAuthenticatedWithGoogle: isUserAuthenticatedWithGoogle(state),
     isUserTyping: isUserTyping(state),
     openMenu: getOpenTopBarMenu(state),
     projectKeys: getAllProjectKeys(state),
