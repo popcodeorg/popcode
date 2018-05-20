@@ -1,10 +1,7 @@
 import {createAction} from 'redux-actions';
 import identity from 'lodash-es/identity';
 
-export const logIn = createAction(
-  'LOG_IN',
-  provider => ({provider}),
-);
+export const logIn = createAction('LOG_IN');
 
 export const logOut = createAction('LOG_OUT');
 

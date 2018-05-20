@@ -10,7 +10,6 @@ module.exports = {
 
   firebaseApp: process.env.FIREBASE_APP,
   firebaseApiKey: process.env.FIREBASE_API_KEY,
-  firebaseClientId: process.env.FIREBASE_CLIENT_ID,
 
   feedbackUrl: 'https://gitreports.com/issue/popcodeorg/popcode',
 
