@@ -29,6 +29,7 @@ import isExperimental from './isExperimental';
 import isGapiReady from './isGapiReady';
 import isGistExportInProgress from './isGistExportInProgress';
 import isRepoExportInProgress from './isRepoExportInProgress';
+import isSaveIndicatorShown from './isSaveIndicatorShown';
 import isSnapshotInProgress from './isSnapshotInProgress';
 import isTextSizeLarge from './isTextSizeLarge';
 import isUserTyping from './isUserTyping';
@@ -67,6 +68,7 @@ export {
   isGapiReady,
   isGistExportInProgress,
   isRepoExportInProgress,
+  isSaveIndicatorShown,
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserTyping,

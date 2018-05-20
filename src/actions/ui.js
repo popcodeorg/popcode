@@ -68,3 +68,11 @@ export const startEditingInstructions = createAction(
 export const cancelEditingInstructions = createAction(
   'CANCEL_EDITING_INSTRUCTIONS',
 );
+
+export const showSaveIndicator = createAction(
+  'SHOW_SAVE_INDICATOR',
+);
+
+export const hideSaveIndicator = createAction(
+  'HIDE_SAVE_INDICATOR',
+);

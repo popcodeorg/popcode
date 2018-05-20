@@ -315,6 +315,16 @@ body {
   border-bottom-left-radius: 0;
 }
 
+.top-bar__project-saved {
+  position: absolute;
+  visibility: hidden;
+  text-align: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
 /** @define instructions */
 
 .instructions {

@@ -17,6 +17,7 @@ import {
   toggleComponent,
   updateProjectSource,
   updateProjectInstructions,
+  projectSuccessfullySaved,
 } from './projects';
 
 import {
@@ -35,6 +36,8 @@ import {
   closeTopBarMenu,
   startEditingInstructions,
   cancelEditingInstructions,
+  showSaveIndicator,
+  hideSaveIndicator,
 } from './ui';
 
 import {
@@ -105,4 +108,7 @@ export {
   projectCompiled,
   projectCompilationFailed,
   gapiClientReady,
+  projectSuccessfullySaved,
+  showSaveIndicator,
+  hideSaveIndicator,
 };

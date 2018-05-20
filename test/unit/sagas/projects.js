@@ -7,6 +7,7 @@ import {
   changeCurrentProject as changeCurrentProjectSaga,
   importGist as importGistSaga,
   importSnapshot as importSnapshotSaga,
+  saveCurrentProject,
   toggleLibrary as toggleLibrarySaga,
   userAuthenticated as userAuthenticatedSaga,
   updateProjectSource as updateProjectSourceSaga,
@@ -18,6 +19,7 @@ import {
   toggleLibrary,
   updateProjectInstructions,
   updateProjectSource,
+  projectSuccessfullySaved,
 } from '../../../src/actions/projects';
 import {
   snapshotImportError,
@@ -26,14 +28,22 @@ import {
 } from '../../../src/actions/clients';
 import {userAuthenticated} from '../../../src/actions/user';
 import applicationLoaded from '../../../src/actions/applicationLoaded';
-import {saveCurrentProject} from '../../../src/util/projectUtils';
 import {loadGistFromId} from '../../../src/clients/github';
 import {
   loadAllProjects,
   loadProjectSnapshot,
+  saveProject,
 } from '../../../src/clients/firebase';
 import Scenario from '../../helpers/Scenario';
-import {gistData, project, userCredential} from '../../helpers/factory';
+import {
+  gistData,
+  project,
+  userCredential,
+} from '../../helpers/factory';
+import {
+  getCurrentUserId,
+  getCurrentProject,
+} from '../../../src/selectors/index';
 
 test('createProject()', (assert) => {
   let firstProjectKey;
@@ -70,14 +80,19 @@ test('createProject()', (assert) => {
 });
 
 test('changeCurrentProject()', (assert) => {
-  const scenario = new Scenario();
-  testSaga(changeCurrentProjectSaga).
-    next().inspect((effect) => {
-      assert.ok(effect.SELECT, 'invokes select effect');
-    }).
-    next(scenario.state).call(saveCurrentProject, scenario.state).
-    next().isDone();
+  const userId = 'abc123';
+  const currentProject = project();
 
+  testSaga(changeCurrentProjectSaga).
+    next().select(getCurrentUserId).
+    next(userId).select(getCurrentProject).
+    next(currentProject).call(
+      saveProject,
+      userId,
+      currentProject,
+    ).
+    next().put(projectSuccessfullySaved()).
+    next().isDone();
   assert.end();
 });
 
@@ -213,44 +228,69 @@ test('userAuthenticated', (assert) => {
   const projects = [project()];
   testSaga(userAuthenticatedSaga, userAuthenticated(userCredential())).
     next().inspect(effect => assert.ok(effect.SELECT)).
-    next(scenario.state).fork(saveCurrentProject, scenario.state).
-    next().call(loadAllProjects, scenario.user.get('id')).
-    next(projects).put(projectsLoaded(projects));
+    next(scenario.state).fork(saveCurrentProject).
+    next(scenario.state).call(loadAllProjects, scenario.user.get('id')).
+    next(projects).put(projectsLoaded(projects)).
+    next().isDone();
   assert.end();
 });
 
 test('updateProjectSource', (assert) => {
   const scenario = new Scenario();
+  const userId = 'abc123';
+  const currentProject = project();
   testSaga(
     updateProjectSourceSaga,
     updateProjectSource(scenario.projectKey, 'css', 'p {}'),
   ).
-    next().select().
-    next(scenario.state).call(saveCurrentProject, scenario.state).
+    next().select(getCurrentUserId).
+    next(userId).select(getCurrentProject).
+    next(currentProject).call(
+      saveProject,
+      userId,
+      currentProject,
+    ).
+    next().put(projectSuccessfullySaved()).
     next().isDone();
   assert.end();
 });
 
 test('updateProjectInstructions', (assert) => {
   const scenario = new Scenario();
+  const userId = 'abc123';
+  const currentProject = project();
   testSaga(
     updateProjectSourceSaga,
     updateProjectInstructions(scenario.projectKey, '# Instructions'),
   ).
-    next().select().
-    next(scenario.state).call(saveCurrentProject, scenario.state).
+    next().select(getCurrentUserId).
+    next(userId).select(getCurrentProject).
+    next(currentProject).call(
+      saveProject,
+      userId,
+      currentProject,
+    ).
+    next().put(projectSuccessfullySaved()).
     next().isDone();
   assert.end();
 });
 
 test('toggleLibrary', (assert) => {
   const scenario = new Scenario();
+  const userId = 'abc123';
+  const currentProject = project();
   testSaga(
     toggleLibrarySaga,
     toggleLibrary(scenario.projectKey, 'jquery'),
   ).
-    next().select().
-    next(scenario.state).call(saveCurrentProject, scenario.state).
+    next().select(getCurrentUserId).
+    next(userId).select(getCurrentProject).
+    next(currentProject).call(
+      saveProject,
+      userId,
+      currentProject,
+    ).
+    next().put(projectSuccessfullySaved()).
     next().isDone();
   assert.end();
 });

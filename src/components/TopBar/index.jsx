@@ -47,6 +47,7 @@ export default function TopBar({
   isTextSizeLarge,
   openMenu,
   projectKeys,
+  shouldShowSavedIndicator,
   validationState,
   onChangeCurrentProject,
   onClickMenu,
@@ -104,6 +105,7 @@ export default function TopBar({
         currentProjectKey={currentProjectKey}
         isUserAuthenticated={isUserAuthenticated}
         projectKeys={projectKeys}
+        shouldShowSavedIndicator={shouldShowSavedIndicator}
         onChangeCurrentProject={onChangeCurrentProject}
       />
       <CurrentUser
@@ -149,6 +151,7 @@ TopBar.propTypes = {
   isUserTyping: PropTypes.bool.isRequired,
   openMenu: PropTypes.string,
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+  shouldShowSavedIndicator: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
   onChangeCurrentProject: PropTypes.func.isRequired,
   onClickMenu: PropTypes.func.isRequired,
