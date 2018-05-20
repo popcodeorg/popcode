@@ -23,7 +23,6 @@ import {
 import {
   focusLine,
   editorFocusedRequestedLine,
-  dragRowDivider,
   dragColumnDivider,
   startDragColumnDivider,
   stopDragColumnDivider,
@@ -66,6 +65,10 @@ import {
   evaluateConsoleEntry,
 } from './console';
 
+import {
+  updateResizableFlex,
+} from './resizableFlex';
+
 export {
   clearConsoleEntries,
   consoleValueProduced,
@@ -85,7 +88,6 @@ export {
   toggleComponent,
   focusLine,
   editorFocusedRequestedLine,
-  dragRowDivider,
   dragColumnDivider,
   startDragColumnDivider,
   stopDragColumnDivider,
@@ -113,4 +115,5 @@ export {
   showSaveIndicator,
   hideSaveIndicator,
   linkGithubIdentity,
+  updateResizableFlex,
 };

@@ -1,9 +1,12 @@
 import prefixAll from 'inline-style-prefixer/static';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {forwardRef} from 'react';
 import {t} from 'i18next';
 
-function EditorContainer({children, language, source, style, onHide, onRef}) {
+const EditorContainer = forwardRef((
+  {children, language, source, style, onHide},
+  ref,
+) => {
   let helpText;
 
   if (source === '') {
@@ -17,7 +20,7 @@ function EditorContainer({children, language, source, style, onHide, onRef}) {
   return (
     <div
       className="editors__editor-container"
-      ref={onRef}
+      ref={ref}
       style={prefixAll(style)}
     >
       <div
@@ -32,7 +35,7 @@ function EditorContainer({children, language, source, style, onHide, onRef}) {
       {children}
     </div>
   );
-}
+});
 
 EditorContainer.propTypes = {
   children: PropTypes.node.isRequired,
@@ -40,7 +43,6 @@ EditorContainer.propTypes = {
   source: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
   onHide: PropTypes.func.isRequired,
-  onRef: PropTypes.func.isRequired,
 };
 
 export default EditorContainer;

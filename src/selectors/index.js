@@ -11,7 +11,6 @@ import getCurrentProjectKey from './getCurrentProjectKey';
 import getCurrentUser from './getCurrentUser';
 import getCurrentUserId from './getCurrentUserId';
 import getCurrentValidationState from './getCurrentValidationState';
-import getEditorsFlex from './getEditorsFlex';
 import getEnabledLibraries from './getEnabledLibraries';
 import getErrors from './getErrors';
 import getHiddenUIComponents from './getHiddenUIComponents';
@@ -38,6 +37,7 @@ import isUserAuthenticated from './isUserAuthenticated';
 import isUserAuthenticatedWithGithub from './isUserAuthenticatedWithGithub';
 import isUserAuthenticatedWithGoogle from './isUserAuthenticatedWithGoogle';
 import makeGetProjectPreview from './makeGetProjectPreview';
+import makeGetResizableFlexGrow from './makeGetResizableFlexGrow';
 
 export {
   getAllProjectKeys,
@@ -52,7 +52,6 @@ export {
   getCurrentUser,
   getCurrentUserId,
   getCurrentValidationState,
-  getEditorsFlex,
   getEnabledLibraries,
   getErrors,
   getHiddenUIComponents,
@@ -78,4 +77,5 @@ export {
   isUserAuthenticatedWithGithub,
   isUserAuthenticatedWithGoogle,
   makeGetProjectPreview,
+  makeGetResizableFlexGrow,
 };
