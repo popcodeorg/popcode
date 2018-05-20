@@ -39,7 +39,10 @@ export function* exportProject({payload: {exportType}}) {
     } else if (exportType === 'repo') {
       ({url, name} = yield call(createOrUpdateRepoFromProject, project, user));
       if (name) {
-        exportData = {name};
+        exportData = {
+          repoName: name,
+          username: user.githubUsername,
+        };
       }
     } else if (exportType === 'classroom') {
       const snapshotKey = yield call(createProjectSnapshot, project);

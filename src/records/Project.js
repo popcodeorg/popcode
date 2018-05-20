@@ -1,4 +1,4 @@
-import {Record, Set} from 'immutable';
+import {Map, Record, Set} from 'immutable';
 
 import HTML_TEMPLATE from '../../templates/new.html';
 
@@ -9,7 +9,7 @@ const Sources = Record({
 });
 
 const ExternalLocations = Record({
-  githubRepoName: null,
+  githubRepos: new Map(),
 });
 
 export default class Project extends Record({

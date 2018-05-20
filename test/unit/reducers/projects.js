@@ -327,11 +327,11 @@ tap(initProjects({1: true}), (projects) => {
       'https://github.com/usernmaer/Page-Title-abc123',
       'repo',
       '1',
-      {name: repoName},
+      {repoName, username: 'popcoder'},
       timestamp,
     ),
     projects.setIn(['1', 'updatedAt'], timestamp).
-      setIn(['1', 'externalLocations', 'githubRepoName'], repoName),
+      setIn(['1', 'externalLocations', 'githubRepos', 'popcoder'], repoName),
     'stores the repo name',
   ));
 });

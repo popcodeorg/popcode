@@ -211,10 +211,17 @@ export default function reduceProjects(stateIn, action) {
 
     case 'PROJECT_EXPORTED':
       if (action.payload.exportType === 'repo' &&
-        action.payload.exportData.name) {
-        return state.setIn(
-          [action.payload.projectKey, 'externalLocations', 'githubRepoName'],
-          action.payload.exportData.name,
+        action.payload.exportData.repoName) {
+        return state.mergeIn(
+          [
+            action.payload.projectKey,
+            'externalLocations',
+            'githubRepos',
+          ],
+          Immutable.fromJS({
+            [action.payload.exportData.username]:
+              action.payload.exportData.repoName,
+          }),
         ).setIn(
           [action.payload.projectKey, 'updatedAt'],
           action.meta.timestamp,
