@@ -1,8 +1,11 @@
+import classnames from 'classnames';
 import isEmpty from 'lodash-es/isEmpty';
+import filter from 'lodash-es/filter';
 import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {t} from 'i18next';
 
 import ProjectPreview from '../../containers/ProjectPreview';
 
@@ -23,22 +26,58 @@ const ProjectPicker = createMenu({
       isUserAuthenticated;
   },
 
-  renderItems({currentProjectKey, projectKeys, onChangeCurrentProject}) {
-    return map(projectKeys, projectKey => (
+  renderItems({
+    currentProjectKey,
+    projects,
+    shouldShowArchivedProjects,
+    onChangeCurrentProject,
+    onToggleViewArchived,
+  }) {
+    const visibleProjects = shouldShowArchivedProjects ?
+      projects :
+      filter(projects, ({isArchived}) => !isArchived);
+    const items = map(visibleProjects, project => (
       <MenuItem
-        isActive={projectKey === currentProjectKey}
-        key={projectKey}
-        onClick={partial(onChangeCurrentProject, projectKey)}
+        isActive={project.projectKey === currentProjectKey}
+        key={project.projectKey}
+        onClick={partial(onChangeCurrentProject, project.projectKey)}
       >
-        <ProjectPreview projectKey={projectKey} />
+        <ProjectPreview
+          projectKey={project.projectKey}
+        />
       </MenuItem>
     ));
+
+    if (!isEmpty(filter(projects, 'isArchived'))) {
+      items.push(
+        <div
+          className={classnames(
+            'top-bar__menu-item',
+            'top-bar__menu-item_toggle-archived-projects-button',
+          )}
+          key="toggleShowArchivedProjects"
+          onClick={onToggleViewArchived}
+        >
+          <div>
+            {
+              shouldShowArchivedProjects ?
+                t('top-bar.hide-projects') :
+                t('top-bar.show-projects')
+            }
+          </div>
+        </div>,
+      );
+    }
+
+    return items;
   },
 })(ProjectPickerButton);
 
 ProjectPicker.propTypes = {
   currentProjectKey: PropTypes.string,
-  projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+  projects: PropTypes.array.isRequired,
+  shouldShowArchivedProjects: PropTypes.bool.isRequired,
+  onToggleViewArchived: PropTypes.func.isRequired,
 };
 
 ProjectPicker.defaultProps = {

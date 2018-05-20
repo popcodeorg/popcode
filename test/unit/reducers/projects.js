@@ -23,6 +23,7 @@ import {
   toggleComponent,
   updateProjectSource,
   updateProjectInstructions,
+  archiveProject,
 } from '../../../src/actions/projects';
 import {
   snapshotImported,
@@ -87,7 +88,11 @@ test('changeCurrentProject', (t) => {
     reducer,
     initProjects({1: true, 2: false}),
     partial(changeCurrentProject, '2'),
-    initProjects({1: true, 2: false}),
+    initProjects({1: true, 2: false}).
+      update(
+        '2',
+        editedProject => editedProject.set('isArchived', false),
+      ),
     'keeps previous project in store',
   ));
 
@@ -103,7 +108,11 @@ test('changeCurrentProject', (t) => {
     reducer,
     initProjects({1: true, 2: true}),
     partial(changeCurrentProject, '2'),
-    initProjects({1: true, 2: true}),
+    initProjects({1: true, 2: true}).
+      update(
+        '2',
+        editedProject => editedProject.set('isArchived', false),
+      ),
     'keeps previous project in store',
   ));
 });
@@ -372,6 +381,14 @@ tap(initProjects({1: true}), (projects) => {
     'stores the repo name',
   ));
 });
+
+tap(initProjects({1: false}), projects =>
+  test('archiveProject', reducerTest(
+    reducer,
+    projects,
+    partial(archiveProject, '1'),
+    projects.setIn(['1', 'isArchived'], true),
+  )));
 
 function initProjects(map = {}) {
   return reduce(map, (projectsIn, modified, key) => {

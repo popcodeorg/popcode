@@ -24,6 +24,7 @@ import {
   updateProjectSource,
   updateProjectInstructions,
   projectSuccessfullySaved,
+  archiveProject,
 } from './projects';
 
 import {
@@ -46,6 +47,7 @@ import {
   closeAssignmentCreator,
   coursesLoaded,
   coursesFullyLoaded,
+  toggleArchivedView,
 } from './ui';
 
 import {
@@ -143,4 +145,6 @@ export {
   closeAssignmentCreator,
   coursesLoaded,
   coursesFullyLoaded,
+  archiveProject,
+  toggleArchivedView,
 };

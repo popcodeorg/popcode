@@ -62,6 +62,7 @@ function importGist(state, projectKey, gistData) {
       enabledLibraries: popcodeJson.enabledLibraries || [],
       hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
       instructions: contentForLanguage(files, 'Markdown'),
+      isArchived: false,
     },
   );
 }
@@ -144,7 +145,10 @@ export default function reduceProjects(stateIn, action) {
       );
 
     case 'CHANGE_CURRENT_PROJECT':
-      return removePristineExcept(state, action.payload.projectKey);
+      return removePristineExcept(state, action.payload.projectKey).setIn(
+        [action.payload.projectKey, 'isArchived'],
+        false,
+      );
 
     case 'SNAPSHOT_IMPORTED':
       return addProject(
@@ -234,6 +238,12 @@ export default function reduceProjects(stateIn, action) {
         );
       }
       return state;
+
+    case 'ARCHIVE_PROJECT':
+      return state.setIn(
+        [action.payload.projectKey, 'isArchived'],
+        true,
+      );
 
     default:
       return state;

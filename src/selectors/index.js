@@ -27,6 +27,7 @@ import getRequestedFocusedLine from './getRequestedFocusedLine';
 import isAssignmentCreatorOpen from './isAssignmentCreatorOpen';
 import isAssignmentExportInProgress from './isAssignmentExportInProgress';
 import isClassroomExportInProgress from './isClassroomExportInProgress';
+import isArchivedViewOpen from './isArchivedViewOpen';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
   from './isCurrentProjectSyntacticallyValid';
@@ -78,6 +79,7 @@ export {
   isAssignmentCreatorOpen,
   isAssignmentExportInProgress,
   isClassroomExportInProgress,
+  isArchivedViewOpen,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isDraggingColumnDivider,

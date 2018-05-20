@@ -262,6 +262,12 @@ body {
   cursor: default;
 }
 
+.top-bar__menu-item_toggle-archived-projects-button {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--color-low-contrast-gray);
+}
+
 .top-bar__drop-down-button {
   padding-left: 0.5em;
 }
@@ -426,8 +432,31 @@ body {
 
 /** @define project-preview */
 
+.project-preview {
+  display: flex;
+  justify-content: space-between;
+}
+
 .project-preview__label {
   white-space: normal;
+}
+
+.project-preview__label_archived {
+  font-style: italic;
+}
+
+.project-preview__archive {
+  color: var(--color-light-gray);
+  margin-right: 1em;
+  font-size: 1.5em;
+}
+
+.project-preview__archive:hover {
+  color: black;
+}
+
+.project-preview__archived {
+  font-style: italic;
 }
 
 .project-preview__timestamp {
