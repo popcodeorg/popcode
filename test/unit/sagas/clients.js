@@ -119,7 +119,7 @@ test('export repo', (t) => {
         url,
         exportType,
         scenario.project.projectKey,
-        {name},
+        {repoName: name, username: undefined},
         Date.now(),
       )).
       next().isDone();

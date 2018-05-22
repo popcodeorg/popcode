@@ -25,8 +25,12 @@ function normalizeTitle(title) {
   return titleWithoutPunctuationAndWhitespace;
 }
 
+function getRepoNameForUser(project, user) {
+  return project.externalLocations.githubRepos[user.githubUsername];
+}
+
 export async function createOrUpdateRepoFromProject(project, user) {
-  const repoAlreadyExists = Boolean(project.externalLocations.githubRepoName);
+  const repoAlreadyExists = Boolean(getRepoNameForUser(project, user));
   if (repoAlreadyExists) {
     return updateRepoFromProject(project, user);
   }
@@ -65,7 +69,7 @@ async function createRepoFromProject(project, user) {
 
 export async function updateRepoFromProject(project, user) {
   const github = await clientForUser(user);
-  const repoName = project.externalLocations.githubRepoName;
+  const repoName = getRepoNameForUser(project, user);
 
   const {data: userData} = await performWithRetryNetworkErrors(
     () => github.getUser().getProfile(),
