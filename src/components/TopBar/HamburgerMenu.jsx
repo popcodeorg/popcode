@@ -13,18 +13,37 @@ const HamburgerMenu = createMenu({
   renderItems({
     hasExportedRepo,
     hasInstructions,
+    isClassroomExportInProgress,
     isEditingInstructions,
+    isExperimental,
+    isGapiReady,
     isGistExportInProgress,
     isRepoExportInProgress,
-    isClassroomExportInProgress,
     isUserAuthenticated,
+    isUserAuthenticatedWithGithub,
     onExportGist,
     onExportRepo,
     onUpdateRepo,
     onExportToClassroom,
     onStartEditingInstructions,
+    onStartGoogleLogIn,
+
   }) {
     return tap([], (items) => {
+      if (
+        !isUserAuthenticated &&
+        isExperimental &&
+        isGapiReady
+      ) {
+        items.push(
+          <MenuItem
+            key="startGoogleLogIn"
+            onClick={onStartGoogleLogIn}
+          >
+            Login with Google
+          </MenuItem>,
+        );
+      }
       items.push(
         <MenuItem
           isDisabled={isClassroomExportInProgress}
@@ -49,7 +68,7 @@ const HamburgerMenu = createMenu({
         </MenuItem>,
       );
 
-      if (isUserAuthenticated) {
+      if (isUserAuthenticatedWithGithub) {
         items.push(
           <MenuItem
             idDisabled={isGistExportInProgress}
@@ -130,14 +149,18 @@ HamburgerMenu.propTypes = {
   hasInstructions: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
+  isExperimental: PropTypes.bool.isRequired,
+  isGapiReady: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
+  isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onExportToClassroom: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
+  onStartGoogleLogIn: PropTypes.func.isRequired,
   onUpdateRepo: PropTypes.func.isRequired,
 };
 

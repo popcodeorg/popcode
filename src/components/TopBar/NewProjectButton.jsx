@@ -2,7 +2,10 @@ import {t} from 'i18next';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function NewProjectButton({isUserAuthenticated, onClick}) {
+export default function NewProjectButton({
+  onClick,
+  isUserAuthenticated,
+}) {
   if (!isUserAuthenticated) {
     return false;
   }
