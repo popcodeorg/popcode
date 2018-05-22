@@ -303,6 +303,18 @@ body {
   flex: 1 0 0;
 }
 
+.top-bar__snapshot {
+  margin-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.top-bar__menu-button_export {
+  margin-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 /** @define instructions */
 
 .instructions {

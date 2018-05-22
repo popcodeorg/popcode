@@ -5,6 +5,7 @@ import partial from 'lodash-es/partial';
 import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
 import CurrentUser from './CurrentUser';
+import ExportMenu from './ExportMenu';
 import HamburgerMenu from './HamburgerMenu';
 import LibraryPicker from './LibraryPicker';
 import NewProjectButton from './NewProjectButton';
@@ -78,6 +79,19 @@ export default function TopBar({
         isInProgress={isSnapshotInProgress}
         onClick={onCreateSnapshot}
       />
+      <ExportMenu
+        hasExportedRepo={hasExportedRepo}
+        isClassroomExportInProgress={isClassroomExportInProgress}
+        isGistExportInProgress={isGistExportInProgress}
+        isOpen={openMenu === 'export'}
+        isRepoExportInProgress={isRepoExportInProgress}
+        isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
+        onClick={partial(onClickMenu, 'export')}
+        onExportGist={onExportGist}
+        onExportRepo={onExportRepo}
+        onExportToClassroom={onExportToClassroom}
+        onUpdateRepo={onUpdateRepo}
+      />
       <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
       <div className="top-bar__spacer" />
       <NewProjectButton
@@ -99,25 +113,16 @@ export default function TopBar({
         onStartGithubLogIn={onStartGithubLogIn}
       />
       <HamburgerMenu
-        hasExportedRepo={hasExportedRepo}
         hasInstructions={hasInstructions}
-        isClassroomExportInProgress={isClassroomExportInProgress}
         isEditingInstructions={isEditingInstructions}
         isExperimental={isExperimental}
         isGapiReady={isGapiReady}
-        isGistExportInProgress={isGistExportInProgress}
         isOpen={openMenu === 'hamburger'}
-        isRepoExportInProgress={isRepoExportInProgress}
         isUserAuthenticated={isUserAuthenticated}
-        isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
         onClick={partial(onClickMenu, 'hamburger')}
-        onExportGist={onExportGist}
-        onExportRepo={onExportRepo}
-        onExportToClassroom={onExportToClassroom}
         onStartEditingInstructions={
           partial(onStartEditingInstructions, currentProjectKey)}
         onStartGoogleLogIn={onStartGoogleLogIn}
-        onUpdateRepo={onUpdateRepo}
       />
     </header>
   );

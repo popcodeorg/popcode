@@ -11,20 +11,11 @@ const HamburgerMenu = createMenu({
   name: 'hamburger',
 
   renderItems({
-    hasExportedRepo,
     hasInstructions,
-    isClassroomExportInProgress,
     isEditingInstructions,
     isExperimental,
     isGapiReady,
-    isGistExportInProgress,
-    isRepoExportInProgress,
     isUserAuthenticated,
-    isUserAuthenticatedWithGithub,
-    onExportGist,
-    onExportRepo,
-    onUpdateRepo,
-    onExportToClassroom,
     onStartEditingInstructions,
     onStartGoogleLogIn,
 
@@ -46,16 +37,6 @@ const HamburgerMenu = createMenu({
       }
       items.push(
         <MenuItem
-          isDisabled={isClassroomExportInProgress}
-          key="exportToClassroom"
-          onClick={onExportToClassroom}
-        >
-          {t('top-bar.share-to-classroom')}
-        </MenuItem>,
-      );
-
-      items.push(
-        <MenuItem
           isDisabled={isEditingInstructions}
           key="addOrEditInstructions"
           onClick={onStartEditingInstructions}
@@ -67,40 +48,6 @@ const HamburgerMenu = createMenu({
           }
         </MenuItem>,
       );
-
-      if (isUserAuthenticatedWithGithub) {
-        items.push(
-          <MenuItem
-            idDisabled={isGistExportInProgress}
-            key="exportGist"
-            onClick={onExportGist}
-          >
-            {t('top-bar.export-gist')}
-          </MenuItem>,
-        );
-
-        if (hasExportedRepo) {
-          items.push(
-            <MenuItem
-              isDisabled={isRepoExportInProgress}
-              key="updateRepo"
-              onClick={onUpdateRepo}
-            >
-              {t('top-bar.update-repo')}
-            </MenuItem>,
-          );
-        } else {
-          items.push(
-            <MenuItem
-              isDisabled={isRepoExportInProgress}
-              key="exportRepo"
-              onClick={onExportRepo}
-            >
-              {t('top-bar.export-repo')}
-            </MenuItem>,
-          );
-        }
-      }
 
       items.push(
         <a
@@ -145,23 +92,14 @@ const HamburgerMenu = createMenu({
 
 
 HamburgerMenu.propTypes = {
-  hasExportedRepo: PropTypes.bool.isRequired,
   hasInstructions: PropTypes.bool.isRequired,
-  isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   isExperimental: PropTypes.bool.isRequired,
   isGapiReady: PropTypes.bool.isRequired,
-  isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  isRepoExportInProgress: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
-  isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
-  onExportGist: PropTypes.func.isRequired,
-  onExportRepo: PropTypes.func.isRequired,
-  onExportToClassroom: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
   onStartGoogleLogIn: PropTypes.func.isRequired,
-  onUpdateRepo: PropTypes.func.isRequired,
 };
 
 export default HamburgerMenu;
