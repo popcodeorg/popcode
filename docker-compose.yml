@@ -15,6 +15,11 @@ services:
     environment:
       - DEBUG
       - PROFILE_BUILD
+  travis:
+    image: andredumas/travis-ci-cli
+    volumes:
+      - .:/repo:cached
+      - ~/.travis:/travis
 volumes:
   node_modules:
   npm_cache:
