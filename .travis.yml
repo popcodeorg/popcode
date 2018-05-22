@@ -8,7 +8,6 @@ env:
   - LOG_REDUX_ACTIONS=false
   - FIREBASE_APP=popcode
   - FIREBASE_API_KEY=AIzaSyAga2AZz56-dAjl1fsswFfvs3HRBbfKZJg
-  - FIREBASE_CLIENT_ID=488497217137-c0mdq8uca6ot5o9u9avo3j5mfsi1q9v5.apps.googleusercontent.com
   - BROWSER_STACK_USERNAME=matthewbrown17
   - CLOUDFLARE_ZONE=d3f68763e9e100672fc0e1800282ddbe
   - GOOGLE_ANALYTICS_TRACKING_ID=UA-90316486-1
@@ -26,10 +25,10 @@ addons:
     - g++-4.8
   chrome: stable
 before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.5.1
-  - export PATH="$HOME/.yarn/bin:$PATH"
+- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.5.1
+- export PATH="$HOME/.yarn/bin:$PATH"
 install:
-  - yarn install --production=false --frozen-lockfile --non-interactive
+- yarn install --production=false --frozen-lockfile --non-interactive
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
@@ -41,27 +40,30 @@ script:
 before_deploy:
 - gulp syncFirebase
 deploy:
-  - provider: s3
-    access_key_id: AKIAJY2GYDQBE4HFF32Q
-    secret_access_key:
-      secure: qqkSdpnlOM80HavspUc/S4OpohDAkbDqaCKQTw08j2/CaU0LwN335CVQhDZ4Oskgr6y5evx6LrTU0BNiDfzcMIEykokV1ZCPLuWLrHo/ZtCSIU+3ikVErY/0qZH4FdZ1h/Q1FP5gTDydP0QbXWkQsQQg1cgg2NTX4/BsTTT9nBRJeg4Gdm9ARLW0b3SGutW13tW8fuRG9YrNJs6gKZsZ6FhP1ru4T47tdsbphV1IsedZv8nU7dGnWQj67//4OpAHOi1KOm6K1CprNa35Kw7D/+n6786skbPi7Tsu7UbIVMWD+Jy1c2xtz3mqinIbyS8spzLd3kbDV+BRvIYXXHpC6B4gGhyRd+ohN+WcoDQZJha2PaOfIPfAxPhK2IKO6h+6i8Q0CK4/x4Yd8PurVHrB8KEyPrMHPa42abMTTeRLs7OAjrtM7dWucngCvW6fBqhpgp36cRDZeXLKjywkapo1/6l64fjkM+wGkYFkI5i6qzEAr0JvBrIeTDiymz1Oitf3Uio+vs4hfjXegQansq5l/mXtMdI9DfNrKm/R2zpUp1qS7i+v1MfnhAxd8NOEGYpT75sJbSVca0jgnkLXcja6+O4oRswx4maA+BTiIcwknAn6B4Rupf8U0Tnt3s/pFu6Ih6lnMo6rpeBkV7FO1Bwyv59zyxZS8Z23ec+v7+TZ/iE=
-    bucket: popcode.org
-    skip_cleanup: true
-    local-dir: dist
-    acl: public_read
-    on:
-      repo: popcodeorg/popcode
-      branch: master
-  - provider: s3
-    access_key_id: AKIAJY2GYDQBE4HFF32Q
-    secret_access_key:
-      secure: qqkSdpnlOM80HavspUc/S4OpohDAkbDqaCKQTw08j2/CaU0LwN335CVQhDZ4Oskgr6y5evx6LrTU0BNiDfzcMIEykokV1ZCPLuWLrHo/ZtCSIU+3ikVErY/0qZH4FdZ1h/Q1FP5gTDydP0QbXWkQsQQg1cgg2NTX4/BsTTT9nBRJeg4Gdm9ARLW0b3SGutW13tW8fuRG9YrNJs6gKZsZ6FhP1ru4T47tdsbphV1IsedZv8nU7dGnWQj67//4OpAHOi1KOm6K1CprNa35Kw7D/+n6786skbPi7Tsu7UbIVMWD+Jy1c2xtz3mqinIbyS8spzLd3kbDV+BRvIYXXHpC6B4gGhyRd+ohN+WcoDQZJha2PaOfIPfAxPhK2IKO6h+6i8Q0CK4/x4Yd8PurVHrB8KEyPrMHPa42abMTTeRLs7OAjrtM7dWucngCvW6fBqhpgp36cRDZeXLKjywkapo1/6l64fjkM+wGkYFkI5i6qzEAr0JvBrIeTDiymz1Oitf3Uio+vs4hfjXegQansq5l/mXtMdI9DfNrKm/R2zpUp1qS7i+v1MfnhAxd8NOEGYpT75sJbSVca0jgnkLXcja6+O4oRswx4maA+BTiIcwknAn6B4Rupf8U0Tnt3s/pFu6Ih6lnMo6rpeBkV7FO1Bwyv59zyxZS8Z23ec+v7+TZ/iE=
-    bucket: popcode.school
-    skip_cleanup: true
-    local-dir: dist
-    acl: public_read
-    on:
-      repo: popcodeorg/popcode
-      branch: master
+- provider: s3
+  access_key_id: AKIAJY2GYDQBE4HFF32Q
+  secret_access_key:
+    secure: qqkSdpnlOM80HavspUc/S4OpohDAkbDqaCKQTw08j2/CaU0LwN335CVQhDZ4Oskgr6y5evx6LrTU0BNiDfzcMIEykokV1ZCPLuWLrHo/ZtCSIU+3ikVErY/0qZH4FdZ1h/Q1FP5gTDydP0QbXWkQsQQg1cgg2NTX4/BsTTT9nBRJeg4Gdm9ARLW0b3SGutW13tW8fuRG9YrNJs6gKZsZ6FhP1ru4T47tdsbphV1IsedZv8nU7dGnWQj67//4OpAHOi1KOm6K1CprNa35Kw7D/+n6786skbPi7Tsu7UbIVMWD+Jy1c2xtz3mqinIbyS8spzLd3kbDV+BRvIYXXHpC6B4gGhyRd+ohN+WcoDQZJha2PaOfIPfAxPhK2IKO6h+6i8Q0CK4/x4Yd8PurVHrB8KEyPrMHPa42abMTTeRLs7OAjrtM7dWucngCvW6fBqhpgp36cRDZeXLKjywkapo1/6l64fjkM+wGkYFkI5i6qzEAr0JvBrIeTDiymz1Oitf3Uio+vs4hfjXegQansq5l/mXtMdI9DfNrKm/R2zpUp1qS7i+v1MfnhAxd8NOEGYpT75sJbSVca0jgnkLXcja6+O4oRswx4maA+BTiIcwknAn6B4Rupf8U0Tnt3s/pFu6Ih6lnMo6rpeBkV7FO1Bwyv59zyxZS8Z23ec+v7+TZ/iE=
+  bucket: popcode.org
+  skip_cleanup: true
+  local-dir: dist
+  acl: public_read
+  on:
+    repo: popcodeorg/popcode
+    branch: master
+- provider: s3
+  access_key_id: AKIAJY2GYDQBE4HFF32Q
+  secret_access_key:
+    secure: qqkSdpnlOM80HavspUc/S4OpohDAkbDqaCKQTw08j2/CaU0LwN335CVQhDZ4Oskgr6y5evx6LrTU0BNiDfzcMIEykokV1ZCPLuWLrHo/ZtCSIU+3ikVErY/0qZH4FdZ1h/Q1FP5gTDydP0QbXWkQsQQg1cgg2NTX4/BsTTT9nBRJeg4Gdm9ARLW0b3SGutW13tW8fuRG9YrNJs6gKZsZ6FhP1ru4T47tdsbphV1IsedZv8nU7dGnWQj67//4OpAHOi1KOm6K1CprNa35Kw7D/+n6786skbPi7Tsu7UbIVMWD+Jy1c2xtz3mqinIbyS8spzLd3kbDV+BRvIYXXHpC6B4gGhyRd+ohN+WcoDQZJha2PaOfIPfAxPhK2IKO6h+6i8Q0CK4/x4Yd8PurVHrB8KEyPrMHPa42abMTTeRLs7OAjrtM7dWucngCvW6fBqhpgp36cRDZeXLKjywkapo1/6l64fjkM+wGkYFkI5i6qzEAr0JvBrIeTDiymz1Oitf3Uio+vs4hfjXegQansq5l/mXtMdI9DfNrKm/R2zpUp1qS7i+v1MfnhAxd8NOEGYpT75sJbSVca0jgnkLXcja6+O4oRswx4maA+BTiIcwknAn6B4Rupf8U0Tnt3s/pFu6Ih6lnMo6rpeBkV7FO1Bwyv59zyxZS8Z23ec+v7+TZ/iE=
+  bucket: popcode.school
+  skip_cleanup: true
+  local-dir: dist
+  acl: public_read
+  on:
+    repo: popcodeorg/popcode
+    branch: master
 after_deploy:
 - gulp purgeCache
+notifications:
+  slack:
+    secure: IJ0LSnahbfPFMFFgEK+wwSYEUWjJ2AFZz89oSmzSuKqEchM7AA2tpkCAPvN37cUksPE4YozVXxx++SQ4j+fk1lmhhddEUYO9ueB/UqD3iu0xCFR/CJ30ka7QDkfzkatKkn0H8MVU3FwEJ6ZbHJR2zJVUALPFw7AQ08EE4GpTC2TfWSiYuv1AnuVUC8ZkvGBjwFN1lQrAnHFS62sreNmYtBR0FHHo9DEE+NanYdtLnFYyGeDauWx7I1ERT1vnv4G+0vx5Guu7TGwC1uzHCTlciqSGPeaifaC+uXR/8VaTabZS4G1PsR8ROYt3S/RFtCEAfuhBvlcWdNnfLH7/xLhET4W35H/hhHmSaMYJCy/gnQW/bXfLCxtO5/luwM5nOM4NeQcRybqreBL/q4K78giw6ttpTo5EumBxXrYKo4PRWfOWkOhePotQ/IRzpsoMqFHxzlJxv9HPSnFb+11OTe3BsxfWpsHs233eIBpKYOcjpzXPP4GSq7FH2V7jL2lg6Cc81XUK2v8upJpPoWRRfM52LxemNi+uEMBrgLro6VA2O5qRDN/+mhr8wYS4dLms5uk6Hq87UA9xhlIUl0P9d6kfN0vHi+QzxLMLvA1ateFncaG7MKTgMNjsckziKlR2B8FZ1c3lT55RB/zfojGzrDs0l7TCKB+WKP5uPJEWw5/UC2A=
