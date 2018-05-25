@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 import get from 'lodash-es/get';
 import isNil from 'lodash-es/isNil';
 import isNull from 'lodash-es/isNull';
+import omit from 'lodash-es/omit';
 import values from 'lodash-es/values';
 import uuid from 'uuid/v4';
 import {getGapiSync} from '../services/gapi';
@@ -37,10 +38,16 @@ export async function loadAllProjects(uid) {
   return values(projects.val() || {});
 }
 
+function getProjectforSnapshot(project) {
+  const snapshotBlacklist = ['externalLocations'];
+  return omit(project, snapshotBlacklist);
+}
+
 export async function createProjectSnapshot(project) {
   const snapshotKey = uuid().toString();
   const database = await loadDatabase();
-  await database.ref('snapshots').child(snapshotKey).set(project);
+  const projectForSnapshot = getProjectforSnapshot(project);
+  await database.ref('snapshots').child(snapshotKey).set(projectForSnapshot);
   return snapshotKey;
 }
 
