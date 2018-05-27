@@ -1,10 +1,6 @@
 import Immutable from 'immutable';
 
-import {updateWorkspaceRowFlex} from '../util/resize';
-
-const DEFAULT_ROW_FLEX = new Immutable.List(['1', '1']);
 export const DEFAULT_WORKSPACE = new Immutable.Map({
-  rowFlex: DEFAULT_ROW_FLEX,
   isDraggingColumnDivider: false,
   isEditingInstructions: false,
 });
@@ -53,13 +49,6 @@ export default function ui(stateIn, action) {
     case 'PROJECT_CREATED':
       return state.set('workspace', DEFAULT_WORKSPACE);
 
-    case 'HIDE_COMPONENT':
-    case 'UNHIDE_COMPONENT':
-      if (action.payload.componentName === 'output') {
-        return state.setIn(['workspace', 'rowFlex'], DEFAULT_ROW_FLEX);
-      }
-      return state;
-
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(['editors', 'typing'], true);
 
@@ -86,12 +75,6 @@ export default function ui(stateIn, action) {
 
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.setIn(['editors', 'requestedFocusedLine'], null);
-
-    case 'DRAG_COLUMN_DIVIDER':
-      return state.updateIn(['workspace', 'rowFlex'], (prevFlex) => {
-        const newFlex = updateWorkspaceRowFlex(action.payload);
-        return newFlex ? Immutable.fromJS(newFlex) : prevFlex;
-      });
 
     case 'START_DRAG_COLUMN_DIVIDER':
       return state.setIn(['workspace', 'isDraggingColumnDivider'], true);

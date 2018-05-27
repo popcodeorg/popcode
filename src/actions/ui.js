@@ -12,10 +12,6 @@ export const editorFocusedRequestedLine = createAction(
   'EDITOR_FOCUSED_REQUESTED_LINE',
 );
 
-export const dragColumnDivider = createAction(
-  'DRAG_COLUMN_DIVIDER',
-);
-
 export const startDragColumnDivider = createAction(
   'START_DRAG_COLUMN_DIVIDER',
 );

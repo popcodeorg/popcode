@@ -23,7 +23,6 @@ import {
 import {
   focusLine,
   editorFocusedRequestedLine,
-  dragColumnDivider,
   startDragColumnDivider,
   stopDragColumnDivider,
   notificationTriggered,
@@ -88,7 +87,6 @@ export {
   toggleComponent,
   focusLine,
   editorFocusedRequestedLine,
-  dragColumnDivider,
   startDragColumnDivider,
   stopDragColumnDivider,
   notificationTriggered,

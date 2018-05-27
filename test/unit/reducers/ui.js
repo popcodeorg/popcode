@@ -12,7 +12,6 @@ import {
   updateProjectInstructions,
 } from '../../../src/actions/projects';
 import {
-  dragColumnDivider,
   userDoneTyping,
   focusLine,
   editorFocusedRequestedLine,
@@ -63,25 +62,6 @@ function withNotification(type, severity, payload = {}) {
 }
 
 const gistId = '12345';
-
-test('dragColumnDivider', reducerTest(
-  reducer,
-  initialState,
-  partial(dragColumnDivider, {
-    dividerWidth: {minWidth: 4},
-    columnWidths: [
-      {width: 400, minWidth: 300},
-      {width: 400, minWidth: 300},
-    ],
-    deltaX: 5,
-    lastX: 400,
-    x: 405,
-  }),
-  initialState.setIn(
-    ['workspace', 'rowFlex'],
-    new Immutable.List(['0 1 405px', '1', '1']),
-  ),
-));
 
 test('startEditingInstructions', reducerTest(
   reducer,

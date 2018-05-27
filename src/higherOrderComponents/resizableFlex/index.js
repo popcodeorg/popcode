@@ -10,6 +10,7 @@ import {makeGetResizableFlexGrow} from '../../selectors';
 import {updateResizableFlex} from '../../actions';
 
 import calculateFlexGrowAfterDrag from './calculateFlexGrowAfterDrag';
+import directionAdapterFor from './directionAdapterFor';
 
 let nextInstanceId = 1;
 
@@ -29,21 +30,24 @@ export default function resizableFlex(size) {
             const [{current: before}, {current: after}] =
               at(regions, [beforeIndex, afterIndex]);
 
+            const {getCurrentSize, getDesiredSize} =
+              directionAdapterFor(before);
+
             const [desiredBeforeFlexGrow, desiredAfterFlexGrow] =
               calculateFlexGrowAfterDrag(
                 {
                   currentFlexGrow: Number(
                     getComputedStyle(before)['flex-grow'],
                   ),
-                  currentSize: before.offsetHeight,
-                  desiredSize: payload.y - before.offsetTop,
+                  currentSize: getCurrentSize(before),
+                  desiredSize: getDesiredSize(before, payload),
                   initialMainSize: initialMainSizes[beforeIndex],
                 },
                 {
                   currentFlexGrow: Number(
                     getComputedStyle(after)['flex-grow'],
                   ),
-                  currentSize: after.offsetHeight,
+                  currentSize: getCurrentSize(after),
                   initialMainSize: initialMainSizes[afterIndex],
                 },
               );
@@ -59,18 +63,20 @@ export default function resizableFlex(size) {
 
           resizableFlexRefs: map(
             regions,
-            (region, index) => (ref) => {
-              region.current = ref;
-              if (isNull(ref)) {
+            (region, index) => (element) => {
+              region.current = element;
+              if (isNull(element)) {
                 initialMainSizes[index] = null;
                 return;
               }
-              const flexGrowWas = ref.style.flexGrow;
-              const flexShrinkWas = ref.style.flexShrink;
-              ref.style.flexGrow = ref.style.flexShrink = '0';
-              initialMainSizes[index] = ref.offsetHeight;
-              ref.style.flexGrow = flexGrowWas;
-              ref.style.flexShrink = flexShrinkWas;
+
+              const flexGrowWas = element.style.flexGrow;
+              const flexShrinkWas = element.style.flexShrink;
+              element.style.flexGrow = element.style.flexShrink = '0';
+              initialMainSizes[index] = directionAdapterFor(element).
+                getCurrentSize(element);
+              element.style.flexGrow = flexGrowWas;
+              element.style.flexShrink = flexShrinkWas;
             },
           ),
 
