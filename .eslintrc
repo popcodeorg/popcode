@@ -145,6 +145,9 @@
         "import/no-duplicates": [
           2
         ],
+        "import/no-extraneous-dependencies": [
+          2
+        ],
         "import/no-mutable-exports": [
           2
         ],

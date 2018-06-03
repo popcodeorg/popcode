@@ -1,5 +1,5 @@
 import $S from 'scriptjs';
-import once from 'lodash/once';
+import once from 'lodash-es/once';
 import config from '../config';
 import {GOOGLE_SCOPES} from './appFirebase';
 
