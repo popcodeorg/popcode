@@ -136,7 +136,7 @@ TopBar.propTypes = {
   hasInstructions: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
-  isExperimental: PropTypes.bool.isRequired,
+  isExperimental: PropTypes.bool,
   isGapiReady: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,
@@ -167,5 +167,6 @@ TopBar.propTypes = {
 
 TopBar.defaultProps = {
   currentProjectKey: null,
+  isExperimental: false,
   openMenu: null,
 };
