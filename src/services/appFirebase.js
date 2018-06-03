@@ -18,7 +18,7 @@ githubAuthProvider.addScope('public_repo');
 export const loadDatabase = once(async() => {
   await retryingFailedImports(() =>
     import(
-      /* webpackChunkName: 'mainAsync' */
+      /* webpackChunkName: "mainAsync" */
       '@firebase/database',
     ),
   );

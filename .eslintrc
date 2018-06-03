@@ -112,6 +112,9 @@
         "import/default": [
           2
         ],
+        "import/dynamic-import-chunkname": [
+          2
+        ],
         "import/export": [
           2
         ],

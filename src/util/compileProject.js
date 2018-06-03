@@ -123,7 +123,7 @@ async function librariesWithDependencies(libraryKeys) {
 
 async function importLibraries() {
   return retryingFailedImports(() => import(
-    /* webpackChunkName: 'previewLibraries' */
+    /* webpackChunkName: "previewLibraries" */
     '../config/libraryAssets',
   ));
 }
@@ -167,7 +167,7 @@ async function addJavascript(
   if (breakLoops) {
     const {'default': loopBreaker} = await retryingFailedImports(
       () => import(
-        /* webpackChunkName: 'mainAsync' */
+        /* webpackChunkName: "mainAsync" */
         'loop-breaker',
       ),
     );
