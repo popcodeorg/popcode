@@ -16,7 +16,7 @@ import retryingFailedImports from '../util/retryingFailedImports';
 export async function importValidations() {
   return retryingFailedImports(
     () => import(
-      /* webpackChunkName: 'mainAsync' */
+      /* webpackChunkName: "mainAsync" */
       '../validations',
     ),
   );

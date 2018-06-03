@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import handleErrors from './previewSupport/handleErrors';
 import handleConsoleExpressions
   from './previewSupport/handleConsoleExpressions';

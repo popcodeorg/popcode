@@ -38,7 +38,7 @@ import {
   applicationLoaded,
   projectCompiled,
   projectCompilationFailed,
-} from '../../../src/actions/';
+} from '../../../src/actions';
 
 const initialState = Immutable.fromJS({
   editors: {

@@ -6,7 +6,7 @@ import map from 'lodash-es/map';
 import trim from 'lodash-es/trim';
 import uniq from 'lodash-es/uniq';
 import config from '../config';
-import retryingFailedImports from '../util/retryingFailedImports';
+import retryingFailedImports from './retryingFailedImports';
 
 const downloadingScript = downloadScript();
 
@@ -123,7 +123,7 @@ async function librariesWithDependencies(libraryKeys) {
 
 async function importLibraries() {
   return retryingFailedImports(() => import(
-    /* webpackChunkName: 'previewLibraries' */
+    /* webpackChunkName: "previewLibraries" */
     '../config/libraryAssets',
   ));
 }
@@ -167,7 +167,7 @@ async function addJavascript(
   if (breakLoops) {
     const {'default': loopBreaker} = await retryingFailedImports(
       () => import(
-        /* webpackChunkName: 'mainAsync' */
+        /* webpackChunkName: "mainAsync" */
         'loop-breaker',
       ),
     );

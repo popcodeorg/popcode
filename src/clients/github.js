@@ -285,7 +285,7 @@ async function updateRepoDescription(github, userName, repoName) {
 async function githubWithAccessToken(token) {
   const {'default': GitHub} = await retryingFailedImports(() =>
     import(
-      /* webpackChunkName: 'mainAsync' */
+      /* webpackChunkName: "mainAsync" */
       'github-api',
     ),
   );

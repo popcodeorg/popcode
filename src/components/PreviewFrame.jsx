@@ -57,7 +57,7 @@ class PreviewFrame extends React.Component {
   async _evaluateConsoleExpression(key, expression) {
     const {hasExpressionStatement} = await retryingFailedImports(
       () => import(
-        /* webpackChunkName: 'mainAsync' */
+        /* webpackChunkName: "mainAsync" */
         '../util/javascript',
       ),
     );

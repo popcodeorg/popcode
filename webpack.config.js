@@ -165,8 +165,17 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
   return {
     mode: isProduction ? 'production' : 'development',
     entry: isTest ? undefined : {
-      main: './src/application.js',
-      preview: './src/preview.js',
+      main: [
+        'babel-polyfill',
+        'es6-set/implement',
+        'whatwg-fetch',
+        './src/init/DOMParserShim',
+        './src/application.js',
+      ],
+      preview: [
+        'babel-polyfill',
+        './src/preview.js',
+      ],
     },
     optimization: {
       splitChunks: isTest ? false : {chunks: 'all'},
