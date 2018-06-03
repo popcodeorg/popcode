@@ -16,12 +16,15 @@ export default class ConsoleInput extends Component {
     bindAll(this, '_ref');
   }
 
-  componentWillReceiveProps({isTextSizeLarge, requestedFocusedLine}) {
-    if (isTextSizeLarge !== this.props.isTextSizeLarge) {
+  componentDidUpdate({isTextSizeLarge: prevIsTextSizeLarge}) {
+    const {isTextSizeLarge, requestedFocusedLine} = this.props;
+
+    if (isTextSizeLarge !== prevIsTextSizeLarge) {
       requestAnimationFrame(() => {
         inheritFontStylesFromParentElement(this._editor);
       });
     }
+
     this._focusRequestedLine(requestedFocusedLine);
   }
 
