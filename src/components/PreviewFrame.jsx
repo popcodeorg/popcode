@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Bowser from 'bowser';
 import bindAll from 'lodash-es/bindAll';
+import constant from 'lodash-es/constant';
 import {t} from 'i18next';
 import normalizeError from '../util/normalizeError';
 import retryingFailedImports from '../util/retryingFailedImports';
@@ -21,26 +22,36 @@ const sandboxOptions = [
 let nextId = 1;
 
 class PreviewFrame extends React.Component {
-  constructor() {
-    super();
-    this._frameName = `preview-frame-${nextId++}`;
+  constructor(props) {
+    super(props);
+
+    const {compiledProject: {source}} = props;
+
     bindAll(this, '_attachToFrame', '_handleInfiniteLoop');
+
+    this.render = constant(
+      <div className="preview__frame-container">
+        <iframe
+          className="preview__frame"
+          name={`preview-frame-${nextId++}`}
+          ref={this._attachToFrame}
+          sandbox={sandboxOptions}
+          srcDoc={source}
+        />
+      </div>,
+    );
   }
 
-  componentWillReceiveProps(newProps) {
-    const {consoleEntries: previousConsoleEntries, isActive} = this.props;
+  componentDidUpdate({consoleEntries: prevConsoleEntries}) {
+    const {consoleEntries, isActive} = this.props;
 
     if (this._channel && isActive) {
-      for (const [key, {expression}] of newProps.consoleEntries) {
-        if (!previousConsoleEntries.has(key) && expression) {
+      for (const [key, {expression}] of consoleEntries) {
+        if (!prevConsoleEntries.has(key) && expression) {
           this._evaluateConsoleExpression(key, expression);
         }
       }
     }
-  }
-
-  shouldComponentUpdate() {
-    return false;
   }
 
   async _evaluateConsoleExpression(key, expression) {
@@ -152,21 +163,6 @@ class PreviewFrame extends React.Component {
         this._handleConsoleLog(params);
       }
     });
-  }
-
-  render() {
-    const {source} = this.props.compiledProject;
-    return (
-      <div className="preview__frame-container">
-        <iframe
-          className="preview__frame"
-          name={this._frameName}
-          ref={this._attachToFrame}
-          sandbox={sandboxOptions}
-          srcDoc={source}
-        />
-      </div>
-    );
   }
 }
 
