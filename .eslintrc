@@ -176,6 +176,10 @@
         "import/no-self-import": [
           2
         ],
+        "import/no-unassigned-import": [
+          2,
+          "allow": ["brace/**/*", "@firebase/*"]
+        ],
         "import/no-unresolved": [
           2
         ],
