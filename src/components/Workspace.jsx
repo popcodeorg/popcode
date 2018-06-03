@@ -34,7 +34,7 @@ export default class Workspace extends React.Component {
     this.columnRefs = [null, null];
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {onApplicationLoaded} = this.props;
     const {
       gistId,
@@ -42,16 +42,16 @@ export default class Workspace extends React.Component {
       isExperimental,
     } = getQueryParameters(location.search);
     const rehydratedProject = rehydrateProject();
+
     setQueryParameters({isExperimental});
+
     onApplicationLoaded({
       snapshotKey,
       gistId,
       isExperimental,
       rehydratedProject,
     });
-  }
 
-  componentDidMount() {
     addEventListener('beforeunload', this._handleUnload);
   }
 
