@@ -170,6 +170,9 @@
         "import/no-unresolved": [
           2
         ],
+        "import/no-useless-path-segments": [
+          2
+        ],
         "import/no-webpack-loader-syntax": [
           2
         ],

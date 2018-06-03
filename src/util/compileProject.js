@@ -6,7 +6,7 @@ import map from 'lodash-es/map';
 import trim from 'lodash-es/trim';
 import uniq from 'lodash-es/uniq';
 import config from '../config';
-import retryingFailedImports from '../util/retryingFailedImports';
+import retryingFailedImports from './retryingFailedImports';
 
 const downloadingScript = downloadScript();
 
