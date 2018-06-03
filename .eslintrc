@@ -145,6 +145,9 @@
         "import/no-commonjs": [
           2
         ],
+        "import/no-cycle": [
+          2
+        ],
         "import/no-duplicates": [
           2
         ],
@@ -169,6 +172,9 @@
         "import/no-nodejs-modules": [
           2,
           {"allow": ["fs", "path"]}
+        ],
+        "import/no-self-import": [
+          2
         ],
         "import/no-unresolved": [
           2
