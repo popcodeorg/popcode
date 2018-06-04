@@ -78,13 +78,13 @@ class EsprimaValidator extends Validator {
     super(source, 'javascript', errorMap);
   }
 
-  async _getRawErrors() {
+  async getRawErrors() {
     try {
-      parse(this._source);
+      parse(this.source);
     } catch (error) {
       try {
         const tokens = tokenize(
-          this._source,
+          this.source,
           {range: true, comment: true},
         );
         const token = findTokenForError(error, tokens);
@@ -96,17 +96,17 @@ class EsprimaValidator extends Validator {
     return [];
   }
 
-  _keyForError(error) {
+  keyForError(error) {
     return error.error.description;
   }
 
-  _mapError(error) {
-    const mappedError = super._mapError(error);
+  mapError(error) {
+    const mappedError = super.mapError(error);
     if (mappedError) {
       return mappedError;
     }
 
-    const match = UNEXPECTED_TOKEN_EXPR.exec(this._keyForError(error));
+    const match = UNEXPECTED_TOKEN_EXPR.exec(this.keyForError(error));
     if (match) {
       return {
         reason: 'unexpected-token',
@@ -118,7 +118,7 @@ class EsprimaValidator extends Validator {
     return {reason: 'tokenize-error'};
   }
 
-  _locationForError(error) {
+  locationForError(error) {
     const row = error.error.lineNumber - 1;
     const column = error.error.column - 1;
     return {row, column};

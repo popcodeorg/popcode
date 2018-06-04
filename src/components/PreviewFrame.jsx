@@ -135,8 +135,6 @@ class PreviewFrame extends React.Component {
   }
 
   _attachToFrame(frame) {
-    this._frame = frame;
-
     if (!frame) {
       if (this._channel) {
         this._channel.destroy();

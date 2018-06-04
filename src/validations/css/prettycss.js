@@ -132,20 +132,20 @@ class PrettyCssValidator extends Validator {
     super(source, 'css', errorMap);
   }
 
-  async _getRawErrors() {
+  async getRawErrors() {
     try {
-      const result = prettyCSS.parse(this._source);
+      const result = prettyCSS.parse(this.source);
       return result.getProblems();
     } catch (_e) {
       return [];
     }
   }
 
-  _keyForError(error) {
+  keyForError(error) {
     return error.code.split(':')[0];
   }
 
-  _locationForError(error) {
+  locationForError(error) {
     if (!error.token) {
       return {row: 0, column: 0};
     }
