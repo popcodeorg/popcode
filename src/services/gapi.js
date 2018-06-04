@@ -1,6 +1,8 @@
 import $S from 'scriptjs';
 import once from 'lodash-es/once';
+
 import config from '../config';
+
 import {GOOGLE_SCOPES} from './appFirebase';
 
 const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/classroom/v1/rest'];

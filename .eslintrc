@@ -190,7 +190,8 @@
           2
         ],
         "import/order": [
-          2
+          2,
+          {"newlines-between": "always-and-inside-groups"}
         ],
         "import/unambiguous": [
           2

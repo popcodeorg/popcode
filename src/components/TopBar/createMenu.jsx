@@ -9,6 +9,7 @@ import preventClickthrough from 'react-prevent-clickthrough';
 import property from 'lodash-es/property';
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import {closeTopBarMenu, toggleTopBarMenu} from '../../actions';
 import {getOpenTopBarMenu} from '../../selectors';
 

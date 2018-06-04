@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import partial from 'lodash-es/partial';
+
 import NotificationContainer from './NotificationContainer';
 import {
   GenericNotification,

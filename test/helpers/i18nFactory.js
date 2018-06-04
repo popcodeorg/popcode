@@ -1,4 +1,5 @@
 import {createInstance} from 'i18next';
+
 import applyCustomI18nFormatters from '../../src/util/i18nFormatting';
 
 const enTestResourceData = {

@@ -2,6 +2,7 @@ import HTMLInspector from 'html-inspector';
 import last from 'lodash-es/last';
 import isNull from 'lodash-es/isNull';
 import trim from 'lodash-es/trim';
+
 import {localizedArrayToSentence} from '../../util/arrayToSentence';
 import Validator from '../Validator';
 

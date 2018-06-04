@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {t} from 'i18next';
+
 import createMenu, {MenuItem} from './createMenu';
 import CurrentUserButton from './CurrentUserButton';
 

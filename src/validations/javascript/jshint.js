@@ -6,6 +6,7 @@ import defaults from 'lodash-es/defaults';
 import find from 'lodash-es/find';
 import includes from 'lodash-es/includes';
 import {JSHINT as jshint} from 'jshint';
+
 import libraries from '../../config/libraries';
 import Validator from '../Validator';
 

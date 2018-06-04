@@ -20,6 +20,7 @@
 // so yield UNOPENED_TAG.
 
 import findLastIndex from 'lodash-es/findLastIndex';
+
 import Code from './Code';
 
 export default class {

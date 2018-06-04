@@ -1,4 +1,5 @@
 import test from 'tape';
+
 import {getQueryParameters} from '../../../src/util/queryParams';
 
 

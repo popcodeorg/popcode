@@ -1,4 +1,5 @@
 import test from 'tape';
+
 import css from '../../../src/validations/css';
 import validationTest from '../../helpers/validationTest';
 import testValidatorAcceptance from '../../helpers/testValidatorAcceptance';

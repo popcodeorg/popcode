@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
+
 import GenericNotificationWithURL from './GenericNotificationWithURL';
 
 export default function ProjectExportNotification({payload}) {

@@ -4,6 +4,7 @@
 
 const fs = require('fs');
 const path = require('path');
+
 const OfflinePlugin = require('offline-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -15,6 +16,7 @@ const webpack = require('webpack');
 const escapeRegExp = require('lodash.escaperegexp');
 const git = require('git-rev-sync');
 const babel = require('babel-core');
+
 const babelLoaderVersion =
   require('./node_modules/babel-loader/package.json').version;
 

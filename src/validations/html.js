@@ -1,4 +1,5 @@
 import trim from 'lodash-es/trim';
+
 import mergeValidations from './mergeValidations';
 import validateWithHtmlInspector from './html/htmlInspector';
 import validateWithHtmllint from './html/htmllint';

@@ -1,4 +1,5 @@
 import {List, Map, fromJS} from 'immutable';
+
 import {Error, ErrorList, ErrorReport} from '../../src/records';
 
 const sampleError = new Error({reason: 'bad-code'});

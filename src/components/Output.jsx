@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import prefixAll from 'inline-style-prefixer/static';
+
 import ErrorReport from '../containers/ErrorReport';
 import Preview from '../containers/Preview';
 import Console from '../containers/Console';

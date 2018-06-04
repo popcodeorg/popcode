@@ -1,4 +1,5 @@
 import {connect} from 'react-redux';
+
 import Console from '../components/Console';
 import {
   getCurrentCompiledProjectKey,

@@ -1,6 +1,7 @@
 import bugsnag from 'bugsnag-js';
 import createPlugin from 'bugsnag-react';
 import React from 'react';
+
 import config from '../config';
 import {getCurrentProject} from '../selectors';
 

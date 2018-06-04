@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isNull from 'lodash-es/isNull';
+
 import {toReact as markdownToReact} from '../util/markdown';
+
 import InstructionsEditor from './InstructionsEditor';
 
 export default function Instructions({

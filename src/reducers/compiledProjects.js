@@ -1,4 +1,5 @@
 import {List} from 'immutable';
+
 import {CompiledProject} from '../records';
 
 const initialState = new List();

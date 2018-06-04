@@ -1,4 +1,5 @@
 import acceptance from '../data/acceptance.json';
+
 import validationTest from './validationTest';
 
 export default function testValidatorAcceptance(validator, language) {

@@ -1,4 +1,5 @@
 import test from 'tape';
+
 import runRules from '../../../../src/validations/html/runRules';
 
 test('openTag row', async(t) => {

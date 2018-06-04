@@ -1,6 +1,7 @@
 import test from 'tape';
 import partial from 'lodash-es/partial';
 import {List} from 'immutable';
+
 import {Error, ErrorList} from '../../../src/records';
 import reducerTest from '../../helpers/reducerTest';
 import {errors as states} from '../../helpers/referenceStates';

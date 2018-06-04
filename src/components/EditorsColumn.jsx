@@ -8,6 +8,7 @@ import isEmpty from 'lodash-es/isEmpty';
 import includes from 'lodash-es/includes';
 import partial from 'lodash-es/partial';
 import partition from 'lodash-es/partition';
+
 import {getNodeHeights} from '../util/resize';
 
 import EditorContainer from './EditorContainer';

@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux-immutable';
 import reduceReducers from 'reduce-reducers';
+
 import user from './user';
 import projects, {reduceRoot as reduceRootForProjects} from './projects';
 import console from './console';

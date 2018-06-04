@@ -3,7 +3,9 @@ import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import ProjectPreview from '../../containers/ProjectPreview';
+
 import ProjectPickerButton from './ProjectPickerButton';
 import createMenu, {MenuItem} from './createMenu';
 

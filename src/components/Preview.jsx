@@ -2,6 +2,7 @@ import get from 'lodash-es/get';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import React from 'react';
+
 import PreviewFrame from './PreviewFrame';
 
 export default function Preview({
