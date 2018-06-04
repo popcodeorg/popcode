@@ -7,7 +7,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/app:cached
-      - node_modules:/app/node_modules
+      - ./node_modules:/app/node_modules:delegated
       - npm_cache:/root/.npm
       - yarn_cache:/usr/local/share/.cache/yarn
     tmpfs:
