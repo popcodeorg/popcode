@@ -1,4 +1,5 @@
 import css from 'css';
+
 import Validator from '../Validator';
 
 const errorMap = {

@@ -4,6 +4,7 @@ import map from 'lodash-es/map';
 import compact from 'lodash-es/compact';
 import remark from 'remark';
 import stripMarkdown from 'strip-markdown';
+
 import config from '../config';
 
 class Validator {

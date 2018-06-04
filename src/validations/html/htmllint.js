@@ -2,6 +2,7 @@ import clone from 'lodash-es/clone';
 import defaults from 'lodash-es/defaults';
 import {Linter, rules} from 'htmllint';
 import reduce from 'lodash-es/reduce';
+
 import Validator from '../Validator';
 
 const errorMap = {

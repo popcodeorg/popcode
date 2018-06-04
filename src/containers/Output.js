@@ -1,4 +1,5 @@
 import {connect} from 'react-redux';
+
 import Output from '../components/Output';
 import {
   isDraggingColumnDivider,

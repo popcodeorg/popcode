@@ -1,4 +1,5 @@
 import test from 'tape';
+
 import Code from '../../../../src/validations/html/rules/Code';
 import MismatchedTag
   from '../../../../src/validations/html/rules/MismatchedTag';

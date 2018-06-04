@@ -5,6 +5,7 @@ import isNull from 'lodash-es/isNull';
 import omit from 'lodash-es/omit';
 import values from 'lodash-es/values';
 import uuid from 'uuid/v4';
+
 import {getGapiSync} from '../services/gapi';
 import {
   auth,

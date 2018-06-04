@@ -6,6 +6,7 @@ import {
   userAuthenticated,
 } from '../../src/actions/user';
 import Analyzer from '../../src/analyzers';
+
 import {userCredential} from './factory';
 
 export default class Scenario {

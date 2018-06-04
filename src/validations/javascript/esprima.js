@@ -1,6 +1,7 @@
 import {parse, tokenize} from 'esprima';
 import find from 'lodash-es/find';
 import inRange from 'lodash-es/inRange';
+
 import Validator from '../Validator';
 
 const UNEXPECTED_TOKEN_EXPR = /^Unexpected token (.+)$/;

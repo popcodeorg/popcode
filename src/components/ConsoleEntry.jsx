@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {ConsoleEntry as ConsoleEntryRecord} from '../records';
+
 import ConsoleExpression from './ConsoleExpression';
 import ConsoleOutput from './ConsoleOutput';
 

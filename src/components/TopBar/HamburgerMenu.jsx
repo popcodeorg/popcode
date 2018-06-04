@@ -2,7 +2,9 @@ import {t} from 'i18next';
 import tap from 'lodash-es/tap';
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import config from '../../config';
+
 import createMenu, {MenuItem} from './createMenu';
 import HamburgerMenuButton from './HamburgerMenuButton';
 

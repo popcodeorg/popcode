@@ -1,6 +1,7 @@
 import {OrderedMap} from 'immutable';
 import partial from 'lodash-es/partial';
 import test from 'tape';
+
 import {ConsoleEntry, ConsoleError} from '../../../src/records';
 import {
   consoleErrorProduced,

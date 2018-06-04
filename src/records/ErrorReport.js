@@ -1,4 +1,5 @@
 import {Record} from 'immutable';
+
 import ErrorList from './ErrorList';
 
 const defaultErrorList = new ErrorList();

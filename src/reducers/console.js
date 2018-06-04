@@ -1,4 +1,5 @@
 import {OrderedMap} from 'immutable';
+
 import {ConsoleEntry, ConsoleError} from '../records';
 
 const initialState = new OrderedMap();

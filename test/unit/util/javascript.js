@@ -1,4 +1,5 @@
 import test from 'tape';
+
 import {hasExpressionStatement} from '../../../src/util/javascript';
 
 test('empty statement is not an expression statement', (assert) => {

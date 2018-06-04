@@ -1,6 +1,7 @@
 import test from 'tape';
 import Immutable from 'immutable';
 import partial from 'lodash-es/partial';
+
 import reducer from '../../../src/reducers/clients';
 import reducerTest from '../../helpers/reducerTest';
 import {

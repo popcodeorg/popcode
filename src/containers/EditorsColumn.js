@@ -1,4 +1,5 @@
 import {connect} from 'react-redux';
+
 import EditorsColumn from '../components/EditorsColumn';
 import {
   getCurrentProject,

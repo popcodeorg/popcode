@@ -1,6 +1,7 @@
 import test from 'tape';
 import Immutable from 'immutable';
 import partial from 'lodash-es/partial';
+
 import reducerTest from '../../helpers/reducerTest';
 import {user as states} from '../../helpers/referenceStates';
 import {userCredential} from '../../helpers/factory';

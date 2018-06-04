@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import partial from 'lodash-es/partial';
+
 import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
+
 import CurrentUser from './CurrentUser';
 import ExportMenu from './ExportMenu';
 import HamburgerMenu from './HamburgerMenu';

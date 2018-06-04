@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';
 import {t} from 'i18next';
+
 import ErrorItem from './ErrorItem';
 
 function ErrorList({errors, onErrorClick, language}) {

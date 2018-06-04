@@ -1,10 +1,12 @@
 import React from 'react';
 import {Provider} from 'react-redux';
 import bowser from 'bowser';
+
 import createApplicationStore from '../createApplicationStore';
 import {ErrorBoundary, includeStoreInBugReports} from '../util/bugsnag';
 import supportedBrowsers from '../../config/browsers.json';
 import Workspace from '../containers/Workspace';
+
 import BrowserError from './BrowserError';
 import IEBrowserError from './IEBrowserError';
 

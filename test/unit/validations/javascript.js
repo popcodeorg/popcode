@@ -1,5 +1,6 @@
 import test from 'tape';
 import partialRight from 'lodash-es/partialRight';
+
 import validationTest from '../../helpers/validationTest';
 import testValidatorAcceptance from '../../helpers/testValidatorAcceptance';
 import javascript from '../../../src/validations/javascript';

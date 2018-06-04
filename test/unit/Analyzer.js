@@ -1,4 +1,5 @@
 import test from 'tape';
+
 import Analyzer from '../../src/analyzers';
 import {Project} from '../../src/records';
 

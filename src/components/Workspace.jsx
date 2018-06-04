@@ -7,6 +7,7 @@ import get from 'lodash-es/get';
 import partial from 'lodash-es/partial';
 import {t} from 'i18next';
 import classnames from 'classnames';
+
 import {getNodeWidth, getNodeWidths} from '../util/resize';
 import {getQueryParameters, setQueryParameters} from '../util/queryParams';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
@@ -18,6 +19,7 @@ import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
 import EditorsColumn from '../containers/EditorsColumn';
 import Output from '../containers/Output';
+
 import PopThrobber from './PopThrobber';
 
 export default class Workspace extends React.Component {

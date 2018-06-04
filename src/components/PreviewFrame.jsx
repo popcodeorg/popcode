@@ -6,6 +6,7 @@ import Bowser from 'bowser';
 import bindAll from 'lodash-es/bindAll';
 import constant from 'lodash-es/constant';
 import {t} from 'i18next';
+
 import normalizeError from '../util/normalizeError';
 import retryingFailedImports from '../util/retryingFailedImports';
 import {sourceDelimiter} from '../util/compileProject';
