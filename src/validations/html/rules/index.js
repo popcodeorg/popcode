@@ -27,15 +27,15 @@ class RuleValidator extends Validator {
     super(source, 'html', errorMap);
   }
 
-  _keyForError({code}) {
+  keyForError({code}) {
     return code;
   }
 
-  async _getRawErrors() {
-    return Array.from(await runRules([new MismatchedTag()], this._source));
+  async getRawErrors() {
+    return Array.from(await runRules([new MismatchedTag()], this.source));
   }
 
-  _locationForError(error) {
+  locationForError(error) {
     switch (error.code) {
       case Code.MISPLACED_CLOSE_TAG:
         return error.match;

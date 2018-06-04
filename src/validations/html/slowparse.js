@@ -124,10 +124,10 @@ class SlowparseValidator extends Validator {
     super(source, 'html', errorMap);
   }
 
-  async _getRawErrors() {
+  async getRawErrors() {
     let error;
     try {
-      ({error} = Slowparse.HTML(document, this._source, {errorDetectors}));
+      ({error} = Slowparse.HTML(document, this.source, {errorDetectors}));
     } catch (e) {
       error = null;
     }
@@ -139,12 +139,12 @@ class SlowparseValidator extends Validator {
     return [];
   }
 
-  _keyForError(error) {
+  keyForError(error) {
     return error.type;
   }
 
-  _locationForError(error) {
-    const lines = this._source.slice(0, error.cursor).split('\n');
+  locationForError(error) {
+    const lines = this.source.slice(0, error.cursor).split('\n');
     const row = lines.length - 1;
     const column = lines[row].length - 1;
     return {row, column};

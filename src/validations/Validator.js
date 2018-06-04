@@ -7,31 +7,30 @@ import stripMarkdown from 'strip-markdown';
 import config from '../config';
 
 class Validator {
-  constructor(source, language, errorMap, analyzer) {
-    this._source = source;
+  constructor(source, language, errorMap) {
+    this.source = source;
     this._language = language;
     this._errorMap = errorMap;
-    this._analyzer = analyzer;
   }
 
   async getAnnotations() {
-    const errors = await this._getRawErrors();
+    const errors = await this.getRawErrors();
     return compact(map(
       errors,
       this._convertErrorToAnnotation.bind(this),
     ));
   }
 
-  _mapError(rawError) {
-    const key = this._keyForError(rawError);
+  mapError(rawError) {
+    const key = this.keyForError(rawError);
     if (this._errorMap.hasOwnProperty(key)) {
-      return this._errorMap[key](rawError, this._source);
+      return this._errorMap[key](rawError, this.source);
     }
     return null;
   }
 
   _convertErrorToAnnotation(rawError) {
-    const error = this._mapError(rawError);
+    const error = this.mapError(rawError);
     if (!error) {
       if (config.warnOnDroppedErrors) {
         // eslint-disable-next-line no-console
@@ -46,7 +45,7 @@ class Validator {
       error.payload,
     );
 
-    const location = this._locationForError(rawError);
+    const location = this.locationForError(rawError);
 
     return assign({}, location, error, {
       text: remark().use(stripMarkdown).processSync(message).toString(),
@@ -55,20 +54,20 @@ class Validator {
     });
   }
 
-  _keyForError() {
-    throw new Error('Subclasses must define _keyForError()');
+  keyForError() {
+    throw new Error('Subclasses must define keyForError()');
   }
 
-  _getRawErrors() {
-    throw new Error('Subclasses must define _getRawErrors()');
+  getRawErrors() {
+    throw new Error('Subclasses must define getRawErrors()');
   }
 
-  _rowForError() {
-    throw new Error('Subclasses must define _rowForError()');
+  rowForError() {
+    throw new Error('Subclasses must define rowForError()');
   }
 
-  _columnForError() {
-    throw new Error('Subclasses must define _columnForError()');
+  columnForError() {
+    throw new Error('Subclasses must define columnForError()');
   }
 }
 

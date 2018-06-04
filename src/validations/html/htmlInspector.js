@@ -90,10 +90,10 @@ HTMLInspector.rules.add(
 class HtmlInspectorValidator extends Validator {
   constructor(source) {
     super(source, 'html', errorMap);
-    this._doc = new DOMParser().parseFromString(this._source, 'text/html');
+    this._doc = new DOMParser().parseFromString(this.source, 'text/html');
   }
 
-  async _getRawErrors() {
+  async getRawErrors() {
     if (isNull(this._doc.documentElement)) {
       return Promise.resolve([]);
     }
@@ -107,17 +107,17 @@ class HtmlInspectorValidator extends Validator {
     });
   }
 
-  _keyForError(error) {
+  keyForError(error) {
     return error.rule;
   }
 
-  _locationForError(error) {
+  locationForError(error) {
     const range = this._doc.createRange();
     range.setEndBefore(error.context);
     const lines = range.toString().split('\n');
 
     const droppedNewlines =
-      this._source.split('\n').length -
+      this.source.split('\n').length -
       this._doc.documentElement.outerHTML.split('\n').length;
 
     return {

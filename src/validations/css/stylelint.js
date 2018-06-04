@@ -21,14 +21,14 @@ class StyleLintValidator extends Validator {
     super(source, 'css', errorMap);
   }
 
-  async _getRawErrors() {
+  async getRawErrors() {
     try {
       const warnings = [];
       checkAgainstRule(
         {
           ruleName: 'declaration-block-trailing-semicolon',
           ruleSettings: ['always'],
-          root: parse(this._source),
+          root: parse(this.source),
         },
         warning => warnings.push(warning),
       );
@@ -38,7 +38,7 @@ class StyleLintValidator extends Validator {
     }
   }
 
-  _keyForError(error) {
+  keyForError(error) {
     if (isSyntaxError(error)) {
       return `syntaxError/${error.reason}`;
     }
@@ -46,7 +46,7 @@ class StyleLintValidator extends Validator {
     return `lintRule/${error.rule}`;
   }
 
-  _locationForError(error) {
+  locationForError(error) {
     return {row: error.line - 1, column: error.column};
   }
 }
