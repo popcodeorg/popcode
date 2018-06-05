@@ -188,7 +188,7 @@
     "moment": "^2.14.1",
     "object-inspect": "^1.5.0",
     "offline-plugin": "^5.0.3",
-    "parse5": "^4.0.0",
+    "parse5-sax-parser": "^5.0.0",
     "pify": "^3.0.0",
     "postcss": "^6.0.22",
     "promise-retry": "^1.1.1",

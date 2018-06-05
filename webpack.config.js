@@ -276,6 +276,8 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
             matchModule('ast-types'),
             matchModule('chalk'),
             matchModule('lodash-es'),
+            matchModule('parse5'),
+            matchModule('parse5-sax-parser'),
             matchModule('postcss-html'),
             matchModule('recast'),
             matchModule('redux'),
