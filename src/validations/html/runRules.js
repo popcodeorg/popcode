@@ -1,4 +1,4 @@
-import SAXParser from 'parse5/lib/sax';
+import SAXParser from 'parse5-sax-parser';
 import voidElements from 'void-elements';
 
 // Runs `rules` on `source` and promises an iterable of all errors.
@@ -12,22 +12,35 @@ import voidElements from 'void-elements';
 //   closeTag({row: number, column: number}, name: string)
 //   to take in close tags
 export default (rules, source) => {
-  const parser = new SAXParser({locationInfo: true});
+  const parser = new SAXParser({sourceCodeLocationInfo: true});
   return new Promise((resolve) => {
-    parser.on('startTag', (name, attrs, selfClosing, {line, col}) => {
-      for (const rule of rules) {
-        if (rule.openTag && !selfClosing && !(name in voidElements)) {
-          rule.openTag({row: line - 1, column: col - 1}, {name});
+    parser.on(
+      'startTag',
+      ({
+        tagName,
+        selfClosing,
+        sourceCodeLocation: {startLine, startCol},
+      }) => {
+        for (const rule of rules) {
+          if (rule.openTag && !selfClosing && !(tagName in voidElements)) {
+            rule.openTag(
+              {row: startLine - 1, column: startCol - 1},
+              {name: tagName},
+            );
+          }
         }
-      }
-    });
-    parser.on('endTag', (name, {line, col}) => {
-      for (const rule of rules) {
-        if (rule.closeTag) {
-          rule.closeTag({row: line - 1, column: col - 1}, name);
+      },
+    );
+    parser.on(
+      'endTag',
+      ({tagName, sourceCodeLocation: {startLine, startCol}}) => {
+        for (const rule of rules) {
+          if (rule.closeTag) {
+            rule.closeTag({row: startLine - 1, column: startCol - 1}, tagName);
+          }
         }
-      }
-    });
+      },
+    );
     parser.write(source);
     parser.end(() => {
       resolve(function* () {
