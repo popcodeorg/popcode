@@ -268,7 +268,7 @@
 
 "@sinonjs/formatio@^2.0.0":
   version "2.0.0"
-  resolved "http://registry.npmjs.org/@sinonjs/formatio/-/formatio-2.0.0.tgz#84db7e9eb5531df18a8c5e0bfb6e449e55e654b2"
+  resolved "https://registry.yarnpkg.com/@sinonjs/formatio/-/formatio-2.0.0.tgz#84db7e9eb5531df18a8c5e0bfb6e449e55e654b2"
   dependencies:
     samsam "1.3.0"
 
@@ -2676,9 +2676,13 @@ core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
-core-js@^2.2.0, core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0:
+core-js@^2.2.0, core-js@^2.4.0, core-js@^2.5.0:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.6.tgz#0fe6d45bf3cac3ac364a9d72de7576f4eb221b9d"
+
+core-js@^2.4.1:
+  version "2.5.7"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -3150,7 +3154,7 @@ di@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/di/-/di-0.0.1.tgz#806649326ceaa7caa3306d75d985ea2748ba913c"
 
-diff@^3.1.0:
+diff@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
 
@@ -6312,9 +6316,9 @@ loglevelnext@^1.0.1:
     es6-symbol "^3.1.1"
     object.assign "^4.1.0"
 
-lolex@^2.2.0, lolex@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/lolex/-/lolex-2.3.2.tgz#85f9450425103bf9e7a60668ea25dc43274ca807"
+lolex@^2.3.2, lolex@^2.4.2:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/lolex/-/lolex-2.7.0.tgz#9c087a69ec440e39d3f796767cf1b2cdc43d5ea5"
 
 long@^3.2.0:
   version "3.2.0"
@@ -6838,9 +6842,9 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
-nise@^1.2.0:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/nise/-/nise-1.3.3.tgz#c17a850066a8a1dfeb37f921da02441afc4a82ba"
+nise@^1.3.3:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/nise/-/nise-1.4.1.tgz#78bc2b343d5ff1031ea9d1bb2c87a94c26db7250"
   dependencies:
     "@sinonjs/formatio" "^2.0.0"
     just-extend "^1.1.27"
@@ -8703,8 +8707,8 @@ redux-saga-debounce-effect@^0.2.2:
   resolved "https://registry.yarnpkg.com/redux-saga-debounce-effect/-/redux-saga-debounce-effect-0.2.2.tgz#ba61f7ac939f3bcc5b6693384e39837a4802b5ee"
 
 redux-saga-test-plan@^3.0.2:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/redux-saga-test-plan/-/redux-saga-test-plan-3.6.0.tgz#ca316ce212efbddf4ffa532bb0e673bba8114b1d"
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/redux-saga-test-plan/-/redux-saga-test-plan-3.7.0.tgz#c8f513b1c6e13eef526a6b8a2e9076b6f26f5698"
   dependencies:
     core-js "^2.4.1"
     fsm-iterator "^1.1.0"
@@ -9332,16 +9336,16 @@ simple-swizzle@^0.2.2:
     is-arrayish "^0.3.1"
 
 sinon@^5.0.7:
-  version "5.0.7"
-  resolved "https://registry.yarnpkg.com/sinon/-/sinon-5.0.7.tgz#3bded6a73613ccc9e512e20246ced69a27c27dab"
+  version "5.0.10"
+  resolved "https://registry.yarnpkg.com/sinon/-/sinon-5.0.10.tgz#a282b36a7475664c9f98719108e5546907129023"
   dependencies:
     "@sinonjs/formatio" "^2.0.0"
-    diff "^3.1.0"
+    diff "^3.5.0"
     lodash.get "^4.4.2"
-    lolex "^2.2.0"
-    nise "^1.2.0"
-    supports-color "^5.1.0"
-    type-detect "^4.0.5"
+    lolex "^2.4.2"
+    nise "^1.3.3"
+    supports-color "^5.4.0"
+    type-detect "^4.0.8"
 
 slack-node@~0.2.0:
   version "0.2.0"
@@ -9976,7 +9980,7 @@ supports-color@^3.1.2, supports-color@^3.2.3:
   dependencies:
     has-flag "^1.0.0"
 
-supports-color@^5.1.0, supports-color@^5.3.0, supports-color@^5.4.0:
+supports-color@^5.3.0, supports-color@^5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.4.0.tgz#1c6b337402c2137605efe19f10fec390f6faab54"
   dependencies:
@@ -10316,7 +10320,7 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-type-detect@^4.0.5:
+type-detect@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.8.tgz#7646fb5f18871cfbb7749e69bd39a6388eb7450c"
 
