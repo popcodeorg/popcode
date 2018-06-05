@@ -2016,15 +2016,15 @@ buffers@~0.1.1:
   resolved "https://registry.yarnpkg.com/buffers/-/buffers-0.1.1.tgz#b24579c3bed4d6d396aeee6d9a8ae7f5482ab7bb"
 
 bugsnag-js@^4.0.3:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/bugsnag-js/-/bugsnag-js-4.6.0.tgz#c855ff548cecae1138dc592b7c271e9ac2f86af6"
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/bugsnag-js/-/bugsnag-js-4.7.1.tgz#29dc87cfbf9bf3eb014bdd465ec34ddf666ed272"
   dependencies:
     "@bugsnag/cuid" "^3.0.0"
     "@bugsnag/safe-json-stringify" "^2.1.0"
     browserify-versionify "^1.0.6"
-    error-stack-parser "^2.0.1"
+    error-stack-parser "^2.0.2"
     iserror "0.0.2"
-    stack-generator "github:bengourley/stack-generator#190a6f500cfc4a9ef77db204b4f571964e39c3d8"
+    stack-generator "^2.0.3"
 
 bugsnag-react@^1.0.0:
   version "1.1.1"
@@ -3478,11 +3478,11 @@ error-ex@^1.2.0, error-ex@^1.3.1:
   dependencies:
     is-arrayish "^0.2.1"
 
-error-stack-parser@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/error-stack-parser/-/error-stack-parser-2.0.1.tgz#a3202b8fb03114aa9b40a0e3669e48b2b65a010a"
+error-stack-parser@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/error-stack-parser/-/error-stack-parser-2.0.2.tgz#4ae8dbaa2bf90a8b450707b9149dcabca135520d"
   dependencies:
-    stackframe "^1.0.3"
+    stackframe "^1.0.4"
 
 es-abstract@^1.5.0, es-abstract@^1.5.1, es-abstract@^1.6.1:
   version "1.11.0"
@@ -9651,13 +9651,13 @@ stable@~0.1.6:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/stable/-/stable-0.1.8.tgz#836eb3c8382fe2936feaf544631017ce7d47a3cf"
 
-"stack-generator@github:bengourley/stack-generator#190a6f500cfc4a9ef77db204b4f571964e39c3d8":
-  version "2.0.2"
-  resolved "https://codeload.github.com/bengourley/stack-generator/tar.gz/190a6f500cfc4a9ef77db204b4f571964e39c3d8"
+stack-generator@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/stack-generator/-/stack-generator-2.0.3.tgz#bb74385c67ffc4ccf3c4dee5831832d4e509c8a0"
   dependencies:
     stackframe "^1.0.4"
 
-stackframe@^1.0.3, stackframe@^1.0.4:
+stackframe@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/stackframe/-/stackframe-1.0.4.tgz#357b24a992f9427cba6b545d96a14ed2cbca187b"
 
