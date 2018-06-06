@@ -4,6 +4,7 @@ import ConsoleError from './ConsoleError';
 import Error from './Error';
 import ErrorList from './ErrorList';
 import ErrorReport from './ErrorReport';
+import Notification from './Notification';
 import Project from './Project';
 import UiState from './UiState';
 import User from './User';
@@ -16,6 +17,7 @@ export {
   Error,
   ErrorList,
   ErrorReport,
+  Notification,
   Project,
   User,
   UserAccount,

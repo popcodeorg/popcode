@@ -1,13 +1,13 @@
-import Immutable from 'immutable';
+import Immutable, {Map} from 'immutable';
 
-import {UiState} from '../records';
+import {Notification, UiState} from '../records';
 
 const defaultState = new UiState();
 
-function addNotification(state, type, severity, payload = {}) {
+function addNotification(state, type, severity, metadata = {}) {
   return state.setIn(
     ['notifications', type],
-    Immutable.fromJS({type, severity, payload, metadata: {}}),
+    new Notification({type, severity, metadata: new Map(metadata)}),
   );
 }
 
@@ -93,16 +93,16 @@ export default function ui(stateIn, action) {
         state,
         action.payload.type,
         action.payload.severity,
-        action.payload.payload,
+        action.payload.metadata,
       );
 
     case 'USER_DISMISSED_NOTIFICATION':
       return dismissNotification(state, action.payload.type);
 
     case 'UPDATE_NOTIFICATION_METADATA':
-      return state.setIn(
+      return state.updateIn(
         ['notifications', action.payload.type, 'metadata'],
-        Immutable.fromJS(action.payload.metadata),
+        metadata => metadata.merge(action.payload.metadata),
       );
 
     case 'USER_LOGGED_OUT':

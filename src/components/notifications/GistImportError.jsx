@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import {t} from 'i18next';
 
 function gistUrlFromId(gistId) {
   return `https://gist.github.com/${gistId}`;
 }
 
-export default function GistImportError({payload: {gistId}}) {
+export default function GistImportError({metadata}) {
   return (
     <span>
       {t('notifications.gist-import-error')}{' '}
       <a
-        href={gistUrlFromId(gistId)}
+        href={gistUrlFromId(metadata.get('gistId'))}
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -22,5 +23,7 @@ export default function GistImportError({payload: {gistId}}) {
 }
 
 GistImportError.propTypes = {
-  payload: PropTypes.object.isRequired,
+  metadata: ImmutablePropTypes.contains({
+    gistId: PropTypes.string,
+  }).isRequired,
 };
