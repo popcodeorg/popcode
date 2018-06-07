@@ -10,6 +10,8 @@ import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';
 import partition from 'lodash-es/partition';
 
+import {EditorLocation} from '../records';
+
 import EditorContainer from './EditorContainer';
 import Editor from './Editor';
 
@@ -125,7 +127,7 @@ EditorsColumn.propTypes = {
   currentProject: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
-  requestedFocusedLine: PropTypes.object,
+  requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
   resizableFlexRefs: PropTypes.array.isRequired,
   style: PropTypes.object.isRequired,

@@ -1,6 +1,7 @@
 import CompiledProject from './CompiledProject';
 import ConsoleEntry from './ConsoleEntry';
 import ConsoleError from './ConsoleError';
+import EditorLocation from './EditorLocation';
 import Error from './Error';
 import ErrorList from './ErrorList';
 import ErrorReport from './ErrorReport';
@@ -14,6 +15,7 @@ export {
   CompiledProject,
   ConsoleEntry,
   ConsoleError,
+  EditorLocation,
   Error,
   ErrorList,
   ErrorReport,

@@ -1,6 +1,6 @@
-import Immutable, {Map} from 'immutable';
+import {Map} from 'immutable';
 
-import {Notification, UiState} from '../records';
+import {EditorLocation, Notification, UiState} from '../records';
 
 const defaultState = new UiState();
 
@@ -46,7 +46,7 @@ export default function ui(stateIn, action) {
     case 'FOCUS_LINE':
       return state.set(
         'requestedFocusedLine',
-        new Immutable.Map({
+        new EditorLocation({
           component: action.payload.component,
           line: action.payload.line,
           column: action.payload.column,
@@ -56,7 +56,7 @@ export default function ui(stateIn, action) {
     case 'CLEAR_CONSOLE_ENTRIES':
       return state.set(
         'requestedFocusedLine',
-        new Immutable.Map({
+        new EditorLocation({
           component: 'console',
           line: 0,
           column: 0,
