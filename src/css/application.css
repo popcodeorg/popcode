@@ -317,7 +317,6 @@ body {
 
 .top-bar__project-saved {
   position: absolute;
-  visibility: hidden;
   text-align: center;
   top: 0;
   left: 0;
