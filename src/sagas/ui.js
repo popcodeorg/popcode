@@ -1,6 +1,11 @@
+import {delay} from 'redux-saga';
 import {all, call, put, select, take, takeEvery} from 'redux-saga/effects';
 import {debounceFor} from 'redux-saga-debounce-effect';
-import {userDoneTyping as userDoneTypingAction} from '../actions/ui';
+import {
+  userDoneTyping as userDoneTypingAction,
+  showSaveIndicator,
+  hideSaveIndicator,
+} from '../actions/ui';
 import {getCurrentProject} from '../selectors';
 import {
   projectExportDisplayed,
@@ -12,6 +17,12 @@ import compileProject from '../util/compileProject';
 
 export function* userDoneTyping() {
   yield put(userDoneTypingAction());
+}
+
+export function* projectSuccessfullySaved() {
+  yield put(showSaveIndicator());
+  yield call(delay, 1000);
+  yield put(hideSaveIndicator());
 }
 
 function* projectExport(
@@ -55,5 +66,6 @@ export default function* () {
     debounceFor('UPDATE_PROJECT_SOURCE', userDoneTyping, 1000),
     takeEvery('POP_OUT_PROJECT', popOutProject),
     takeEvery('EXPORT_PROJECT', exportProject),
+    debounceFor('PROJECT_SUCCESSFULLY_SAVED', projectSuccessfullySaved, 1000),
   ]);
 }

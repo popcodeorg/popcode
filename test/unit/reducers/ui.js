@@ -22,6 +22,8 @@ import {
   toggleTopBarMenu,
   startEditingInstructions,
   cancelEditingInstructions,
+  showSaveIndicator,
+  hideSaveIndicator,
 } from '../../../src/actions/ui';
 import {
   snapshotCreated,
@@ -175,6 +177,20 @@ test('userDoneTyping', reducerTest(
   initialState.setIn(['editors', 'typing'], true),
   userDoneTyping,
   initialState,
+));
+
+test('showSaveIndicator', reducerTest(
+  reducer,
+  initialState,
+  showSaveIndicator,
+  initialState.set('saveIndicatorShown', true),
+));
+
+test('currentProjectSaveFinished', reducerTest(
+  reducer,
+  initialState,
+  hideSaveIndicator,
+  initialState.set('saveIndicatorShown', false),
 ));
 
 test('userLoggedOut', (t) => {

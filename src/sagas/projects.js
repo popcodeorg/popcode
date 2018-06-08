@@ -16,6 +16,7 @@ import {
   gistNotFound,
   projectCreated,
   projectsLoaded,
+  projectSuccessfullySaved,
 } from '../actions/projects';
 import {
   snapshotImported,
@@ -23,10 +24,14 @@ import {
   snapshotNotFound,
   projectRestoredFromLastSession,
 } from '../actions/clients';
-import {saveCurrentProject} from '../util/projectUtils';
+import {isPristineProject} from '../util/projectUtils';
 import {loadGistFromId} from '../clients/github';
-import {loadAllProjects, loadProjectSnapshot} from '../clients/firebase';
-import {getCurrentUserId} from '../selectors';
+import {
+  loadAllProjects,
+  loadProjectSnapshot,
+  saveProject,
+} from '../clients/firebase';
+import {getCurrentProject, getCurrentUserId} from '../selectors';
 
 export function* applicationLoaded(action) {
   if (isString(action.payload.gistId)) {
@@ -47,9 +52,7 @@ export function* createProject() {
 }
 
 export function* changeCurrentProject() {
-  const state = yield select();
-
-  yield call(saveCurrentProject, state);
+  yield* saveCurrentProject();
 }
 
 export function* importSnapshot({payload: {snapshotKey}}) {
@@ -81,13 +84,12 @@ export function* importGist({payload: {gistId}}) {
 }
 
 export function* updateProjectSource() {
-  const state = yield select();
-  yield call(saveCurrentProject, state);
+  yield* saveCurrentProject();
 }
 
 export function* userAuthenticated() {
   const state = yield select();
-  yield fork(saveCurrentProject, state);
+  yield fork(saveCurrentProject);
 
   const projects = yield call(loadAllProjects, getCurrentUserId(state));
 
@@ -95,9 +97,7 @@ export function* userAuthenticated() {
 }
 
 export function* toggleLibrary() {
-  const state = yield select();
-
-  yield call(saveCurrentProject, state);
+  yield* saveCurrentProject();
 }
 
 function generateProjectKey() {
@@ -107,8 +107,17 @@ function generateProjectKey() {
 
 export function* projectExported({payload: {exportType}}) {
   if (exportType === 'repo') {
-    const state = yield select();
-    yield call(saveCurrentProject, state);
+    yield* saveCurrentProject();
+  }
+}
+
+export function* saveCurrentProject() {
+  const userId = yield select(getCurrentUserId);
+  const currentProject = yield select(getCurrentProject);
+
+  if (userId && currentProject && !isPristineProject(currentProject)) {
+    yield call(saveProject, userId, currentProject);
+    yield put(projectSuccessfullySaved());
   }
 }
 

@@ -23,7 +23,8 @@ const defaultState = new Immutable.Map().
   })).
   set('workspace', DEFAULT_WORKSPACE).
   set('notifications', new Immutable.Map()).
-  set('topBar', new Immutable.Map({openMenu: null}));
+  set('topBar', new Immutable.Map({openMenu: null})).
+  set('saveIndicatorShown', false);
 
 function addNotification(state, type, severity, payload = {}) {
   return state.setIn(
@@ -228,6 +229,12 @@ export default function ui(stateIn, action) {
     case 'CANCEL_EDITING_INSTRUCTIONS':
     case 'UPDATE_PROJECT_INSTRUCTIONS':
       return state.setIn(['workspace', 'isEditingInstructions'], false);
+
+    case 'SHOW_SAVE_INDICATOR':
+      return state.set('saveIndicatorShown', true);
+
+    case 'HIDE_SAVE_INDICATOR':
+      return state.set('saveIndicatorShown', false);
 
     default:
       return state;

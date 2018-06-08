@@ -64,3 +64,6 @@ export const gistImportError = createAction(
 );
 
 export const projectsLoaded = createAction('PROJECTS_LOADED');
+
+export const projectSuccessfullySaved =
+  createAction('PROJECT_SUCCESSFULLY_SAVED');
