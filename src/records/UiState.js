@@ -9,4 +9,5 @@ export default Record({
   notifications: new Map(),
   openTopBarMenu: null,
   requestedFocusedLine: null,
+  saveIndicatorShown: false,
 }, 'UiState');
