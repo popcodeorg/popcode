@@ -33,6 +33,7 @@ import isSaveIndicatorShown from './isSaveIndicatorShown';
 import isSnapshotInProgress from './isSnapshotInProgress';
 import isTextSizeLarge from './isTextSizeLarge';
 import isUserTyping from './isUserTyping';
+import isUserAnonymous from './isUserAnonymous';
 import isUserAuthenticated from './isUserAuthenticated';
 import isUserAuthenticatedWithGithub from './isUserAuthenticatedWithGithub';
 import isUserAuthenticatedWithGoogle from './isUserAuthenticatedWithGoogle';
@@ -72,6 +73,7 @@ export {
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserTyping,
+  isUserAnonymous,
   isUserAuthenticated,
   isUserAuthenticatedWithGithub,
   isUserAuthenticatedWithGoogle,

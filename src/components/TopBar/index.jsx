@@ -41,6 +41,7 @@ export default function TopBar({
   isGistExportInProgress,
   isRepoExportInProgress,
   isClassroomExportInProgress,
+  isUserAnonymous,
   isUserAuthenticated,
   isUserAuthenticatedWithGithub,
   isUserTyping,
@@ -111,6 +112,7 @@ export default function TopBar({
       />
       <CurrentUser
         isOpen={openMenu === 'currentUser'}
+        isUserAnonymous={isUserAnonymous}
         isUserAuthenticated={isUserAuthenticated}
         user={currentUser}
         onClick={partial(onClickMenu, 'currentUser')}
@@ -148,6 +150,7 @@ TopBar.propTypes = {
   isRepoExportInProgress: PropTypes.bool.isRequired,
   isSnapshotInProgress: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
+  isUserAnonymous: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
   isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool.isRequired,
