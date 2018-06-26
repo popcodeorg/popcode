@@ -1,7 +1,7 @@
-import Immutable from 'immutable';
 import get from 'lodash-es/get';
 
-const init = new Immutable.Map({authenticated: false});
+import {User, UserAccount} from '../records';
+import {LoginState} from '../enums';
 
 function getToken(credential) {
   if (credential.providerId === 'github.com') {
@@ -13,7 +13,7 @@ function getToken(credential) {
 }
 
 function user(stateIn, action) {
-  const state = stateIn || init;
+  const state = stateIn || new User();
 
   switch (action.type) {
     case 'USER_AUTHENTICATED': {
@@ -22,22 +22,26 @@ function user(stateIn, action) {
       const profileData = get(userData, ['providerData', 0], userData);
 
       return state.merge({
-        authenticated: true,
-        id: userData.uid,
-        displayName: profileData.displayName || get(
-          additionalUserInfo,
-          'username',
-        ),
-        avatarUrl: profileData.photoURL,
-        accessTokens: new Immutable.Map().set(
-          credential.providerId,
-          getToken(credential),
+        loginState: LoginState.AUTHENTICATED,
+        account: new UserAccount({
+          id: userData.uid,
+          displayName: profileData.displayName || get(
+            additionalUserInfo,
+            'username',
+          ),
+          avatarUrl: profileData.photoURL,
+        }).update(
+          'accessTokens',
+          accessTokens => accessTokens.set(
+            credential.providerId,
+            getToken(credential),
+          ),
         ),
       });
     }
 
     case 'USER_LOGGED_OUT':
-      return init;
+      return new User().set('loginState', LoginState.ANONYMOUS);
 
     default:
       return state;

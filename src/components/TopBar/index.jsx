@@ -5,6 +5,7 @@ import partial from 'lodash-es/partial';
 
 import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
+import {UserAccount} from '../../records';
 
 import CurrentUser from './CurrentUser';
 import ExportMenu from './ExportMenu';
@@ -110,6 +111,7 @@ export default function TopBar({
       />
       <CurrentUser
         isOpen={openMenu === 'currentUser'}
+        isUserAuthenticated={isUserAuthenticated}
         user={currentUser}
         onClick={partial(onClickMenu, 'currentUser')}
         onClose={partial(onCloseMenu, 'currentUser')}
@@ -134,7 +136,7 @@ export default function TopBar({
 
 TopBar.propTypes = {
   currentProjectKey: PropTypes.string,
-  currentUser: PropTypes.object.isRequired,
+  currentUser: PropTypes.instanceOf(UserAccount),
   enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
   hasExportedRepo: PropTypes.bool.isRequired,
   hasInstructions: PropTypes.bool.isRequired,
@@ -172,6 +174,7 @@ TopBar.propTypes = {
 
 TopBar.defaultProps = {
   currentProjectKey: null,
+  currentUser: null,
   isExperimental: false,
   openMenu: null,
 };

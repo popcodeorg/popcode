@@ -1,12 +1,12 @@
 import {List, Map, fromJS} from 'immutable';
 
-import {Error, ErrorList, ErrorReport} from '../../src/records';
+import {Error, ErrorList, ErrorReport, User} from '../../src/records';
 
 const sampleError = new Error({reason: 'bad-code'});
 const validatingErrorList = new ErrorList({state: 'validating'});
 
 export const user = {
-  initial: fromJS({authenticated: false}),
+  initial: new User(),
 };
 
 export const projects = {

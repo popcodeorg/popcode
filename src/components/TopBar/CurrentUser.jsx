@@ -3,14 +3,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
 
+import {UserAccount} from '../../records';
+
 import CurrentUserMenu from './CurrentUserMenu';
 
 export default function CurrentUser({
+  isUserAuthenticated,
   user,
   onLogOut,
   onStartGithubLogIn,
 }) {
-  if (user.authenticated) {
+  if (isUserAuthenticated) {
     return <CurrentUserMenu user={user} onLogOut={onLogOut} />;
   }
   return (
@@ -27,9 +30,12 @@ export default function CurrentUser({
 }
 
 CurrentUser.propTypes = {
-  user: PropTypes.shape({
-    authenticated: PropTypes.boolean,
-  }).isRequired,
+  isUserAuthenticated: PropTypes.bool.isRequired,
+  user: PropTypes.instanceOf(UserAccount),
   onLogOut: PropTypes.func.isRequired,
   onStartGithubLogIn: PropTypes.func.isRequired,
+};
+
+CurrentUser.defaultProps = {
+  user: null,
 };

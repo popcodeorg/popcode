@@ -167,6 +167,7 @@
     "bugsnag-react": "^1.0.0",
     "classnames": "^2.1.5",
     "css": "^2.2.1",
+    "enum": "^2.5.0",
     "enumify": "^1.0.4",
     "es6-set": "^0.1.4",
     "esprima": "^4.0.0",
