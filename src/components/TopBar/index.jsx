@@ -116,7 +116,7 @@ export default function TopBar({
         onClick={partial(onClickMenu, 'currentUser')}
         onClose={partial(onCloseMenu, 'currentUser')}
         onLogOut={onLogOut}
-        onStartGithubLogIn={onStartGithubLogIn}
+        onStartLogIn={onStartGithubLogIn}
       />
       <HamburgerMenu
         hasInstructions={hasInstructions}
