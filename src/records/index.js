@@ -5,6 +5,8 @@ import Error from './Error';
 import ErrorList from './ErrorList';
 import ErrorReport from './ErrorReport';
 import Project from './Project';
+import User from './User';
+import UserAccount from './UserAccount';
 
 export {
   CompiledProject,
@@ -14,4 +16,6 @@ export {
   ErrorList,
   ErrorReport,
   Project,
+  User,
+  UserAccount,
 };
