@@ -15,28 +15,10 @@ const HamburgerMenu = createMenu({
   renderItems({
     hasInstructions,
     isEditingInstructions,
-    isExperimental,
-    isGapiReady,
-    isUserAuthenticated,
     onStartEditingInstructions,
-    onStartGoogleLogIn,
 
   }) {
     return tap([], (items) => {
-      if (
-        !isUserAuthenticated &&
-        isExperimental &&
-        isGapiReady
-      ) {
-        items.push(
-          <MenuItem
-            key="startGoogleLogIn"
-            onClick={onStartGoogleLogIn}
-          >
-            Login with Google
-          </MenuItem>,
-        );
-      }
       items.push(
         <MenuItem
           isDisabled={isEditingInstructions}
@@ -101,7 +83,6 @@ HamburgerMenu.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
-  onStartGoogleLogIn: PropTypes.func.isRequired,
 };
 
 export default HamburgerMenu;

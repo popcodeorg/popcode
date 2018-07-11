@@ -111,6 +111,7 @@ export default function TopBar({
         onChangeCurrentProject={onChangeCurrentProject}
       />
       <CurrentUser
+        isLoginAvailable={!isExperimental || isGapiReady}
         isOpen={openMenu === 'currentUser'}
         isUserAnonymous={isUserAnonymous}
         isUserAuthenticated={isUserAuthenticated}
@@ -118,19 +119,15 @@ export default function TopBar({
         onClick={partial(onClickMenu, 'currentUser')}
         onClose={partial(onCloseMenu, 'currentUser')}
         onLogOut={onLogOut}
-        onStartLogIn={onStartGithubLogIn}
+        onStartLogIn={isExperimental ? onStartGoogleLogIn : onStartGithubLogIn}
       />
       <HamburgerMenu
         hasInstructions={hasInstructions}
         isEditingInstructions={isEditingInstructions}
-        isExperimental={isExperimental}
-        isGapiReady={isGapiReady}
         isOpen={openMenu === 'hamburger'}
-        isUserAuthenticated={isUserAuthenticated}
         onClick={partial(onClickMenu, 'hamburger')}
         onStartEditingInstructions={
           partial(onStartEditingInstructions, currentProjectKey)}
-        onStartGoogleLogIn={onStartGoogleLogIn}
       />
     </header>
   );
