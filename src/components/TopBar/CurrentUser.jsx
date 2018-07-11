@@ -8,6 +8,7 @@ import {UserAccount} from '../../records';
 import CurrentUserMenu from './CurrentUserMenu';
 
 export default function CurrentUser({
+  isLoginAvailable,
   isUserAnonymous,
   isUserAuthenticated,
   user,
@@ -18,7 +19,7 @@ export default function CurrentUser({
     return <CurrentUserMenu user={user} onLogOut={onLogOut} />;
   }
 
-  if (isUserAnonymous) {
+  if (isUserAnonymous && isLoginAvailable) {
     return (
       <div
         className={classnames('top-bar__current-user',
@@ -36,6 +37,7 @@ export default function CurrentUser({
 }
 
 CurrentUser.propTypes = {
+  isLoginAvailable: PropTypes.bool.isRequired,
   isUserAnonymous: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
   user: PropTypes.instanceOf(UserAccount),
