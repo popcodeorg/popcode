@@ -16,7 +16,6 @@ const HamburgerMenu = createMenu({
     hasInstructions,
     isEditingInstructions,
     onStartEditingInstructions,
-
   }) {
     return tap([], (items) => {
       items.push(
@@ -78,10 +77,6 @@ const HamburgerMenu = createMenu({
 HamburgerMenu.propTypes = {
   hasInstructions: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
-  isExperimental: PropTypes.bool.isRequired,
-  isGapiReady: PropTypes.bool.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  isUserAuthenticated: PropTypes.bool.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
 };
 
