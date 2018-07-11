@@ -2,12 +2,20 @@ import test from 'tape';
 import {testSaga} from 'redux-saga-test-plan';
 import {
   applicationLoaded,
+  linkGithubIdentity,
   notificationTriggered,
   userLoggedOut,
 } from '../../../src/actions';
-import {logIn, logOut, userAuthenticated} from '../../../src/actions/user';
+import {
+  identityLinked,
+  linkIdentityFailed,
+  logIn,
+  logOut,
+  userAuthenticated,
+} from '../../../src/actions/user';
 import {
   getSessionUid,
+  linkGithub,
   signIn,
   signOut,
   startSessionHeartbeat,
@@ -16,6 +24,7 @@ import {
   applicationLoaded as applicationLoadedSaga,
   logIn as logInSaga,
   logOut as logOutSaga,
+  linkGithubIdentity as linkGithubIdentitySaga,
 } from '../../../src/sagas/user';
 import {loginState} from '../../../src/channels';
 import {userCredential as createUserCredential} from '../../helpers/factory';
@@ -143,6 +152,28 @@ test('logIn', (t) => {
         {metaData: {code: 'auth/bogus-error'}},
       ).
       next().isDone();
+
+    assert.end();
+  });
+});
+
+test('linkGithubIdentity', (t) => {
+  t.test('success', (assert) => {
+    const credential = {providerId: 'github.com'};
+
+    testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
+      next().call(linkGithub).
+      next({credential}).put(identityLinked({credential}));
+
+    assert.end();
+  });
+
+  t.test('error', (assert) => {
+    const error = new Error('authentication problem!');
+
+    testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
+      next().call(linkGithub).
+      throw(error).put(linkIdentityFailed(error));
 
     assert.end();
   });

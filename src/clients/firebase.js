@@ -101,6 +101,13 @@ export async function signIn(provider) {
   }
 }
 
+export async function linkGithub() {
+  const userCredential =
+    await auth.currentUser.linkWithPopup(githubAuthProvider);
+  await saveUserCredential(userCredential);
+  return userCredential;
+}
+
 async function signInWithGithub() {
   return auth.signInWithPopup(githubAuthProvider);
 }

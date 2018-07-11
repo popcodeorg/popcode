@@ -4,10 +4,16 @@ import isString from 'lodash-es/isString';
 import {all, call, put, take, takeEvery} from 'redux-saga/effects';
 import isNil from 'lodash-es/isNil';
 import {notificationTriggered} from '../actions/ui';
-import {userAuthenticated, userLoggedOut} from '../actions/user';
+import {
+  identityLinked,
+  linkIdentityFailed,
+  userAuthenticated,
+  userLoggedOut,
+} from '../actions/user';
 import loginState from '../channels/loginState';
 import {
   getSessionUid,
+  linkGithub,
   signIn,
   signOut,
   startSessionHeartbeat,
@@ -92,6 +98,15 @@ export function* logIn({payload: {provider}}) {
   }
 }
 
+export function* linkGithubIdentity() {
+  try {
+    const userCredential = yield call(linkGithub);
+    yield put(identityLinked(userCredential));
+  } catch (e) {
+    yield put(linkIdentityFailed(e));
+  }
+}
+
 export function* logOut() {
   yield call(signOut);
 }
@@ -99,6 +114,7 @@ export function* logOut() {
 export default function* () {
   yield all([
     takeEvery('APPLICATION_LOADED', applicationLoaded),
+    takeEvery('LINK_GITHUB_IDENTITY', linkGithubIdentity),
     takeEvery('LOG_IN', logIn),
     takeEvery('LOG_OUT', logOut),
   ]);

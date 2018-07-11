@@ -6,6 +6,15 @@ export const logIn = createAction(
   provider => ({provider}),
 );
 
+export const linkGithubIdentity = createAction('LINK_GITHUB_IDENTITY');
+
+export const identityLinked = createAction('IDENTITY_LINKED');
+
+export const linkIdentityFailed = createAction(
+  'LINK_IDENTITY_FAILED',
+  error => ({error}),
+);
+
 export const logOut = createAction('LOG_OUT');
 
 export const userAuthenticated = createAction('USER_AUTHENTICATED', identity);

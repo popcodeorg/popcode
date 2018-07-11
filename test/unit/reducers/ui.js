@@ -35,6 +35,9 @@ import {
 } from '../../../src/actions/clients';
 import {EmptyGistError} from '../../../src/clients/github';
 import {
+  identityLinked,
+  linkGithubIdentity,
+  linkIdentityFailed,
   userLoggedOut,
 } from '../../../src/actions/user';
 import {
@@ -215,6 +218,43 @@ test('userLoggedOut', (t) => {
     initialState.setIn(['topBar', 'openMenu'], 'silly'),
   ));
 });
+
+test('linkGithubIdentity', (t) => {
+  t.test('with no top bar menu open', reducerTest(
+    reducer,
+    initialState,
+    linkGithubIdentity,
+    initialState,
+  ));
+
+  t.test('with currentUser menu open', reducerTest(
+    reducer,
+    initialState.setIn(['topBar', 'openMenu'], 'currentUser'),
+    linkGithubIdentity,
+    initialState,
+  ));
+
+  t.test('with different menu open', reducerTest(
+    reducer,
+    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+    linkGithubIdentity,
+    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+  ));
+});
+
+test('identityLinked', reducerTest(
+  reducer,
+  initialState,
+  partial(identityLinked, {credential: {providerId: 'github.com'}}),
+  withNotification('identity-linked', 'notice', {provider: 'github.com'}),
+));
+
+test('linkIdentityFailed', reducerTest(
+  reducer,
+  initialState,
+  partial(linkIdentityFailed, new Error()),
+  withNotification('link-identity-failed', 'error'),
+));
 
 tap({url: 'https://gists.github.com/12345abc', exportType: 'gist'}, (payload) => {
   test('projectExportNotDisplayed', reducerTest(

@@ -145,6 +145,7 @@ export default function ui(stateIn, action) {
       );
 
     case 'USER_LOGGED_OUT':
+    case 'LINK_GITHUB_IDENTITY':
       return state.updateIn(
         ['topBar', 'openMenu'],
         menu => menu === 'currentUser' ? null : menu,
@@ -235,6 +236,18 @@ export default function ui(stateIn, action) {
 
     case 'HIDE_SAVE_INDICATOR':
       return state.set('saveIndicatorShown', false);
+
+    case 'IDENTITY_LINKED': {
+      return addNotification(
+        state,
+        'identity-linked',
+        'notice',
+        {provider: action.payload.credential.providerId},
+      );
+    }
+
+    case 'LINK_IDENTITY_FAILED':
+      return addNotification(state, 'link-identity-failed', 'error');
 
     default:
       return state;

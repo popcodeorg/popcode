@@ -12,6 +12,16 @@ function getToken(credential) {
   return null;
 }
 
+function addCredential(state, credential) {
+  return state.updateIn(
+    ['account', 'accessTokens'],
+    accessTokens => accessTokens.set(
+      credential.providerId,
+      getToken(credential),
+    ),
+  );
+}
+
 function user(stateIn, action) {
   const state = stateIn || new User();
 
@@ -21,24 +31,24 @@ function user(stateIn, action) {
 
       const profileData = get(userData, ['providerData', 0], userData);
 
-      return state.merge({
-        loginState: LoginState.AUTHENTICATED,
-        account: new UserAccount({
-          id: userData.uid,
-          displayName: profileData.displayName || get(
-            additionalUserInfo,
-            'username',
-          ),
-          avatarUrl: profileData.photoURL,
-        }).update(
-          'accessTokens',
-          accessTokens => accessTokens.set(
-            credential.providerId,
-            getToken(credential),
-          ),
-        ),
-      });
+      return addCredential(
+        state.merge({
+          loginState: LoginState.AUTHENTICATED,
+          account: new UserAccount({
+            id: userData.uid,
+            displayName: profileData.displayName || get(
+              additionalUserInfo,
+              'username',
+            ),
+            avatarUrl: profileData.photoURL,
+          }),
+        }),
+        credential,
+      );
     }
+
+    case 'IDENTITY_LINKED':
+      return addCredential(state, action.payload.credential);
 
     case 'USER_LOGGED_OUT':
       return new User().set('loginState', LoginState.ANONYMOUS);

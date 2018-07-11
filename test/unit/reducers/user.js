@@ -6,7 +6,11 @@ import reducerTest from '../../helpers/reducerTest';
 import {user as states} from '../../helpers/referenceStates';
 import {userCredential} from '../../helpers/factory';
 import reducer from '../../../src/reducers/user';
-import {userAuthenticated, userLoggedOut} from '../../../src/actions/user';
+import {
+  identityLinked,
+  userAuthenticated,
+  userLoggedOut,
+} from '../../../src/actions/user';
 import {LoginState} from '../../../src/enums';
 import {User, UserAccount} from '../../../src/records';
 
@@ -49,6 +53,16 @@ test('userAuthenticated', (t) => {
     ),
   ));
 });
+
+test('identityLinked', reducerTest(
+  reducer,
+  loggedInState,
+  partial(
+    identityLinked,
+    {credential: {providerId: 'google.com', idToken: 'abc'}},
+  ),
+  loggedInState.setIn(['account', 'accessTokens', 'google.com'], 'abc'),
+));
 
 test('userLoggedOut', reducerTest(
   reducer,

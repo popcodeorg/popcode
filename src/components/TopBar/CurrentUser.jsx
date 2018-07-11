@@ -11,12 +11,21 @@ export default function CurrentUser({
   isLoginAvailable,
   isUserAnonymous,
   isUserAuthenticated,
+  isUserAuthenticatedWithGithub,
   user,
+  onLinkGitHub,
   onLogOut,
   onStartLogIn,
 }) {
   if (isUserAuthenticated) {
-    return <CurrentUserMenu user={user} onLogOut={onLogOut} />;
+    return (
+      <CurrentUserMenu
+        isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
+        user={user}
+        onLinkGitHub={onLinkGitHub}
+        onLogOut={onLogOut}
+      />
+    );
   }
 
   if (isUserAnonymous && isLoginAvailable) {
@@ -40,7 +49,9 @@ CurrentUser.propTypes = {
   isLoginAvailable: PropTypes.bool.isRequired,
   isUserAnonymous: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
+  isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
   user: PropTypes.instanceOf(UserAccount),
+  onLinkGitHub: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onStartLogIn: PropTypes.func.isRequired,
 };
