@@ -294,6 +294,6 @@ async function githubWithAccessToken(token) {
 }
 
 async function clientForUser(user) {
-  const githubToken = get(user, ['accessTokens', 'github.com']);
+  const githubToken = get(user, ['account', 'accessTokens', 'github.com']);
   return githubWithAccessToken(githubToken);
 }
