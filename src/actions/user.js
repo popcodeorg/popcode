@@ -1,5 +1,4 @@
 import {createAction} from 'redux-actions';
-import identity from 'lodash-es/identity';
 
 export const logIn = createAction(
   'LOG_IN',
@@ -8,7 +7,10 @@ export const logIn = createAction(
 
 export const linkGithubIdentity = createAction('LINK_GITHUB_IDENTITY');
 
-export const identityLinked = createAction('IDENTITY_LINKED');
+export const identityLinked = createAction(
+  'IDENTITY_LINKED',
+  credential => ({credential}),
+);
 
 export const linkIdentityFailed = createAction(
   'LINK_IDENTITY_FAILED',
@@ -17,6 +19,9 @@ export const linkIdentityFailed = createAction(
 
 export const logOut = createAction('LOG_OUT');
 
-export const userAuthenticated = createAction('USER_AUTHENTICATED', identity);
+export const userAuthenticated = createAction(
+  'USER_AUTHENTICATED',
+  (user, credentials) => ({user, credentials}),
+);
 
 export const userLoggedOut = createAction('USER_LOGGED_OUT');

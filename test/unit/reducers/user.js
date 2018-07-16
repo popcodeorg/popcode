@@ -4,7 +4,7 @@ import {Map} from 'immutable';
 
 import reducerTest from '../../helpers/reducerTest';
 import {user as states} from '../../helpers/referenceStates';
-import {userCredential} from '../../helpers/factory';
+import {userWithCredentials} from '../../helpers/factory';
 import reducer from '../../../src/reducers/user';
 import {
   identityLinked,
@@ -14,7 +14,7 @@ import {
 import {LoginState} from '../../../src/enums';
 import {User, UserAccount} from '../../../src/records';
 
-const userCredentialIn = userCredential();
+const userWithCredentialsIn = userWithCredentials();
 
 const loggedOutState = new User({
   loginState: LoginState.ANONYMOUS,
@@ -23,43 +23,32 @@ const loggedOutState = new User({
 const loggedInState = new User({
   loginState: LoginState.AUTHENTICATED,
   account: new UserAccount({
-    id: userCredentialIn.user.uid,
-    displayName: userCredentialIn.user.providerData[0].displayName,
-    avatarUrl: userCredentialIn.user.providerData[0].photoURL,
+    id: userWithCredentialsIn.user.uid,
+    displayName: userWithCredentialsIn.user.displayName,
+    avatarUrl: userWithCredentialsIn.user.photoURL,
     accessTokens: new Map({
-      'github.com': userCredentialIn.credential.accessToken,
+      'github.com': userWithCredentialsIn.credentials[0].accessToken,
     }),
   }),
 });
 
-test('userAuthenticated', (t) => {
-  t.test('with displayName', reducerTest(
-    reducer,
-    states.initial,
-    partial(userAuthenticated, userCredentialIn),
-    loggedInState,
-  ));
-
-  t.test('with no displayName', reducerTest(
-    reducer,
-    states.initial,
-    partial(
-      userAuthenticated,
-      userCredential({user: {providerData: [{displayName: null}]}}),
-    ),
-    loggedInState.update(
-      'account',
-      account => account.set('displayName', 'popcoder'),
-    ),
-  ));
-});
+test('userAuthenticated', reducerTest(
+  reducer,
+  states.initial,
+  partial(
+    userAuthenticated,
+    userWithCredentialsIn.user,
+    userWithCredentialsIn.credentials,
+  ),
+  loggedInState,
+));
 
 test('identityLinked', reducerTest(
   reducer,
   loggedInState,
   partial(
     identityLinked,
-    {credential: {providerId: 'google.com', idToken: 'abc'}},
+    {providerId: 'google.com', idToken: 'abc'},
   ),
   loggedInState.setIn(['account', 'accessTokens', 'google.com'], 'abc'),
 ));

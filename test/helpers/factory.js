@@ -29,31 +29,20 @@ export function gistData({
   return {files};
 }
 
-export function userCredential({
+export function userWithCredentials({
   user: userIn,
   credential: credentialIn,
-  additionalUserInfo: additionalUserInfoIn,
 } = {}) {
   return {
     user: user(userIn),
-    credential: credential(credentialIn),
-    additionalUserInfo: additionalUserInfo(additionalUserInfoIn),
+    credentials: [credential(credentialIn)],
   };
 }
 
 export function user(userIn) {
   return defaultsDeep({}, userIn, {
-    displayName: null,
-    photoURL: null,
-    providerData: [
-      {
-        displayName: 'Popcode User',
-        email: 'popcodeuser@example.com',
-        photoURL: 'https://camo.github.com/popcodeuser.jpg',
-        providerId: 'github.com',
-        uid: '345',
-      },
-    ],
+    displayName: 'Popcode User',
+    photoURL: 'https://camo.github.com/popcodeuser.jpg',
     uid: 'abc123',
   });
 }
@@ -77,12 +66,4 @@ export function credential(credentialIn) {
     accessToken: '0123456789abcdef',
     providerId: 'github.com',
   }, credentialIn);
-}
-
-export function additionalUserInfo(additionalUserInfoIn) {
-  return defaultsDeep({}, additionalUserInfoIn, {
-    profile: {},
-    providerId: 'github.com',
-    username: 'popcoder',
-  });
 }

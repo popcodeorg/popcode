@@ -27,7 +27,9 @@ import {
   linkGithubIdentity as linkGithubIdentitySaga,
 } from '../../../src/sagas/user';
 import {loginState} from '../../../src/channels';
-import {userCredential as createUserCredential} from '../../helpers/factory';
+import {
+  userWithCredentials as createUserWithCredentials,
+} from '../../helpers/factory';
 import {bugsnagClient} from '../../../src/util/bugsnag';
 
 class MockFirebaseError extends Error {
@@ -42,28 +44,28 @@ test('applicationLoaded', (t) => {
     testSaga(applicationLoadedSaga, applicationLoaded()).
       next().call(startSessionHeartbeat).
       next().take(loginState).
-      next({userCredential: null}).put(userLoggedOut());
+      next({user: null}).put(userLoggedOut());
 
     assert.end();
   });
 
   t.test('with logged in user', (assert) => {
-    const userCredential = createUserCredential();
+    const {user, credentials} = createUserWithCredentials();
     testSaga(applicationLoadedSaga, applicationLoaded()).
       next().call(startSessionHeartbeat).
       next().take(loginState).
-      next({userCredential}).call(getSessionUid).
-      next(userCredential.user.uid).put(userAuthenticated(userCredential));
+      next({user, credentials}).call(getSessionUid).
+      next(user.uid).put(userAuthenticated(user, credentials));
 
     assert.end();
   });
 
   t.test('with expired session', (assert) => {
-    const userCredential = createUserCredential();
+    const {user, credentials} = createUserWithCredentials();
     testSaga(applicationLoadedSaga, applicationLoaded()).
       next().call(startSessionHeartbeat).
       next().take(loginState).
-      next({userCredential}).call(getSessionUid).
+      next({user, credentials}).call(getSessionUid).
       next(undefined).call(signOut);
 
     assert.end();
@@ -163,7 +165,7 @@ test('linkGithubIdentity', (t) => {
 
     testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
       next().call(linkGithub).
-      next({credential}).put(identityLinked({credential}));
+      next(credential).put(identityLinked(credential));
 
     assert.end();
   });

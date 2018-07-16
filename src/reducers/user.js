@@ -1,4 +1,4 @@
-import get from 'lodash-es/get';
+import reduce from 'lodash-es/reduce';
 
 import {User, UserAccount} from '../records';
 import {LoginState} from '../enums';
@@ -27,23 +27,19 @@ function user(stateIn, action) {
 
   switch (action.type) {
     case 'USER_AUTHENTICATED': {
-      const {user: userData, credential, additionalUserInfo} = action.payload;
+      const {user: userData, credentials} = action.payload;
 
-      const profileData = get(userData, ['providerData', 0], userData);
-
-      return addCredential(
+      return reduce(
+        credentials,
+        addCredential,
         state.merge({
           loginState: LoginState.AUTHENTICATED,
           account: new UserAccount({
             id: userData.uid,
-            displayName: profileData.displayName || get(
-              additionalUserInfo,
-              'username',
-            ),
-            avatarUrl: profileData.photoURL,
+            displayName: userData.displayName,
+            avatarUrl: userData.photoURL,
           }),
         }),
-        credential,
       );
     }
 

@@ -1,4 +1,5 @@
 import {bugsnagClient} from '../util/bugsnag';
+import isEmpty from 'lodash-es/isEmpty';
 import isError from 'lodash-es/isError';
 import isString from 'lodash-es/isString';
 import {all, call, put, take, takeEvery} from 'redux-saga/effects';
@@ -26,32 +27,33 @@ export function* applicationLoaded() {
 }
 
 function* handleInitialAuth() {
-  const {userCredential} = yield take(loginState);
-  if (isNil(userCredential)) {
+  const {user, credentials} = yield take(loginState);
+
+  if (isNil(user)) {
     yield put(userLoggedOut());
   } else {
-    if (isNil(userCredential.credential)) {
+    if (isEmpty(credentials)) {
       yield call(signOut);
       return;
     }
 
     const sessionUid = yield call(getSessionUid);
-    if (userCredential.user.uid !== sessionUid) {
+    if (user.uid !== sessionUid) {
       yield call(signOut);
       return;
     }
 
-    yield put(userAuthenticated(userCredential));
+    yield put(userAuthenticated(user, credentials));
   }
 }
 
 function* handleAuthChange() {
   while (true) {
-    const {userCredential} = yield take(loginState);
-    if (isNil(userCredential)) {
+    const {user, credentials} = yield take(loginState);
+    if (isNil(user)) {
       yield put(userLoggedOut());
     } else {
-      yield put(userAuthenticated(userCredential));
+      yield put(userAuthenticated(user, credentials));
     }
   }
 }
@@ -100,8 +102,8 @@ export function* logIn({payload: {provider}}) {
 
 export function* linkGithubIdentity() {
   try {
-    const userCredential = yield call(linkGithub);
-    yield put(identityLinked(userCredential));
+    const credential = yield call(linkGithub);
+    yield put(identityLinked(credential));
   } catch (e) {
     yield put(linkIdentityFailed(e));
   }
