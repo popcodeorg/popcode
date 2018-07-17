@@ -7,6 +7,7 @@ import {
   userLoggedOut,
 } from '../../../src/actions';
 import {
+  accountMigrationNeeded,
   identityLinked,
   linkIdentityFailed,
   logIn,
@@ -170,7 +171,19 @@ test('linkGithubIdentity', (t) => {
     assert.end();
   });
 
-  t.test('error', (assert) => {
+  t.test('credential already in use', (assert) => {
+    const error = new Error('credential already in use');
+    error.code = 'auth/credential-already-in-use';
+    error.credential = {providerId: 'github.com'};
+
+    testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
+      next().call(linkGithub).
+      throw(error).put(accountMigrationNeeded(error.credential));
+
+    assert.end();
+  });
+
+  t.test('other error', (assert) => {
     const error = new Error('authentication problem!');
 
     testSaga(linkGithubIdentitySaga, linkGithubIdentity()).

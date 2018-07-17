@@ -1,5 +1,6 @@
 import test from 'tape';
 import partial from 'lodash-es/partial';
+import tap from 'lodash-es/tap';
 import {Map} from 'immutable';
 
 import reducerTest from '../../helpers/reducerTest';
@@ -7,12 +8,13 @@ import {user as states} from '../../helpers/referenceStates';
 import {userWithCredentials} from '../../helpers/factory';
 import reducer from '../../../src/reducers/user';
 import {
+  accountMigrationNeeded,
   identityLinked,
   userAuthenticated,
   userLoggedOut,
 } from '../../../src/actions/user';
 import {LoginState} from '../../../src/enums';
-import {User, UserAccount} from '../../../src/records';
+import {AccountMigration, User, UserAccount} from '../../../src/records';
 
 const userWithCredentialsIn = userWithCredentials();
 
@@ -52,6 +54,21 @@ test('identityLinked', reducerTest(
   ),
   loggedInState.setIn(['account', 'accessTokens', 'google.com'], 'abc'),
 ));
+
+tap({providerId: 'github.com'}, (credentialToMerge) => {
+  test('accountMigrationNeeded', reducerTest(
+    reducer,
+    loggedInState,
+    partial(
+      accountMigrationNeeded,
+      credentialToMerge,
+    ),
+    loggedInState.set(
+      'currentMigration',
+      new AccountMigration({credentialToMerge}),
+    ),
+  ));
+});
 
 test('userLoggedOut', reducerTest(
   reducer,

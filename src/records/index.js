@@ -1,3 +1,4 @@
+import AccountMigration from './AccountMigration';
 import CompiledProject from './CompiledProject';
 import ConsoleEntry from './ConsoleEntry';
 import ConsoleError from './ConsoleError';
@@ -12,6 +13,7 @@ import User from './User';
 import UserAccount from './UserAccount';
 
 export {
+  AccountMigration,
   CompiledProject,
   ConsoleEntry,
   ConsoleError,

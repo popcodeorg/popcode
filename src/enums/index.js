@@ -5,3 +5,9 @@ export const LoginState = new Enum([
   'ANONYMOUS',
   'AUTHENTICATED',
 ], 'LoginState');
+
+export const AccountMigrationState = new Enum([
+  'PROPOSED',
+  'IN_PROGRESS',
+  'COMPLETE',
+]);

@@ -6,6 +6,7 @@ import {all, call, put, take, takeEvery} from 'redux-saga/effects';
 import isNil from 'lodash-es/isNil';
 import {notificationTriggered} from '../actions/ui';
 import {
+  accountMigrationNeeded,
   identityLinked,
   linkIdentityFailed,
   userAuthenticated,
@@ -105,7 +106,13 @@ export function* linkGithubIdentity() {
     const credential = yield call(linkGithub);
     yield put(identityLinked(credential));
   } catch (e) {
-    yield put(linkIdentityFailed(e));
+    switch (e.code) {
+      case 'auth/credential-already-in-use':
+        yield put(accountMigrationNeeded(e.credential));
+        break;
+      default:
+        yield put(linkIdentityFailed(e));
+    }
   }
 }
 

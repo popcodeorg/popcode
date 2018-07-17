@@ -1,6 +1,6 @@
 import reduce from 'lodash-es/reduce';
 
-import {User, UserAccount} from '../records';
+import {AccountMigration, User, UserAccount} from '../records';
 import {LoginState} from '../enums';
 
 function getToken(credential) {
@@ -45,6 +45,14 @@ function user(stateIn, action) {
 
     case 'IDENTITY_LINKED':
       return addCredential(state, action.payload.credential);
+
+    case 'ACCOUNT_MIGRATION_NEEDED':
+      return state.set(
+        'currentMigration',
+        new AccountMigration({
+          credentialToMerge: action.payload.credentialToMerge},
+        ),
+      );
 
     case 'USER_LOGGED_OUT':
       return new User().set('loginState', LoginState.ANONYMOUS);

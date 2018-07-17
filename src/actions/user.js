@@ -17,6 +17,11 @@ export const linkIdentityFailed = createAction(
   error => ({error}),
 );
 
+export const accountMigrationNeeded = createAction(
+  'ACCOUNT_MIGRATION_NEEDED',
+  credentialToMerge => ({credentialToMerge}),
+);
+
 export const logOut = createAction('LOG_OUT');
 
 export const userAuthenticated = createAction(

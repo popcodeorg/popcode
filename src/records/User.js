@@ -5,4 +5,5 @@ import {LoginState} from '../enums';
 export default Record({
   loginState: LoginState.UNKNOWN,
   account: null,
+  currentMigration: null,
 }, 'User');
