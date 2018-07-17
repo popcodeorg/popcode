@@ -3,18 +3,17 @@ import {connect} from 'react-redux';
 import Workspace from '../components/Workspace';
 import {getCurrentProject, isEditingInstructions} from '../selectors';
 import {
-  dragColumnDivider,
-  startDragColumnDivider,
-  stopDragColumnDivider,
   toggleComponent,
   applicationLoaded,
+  startDragColumnDivider,
+  stopDragColumnDivider,
 } from '../actions';
+import resizableFlex from '../higherOrderComponents/resizableFlex';
 
 function mapStateToProps(state) {
   return {
     currentProject: getCurrentProject(state),
     isEditingInstructions: isEditingInstructions(state),
-    rowsFlex: state.getIn(['ui', 'workspace', 'rowFlex']).toJS(),
   };
 }
 
@@ -26,10 +25,6 @@ function mapDispatchToProps(dispatch) {
 
     onComponentToggle(projectKey, componentName) {
       dispatch(toggleComponent(projectKey, componentName));
-    },
-
-    onDragColumnDivider(payload) {
-      dispatch(dragColumnDivider(payload));
     },
 
     onStartDragColumnDivider() {
@@ -45,4 +40,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Workspace);
+)(resizableFlex(2)(Workspace));

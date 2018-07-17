@@ -216,6 +216,7 @@
     "remark-react-lowlight": "^0.7.0",
     "reselect": "^3.0.1",
     "scriptjs": "^2.5.8",
+    "shallowequal": "^1.0.2",
     "slowparse": "^1.1.4",
     "strip-markdown": "^3.0.0",
     "stylelint": "^9.2.0",
@@ -241,6 +242,7 @@
     "analyze-bundle": "gulp js --production && source-map-explorer ./dist/application.js"
   },
   "devDependencies": {
+    "almost-equal": "^1.1.0",
     "babel-cli": "^6.23.0",
     "babel-core": "^6.14.0",
     "babel-eslint": "^8.0.1",

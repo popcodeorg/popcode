@@ -484,6 +484,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 85px;
+  flex: 1 0 0;
 }
 
 .editors__editor {

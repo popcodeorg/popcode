@@ -9,6 +9,7 @@ import errors from './errors';
 import ui from './ui';
 import clients from './clients';
 import compiledProjects from './compiledProjects';
+import resizableFlex from './resizableFlex';
 
 const reduceRoot = combineReducers({
   user,
@@ -19,6 +20,7 @@ const reduceRoot = combineReducers({
   clients,
   compiledProjects,
   console,
+  resizableFlex,
 });
 
 export default reduceReducers(

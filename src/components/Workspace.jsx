@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import {DraggableCore} from 'react-draggable';
 import bindAll from 'lodash-es/bindAll';
 import isNull from 'lodash-es/isNull';
@@ -8,7 +9,6 @@ import partial from 'lodash-es/partial';
 import {t} from 'i18next';
 import classnames from 'classnames';
 
-import {getNodeWidth, getNodeWidths} from '../util/resize';
 import {getQueryParameters, setQueryParameters} from '../util/queryParams';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
@@ -29,9 +29,6 @@ export default class Workspace extends React.Component {
       this,
       '_handleUnload',
       '_handleClickInstructionsBar',
-      '_handleDividerDrag',
-      '_storeDividerRef',
-      '_storeColumnRef',
     );
     this.columnRefs = [null, null];
   }
@@ -104,55 +101,39 @@ export default class Workspace extends React.Component {
     );
   }
 
-  _storeColumnRef(index, column) {
-    this.columnRefs[index] = column;
-  }
-
-  _storeDividerRef(divider) {
-    this.dividerRef = divider;
-  }
-
-  _handleDividerDrag(_, {deltaX, lastX, x}) {
-    const {onDragColumnDivider} = this.props;
-    onDragColumnDivider({
-      columnWidths: getNodeWidths(this.columnRefs),
-      dividerWidth: getNodeWidth(this.dividerRef),
-      deltaX,
-      lastX,
-      x,
-    });
-  }
-
   _renderEnvironment() {
     const {
       currentProject,
+      resizableFlexGrow,
+      resizableFlexRefs,
+      onResizableFlexDividerDrag,
       onStartDragColumnDivider,
       onStopDragColumnDivider,
-      rowsFlex,
     } = this.props;
     if (isNull(currentProject)) {
       return <PopThrobber message={t('workspace.loading')} />;
     }
 
+    const [_handleEditorsRef, _handleOutputRef] = resizableFlexRefs;
+
     return (
       <div className="environment">
         <EditorsColumn
-          style={{flex: rowsFlex[0]}}
-          onRef={partial(this._storeColumnRef, 0)}
+          style={{flexGrow: resizableFlexGrow.get(0)}}
+          onRef={_handleEditorsRef}
         />
         <DraggableCore
-          onDrag={this._handleDividerDrag}
+          onDrag={partial(onResizableFlexDividerDrag, 0)}
           onStart={onStartDragColumnDivider}
           onStop={onStopDragColumnDivider}
         >
           <div
             className="editors__column-divider"
-            ref={this._storeDividerRef}
           />
         </DraggableCore>
         <Output
-          style={{flex: rowsFlex[1]}}
-          onRef={partial(this._storeColumnRef, 1)}
+          style={{flexGrow: resizableFlexGrow.get(1)}}
+          onRef={_handleOutputRef}
         />
       </div>
     );
@@ -178,10 +159,11 @@ export default class Workspace extends React.Component {
 Workspace.propTypes = {
   currentProject: PropTypes.object,
   isEditingInstructions: PropTypes.bool.isRequired,
-  rowsFlex: PropTypes.array.isRequired,
+  resizableFlexGrow: ImmutablePropTypes.list.isRequired,
+  resizableFlexRefs: PropTypes.array.isRequired,
   onApplicationLoaded: PropTypes.func.isRequired,
   onComponentToggle: PropTypes.func.isRequired,
-  onDragColumnDivider: PropTypes.func.isRequired,
+  onResizableFlexDividerDrag: PropTypes.func.isRequired,
   onStartDragColumnDivider: PropTypes.func.isRequired,
   onStopDragColumnDivider: PropTypes.func.isRequired,
 };
