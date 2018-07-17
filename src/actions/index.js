@@ -45,6 +45,7 @@ import {
 } from './errors';
 
 import {
+  linkGithubIdentity,
   logIn,
   logOut,
   userAuthenticated,
@@ -111,4 +112,5 @@ export {
   projectSuccessfullySaved,
   showSaveIndicator,
   hideSaveIndicator,
+  linkGithubIdentity,
 };

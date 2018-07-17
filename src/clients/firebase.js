@@ -1,7 +1,9 @@
 import Cookies from 'js-cookie';
 import get from 'lodash-es/get';
+import isEqual from 'lodash-es/isEqual';
 import isNil from 'lodash-es/isNil';
 import isNull from 'lodash-es/isNull';
+import map from 'lodash-es/map';
 import omit from 'lodash-es/omit';
 import values from 'lodash-es/values';
 import uuid from 'uuid/v4';
@@ -20,9 +22,9 @@ const SESSION_TTL_MS = 5 * 60 * 1000;
 export function onAuthStateChanged(listener) {
   const unsubscribe = auth.onAuthStateChanged(async(user) => {
     if (isNull(user)) {
-      listener(null);
+      listener({user: null});
     } else {
-      listener(await userCredentialForUserData(user));
+      listener(await decorateUserWithCredentials(user));
     }
   });
   return unsubscribe;
@@ -65,21 +67,22 @@ export async function saveProject(uid, project) {
     setWithPriority(project, -Date.now());
 }
 
-async function userCredentialForUserData(user) {
+async function decorateUserWithCredentials(user) {
   const database = await loadDatabase();
-  const path = providerPath(user.uid, user.providerData[0].providerId);
-  const [credentialEvent, providerInfoEvent] = await Promise.all([
-    database.ref(`authTokens/${path}`).once('value'),
-    database.ref(`providerInfo/${path}`).once('value'),
-  ]);
-  const credential = credentialEvent.val();
-  const additionalUserInfo = providerInfoEvent.val();
-  if (isNil(credential)) {
+  const credentialEvent =
+    await database.ref(`authTokens/${user.uid}`).once('value');
+  const credentials = values(credentialEvent.val() || {});
+  if (
+    !isEqual(
+      map(credentials, 'providerId').sort(),
+      map(user.providerData, 'providerId').sort(),
+    )
+  ) {
     await auth.signOut();
-    return null;
+    return {user: null};
   }
 
-  return {user, credential, additionalUserInfo};
+  return {user, credentials};
 }
 
 export async function signIn(provider) {
@@ -99,6 +102,13 @@ export async function signIn(provider) {
       window.onerror = originalOnerror;
     });
   }
+}
+
+export async function linkGithub() {
+  const userCredential =
+    await auth.currentUser.linkWithPopup(githubAuthProvider);
+  await saveUserCredential(userCredential);
+  return userCredential.credential;
 }
 
 async function signInWithGithub() {
@@ -125,26 +135,11 @@ export async function signOut() {
 async function saveUserCredential({
   user: {uid},
   credential,
-  additionalUserInfo,
 }) {
-  await Promise.all([
-    saveProviderInfo(uid, additionalUserInfo),
-    saveCredentials(uid, credential),
-  ]);
-}
-
-async function saveCredentials(uid, credential) {
   const database = await loadDatabase();
   await database.
     ref(`authTokens/${providerPath(uid, credential.providerId)}`).
     set(credential);
-}
-
-async function saveProviderInfo(uid, providerInfo) {
-  const database = await loadDatabase();
-  await database.
-    ref(`providerInfo/${providerPath(uid, providerInfo.providerId)}`).
-    set(providerInfo);
 }
 
 function providerPath(uid, providerId) {

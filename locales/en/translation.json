@@ -13,6 +13,7 @@
     "new-project": "New Project",
     "send-feedback": "Send Feedback",
     "session": {
+      "link-github": "Link GitHub",
       "log-in-prompt": "Log in to save",
       "log-out-prompt": "Log out"
     }
@@ -46,7 +47,9 @@
     "snapshot-not-found": "That snapshot doesn’t seem to exist. Check the link and try again.",
     "classroom-export-complete": "Your project is ready to share to Google Classroom",
     "classroom-export-error": "Something went wrong trying to share to Google Classroom. Please try again.",
-    "project-compilation-failed": "Something went wrong trying to display a preview of your project. This is a bug in Popcode and we have been notified. Making another change to your code will likely fix this error."
+    "project-compilation-failed": "Something went wrong trying to display a preview of your project. This is a bug in Popcode and we have been notified. Making another change to your code will likely fix this error.",
+    "identity-linked": "Your GitHub account is now linked!",
+    "link-identity-failed": "There was a problem linking your GitHub account."
   },
   "languages": {
     "html": "HTML",

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Fragment} from 'react';
 import {t} from 'i18next';
 
 import createMenu, {MenuItem} from './createMenu';
@@ -10,16 +10,27 @@ const CurrentUserMenu = createMenu({
   name: 'currentUser',
 
   // eslint-disable-next-line react/prop-types
-  renderItems({onLogOut}) {
+  renderItems({isUserAuthenticatedWithGithub, onLinkGitHub, onLogOut}) {
     return (
-      <MenuItem onClick={onLogOut}>
-        {t('top-bar.session.log-out-prompt')}
-      </MenuItem>
+      <Fragment>
+        {
+          !isUserAuthenticatedWithGithub && (
+            <MenuItem onClick={onLinkGitHub}>
+              {t('top-bar.session.link-github')}
+            </MenuItem>
+          )
+        }
+        <MenuItem onClick={onLogOut}>
+          {t('top-bar.session.log-out-prompt')}
+        </MenuItem>
+      </Fragment>
     );
   },
 })(CurrentUserButton);
 
 CurrentUserMenu.propTypes = {
+  isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
+  onLinkGitHub: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
 };
 

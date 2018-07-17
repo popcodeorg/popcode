@@ -59,6 +59,7 @@ export default function TopBar({
   onExportGist,
   onExportRepo,
   onExportToClassroom,
+  onLinkGitHub,
   onLogOut,
   onStartGithubLogIn,
   onStartGoogleLogIn,
@@ -115,9 +116,11 @@ export default function TopBar({
         isOpen={openMenu === 'currentUser'}
         isUserAnonymous={isUserAnonymous}
         isUserAuthenticated={isUserAuthenticated}
+        isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
         user={currentUser}
         onClick={partial(onClickMenu, 'currentUser')}
         onClose={partial(onCloseMenu, 'currentUser')}
+        onLinkGitHub={onLinkGitHub}
         onLogOut={onLogOut}
         onStartLogIn={isExperimental ? onStartGoogleLogIn : onStartGithubLogIn}
       />
@@ -163,6 +166,7 @@ TopBar.propTypes = {
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onExportToClassroom: PropTypes.func.isRequired,
+  onLinkGitHub: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
   onStartGithubLogIn: PropTypes.func.isRequired,

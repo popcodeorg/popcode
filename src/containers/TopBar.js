@@ -30,6 +30,7 @@ import {
   createProject,
   createSnapshot,
   exportProject,
+  linkGithubIdentity,
   startEditingInstructions,
   toggleEditorTextSize,
   toggleLibrary,
@@ -108,6 +109,10 @@ function mapDispatchToProps(dispatch) {
 
     onToggleLibrary(projectKey, libraryKey) {
       dispatch(toggleLibrary(projectKey, libraryKey));
+    },
+
+    onLinkGitHub() {
+      dispatch(linkGithubIdentity());
     },
 
     onLogOut() {

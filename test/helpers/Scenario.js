@@ -1,3 +1,5 @@
+import partial from 'lodash-es/partial';
+
 import reduce from '../../src/reducers';
 import {
   projectCreated,
@@ -7,7 +9,7 @@ import {
 } from '../../src/actions/user';
 import Analyzer from '../../src/analyzers';
 
-import {userCredential} from './factory';
+import {userWithCredentials} from './factory';
 
 export default class Scenario {
   constructor() {
@@ -16,8 +18,9 @@ export default class Scenario {
   }
 
   logIn() {
-    this.userCredential = userCredential();
-    this._reduce(userAuthenticated, this.userCredential);
+    const {user, credentials} = this.userWithCredentials =
+      userWithCredentials();
+    this._reduce(partial(userAuthenticated, user, credentials));
     return this;
   }
 
