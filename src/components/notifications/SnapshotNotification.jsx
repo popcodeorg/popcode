@@ -2,19 +2,19 @@ import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import {t} from 'i18next';
 
 export default function SnapshotNotification({
-  metadata: {isCopied},
-  payload: {snapshotKey},
+  metadata,
   onUpdateMetadata,
 }) {
   const uri = document.createElement('a');
   uri.setAttribute('href', '/');
-  uri.search = `snapshot=${snapshotKey}`;
+  uri.search = `snapshot=${metadata.get('snapshotKey')}`;
 
   let checkmark;
-  if (isCopied) {
+  if (metadata.get('isCopied')) {
     checkmark = [
       ' ',
       <span className="u__icon" key="icon">&#xf058;</span>,
@@ -40,7 +40,9 @@ export default function SnapshotNotification({
 }
 
 SnapshotNotification.propTypes = {
-  metadata: PropTypes.object.isRequired,
-  payload: PropTypes.object.isRequired,
+  metadata: ImmutablePropTypes.contains({
+    snapshotKey: PropTypes.string.isRequired,
+    isCopied: PropTypes.bool,
+  }).isRequired,
   onUpdateMetadata: PropTypes.func.isRequired,
 };

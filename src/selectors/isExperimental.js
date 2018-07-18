@@ -1,3 +1,3 @@
 export default function isExperimental(state) {
-  return state.getIn(['ui', 'experimental']);
+  return state.getIn(['ui', 'isExperimental']);
 }

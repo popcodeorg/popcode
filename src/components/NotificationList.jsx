@@ -1,6 +1,9 @@
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import React from 'react';
 import PropTypes from 'prop-types';
 import partial from 'lodash-es/partial';
+
+import {Notification as NotificationRecord} from '../records';
 
 import NotificationContainer from './NotificationContainer';
 import {
@@ -28,40 +31,39 @@ export default function NotificationList({
   onNotificationDismissed,
   onUpdateNotificationMetadata,
 }) {
-  if (!notifications.length) {
+  if (notifications.isEmpty()) {
     return null;
   }
 
-  const notificationList = notifications.map((notification) => {
-    const Notification = chooseNotificationComponent(notification);
-
-    return (
-      <NotificationContainer
-        key={notification.type}
-        severity={notification.severity}
-        onDismissed={
-          partial(onNotificationDismissed, notification)
-        }
-      >
-        <Notification
-          metadata={notification.metadata}
-          payload={notification.payload}
-          type={notification.type}
-          onUpdateMetadata={
-            partial(onUpdateNotificationMetadata, notification)
-          }
-        />
-      </NotificationContainer>
-    );
-  });
-
   return (
-    <div className="notification-list">{notificationList}</div>
+    <div className="notification-list">{
+      notifications.map((notification) => {
+        const Notification = chooseNotificationComponent(notification);
+
+        return (
+          <NotificationContainer
+            key={notification.type}
+            severity={notification.severity}
+            onDismissed={
+              partial(onNotificationDismissed, notification)
+            }
+          >
+            <Notification
+              metadata={notification.metadata}
+              type={notification.type}
+              onUpdateMetadata={
+                partial(onUpdateNotificationMetadata, notification)
+              }
+            />
+          </NotificationContainer>
+        );
+      })
+    }</div>
   );
 }
 
 NotificationList.propTypes = {
-  notifications: PropTypes.array.isRequired,
+  notifications: ImmutablePropTypes.iterableOf(NotificationRecord).isRequired,
   onNotificationDismissed: PropTypes.func.isRequired,
   onUpdateNotificationMetadata: PropTypes.func.isRequired,
 };

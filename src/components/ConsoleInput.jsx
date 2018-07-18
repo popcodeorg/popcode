@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash-es/get';
 import preventClickthrough from 'react-prevent-clickthrough';
 
+import {EditorLocation} from '../records';
 import {
   createAceEditor,
   createAceSessionWithoutWorker,
@@ -82,7 +83,7 @@ export default class ConsoleInput extends Component {
 
 ConsoleInput.propTypes = {
   isTextSizeLarge: PropTypes.bool,
-  requestedFocusedLine: PropTypes.object,
+  requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };

@@ -1,10 +1,11 @@
 import test from 'tape';
-import Immutable from 'immutable';
 import tap from 'lodash-es/tap';
 import partial from 'lodash-es/partial';
+import {Map} from 'immutable';
 
 import reducerTest from '../../helpers/reducerTest';
-import reducer, {DEFAULT_WORKSPACE} from '../../../src/reducers/ui';
+import reducer from '../../../src/reducers/ui';
+import {EditorLocation, Notification, UiState} from '../../../src/records';
 import {
   gistNotFound,
   gistImportError,
@@ -44,20 +45,12 @@ import {
   projectCompilationFailed,
 } from '../../../src/actions';
 
-const initialState = Immutable.fromJS({
-  editors: {
-    typing: false,
-    requestedFocusedLine: null,
-  },
-  workspace: DEFAULT_WORKSPACE,
-  notifications: new Immutable.Map(),
-  topBar: {openMenu: null},
-});
+const initialState = new UiState();
 
-function withNotification(type, severity, payload = {}) {
+function withNotification(type, severity, metadata = {}) {
   return initialState.setIn(
     ['notifications', type],
-    Immutable.fromJS({type, severity, payload, metadata: {}}),
+    new Notification({type, severity, metadata: new Map(metadata)}),
   );
 }
 
@@ -67,19 +60,19 @@ test('startEditingInstructions', reducerTest(
   reducer,
   initialState,
   startEditingInstructions,
-  initialState.setIn(['workspace', 'isEditingInstructions'], true),
+  initialState.set('isEditingInstructions', true),
 ));
 
 test('startEditingInstructions', reducerTest(
   reducer,
-  initialState.setIn(['workspace', 'isEditingInstructions'], true),
+  initialState.set('isEditingInstructions', true),
   cancelEditingInstructions,
   initialState,
 ));
 
 test('updateProjectInstructions', reducerTest(
   reducer,
-  initialState.setIn(['workspace', 'isEditingInstructions'], true),
+  initialState.set('isEditingInstructions', true),
   updateProjectInstructions,
   initialState,
 ));
@@ -102,12 +95,12 @@ test('updateProjectSource', reducerTest(
   reducer,
   initialState,
   updateProjectSource,
-  initialState.setIn(['editors', 'typing'], true),
+  initialState.set('isTyping', true),
 ));
 
 test('userDoneTyping', reducerTest(
   reducer,
-  initialState.setIn(['editors', 'typing'], true),
+  initialState.set('isTyping', true),
   userDoneTyping,
   initialState,
 ));
@@ -136,16 +129,16 @@ test('userLoggedOut', (t) => {
 
   t.test('with currentUser menu open', reducerTest(
     reducer,
-    initialState.setIn(['topBar', 'openMenu'], 'currentUser'),
+    initialState.set('openTopBarMenu', 'currentUser'),
     userLoggedOut,
     initialState,
   ));
 
   t.test('with different menu open', reducerTest(
     reducer,
-    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+    initialState.set('openTopBarMenu', 'silly'),
     userLoggedOut,
-    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+    initialState.set('openTopBarMenu', 'silly'),
   ));
 });
 
@@ -159,16 +152,16 @@ test('linkGithubIdentity', (t) => {
 
   t.test('with currentUser menu open', reducerTest(
     reducer,
-    initialState.setIn(['topBar', 'openMenu'], 'currentUser'),
+    initialState.set('openTopBarMenu', 'currentUser'),
     linkGithubIdentity,
     initialState,
   ));
 
   t.test('with different menu open', reducerTest(
     reducer,
-    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+    initialState.set('openTopBarMenu', 'silly'),
     linkGithubIdentity,
-    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+    initialState.set('openTopBarMenu', 'silly'),
   ));
 });
 
@@ -240,17 +233,17 @@ test('focusLine', reducerTest(
   reducer,
   initialState,
   partial(focusLine, 'editor.javascript', 4, 2),
-  initialState.setIn(
-    ['editors', 'requestedFocusedLine'],
-    new Immutable.Map({component: 'editor.javascript', line: 4, column: 2}),
+  initialState.set(
+    'requestedFocusedLine',
+    new EditorLocation({component: 'editor.javascript', line: 4, column: 2}),
   ),
 ));
 
 test('editorFocusedRequestedLine', reducerTest(
   reducer,
-  initialState.setIn(
-    ['editors', 'requestedFocusedLine'],
-    new Immutable.Map({component: 'editor.javascript', line: 4, column: 2}),
+  initialState.set(
+    'requestedFocusedLine',
+    new EditorLocation({component: 'editor.javascript', line: 4, column: 2}),
   ),
   editorFocusedRequestedLine,
   initialState,
@@ -284,14 +277,14 @@ test('applicationLoaded', (t) => {
     reducer,
     initialState,
     partial(applicationLoaded, {gistId: null, isExperimental: true}),
-    initialState.set('experimental', true),
+    initialState.set('isExperimental', true),
   ));
 
   t.test('isExperimental = false', reducerTest(
     reducer,
     initialState,
     partial(applicationLoaded, {gistId: null, isExperimental: false}),
-    initialState.set('experimental', false),
+    initialState.set('isExperimental', false),
   ));
 });
 
@@ -323,20 +316,20 @@ test('toggleTopBarMenu', (t) => {
     reducer,
     initialState,
     partial(toggleTopBarMenu, 'silly'),
-    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+    initialState.set('openTopBarMenu', 'silly'),
   ));
 
   t.test('with specified menu open', reducerTest(
     reducer,
-    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+    initialState.set('openTopBarMenu', 'silly'),
     partial(toggleTopBarMenu, 'silly'),
     initialState,
   ));
 
   t.test('with different menu open', reducerTest(
     reducer,
-    initialState.setIn(['topBar', 'openMenu'], 'goofy'),
+    initialState.set('openTopBarMenu', 'goofy'),
     partial(toggleTopBarMenu, 'silly'),
-    initialState.setIn(['topBar', 'openMenu'], 'silly'),
+    initialState.set('openTopBarMenu', 'silly'),
   ));
 });

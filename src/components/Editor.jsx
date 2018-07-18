@@ -7,6 +7,7 @@ import throttle from 'lodash-es/throttle';
 import noop from 'lodash-es/noop';
 
 import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
+import {EditorLocation} from '../records';
 
 import 'brace/ext/searchbox';
 import 'brace/mode/html';
@@ -143,7 +144,7 @@ Editor.propTypes = {
   language: PropTypes.string.isRequired,
   percentageOfHeight: PropTypes.number.isRequired,
   projectKey: PropTypes.string.isRequired,
-  requestedFocusedLine: PropTypes.object,
+  requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   source: PropTypes.string.isRequired,
   textSizeIsLarge: PropTypes.bool.isRequired,
   onInput: PropTypes.func.isRequired,

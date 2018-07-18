@@ -26,7 +26,7 @@ export const popOutProject = createAction(
 
 export const notificationTriggered = createAction(
   'NOTIFICATION_TRIGGERED',
-  (type, severity = 'error', payload = {}) => ({type, severity, payload}),
+  (type, severity = 'error', metadata = {}) => ({type, severity, metadata}),
 );
 
 export const userDismissedNotification = createAction(

@@ -1,3 +1,3 @@
 export default function getOpenTopBarMenu(state) {
-  return state.getIn(['ui', 'topBar', 'openMenu']);
+  return state.getIn(['ui', 'openTopBarMenu']);
 }

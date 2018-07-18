@@ -4,6 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
+import {EditorLocation} from '../records';
+
 import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
 
@@ -88,7 +90,7 @@ Console.propTypes = {
   isHidden: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
-  requestedFocusedLine: PropTypes.object,
+  requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   onClearConsoleEntries: PropTypes.func.isRequired,
   onConsoleClicked: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
