@@ -178,7 +178,7 @@ test('importGist()', (t) => {
   t.test('with successful import', (assert) => {
     const saga = testSaga(importGistSaga, applicationLoaded({gistId}));
 
-    saga.next().call(loadGistFromId, gistId, {authenticated: false});
+    saga.next().call(loadGistFromId, gistId);
 
     const gist = gistData({html: '<!doctype html>test'});
     saga.next(gist).inspect((effect) => {
@@ -206,7 +206,7 @@ test('importGist()', (t) => {
 
   t.test('with not found error', (assert) => {
     testSaga(importGistSaga, applicationLoaded({gistId})).
-      next().call(loadGistFromId, gistId, {authenticated: false}).
+      next().call(loadGistFromId, gistId).
       throw(
         Object.create(new Error(), {response: {value: {status: 404}}}),
       ).put(gistNotFound(gistId)).
@@ -216,7 +216,7 @@ test('importGist()', (t) => {
 
   t.test('with other error', (assert) => {
     testSaga(importGistSaga, applicationLoaded({gistId})).
-      next().call(loadGistFromId, gistId, {authenticated: false}).
+      next().call(loadGistFromId, gistId).
       throw(new Error()).put(gistImportError()).
       next().isDone();
     assert.end();
@@ -229,7 +229,7 @@ test('userAuthenticated', (assert) => {
   testSaga(userAuthenticatedSaga, userAuthenticated(userWithCredentials())).
     next().inspect(effect => assert.ok(effect.SELECT)).
     next(scenario.state).fork(saveCurrentProject).
-    next(scenario.state).call(loadAllProjects, scenario.user.get('id')).
+    next(scenario.state).call(loadAllProjects, scenario.user.account.id).
     next(projects).put(projectsLoaded(projects)).
     next().isDone();
   assert.end();
