@@ -12,7 +12,12 @@ import {
 
 import Modal from './Modal';
 
-export default function AccountMigration({currentUserAccount, migration}) {
+export default function AccountMigration({
+  currentUserAccount,
+  migration,
+  onDismiss,
+  onMigrate,
+}) {
   if (isNull(currentUserAccount) || isNull(migration)) {
     return null;
   }
@@ -68,6 +73,7 @@ export default function AccountMigration({currentUserAccount, migration}) {
               'account-migration__button',
               'account-migration__button_confirm',
             )}
+            onClick={onMigrate}
           >
             {t('account-migration.buttons.migrate')}
           </button>
@@ -76,6 +82,7 @@ export default function AccountMigration({currentUserAccount, migration}) {
               'account-migration__button',
               'account-migration__button_cancel',
             )}
+            onClick={onDismiss}
           >
             {t('account-migration.buttons.cancel')}
           </button>
@@ -88,6 +95,8 @@ export default function AccountMigration({currentUserAccount, migration}) {
 AccountMigration.propTypes = {
   currentUserAccount: PropTypes.instanceOf(UserAccountRecord),
   migration: PropTypes.instanceOf(AccountMigrationRecord),
+  onDismiss: PropTypes.func.isRequired,
+  onMigrate: PropTypes.func.isRequired,
 };
 
 AccountMigration.defaultProps = {

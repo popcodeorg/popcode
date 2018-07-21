@@ -2,7 +2,7 @@ import {Map} from 'immutable';
 import reduce from 'lodash-es/reduce';
 
 import {AccountMigration, User, UserAccount} from '../records';
-import {LoginState} from '../enums';
+import {AccountMigrationState, LoginState} from '../enums';
 
 function getToken(credential) {
   if (credential.providerId === 'github.com') {
@@ -68,6 +68,15 @@ function user(stateIn, action) {
           ),
         }),
       );
+
+    case 'START_ACCOUNT_MIGRATION':
+      return state.setIn(
+        ['currentMigration', 'state'],
+        AccountMigrationState.UNDO_GRACE_PERIOD,
+      );
+
+    case 'DISMISS_ACCOUNT_MIGRATION':
+      return state.delete('currentMigration');
 
     case 'USER_LOGGED_OUT':
       return new User().set('loginState', LoginState.ANONYMOUS);

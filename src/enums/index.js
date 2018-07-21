@@ -8,6 +8,7 @@ export const LoginState = new Enum([
 
 export const AccountMigrationState = new Enum([
   'PROPOSED',
+  'UNDO_GRACE_PERIOD',
   'IN_PROGRESS',
   'COMPLETE',
 ]);

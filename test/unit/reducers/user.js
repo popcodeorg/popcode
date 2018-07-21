@@ -9,11 +9,13 @@ import {userWithCredentials} from '../../helpers/factory';
 import reducer from '../../../src/reducers/user';
 import {
   accountMigrationNeeded,
+  dismissAccountMigration,
   identityLinked,
+  startAccountMigration,
   userAuthenticated,
   userLoggedOut,
 } from '../../../src/actions/user';
-import {LoginState} from '../../../src/enums';
+import {AccountMigrationState, LoginState} from '../../../src/enums';
 import {AccountMigration, User, UserAccount} from '../../../src/records';
 
 const userWithCredentialsIn = userWithCredentials();
@@ -61,6 +63,22 @@ tap(
     {providerId: 'github.com', accessToken: 'abc123'},
   ],
   ([githubProfile, credential]) => {
+    const proposedState = loggedInState.set(
+      'currentMigration',
+      new AccountMigration({
+        userAccountToMerge: new UserAccount({
+          displayName: 'Popcode User',
+          avatarUrl: 'https://github.com/popcodeuser.jpg',
+          accessTokens: new Map({'github.com': 'abc123'}),
+        }),
+      }),
+    );
+
+    const undoGracePeriodState = proposedState.setIn(
+      ['currentMigration', 'state'],
+      AccountMigrationState.UNDO_GRACE_PERIOD,
+    );
+
     test('accountMigrationNeeded', reducerTest(
       reducer,
       loggedInState,
@@ -69,16 +87,21 @@ tap(
         githubProfile,
         credential,
       ),
-      loggedInState.set(
-        'currentMigration',
-        new AccountMigration({
-          userAccountToMerge: new UserAccount({
-            displayName: 'Popcode User',
-            avatarUrl: 'https://github.com/popcodeuser.jpg',
-            accessTokens: new Map({'github.com': 'abc123'}),
-          }),
-        }),
-      ),
+      proposedState,
+    ));
+
+    test('startAccountMigration', reducerTest(
+      reducer,
+      proposedState,
+      startAccountMigration,
+      undoGracePeriodState,
+    ));
+
+    test('dismissAccountMigration', reducerTest(
+      reducer,
+      proposedState,
+      dismissAccountMigration,
+      loggedInState,
     ));
   },
 );

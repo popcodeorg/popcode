@@ -22,6 +22,11 @@ export const accountMigrationNeeded = createAction(
   (profile, credential) => ({profile, credential}),
 );
 
+export const startAccountMigration = createAction('START_ACCOUNT_MIGRATION');
+
+export const dismissAccountMigration =
+  createAction('DISMISS_ACCOUNT_MIGRATION');
+
 export const logOut = createAction('LOG_OUT');
 
 export const userAuthenticated = createAction(
