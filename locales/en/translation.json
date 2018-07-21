@@ -75,6 +75,19 @@
       }
     }
   },
+  "account-migration": {
+    "header": "Combine these accounts?",
+    "message": [
+      "Your GitHub login is linked to a different Popcode account. Do you want to combine the account you’re using now with that other account?",
+      "All of the saved projects from the GitHub-linked account will be transferred into the account you’re using now."
+    ],
+    "your-account": "Your account",
+    "account-to-merge": "Account to merge",
+    "buttons": {
+      "migrate": "Yes, combine these accounts",
+      "cancel": "No, keep them separate"
+    }
+  },
   "utility": {
     "or": " or "
   },

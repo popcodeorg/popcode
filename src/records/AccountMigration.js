@@ -4,5 +4,5 @@ import {AccountMigrationState} from '../enums';
 
 export default Record({
   state: AccountMigrationState.PROPOSED,
-  credentialToMerge: null,
+  userAccountToMerge: null,
 }, 'AccountMigration');

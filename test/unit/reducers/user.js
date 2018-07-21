@@ -55,20 +55,33 @@ test('identityLinked', reducerTest(
   loggedInState.setIn(['account', 'accessTokens', 'google.com'], 'abc'),
 ));
 
-tap({providerId: 'github.com'}, (credentialToMerge) => {
-  test('accountMigrationNeeded', reducerTest(
-    reducer,
-    loggedInState,
-    partial(
-      accountMigrationNeeded,
-      credentialToMerge,
-    ),
-    loggedInState.set(
-      'currentMigration',
-      new AccountMigration({credentialToMerge}),
-    ),
-  ));
-});
+tap(
+  [
+    {name: 'Popcode User', avatar_url: 'https://github.com/popcodeuser.jpg'},
+    {providerId: 'github.com', accessToken: 'abc123'},
+  ],
+  ([githubProfile, credential]) => {
+    test('accountMigrationNeeded', reducerTest(
+      reducer,
+      loggedInState,
+      partial(
+        accountMigrationNeeded,
+        githubProfile,
+        credential,
+      ),
+      loggedInState.set(
+        'currentMigration',
+        new AccountMigration({
+          userAccountToMerge: new UserAccount({
+            displayName: 'Popcode User',
+            avatarUrl: 'https://github.com/popcodeuser.jpg',
+            accessTokens: new Map({'github.com': 'abc123'}),
+          }),
+        }),
+      ),
+    ));
+  },
+);
 
 test('userLoggedOut', reducerTest(
   reducer,

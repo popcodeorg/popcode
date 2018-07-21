@@ -1,3 +1,4 @@
+import {Map} from 'immutable';
 import reduce from 'lodash-es/reduce';
 
 import {AccountMigration, User, UserAccount} from '../records';
@@ -20,6 +21,17 @@ function addCredential(state, credential) {
       getToken(credential),
     ),
   );
+}
+
+function createUserAccountFromProfileAndCredential(profile, credential) {
+  if (credential.providerId === 'github.com') {
+    return new UserAccount({
+      displayName: profile.name || profile.login,
+      avatarUrl: profile.avatar_url,
+      accessTokens: new Map({'github.com': getToken(credential)}),
+    });
+  }
+  throw new Error(`Unexpected credential provider ${credential.providerId}`);
 }
 
 function user(stateIn, action) {
@@ -50,8 +62,11 @@ function user(stateIn, action) {
       return state.set(
         'currentMigration',
         new AccountMigration({
-          credentialToMerge: action.payload.credentialToMerge},
-        ),
+          userAccountToMerge: createUserAccountFromProfileAndCredential(
+            action.payload.profile,
+            action.payload.credential,
+          ),
+        }),
       );
 
     case 'USER_LOGGED_OUT':

@@ -21,6 +21,7 @@ import {
   signOut,
   startSessionHeartbeat,
 } from '../../../src/clients/firebase';
+import {getProfileForAuthenticatedUser} from '../../../src/clients/github';
 import {
   applicationLoaded as applicationLoadedSaga,
   logIn as logInSaga,
@@ -174,11 +175,19 @@ test('linkGithubIdentity', (t) => {
   t.test('credential already in use', (assert) => {
     const error = new Error('credential already in use');
     error.code = 'auth/credential-already-in-use';
-    error.credential = {providerId: 'github.com'};
+    error.credential = {providerId: 'github.com', accessToken: 'abc123'};
+
+    const githubProfile = {login: 'popcoder'};
 
     testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
       next().call(linkGithub).
-      throw(error).put(accountMigrationNeeded(error.credential));
+      throw(error).call(
+        getProfileForAuthenticatedUser,
+        error.credential.accessToken,
+      ).
+      next({status: 200, data: githubProfile}).put(
+        accountMigrationNeeded(githubProfile, error.credential),
+      );
 
     assert.end();
   });

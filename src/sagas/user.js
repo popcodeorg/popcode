@@ -20,6 +20,7 @@ import {
   signOut,
   startSessionHeartbeat,
 } from '../clients/firebase';
+import {getProfileForAuthenticatedUser} from '../clients/github';
 
 export function* applicationLoaded() {
   yield call(startSessionHeartbeat);
@@ -107,9 +108,14 @@ export function* linkGithubIdentity() {
     yield put(identityLinked(credential));
   } catch (e) {
     switch (e.code) {
-      case 'auth/credential-already-in-use':
-        yield put(accountMigrationNeeded(e.credential));
+      case 'auth/credential-already-in-use': {
+        const {data: githubProfile} = yield call(
+          getProfileForAuthenticatedUser,
+          e.credential.accessToken,
+        );
+        yield put(accountMigrationNeeded(githubProfile, e.credential));
         break;
+      }
       default:
         yield put(linkIdentityFailed(e));
     }

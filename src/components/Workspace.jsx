@@ -14,6 +14,7 @@ import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {isPristineProject} from '../util/projectUtils';
 
+import AccountMigration from '../containers/AccountMigration';
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
@@ -151,6 +152,7 @@ export default class Workspace extends React.Component {
             {this._renderEnvironment()}
           </div>
         </main>
+        <AccountMigration />
       </div>
     );
   }
