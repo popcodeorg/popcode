@@ -63,7 +63,7 @@ test('export gist', (t) => {
       next(scenario.state).call(
         createGistFromProject,
         scenario.project.toJS(),
-        scenario.user.toJS(),
+        scenario.user.account.accessTokens.get('github.com'),
       );
   }
 
@@ -107,7 +107,7 @@ test('export repo', (t) => {
       next(scenario.state).call(
         createOrUpdateRepoFromProject,
         scenario.project.toJS(),
-        scenario.user.toJS(),
+        scenario.user.account.accessTokens.get('github.com'),
       );
   }
 
@@ -150,7 +150,7 @@ test('update repo', (t) => {
       next(scenario.state).call(
         createOrUpdateRepoFromProject,
         scenario.project.toJS(),
-        scenario.user.toJS(),
+        scenario.user.account.accessTokens.get('github.com'),
       );
   }
 

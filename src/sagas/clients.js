@@ -37,10 +37,14 @@ export function* exportProject({payload: {exportType}}) {
   let url, name;
 
   try {
+    const accessToken = user.account.accessTokens['github.com'];
+
     if (exportType === 'gist') {
-      ({html_url: url} = yield call(createGistFromProject, project, user));
+      ({html_url: url} =
+        yield call(createGistFromProject, project, accessToken));
     } else if (exportType === 'repo') {
-      ({url, name} = yield call(createOrUpdateRepoFromProject, project, user));
+      ({url, name} =
+        yield call(createOrUpdateRepoFromProject, project, accessToken));
       if (name) {
         exportData = {name};
       }

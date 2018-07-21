@@ -72,7 +72,7 @@ export function* importSnapshot({payload: {snapshotKey}}) {
 export function* importGist({payload: {gistId}}) {
   try {
     const gistData =
-      yield call(loadGistFromId, gistId, {authenticated: false});
+      yield call(loadGistFromId, gistId);
     yield put(gistImported(generateProjectKey(), gistData));
   } catch (error) {
     if (get(error, 'response.status') === 404) {

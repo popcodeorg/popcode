@@ -1,5 +1,5 @@
-import get from 'lodash-es/get';
 import isEmpty from 'lodash-es/isEmpty';
+import isNull from 'lodash-es/isNull';
 import trim from 'lodash-es/trim';
 
 import retryingFailedImports from '../util/retryingFailedImports';
@@ -26,16 +26,16 @@ function normalizeTitle(title) {
   return titleWithoutPunctuationAndWhitespace;
 }
 
-export async function createOrUpdateRepoFromProject(project, user) {
+export async function createOrUpdateRepoFromProject(project, accessToken) {
   const repoAlreadyExists = Boolean(project.externalLocations.githubRepoName);
   if (repoAlreadyExists) {
-    return updateRepoFromProject(project, user);
+    return updateRepoFromProject(project, accessToken);
   }
-  return createRepoFromProject(project, user);
+  return createRepoFromProject(project, accessToken);
 }
 
-async function createRepoFromProject(project, user) {
-  const github = await clientForUser(user);
+async function createRepoFromProject(project, accessToken) {
+  const github = await createClient(accessToken);
   const preview = await compileProject(project);
   const title = normalizeTitle(preview.title);
 
@@ -64,8 +64,8 @@ async function createRepoFromProject(project, user) {
   };
 }
 
-export async function updateRepoFromProject(project, user) {
-  const github = await clientForUser(user);
+async function updateRepoFromProject(project, accessToken) {
+  const github = await createClient(accessToken);
   const repoName = project.externalLocations.githubRepoName;
 
   const {data: userData} = await performWithRetryNetworkErrors(
@@ -96,8 +96,8 @@ async function createRepoFiles(github, project, userName, repoName) {
   await createPreviewFile(github, project, userName, repoName);
 }
 
-export async function createGistFromProject(project, user) {
-  const github = await clientForUser(user);
+export async function createGistFromProject(project, accessToken) {
+  const github = await createClient(accessToken);
 
   const gist = buildGistFromProject(project);
   if (isEmpty(gist.files)) {
@@ -110,8 +110,8 @@ export async function createGistFromProject(project, user) {
   return updateGistWithImportUrl(github, response.data);
 }
 
-export async function loadGistFromId(gistId, user) {
-  const github = await clientForUser(user);
+export async function loadGistFromId(gistId) {
+  const github = await createClient();
   const gist = github.getGist(gistId);
   const response =
     await performWithRetryNetworkErrors(() => gist.read(), {retries: 3});
@@ -283,17 +283,16 @@ async function updateRepoDescription(github, userName, repoName) {
   );
 }
 
-async function githubWithAccessToken(token) {
+async function createClient(token = null) {
   const {'default': GitHub} = await retryingFailedImports(() =>
     import(
       /* webpackChunkName: "mainAsync" */
       'github-api',
     ),
   );
-  return new GitHub({auth: 'oauth', token});
-}
 
-async function clientForUser(user) {
-  const githubToken = get(user, ['account', 'accessTokens', 'github.com']);
-  return githubWithAccessToken(githubToken);
+  if (isNull(token)) {
+    return new GitHub({});
+  }
+  return new GitHub({auth: 'oauth', token});
 }
