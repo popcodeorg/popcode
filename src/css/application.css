@@ -829,6 +829,7 @@ body {
 }
 
 .account-migration__button {
+  background: var(--color-chrome);
   border: none;
   border-radius: 5px;
   cursor: pointer;

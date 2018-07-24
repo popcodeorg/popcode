@@ -1,6 +1,4 @@
-import classnames from 'classnames';
 import isNull from 'lodash-es/isNull';
-import map from 'lodash-es/map';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {t} from 'i18next';
@@ -9,8 +7,12 @@ import {
   AccountMigration as AccountMigrationRecord,
   UserAccount as UserAccountRecord,
 } from '../records';
+import {AccountMigrationState} from '../enums';
 
+import AccountMigrationUndoGracePeriod
+  from './AccountMigrationUndoGracePeriod';
 import Modal from './Modal';
+import ProposedAccountMigration from './ProposedAccountMigration';
 
 export default function AccountMigration({
   currentUserAccount,
@@ -26,7 +28,9 @@ export default function AccountMigration({
     <Modal>
       <div className="account-migration">
         <h1 className="account-migration__header">
-          {t('account-migration.header')}
+          {t(`account-migration.header.${
+            migration.state.key.toLowerCase().replace(/_/g, '-')
+          }`)}
         </h1>
         <div className="account-migration__accounts">
           <div className="account-migration__account">
@@ -59,34 +63,20 @@ export default function AccountMigration({
             </div>
           </div>
         </div>
-        {
-          map(
-            t('account-migration.message', {returnObjects: true}),
-            paragraph => (
-              <p key={paragraph}>{paragraph}</p>
-            ),
-          )
-        }
-        <div className="account-migration__buttons">
-          <button
-            className={classnames(
-              'account-migration__button',
-              'account-migration__button_confirm',
-            )}
-            onClick={onMigrate}
-          >
-            {t('account-migration.buttons.migrate')}
-          </button>
-          <button
-            className={classnames(
-              'account-migration__button',
-              'account-migration__button_cancel',
-            )}
-            onClick={onDismiss}
-          >
-            {t('account-migration.buttons.cancel')}
-          </button>
-        </div>
+        {(() => {
+          switch (migration.state) {
+            case AccountMigrationState.PROPOSED:
+              return (
+                <ProposedAccountMigration
+                  onDismiss={onDismiss}
+                  onMigrate={onMigrate}
+                />
+              );
+            case AccountMigrationState.UNDO_GRACE_PERIOD:
+              return <AccountMigrationUndoGracePeriod onDismiss={onDismiss} />;
+          }
+          return null;
+        })()}
       </div>
     </Modal>
   );
