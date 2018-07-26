@@ -2,20 +2,35 @@ import {bugsnagClient} from '../util/bugsnag';
 import isEmpty from 'lodash-es/isEmpty';
 import isError from 'lodash-es/isError';
 import isString from 'lodash-es/isString';
-import {all, call, put, take, takeEvery} from 'redux-saga/effects';
+import {
+  all,
+  call,
+  put,
+  race,
+  select,
+  take,
+  takeEvery,
+} from 'redux-saga/effects';
+import {delay} from 'redux-saga';
 import isNil from 'lodash-es/isNil';
 import {notificationTriggered} from '../actions/ui';
 import {
+  accountMigrationComplete,
   accountMigrationNeeded,
+  accountMigrationUndoPeriodExpired,
   identityLinked,
   linkIdentityFailed,
   userAuthenticated,
   userLoggedOut,
 } from '../actions/user';
+import {
+  getCurrentAccountMigration,
+} from '../selectors';
 import loginState from '../channels/loginState';
 import {
   getSessionUid,
   linkGithub,
+  migrateAccount,
   signIn,
   signOut,
   startSessionHeartbeat,
@@ -122,6 +137,17 @@ export function* linkGithubIdentity() {
   }
 }
 
+export function* startAccountMigration() {
+  yield race({
+    shouldContinue: call(delay, 5000, true),
+    cancel: take('DISMISS_ACCOUNT_MIGRATION'),
+  });
+  yield put(accountMigrationUndoPeriodExpired());
+  const {firebaseCredential} = yield select(getCurrentAccountMigration);
+  const projects = yield call(migrateAccount, firebaseCredential);
+  yield put(accountMigrationComplete(projects, firebaseCredential));
+}
+
 export function* logOut() {
   yield call(signOut);
 }
@@ -132,5 +158,6 @@ export default function* () {
     takeEvery('LINK_GITHUB_IDENTITY', linkGithubIdentity),
     takeEvery('LOG_IN', logIn),
     takeEvery('LOG_OUT', logOut),
+    takeEvery('START_ACCOUNT_MIGRATION', startAccountMigration),
   ]);
 }

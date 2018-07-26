@@ -66,6 +66,7 @@ function user(stateIn, action) {
             action.payload.profile,
             action.payload.credential,
           ),
+          firebaseCredential: action.payload.credential,
         }),
       );
 
@@ -77,6 +78,21 @@ function user(stateIn, action) {
 
     case 'DISMISS_ACCOUNT_MIGRATION':
       return state.delete('currentMigration');
+
+    case 'ACCOUNT_MIGRATION_UNDO_PERIOD_EXPIRED':
+      return state.setIn(
+        ['currentMigration', 'state'],
+        AccountMigrationState.IN_PROGRESS,
+      );
+
+    case 'ACCOUNT_MIGRATION_COMPLETE':
+      return addCredential(
+        state.setIn(
+          ['currentMigration', 'state'],
+          AccountMigrationState.COMPLETE,
+        ),
+        action.payload.credential,
+      );
 
     case 'USER_LOGGED_OUT':
       return new User().set('loginState', LoginState.ANONYMOUS);

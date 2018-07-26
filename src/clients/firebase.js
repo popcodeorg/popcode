@@ -40,12 +40,12 @@ async function loadDatabaseSdk() {
   );
 }
 
-function buildFirebase() {
+function buildFirebase(appName = undefined) {
   const app = firebase.initializeApp({
     apiKey: config.firebaseApiKey,
     authDomain: `${config.firebaseApp}.firebaseapp.com`,
     databaseURL: `https://${config.firebaseApp}.firebaseio.com`,
-  });
+  }, appName);
 
   return {
     auth: firebase.auth(app),
@@ -147,6 +147,51 @@ export async function linkGithub() {
     await auth.currentUser.linkWithPopup(githubAuthProvider);
   await saveUserCredential(userCredential);
   return userCredential.credential;
+}
+
+export async function migrateAccount(inboundAccountCredential) {
+  const inboundAccountFirebase = buildFirebase('migration');
+  const {auth: inboundAccountAuth} = inboundAccountFirebase;
+  try {
+    await inboundAccountAuth.signInWithCredential(inboundAccountCredential);
+
+    const migratedProjects = await migrateProjects(inboundAccountFirebase);
+    await migrateCredential(inboundAccountCredential, inboundAccountFirebase);
+
+    return migratedProjects;
+  } finally {
+    inboundAccountAuth.app.delete();
+  }
+}
+
+async function migrateCredential(credential, {auth: inboundAccountAuth}) {
+  await inboundAccountAuth.currentUser.unlink(credential.providerId);
+  await auth.currentUser.linkWithCredential(credential);
+  await saveUserCredential({user: auth.currentUser, credential});
+}
+
+async function migrateProjects({
+  auth: inboundAccountAuth,
+  loadDatabase: loadinboundAccountDatabase,
+}) {
+  const currentAccountDatabase = await loadDatabase();
+  const inboundAccountDatabase = await loadinboundAccountDatabase();
+
+  const allProjectsValue = await inboundAccountDatabase.
+    ref(`workspaces/${inboundAccountAuth.currentUser.uid}/projects`).
+    once('value');
+
+  if (!isNull(allProjectsValue)) {
+    const allProjects = allProjectsValue.val();
+
+    await currentAccountDatabase.
+      ref(`workspaces/${auth.currentUser.uid}/projects`).
+      update(allProjects);
+
+    return values(allProjects);
+  }
+
+  return [];
 }
 
 async function signInWithGithub() {

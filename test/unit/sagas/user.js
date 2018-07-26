@@ -1,5 +1,8 @@
 import test from 'tape';
 import {testSaga} from 'redux-saga-test-plan';
+import {delay} from 'redux-saga';
+import {call, take, race} from 'redux-saga/effects';
+
 import {
   applicationLoaded,
   linkGithubIdentity,
@@ -7,16 +10,26 @@ import {
   userLoggedOut,
 } from '../../../src/actions';
 import {
+  accountMigrationComplete,
   accountMigrationNeeded,
+  accountMigrationUndoPeriodExpired,
   identityLinked,
   linkIdentityFailed,
   logIn,
   logOut,
+  startAccountMigration,
   userAuthenticated,
 } from '../../../src/actions/user';
 import {
+  getCurrentAccountMigration,
+} from '../../../src/selectors';
+import {
+  AccountMigration,
+} from '../../../src/records';
+import {
   getSessionUid,
   linkGithub,
+  migrateAccount,
   signIn,
   signOut,
   startSessionHeartbeat,
@@ -27,6 +40,7 @@ import {
   logIn as logInSaga,
   logOut as logOutSaga,
   linkGithubIdentity as linkGithubIdentitySaga,
+  startAccountMigration as startAccountMigrationSaga,
 } from '../../../src/sagas/user';
 import {loginState} from '../../../src/channels';
 import {
@@ -187,7 +201,7 @@ test('linkGithubIdentity', (t) => {
       ).
       next({status: 200, data: githubProfile}).put(
         accountMigrationNeeded(githubProfile, error.credential),
-      );
+      ).next().isDone();
 
     assert.end();
   });
@@ -197,10 +211,38 @@ test('linkGithubIdentity', (t) => {
 
     testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
       next().call(linkGithub).
-      throw(error).put(linkIdentityFailed(error));
+      throw(error).put(linkIdentityFailed(error)).
+      next().isDone();
 
     assert.end();
   });
+});
+
+test('startAccountMigration', (assert) => {
+  const firebaseCredential = {};
+  const loadedProjects = [{}];
+  const migration = new AccountMigration().set(
+    'firebaseCredential',
+    firebaseCredential,
+  );
+  testSaga(startAccountMigrationSaga, startAccountMigration()).
+    next().inspect((effect) => {
+      assert.deepEqual(
+        effect,
+        race({
+          shouldContinue: call(delay, 5000, true),
+          cancel: take('DISMISS_ACCOUNT_MIGRATION'),
+        }),
+      );
+    }).
+    next({timeout: true, cancel: null}).
+    put(accountMigrationUndoPeriodExpired()).
+    next().select(getCurrentAccountMigration).
+    next(migration).call(migrateAccount, firebaseCredential).
+    next(loadedProjects).
+    put(accountMigrationComplete(loadedProjects, firebaseCredential)).
+    next().isDone();
+  assert.end();
 });
 
 test('logOut', (assert) => {

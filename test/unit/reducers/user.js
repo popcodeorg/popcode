@@ -8,7 +8,9 @@ import {user as states} from '../../helpers/referenceStates';
 import {userWithCredentials} from '../../helpers/factory';
 import reducer from '../../../src/reducers/user';
 import {
+  accountMigrationComplete,
   accountMigrationNeeded,
+  accountMigrationUndoPeriodExpired,
   dismissAccountMigration,
   identityLinked,
   startAccountMigration,
@@ -71,12 +73,26 @@ tap(
           avatarUrl: 'https://github.com/popcodeuser.jpg',
           accessTokens: new Map({'github.com': 'abc123'}),
         }),
+        firebaseCredential: credential,
       }),
     );
 
     const undoGracePeriodState = proposedState.setIn(
       ['currentMigration', 'state'],
       AccountMigrationState.UNDO_GRACE_PERIOD,
+    );
+
+    const inProgressState = undoGracePeriodState.setIn(
+      ['currentMigration', 'state'],
+      AccountMigrationState.IN_PROGRESS,
+    );
+
+    const completeState = undoGracePeriodState.setIn(
+      ['currentMigration', 'state'],
+      AccountMigrationState.COMPLETE,
+    ).setIn(
+      ['account', 'accessTokens', 'github.com'],
+      credential.accessToken,
     );
 
     test('accountMigrationNeeded', reducerTest(
@@ -102,6 +118,20 @@ tap(
       proposedState,
       dismissAccountMigration,
       loggedInState,
+    ));
+
+    test('accountMigrationUndoPeriodExpired', reducerTest(
+      reducer,
+      undoGracePeriodState,
+      accountMigrationUndoPeriodExpired,
+      inProgressState,
+    ));
+
+    test('accountMigrationComplete', reducerTest(
+      reducer,
+      inProgressState,
+      partial(accountMigrationComplete, [], credential),
+      completeState,
     ));
   },
 );

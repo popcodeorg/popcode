@@ -9,6 +9,8 @@ import {
 } from '../records';
 import {AccountMigrationState} from '../enums';
 
+import AccountMigrationComplete from './AccountMigrationComplete';
+import AccountMigrationInProgress from './AccountMigrationInProgress';
 import AccountMigrationUndoGracePeriod
   from './AccountMigrationUndoGracePeriod';
 import Modal from './Modal';
@@ -74,6 +76,10 @@ export default function AccountMigration({
               );
             case AccountMigrationState.UNDO_GRACE_PERIOD:
               return <AccountMigrationUndoGracePeriod onDismiss={onDismiss} />;
+            case AccountMigrationState.IN_PROGRESS:
+              return <AccountMigrationInProgress />;
+            case AccountMigrationState.COMPLETE:
+              return <AccountMigrationComplete onDismiss={onDismiss} />;
           }
           return null;
         })()}
