@@ -29,23 +29,33 @@ for (const scope of GOOGLE_SCOPES) {
   googleAuthProvider.addScope(scope);
 }
 
-const appFirebase = firebase.initializeApp({
-  apiKey: config.firebaseApiKey,
-  authDomain: `${config.firebaseApp}.firebaseapp.com`,
-  databaseURL: `https://${config.firebaseApp}.firebaseio.com`,
-});
+const {auth, loadDatabase} = buildFirebase();
 
-const auth = firebase.auth(appFirebase);
-
-const loadDatabase = once(async() => {
-  await retryingFailedImports(() =>
+async function loadDatabaseSdk() {
+  return retryingFailedImports(() =>
     import(
       /* webpackChunkName: "mainAsync" */
       '@firebase/database',
     ),
   );
-  return firebase.database(appFirebase);
-});
+}
+
+function buildFirebase() {
+  const app = firebase.initializeApp({
+    apiKey: config.firebaseApiKey,
+    authDomain: `${config.firebaseApp}.firebaseapp.com`,
+    databaseURL: `https://${config.firebaseApp}.firebaseio.com`,
+  });
+
+  return {
+    auth: firebase.auth(app),
+
+    loadDatabase: once(async() => {
+      await loadDatabaseSdk();
+      return firebase.database(app);
+    }),
+  };
+}
 
 export function onAuthStateChanged(listener) {
   const unsubscribe = auth.onAuthStateChanged(async(user) => {
