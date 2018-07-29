@@ -36,7 +36,6 @@ export default function TopBar({
   hasInstructions,
   hasExportedRepo,
   isEditingInstructions,
-  isExperimental,
   isGapiReady,
   isGistExportInProgress,
   isRepoExportInProgress,
@@ -112,7 +111,7 @@ export default function TopBar({
         onChangeCurrentProject={onChangeCurrentProject}
       />
       <CurrentUser
-        isLoginAvailable={!isExperimental || isGapiReady}
+        isLoginAvailable={isGapiReady}
         isOpen={openMenu === 'currentUser'}
         isUserAnonymous={isUserAnonymous}
         isUserAuthenticated={isUserAuthenticated}
@@ -122,15 +121,17 @@ export default function TopBar({
         onClose={partial(onCloseMenu, 'currentUser')}
         onLinkGitHub={onLinkGitHub}
         onLogOut={onLogOut}
-        onStartLogIn={isExperimental ? onStartGoogleLogIn : onStartGithubLogIn}
+        onStartLogIn={onStartGoogleLogIn}
       />
       <HamburgerMenu
         hasInstructions={hasInstructions}
         isEditingInstructions={isEditingInstructions}
         isOpen={openMenu === 'hamburger'}
+        isUserAuthenticated={isUserAuthenticated}
         onClick={partial(onClickMenu, 'hamburger')}
         onStartEditingInstructions={
           partial(onStartEditingInstructions, currentProjectKey)}
+        onStartGithubLogIn={onStartGithubLogIn}
       />
     </header>
   );
@@ -144,7 +145,6 @@ TopBar.propTypes = {
   hasInstructions: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
-  isExperimental: PropTypes.bool,
   isGapiReady: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,
@@ -179,6 +179,5 @@ TopBar.propTypes = {
 TopBar.defaultProps = {
   currentProjectKey: null,
   currentUser: null,
-  isExperimental: false,
   openMenu: null,
 };

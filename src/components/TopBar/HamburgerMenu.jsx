@@ -15,7 +15,9 @@ const HamburgerMenu = createMenu({
   renderItems({
     hasInstructions,
     isEditingInstructions,
+    isUserAuthenticated,
     onStartEditingInstructions,
+    onStartGithubLogIn,
   }) {
     return tap([], (items) => {
       items.push(
@@ -31,6 +33,18 @@ const HamburgerMenu = createMenu({
           }
         </MenuItem>,
       );
+
+      if (!isUserAuthenticated) {
+        items.push(
+          <MenuItem
+            onClick={onStartGithubLogIn}
+          >
+            {
+              t('top-bar.session.log-in-github')
+            }
+          </MenuItem>,
+        );
+      }
 
       items.push(
         <a
@@ -77,7 +91,9 @@ const HamburgerMenu = createMenu({
 HamburgerMenu.propTypes = {
   hasInstructions: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
+  isUserAuthenticated: PropTypes.bool.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
+  onStartGithubLogIn: PropTypes.func.isRequired,
 };
 
 export default HamburgerMenu;

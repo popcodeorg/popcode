@@ -15,7 +15,8 @@
     "session": {
       "link-github": "Link GitHub",
       "log-in-prompt": "Log in to save",
-      "log-out-prompt": "Log out"
+      "log-out-prompt": "Log out",
+      "log-in-github": "Log in with GitHub"
     }
   },
   "editors": {
