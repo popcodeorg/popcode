@@ -3,7 +3,11 @@ import once from 'lodash-es/once';
 
 import config from '../config';
 
-import {GOOGLE_SCOPES} from './appFirebase';
+export const SCOPES = [
+  'https://www.googleapis.com/auth/classroom.courses.readonly',
+  'https://www.googleapis.com/auth/classroom.coursework.students',
+  'https://www.googleapis.com/auth/classroom.coursework.me',
+];
 
 const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/classroom/v1/rest'];
 
@@ -31,7 +35,7 @@ export const loadAndConfigureGapi = once(async() => {
     apiKey: config.firebaseApiKey,
     clientId: config.firebaseClientId,
     discoveryDocs: DISCOVERY_DOCS,
-    scope: GOOGLE_SCOPES.join(' '),
+    scope: SCOPES.join(' '),
   });
 
   return gapi;

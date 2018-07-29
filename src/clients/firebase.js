@@ -7,17 +7,55 @@ import map from 'lodash-es/map';
 import omit from 'lodash-es/omit';
 import values from 'lodash-es/values';
 import uuid from 'uuid/v4';
+import once from 'lodash-es/once';
+import {firebase} from '@firebase/app';
+import '@firebase/auth';
 
-import {getGapiSync} from '../services/gapi';
-import {
-  auth,
-  loadDatabase,
-  githubAuthProvider,
-  googleAuthProvider,
-} from '../services/appFirebase';
+import config from '../config';
+import retryingFailedImports from '../util/retryingFailedImports';
+import {getGapiSync, SCOPES as GOOGLE_SCOPES} from '../services/gapi';
 
+const GITHUB_SCOPES = ['gist', 'public_repo'];
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
 const SESSION_TTL_MS = 5 * 60 * 1000;
+const githubAuthProvider = new firebase.auth.GithubAuthProvider();
+for (const scope of GITHUB_SCOPES) {
+  githubAuthProvider.addScope(scope);
+}
+
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
+for (const scope of GOOGLE_SCOPES) {
+  googleAuthProvider.addScope(scope);
+}
+
+const {auth, loadDatabase} = buildFirebase();
+
+async function loadDatabaseSdk() {
+  return retryingFailedImports(() =>
+    import(
+      /* webpackChunkName: "mainAsync" */
+      '@firebase/database',
+    ),
+  );
+}
+
+function buildFirebase() {
+  const app = firebase.initializeApp({
+    apiKey: config.firebaseApiKey,
+    authDomain: `${config.firebaseApp}.firebaseapp.com`,
+    databaseURL: `https://${config.firebaseApp}.firebaseio.com`,
+  });
+
+  return {
+    auth: firebase.auth(app),
+
+    loadDatabase: once(async() => {
+      await loadDatabaseSdk();
+      return firebase.database(app);
+    }),
+  };
+}
 
 export function onAuthStateChanged(listener) {
   const unsubscribe = auth.onAuthStateChanged(async(user) => {
