@@ -409,7 +409,34 @@ body {
 .instructions-editor__menu {
   padding: 0.5rem;
   text-align: right;
-  background-color: var(--color-light-gray);
+  font-size: var(--font-size-menu);
+}
+
+.instructions-editor__menu-button {
+  border-radius: var(--size-rounded-corners);
+  box-sizing: border-box;
+  cursor: pointer;
+  height: var(--size-top-bar-menu-button);
+  line-height: var(--size-top-bar-menu-button);
+  padding: 0 1em;
+  position: relative;
+  user-select: none;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  white-space: nowrap;
+  width: 80px;
+}
+
+.instructions-editor__menu-button_secondary {
+  background-color: var(--color-low-contrast-gray);
+}
+
+.instructions-editor__menu-button:hover {
+  box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3);
+}
+
+.instructions-editor__menu-button:active {
+  box-shadow: inset 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3);
 }
 
 .instructions-editor__footer {

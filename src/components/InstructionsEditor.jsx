@@ -33,19 +33,19 @@ export default class InstructionsEditor extends React.Component {
       <div className="instructions-editor">
         <div className="instructions-editor__menu">
           <button
+            className="instructions-editor__menu-button instructions-editor__menu-button_secondary"
+            onClick={this._handleCancelEditing}
+          >
+            {t('workspace.components.instructions.cancel')}
+          </button>
+          <button
             className="instructions-editor__menu-button"
             onClick={this._handleSaveChanges}
           >
             {t('workspace.components.instructions.save')}
           </button>
-          <button
-            className="instructions-editor__menu-button"
-            onClick={this._handleCancelEditing}
-          >
-            {t('workspace.components.instructions.cancel')}
-          </button>
         </div>
-        <div className="instructions-editor__input-container">
+        <div className="instructions-editor__input-container instructions-editor__menu-button_primary">
           <textarea
             className="instructions-editor__input"
             defaultValue={this.props.instructions}
