@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {t} from 'i18next';
@@ -33,7 +34,9 @@ export default class InstructionsEditor extends React.Component {
       <div className="instructions-editor">
         <div className="instructions-editor__menu">
           <button
-            className="instructions-editor__menu-button instructions-editor__menu-button_secondary"
+            className={classnames('instructions-editor__menu-button',
+              'instructions-editor__menu-button_secondary',
+            )}
             onClick={this._handleCancelEditing}
           >
             {t('workspace.components.instructions.cancel')}
