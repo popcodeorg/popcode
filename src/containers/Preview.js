@@ -49,8 +49,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(refreshPreview(Date.now()));
     },
 
-    onRuntimeError(error) {
-      dispatch(addRuntimeError('javascript', error));
+    onRuntimeError(error, compiledProjectKey) {
+      dispatch(addRuntimeError('javascript', error, compiledProjectKey));
     },
   };
 }

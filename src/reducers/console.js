@@ -61,6 +61,15 @@ export default function console(stateIn, {type, payload, meta}) {
           payload.compiledProjectKey,
         ),
       );
+
+    case 'ADD_RUNTIME_ERROR':
+      return state.set(
+        payload.key,
+        new ConsoleEntry({
+          evaluatedByCompiledProjectKey: payload.compiledProjectKey,
+          error: new ConsoleError({name: "Runtime Error", message: payload.error.text})
+        }),
+      );
     case 'EVALUATE_CONSOLE_ENTRY':
       return payload.trim(' ') === '' ? state : state.setIn(
         ['history', meta.key],

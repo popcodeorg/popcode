@@ -107,6 +107,7 @@ class PreviewFrame extends React.Component {
     if (Bowser.safari) {
       line = 1;
     }
+    const {compiledProjectKey} = this.props.compiledProject;
 
     this.props.onRuntimeError({
       reason: normalizedError.type,
@@ -115,10 +116,11 @@ class PreviewFrame extends React.Component {
       row: line - 1,
       column: error.column,
       type: 'error',
-    });
+    },compiledProjectKey);
   }
 
   _handleInfiniteLoop(line) {
+    const {compiledProjectKey} = this.props.compiledProject;
     const message = t('errors.javascriptRuntime.infinite-loop');
     this.props.onRuntimeError({
       reason: 'infinite-loop',
@@ -127,7 +129,7 @@ class PreviewFrame extends React.Component {
       row: line - 1,
       column: 0,
       type: 'error',
-    });
+    }, compiledProjectKey);
   }
 
   _handleConsoleLog(printedValue) {
