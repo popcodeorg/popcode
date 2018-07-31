@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash-es/get';
 import preventClickthrough from 'react-prevent-clickthrough';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import {EditorLocation} from '../records';
 import {
@@ -57,6 +58,19 @@ export default class ConsoleInput extends Component {
       editor.resize();
       editor.focus();
 
+      editor.commands.addCommand({
+        name: 'historyPrevious',
+        bindKey: 'Up',
+        exec: () => {
+          const {history} = this.props;
+          if (history.size === 0) {
+            return;
+          }
+          const {expression} = history.toList().get(history.size - 1);
+          editor.setValue(expression);
+          editor.clearSelection();
+        },
+      });
       session.on('change', ({action, lines}) => {
         if (action === 'insert' && lines.length === 2) {
           onInput(editor.getValue().replace('\n', ''));
@@ -82,6 +96,7 @@ export default class ConsoleInput extends Component {
 }
 
 ConsoleInput.propTypes = {
+  history: ImmutablePropTypes.iterable.isRequired,
   isTextSizeLarge: PropTypes.bool,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   onInput: PropTypes.func.isRequired,

@@ -34,6 +34,7 @@ export default function Console({
         }
       >
         <ConsoleInput
+          history={history}
           isTextSizeLarge={isTextSizeLarge}
           requestedFocusedLine={requestedFocusedLine}
           onInput={onInput}
