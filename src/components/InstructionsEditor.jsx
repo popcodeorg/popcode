@@ -48,7 +48,7 @@ export default class InstructionsEditor extends React.Component {
             {t('workspace.components.instructions.save')}
           </button>
         </div>
-        <div className="instructions-editor__input-container instructions-editor__menu-button_primary">
+        <div className="instructions-editor__input-container">
           <textarea
             className="instructions-editor__input"
             defaultValue={this.props.instructions}
