@@ -56,17 +56,9 @@ gulp.task('static', () => gulp.
 );
 
 gulp.task('fonts', () => gulp.
-  src([
-    path.join(
-      bowerComponents,
-      'inconsolata-webfont/fonts/inconsolata-regular.*',
-    ),
-    path.join(bowerComponents, 'fontawesome/fonts/fontawesome-webfont.*'),
-    path.join(
-      bowerComponents,
-      'roboto-webfont-bower/fonts/Roboto-{Bold,Regular}-webfont.*',
-    ),
-  ]).
+  src(
+    [path.join(bowerComponents, 'fontawesome/fonts/fontawesome-webfont.*')],
+  ).
   pipe(gulp.dest(path.join(distDir, 'fonts'))),
 );
 
