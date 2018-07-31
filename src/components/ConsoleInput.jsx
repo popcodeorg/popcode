@@ -44,6 +44,9 @@ export default class ConsoleInput extends Component {
   _ref(containerElement) {
     const {onInput} = this.props;
 
+    let historyLineCursor = 0;
+    let currentInput = '';
+
     if (containerElement) {
       const editor = this._editor = createAceEditor(containerElement);
       const session = createAceSessionWithoutWorker('javascript');
@@ -63,18 +66,49 @@ export default class ConsoleInput extends Component {
         bindKey: 'Up',
         exec: () => {
           const {history} = this.props;
-          if (history.size === 0) {
+          if (historyLineCursor >= history.size) {
             return;
           }
-          const {expression} = history.toList().get(history.size - 1);
+
+          if (historyLineCursor === 0) {
+            currentInput = editor.getValue();
+          }
+          historyLineCursor++;
+
+          const {expression} = history.toList().get(
+            history.size - historyLineCursor);
           editor.setValue(expression);
           editor.clearSelection();
         },
       });
+
+      editor.commands.addCommand({
+        name: 'historyNext',
+        bindKey: 'Down',
+        exec: () => {
+          const {history} = this.props;
+
+          if (historyLineCursor > 0) {
+            historyLineCursor--;
+          }
+
+          if (historyLineCursor === 0) {
+            editor.setValue(currentInput);
+          } else {
+            const {expression} = history.toList().get(
+              history.size - historyLineCursor);
+            editor.setValue(expression);
+          }
+          editor.clearSelection();
+        },
+      });
+
       session.on('change', ({action, lines}) => {
         if (action === 'insert' && lines.length === 2) {
           onInput(editor.getValue().replace('\n', ''));
           editor.setValue('', 0);
+          currentInput = '';
+          historyLineCursor = 0;
         }
       });
     } else if (!isNil(this._editor)) {
