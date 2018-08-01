@@ -138,10 +138,15 @@ export function* linkGithubIdentity() {
 }
 
 export function* startAccountMigration() {
-  yield race({
+  const {shouldContinue} = yield race({
     shouldContinue: call(delay, 5000, true),
     cancel: take('DISMISS_ACCOUNT_MIGRATION'),
   });
+
+  if (!shouldContinue) {
+    return;
+  }
+
   yield put(accountMigrationUndoPeriodExpired());
   const {firebaseCredential} = yield select(getCurrentAccountMigration);
   const projects = yield call(migrateAccount, firebaseCredential);

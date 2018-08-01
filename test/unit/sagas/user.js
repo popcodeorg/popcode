@@ -218,31 +218,52 @@ test('linkGithubIdentity', (t) => {
   });
 });
 
-test('startAccountMigration', (assert) => {
+test('startAccountMigration', (t) => {
   const firebaseCredential = {};
   const loadedProjects = [{}];
   const migration = new AccountMigration().set(
     'firebaseCredential',
     firebaseCredential,
   );
-  testSaga(startAccountMigrationSaga, startAccountMigration()).
-    next().inspect((effect) => {
-      assert.deepEqual(
-        effect,
-        race({
-          shouldContinue: call(delay, 5000, true),
-          cancel: take('DISMISS_ACCOUNT_MIGRATION'),
-        }),
-      );
-    }).
-    next({timeout: true, cancel: null}).
-    put(accountMigrationUndoPeriodExpired()).
-    next().select(getCurrentAccountMigration).
-    next(migration).call(migrateAccount, firebaseCredential).
-    next(loadedProjects).
-    put(accountMigrationComplete(loadedProjects, firebaseCredential)).
-    next().isDone();
-  assert.end();
+
+  t.test('not dismissed during undo period', (assert) => {
+    testSaga(startAccountMigrationSaga, startAccountMigration()).
+      next().inspect((effect) => {
+        assert.deepEqual(
+          effect,
+          race({
+            shouldContinue: call(delay, 5000, true),
+            cancel: take('DISMISS_ACCOUNT_MIGRATION'),
+          }),
+        );
+      }).
+      next({shouldContinue: true, cancel: null}).
+      put(accountMigrationUndoPeriodExpired()).
+      next().select(getCurrentAccountMigration).
+      next(migration).call(migrateAccount, firebaseCredential).
+      next(loadedProjects).
+      put(accountMigrationComplete(loadedProjects, firebaseCredential)).
+      next().isDone();
+    assert.end();
+  });
+
+  t.test('not dismissed during undo period', (assert) => {
+    testSaga(startAccountMigrationSaga, startAccountMigration()).
+      next().inspect((effect) => {
+        assert.deepEqual(
+          effect,
+          race({
+            shouldContinue: call(delay, 5000, true),
+            cancel: take('DISMISS_ACCOUNT_MIGRATION'),
+          }),
+        );
+      }).
+      next({
+        shouldContinue: null,
+        cancel: {type: 'DISMISS_ACCOUNT_MIGRATION'},
+      }).isDone();
+    assert.end();
+  });
 });
 
 test('logOut', (assert) => {
