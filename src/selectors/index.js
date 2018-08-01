@@ -1,7 +1,11 @@
 import getAllProjectKeys from './getAllProjectKeys';
 import getAllProjects from './getAllProjects';
 import getCompiledProjects from './getCompiledProjects';
-import getConsoleHistory from './getConsoleHistory';
+import {
+  getConsoleHistory,
+  getPreviousConsoleInput,
+  getPreviousHistoryIndex,
+} from './getConsoleHistory';
 import getCurrentAccountMigration from './getCurrentAccountMigration';
 import getCurrentCompiledProjectKey from './getCurrentCompiledProjectKey';
 import getCurrentProject from './getCurrentProject';
@@ -59,6 +63,8 @@ export {
   getHiddenUIComponents,
   getNotifications,
   getOpenTopBarMenu,
+  getPreviousConsoleInput,
+  getPreviousHistoryIndex,
   getProject,
   getRequestedFocusedLine,
   isClassroomExportInProgress,

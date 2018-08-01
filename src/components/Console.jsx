@@ -17,8 +17,12 @@ export default function Console({
   isHidden,
   isOpen,
   isTextSizeLarge,
+  previousConsoleInput,
+  previousHistoryIndex,
   onClearConsoleEntries,
   onInput,
+  onSetPreviousHistoryIndex,
+  onStoreCurrentConsoleInput,
   onToggleVisible,
   onRequestedLineFocused,
   requestedFocusedLine,
@@ -36,9 +40,13 @@ export default function Console({
         <ConsoleInput
           history={history}
           isTextSizeLarge={isTextSizeLarge}
+          previousConsoleInput={previousConsoleInput}
+          previousHistoryIndex={previousHistoryIndex}
           requestedFocusedLine={requestedFocusedLine}
           onInput={onInput}
           onRequestedLineFocused={onRequestedLineFocused}
+          onSetPreviousHistoryIndex={onSetPreviousHistoryIndex}
+          onStoreCurrentConsoleInput={onStoreCurrentConsoleInput}
         />
         {history.map((entry, key) => {
           const isActive =
@@ -91,11 +99,15 @@ Console.propTypes = {
   isHidden: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
+  previousConsoleInput: PropTypes.string.isRequired,
+  previousHistoryIndex: PropTypes.number.isRequired,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   onClearConsoleEntries: PropTypes.func.isRequired,
   onConsoleClicked: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
+  onSetPreviousHistoryIndex: PropTypes.func.isRequired,
+  onStoreCurrentConsoleInput: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };
 

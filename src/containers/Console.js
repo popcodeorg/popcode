@@ -6,6 +6,8 @@ import {
   getConsoleHistory,
   getCurrentProjectKey,
   getHiddenUIComponents,
+  getPreviousConsoleInput,
+  getPreviousHistoryIndex,
   getRequestedFocusedLine,
   isCurrentProjectSyntacticallyValid,
   isTextSizeLarge,
@@ -16,6 +18,8 @@ import {
   focusLine,
   editorFocusedRequestedLine,
   clearConsoleEntries,
+  setPreviousHistoryIndex,
+  setCurrentConsoleInput,
 } from '../actions';
 
 function mapStateToProps(state) {
@@ -23,6 +27,8 @@ function mapStateToProps(state) {
     currentCompiledProjectKey: getCurrentCompiledProjectKey(state),
     currentProjectKey: getCurrentProjectKey(state),
     history: getConsoleHistory(state),
+    previousConsoleInput: getPreviousConsoleInput(state),
+    previousHistoryIndex: getPreviousHistoryIndex(state),
     isOpen: !getHiddenUIComponents(state).includes('console'),
     isTextSizeLarge: isTextSizeLarge(state),
     requestedFocusedLine: getRequestedFocusedLine(state),
@@ -50,6 +56,14 @@ function mapDispatchToProps(dispatch) {
 
     onRequestedLineFocused() {
       dispatch(editorFocusedRequestedLine());
+    },
+
+    onSetPreviousHistoryIndex(index) {
+      dispatch(setPreviousHistoryIndex({index}));
+    },
+
+    onStoreCurrentConsoleInput(input) {
+      dispatch(setCurrentConsoleInput({input}));
     },
 
   };

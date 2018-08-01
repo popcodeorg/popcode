@@ -33,7 +33,10 @@ const babelrc = {
     'react',
     ['env', {targets, modules: false}],
   ],
-  plugins: ['syntax-dynamic-import'],
+  plugins: [
+    'syntax-dynamic-import',
+    'syntax-object-rest-spread',
+  ],
   compact: false,
   cacheDirectory: true,
   cacheIdentifier: JSON.stringify({

@@ -42,10 +42,11 @@ export default class ConsoleInput extends Component {
   }
 
   _ref(containerElement) {
-    const {onInput} = this.props;
-
-    let historyLineCursor = 0;
-    let currentInput = '';
+    const {
+      onInput,
+      onStoreCurrentConsoleInput,
+      onSetPreviousHistoryIndex,
+    } = this.props;
 
     if (containerElement) {
       const editor = this._editor = createAceEditor(containerElement);
@@ -65,18 +66,20 @@ export default class ConsoleInput extends Component {
         name: 'historyPrevious',
         bindKey: 'Up',
         exec: () => {
-          const {history} = this.props;
-          if (historyLineCursor >= history.size) {
+          const {history, previousHistoryIndex} = this.props;
+          if (previousHistoryIndex >= history.size) {
             return;
           }
 
-          if (historyLineCursor === 0) {
-            currentInput = editor.getValue();
+          if (previousHistoryIndex === 0) {
+            onStoreCurrentConsoleInput(editor.getValue());
           }
-          historyLineCursor++;
+          const newPreviousHistoryIndex = previousHistoryIndex + 1;
 
-          const {expression} = history.toList().get(
-            history.size - historyLineCursor);
+          onSetPreviousHistoryIndex(newPreviousHistoryIndex);
+
+          const historyIndex = history.size - newPreviousHistoryIndex;
+          const {expression} = history.toList().get(historyIndex);
           editor.setValue(expression);
           editor.clearSelection();
         },
@@ -86,17 +89,26 @@ export default class ConsoleInput extends Component {
         name: 'historyNext',
         bindKey: 'Down',
         exec: () => {
-          const {history} = this.props;
+          const {
+            history,
+            previousConsoleInput,
+            previousHistoryIndex,
+          } = this.props;
 
-          if (historyLineCursor > 0) {
-            historyLineCursor--;
+          const atBottomOfHistory = previousHistoryIndex === 0;
+          if (atBottomOfHistory) {
+            return;
           }
 
-          if (historyLineCursor === 0) {
-            editor.setValue(currentInput);
+          const newPreviousHistoryIndex = previousHistoryIndex - 1;
+
+          onSetPreviousHistoryIndex(newPreviousHistoryIndex);
+
+          if (newPreviousHistoryIndex === 0) {
+            editor.setValue(previousConsoleInput);
           } else {
-            const {expression} = history.toList().get(
-              history.size - historyLineCursor);
+            const historyIndex = history.size - newPreviousHistoryIndex;
+            const {expression} = history.toList().get(historyIndex);
             editor.setValue(expression);
           }
           editor.clearSelection();
@@ -107,8 +119,8 @@ export default class ConsoleInput extends Component {
         if (action === 'insert' && lines.length === 2) {
           onInput(editor.getValue().replace('\n', ''));
           editor.setValue('', 0);
-          currentInput = '';
-          historyLineCursor = 0;
+          onSetPreviousHistoryIndex(0);
+          onStoreCurrentConsoleInput('');
         }
       });
     } else if (!isNil(this._editor)) {
@@ -132,9 +144,13 @@ export default class ConsoleInput extends Component {
 ConsoleInput.propTypes = {
   history: ImmutablePropTypes.iterable.isRequired,
   isTextSizeLarge: PropTypes.bool,
+  previousConsoleInput: PropTypes.string.isRequired,
+  previousHistoryIndex: PropTypes.number.isRequired,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
+  onSetPreviousHistoryIndex: PropTypes.func.isRequired,
+  onStoreCurrentConsoleInput: PropTypes.func.isRequired,
 };
 
 ConsoleInput.defaultProps = {

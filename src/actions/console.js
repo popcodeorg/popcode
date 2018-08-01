@@ -24,6 +24,14 @@ export const clearConsoleEntries = createAction(
   'CLEAR_CONSOLE_ENTRIES',
 );
 
+export const setPreviousHistoryIndex = createAction(
+  'SET_PREVIOUS_HISTORY_INDEX',
+);
+
+export const setCurrentConsoleInput = createAction(
+  'SET_CURRENT_CONSOLE_INPUT',
+);
+
 export const consoleLogProduced = createAction(
   'CONSOLE_LOG_PRODUCED',
   (value, compiledProjectKey) => ({value, compiledProjectKey}),

@@ -65,6 +65,8 @@ import {
   consoleLogProduced,
   consoleValueProduced,
   evaluateConsoleEntry,
+  setCurrentConsoleInput,
+  setPreviousHistoryIndex,
 } from './console';
 
 import {
@@ -90,6 +92,8 @@ export {
   toggleComponent,
   focusLine,
   editorFocusedRequestedLine,
+  setCurrentConsoleInput,
+  setPreviousHistoryIndex,
   startDragColumnDivider,
   stopDragColumnDivider,
   notificationTriggered,
