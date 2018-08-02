@@ -55,16 +55,20 @@ export default function console(stateIn, {type, payload, meta}) {
         }),
       ));
     case 'NAVIGATE_CONSOLE_HISTORY': {
-      const {history} = state;
+      const relevantHistory = state.history.toList().filter(
+        entry => entry.expression !== null,
+      );
+
       if (payload.direction === 'UP') {
-        if (history.size === 0 || state.historyEntryIndex === history.size) {
+        if (relevantHistory.size === 0 ||
+            state.historyEntryIndex === relevantHistory.size) {
           return state;
         }
         const firstHistoryNavigation = state.historyEntryIndex === null;
         const newHistoryEntryIndex = firstHistoryNavigation ?
           1 : state.historyEntryIndex + 1;
-        const historyIndex = state.history.size - newHistoryEntryIndex;
-        const {expression} = state.history.toList().get(historyIndex);
+        const historyIndex = relevantHistory.size - newHistoryEntryIndex;
+        const {expression} = relevantHistory.get(historyIndex);
         const updatedState = state.
           set('historyEntryIndex', newHistoryEntryIndex).
           set('currentInputValue', expression);
@@ -84,8 +88,8 @@ export default function console(stateIn, {type, payload, meta}) {
           set('nextConsoleEntry', null).
           set('currentInputValue', state.nextConsoleEntry);
       }
-      const historyIndex = state.history.size - newHistoryEntryIndex;
-      const {expression} = state.history.toList().get(historyIndex);
+      const historyIndex = relevantHistory.size - newHistoryEntryIndex;
+      const {expression} = relevantHistory.get(historyIndex);
       return state.
         set('historyEntryIndex', newHistoryEntryIndex).
         set('currentInputValue', expression);
