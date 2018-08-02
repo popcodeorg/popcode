@@ -5,21 +5,20 @@ import {
   getCurrentCompiledProjectKey,
   getConsoleHistory,
   getCurrentProjectKey,
+  getCurrentInputValue,
   getHiddenUIComponents,
-  getPreviousConsoleInput,
-  getPreviousHistoryIndex,
   getRequestedFocusedLine,
   isCurrentProjectSyntacticallyValid,
   isTextSizeLarge,
 } from '../selectors';
 import {
+  consoleChange,
   evaluateConsoleEntry,
   toggleComponent,
   focusLine,
   editorFocusedRequestedLine,
   clearConsoleEntries,
-  setPreviousHistoryIndex,
-  setCurrentConsoleInput,
+  navigateConsoleHistory,
 } from '../actions';
 
 function mapStateToProps(state) {
@@ -27,8 +26,7 @@ function mapStateToProps(state) {
     currentCompiledProjectKey: getCurrentCompiledProjectKey(state),
     currentProjectKey: getCurrentProjectKey(state),
     history: getConsoleHistory(state),
-    previousConsoleInput: getPreviousConsoleInput(state),
-    previousHistoryIndex: getPreviousHistoryIndex(state),
+    currentInputValue: getCurrentInputValue(state),
     isOpen: !getHiddenUIComponents(state).includes('console'),
     isTextSizeLarge: isTextSizeLarge(state),
     requestedFocusedLine: getRequestedFocusedLine(state),
@@ -58,12 +56,12 @@ function mapDispatchToProps(dispatch) {
       dispatch(editorFocusedRequestedLine());
     },
 
-    onSetPreviousHistoryIndex(index) {
-      dispatch(setPreviousHistoryIndex({index}));
+    onNavigateConsoleHistory(direction) {
+      dispatch(navigateConsoleHistory(direction));
     },
 
-    onStoreCurrentConsoleInput(input) {
-      dispatch(setCurrentConsoleInput({input}));
+    onChange(value) {
+      dispatch(consoleChange(value));
     },
 
   };

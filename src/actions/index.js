@@ -61,12 +61,12 @@ import {
 
 import {
   clearConsoleEntries,
+  consoleChange,
   consoleErrorProduced,
   consoleLogProduced,
   consoleValueProduced,
   evaluateConsoleEntry,
-  setCurrentConsoleInput,
-  setPreviousHistoryIndex,
+  navigateConsoleHistory,
 } from './console';
 
 import {
@@ -75,6 +75,7 @@ import {
 
 export {
   clearConsoleEntries,
+  consoleChange,
   consoleValueProduced,
   consoleErrorProduced,
   consoleLogProduced,
@@ -92,8 +93,7 @@ export {
   toggleComponent,
   focusLine,
   editorFocusedRequestedLine,
-  setCurrentConsoleInput,
-  setPreviousHistoryIndex,
+  navigateConsoleHistory,
   startDragColumnDivider,
   stopDragColumnDivider,
   notificationTriggered,

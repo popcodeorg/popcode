@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash-es/get';
 import preventClickthrough from 'react-prevent-clickthrough';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import {EditorLocation} from '../records';
 import {
@@ -19,8 +18,15 @@ export default class ConsoleInput extends Component {
     bindAll(this, '_ref');
   }
 
-  componentDidUpdate({isTextSizeLarge: prevIsTextSizeLarge}) {
-    const {isTextSizeLarge, requestedFocusedLine} = this.props;
+  componentDidUpdate({
+    isTextSizeLarge: prevIsTextSizeLarge,
+    currentInputValue: prevCurrentInputValue,
+  }) {
+    const {
+      isTextSizeLarge,
+      requestedFocusedLine,
+      currentInputValue,
+    } = this.props;
 
     if (isTextSizeLarge !== prevIsTextSizeLarge) {
       requestAnimationFrame(() => {
@@ -29,6 +35,11 @@ export default class ConsoleInput extends Component {
     }
 
     this._focusRequestedLine(requestedFocusedLine);
+
+    if (currentInputValue !== prevCurrentInputValue) {
+      this._editor.setValue(currentInputValue);
+      this._editor.clearSelection();
+    }
   }
 
   _focusRequestedLine(requestedFocusedLine) {
@@ -43,9 +54,9 @@ export default class ConsoleInput extends Component {
 
   _ref(containerElement) {
     const {
+      onChange,
       onInput,
-      onStoreCurrentConsoleInput,
-      onSetPreviousHistoryIndex,
+      onNavigateConsoleHistory,
     } = this.props;
 
     if (containerElement) {
@@ -66,22 +77,7 @@ export default class ConsoleInput extends Component {
         name: 'historyPrevious',
         bindKey: 'Up',
         exec: () => {
-          const {history, previousHistoryIndex} = this.props;
-          if (previousHistoryIndex >= history.size) {
-            return;
-          }
-
-          if (previousHistoryIndex === 0) {
-            onStoreCurrentConsoleInput(editor.getValue());
-          }
-          const newPreviousHistoryIndex = previousHistoryIndex + 1;
-
-          onSetPreviousHistoryIndex(newPreviousHistoryIndex);
-
-          const historyIndex = history.size - newPreviousHistoryIndex;
-          const {expression} = history.toList().get(historyIndex);
-          editor.setValue(expression);
-          editor.clearSelection();
+          onNavigateConsoleHistory('UP');
         },
       });
 
@@ -89,38 +85,15 @@ export default class ConsoleInput extends Component {
         name: 'historyNext',
         bindKey: 'Down',
         exec: () => {
-          const {
-            history,
-            previousConsoleInput,
-            previousHistoryIndex,
-          } = this.props;
-
-          const atBottomOfHistory = previousHistoryIndex === 0;
-          if (atBottomOfHistory) {
-            return;
-          }
-
-          const newPreviousHistoryIndex = previousHistoryIndex - 1;
-
-          onSetPreviousHistoryIndex(newPreviousHistoryIndex);
-
-          if (newPreviousHistoryIndex === 0) {
-            editor.setValue(previousConsoleInput);
-          } else {
-            const historyIndex = history.size - newPreviousHistoryIndex;
-            const {expression} = history.toList().get(historyIndex);
-            editor.setValue(expression);
-          }
-          editor.clearSelection();
+          onNavigateConsoleHistory('DOWN');
         },
       });
 
       session.on('change', ({action, lines}) => {
         if (action === 'insert' && lines.length === 2) {
           onInput(editor.getValue().replace('\n', ''));
-          editor.setValue('', 0);
-          onSetPreviousHistoryIndex(0);
-          onStoreCurrentConsoleInput('');
+        } else {
+          onChange(editor.getValue());
         }
       });
     } else if (!isNil(this._editor)) {
@@ -142,15 +115,13 @@ export default class ConsoleInput extends Component {
 }
 
 ConsoleInput.propTypes = {
-  history: ImmutablePropTypes.iterable.isRequired,
+  currentInputValue: PropTypes.string.isRequired,
   isTextSizeLarge: PropTypes.bool,
-  previousConsoleInput: PropTypes.string.isRequired,
-  previousHistoryIndex: PropTypes.number.isRequired,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
+  onChange: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
+  onNavigateConsoleHistory: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
-  onSetPreviousHistoryIndex: PropTypes.func.isRequired,
-  onStoreCurrentConsoleInput: PropTypes.func.isRequired,
 };
 
 ConsoleInput.defaultProps = {

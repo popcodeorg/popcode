@@ -10,6 +10,7 @@ import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
 
 export default function Console({
+  currentInputValue,
   currentProjectKey,
   currentCompiledProjectKey,
   onConsoleClicked,
@@ -17,12 +18,10 @@ export default function Console({
   isHidden,
   isOpen,
   isTextSizeLarge,
-  previousConsoleInput,
-  previousHistoryIndex,
   onClearConsoleEntries,
+  onChange,
   onInput,
-  onSetPreviousHistoryIndex,
-  onStoreCurrentConsoleInput,
+  onNavigateConsoleHistory,
   onToggleVisible,
   onRequestedLineFocused,
   requestedFocusedLine,
@@ -38,15 +37,13 @@ export default function Console({
         }
       >
         <ConsoleInput
-          history={history}
+          currentInputValue={currentInputValue}
           isTextSizeLarge={isTextSizeLarge}
-          previousConsoleInput={previousConsoleInput}
-          previousHistoryIndex={previousHistoryIndex}
           requestedFocusedLine={requestedFocusedLine}
+          onChange={onChange}
           onInput={onInput}
+          onNavigateConsoleHistory={onNavigateConsoleHistory}
           onRequestedLineFocused={onRequestedLineFocused}
-          onSetPreviousHistoryIndex={onSetPreviousHistoryIndex}
-          onStoreCurrentConsoleInput={onStoreCurrentConsoleInput}
         />
         {history.map((entry, key) => {
           const isActive =
@@ -94,20 +91,19 @@ export default function Console({
 
 Console.propTypes = {
   currentCompiledProjectKey: PropTypes.number,
+  currentInputValue: PropTypes.string.isRequired,
   currentProjectKey: PropTypes.string.isRequired,
   history: ImmutablePropTypes.iterable.isRequired,
   isHidden: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
-  previousConsoleInput: PropTypes.string.isRequired,
-  previousHistoryIndex: PropTypes.number.isRequired,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
+  onChange: PropTypes.func.isRequired,
   onClearConsoleEntries: PropTypes.func.isRequired,
   onConsoleClicked: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
+  onNavigateConsoleHistory: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
-  onSetPreviousHistoryIndex: PropTypes.func.isRequired,
-  onStoreCurrentConsoleInput: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };
 

@@ -2,63 +2,51 @@ import {OrderedMap} from 'immutable';
 import partial from 'lodash-es/partial';
 import test from 'tape';
 
-import {ConsoleEntry, ConsoleError} from '../../../src/records';
+import {ConsoleEntry, ConsoleError, ConsoleState} from '../../../src/records';
 import {
   consoleErrorProduced,
   consoleLogProduced,
   consoleValueProduced,
   evaluateConsoleEntry,
-  setPreviousHistoryIndex,
-  setCurrentConsoleInput,
+  navigateConsoleHistory,
 } from '../../../src/actions';
 import reducerTest from '../../helpers/reducerTest';
 import reducer from '../../../src/reducers/console';
 
-const initialState = {
-  history: new OrderedMap(),
-  previousHistoryIndex: 0,
-  previousConsoleInput: '',
-};
+const initialState = new ConsoleState();
 
 test('evaluateConsoleEntry', reducerTest(
   reducer,
   initialState,
   partial(evaluateConsoleEntry, '1+1', '123'),
-  {
-    previousHistoryIndex: 0,
-    previousConsoleInput: '',
-    history: new OrderedMap({123: new ConsoleEntry({expression: '1+1'})}),
-  },
+  initialState.set(
+    'history', new OrderedMap({123: new ConsoleEntry({expression: '1+1'})}),
+  ),
 ));
 
 test('consoleValueProduced', reducerTest(
   reducer,
-  {
-    previousHistoryIndex: 0,
-    previousConsoleInput: '',
-    history: new OrderedMap({123: new ConsoleEntry({expression: '1+1'})}),
-  },
+  initialState.set(
+    'history', new OrderedMap({123: new ConsoleEntry({expression: '1+1'})}),
+  ),
   partial(consoleValueProduced, '123', 2, 123456789),
-  {
-    history: new OrderedMap({
+  initialState.set(
+    'history', new OrderedMap({
       123: new ConsoleEntry({
         expression: '1+1',
         value: 2,
         evaluatedByCompiledProjectKey: 123456789,
       }),
     }),
-  },
+  ),
 ));
 
 test('consoleErrorProduced', reducerTest(
   reducer,
-  {
-    previousHistoryIndex: 0,
-    previousConsoleInput: '',
-    history: new OrderedMap({
-      123: new ConsoleEntry({expression: 'bogus + 1'}),
-    }),
-  },
+  initialState.set(
+    'history',
+    new OrderedMap({123: new ConsoleEntry({expression: 'bogus + 1'})}),
+  ),
   partial(
     consoleErrorProduced,
     '123',
@@ -66,10 +54,9 @@ test('consoleErrorProduced', reducerTest(
     'bogus is not defined',
     123456789,
   ),
-  {
-    previousHistoryIndex: 0,
-    previousConsoleInput: '',
-    history: new OrderedMap({
+  initialState.set(
+    'history',
+    new OrderedMap({
       123: new ConsoleEntry({
         expression: 'bogus + 1',
         error: new ConsoleError({
@@ -79,43 +66,60 @@ test('consoleErrorProduced', reducerTest(
         evaluatedByCompiledProjectKey: 123456789,
       }),
     }),
-  },
+  ),
 ));
 
 test('consoleLogProduced', reducerTest(
   reducer,
   initialState,
   partial(consoleLogProduced, 'A console message', 123456789, '456'),
-  {
-    previousHistoryIndex: 0,
-    previousConsoleInput: '',
-    history: new OrderedMap({
+  initialState.set(
+    'history',
+    new OrderedMap({
       456: new ConsoleEntry({
         value: 'A console message',
         evaluatedByCompiledProjectKey: 123456789,
       }),
     }),
-  },
+  ),
 ));
 
-test('setPreviousHistoryIndex', reducerTest(
+const consoleStateWithHistory = initialState.set(
+  'history',
+  new OrderedMap({
+    123: new ConsoleEntry({expression: '1'}),
+    456: new ConsoleEntry({expression: '2'}),
+  }),
+);
+
+test('navigateConsoleHistory up', reducerTest(
   reducer,
-  initialState,
-  partial(setPreviousHistoryIndex, 1),
-  {
-    previousHistoryIndex: 1,
-    previousConsoleInput: '',
-    history: new OrderedMap(),
-  },
+  consoleStateWithHistory.
+    set('currentInputValue', '3'),
+  partial(navigateConsoleHistory, 'UP'),
+  consoleStateWithHistory.
+    set('currentInputValue', '2').
+    set('historyEntryIndex', 1).
+    set('nextConsoleEntry', '3'),
 ));
 
-test('setCurrentConsoleInput', reducerTest(
+test('navigateConsoleHistory down', reducerTest(
   reducer,
-  initialState,
-  partial(setCurrentConsoleInput, '3'),
-  {
-    previousHistoryIndex: 0,
-    previousConsoleInput: '3',
-    history: new OrderedMap(),
-  },
+  consoleStateWithHistory.
+    set('historyEntryIndex', 2),
+  partial(navigateConsoleHistory, 'DOWN'),
+  consoleStateWithHistory.
+    set('currentInputValue', '2').
+    set('historyEntryIndex', 1),
+));
+
+test('navigateConsoleHistory down returns to nextConsoleEntry', reducerTest(
+  reducer,
+  consoleStateWithHistory.
+    set('currentInputValue', '2').
+    set('historyEntryIndex', 1).
+    set('nextConsoleEntry', '3'),
+  partial(navigateConsoleHistory, 'DOWN'),
+  consoleStateWithHistory.
+    set('currentInputValue', '3'),
 ));

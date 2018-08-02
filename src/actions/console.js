@@ -24,12 +24,14 @@ export const clearConsoleEntries = createAction(
   'CLEAR_CONSOLE_ENTRIES',
 );
 
-export const setPreviousHistoryIndex = createAction(
-  'SET_PREVIOUS_HISTORY_INDEX',
+export const navigateConsoleHistory = createAction(
+  'NAVIGATE_CONSOLE_HISTORY',
+  direction => ({direction}),
 );
 
-export const setCurrentConsoleInput = createAction(
-  'SET_CURRENT_CONSOLE_INPUT',
+export const consoleChange = createAction(
+  'CONSOLE_CHANGE',
+  value => ({value}),
 );
 
 export const consoleLogProduced = createAction(
