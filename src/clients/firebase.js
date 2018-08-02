@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import get from 'lodash-es/get';
+import isEmpty from 'lodash-es/isEmpty';
 import isEqual from 'lodash-es/isEqual';
 import isNil from 'lodash-es/isNil';
 import isNull from 'lodash-es/isNull';
@@ -11,6 +12,7 @@ import once from 'lodash-es/once';
 import {firebase} from '@firebase/app';
 import '@firebase/auth';
 
+import {bugsnagClient} from '../util/bugsnag';
 import config from '../config';
 import retryingFailedImports from '../util/retryingFailedImports';
 import {getGapiSync, SCOPES as GOOGLE_SCOPES} from '../services/gapi';
@@ -154,9 +156,13 @@ export async function migrateAccount(inboundAccountCredential) {
   const {auth: inboundAccountAuth} = inboundAccountFirebase;
   try {
     await inboundAccountAuth.signInWithCredential(inboundAccountCredential);
+    const inboundUid = inboundAccountAuth.currentUser.uid;
+    await logMigration(inboundUid, 'attempt');
 
     const migratedProjects = await migrateProjects(inboundAccountFirebase);
     await migrateCredential(inboundAccountCredential, inboundAccountFirebase);
+
+    await logMigration(inboundUid, 'success');
 
     return migratedProjects;
   } finally {
@@ -181,17 +187,30 @@ async function migrateProjects({
     ref(`workspaces/${inboundAccountAuth.currentUser.uid}/projects`).
     once('value');
 
-  if (!isNull(allProjectsValue)) {
-    const allProjects = allProjectsValue.val();
+  if (isNull(allProjectsValue)) {
+    return [];
+  }
+  const allProjects = allProjectsValue.val();
 
-    await currentAccountDatabase.
-      ref(`workspaces/${auth.currentUser.uid}/projects`).
-      update(allProjects);
-
-    return values(allProjects);
+  if (isNull(allProjects) || isEmpty(allProjects)) {
+    return [];
   }
 
-  return [];
+  await currentAccountDatabase.
+    ref(`workspaces/${auth.currentUser.uid}/projects`).
+    update(allProjects);
+
+  return values(allProjects);
+}
+
+async function logMigration(inboundUid, eventName) {
+  bugsnagClient.notify(
+    new Error(`Account migration ${eventName}`),
+    {
+      metaData: {migration: {inboundUid}},
+      severity: 'info',
+    },
+  );
 }
 
 async function signInWithGithub() {
