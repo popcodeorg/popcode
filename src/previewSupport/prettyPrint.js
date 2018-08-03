@@ -1,5 +1,5 @@
-import inspect from 'object-inspect';
+import serialize from 'serialize-javascript';
 
 export default function prettyPrint(value) {
-  return inspect(value, {quoteStyle: 'double'});
+  return serialize(value);
 }

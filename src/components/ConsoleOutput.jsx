@@ -2,8 +2,14 @@ import isNil from 'lodash-es/isNil';
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import Inspector from 'react-inspector';
 
 import {ConsoleEntry} from '../records';
+
+function deserialize(serializedJavascript) {
+  // eslint-disable-next-line no-eval
+  return eval(`(${serializedJavascript})`);
+}
 
 export default function ConsoleOutput({entry, isActive}) {
   const {expression, value, error} = entry;
@@ -23,7 +29,7 @@ export default function ConsoleOutput({entry, isActive}) {
         }
       >
         {chevron}
-        {value}
+        <Inspector data={deserialize(value)} />
       </div>
     );
   }
