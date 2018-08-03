@@ -626,6 +626,11 @@ body {
 .console__row {
   padding-left: 1em;
   position: relative;
+  display: inline-flex !important;
+}
+
+.console__row > li {
+  margin-right: 3px;
 }
 
 .console__chevron {

@@ -7,7 +7,7 @@ function notifyChannel(args) {
   if (args.length > 0) {
     channel.notify({
       method: 'log',
-      params: args.map(prettyPrint).join(' '),
+      params: prettyPrint(args),
     });
   }
 }

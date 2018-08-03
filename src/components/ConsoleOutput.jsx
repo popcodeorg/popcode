@@ -29,7 +29,13 @@ export default function ConsoleOutput({entry, isActive}) {
         }
       >
         {chevron}
-        <Inspector data={deserialize(value)} />
+        {Object.keys(deserialize(value)).map(
+          (a, i) => (
+            <Inspector
+              data={deserialize(value)[i]}
+            />
+          ),
+        )}
       </div>
     );
   }
