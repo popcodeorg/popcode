@@ -25,6 +25,7 @@ import {
 } from '../actions/user';
 import {
   getCurrentAccountMigration,
+  isExperimental,
 } from '../selectors';
 import loginState from '../channels/loginState';
 import {
@@ -124,6 +125,11 @@ export function* linkGithubIdentity() {
   } catch (e) {
     switch (e.code) {
       case 'auth/credential-already-in-use': {
+        const isExperimentalMode = yield select(isExperimental);
+        if (!isExperimentalMode) {
+          yield put(linkIdentityFailed(e));
+          return;
+        }
         const {data: githubProfile} = yield call(
           getProfileForAuthenticatedUser,
           e.credential.accessToken,
