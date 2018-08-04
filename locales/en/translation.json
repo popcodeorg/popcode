@@ -80,7 +80,8 @@
       "proposed": "Combine these accounts?",
       "undo-grace-period": "Preparing to combine accounts…",
       "in-progress": "Combining accounts…",
-      "complete": "All done!"
+      "complete": "All done!",
+      "error": "Something went wrong."
     },
     "proposal": [
       "Your GitHub login is linked to a different Popcode account. Do you want to combine the account you’re using now with that other account?",
@@ -89,6 +90,7 @@
     "preparing": "Popcode is preparing to combine your accounts. If you do not wish to do this, click the button below:",
     "in-progress": "Popcode is transferring the projects from the other account into your current one.",
     "complete": "Popcode has finished combining your accounts.",
+    "error": "There was a problem combining your accounts. Popcode’s developers have been notified.",
     "your-account": "Your account",
     "account-to-merge": "Account to merge",
     "buttons": {

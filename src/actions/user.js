@@ -35,6 +35,11 @@ export const accountMigrationComplete = createAction(
   (projects, credential) => ({projects, credential}),
 );
 
+export const accountMigrationError = createAction(
+  'ACCOUNT_MIGRATION_ERROR',
+  error => ({error}),
+);
+
 export const logOut = createAction('LOG_OUT');
 
 export const userAuthenticated = createAction(

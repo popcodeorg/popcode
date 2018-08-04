@@ -11,6 +11,7 @@ import {
 } from '../../../src/actions';
 import {
   accountMigrationComplete,
+  accountMigrationError,
   accountMigrationNeeded,
   accountMigrationUndoPeriodExpired,
   identityLinked,
@@ -242,7 +243,32 @@ test('startAccountMigration', (t) => {
     firebaseCredential,
   );
 
-  t.test('not dismissed during undo period', (assert) => {
+  t.test(
+    'not dismissed during undo period, successful migration',
+    (assert) => {
+      testSaga(startAccountMigrationSaga, startAccountMigration()).
+        next().inspect((effect) => {
+          assert.deepEqual(
+            effect,
+            race({
+              shouldContinue: call(delay, 5000, true),
+              cancel: take('DISMISS_ACCOUNT_MIGRATION'),
+            }),
+          );
+        }).
+        next({shouldContinue: true, cancel: null}).
+        put(accountMigrationUndoPeriodExpired()).
+        next().select(getCurrentAccountMigration).
+        next(migration).call(migrateAccount, firebaseCredential).
+        next(loadedProjects).
+        put(accountMigrationComplete(loadedProjects, firebaseCredential)).
+        next().isDone();
+      assert.end();
+    },
+  );
+
+  t.test('not dismissed during undo period, error in migration', (assert) => {
+    const error = new Error('Migration error');
     testSaga(startAccountMigrationSaga, startAccountMigration()).
       next().inspect((effect) => {
         assert.deepEqual(
@@ -257,13 +283,13 @@ test('startAccountMigration', (t) => {
       put(accountMigrationUndoPeriodExpired()).
       next().select(getCurrentAccountMigration).
       next(migration).call(migrateAccount, firebaseCredential).
-      next(loadedProjects).
-      put(accountMigrationComplete(loadedProjects, firebaseCredential)).
+      throw(error).call([bugsnagClient, 'notify'], error).next().
+      put(accountMigrationError(error)).
       next().isDone();
     assert.end();
   });
 
-  t.test('not dismissed during undo period', (assert) => {
+  t.test('dismissed during undo period', (assert) => {
     testSaga(startAccountMigrationSaga, startAccountMigration()).
       next().inspect((effect) => {
         assert.deepEqual(

@@ -15,6 +15,7 @@ import AccountMigrationUndoGracePeriod
   from './AccountMigrationUndoGracePeriod';
 import Modal from './Modal';
 import ProposedAccountMigration from './ProposedAccountMigration';
+import AccountMigrationError from './AccountMigrationError';
 
 export default function AccountMigration({
   currentUserAccount,
@@ -80,6 +81,8 @@ export default function AccountMigration({
               return <AccountMigrationInProgress />;
             case AccountMigrationState.COMPLETE:
               return <AccountMigrationComplete onDismiss={onDismiss} />;
+            case AccountMigrationState.ERROR:
+              return <AccountMigrationError onDismiss={onDismiss} />;
           }
           return null;
         })()}

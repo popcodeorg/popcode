@@ -16,6 +16,7 @@ import {
   startAccountMigration,
   userAuthenticated,
   userLoggedOut,
+  accountMigrationError,
 } from '../../../src/actions/user';
 import {AccountMigrationState, LoginState} from '../../../src/enums';
 import {AccountMigration, User, UserAccount} from '../../../src/records';
@@ -95,6 +96,11 @@ tap(
       credential.accessToken,
     );
 
+    const errorState = undoGracePeriodState.setIn(
+      ['currentMigration', 'state'],
+      AccountMigrationState.ERROR,
+    );
+
     test('accountMigrationNeeded', reducerTest(
       reducer,
       loggedInState,
@@ -132,6 +138,13 @@ tap(
       inProgressState,
       partial(accountMigrationComplete, [], credential),
       completeState,
+    ));
+
+    test('accountMigrationError', reducerTest(
+      reducer,
+      inProgressState,
+      partial(accountMigrationError, new Error('Error')),
+      errorState,
     ));
   },
 );

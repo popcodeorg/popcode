@@ -22,6 +22,7 @@ import {
   linkIdentityFailed,
   userAuthenticated,
   userLoggedOut,
+  accountMigrationError,
 } from '../actions/user';
 import {
   getCurrentAccountMigration,
@@ -155,8 +156,13 @@ export function* startAccountMigration() {
 
   yield put(accountMigrationUndoPeriodExpired());
   const {firebaseCredential} = yield select(getCurrentAccountMigration);
-  const projects = yield call(migrateAccount, firebaseCredential);
-  yield put(accountMigrationComplete(projects, firebaseCredential));
+  try {
+    const projects = yield call(migrateAccount, firebaseCredential);
+    yield put(accountMigrationComplete(projects, firebaseCredential));
+  } catch (e) {
+    yield call([bugsnagClient, 'notify'], e);
+    yield put(accountMigrationError(e));
+  }
 }
 
 export function* logOut() {

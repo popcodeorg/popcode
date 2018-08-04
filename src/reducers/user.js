@@ -94,6 +94,12 @@ function user(stateIn, action) {
         action.payload.credential,
       );
 
+    case 'ACCOUNT_MIGRATION_ERROR':
+      return state.setIn(
+        ['currentMigration', 'state'],
+        AccountMigrationState.ERROR,
+      );
+
     case 'USER_LOGGED_OUT':
       return new User().set('loginState', LoginState.ANONYMOUS);
 

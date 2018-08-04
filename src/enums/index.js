@@ -11,4 +11,5 @@ export const AccountMigrationState = new Enum([
   'UNDO_GRACE_PERIOD',
   'IN_PROGRESS',
   'COMPLETE',
+  'ERROR',
 ]);
