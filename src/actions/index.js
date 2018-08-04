@@ -43,9 +43,11 @@ import {
 } from './errors';
 
 import {
+  dismissAccountMigration,
   linkGithubIdentity,
   logIn,
   logOut,
+  startAccountMigration,
   userAuthenticated,
   userLoggedOut,
 } from './user';
@@ -114,4 +116,6 @@ export {
   hideSaveIndicator,
   linkGithubIdentity,
   updateResizableFlex,
+  startAccountMigration,
+  dismissAccountMigration,
 };

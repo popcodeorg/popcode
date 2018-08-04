@@ -106,6 +106,9 @@ export default function reduceProjects(stateIn, action) {
     case 'PROJECTS_LOADED':
       return action.payload.reduce(addProject, state);
 
+    case 'ACCOUNT_MIGRATION_COMPLETE':
+      return action.payload.projects.reduce(addProject, state);
+
     case 'UPDATE_PROJECT_SOURCE':
       return state.setIn(
         [action.payload.projectKey, 'sources', action.payload.language],

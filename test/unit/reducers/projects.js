@@ -32,7 +32,10 @@ import {
 import {
   focusLine,
 } from '../../../src/actions/ui';
-import {userLoggedOut} from '../../../src/actions/user';
+import {
+  accountMigrationComplete,
+  userLoggedOut,
+} from '../../../src/actions/user';
 
 const now = Date.now();
 const projectKey = '12345';
@@ -195,7 +198,7 @@ test('gistImported', (t) => {
   ));
 });
 
-tap([project(), project()], projectsIn =>
+tap([project(), project()], (projectsIn) => {
   test('projectsLoaded', reducerTest(
     reducer,
     states.initial,
@@ -210,8 +213,24 @@ tap([project(), project()], projectsIn =>
       ),
       new Immutable.Map(),
     ),
-  )),
-);
+  ));
+
+  test('accountMigrationComplete', reducerTest(
+    reducer,
+    states.initial,
+    partial(accountMigrationComplete, projectsIn, {}),
+    projectsIn.reduce(
+      (map, projectIn) => map.set(
+        projectIn.projectKey,
+        buildProject(
+          projectIn.projectKey,
+          projectIn.sources,
+        ).set('updatedAt', projectIn.updatedAt),
+      ),
+      new Immutable.Map(),
+    ),
+  ));
+});
 
 tap(initProjects({1: true, 2: true}), projects =>
   test('userLoggedOut', reducerTest(

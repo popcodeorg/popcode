@@ -17,6 +17,29 @@ export const linkIdentityFailed = createAction(
   error => ({error}),
 );
 
+export const accountMigrationNeeded = createAction(
+  'ACCOUNT_MIGRATION_NEEDED',
+  (profile, credential) => ({profile, credential}),
+);
+
+export const startAccountMigration = createAction('START_ACCOUNT_MIGRATION');
+
+export const dismissAccountMigration =
+  createAction('DISMISS_ACCOUNT_MIGRATION');
+
+export const accountMigrationUndoPeriodExpired =
+  createAction('ACCOUNT_MIGRATION_UNDO_PERIOD_EXPIRED');
+
+export const accountMigrationComplete = createAction(
+  'ACCOUNT_MIGRATION_COMPLETE',
+  (projects, credential) => ({projects, credential}),
+);
+
+export const accountMigrationError = createAction(
+  'ACCOUNT_MIGRATION_ERROR',
+  error => ({error}),
+);
+
 export const logOut = createAction('LOG_OUT');
 
 export const userAuthenticated = createAction(

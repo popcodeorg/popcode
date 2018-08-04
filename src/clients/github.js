@@ -26,6 +26,11 @@ function normalizeTitle(title) {
   return titleWithoutPunctuationAndWhitespace;
 }
 
+export async function getProfileForAuthenticatedUser(accessToken) {
+  const github = await createClient(accessToken);
+  return github.getUser().getProfile();
+}
+
 export async function createOrUpdateRepoFromProject(project, accessToken) {
   const repoAlreadyExists = Boolean(project.externalLocations.githubRepoName);
   if (repoAlreadyExists) {

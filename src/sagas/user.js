@@ -2,23 +2,42 @@ import {bugsnagClient} from '../util/bugsnag';
 import isEmpty from 'lodash-es/isEmpty';
 import isError from 'lodash-es/isError';
 import isString from 'lodash-es/isString';
-import {all, call, put, take, takeEvery} from 'redux-saga/effects';
+import {
+  all,
+  call,
+  put,
+  race,
+  select,
+  take,
+  takeEvery,
+} from 'redux-saga/effects';
+import {delay} from 'redux-saga';
 import isNil from 'lodash-es/isNil';
 import {notificationTriggered} from '../actions/ui';
 import {
+  accountMigrationComplete,
+  accountMigrationNeeded,
+  accountMigrationUndoPeriodExpired,
   identityLinked,
   linkIdentityFailed,
   userAuthenticated,
   userLoggedOut,
+  accountMigrationError,
 } from '../actions/user';
+import {
+  getCurrentAccountMigration,
+  isExperimental,
+} from '../selectors';
 import loginState from '../channels/loginState';
 import {
   getSessionUid,
   linkGithub,
+  migrateAccount,
   signIn,
   signOut,
   startSessionHeartbeat,
 } from '../clients/firebase';
+import {getProfileForAuthenticatedUser} from '../clients/github';
 
 export function* applicationLoaded() {
   yield call(startSessionHeartbeat);
@@ -105,7 +124,44 @@ export function* linkGithubIdentity() {
     const credential = yield call(linkGithub);
     yield put(identityLinked(credential));
   } catch (e) {
-    yield put(linkIdentityFailed(e));
+    switch (e.code) {
+      case 'auth/credential-already-in-use': {
+        const isExperimentalMode = yield select(isExperimental);
+        if (!isExperimentalMode) {
+          yield put(linkIdentityFailed(e));
+          return;
+        }
+        const {data: githubProfile} = yield call(
+          getProfileForAuthenticatedUser,
+          e.credential.accessToken,
+        );
+        yield put(accountMigrationNeeded(githubProfile, e.credential));
+        break;
+      }
+      default:
+        yield put(linkIdentityFailed(e));
+    }
+  }
+}
+
+export function* startAccountMigration() {
+  const {shouldContinue} = yield race({
+    shouldContinue: call(delay, 5000, true),
+    cancel: take('DISMISS_ACCOUNT_MIGRATION'),
+  });
+
+  if (!shouldContinue) {
+    return;
+  }
+
+  yield put(accountMigrationUndoPeriodExpired());
+  const {firebaseCredential} = yield select(getCurrentAccountMigration);
+  try {
+    const projects = yield call(migrateAccount, firebaseCredential);
+    yield put(accountMigrationComplete(projects, firebaseCredential));
+  } catch (e) {
+    yield call([bugsnagClient, 'notify'], e);
+    yield put(accountMigrationError(e));
   }
 }
 
@@ -119,5 +175,6 @@ export default function* () {
     takeEvery('LINK_GITHUB_IDENTITY', linkGithubIdentity),
     takeEvery('LOG_IN', logIn),
     takeEvery('LOG_OUT', logOut),
+    takeEvery('START_ACCOUNT_MIGRATION', startAccountMigration),
   ]);
 }

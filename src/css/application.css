@@ -75,8 +75,10 @@
   --color-gray: #666;
   --color-dark-gray: #444;
   --color-green: #00ff85;
+  --color-low-contrast-green: #a2ffd2;
   --color-yellow: #ffd100;
   --color-red: #ff5e4f;
+  --color-low-contrast-red: #ffc4bf;
   --color-purple: #f0f;
   --color-low-contrast-blue: #baecff;
   --color-blue: #00b8ff;
@@ -103,6 +105,7 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
+  z-index: 0;
 }
 
 .layout__columns {
@@ -778,6 +781,72 @@ body {
   margin: 0;
 }
 
+/** @define account-migration */
+
+.account-migration__header {
+  text-align: center;
+}
+
+.account-migration__accounts {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  margin: 1em 0;
+}
+
+.account-migration__merge-icon {
+  font-size: 2em;
+  color: var(--color-gray);
+}
+
+.account-migration__account {
+  border: 1px solid var(--color-light-gray);
+  margin: 0 1em;
+  padding: 0.5em 1em;
+}
+
+.account-migration__account-label {
+  color: var(--color-gray);
+  font-size: 0.8em;
+  margin: 0 0 0.5em;
+  text-align: center;
+}
+
+.account-migration__avatar {
+  display: block;
+  height: 128px;
+}
+
+.account-migration__user-name {
+  font-weight: bold;
+  margin: 0.5em 0 0;
+  text-align: center;
+}
+
+.account-migration__buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.account-migration__button {
+  background: var(--color-chrome);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0.5em;
+  padding: 1em;
+  width: 20em;
+}
+
+.account-migration__button_confirm {
+  background-color: var(--color-low-contrast-green);
+  font-weight: bold;
+}
+
+.account-migration__button_cancel {
+  background-color: var(--color-low-contrast-red);
+}
+
 /** @define notification-list */
 
 .notification-list__notification {
@@ -853,6 +922,26 @@ body {
 
 .pop-throbber path {
   fill: var(--color-low-contrast-gray) !important;
+}
+
+/** @define modal */
+
+.modal {
+  background: rgba(0, 0, 0, 0.48);
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 1;
+}
+
+.modal__contents {
+  background: #fafafa;
+  box-shadow: 0 2px 8px #888;
+  margin: 10% auto 0;
+  padding: 1em 2em 2em;
+  width: 40vw;
 }
 
 /** @define label */

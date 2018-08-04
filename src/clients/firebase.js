@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import get from 'lodash-es/get';
+import isEmpty from 'lodash-es/isEmpty';
 import isEqual from 'lodash-es/isEqual';
 import isNil from 'lodash-es/isNil';
 import isNull from 'lodash-es/isNull';
@@ -11,6 +12,7 @@ import once from 'lodash-es/once';
 import {firebase} from '@firebase/app';
 import '@firebase/auth';
 
+import {bugsnagClient} from '../util/bugsnag';
 import config from '../config';
 import retryingFailedImports from '../util/retryingFailedImports';
 import {getGapiSync, SCOPES as GOOGLE_SCOPES} from '../services/gapi';
@@ -40,12 +42,12 @@ async function loadDatabaseSdk() {
   );
 }
 
-function buildFirebase() {
+function buildFirebase(appName = undefined) {
   const app = firebase.initializeApp({
     apiKey: config.firebaseApiKey,
     authDomain: `${config.firebaseApp}.firebaseapp.com`,
     databaseURL: `https://${config.firebaseApp}.firebaseio.com`,
-  });
+  }, appName);
 
   return {
     auth: firebase.auth(app),
@@ -147,6 +149,68 @@ export async function linkGithub() {
     await auth.currentUser.linkWithPopup(githubAuthProvider);
   await saveUserCredential(userCredential);
   return userCredential.credential;
+}
+
+export async function migrateAccount(inboundAccountCredential) {
+  const inboundAccountFirebase = buildFirebase('migration');
+  const {auth: inboundAccountAuth} = inboundAccountFirebase;
+  try {
+    await inboundAccountAuth.signInWithCredential(inboundAccountCredential);
+    const inboundUid = inboundAccountAuth.currentUser.uid;
+    await logMigration(inboundUid, 'attempt');
+
+    const migratedProjects = await migrateProjects(inboundAccountFirebase);
+    await migrateCredential(inboundAccountCredential, inboundAccountFirebase);
+
+    await logMigration(inboundUid, 'success');
+
+    return migratedProjects;
+  } finally {
+    inboundAccountAuth.app.delete();
+  }
+}
+
+async function migrateCredential(credential, {auth: inboundAccountAuth}) {
+  await inboundAccountAuth.currentUser.unlink(credential.providerId);
+  await auth.currentUser.linkWithCredential(credential);
+  await saveUserCredential({user: auth.currentUser, credential});
+}
+
+async function migrateProjects({
+  auth: inboundAccountAuth,
+  loadDatabase: loadinboundAccountDatabase,
+}) {
+  const currentAccountDatabase = await loadDatabase();
+  const inboundAccountDatabase = await loadinboundAccountDatabase();
+
+  const allProjectsValue = await inboundAccountDatabase.
+    ref(`workspaces/${inboundAccountAuth.currentUser.uid}/projects`).
+    once('value');
+
+  if (isNull(allProjectsValue)) {
+    return [];
+  }
+  const allProjects = allProjectsValue.val();
+
+  if (isNull(allProjects) || isEmpty(allProjects)) {
+    return [];
+  }
+
+  await currentAccountDatabase.
+    ref(`workspaces/${auth.currentUser.uid}/projects`).
+    update(allProjects);
+
+  return values(allProjects);
+}
+
+async function logMigration(inboundUid, eventName) {
+  bugsnagClient.notify(
+    new Error(`Account migration ${eventName}`),
+    {
+      metaData: {migration: {inboundUid}},
+      severity: 'info',
+    },
+  );
 }
 
 async function signInWithGithub() {
