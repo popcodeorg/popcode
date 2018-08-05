@@ -21,10 +21,7 @@ import {
   startAccountMigration,
   userAuthenticated,
 } from '../../../src/actions/user';
-import {
-  getCurrentAccountMigration,
-  isExperimental,
-} from '../../../src/selectors';
+import {getCurrentAccountMigration} from '../../../src/selectors';
 import {
   AccountMigration,
 } from '../../../src/records';
@@ -188,20 +185,6 @@ test('linkGithubIdentity', (t) => {
     assert.end();
   });
 
-  t.test('credential already in use', (assert) => {
-    const error = new Error('credential already in use');
-    error.code = 'auth/credential-already-in-use';
-    error.credential = {providerId: 'github.com', accessToken: 'abc123'};
-
-    testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
-      next().call(linkGithub).
-      throw(error).select(isExperimental).
-      next(false).put(linkIdentityFailed(error)).
-      next().isDone();
-
-    assert.end();
-  });
-
   t.test('credential already in use in experimental mode', (assert) => {
     const error = new Error('credential already in use');
     error.code = 'auth/credential-already-in-use';
@@ -211,8 +194,7 @@ test('linkGithubIdentity', (t) => {
 
     testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
       next().call(linkGithub).
-      throw(error).select(isExperimental).
-      next(true).call(
+      throw(error).call(
         getProfileForAuthenticatedUser,
         error.credential.accessToken,
       ).
