@@ -8,6 +8,7 @@ import get from 'lodash-es/get';
 
 import reducers from './reducers';
 import rootSaga from './sagas';
+import {bugsnagClient} from './util/bugsnag';
 
 const compose = get(
   window,
@@ -16,7 +17,11 @@ const compose = get(
 );
 
 export default function createApplicationStore() {
-  const sagaMiddleware = createSagaMiddleware();
+  const sagaMiddleware = createSagaMiddleware({
+    onError(error) {
+      bugsnagClient.notify(error);
+    },
+  });
   const store = createStore(
     reducers,
     compose(applyMiddleware(sagaMiddleware)),
