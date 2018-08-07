@@ -1,4 +1,5 @@
 import {bugsnagClient} from '../util/bugsnag';
+import cloneDeepWith from 'lodash-es/cloneDeepWith';
 import isEmpty from 'lodash-es/isEmpty';
 import isError from 'lodash-es/isError';
 import isString from 'lodash-es/isString';
@@ -131,6 +132,25 @@ export function* linkGithubIdentity() {
           yield put(linkIdentityFailed(e));
           return;
         }
+
+        if (isNil(e.credential)) {
+          const clonedError = cloneDeepWith(e, val => Object.assign({}, val));
+          const errorToJson = e.toJSON();
+          yield call(
+            [bugsnagClient, 'notify'],
+            e,
+            {
+              metaData: {
+                errorObject: e,
+                clonedError,
+                errorToJson,
+              },
+            },
+          );
+          yield put(linkIdentityFailed(e));
+          return;
+        }
+
         const {data: githubProfile} = yield call(
           getProfileForAuthenticatedUser,
           e.credential.accessToken,
@@ -138,7 +158,9 @@ export function* linkGithubIdentity() {
         yield put(accountMigrationNeeded(githubProfile, e.credential));
         break;
       }
+
       default:
+        yield call([bugsnagClient, 'notify'], e);
         yield put(linkIdentityFailed(e));
     }
   }

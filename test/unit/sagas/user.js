@@ -228,7 +228,8 @@ test('linkGithubIdentity', (t) => {
 
     testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
       next().call(linkGithub).
-      throw(error).put(linkIdentityFailed(error)).
+      throw(error).call([bugsnagClient, 'notify'], error).
+      next().put(linkIdentityFailed(error)).
       next().isDone();
 
     assert.end();
