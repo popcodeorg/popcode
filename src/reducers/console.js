@@ -10,24 +10,20 @@ export default function console(stateIn, {type, payload, meta}) {
 
   switch (type) {
     case 'CONSOLE_VALUE_PRODUCED':
-      return state.set(
-        'history',
-        state.history.update(
-          payload.key,
-          input => input.set(
-            'value',
-            payload.value,
-          ).set(
-            'evaluatedByCompiledProjectKey',
-            payload.compiledProjectKey,
-          ),
+      return state.updateIn(
+        ['history', payload.key],
+        input => input.set(
+          'value',
+          payload.value,
+        ).set(
+          'evaluatedByCompiledProjectKey',
+          payload.compiledProjectKey,
         ),
-      ).set('currentInputValue', '').
-        set('nextConsoleEntry', null).
-        set('historyEntryIndex', null);
+      ).delete('currentInputValue').
+        delete('nextConsoleEntry').
+        delete('historyEntryIndex');
     case 'CONSOLE_ERROR_PRODUCED':
-      return state.set('history', state.history.update(
-        payload.key,
+      return state.updateIn(['history', payload.key],
         input => input.set(
           'error',
           new ConsoleError({name: payload.name, message: payload.message}),
@@ -35,25 +31,24 @@ export default function console(stateIn, {type, payload, meta}) {
           'evaluatedByCompiledProjectKey',
           payload.compiledProjectKey,
         ),
-      ));
+      );
     case 'EVALUATE_CONSOLE_ENTRY':
-      return payload.trim(' ') === '' ? state : state.set(
-        'history', state.history.set(
-          meta.key,
-          new ConsoleEntry({expression: payload}),
-        ));
+      return payload.trim(' ') === '' ? state : state.updateIn(
+        ['history', meta.key],
+        () => new ConsoleEntry({expression: payload}),
+      );
     case 'CLEAR_CONSOLE_ENTRIES':
       return initialState;
     case 'CONSOLE_CHANGE':
       return state.set('currentInputValue', payload.value);
     case 'CONSOLE_LOG_PRODUCED':
-      return state.set('history', state.history.set(
-        meta.key,
-        new ConsoleEntry({
+      return state.updateIn(
+        ['history', meta.key],
+        () => new ConsoleEntry({
           value: payload.value,
           evaluatedByCompiledProjectKey: payload.compiledProjectKey,
         }),
-      ));
+      );
     case 'NAVIGATE_CONSOLE_HISTORY': {
       const relevantHistory = state.history.toList().filter(
         entry => entry.expression !== null,
@@ -84,8 +79,8 @@ export default function console(stateIn, {type, payload, meta}) {
       const newHistoryEntryIndex = state.historyEntryIndex - 1;
       if (newHistoryEntryIndex === 0) {
         return state.
-          set('historyEntryIndex', null).
-          set('nextConsoleEntry', null).
+          delete('historyEntryIndex').
+          delete('nextConsoleEntry').
           set('currentInputValue', state.nextConsoleEntry);
       }
       const historyIndex = relevantHistory.size - newHistoryEntryIndex;
