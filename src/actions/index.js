@@ -61,7 +61,7 @@ import {
 
 import {
   clearConsoleEntries,
-  consoleChange,
+  consoleInputChanged,
   consoleErrorProduced,
   consoleLogProduced,
   consoleValueProduced,
@@ -75,7 +75,7 @@ import {
 
 export {
   clearConsoleEntries,
-  consoleChange,
+  consoleInputChanged,
   consoleValueProduced,
   consoleErrorProduced,
   consoleLogProduced,

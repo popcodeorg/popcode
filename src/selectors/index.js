@@ -4,7 +4,7 @@ import getCompiledProjects from './getCompiledProjects';
 import getConsoleHistory from './getConsoleHistory';
 import getCurrentAccountMigration from './getCurrentAccountMigration';
 import getCurrentCompiledProjectKey from './getCurrentCompiledProjectKey';
-import getCurrentInputValue from './getCurrentInputValue';
+import getCurrentConsoleInputValue from './getCurrentConsoleInputValue';
 import getCurrentProject from './getCurrentProject';
 import getCurrentProjectInstructions from './getCurrentProjectInstructions';
 import getCurrentProjectExportedRepoName
@@ -48,7 +48,7 @@ export {
   getConsoleHistory,
   getCurrentAccountMigration,
   getCurrentCompiledProjectKey,
-  getCurrentInputValue,
+  getCurrentConsoleInputValue,
   getCurrentProject,
   getCurrentProjectExportedRepoName,
   getCurrentProjectInstructions,

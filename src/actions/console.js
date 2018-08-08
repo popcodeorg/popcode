@@ -29,8 +29,8 @@ export const navigateConsoleHistory = createAction(
   direction => ({direction}),
 );
 
-export const consoleChange = createAction(
-  'CONSOLE_CHANGE',
+export const consoleInputChanged = createAction(
+  'CONSOLE_INPUT_CHANGED',
   value => ({value}),
 );
 
