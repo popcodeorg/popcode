@@ -17,7 +17,7 @@ import config from '../config';
 import retryingFailedImports from '../util/retryingFailedImports';
 import {getGapiSync, SCOPES as GOOGLE_SCOPES} from '../services/gapi';
 
-const GITHUB_SCOPES = ['gist', 'public_repo'];
+const GITHUB_SCOPES = ['gist', 'public_repo', 'read:user', 'user:email'];
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
 const SESSION_TTL_MS = 5 * 60 * 1000;
 const githubAuthProvider = new firebase.auth.GithubAuthProvider();
