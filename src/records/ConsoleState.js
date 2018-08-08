@@ -2,7 +2,7 @@ import {Record, OrderedMap} from 'immutable';
 
 export default Record({
   history: new OrderedMap(),
-  historyEntryIndex: null,
+  historyEntryIndex: 0,
   nextConsoleEntry: null,
   currentInputValue: '',
 }, 'ConsoleState');

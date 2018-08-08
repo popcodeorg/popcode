@@ -54,40 +54,40 @@ export default function console(stateIn, {type, payload, meta}) {
         entry => entry.expression !== null,
       );
 
-      if (payload.direction === 'UP') {
-        if (relevantHistory.size === 0 ||
-            state.historyEntryIndex === relevantHistory.size) {
-          return state;
-        }
-        const firstHistoryNavigation = state.historyEntryIndex === null;
-        const newHistoryEntryIndex = firstHistoryNavigation ?
-          1 : state.historyEntryIndex + 1;
-        const historyIndex = relevantHistory.size - newHistoryEntryIndex;
-        const {expression} = relevantHistory.get(historyIndex);
-        const updatedState = state.
-          set('historyEntryIndex', newHistoryEntryIndex).
-          set('currentInputValue', expression);
+      const newHistoryEntryIndex = payload.direction === 'UP' ?
+        state.historyEntryIndex + 1 :
+        state.historyEntryIndex - 1;
 
-        return firstHistoryNavigation ?
-          updatedState.set('nextConsoleEntry', state.currentInputValue) :
-          updatedState;
-      }
-
-      if (state.historyEntryIndex === null) {
+      if (newHistoryEntryIndex < 0 ||
+          newHistoryEntryIndex === relevantHistory.size) {
         return state;
       }
-      const newHistoryEntryIndex = state.historyEntryIndex - 1;
-      if (newHistoryEntryIndex === 0) {
+
+      const downToPreviousInput = newHistoryEntryIndex === 0 &&
+        payload.direction === 'DOWN';
+
+      if (downToPreviousInput) {
         return state.
-          delete('historyEntryIndex').
           delete('nextConsoleEntry').
+          delete('historyEntryIndex').
           set('currentInputValue', state.nextConsoleEntry);
       }
+
       const historyIndex = relevantHistory.size - newHistoryEntryIndex;
       const {expression} = relevantHistory.get(historyIndex);
-      return state.
+      const updatedState = state.
         set('historyEntryIndex', newHistoryEntryIndex).
         set('currentInputValue', expression);
+
+
+      const firstUp = newHistoryEntryIndex === 1 &&
+        payload.direction === 'UP';
+
+      if (firstUp) {
+        return updatedState.set('nextConsoleEntry', state.currentInputValue);
+      }
+
+      return updatedState;
     }
     default:
       return state;
