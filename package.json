@@ -157,8 +157,8 @@
   "dependencies": {
     "@firebase/app": "^0.3.3",
     "@firebase/app-types": "^0.3.2",
-    "@firebase/auth": "^0.5.3",
-    "@firebase/database": "^0.3.3",
+    "@firebase/auth": "^0.7.2",
+    "@firebase/database": "^0.3.4",
     "PrettyCSS": "^0.3.17",
     "array-to-sentence": "^2.0.0",
     "bowser": "^1.4.5",
