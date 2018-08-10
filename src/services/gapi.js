@@ -1,7 +1,8 @@
-import $S from 'scriptjs';
+import loadjs from 'loadjs';
 import once from 'lodash-es/once';
 
 import config from '../config';
+import ExtendableError from '../util/ExtendableError';
 
 export const SCOPES = [
   'https://www.googleapis.com/auth/classroom.courses.readonly',
@@ -11,9 +12,17 @@ export const SCOPES = [
 
 const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/classroom/v1/rest'];
 
-const loadGapi = once(async() => new Promise((resolve) => {
-  $S('https://apis.google.com/js/client.js', async() => {
-    resolve(window.gapi);
+class LoadError extends ExtendableError {}
+
+const loadGapi = once(async() => new Promise((resolve, reject) => {
+  loadjs('https://apis.google.com/js/client.js', {
+    success() {
+      resolve(window.gapi);
+    },
+    error(failedPaths) {
+      reject(new LoadError(`Failed to load ${failedPaths.join(', ')}`));
+    },
+    numRetries: 16,
   });
 }));
 

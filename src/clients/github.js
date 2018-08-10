@@ -5,18 +5,14 @@ import trim from 'lodash-es/trim';
 import retryingFailedImports from '../util/retryingFailedImports';
 import performWithRetries from '../util/performWithRetries';
 import compileProject from '../util/compileProject';
+import ExtendableError from '../util/ExtendableError';
 
 const COMMIT_MESSAGE = 'Created using Popcode: https://popcode.org';
 const MASTER = 'master';
 const GH_PAGES = 'gh-pages';
 const NETWORK_ERROR = 'Network Error';
 
-export function EmptyGistError(message) {
-  this.name = 'EmptyGistError';
-  this.message = message;
-  this.stack = new Error().stack;
-}
-EmptyGistError.prototype = Object.create(Error.prototype);
+export class EmptyGistError extends ExtendableError {}
 
 function normalizeTitle(title) {
   const titleWithoutPunctuationAndWhitespace = title.
