@@ -11,10 +11,10 @@ function ErrorList({errors, onErrorClick, language}) {
     return false;
   }
 
-  const errorItems = map(errors.items, error => (
+  const errorItems = map(errors.items, (error, index) => (
     <ErrorItem
       {...error}
-      key={[error.reason, error.row]}
+      key={[error.reason, error.row, index]}
       onClick={partial(
         onErrorClick,
         language,
