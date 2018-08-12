@@ -23,6 +23,8 @@ const EditorContainer = forwardRef((
       ref={ref}
       style={prefixAll(style)}
     >
+      {helpText}
+      {children}
       <div
         className="label editors__label editors__label_expanded"
         onClick={onHide}
@@ -31,8 +33,6 @@ const EditorContainer = forwardRef((
         {' '}
         <span className="u__icon">&#xf078;</span>
       </div>
-      {helpText}
-      {children}
     </div>
   );
 });

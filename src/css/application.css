@@ -540,6 +540,16 @@ body {
   z-index: 1;
 }
 
+/* postcss-bem-linter: ignore */
+.ace_focus ~ .editors__label {
+  visibility: hidden;
+
+  /* postcss-bem-linter: ignore */
+  & .u__icon {
+    visibility: visible;
+  }
+}
+
 .editors__column-divider {
   background-color: var(--color-light-gray);
   cursor: ew-resize;
