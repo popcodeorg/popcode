@@ -23,7 +23,8 @@ export default function console(stateIn, {type, payload, meta}) {
         delete('nextConsoleEntry').
         delete('historyEntryIndex');
     case 'CONSOLE_ERROR_PRODUCED':
-      return state.updateIn(['history', payload.key],
+      return state.updateIn(
+        ['history', payload.key],
         input => input.set(
           'error',
           new ConsoleError({name: payload.name, message: payload.message}),
@@ -33,18 +34,18 @@ export default function console(stateIn, {type, payload, meta}) {
         ),
       );
     case 'EVALUATE_CONSOLE_ENTRY':
-      return payload.trim(' ') === '' ? state : state.updateIn(
+      return payload.trim(' ') === '' ? state : state.setIn(
         ['history', meta.key],
-        () => new ConsoleEntry({expression: payload}),
+        new ConsoleEntry({expression: payload}),
       );
     case 'CLEAR_CONSOLE_ENTRIES':
       return initialState;
     case 'CONSOLE_CHANGE':
       return state.set('currentInputValue', payload.value);
     case 'CONSOLE_LOG_PRODUCED':
-      return state.updateIn(
+      return state.setIn(
         ['history', meta.key],
-        () => new ConsoleEntry({
+        new ConsoleEntry({
           value: payload.value,
           evaluatedByCompiledProjectKey: payload.compiledProjectKey,
         }),
@@ -58,8 +59,7 @@ export default function console(stateIn, {type, payload, meta}) {
         state.historyEntryIndex + 1 :
         state.historyEntryIndex - 1;
 
-      if (newHistoryEntryIndex < 0 ||
-          newHistoryEntryIndex === relevantHistory.size) {
+      if (!relevantHistory.has(newHistoryEntryIndex)) {
         return state;
       }
 
@@ -78,7 +78,6 @@ export default function console(stateIn, {type, payload, meta}) {
       const updatedState = state.
         set('historyEntryIndex', newHistoryEntryIndex).
         set('currentInputValue', expression);
-
 
       const firstUp = newHistoryEntryIndex === 1 &&
         payload.direction === 'UP';
