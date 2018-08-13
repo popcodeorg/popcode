@@ -113,13 +113,16 @@ test('navigateConsoleHistory down', reducerTest(
     set('historyEntryIndex', 1),
 ));
 
+const consoleStateWithNext = consoleStateWithHistory.set(
+  'nextConsoleEntry', '3',
+);
+
 test('navigateConsoleHistory down returns to nextConsoleEntry', reducerTest(
   reducer,
-  consoleStateWithHistory.
+  consoleStateWithNext.
     set('currentInputValue', '2').
-    set('historyEntryIndex', 1).
-    set('nextConsoleEntry', '3'),
+    set('historyEntryIndex', 1),
   partial(navigateConsoleHistory, 'DOWN'),
-  consoleStateWithHistory.
+  consoleStateWithNext.
     set('currentInputValue', '3'),
 ));

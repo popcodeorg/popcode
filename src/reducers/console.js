@@ -1,3 +1,5 @@
+import inRange from 'lodash-es/inRange';
+
 import {ConsoleState, ConsoleEntry, ConsoleError} from '../records';
 
 const initialState = new ConsoleState();
@@ -19,9 +21,7 @@ export default function console(stateIn, {type, payload, meta}) {
           'evaluatedByCompiledProjectKey',
           payload.compiledProjectKey,
         ),
-      ).delete('currentInputValue').
-        delete('nextConsoleEntry').
-        delete('historyEntryIndex');
+      );
     case 'CONSOLE_ERROR_PRODUCED':
       return state.updateIn(
         ['history', payload.key],
@@ -37,10 +37,13 @@ export default function console(stateIn, {type, payload, meta}) {
       return payload.trim(' ') === '' ? state : state.setIn(
         ['history', meta.key],
         new ConsoleEntry({expression: payload}),
-      );
+      ).
+        delete('currentInputValue').
+        delete('nextConsoleEntry').
+        delete('historyEntryIndex');
     case 'CLEAR_CONSOLE_ENTRIES':
       return initialState;
-    case 'CONSOLE_CHANGE':
+    case 'CONSOLE_INPUT_CHANGED':
       return state.set('currentInputValue', payload.value);
     case 'CONSOLE_LOG_PRODUCED':
       return state.setIn(
@@ -51,30 +54,22 @@ export default function console(stateIn, {type, payload, meta}) {
         }),
       );
     case 'NAVIGATE_CONSOLE_HISTORY': {
-      const relevantHistory = state.history.toList().filter(
-        entry => entry.expression !== null,
-      );
-
       const newHistoryEntryIndex = payload.direction === 'UP' ?
         state.historyEntryIndex + 1 :
         state.historyEntryIndex - 1;
 
-      if (!relevantHistory.has(newHistoryEntryIndex)) {
+      const expressionHistory = state.history.toList().
+        map(entry => entry.expression).
+        filter(expression => expression !== null).
+        concat(state.nextConsoleEntry).
+        reverse();
+
+      if (!inRange(newHistoryEntryIndex, expressionHistory.size)) {
         return state;
       }
 
-      const downToPreviousInput = newHistoryEntryIndex === 0 &&
-        payload.direction === 'DOWN';
+      const expression = expressionHistory.get(newHistoryEntryIndex);
 
-      if (downToPreviousInput) {
-        return state.
-          delete('nextConsoleEntry').
-          delete('historyEntryIndex').
-          set('currentInputValue', state.nextConsoleEntry);
-      }
-
-      const historyIndex = relevantHistory.size - newHistoryEntryIndex;
-      const {expression} = relevantHistory.get(historyIndex);
       const updatedState = state.
         set('historyEntryIndex', newHistoryEntryIndex).
         set('currentInputValue', expression);
