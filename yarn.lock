@@ -6190,7 +6190,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash-es@^4.17.10, lodash-es@^4.17.4, lodash-es@^4.17.5:
+lodash-es@^4.17.10, lodash-es@^4.17.5:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.10.tgz#62cd7104cdf5dd87f235a837f0ede0e8e5117e05"
 
@@ -6233,6 +6233,10 @@ lodash._root@^3.0.0:
 lodash.camelcase@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
+
+lodash.curry@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.curry/-/lodash.curry-4.1.1.tgz#248e36072ede906501d75966200a86dab8b23170"
 
 lodash.escape@^3.0.0:
   version "3.2.0"
@@ -8777,17 +8781,17 @@ reduce-reducers@^0.1.0:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-0.1.5.tgz#ff77ca8068ff41007319b8b4b91533c7e0e54576"
 
-reduce-reducers@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-0.3.0.tgz#ed6122072676eb8d84d41d74bba31e5e3f7ce977"
+reduce-reducers@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-0.4.3.tgz#8e052618801cd8fc2714b4915adaa8937eb6d66c"
 
-redux-actions@^2.2.1:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/redux-actions/-/redux-actions-2.4.0.tgz#620df42d264af88366b4e919c46ae68da7c9ce7c"
+redux-actions@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/redux-actions/-/redux-actions-2.6.1.tgz#42c06e94739fbe6db35db3605abb105bdb3724d8"
   dependencies:
     invariant "^2.2.1"
-    lodash "^4.13.1"
-    lodash-es "^4.17.4"
+    lodash.camelcase "^4.3.0"
+    lodash.curry "^4.1.1"
     reduce-reducers "^0.1.0"
 
 redux-immutable@^4.0.0:
