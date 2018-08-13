@@ -740,6 +740,9 @@
         "react/no-unknown-property": [
             2
         ],
+        "react/no-unsafe": [
+            2
+        ],
         "react/no-unused-prop-types": [
           2
         ],
