@@ -37,3 +37,8 @@ export const projectExportNotDisplayed = createAction(
 );
 
 export const gapiClientReady = createAction('GAPI_CLIENT_READY');
+
+export const gapiClientUnavailable = createAction(
+  'GAPI_CLIENT_UNAVAILABLE',
+  error => ({error}),
+);

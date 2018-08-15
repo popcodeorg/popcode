@@ -211,6 +211,9 @@ export default function ui(stateIn, action) {
     case 'LINK_IDENTITY_FAILED':
       return addNotification(state, 'link-identity-failed', 'error');
 
+    case 'GAPI_CLIENT_UNAVAILABLE':
+      return addNotification(state, 'gapi-client-unavailable', 'error');
+
     default:
       return state;
   }

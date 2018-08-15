@@ -6,6 +6,7 @@ import {
   projectExportDisplayed,
   projectExportNotDisplayed,
   gapiClientReady,
+  gapiClientUnavailable,
 } from './clients';
 
 import {
@@ -111,6 +112,7 @@ export {
   projectCompiled,
   projectCompilationFailed,
   gapiClientReady,
+  gapiClientUnavailable,
   projectSuccessfullySaved,
   showSaveIndicator,
   hideSaveIndicator,
