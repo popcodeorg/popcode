@@ -13,9 +13,11 @@ import {
   projectExported,
   projectExportError,
   gapiClientReady,
+  gapiClientUnavailable,
 } from '../actions/clients';
 import {getCurrentProject} from '../selectors';
 import {generateTextPreview} from '../util/compileProject';
+import {bugsnagClient} from '../util/bugsnag';
 import {loadAndConfigureGapi} from '../services/gapi';
 
 
@@ -65,8 +67,13 @@ export function* exportProject({payload: {exportType}}) {
 }
 
 export function* applicationLoaded() {
-  yield loadAndConfigureGapi();
-  yield put(gapiClientReady());
+  try {
+    yield loadAndConfigureGapi();
+    yield put(gapiClientReady());
+  } catch (error) {
+    yield call([bugsnagClient, 'notify'], error);
+    yield put(gapiClientUnavailable(error));
+  }
 }
 
 export default function* () {
