@@ -40,11 +40,13 @@ class Application extends React.Component {
     }
 
     return (
-      <ErrorBoundary>
-        <Provider store={this.state.store}>
-          <Workspace />
-        </Provider>
-      </ErrorBoundary>
+      <React.StrictMode>
+        <ErrorBoundary>
+          <Provider store={this.state.store}>
+            <Workspace />
+          </Provider>
+        </ErrorBoundary>
+      </React.StrictMode>
     );
   }
 }
