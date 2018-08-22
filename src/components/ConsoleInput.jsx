@@ -20,7 +20,6 @@ export default class ConsoleInput extends Component {
 
   componentDidUpdate({
     isTextSizeLarge: prevIsTextSizeLarge,
-    currentInputValue: prevCurrentInputValue,
   }) {
     const {
       isTextSizeLarge,
@@ -36,7 +35,7 @@ export default class ConsoleInput extends Component {
 
     this._focusRequestedLine(requestedFocusedLine);
 
-    if (currentInputValue !== prevCurrentInputValue) {
+    if (currentInputValue !== this._editor.getValue()) {
       this._editor.setValue(currentInputValue);
       this._editor.clearSelection();
     }
@@ -89,11 +88,25 @@ export default class ConsoleInput extends Component {
         },
       });
 
-      session.on('change', ({action, lines}) => {
-        if (action === 'insert' && lines.length === 2) {
-          onInput(editor.getValue().replace('\n', ''));
-        } else {
-          onChange(editor.getValue());
+      session.on('change', ({lines}) => {
+        const programmaticEdit = ['historyNext', 'historyPrevious'].includes(
+          editor.curOp.command.name,
+        );
+
+        if (programmaticEdit) {
+          return;
+        }
+
+        const value = editor.getValue().replace('\n', '');
+        const submitted = lines.length === 2;
+
+        if (submitted) {
+          onInput(value);
+          return;
+        }
+
+        if (value !== this.props.currentInputValue) {
+          onChange(value);
         }
       });
     } else if (!isNil(this._editor)) {
