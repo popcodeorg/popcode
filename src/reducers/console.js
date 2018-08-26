@@ -70,18 +70,20 @@ export default function console(stateIn, {type, payload, meta}) {
 
       const expression = expressionHistory.get(newHistoryEntryIndex);
 
-      const updatedState = state.
+      return state.
         set('historyEntryIndex', newHistoryEntryIndex).
-        set('currentInputValue', expression);
+        set('currentInputValue', expression).
+        withMutations((record) => {
+          const firstUp = (
+            newHistoryEntryIndex === 1 &&
+            payload.direction === 'UP'
+          );
 
-      const firstUp = newHistoryEntryIndex === 1 &&
-        payload.direction === 'UP';
-
-      if (firstUp) {
-        return updatedState.set('nextConsoleEntry', state.currentInputValue);
-      }
-
-      return updatedState;
+          if (firstUp) {
+            return record.set('nextConsoleEntry', record.currentInputValue);
+          }
+          return record;
+        });
     }
     default:
       return state;
