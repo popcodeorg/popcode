@@ -4,6 +4,24 @@ import {ConsoleState, ConsoleEntry, ConsoleError} from '../records';
 
 const initialState = new ConsoleState();
 
+function updateConsoleForHistoryIndex(index, state) {
+  const expressionHistory = state.history.toList().
+    map(entry => entry.expression).
+    filter(expression => expression !== null).
+    concat(state.nextConsoleEntry).
+    reverse();
+
+  if (!inRange(index, expressionHistory.size)) {
+    return state;
+  }
+
+  const expression = expressionHistory.get(index);
+
+  return state.
+    set('historyEntryIndex', index).
+    set('currentInputValue', expression);
+}
+
 export default function console(stateIn, {type, payload, meta}) {
   let state = stateIn;
   if (state === undefined) {
@@ -53,37 +71,26 @@ export default function console(stateIn, {type, payload, meta}) {
           evaluatedByCompiledProjectKey: payload.compiledProjectKey,
         }),
       );
-    case 'NAVIGATE_CONSOLE_HISTORY': {
-      const newHistoryEntryIndex = payload.direction === 'UP' ?
-        state.historyEntryIndex + 1 :
-        state.historyEntryIndex - 1;
+    case 'PREVIOUS_CONSOLE_HISTORY': {
+      const newHistoryEntryIndex = state.historyEntryIndex + 1;
 
-      const expressionHistory = state.history.toList().
-        map(entry => entry.expression).
-        filter(expression => expression !== null).
-        concat(state.nextConsoleEntry).
-        reverse();
+      return updateConsoleForHistoryIndex(
+        newHistoryEntryIndex,
+        state.
+          withMutations((record) => {
+            const firstUp = newHistoryEntryIndex === 1;
 
-      if (!inRange(newHistoryEntryIndex, expressionHistory.size)) {
-        return state;
-      }
+            if (firstUp && !state.history.isEmpty()) {
+              return record.set('nextConsoleEntry', record.currentInputValue);
+            }
+            return record;
+          }),
+      );
+    }
+    case 'NEXT_CONSOLE_HISTORY': {
+      const newHistoryEntryIndex = state.historyEntryIndex - 1;
 
-      const expression = expressionHistory.get(newHistoryEntryIndex);
-
-      return state.
-        set('historyEntryIndex', newHistoryEntryIndex).
-        set('currentInputValue', expression).
-        withMutations((record) => {
-          const firstUp = (
-            newHistoryEntryIndex === 1 &&
-            payload.direction === 'UP'
-          );
-
-          if (firstUp) {
-            return record.set('nextConsoleEntry', record.currentInputValue);
-          }
-          return record;
-        });
+      return updateConsoleForHistoryIndex(newHistoryEntryIndex, state);
     }
     default:
       return state;

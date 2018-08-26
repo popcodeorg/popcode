@@ -55,7 +55,8 @@ export default class ConsoleInput extends Component {
     const {
       onChange,
       onInput,
-      onNavigateConsoleHistory,
+      onNextConsoleHistory,
+      onPreviousConsoleHistory,
     } = this.props;
 
     if (containerElement) {
@@ -76,7 +77,7 @@ export default class ConsoleInput extends Component {
         name: 'historyPrevious',
         bindKey: 'Up',
         exec: () => {
-          onNavigateConsoleHistory('UP');
+          onPreviousConsoleHistory();
         },
       });
 
@@ -84,7 +85,7 @@ export default class ConsoleInput extends Component {
         name: 'historyNext',
         bindKey: 'Down',
         exec: () => {
-          onNavigateConsoleHistory('DOWN');
+          onNextConsoleHistory();
         },
       });
 
@@ -133,7 +134,8 @@ ConsoleInput.propTypes = {
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   onChange: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
-  onNavigateConsoleHistory: PropTypes.func.isRequired,
+  onNextConsoleHistory: PropTypes.func.isRequired,
+  onPreviousConsoleHistory: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };
 

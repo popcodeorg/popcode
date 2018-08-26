@@ -8,7 +8,8 @@ import {
   consoleLogProduced,
   consoleValueProduced,
   evaluateConsoleEntry,
-  navigateConsoleHistory,
+  nextConsoleHistory,
+  previousConsoleHistory,
 } from '../../../src/actions';
 import reducerTest from '../../helpers/reducerTest';
 import reducer from '../../../src/reducers/console';
@@ -92,22 +93,22 @@ const consoleStateWithHistory = initialState.set(
   }),
 );
 
-test('navigateConsoleHistory up', reducerTest(
+test('previousConsoleHistory', reducerTest(
   reducer,
   consoleStateWithHistory.
     set('currentInputValue', '3'),
-  partial(navigateConsoleHistory, 'UP'),
+  previousConsoleHistory,
   consoleStateWithHistory.
     set('currentInputValue', '2').
     set('historyEntryIndex', 1).
     set('nextConsoleEntry', '3'),
 ));
 
-test('navigateConsoleHistory down', reducerTest(
+test('nextConsoleHistory', reducerTest(
   reducer,
   consoleStateWithHistory.
     set('historyEntryIndex', 2),
-  partial(navigateConsoleHistory, 'DOWN'),
+  nextConsoleHistory,
   consoleStateWithHistory.
     set('currentInputValue', '2').
     set('historyEntryIndex', 1),
@@ -117,12 +118,12 @@ const consoleStateWithNext = consoleStateWithHistory.set(
   'nextConsoleEntry', '3',
 );
 
-test('navigateConsoleHistory down returns to nextConsoleEntry', reducerTest(
+test('nextConsoleHistory returns to nextConsoleEntry', reducerTest(
   reducer,
   consoleStateWithNext.
     set('currentInputValue', '2').
     set('historyEntryIndex', 1),
-  partial(navigateConsoleHistory, 'DOWN'),
+  nextConsoleHistory,
   consoleStateWithNext.
     set('currentInputValue', '3'),
 ));

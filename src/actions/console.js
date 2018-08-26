@@ -24,9 +24,12 @@ export const clearConsoleEntries = createAction(
   'CLEAR_CONSOLE_ENTRIES',
 );
 
-export const navigateConsoleHistory = createAction(
-  'NAVIGATE_CONSOLE_HISTORY',
-  direction => ({direction}),
+export const previousConsoleHistory = createAction(
+  'PREVIOUS_CONSOLE_HISTORY',
+);
+
+export const nextConsoleHistory = createAction(
+  'NEXT_CONSOLE_HISTORY',
 );
 
 export const consoleInputChanged = createAction(

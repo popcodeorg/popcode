@@ -12,13 +12,14 @@ import {
   isTextSizeLarge,
 } from '../selectors';
 import {
-  consoleInputChanged,
-  evaluateConsoleEntry,
-  toggleComponent,
-  focusLine,
-  editorFocusedRequestedLine,
   clearConsoleEntries,
-  navigateConsoleHistory,
+  consoleInputChanged,
+  editorFocusedRequestedLine,
+  evaluateConsoleEntry,
+  focusLine,
+  nextConsoleHistory,
+  previousConsoleHistory,
+  toggleComponent,
 } from '../actions';
 
 function mapStateToProps(state) {
@@ -56,8 +57,12 @@ function mapDispatchToProps(dispatch) {
       dispatch(editorFocusedRequestedLine());
     },
 
-    onNavigateConsoleHistory(direction) {
-      dispatch(navigateConsoleHistory(direction));
+    onPreviousConsoleHistory() {
+      dispatch(previousConsoleHistory());
+    },
+
+    onNextConsoleHistory() {
+      dispatch(nextConsoleHistory());
     },
 
     onChange(value) {

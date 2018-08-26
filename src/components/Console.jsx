@@ -10,20 +10,21 @@ import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
 
 export default function Console({
+  currentCompiledProjectKey,
   currentInputValue,
   currentProjectKey,
-  currentCompiledProjectKey,
-  onConsoleClicked,
   history,
   isHidden,
   isOpen,
   isTextSizeLarge,
-  onClearConsoleEntries,
   onChange,
+  onClearConsoleEntries,
+  onConsoleClicked,
   onInput,
-  onNavigateConsoleHistory,
-  onToggleVisible,
+  onNextConsoleHistory,
+  onPreviousConsoleHistory,
   onRequestedLineFocused,
+  onToggleVisible,
   requestedFocusedLine,
 }) {
   const console = (
@@ -42,7 +43,8 @@ export default function Console({
           requestedFocusedLine={requestedFocusedLine}
           onChange={onChange}
           onInput={onInput}
-          onNavigateConsoleHistory={onNavigateConsoleHistory}
+          onNextConsoleHistory={onNextConsoleHistory}
+          onPreviousConsoleHistory={onPreviousConsoleHistory}
           onRequestedLineFocused={onRequestedLineFocused}
         />
         {history.map((entry, key) => {
@@ -102,7 +104,8 @@ Console.propTypes = {
   onClearConsoleEntries: PropTypes.func.isRequired,
   onConsoleClicked: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
-  onNavigateConsoleHistory: PropTypes.func.isRequired,
+  onNextConsoleHistory: PropTypes.func.isRequired,
+  onPreviousConsoleHistory: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };
