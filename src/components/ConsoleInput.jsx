@@ -89,7 +89,7 @@ export default class ConsoleInput extends Component {
         },
       });
 
-      session.on('change', ({lines}) => {
+      session.on('change', ({action, lines}) => {
         const programmaticEdit = ['historyNext', 'historyPrevious'].includes(
           editor.curOp.command.name,
         );
@@ -99,7 +99,7 @@ export default class ConsoleInput extends Component {
         }
 
         const value = editor.getValue().replace('\n', '');
-        const submitted = lines.length === 2;
+        const submitted = action === 'insert' && lines.length === 2;
 
         if (submitted) {
           onInput(value);
