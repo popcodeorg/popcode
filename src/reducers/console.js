@@ -22,6 +22,16 @@ function updateConsoleForHistoryIndex(index, state) {
     set('currentInputValue', expression);
 }
 
+function setNextConsoleEntry(newHistoryEntryIndex, state) {
+  const firstUp = newHistoryEntryIndex === 1;
+
+  if (firstUp && !state.history.isEmpty()) {
+    return state.set('nextConsoleEntry', state.currentInputValue);
+  }
+
+  return state;
+}
+
 export default function console(stateIn, {type, payload, meta}) {
   let state = stateIn;
   if (state === undefined) {
@@ -76,15 +86,7 @@ export default function console(stateIn, {type, payload, meta}) {
 
       return updateConsoleForHistoryIndex(
         newHistoryEntryIndex,
-        state.
-          withMutations((record) => {
-            const firstUp = newHistoryEntryIndex === 1;
-
-            if (firstUp && !state.history.isEmpty()) {
-              return record.set('nextConsoleEntry', record.currentInputValue);
-            }
-            return record;
-          }),
+        setNextConsoleEntry(state),
       );
     }
     case 'NEXT_CONSOLE_HISTORY': {
