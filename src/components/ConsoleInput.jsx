@@ -18,8 +18,14 @@ export default class ConsoleInput extends Component {
     bindAll(this, '_ref');
   }
 
-  componentDidUpdate({isTextSizeLarge: prevIsTextSizeLarge}) {
-    const {isTextSizeLarge, requestedFocusedLine} = this.props;
+  componentDidUpdate({
+    isTextSizeLarge: prevIsTextSizeLarge,
+  }) {
+    const {
+      isTextSizeLarge,
+      requestedFocusedLine,
+      currentInputValue,
+    } = this.props;
 
     if (isTextSizeLarge !== prevIsTextSizeLarge) {
       requestAnimationFrame(() => {
@@ -28,6 +34,10 @@ export default class ConsoleInput extends Component {
     }
 
     this._focusRequestedLine(requestedFocusedLine);
+
+    if (currentInputValue !== this._editor.getValue()) {
+      this._editor.setValue(currentInputValue, 1);
+    }
   }
 
   _focusRequestedLine(requestedFocusedLine) {
@@ -41,7 +51,12 @@ export default class ConsoleInput extends Component {
   }
 
   _ref(containerElement) {
-    const {onInput} = this.props;
+    const {
+      onChange,
+      onInput,
+      onNextConsoleHistory,
+      onPreviousConsoleHistory,
+    } = this.props;
 
     if (containerElement) {
       const editor = this._editor = createAceEditor(containerElement);
@@ -57,10 +72,41 @@ export default class ConsoleInput extends Component {
       editor.resize();
       editor.focus();
 
+      editor.commands.addCommand({
+        name: 'historyPrevious',
+        bindKey: 'Up',
+        exec: () => {
+          onPreviousConsoleHistory();
+        },
+      });
+
+      editor.commands.addCommand({
+        name: 'historyNext',
+        bindKey: 'Down',
+        exec: () => {
+          onNextConsoleHistory();
+        },
+      });
+
       session.on('change', ({action, lines}) => {
-        if (action === 'insert' && lines.length === 2) {
-          onInput(editor.getValue().replace('\n', ''));
-          editor.setValue('', 0);
+        const programmaticEdit = ['historyNext', 'historyPrevious'].includes(
+          editor.curOp.command.name,
+        );
+
+        if (programmaticEdit) {
+          return;
+        }
+
+        const value = editor.getValue().replace('\n', '');
+        const submitted = action === 'insert' && lines.length === 2;
+
+        if (submitted) {
+          onInput(value);
+          return;
+        }
+
+        if (value !== this.props.currentInputValue) {
+          onChange(value);
         }
       });
     } else if (!isNil(this._editor)) {
@@ -82,9 +128,13 @@ export default class ConsoleInput extends Component {
 }
 
 ConsoleInput.propTypes = {
+  currentInputValue: PropTypes.string.isRequired,
   isTextSizeLarge: PropTypes.bool,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
+  onChange: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
+  onNextConsoleHistory: PropTypes.func.isRequired,
+  onPreviousConsoleHistory: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };
 

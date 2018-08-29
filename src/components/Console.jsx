@@ -10,17 +10,21 @@ import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
 
 export default function Console({
-  currentProjectKey,
   currentCompiledProjectKey,
-  onConsoleClicked,
+  currentInputValue,
+  currentProjectKey,
   history,
   isHidden,
   isOpen,
   isTextSizeLarge,
+  onChange,
   onClearConsoleEntries,
+  onConsoleClicked,
   onInput,
-  onToggleVisible,
+  onNextConsoleHistory,
+  onPreviousConsoleHistory,
   onRequestedLineFocused,
+  onToggleVisible,
   requestedFocusedLine,
 }) {
   const console = (
@@ -34,9 +38,13 @@ export default function Console({
         }
       >
         <ConsoleInput
+          currentInputValue={currentInputValue}
           isTextSizeLarge={isTextSizeLarge}
           requestedFocusedLine={requestedFocusedLine}
+          onChange={onChange}
           onInput={onInput}
+          onNextConsoleHistory={onNextConsoleHistory}
+          onPreviousConsoleHistory={onPreviousConsoleHistory}
           onRequestedLineFocused={onRequestedLineFocused}
         />
         {history.map((entry, key) => {
@@ -85,15 +93,19 @@ export default function Console({
 
 Console.propTypes = {
   currentCompiledProjectKey: PropTypes.number,
+  currentInputValue: PropTypes.string.isRequired,
   currentProjectKey: PropTypes.string.isRequired,
   history: ImmutablePropTypes.iterable.isRequired,
   isHidden: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
+  onChange: PropTypes.func.isRequired,
   onClearConsoleEntries: PropTypes.func.isRequired,
   onConsoleClicked: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
+  onNextConsoleHistory: PropTypes.func.isRequired,
+  onPreviousConsoleHistory: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };
