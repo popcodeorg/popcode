@@ -67,7 +67,10 @@ export default function console(stateIn, {type, payload, meta}) {
         payload.key,
         new ConsoleEntry({
           evaluatedByCompiledProjectKey: payload.compiledProjectKey,
-          error: new ConsoleError({name: "Runtime Error", message: payload.error.text})
+          error: new ConsoleError({
+            name: 'Runtime Error',
+            message: payload.error.text,
+          }),
         }),
       );
     case 'EVALUATE_CONSOLE_ENTRY':

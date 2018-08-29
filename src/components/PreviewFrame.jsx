@@ -116,7 +116,7 @@ class PreviewFrame extends React.Component {
       row: line - 1,
       column: error.column,
       type: 'error',
-    },compiledProjectKey);
+    }, compiledProjectKey);
   }
 
   _handleInfiniteLoop(line) {
