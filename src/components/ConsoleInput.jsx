@@ -36,8 +36,7 @@ export default class ConsoleInput extends Component {
     this._focusRequestedLine(requestedFocusedLine);
 
     if (currentInputValue !== this._editor.getValue()) {
-      this._editor.setValue(currentInputValue);
-      this._editor.clearSelection();
+      this._editor.setValue(currentInputValue, 1);
     }
   }
 
