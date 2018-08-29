@@ -4,7 +4,7 @@ import {ConsoleState, ConsoleEntry, ConsoleError} from '../records';
 
 const initialState = new ConsoleState();
 
-function updateConsoleForHistoryIndex(index, state) {
+function updateConsoleForHistoryIndex(state, index) {
   const expressionHistory = state.history.toList().
     map(entry => entry.expression).
     filter(expression => expression !== null).
@@ -22,8 +22,8 @@ function updateConsoleForHistoryIndex(index, state) {
     set('currentInputValue', expression);
 }
 
-function setNextConsoleEntry(newHistoryEntryIndex, state) {
-  const firstUp = newHistoryEntryIndex === 1;
+function setNextConsoleEntry(state, historyIndex) {
+  const firstUp = historyIndex === 1;
 
   if (firstUp && !state.history.isEmpty()) {
     return state.set('nextConsoleEntry', state.currentInputValue);
@@ -82,18 +82,15 @@ export default function console(stateIn, {type, payload, meta}) {
         }),
       );
     case 'PREVIOUS_CONSOLE_HISTORY': {
-      const newHistoryEntryIndex = state.historyEntryIndex + 1;
+      const historyIndex = state.historyEntryIndex + 1;
 
       return updateConsoleForHistoryIndex(
-        newHistoryEntryIndex,
-        setNextConsoleEntry(state),
+        setNextConsoleEntry(state, historyIndex),
+        historyIndex,
       );
     }
-    case 'NEXT_CONSOLE_HISTORY': {
-      const newHistoryEntryIndex = state.historyEntryIndex - 1;
-
-      return updateConsoleForHistoryIndex(newHistoryEntryIndex, state);
-    }
+    case 'NEXT_CONSOLE_HISTORY':
+      return updateConsoleForHistoryIndex(state, state.historyEntryIndex - 1);
     default:
       return state;
   }
