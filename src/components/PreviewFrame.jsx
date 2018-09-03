@@ -47,6 +47,11 @@ class PreviewFrame extends React.Component {
     const {consoleEntries, isActive} = this.props;
 
     if (this._channel && isActive) {
+      if (this.props.shouldRunTests) {
+        // const tests = 'console.log("test");';
+        this._runUnitTests(this.props.shouldRunTests, this.props.tests);
+      }
+
       for (const [key, {expression}] of consoleEntries) {
         if (!prevConsoleEntries.has(key) && expression) {
           this._evaluateConsoleExpression(key, expression);
@@ -81,6 +86,14 @@ class PreviewFrame extends React.Component {
           this.props.compiledProject.compiledProjectKey,
         );
       },
+    });
+  }
+
+  async _runUnitTests(shouldRunTests, tests) {
+    // eslint-disable-next-line prefer-reflect
+    this._channel.notify({
+      method: 'runTests',
+      params: {shouldRunTests, tests},
     });
   }
 
@@ -162,6 +175,11 @@ class PreviewFrame extends React.Component {
         this._handleConsoleLog(params);
       }
     });
+    this._channel.bind('testResult', (_trans, params) => {
+      if (this.props.isActive) {
+        this.props.onTestsComplete(params);
+      }
+    });
   }
 }
 
@@ -169,10 +187,13 @@ PreviewFrame.propTypes = {
   compiledProject: PropTypes.instanceOf(CompiledProjectRecord).isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
   isActive: PropTypes.bool.isRequired,
+  shouldRunTests: PropTypes.bool.isRequired,
+  tests: PropTypes.string.isRequired,
   onConsoleError: PropTypes.func.isRequired,
   onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
+  onTestsComplete: PropTypes.func.isRequired,
 };
 
 export default PreviewFrame;

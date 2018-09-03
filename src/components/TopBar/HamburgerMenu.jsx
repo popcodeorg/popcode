@@ -15,8 +15,10 @@ const HamburgerMenu = createMenu({
 
   renderItems({
     hasInstructions,
+    hasTests,
     isEditingInstructions,
     isUserAuthenticated,
+    onOpenTestCreatorPane,
     onStartEditingInstructions,
     onStartGithubLogIn,
   }) {
@@ -30,6 +32,16 @@ const HamburgerMenu = createMenu({
             hasInstructions ?
               t('top-bar.edit-instructions') :
               t('top-bar.add-instructions')
+          }
+        </MenuItem>
+
+        <MenuItem
+          onClick={onOpenTestCreatorPane}
+        >
+          {
+            hasTests ?
+              'Edit Tests' :
+              'Add Tests'
           }
         </MenuItem>
 

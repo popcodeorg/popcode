@@ -20,6 +20,8 @@ import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
 import EditorsColumn from '../containers/EditorsColumn';
 import Output from '../containers/Output';
+import TestCreatorPane from '../containers/TestCreatorPane';
+import TestResultsPane from '../containers/TestResultsPane';
 
 import PopThrobber from './PopThrobber';
 
@@ -179,6 +181,8 @@ export default class Workspace extends React.Component {
           </div>
         </main>
         <AccountMigration />
+        <TestCreatorPane />
+        <TestResultsPane />
       </div>
     );
   }

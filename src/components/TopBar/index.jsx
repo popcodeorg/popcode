@@ -14,6 +14,7 @@ import LibraryPicker from './LibraryPicker';
 import NewProjectButton from './NewProjectButton';
 import ProjectPicker from './ProjectPicker';
 import SnapshotButton from './SnapshotButton';
+import RunTestsButton from './RunTestsButton';
 import TextSize from './TextSize';
 
 function uiVariants({validationState, isUserTyping}) {
@@ -35,6 +36,7 @@ export default function TopBar({
   enabledLibraries,
   hasInstructions,
   hasExportedRepo,
+  hasTests,
   isEditingInstructions,
   isGapiReady,
   isGistExportInProgress,
@@ -60,6 +62,8 @@ export default function TopBar({
   onExportToClassroom,
   onLinkGitHub,
   onLogOut,
+  onOpenTestCreatorPane,
+  onRunTests,
   onStartGithubLogIn,
   onStartGoogleLogIn,
   onStartEditingInstructions,
@@ -97,6 +101,10 @@ export default function TopBar({
         onExportToClassroom={onExportToClassroom}
         onUpdateRepo={onUpdateRepo}
       />
+      <RunTestsButton
+        projectHasTests={hasTests}
+        onClick={onRunTests}
+      />
       <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
       <div className="top-bar__spacer" />
       <NewProjectButton
@@ -125,10 +133,13 @@ export default function TopBar({
       />
       <HamburgerMenu
         hasInstructions={hasInstructions}
+        hasTests={hasTests}
         isEditingInstructions={isEditingInstructions}
         isOpen={openMenu === 'hamburger'}
         isUserAuthenticated={isUserAuthenticated}
         onClick={partial(onClickMenu, 'hamburger')}
+        onOpenTestCreatorPane={
+          partial(onOpenTestCreatorPane, currentProjectKey)}
         onStartEditingInstructions={
           partial(onStartEditingInstructions, currentProjectKey)}
         onStartGithubLogIn={onStartGithubLogIn}
@@ -143,6 +154,7 @@ TopBar.propTypes = {
   enabledLibraries: PropTypes.arrayOf(PropTypes.string).isRequired,
   hasExportedRepo: PropTypes.bool.isRequired,
   hasInstructions: PropTypes.bool.isRequired,
+  hasTests: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   isGapiReady: PropTypes.bool.isRequired,
@@ -168,6 +180,8 @@ TopBar.propTypes = {
   onExportToClassroom: PropTypes.func.isRequired,
   onLinkGitHub: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
+  onOpenTestCreatorPane: PropTypes.func.isRequired,
+  onRunTests: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
   onStartGithubLogIn: PropTypes.func.isRequired,
   onStartGoogleLogIn: PropTypes.func.isRequired,

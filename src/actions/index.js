@@ -74,6 +74,16 @@ import {
   updateResizableFlex,
 } from './resizableFlex';
 
+import {
+  runTests,
+  testsComplete,
+  saveTests,
+  closeTestCreatorPane,
+  closeTestResultsPane,
+  openTestCreatorPane,
+  addTest,
+} from './tests';
+
 export {
   clearConsoleEntries,
   consoleInputChanged,
@@ -126,4 +136,11 @@ export {
   updateResizableFlex,
   startAccountMigration,
   dismissAccountMigration,
+  runTests,
+  testsComplete,
+  saveTests,
+  closeTestCreatorPane,
+  closeTestResultsPane,
+  openTestCreatorPane,
+  addTest,
 };

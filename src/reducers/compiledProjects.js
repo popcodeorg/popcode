@@ -25,6 +25,7 @@ export default function compiledProjects(stateIn, action) {
     case 'CHANGE_CURRENT_PROJECT':
       return initialState;
 
+    case 'CLOSE_TEST_RESULTS_PANE':
     case 'REFRESH_PREVIEW': {
       if (state.isEmpty()) {
         return state;

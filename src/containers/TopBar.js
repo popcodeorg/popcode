@@ -5,6 +5,7 @@ import {
   getCurrentProjectExportedRepoName,
   getCurrentProjectKey,
   getCurrentProjectInstructions,
+  getCurrentProjectTests,
   getCurrentUser,
   getCurrentValidationState,
   getEnabledLibraries,
@@ -31,12 +32,14 @@ import {
   createSnapshot,
   exportProject,
   linkGithubIdentity,
+  runTests,
   startEditingInstructions,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
   logIn,
   logOut,
+  openTestCreatorPane,
 } from '../actions';
 
 function mapStateToProps(state) {
@@ -46,6 +49,7 @@ function mapStateToProps(state) {
     enabledLibraries: getEnabledLibraries(state),
     hasInstructions: Boolean(getCurrentProjectInstructions(state)),
     hasExportedRepo: Boolean(getCurrentProjectExportedRepoName(state)),
+    hasTests: Boolean(getCurrentProjectTests(state)),
     isEditingInstructions: isEditingInstructions(state),
     isExperimental: isExperimental(state),
     isGapiReady: isGapiReady(state),
@@ -134,6 +138,15 @@ function mapDispatchToProps(dispatch) {
     onToggleTextSize() {
       dispatch(toggleEditorTextSize());
     },
+
+    onRunTests() {
+      dispatch(runTests());
+    },
+
+    onOpenTestCreatorPane() {
+      dispatch(openTestCreatorPane());
+    },
+
   };
 }
 

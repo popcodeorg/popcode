@@ -9,12 +9,15 @@ export default function Preview({
   compiledProjects,
   consoleEntries,
   showingErrors,
+  shouldRunTests,
+  tests,
   onConsoleError,
   onConsoleLog,
   onConsoleValue,
   onPopOutProject,
   onRefreshClick,
   onRuntimeError,
+  onTestsComplete,
 }) {
   if (showingErrors) {
     return null;
@@ -26,10 +29,13 @@ export default function Preview({
       consoleEntries={consoleEntries}
       isActive={key === compiledProjects.keySeq().last()}
       key={compiledProject.compiledProjectKey}
+      shouldRunTests={shouldRunTests}
+      tests={tests}
       onConsoleError={onConsoleError}
       onConsoleLog={onConsoleLog}
       onConsoleValue={onConsoleValue}
       onRuntimeError={onRuntimeError}
+      onTestsComplete={onTestsComplete}
     />
   ));
 
@@ -57,11 +63,14 @@ export default function Preview({
 Preview.propTypes = {
   compiledProjects: ImmutablePropTypes.iterable.isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
+  shouldRunTests: PropTypes.bool.isRequired,
   showingErrors: PropTypes.bool.isRequired,
+  tests: PropTypes.string.isRequired,
   onConsoleError: PropTypes.func.isRequired,
   onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
   onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
+  onTestsComplete: PropTypes.func.isRequired,
 };

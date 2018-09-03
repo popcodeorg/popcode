@@ -11,6 +11,8 @@ import values from 'lodash-es/values';
 import {Project} from '../records';
 import {isPristineProject} from '../util/projectUtils';
 
+import TEST_TEMPLATE from '../../templates/test';
+
 const emptyMap = new Immutable.Map();
 
 function addProject(state, project) {
@@ -209,6 +211,24 @@ export default function reduceProjects(stateIn, action) {
         state,
         action.payload.projectKey,
         'instructions',
+        action.meta.timestamp,
+      );
+
+    case 'SAVE_TESTS':
+      return state.setIn(
+        [action.payload.currentProjectKey, 'tests'],
+        action.payload.tests,
+      ).setIn(
+        [action.payload.currentProjectKey, 'updatedAt'],
+        action.meta.timestamp,
+      );
+
+    case 'ADD_TEST':
+      return state.updateIn(
+        [action.payload.projectKey, 'tests'],
+        tests => tests + TEST_TEMPLATE,
+      ).setIn(
+        [action.payload.projectKey, 'updatedAt'],
         action.meta.timestamp,
       );
 

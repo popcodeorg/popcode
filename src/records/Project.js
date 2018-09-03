@@ -1,6 +1,7 @@
 import {Record, Set} from 'immutable';
 
 import HTML_TEMPLATE from '../../templates/new.html';
+import TEST_TEMPLATE from '../../templates/test';
 
 const Sources = Record({
   html: HTML_TEMPLATE,
@@ -19,6 +20,7 @@ export default class Project extends Record({
   hiddenUIComponents: new Set(['console']),
   updatedAt: null,
   instructions: '',
+  tests: TEST_TEMPLATE,
   externalLocations: new ExternalLocations(),
 }) {
   static fromJS({
@@ -28,6 +30,7 @@ export default class Project extends Record({
     hiddenUIComponents = [],
     updatedAt = null,
     instructions = '',
+    tests = '',
     externalLocations = {},
   }) {
     return new Project({
@@ -37,6 +40,7 @@ export default class Project extends Record({
       hiddenUIComponents: new Set(hiddenUIComponents),
       updatedAt,
       instructions,
+      tests,
       externalLocations: new ExternalLocations(externalLocations),
     });
   }
