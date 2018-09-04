@@ -40,28 +40,50 @@ async function createRepoFromProject(project, accessToken) {
   const preview = await compileProject(project);
   const title = normalizeTitle(preview.title);
 
-  const repoName = `${title}-${Date.now()}`;
-
+  const repoName = `${title}`;
+  let duplicateNameFailureCount = 0;
+  let fullRepoName = '';
   const {data} =
-    await performWithRetryNetworkErrors(
-      () => github.getUser().createRepo({name: repoName, auto_init: true}),
+    await performWithRetries(
+      () => {
+        const suffix = duplicateNameFailureCount === 0 ?
+          '' :
+          `-${duplicateNameFailureCount}`;
+        fullRepoName = `${repoName}${suffix}`;
+        return github.getUser().createRepo({
+          name: fullRepoName,
+          auto_init: true,
+        });
+      },
+      (errorMessage) => {
+        const shouldRetry = errorMessage.includes('Unprocessable Entity') ||
+          errorMessage === NETWORK_ERROR;
+        if (errorMessage.includes('Unprocessable Entity')) {
+          duplicateNameFailureCount += 1;
+        }
+        return shouldRetry;
+      },
+      {},
     );
 
   const userName = data.owner.login;
 
   await performWithRetryNetworkErrors(
-    () => github.getRepo(userName, repoName).deleteFile(MASTER, 'README.md'),
+    () => github.getRepo(
+      userName,
+      fullRepoName,
+    ).deleteFile(MASTER, 'README.md'),
   );
 
-  await createBranch(github, userName, repoName, MASTER, GH_PAGES);
+  await createBranch(github, userName, fullRepoName, MASTER, GH_PAGES);
 
-  await createRepoFiles(github, project, userName, repoName);
+  await createRepoFiles(github, project, userName, fullRepoName);
 
-  await updateRepoDescription(github, userName, repoName);
+  await updateRepoDescription(github, userName, fullRepoName);
 
   return {
     url: data.html_url,
-    name: repoName,
+    name: fullRepoName,
   };
 }
 
