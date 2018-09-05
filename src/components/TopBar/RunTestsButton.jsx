@@ -21,10 +21,6 @@ export default function RunTestsButton({hasTests, onClick}) {
 }
 
 RunTestsButton.propTypes = {
-  hasTests: PropTypes.bool,
+  hasTests: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
-
-// RunTestsButton.defaultProps = {
-//   hasTests: false,
-// };

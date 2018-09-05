@@ -1,8 +1,8 @@
-import {List, Record} from 'immutable';
+import {OrderedMap, Record} from 'immutable';
 
 export default Record({
   isTestResultsPaneOpen: false,
   isTestCreatorPaneOpen: false,
   shouldRunTests: false,
-  testResults: new List(),
+  testResults: new OrderedMap(),
 }, 'Test');

@@ -76,7 +76,8 @@ import {
 
 import {
   runTests,
-  testsComplete,
+  testProduced,
+  testAssertionProduced,
   saveTests,
   closeTestCreatorPane,
   closeTestResultsPane,
@@ -137,10 +138,11 @@ export {
   startAccountMigration,
   dismissAccountMigration,
   runTests,
-  testsComplete,
+  testProduced,
   saveTests,
   closeTestCreatorPane,
   closeTestResultsPane,
   openTestCreatorPane,
   addTest,
+  testAssertionProduced,
 };

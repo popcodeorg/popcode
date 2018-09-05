@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 // import {t} from 'i18next';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import Modal from './Modal';
 
@@ -13,28 +14,35 @@ export default function TestResultsPane({
   if (!isTestResultsPaneOpen) {
     return null;
   }
-  const results = [];
-  for (const testResult of testResults) {
-    if (testResult.type === 'test') {
-      results.push(<p>{testResult.name}</p>);
-    } else if (testResult.type === 'assert') {
-      results.push(
-        <p
-          className={classnames(
-            'test-results__failed',
-            {'test-results__passed': testResult.ok},
-          )}
-          // key={}
-        >
-          {
-            testResult.ok ?
-              'Passed!' :
-              `Not Passed: The test expected ${testResult.expected} but actually got ${testResult.actual}`
-          }
-        </p>,
-      );
-    }
-  }
+
+  const results = testResults.map((testResult) => {
+    return (
+      <div
+        key={testResult.id}
+      >
+        <p>{testResult.name}</p>
+        {
+          testResult.assertions.map((assertion) => {
+            return (
+              <p
+                className={classnames(
+                  'test-results__failed',
+                  {'test-results__passed': assertion.ok},
+                )}
+                key={`${testResult}${assertion.id}`}
+              >
+                {
+                  assertion.ok ?
+                    'Passed!' :
+                    `Not Passed: The test expected ${assertion.expected} but actually got ${assertion.actual}`
+                }
+              </p>
+            );
+          }).valueSeq()
+        }
+      </div>
+    );
+  }).valueSeq();
 
   return (
     <Modal>
@@ -60,10 +68,6 @@ export default function TestResultsPane({
 
 TestResultsPane.propTypes = {
   isTestResultsPaneOpen: PropTypes.bool.isRequired,
-  testResults: PropTypes.array.isRequired,
+  testResults: ImmutablePropTypes.iterable.isRequired,
   onCloseTestResultsPane: PropTypes.func.isRequired,
-};
-
-TestResultsPane.defaultProps = {
-
 };

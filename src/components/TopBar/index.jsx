@@ -102,7 +102,7 @@ export default function TopBar({
         onUpdateRepo={onUpdateRepo}
       />
       <RunTestsButton
-        projectHasTests={hasTests}
+        hasTests={hasTests}
         onClick={onRunTests}
       />
       <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />

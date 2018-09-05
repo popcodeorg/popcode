@@ -48,7 +48,6 @@ class PreviewFrame extends React.Component {
 
     if (this._channel && isActive) {
       if (this.props.shouldRunTests) {
-        // const tests = 'console.log("test");';
         this._runUnitTests(this.props.shouldRunTests, this.props.tests);
       }
 
@@ -177,7 +176,11 @@ class PreviewFrame extends React.Component {
     });
     this._channel.bind('testResult', (_trans, params) => {
       if (this.props.isActive) {
-        this.props.onTestsComplete(params);
+        if (params.type === 'test') {
+          this.props.onTestProduced(params);
+        } else if (params.type === 'assert') {
+          this.props.onTestAssertionProduced(params);
+        }
       }
     });
   }
@@ -193,7 +196,8 @@ PreviewFrame.propTypes = {
   onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
-  onTestsComplete: PropTypes.func.isRequired,
+  onTestAssertionProduced: PropTypes.func.isRequired,
+  onTestProduced: PropTypes.func.isRequired,
 };
 
 export default PreviewFrame;

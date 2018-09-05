@@ -5,15 +5,23 @@ import channel from './channel';
 const test = tapeTest;
 
 export function handleTestResults(shouldRunTests, tests) {
-  const testStream = test.createStream({objectMode: true});
-  // eslint-disable-next-line no-eval
-  eval(tests);
-  testStream.on('data', (row) => {
+  try {
+    const testStream = test.createStream({objectMode: true});
+    // eslint-disable-next-line no-eval
+    eval(tests);
+
+    testStream.on('data', (row) => {
+      channel.notify({
+        method: 'testResult',
+        params: row,
+      });
+    });
+  } catch (e) {
     channel.notify({
       method: 'testResult',
-      params: row,
+      params: {error: 'error'},
     });
-  });
+  }
 }
 
 export function handleTestRuns() {

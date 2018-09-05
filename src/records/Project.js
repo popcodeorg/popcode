@@ -1,7 +1,6 @@
 import {Record, Set} from 'immutable';
 
 import HTML_TEMPLATE from '../../templates/new.html';
-import TEST_TEMPLATE from '../../templates/test';
 
 const Sources = Record({
   html: HTML_TEMPLATE,
@@ -20,7 +19,7 @@ export default class Project extends Record({
   hiddenUIComponents: new Set(['console']),
   updatedAt: null,
   instructions: '',
-  tests: TEST_TEMPLATE,
+  tests: '//Write your tests below',
   externalLocations: new ExternalLocations(),
 }) {
   static fromJS({

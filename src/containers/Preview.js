@@ -8,7 +8,8 @@ import {
   consoleValueProduced,
   popOutProject,
   refreshPreview,
-  testsComplete,
+  testProduced,
+  testAssertionProduced,
 } from '../actions';
 import {
   getCompiledProjects,
@@ -58,8 +59,12 @@ function mapDispatchToProps(dispatch) {
       dispatch(addRuntimeError('javascript', error));
     },
 
-    onTestsComplete(params) {
-      dispatch(testsComplete(params));
+    onTestProduced(params) {
+      dispatch(testProduced(params));
+    },
+
+    onTestAssertionProduced(params) {
+      dispatch(testAssertionProduced(params));
     },
 
   };

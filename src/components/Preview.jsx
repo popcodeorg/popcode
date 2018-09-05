@@ -17,7 +17,8 @@ export default function Preview({
   onPopOutProject,
   onRefreshClick,
   onRuntimeError,
-  onTestsComplete,
+  onTestProduced,
+  onTestAssertionProduced,
 }) {
   if (showingErrors) {
     return null;
@@ -35,7 +36,8 @@ export default function Preview({
       onConsoleLog={onConsoleLog}
       onConsoleValue={onConsoleValue}
       onRuntimeError={onRuntimeError}
-      onTestsComplete={onTestsComplete}
+      onTestAssertionProduced={onTestAssertionProduced}
+      onTestProduced={onTestProduced}
     />
   ));
 
@@ -72,5 +74,6 @@ Preview.propTypes = {
   onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
-  onTestsComplete: PropTypes.func.isRequired,
+  onTestAssertionProduced: PropTypes.func.isRequired,
+  onTestProduced: PropTypes.func.isRequired,
 };

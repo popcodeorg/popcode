@@ -4,8 +4,13 @@ export const runTests = createAction(
   'RUN_TESTS',
 );
 
-export const testsComplete = createAction(
-  'TESTS_COMPLETE',
+export const testProduced = createAction(
+  'TEST_PRODUCED',
+  params => ({params}),
+);
+
+export const testAssertionProduced = createAction(
+  'TEST_ASSERTION_PRODUCED',
   params => ({params}),
 );
 

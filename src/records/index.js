@@ -10,6 +10,8 @@ import ErrorReport from './ErrorReport';
 import Notification from './Notification';
 import Project from './Project';
 import Test from './Test';
+import TestResult from './TestResult';
+import TestResultAssertion from './TestResultAssertion';
 import UiState from './UiState';
 import User from './User';
 import UserAccount from './UserAccount';
@@ -27,6 +29,8 @@ export {
   Notification,
   Project,
   Test,
+  TestResult,
+  TestResultAssertion,
   User,
   UserAccount,
   UiState,
