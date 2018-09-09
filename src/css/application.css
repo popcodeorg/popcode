@@ -952,6 +952,10 @@ body {
   user-select: none;
 }
 
+.label__icon {
+  padding-left: 0.25rem;
+}
+
 /** @define utilities */
 
 .u__flex-container {

@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import partial from 'lodash-es/partial';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -59,7 +60,7 @@ export default function Console({
     </div>
   );
 
-  const chevron = isOpen ? ' \uf078' : ' \uf077';
+  const chevron = isOpen ? 'chevron-down' : 'chevron-up';
 
   return (
     <div
@@ -74,16 +75,16 @@ export default function Console({
       >
         <div>
           Console
-          <span className="u__icon">{chevron}</span>
+          <FontAwesomeIcon className="label__icon" icon={chevron} />
         </div>
         <div
-          className="console__button console__button_clear u__icon"
+          className="u__icon"
           onClick={(e) => {
             e.stopPropagation();
             onClearConsoleEntries();
           }}
         >
-          &#xf05e;
+          <FontAwesomeIcon icon="ban" />
         </div>
       </div>
       {isOpen ? console : null}
