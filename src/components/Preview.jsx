@@ -41,7 +41,10 @@ export default function Preview({
     <div className="preview output__item">
       <div className="preview__title-bar">
         <span className="preview__button preview__button_pop-out">
-          <FontAwesomeIcon icon="external-link-alt" onClick={onPopOutProject} />
+          <FontAwesomeIcon
+            icon="external-link-alt"
+            onClick={onPopOutProject}
+          />
         </span>
         {title}
         <span className="preview__button preview__button_reset">
