@@ -1,3 +1,4 @@
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import get from 'lodash-es/get';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -39,15 +40,13 @@ export default function Preview({
   return (
     <div className="preview output__item">
       <div className="preview__title-bar">
-        <span
-          className="preview__button preview__button_pop-out u__icon"
-          onClick={onPopOutProject}
-        >&#xf08e;</span>
+        <span className="preview__button preview__button_pop-out">
+          <FontAwesomeIcon icon="external-link-alt" onClick={onPopOutProject} />
+        </span>
         {title}
-        <span
-          className="preview__button preview__button_reset u__icon"
-          onClick={onRefreshClick}
-        >&#xf021;</span>
+        <span className="preview__button preview__button_reset">
+          <FontAwesomeIcon icon="sync-alt" onClick={onRefreshClick} />
+        </span>
       </div>
       {projectFrames}
     </div>

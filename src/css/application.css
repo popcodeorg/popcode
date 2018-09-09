@@ -725,6 +725,7 @@ body {
 
 .preview__button {
   padding: 0 0.5em;
+  cursor: pointer;
 }
 
 .preview__button_pop-out {
