@@ -139,7 +139,7 @@ body {
 }
 
 .layout__instructions-bar:hover .layout__instructions-bar-edit-button {
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .layout__main {
