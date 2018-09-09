@@ -78,7 +78,6 @@ export default function Console({
           <FontAwesomeIcon className="label__icon" icon={chevron} />
         </div>
         <div
-          className="u__icon"
           onClick={(e) => {
             e.stopPropagation();
             onClearConsoleEntries();
