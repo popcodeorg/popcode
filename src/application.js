@@ -6,6 +6,7 @@ import {install as installOfflinePlugin} from 'offline-plugin/runtime';
 
 import {bugsnagClient} from './util/bugsnag';
 import Application from './components/Application';
+import fontawesome from './util/fontawesome';
 import initI18n from './util/initI18n';
 import {init as initAnalytics, logPageview} from './clients/googleAnalytics';
 
@@ -19,6 +20,7 @@ installOfflinePlugin({
 initI18n();
 initAnalytics();
 logPageview();
+fontawesome();
 
 ReactDOM.render(
   React.createElement(Application),
