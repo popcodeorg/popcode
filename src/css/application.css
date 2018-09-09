@@ -124,6 +124,7 @@ body {
   flex: none;
   flex-direction: column;
   font-size: 2em;
+  justify-content: space-between;
   text-align: center;
   padding: 0.25em;
 }
