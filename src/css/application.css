@@ -545,27 +545,27 @@ body {
 }
 
 /* postcss-bem-linter: ignore */
-.ace-sqlserver .ace_keyword.ace_operator,
-.ace-sqlserver .ace_lparen,
-.ace-sqlserver .ace_rparen,
-.ace-sqlserver .ace_punctuation {
-  color: #4f4f4f !important;
+.editors__editor.ace-sqlserver .ace_keyword.ace_operator,
+.editors__editor.ace-sqlserver .ace_lparen,
+.editors__editor.ace-sqlserver .ace_rparen,
+.editors__editor.ace-sqlserver .ace_punctuation {
+  color: #4f4f4f;
 }
 
-.ace-sqlserver .ace_support.ace_function {
-  color: #9e21c4 !important;
+.editors__editor.ace-sqlserver .ace_support.ace_function {
+  color: #9e21c4;
 }
 
-.ace-sqlserver .ace_storage {
-  color: #1724fb !important;
+.editors__editor.ace-sqlserver .ace_storage {
+  color: #1724fb;
 }
 
-.ace-sqlserver .ace_string {
-  color: #c40b17 !important;
+.editors__editor.ace-sqlserver .ace_string {
+  color: #c40b17;
 }
 
-.ace-sqlserver .ace_numeric {
-  color: #17942e !important;
+.editors__editor.ace-sqlserver .ace_numeric {
+  color: #17942e;
 }
 
 /** @define output */
