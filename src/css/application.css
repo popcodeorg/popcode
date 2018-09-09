@@ -1,38 +1,4 @@
 @font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  src:
-    local('Roboto'),
-    url('fonts/Roboto-Regular-webfont.woff') format('woff'),
-    url('fonts/Roboto-Regular-webfont.ttf') format('ttf'),
-    url('fonts/Roboto-Regular-webfont.eot') format('eot');
-}
-
-@font-face {
-  font-family: 'Roboto';
-  font-style: bold;
-  font-weight: 700;
-  src:
-    local('Roboto'),
-    url('fonts/Roboto-Bold-webfont.woff') format('woff'),
-    url('fonts/Roboto-Bold-webfont.ttf') format('ttf'),
-    url('fonts/Roboto-Bold-webfont.eot') format('eot');
-}
-
-@font-face {
-  font-family: 'Inconsolata';
-  font-style: normal;
-  font-weight: 400;
-  src:
-    local('Inconsolata'),
-    url('fonts/inconsolata-regular.woff2') format('woff2'),
-    url('fonts/inconsolata-regular.woff') format('woff'),
-    url('fonts/inconsolata-regular.ttf') format('ttf'),
-    url('fonts/inconsolata-regular.eot') format('eot');
-}
-
-@font-face {
   font-family: 'FontAwesome';
   font-style: normal;
   font-weight: 400;
