@@ -75,7 +75,8 @@ export default function Console({
       >
         <div>
           Console
-          <FontAwesomeIcon className="label__icon" icon={chevron} />
+          {' '}
+          <FontAwesomeIcon icon={chevron} />
         </div>
         <div
           onClick={(e) => {

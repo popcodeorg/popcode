@@ -1,3 +1,4 @@
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import prefixAll from 'inline-style-prefixer/static';
 import PropTypes from 'prop-types';
 import React, {forwardRef} from 'react';
@@ -29,7 +30,7 @@ const EditorContainer = forwardRef((
       >
         {t(`languages.${language}`)}
         {' '}
-        <span className="u__icon">&#xf078;</span>
+        <FontAwesomeIcon icon="chevron-down" />
       </div>
       {helpText}
       {children}

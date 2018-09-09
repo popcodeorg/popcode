@@ -1,3 +1,4 @@
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {DraggableCore} from 'react-draggable';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -100,7 +101,7 @@ export default function EditorsColumn({
         <div className="label editors__label editors__label_collapsed">
           {t(`languages.${language}`)}
           {' '}
-          <span className="u__icon">&#xf077;</span>
+          <FontAwesomeIcon icon="chevron-up" />
         </div>
       </div>
     ));
