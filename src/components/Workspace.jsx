@@ -116,7 +116,7 @@ export default class Workspace extends React.Component {
               this._handleClickInstructionsEditButton();
             }}
           >
-            &#xf044;
+            &#xf14b;
           </span>
         }
       </div>
