@@ -95,6 +95,11 @@ export default class Workspace extends React.Component {
       return null;
     }
 
+    const isInstructionsHidden = get(
+      this.props,
+      ['currentProject', 'hiddenUIComponents'],
+    ).includes('instructions');
+
     return (
       <div
         className={classnames('layout__instructions-bar', {
@@ -108,7 +113,7 @@ export default class Workspace extends React.Component {
             u__icon_disabled: this.props.isEditingInstructions,
           })}
         >&#xf05a;</span>
-        {!this.props.isEditingInstructions &&
+        {!isInstructionsHidden && !this.props.isEditingInstructions &&
           <span
             className="u__icon layout__instructions-bar-edit-button"
             onClick={(e) => {
