@@ -1,5 +1,6 @@
-import React from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 export default function CurrentUserButton({user: {avatarUrl, displayName}}) {
   return (
@@ -9,9 +10,10 @@ export default function CurrentUserButton({user: {avatarUrl, displayName}}) {
         src={avatarUrl}
       />
       <span className="top-bar__username">{displayName}</span>
-      <span className="top-bar__drop-down-button u__icon">
-        &#xf0d7;
-      </span>
+      <FontAwesomeIcon
+        className="top-bar__drop-down-button"
+        icon="caret-down"
+      />
     </div>
   );
 }

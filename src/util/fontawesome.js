@@ -2,6 +2,7 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {
   faBan,
   faBars,
+  faCaretDown,
   faCheckCircle,
   faChevronDown,
   faChevronUp,
@@ -12,6 +13,7 @@ import {
 export default function() {
   library.add(faBan);
   library.add(faBars);
+  library.add(faCaretDown);
   library.add(faCheckCircle);
   library.add(faChevronDown);
   library.add(faChevronUp);
