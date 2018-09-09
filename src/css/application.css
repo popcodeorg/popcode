@@ -544,6 +544,30 @@ body {
   pointer-events: none;
 }
 
+/* postcss-bem-linter: ignore */
+.editors__editor.ace-sqlserver .ace_keyword.ace_operator,
+.editors__editor.ace-sqlserver .ace_lparen,
+.editors__editor.ace-sqlserver .ace_rparen,
+.editors__editor.ace-sqlserver .ace_punctuation {
+  color: #4f4f4f;
+}
+
+.editors__editor.ace-sqlserver .ace_support.ace_function {
+  color: #9e21c4;
+}
+
+.editors__editor.ace-sqlserver .ace_storage {
+  color: #1724fb;
+}
+
+.editors__editor.ace-sqlserver .ace_string {
+  color: #c40b17;
+}
+
+.editors__editor.ace-sqlserver .ace_numeric {
+  color: #17942e;
+}
+
 /** @define output */
 
 .output {
