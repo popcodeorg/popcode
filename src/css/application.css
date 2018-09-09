@@ -135,6 +135,7 @@ body {
 .layout__instructions-bar-edit-button {
   margin-top: .25em;
   opacity: 0;
+  transition: opacity .1s;
 }
 
 .layout__instructions-bar:hover .layout__instructions-bar-edit-button {
