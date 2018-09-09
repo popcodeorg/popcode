@@ -230,10 +230,6 @@ body {
   box-shadow: inset 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3);
 }
 
-.top-bar__hamburger {
-  font-size: 1.5em;
-}
-
 .top-bar__menu {
   border-radius: var(--size-rounded-corners);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);

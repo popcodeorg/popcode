@@ -1,8 +1,9 @@
 import React from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export default function HamburgerMenuButton() {
   return (
-    <span className="u__icon top-bar__hamburger">&#xf0c9;</span>
+    <FontAwesomeIcon icon="bars" size="lg" />
   );
 }
 
