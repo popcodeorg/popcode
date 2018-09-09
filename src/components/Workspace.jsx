@@ -30,6 +30,7 @@ export default class Workspace extends React.Component {
       this,
       '_handleUnload',
       '_handleClickInstructionsBar',
+      '_handleClickInstructionsEditButton',
     );
     this.columnRefs = [null, null];
   }
@@ -76,6 +77,15 @@ export default class Workspace extends React.Component {
     }
   }
 
+  _handleClickInstructionsEditButton() {
+    const {isEditingInstructions, onClickInstructionsEditButton} = this.props;
+    if (!isEditingInstructions) {
+      onClickInstructionsEditButton(
+        get(this.props, ['currentProject', 'projectKey']),
+      );
+    }
+  }
+
   _renderInstructionsBar() {
     const currentInstructions = get(
       this.props,
@@ -84,6 +94,11 @@ export default class Workspace extends React.Component {
     if (!this.props.isEditingInstructions && !currentInstructions) {
       return null;
     }
+
+    const isInstructionsHidden = get(
+      this.props,
+      ['currentProject', 'hiddenUIComponents'],
+    ).includes('instructions');
 
     return (
       <div
@@ -98,6 +113,17 @@ export default class Workspace extends React.Component {
             u__icon_disabled: this.props.isEditingInstructions,
           })}
         >&#xf05a;</span>
+        {!isInstructionsHidden && !this.props.isEditingInstructions &&
+          <span
+            className="u__icon layout__instructions-bar-edit-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              this._handleClickInstructionsEditButton();
+            }}
+          >
+            &#xf14b;
+          </span>
+        }
       </div>
     );
   }
@@ -164,6 +190,7 @@ Workspace.propTypes = {
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
   resizableFlexRefs: PropTypes.array.isRequired,
   onApplicationLoaded: PropTypes.func.isRequired,
+  onClickInstructionsEditButton: PropTypes.func.isRequired,
   onComponentToggle: PropTypes.func.isRequired,
   onResizableFlexDividerDrag: PropTypes.func.isRequired,
   onStartDragColumnDivider: PropTypes.func.isRequired,

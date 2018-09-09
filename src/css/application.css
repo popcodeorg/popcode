@@ -122,13 +122,25 @@ body {
   cursor: pointer;
   display: flex;
   flex: none;
+  flex-direction: column;
   font-size: 2em;
+  justify-content: space-between;
   text-align: center;
   padding: 0.25em;
 }
 
 .layout__instructions-bar_disabled {
   cursor: default;
+}
+
+.layout__instructions-bar-edit-button {
+  margin-top: 0.25em;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.layout__instructions-bar:hover .layout__instructions-bar-edit-button {
+  opacity: 0.6;
 }
 
 .layout__main {
