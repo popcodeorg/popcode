@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-// import {t} from 'i18next';
+import {t} from 'i18next';
 
 export default function RunTestsButton({hasTests, onClick}) {
   if (!hasTests) {
@@ -15,7 +15,7 @@ export default function RunTestsButton({hasTests, onClick}) {
       )}
       onClick={onClick}
     >
-      Run Tests
+      {t('top-bar.run-tests')}
     </div>
   );
 }

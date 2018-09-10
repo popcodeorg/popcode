@@ -18,12 +18,20 @@ function tests(stateIn, action) {
     case 'TEST_PRODUCED':
       return state.setIn(
         ['testResults', action.payload.params.id],
-        new TestResult({name: action.payload.params.name, id: action.payload.params.id}),
+        new TestResult({
+          name: action.payload.params.name,
+          id: action.payload.params.id,
+        }),
       );
 
     case 'TEST_ASSERTION_PRODUCED':
       return state.setIn(
-        ['testResults', action.payload.params.test, 'assertions', action.payload.params.id],
+        [
+          'testResults',
+          action.payload.params.test,
+          'assertions',
+          action.payload.params.id,
+        ],
         TestResultAssertion.fromJS(action.payload.params),
       );
 

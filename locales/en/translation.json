@@ -12,12 +12,22 @@
     "project-saved": "Saved!",
     "new-project": "New Project",
     "send-feedback": "Send Feedback",
+    "run-tests": "Run Tests",
     "session": {
       "link-github": "Link GitHub",
       "log-in-prompt": "Log in to save",
       "log-out-prompt": "Log out",
       "log-in-github": "Log in with GitHub"
     }
+  },
+  "tests": {
+    "passed": "Passed",
+    "failed": "Not Passed: The test expected {{expected}} but actually got {{actual}}",
+    "results-title": "Test Results",
+    "creator-title": "Write your tests below using ",
+    "creator-title-tape": "tape",
+    "add-test": "Add Test",
+    "close": "Close"
   },
   "editors": {
     "help-text": "Type in your $t(languages.{{language}}) code here."

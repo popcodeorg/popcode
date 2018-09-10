@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import {t} from 'i18next';
 import bindAll from 'lodash-es/bindAll';
 import constant from 'lodash-es/constant';
 import throttle from 'lodash-es/throttle';
@@ -36,12 +35,10 @@ export default class TestCreatorPane extends React.Component {
   }
 
   componentDidUpdate({
-    // percentageOfHeight: prevPercentageOfHeight,
     projectKey: prevProjectKey,
     tests: prevTests,
   }) {
     const {
-      // percentageOfHeight,
       projectKey,
       tests,
     } = this.props;

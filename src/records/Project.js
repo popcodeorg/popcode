@@ -19,7 +19,7 @@ export default class Project extends Record({
   hiddenUIComponents: new Set(['console']),
   updatedAt: null,
   instructions: '',
-  tests: '//Write your tests below',
+  tests: '',
   externalLocations: new ExternalLocations(),
 }) {
   static fromJS({

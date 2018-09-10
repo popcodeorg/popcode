@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import isNull from 'lodash-es/isNull';
 import partial from 'lodash-es/partial';
 import classnames from 'classnames';
-// import {t} from 'i18next';
+import {t} from 'i18next';
 
 import TestCreatorPaneEditor from './TestCreatorPaneEditor';
 import Modal from './Modal';
@@ -22,16 +22,23 @@ export default function TestCreatorPane({
 
   return (
     <Modal>
-      <div className="">
-        <div>
-          <h2>Write your tests</h2>
-          <p
+      <div>
+        <div className="test-creator__heading">
+          <p>
+            {t('tests.creator-title')}
+            <a href="https://github.com/dwyl/learn-tape">{t('tests.creator-title-tape')}</a>
+          </p>
+          <button
+            className={classnames(
+              'test-creator__button',
+              'test-creator__button_add-test',
+            )}
             onClick={partial(onAddTest, projectKey)}
           >
-            Add Test
-          </p>
+            {t('tests.add-test')}
+          </button>
         </div>
-        <div className="test-creator-pane__editor">
+        <div className="test-creator__editor">
           <TestCreatorPaneEditor
             projectKey={projectKey}
             tests={tests}
@@ -40,12 +47,13 @@ export default function TestCreatorPane({
         </div>
         <div className="">
           <button
-            className={classnames('instructions-editor__menu-button',
-              'instructions-editor__menu-button_secondary',
+            className={classnames(
+              'test-creator__button',
+              'test-creator__button_close',
             )}
             onClick={onCloseTestCreatorPane}
           >
-            Close
+            {t('tests.close')}
           </button>
         </div>
       </div>
