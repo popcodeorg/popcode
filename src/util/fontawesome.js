@@ -15,6 +15,7 @@ import {
   faSearchMinus,
   faSearchPlus,
   faSyncAlt,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -39,6 +40,7 @@ export default function() {
   library.add(faSearchMinus);
   library.add(faSearchPlus);
   library.add(faSyncAlt);
+  library.add(faTimes);
 
   library.add(faGithub);
   library.add(faSlackHash);
