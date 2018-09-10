@@ -32,18 +32,6 @@
     url('fonts/inconsolata-regular.eot') format('eot');
 }
 
-@font-face {
-  font-family: 'FontAwesome';
-  font-style: normal;
-  font-weight: 400;
-  src:
-    local('FontAwesome'),
-    url('fonts/fontawesome-webfont.woff2') format('woff2'),
-    url('fonts/fontawesome-webfont.woff') format('woff'),
-    url('fonts/fontawesome-webfont.ttf') format('ttf'),
-    url('fonts/fontawesome-webfont.eot') format('eot');
-}
-
 @keyframes pulsing {
   0% {
     transform: scale(1);
@@ -627,7 +615,6 @@ body {
 
 .console__chevron {
   color: var(--color-light-gray);
-  font-family: 'FontAwesome';
   left: 0;
   position: absolute;
   top: 0;
@@ -874,7 +861,6 @@ body {
   cursor: pointer;
   display: block;
   float: right;
-  font-family: 'FontAwesome';
   padding: 0 1rem;
 }
 
@@ -987,19 +973,6 @@ body {
 
 .u__invisible {
   visibility: hidden;
-}
-
-.u__icon {
-  color: inherit;
-  cursor: pointer;
-  font-family: 'FontAwesome';
-  font-weight: normal;
-  user-select: none;
-  text-decoration: none;
-}
-
-.u__icon_disabled {
-  cursor: default;
 }
 
 .u__pointer {
