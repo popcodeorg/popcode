@@ -12,6 +12,7 @@ import {
   faExchangeAlt,
   faExternalLinkAlt,
   faInfoCircle,
+  faPenSquare,
   faSearchMinus,
   faSearchPlus,
   faSyncAlt,
@@ -37,6 +38,7 @@ export default function() {
   library.add(faExchangeAlt);
   library.add(faExternalLinkAlt);
   library.add(faInfoCircle);
+  library.add(faPenSquare);
   library.add(faSearchMinus);
   library.add(faSearchPlus);
   library.add(faSyncAlt);

@@ -55,20 +55,6 @@ gulp.task('static', () => gulp.
   pipe(gulp.dest(distDir)),
 );
 
-gulp.task('fonts', () => gulp.
-  src([
-    path.join(
-      bowerComponents,
-      'inconsolata-webfont/fonts/inconsolata-regular.*',
-    ),
-    path.join(
-      bowerComponents,
-      'roboto-webfont-bower/fonts/Roboto-{Bold,Regular}-webfont.*',
-    ),
-  ]).
-  pipe(gulp.dest(path.join(distDir, 'fonts'))),
-);
-
 gulp.task('css', () => {
   const processors = [cssnext({browsers: cssnextBrowsers})];
   if (process.env.NODE_ENV === 'production') {
@@ -113,7 +99,7 @@ gulp.task('js', ['env'], () => new Promise((resolve, reject) => {
   );
 }));
 
-gulp.task('build', ['static', 'fonts', 'css', 'js']);
+gulp.task('build', ['static', 'css', 'js']);
 
 gulp.task('syncFirebase', async() => {
   const data = await pify(fs).readFile(
@@ -142,7 +128,7 @@ gulp.task('syncFirebase', async() => {
   });
 });
 
-gulp.task('dev', ['browserSync', 'static', 'fonts', 'css'], () => {
+gulp.task('dev', ['browserSync', 'static', 'css'], () => {
   gulp.watch(path.join(staticDir, '/**/*'), ['static']);
   gulp.watch(path.join(stylesheetsDir, '**/*.css'), ['css']);
   gulp.watch(path.join(distDir, '*')).on('change', browserSync.reload);
