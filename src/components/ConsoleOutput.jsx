@@ -1,3 +1,4 @@
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import isNil from 'lodash-es/isNil';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -8,7 +9,9 @@ import {ConsoleEntry} from '../records';
 export default function ConsoleOutput({entry, isActive}) {
   const {expression, value, error} = entry;
   const chevron = expression ?
-    <div className="console__chevron console__chevron_outdent">&#xf053;</div> :
+    (<div className="console__chevron console__chevron_outdent">
+      <FontAwesomeIcon icon="chevron-left" />
+    </div>) :
     null;
 
   if (!isNil(value)) {

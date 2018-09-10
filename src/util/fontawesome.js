@@ -6,6 +6,8 @@ import {
   faCheck,
   faCheckCircle,
   faChevronDown,
+  faChevronLeft,
+  faChevronRight,
   faChevronUp,
   faExchangeAlt,
   faExternalLinkAlt,
@@ -28,6 +30,8 @@ export default function() {
   library.add(faCheck);
   library.add(faCheckCircle);
   library.add(faChevronDown);
+  library.add(faChevronLeft);
+  library.add(faChevronRight);
   library.add(faChevronUp);
   library.add(faExchangeAlt);
   library.add(faExternalLinkAlt);
