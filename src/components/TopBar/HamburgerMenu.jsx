@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {t} from 'i18next';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
@@ -52,23 +53,29 @@ const HamburgerMenu = createMenu({
 
         <div className="top-bar__menu-item top-bar__menu-item_icons">
           <a
-            className="u__icon top-bar__menu-item-icon"
+            className="top-bar__menu-item-icon"
             href="https://github.com/popcodeorg/popcode"
             rel="noopener noreferrer"
             target="_blank"
-          >&#xf09b;</a>
+          >
+            <FontAwesomeIcon icon={['fab', 'github']} />
+          </a>
           <a
-            className="u__icon top-bar__menu-item-icon"
+            className="top-bar__menu-item-icon"
             href="https://twitter.com/popcodeorg"
             rel="noopener noreferrer"
             target="_blank"
-          >&#xf099;</a>
+          >
+            <FontAwesomeIcon icon={['fab', 'twitter']} />
+          </a>
           <a
-            className="u__icon top-bar__menu-item-icon"
+            className="top-bar__menu-item-icon"
             href="https://slack.popcode.org/"
             rel="noopener noreferrer"
             target="_blank"
-          >&#xf198;</a>
+          >
+            <FontAwesomeIcon icon={['fab', 'slack-hash']} />
+          </a>
         </div>
       </Fragment>
     );

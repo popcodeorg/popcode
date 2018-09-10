@@ -14,6 +14,12 @@ import {
   faSyncAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
+import {
+  faGithub,
+  faSlackHash,
+  faTwitter,
+} from '@fortawesome/free-brands-svg-icons';
+
 export default function() {
   library.add(faBan);
   library.add(faBars);
@@ -27,4 +33,8 @@ export default function() {
   library.add(faSearchMinus);
   library.add(faSearchPlus);
   library.add(faSyncAlt);
+
+  library.add(faGithub);
+  library.add(faSlackHash);
+  library.add(faTwitter);
 }
