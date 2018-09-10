@@ -3,6 +3,7 @@ import {
   faBan,
   faBars,
   faCaretDown,
+  faCheck,
   faCheckCircle,
   faChevronDown,
   faChevronUp,
@@ -17,6 +18,7 @@ export default function() {
   library.add(faBan);
   library.add(faBars);
   library.add(faCaretDown);
+  library.add(faCheck);
   library.add(faCheckCircle);
   library.add(faChevronDown);
   library.add(faChevronUp);
