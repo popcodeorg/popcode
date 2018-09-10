@@ -1000,3 +1000,7 @@ body {
 .u__icon_disabled {
   cursor: default;
 }
+
+.u__pointer {
+  cursor: pointer;
+}

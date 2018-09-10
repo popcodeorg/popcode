@@ -1,3 +1,4 @@
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -93,11 +94,12 @@ export default class Workspace extends React.Component {
         })}
         onClick={this._handleClickInstructionsBar}
       >
-        <span
-          className={classnames('u__icon', {
-            u__icon_disabled: this.props.isEditingInstructions,
+        <FontAwesomeIcon
+          className={classnames({
+            u__pointer: !this.props.isEditingInstructions
           })}
-        >&#xf05a;</span>
+          icon="info-circle"
+        />
       </div>
     );
   }
