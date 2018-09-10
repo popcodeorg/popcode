@@ -110,16 +110,16 @@ export default class Workspace extends React.Component {
         onClick={this._handleClickInstructionsBar}
       >
         <FontAwesomeIcon
+          fixedWidth
           className={classnames({
             u__pointer: !this.props.isEditingInstructions,
           })}
-          fixedWidth
           icon="info-circle"
         />
         {!isInstructionsHidden && !this.props.isEditingInstructions &&
           <FontAwesomeIcon
-            className="layout__instructions-bar-edit-button"
             fixedWidth
+            className="layout__instructions-bar-edit-button"
             icon="pen-square"
             onClick={(e) => {
               e.stopPropagation();
