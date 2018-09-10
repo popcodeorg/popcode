@@ -8,6 +8,8 @@ import {
   faChevronUp,
   faExternalLinkAlt,
   faInfoCircle,
+  faSearchMinus,
+  faSearchPlus,
   faSyncAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,5 +22,7 @@ export default function() {
   library.add(faChevronUp);
   library.add(faExternalLinkAlt);
   library.add(faInfoCircle);
+  library.add(faSearchMinus);
+  library.add(faSearchPlus);
   library.add(faSyncAlt);
 }

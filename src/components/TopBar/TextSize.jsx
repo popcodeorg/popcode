@@ -1,17 +1,16 @@
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function TextSize({isLarge, onToggle}) {
+  const icon = isLarge ? 'search-minus' : 'search-plus';
+
   return (
     <div
       className="top-bar__menu-button top-bar__text-size"
       onClick={onToggle}
     >
-      {
-        isLarge ?
-          <span className="u__icon">&#xf010;</span> :
-          <span className="u__icon">&#xf00e;</span>
-      }
+      <FontAwesomeIcon icon={icon} />
     </div>
   );
 }
