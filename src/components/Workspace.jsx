@@ -96,7 +96,7 @@ export default class Workspace extends React.Component {
       >
         <FontAwesomeIcon
           className={classnames({
-            u__pointer: !this.props.isEditingInstructions
+            u__pointer: !this.props.isEditingInstructions,
           })}
           icon="info-circle"
         />
