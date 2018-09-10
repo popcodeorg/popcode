@@ -175,13 +175,13 @@ export default class Workspace extends React.Component {
       <div className="layout">
         <TopBar />
         <NotificationList />
-        <main className="layout__columns">
+        <div className="layout__columns">
           <Instructions />
           {this._renderInstructionsBar()}
           <div className="workspace layout__main">
             {this._renderEnvironment()}
           </div>
-        </main>
+        </div>
         <AccountMigration />
       </div>
     );
