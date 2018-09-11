@@ -8,10 +8,14 @@ import {
   consoleValueProduced,
   popOutProject,
   refreshPreview,
+  testProduced,
+  testAssertionProduced,
 } from '../actions';
 import {
   getCompiledProjects,
   getConsoleHistory,
+  getCurrentProjectTests,
+  getShouldRunTests,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
 } from '../selectors';
@@ -24,6 +28,8 @@ function mapStateToProps(state) {
       !isUserTyping(state) &&
         !isCurrentProjectSyntacticallyValid(state)
     ),
+    shouldRunTests: getShouldRunTests(state),
+    tests: getCurrentProjectTests(state),
   };
 }
 
@@ -52,6 +58,15 @@ function mapDispatchToProps(dispatch) {
     onRuntimeError(error) {
       dispatch(addRuntimeError('javascript', error));
     },
+
+    onTestProduced(params) {
+      dispatch(testProduced(params));
+    },
+
+    onTestAssertionProduced(params) {
+      dispatch(testAssertionProduced(params));
+    },
+
   };
 }
 

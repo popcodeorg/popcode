@@ -825,6 +825,73 @@ body {
   background-color: var(--color-low-contrast-red);
 }
 
+/** @define account-migration */
+
+.test-results__failed {
+  color: var(--color-red);
+}
+
+.test-results__passed {
+  color: var(--color-green);
+}
+
+.test-creator__buttons,
+.test-results__buttons {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.test-creator__button,
+.test-results__button {
+  border-radius: var(--size-rounded-corners);
+  box-sizing: border-box;
+  cursor: pointer;
+  height: var(--size-top-bar-menu-button);
+  line-height: var(--size-top-bar-menu-button);
+  padding: 0 1em;
+  position: relative;
+  user-select: none;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  white-space: nowrap;
+}
+
+.test-creator__button_close,
+.test-results__button_close {
+  background-color: var(--color-low-contrast-gray);
+}
+
+.test-creator__button_close:hover,
+.test-results__button_close:hover {
+  box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3);
+}
+
+.test-creator__button_close:active,
+.test-results__button_close:active {
+  box-shadow: inset 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3);
+}
+
+
+/** @define test-creator */
+
+.test-creator__heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.test-creator__editor {
+  box-sizing: border-box;
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 150px;
+  flex: 1 0 0;
+  margin-bottom: 1em;
+  font-family: 'Inconsolata';
+  font-size: 12px;
+}
+
 /** @define notification-list */
 
 .notification-list__notification {

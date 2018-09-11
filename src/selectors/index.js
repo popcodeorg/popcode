@@ -40,6 +40,11 @@ import isUserAuthenticatedWithGithub from './isUserAuthenticatedWithGithub';
 import isUserAuthenticatedWithGoogle from './isUserAuthenticatedWithGoogle';
 import makeGetProjectPreview from './makeGetProjectPreview';
 import makeGetResizableFlexGrow from './makeGetResizableFlexGrow';
+import getShouldRunTests from './getShouldRunTests';
+import getTestResults from './getTestResults';
+import getCurrentProjectTests from './getCurrentProjectTests';
+import isTestCreatorPaneOpen from './isTestCreatorPaneOpen';
+import isTestResultsPaneOpen from './isTestResultsPaneOpen';
 
 export {
   getAllProjectKeys,
@@ -82,4 +87,9 @@ export {
   isUserAuthenticatedWithGoogle,
   makeGetProjectPreview,
   makeGetResizableFlexGrow,
+  getShouldRunTests,
+  getTestResults,
+  getCurrentProjectTests,
+  isTestCreatorPaneOpen,
+  isTestResultsPaneOpen,
 };

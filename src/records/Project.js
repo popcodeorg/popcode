@@ -19,6 +19,7 @@ export default class Project extends Record({
   hiddenUIComponents: new Set(['console']),
   updatedAt: null,
   instructions: '',
+  tests: '',
   externalLocations: new ExternalLocations(),
 }) {
   static fromJS({
@@ -28,6 +29,7 @@ export default class Project extends Record({
     hiddenUIComponents = [],
     updatedAt = null,
     instructions = '',
+    tests = '',
     externalLocations = {},
   }) {
     return new Project({
@@ -37,6 +39,7 @@ export default class Project extends Record({
       hiddenUIComponents: new Set(hiddenUIComponents),
       updatedAt,
       instructions,
+      tests,
       externalLocations: new ExternalLocations(externalLocations),
     });
   }
