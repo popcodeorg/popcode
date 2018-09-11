@@ -1,3 +1,8 @@
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {
+  faExternalLinkAlt,
+  faSyncAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import get from 'lodash-es/get';
 import PropTypes from 'prop-types';
@@ -5,6 +10,9 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import React from 'react';
 
 import PreviewFrame from './PreviewFrame';
+
+library.add(faExternalLinkAlt);
+library.add(faSyncAlt);
 
 export default function Preview({
   compiledProjects,

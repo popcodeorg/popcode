@@ -1,4 +1,10 @@
 import classnames from 'classnames';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {
+  faBan,
+  faChevronDown,
+  faChevronUp,
+} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import partial from 'lodash-es/partial';
 import React from 'react';
@@ -9,6 +15,10 @@ import {EditorLocation} from '../records';
 
 import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
+
+library.add(faBan);
+library.add(faChevronDown);
+library.add(faChevronUp);
 
 export default function Console({
   currentCompiledProjectKey,

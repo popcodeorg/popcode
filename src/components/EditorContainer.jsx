@@ -1,8 +1,12 @@
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import prefixAll from 'inline-style-prefixer/static';
 import PropTypes from 'prop-types';
 import React, {forwardRef} from 'react';
 import {t} from 'i18next';
+
+library.add(faChevronDown);
 
 const EditorContainer = forwardRef((
   {children, language, source, style, onHide},

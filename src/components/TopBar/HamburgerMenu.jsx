@@ -1,5 +1,11 @@
 /* eslint-disable react/prop-types */
 
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {
+  faGithub,
+  faSlackHash,
+  faTwitter,
+} from '@fortawesome/free-brands-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {t} from 'i18next';
 import PropTypes from 'prop-types';
@@ -9,6 +15,10 @@ import config from '../../config';
 
 import createMenu, {MenuItem} from './createMenu';
 import HamburgerMenuButton from './HamburgerMenuButton';
+
+library.add(faGithub);
+library.add(faSlackHash);
+library.add(faTwitter);
 
 const HamburgerMenu = createMenu({
   menuClass: 'top-bar__menu_right',

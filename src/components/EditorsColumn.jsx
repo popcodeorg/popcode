@@ -1,3 +1,5 @@
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {DraggableCore} from 'react-draggable';
 import React from 'react';
@@ -15,6 +17,8 @@ import {EditorLocation} from '../records';
 
 import EditorContainer from './EditorContainer';
 import Editor from './Editor';
+
+library.add(faChevronUp);
 
 export default function EditorsColumn({
   currentProject,
