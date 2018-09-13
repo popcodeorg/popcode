@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import {library as faLibrary} from '@fortawesome/fontawesome-svg-core';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import map from 'lodash-es/map';
@@ -11,8 +10,6 @@ import libraries from '../../config/libraries';
 
 import createMenu, {MenuItem} from './createMenu';
 import LibraryPickerButton from './LibraryPickerButton';
-
-faLibrary.add(faCheck);
 
 const LibraryPicker = createMenu({
   menuClass: 'top-bar__menu_left',
@@ -30,7 +27,7 @@ const LibraryPicker = createMenu({
         >
           <FontAwesomeIcon
             className={classnames({u__invisible: !isActive})}
-            icon="check"
+            icon={faCheck}
           />
           {` ${library.name}`}
         </MenuItem>

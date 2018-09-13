@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 
-import {library} from '@fortawesome/fontawesome-svg-core';
 import {
   faGithub,
   faSlackHash,
@@ -15,10 +14,6 @@ import config from '../../config';
 
 import createMenu, {MenuItem} from './createMenu';
 import HamburgerMenuButton from './HamburgerMenuButton';
-
-library.add(faGithub);
-library.add(faSlackHash);
-library.add(faTwitter);
 
 const HamburgerMenu = createMenu({
   menuClass: 'top-bar__menu_right',
@@ -68,7 +63,7 @@ const HamburgerMenu = createMenu({
             rel="noopener noreferrer"
             target="_blank"
           >
-            <FontAwesomeIcon icon={['fab', 'github']} />
+            <FontAwesomeIcon icon={faGithub} />
           </a>
           <a
             className="top-bar__menu-item-icon"
@@ -76,7 +71,7 @@ const HamburgerMenu = createMenu({
             rel="noopener noreferrer"
             target="_blank"
           >
-            <FontAwesomeIcon icon={['fab', 'twitter']} />
+            <FontAwesomeIcon icon={faTwitter} />
           </a>
           <a
             className="top-bar__menu-item-icon"
@@ -84,7 +79,7 @@ const HamburgerMenu = createMenu({
             rel="noopener noreferrer"
             target="_blank"
           >
-            <FontAwesomeIcon icon={['fab', 'slack-hash']} />
+            <FontAwesomeIcon icon={faSlackHash} />
           </a>
         </div>
       </Fragment>

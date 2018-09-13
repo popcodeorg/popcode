@@ -1,4 +1,3 @@
-import {library} from '@fortawesome/fontawesome-svg-core';
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
@@ -7,8 +6,6 @@ import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {t} from 'i18next';
-
-library.add(faCheckCircle);
 
 export default function SnapshotNotification({
   metadata,
@@ -22,7 +19,7 @@ export default function SnapshotNotification({
   if (metadata.get('isCopied')) {
     checkmark = [
       ' ',
-      <FontAwesomeIcon icon="check-circle" key="icon" />,
+      <FontAwesomeIcon icon={faCheckCircle} key="icon" />,
     ];
   }
 

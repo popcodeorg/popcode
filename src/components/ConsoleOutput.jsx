@@ -1,4 +1,3 @@
-import {library} from '@fortawesome/fontawesome-svg-core';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import isNil from 'lodash-es/isNil';
@@ -8,13 +7,11 @@ import classnames from 'classnames';
 
 import {ConsoleEntry} from '../records';
 
-library.add(faChevronLeft);
-
 export default function ConsoleOutput({entry, isActive}) {
   const {expression, value, error} = entry;
   const chevron = expression ?
     (<div className="console__chevron console__chevron_outdent">
-      <FontAwesomeIcon icon="chevron-left" />
+      <FontAwesomeIcon icon={faChevronLeft} />
     </div>) :
     null;
 

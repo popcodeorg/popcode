@@ -1,4 +1,3 @@
-import {library} from '@fortawesome/fontawesome-svg-core';
 import {
   faExternalLinkAlt,
   faSyncAlt,
@@ -10,9 +9,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import React from 'react';
 
 import PreviewFrame from './PreviewFrame';
-
-library.add(faExternalLinkAlt);
-library.add(faSyncAlt);
 
 export default function Preview({
   compiledProjects,
@@ -50,13 +46,13 @@ export default function Preview({
       <div className="preview__title-bar">
         <span className="preview__button preview__button_pop-out">
           <FontAwesomeIcon
-            icon="external-link-alt"
+            icon={faExternalLinkAlt}
             onClick={onPopOutProject}
           />
         </span>
         {title}
         <span className="preview__button preview__button_reset">
-          <FontAwesomeIcon icon="sync-alt" onClick={onRefreshClick} />
+          <FontAwesomeIcon icon={faSyncAlt} onClick={onRefreshClick} />
         </span>
       </div>
       {projectFrames}

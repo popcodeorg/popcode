@@ -1,4 +1,3 @@
-import {library} from '@fortawesome/fontawesome-svg-core';
 import {faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {DraggableCore} from 'react-draggable';
@@ -17,8 +16,6 @@ import {EditorLocation} from '../records';
 
 import EditorContainer from './EditorContainer';
 import Editor from './Editor';
-
-library.add(faChevronUp);
 
 export default function EditorsColumn({
   currentProject,
@@ -105,7 +102,7 @@ export default function EditorsColumn({
         <div className="label editors__label editors__label_collapsed">
           {t(`languages.${language}`)}
           {' '}
-          <FontAwesomeIcon icon="chevron-up" />
+          <FontAwesomeIcon icon={faChevronUp} />
         </div>
       </div>
     ));

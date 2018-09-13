@@ -1,4 +1,3 @@
-import {library} from '@fortawesome/fontawesome-svg-core';
 import {faExchangeAlt} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import isNull from 'lodash-es/isNull';
@@ -19,8 +18,6 @@ import AccountMigrationUndoGracePeriod
 import Modal from './Modal';
 import ProposedAccountMigration from './ProposedAccountMigration';
 import AccountMigrationError from './AccountMigrationError';
-
-library.add(faExchangeAlt);
 
 export default function AccountMigration({
   currentUserAccount,
@@ -54,7 +51,7 @@ export default function AccountMigration({
             </div>
           </div>
           <div className="account-migration__merge-icon">
-            <FontAwesomeIcon icon="exchange-alt" />
+            <FontAwesomeIcon icon={faExchangeAlt} />
           </div>
           <div className="account-migration__account">
             <p className="account-migration__account-label">

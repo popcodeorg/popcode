@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import {library} from '@fortawesome/fontawesome-svg-core';
 import {
   faBan,
   faChevronDown,
@@ -15,10 +14,6 @@ import {EditorLocation} from '../records';
 
 import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
-
-library.add(faBan);
-library.add(faChevronDown);
-library.add(faChevronUp);
 
 export default function Console({
   currentCompiledProjectKey,
@@ -70,7 +65,7 @@ export default function Console({
     </div>
   );
 
-  const chevron = isOpen ? 'chevron-down' : 'chevron-up';
+  const chevron = isOpen ? faChevronDown : faChevronUp;
 
   return (
     <div
@@ -94,7 +89,7 @@ export default function Console({
             onClearConsoleEntries();
           }}
         >
-          <FontAwesomeIcon icon="ban" />
+          <FontAwesomeIcon icon={faBan} />
         </div>
       </div>
       {isOpen ? console : null}
