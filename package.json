@@ -200,6 +200,7 @@
     "promise-retry": "^1.1.1",
     "prop-types": "^15.6.2",
     "qs": "^6.1.0",
+    "raf": "^3.4.0",
     "react": "^16.4.2",
     "react-copy-to-clipboard": "^5.0.0",
     "react-dom": "^16.4.2",

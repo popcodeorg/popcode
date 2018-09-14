@@ -157,6 +157,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         'babel-polyfill',
         'es6-set/implement',
         'whatwg-fetch',
+        'raf/polyfill',
         './src/init/DOMParserShim',
         './src/application.js',
       ],
