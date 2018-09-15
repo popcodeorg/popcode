@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import prefixAll from 'inline-style-prefixer/static';
 import {t} from 'i18next';
+import classnames from 'classnames';
+import clone from 'lodash-es/clone';
 import isEmpty from 'lodash-es/isEmpty';
 import includes from 'lodash-es/includes';
 import map from 'lodash-es/map';
@@ -122,7 +124,7 @@ export default function EditorsColumn({
     <div
       className="environment__column"
       ref={onRef}
-      style={prefixAll(style)}
+      style={prefixAll(clone(style))}
     >
       <div className="environment__column-contents editors">
         {children}
