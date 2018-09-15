@@ -6,6 +6,8 @@ import {
   exportProject as exportProjectSaga,
   popOutProject as popOutProjectSaga,
   projectSuccessfullySaved as projectSuccessfullySavedSaga,
+  updateFocusedSelector as updateFocusedSelectorSaga,
+  importSelectorAtCursor,
 } from '../../../src/sagas/ui';
 import {getCurrentProject} from '../../../src/selectors';
 import {
@@ -13,6 +15,7 @@ import {
   popOutProject,
   showSaveIndicator,
   hideSaveIndicator,
+  currentFocusedSelectorChanged,
 } from '../../../src/actions/ui';
 import {
   projectExported,
@@ -23,6 +26,7 @@ import {
 import {openWindowWithContent} from '../../../src/util';
 import spinnerPageHtml from '../../../templates/project-export.html';
 import compileProject from '../../../src/util/compileProject';
+import {selectorAtCursor} from '../../../src/util/selectorAtCursor';
 
 test('userDoneTyping', (assert) => {
   testSaga(userDoneTypingSaga).
@@ -94,6 +98,20 @@ test('projectSuccessfullySaved', (assert) => {
     next().put(showSaveIndicator()).
     next().call(delay, 1000).
     next().put(hideSaveIndicator()).
+    next().isDone();
+  assert.end();
+});
+
+test('projectSuccessfullySaved', (assert) => {
+  const source = 'body{}';
+  const cursor = {column: 1, row: 0};
+  const language = 'css';
+  const selector = 'body';
+
+  testSaga(updateFocusedSelectorSaga, {payload: {source, cursor, language}}).
+    next().call(importSelectorAtCursor).
+    next({selectorAtCursor}).call(selectorAtCursor, source, cursor, language).
+    next(selector).put(currentFocusedSelectorChanged(selector)).
     next().isDone();
   assert.end();
 });

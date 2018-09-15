@@ -8,7 +8,7 @@ import PreviewFrame from './PreviewFrame';
 export default function Preview({
   compiledProjects,
   consoleEntries,
-  highlighterSelector,
+  focusedSelector,
   showingErrors,
   onConsoleError,
   onConsoleLog,
@@ -25,6 +25,7 @@ export default function Preview({
     <PreviewFrame
       compiledProject={compiledProject}
       consoleEntries={consoleEntries}
+      focusedSelector={focusedSelector}
       isActive={key === compiledProjects.keySeq().last()}
       key={compiledProject.compiledProjectKey}
       onConsoleError={onConsoleError}
@@ -51,7 +52,6 @@ export default function Preview({
         >&#xf021;</span>
       </div>
       {projectFrames}
-      // focusedSelector={focusedSelector}
     </div>
   );
 }

@@ -8,8 +8,9 @@ import uniq from 'lodash-es/uniq';
 
 import config from '../config';
 
-import retryingFailedImports from './retryingFailedImports';
 import highlighterCss from '../../templates/highlighter.css';
+
+import retryingFailedImports from './retryingFailedImports';
 
 const downloadingScript = downloadScript();
 

@@ -1,3 +1,3 @@
 export default function getFocusedSelector(state) {
-  return state.getIn(['ui', 'editors', 'focusedSelector']);
+  return state.getIn(['ui', 'focusedSelector']);
 }

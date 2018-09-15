@@ -10,4 +10,5 @@ export default Record({
   openTopBarMenu: null,
   requestedFocusedLine: null,
   saveIndicatorShown: false,
+  focusedSelector: null,
 }, 'UiState');

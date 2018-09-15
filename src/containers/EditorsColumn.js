@@ -9,10 +9,13 @@ import {
   isTextSizeLarge,
 } from '../selectors';
 import {
+  currentCursorChanged,
   editorFocusedRequestedLine,
   hideComponent,
   updateProjectSource,
   unhideComponent,
+  editorBlurred,
+  editorFocused,
 } from '../actions';
 
 function mapStateToProps(state) {
@@ -41,6 +44,33 @@ function mapDispatchToProps(dispatch) {
     onRequestedLineFocused() {
       dispatch(editorFocusedRequestedLine());
     },
+
+    onEditorCursorChange(source, cursor, language) {
+      dispatch(
+        currentCursorChanged(
+          source,
+          cursor,
+          language,
+        ),
+      );
+    },
+
+    onEditorBlurred() {
+      dispatch(
+        editorBlurred(),
+      );
+    },
+
+    onEditorFocused(source, cursor, language) {
+      dispatch(
+        editorFocused(
+          source,
+          cursor,
+          language,
+        ),
+      );
+    },
+
   };
 }
 

@@ -7,14 +7,11 @@ const path = require('path');
 
 const OfflinePlugin = require('offline-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-<<<<<<< HEAD
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
 const VisualizerPlugin = require('webpack-visualizer-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
-=======
->>>>>>> fa1acd3... Element Highlighter
 const webpack = require('webpack');
 const escapeRegExp = require('lodash.escaperegexp');
 const git = require('git-rev-sync');
@@ -147,68 +144,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
             attribute: 'type',
             value: 'ref',
           },
-<<<<<<< HEAD
-=======
-        ],
-      },
-      {
-        include: path.resolve(__dirname, 'locales'),
-        use: [{
-          loader: 'i18next-resource-store-loader',
-          options: 'include=\\.json$',
-        }],
-      },
-      {
-        include: matchModule('htmllint'),
-        enforce: 'post',
-        use: ['transform-loader/cacheable?bulkify'],
-      },
-      {
-        include: [matchModule('PrettyCSS'), matchModule('css')],
-        use: ['transform-loader/cacheable?brfs'],
-      },
-      {
-        test: /\.js$/,
-        include: [
-          matchModule('htmllint'),
-        ],
-        use: [{
-          loader: 'string-replace-loader',
-          options: {
-            search: 'require(plugin)',
-            replace: 'undefined',
-          },
-        }],
-      },
-      {
-        test: /\.js$/,
-        include: [
-          path.resolve(
-            __dirname,
-            'node_modules/stylelint/lib/utils/isAutoprefixable'
-          ),
-        ],
-        use: [{
-          loader: 'substitute-loader',
-          options: {content: '() => false'},
-        }],
-      },
-      {
-        test: /\.js$/,
-        include: [
-          matchModule('ansi-styles'),
-          matchModule('chalk'),
-          matchModule('lodash-es'),
-          matchModule('redux'),
-          matchModule('stylelint'),
-        ],
-        use: {loader: 'babel-loader', options: babelrc},
-      },
-      {
-        include: matchModule('html-inspector'),
-        use: [
-          {loader: 'imports-loader', options: 'window=>{}'},
->>>>>>> fa1acd3... Element Highlighter
           {
             test: /(^|~)preview[.~-]/,
             attribute: 'class',
@@ -219,7 +154,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     );
   }
 
-<<<<<<< HEAD
   return {
     mode: isProduction ? 'production' : 'development',
     entry: isTest ? undefined : {
@@ -229,44 +163,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         'whatwg-fetch',
         './src/init/DOMParserShim',
         './src/application.js',
-=======
-  plugins: [
-    new webpack.EnvironmentPlugin({
-      FIREBASE_APP: 'popcode-development',
-      FIREBASE_API_KEY: 'AIzaSyCHlo2RhOkRFFh48g779YSZrLwKjoyCcws',
-      GIT_REVISION: git.short(),
-      LOG_REDUX_ACTIONS: 'false',
-      NODE_ENV: 'development',
-      WARN_ON_DROPPED_ERRORS: 'false',
-      GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2'
-    }),
-    new CircularDependencyPlugin({
-      exclude: /node_modules/,
-      failOnError: true,
-    }),
-    new OfflinePlugin({
-      publicPath: '/',
-      responseStrategy: 'network-first',
-      externals: [
-        'index.html',
-        'application.css',
-        'fonts/Roboto-Regular-webfont.woff',
-        'fonts/Roboto-Regular-webfont.ttf',
-        'fonts/Roboto-Regular-webfont.eot',
-        'fonts/Roboto-Bold-webfont.woff',
-        'fonts/Roboto-Bold-webfont.ttf',
-        'fonts/Roboto-Bold-webfont.eot',
-        'fonts/inconsolata-regular.woff2',
-        'fonts/inconsolata-regular.woff',
-        'fonts/inconsolata-regular.ttf',
-        'fonts/inconsolata-regular.eot',
-        'fonts/fontawesome-webfont.woff2',
-        'fonts/fontawesome-webfont.woff',
-        'fonts/fontawesome-webfont.ttf',
-        'fonts/fontawesome-webfont.eot',
-        'images/pop/thinking.svg',
-        'images/large-spinner.gif',
->>>>>>> fa1acd3... Element Highlighter
       ],
       preview: [
         'babel-polyfill',

@@ -27,15 +27,6 @@ import {
   editorBlurred,
   editorFocused,
   editorFocusedRequestedLine,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  editorResized,
-=======
->>>>>>> e90fafb... update window resize, update element highlighter, write unit test
-  dragRowDivider,
-  dragColumnDivider,
->>>>>>> 66eba11... changes
   startDragColumnDivider,
   stopDragColumnDivider,
   notificationTriggered,
@@ -45,13 +36,10 @@ import {
   toggleEditorTextSize,
   toggleTopBarMenu,
   closeTopBarMenu,
-<<<<<<< HEAD
   startEditingInstructions,
   cancelEditingInstructions,
   showSaveIndicator,
   hideSaveIndicator,
-=======
->>>>>>> fa1acd3... Element Highlighter
 } from './ui';
 
 import {
@@ -68,7 +56,6 @@ import {
   userLoggedOut,
 } from './user';
 
-<<<<<<< HEAD
 import {
   projectCompiled,
   projectCompilationFailed,
@@ -90,8 +77,6 @@ import {
   updateResizableFlex,
 } from './resizableFlex';
 
-=======
->>>>>>> fa1acd3... Element Highlighter
 export {
   clearConsoleEntries,
   consoleInputChanged,
@@ -114,17 +99,8 @@ export {
   editorBlurred,
   editorFocused,
   editorFocusedRequestedLine,
-<<<<<<< HEAD
-<<<<<<< HEAD
   previousConsoleHistory,
   nextConsoleHistory,
-=======
-  editorResized,
-=======
->>>>>>> e90fafb... update window resize, update element highlighter, write unit test
-  dragRowDivider,
-  dragColumnDivider,
->>>>>>> 66eba11... changes
   startDragColumnDivider,
   stopDragColumnDivider,
   notificationTriggered,

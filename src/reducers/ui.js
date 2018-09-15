@@ -40,12 +40,6 @@ export default function ui(stateIn, action) {
     case 'UPDATE_PROJECT_SOURCE':
       return state.set('isTyping', true);
 
-    case 'UPDATE_HIGHLIGHTER_SELECTOR':
-      return state.setIn(
-        ['editors', 'highlighterSelector'],
-        action.payload.selector,
-      );
-
     case 'USER_DONE_TYPING':
       return state.set('isTyping', false);
 
@@ -72,21 +66,14 @@ export default function ui(stateIn, action) {
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.set('requestedFocusedLine', null);
 
-    case 'EDITOR_FOCUSED':
+    case 'CURRENT_FOCUSED_SELECTOR_CHANGED':
       return state.setIn(
-        ['editors', 'focusedSelector'],
-        action.payload.language,
+        ['focusedSelector'], action.payload,
       );
 
     case 'EDITOR_BLURRED':
       return state.setIn(
-        ['editors', 'focusedSelector'],
-        null,
-      );
-
-    case 'EDITOR_RESIZED':
-      return state.setIn(
-        ['editors', 'focusedSelector'],
+        ['focusedSelector'],
         null,
       );
 

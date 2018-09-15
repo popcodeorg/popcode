@@ -1,4 +1,5 @@
 import {connect} from 'react-redux';
+
 import Preview from '../components/Preview';
 import {
   addRuntimeError,
@@ -9,7 +10,6 @@ import {
   refreshPreview,
 } from '../actions';
 import {
-  getFocusedSelector,
   getCompiledProjects,
   getConsoleHistory,
   getFocusedSelector,
@@ -19,15 +19,13 @@ import {
 
 function mapStateToProps(state) {
   return {
-    focusedSelector: getFocusedSelector(state),
     compiledProjects: getCompiledProjects(state),
     consoleEntries: getConsoleHistory(state),
+    focusedSelector: getFocusedSelector(state),
     showingErrors: (
       !isUserTyping(state) &&
         !isCurrentProjectSyntacticallyValid(state)
     ),
-    focusedSelector: getFocusedSelector(state),
-
   };
 }
 

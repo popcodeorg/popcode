@@ -1,4 +1,5 @@
 import test from 'tape';
+
 import {selectorAtCursor} from '../../../src/util/selectorAtCursor';
 import {css} from '../../data/acceptance.json';
 

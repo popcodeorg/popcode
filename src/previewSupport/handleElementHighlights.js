@@ -1,4 +1,5 @@
-import throttle from 'lodash/throttle';
+import throttle from 'lodash-es/throttle';
+
 import channel from './channel';
 
 const RESIZE_THROTTLE = 250;

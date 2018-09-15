@@ -134,10 +134,6 @@ function mapDispatchToProps(dispatch) {
     onToggleTextSize() {
       dispatch(toggleEditorTextSize());
     },
-
-    onToggleTextSize() {
-      dispatch(toggleEditorTextSize());
-    },
   };
 }
 

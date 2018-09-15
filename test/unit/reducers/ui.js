@@ -23,6 +23,7 @@ import {
   cancelEditingInstructions,
   showSaveIndicator,
   hideSaveIndicator,
+  currentFocusedSelectorChanged,
 } from '../../../src/actions/ui';
 import {
   snapshotCreated,
@@ -331,5 +332,27 @@ test('toggleTopBarMenu', (t) => {
     initialState.set('openTopBarMenu', 'goofy'),
     partial(toggleTopBarMenu, 'silly'),
     initialState.set('openTopBarMenu', 'silly'),
+  ));
+});
+
+test('updateSelector', (t) => {
+  t.test('focusSelector', reducerTest(
+    reducer,
+    initialState,
+    partial(currentFocusedSelectorChanged, 'h1'),
+    initialState.set(
+      'focusedSelector',
+      'h1',
+    ),
+  ));
+
+  t.test('unFocusSelector', reducerTest(
+    reducer,
+    initialState.set(
+      'focusedSelector',
+      'h1',
+    ),
+    partial(currentFocusedSelectorChanged, null),
+    initialState,
   ));
 });

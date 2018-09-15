@@ -18,7 +18,6 @@ const sandboxOptions = [
   'allow-popups-to-escape-sandbox',
   'allow-scripts',
   'allow-top-navigation',
-  'allow-same-origin',
 ].join(' ');
 
 let nextId = 1;
@@ -44,26 +43,11 @@ class PreviewFrame extends React.Component {
     );
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.highlighterSelector !== this.props.highlighterSelector) {
-  //     this._postHighlighterSelectorToFrame(nextProps.highlighterSelector);
-  //   }
-  // }
-  // componentDidMount() {
-  //   window.addEventListener('message', this._onMessage);
-  //   this._postFocusedSelectorToFrame(this.props.focusedSelector);
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.focusedSelector !== this.props.focusedSelector) {
-  //     this._postFocusedSelectorToFrame(nextProps.focusedSelector);
-  //   }
-  // }
-
   componentDidUpdate({consoleEntries: prevConsoleEntries}) {
     const {consoleEntries, isActive} = this.props;
 
     if (this._channel && isActive) {
+      this._postFocusedSelectorToFrame(this.props.focusedSelector);
       for (const [key, {expression}] of consoleEntries) {
         if (!prevConsoleEntries.has(key) && expression) {
           this._evaluateConsoleExpression(key, expression);
@@ -152,18 +136,11 @@ class PreviewFrame extends React.Component {
     this.props.onConsoleLog(printedValue, compiledProjectKey);
   }
 
-  _postHighlighterSelectorToFrame(selector) {
-    window.frames[0].postMessage(JSON.stringify({
-      type: 'highlightElement',
-      selector: {selector},
-    }), '*');
-  }
-
   _postFocusedSelectorToFrame(selector) {
-    this._frame_element.contentWindow.postMessage(JSON.stringify({
-      type: 'org.popcode.highlightElement',
-      selector,
-    }), '*');
+    this._channel.notify({
+      method: 'highlightElement',
+      params: selector,
+    });
   }
 
   _attachToFrame(frame) {

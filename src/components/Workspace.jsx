@@ -75,23 +75,6 @@ export default class Workspace extends React.Component {
         'instructions',
       );
     }
-
-    // _handleEditorFocused(language) {
-    //   this.props.dispatch(editorFocused(language));
-    // }
-  
-    // _handleEditorBlurred() {
-    //   this.props.dispatch(editorBlurred());
-    // }
-    // _handleEditorCursorChange(source, cursor, language) {
-    //   this.props.dispatch(
-    //     currentCursorChanged(
-    //       source,
-    //       cursor,
-    //       language,
-    //     ),
-    //   );
-    // }
   }
 
   _handleClickInstructionsEditButton() {

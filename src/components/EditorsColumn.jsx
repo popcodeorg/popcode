@@ -24,7 +24,9 @@ export default function EditorsColumn({
   requestedFocusedLine,
   onComponentHide,
   onComponentUnhide,
+  onEditorBlurred,
   onEditorCursorChange,
+  onEditorFocused,
   onEditorInput,
   onRef,
   onRequestedLineFocused,
@@ -69,7 +71,6 @@ export default function EditorsColumn({
           onCursorChange={onEditorCursorChange}
           onEditorBlurred={onEditorBlurred}
           onEditorFocused={onEditorFocused}
-          onEditorResized={onEditorResized}
           onInput={partial(
             onEditorInput,
             currentProject.projectKey,
@@ -138,6 +139,7 @@ EditorsColumn.propTypes = {
   style: PropTypes.object.isRequired,
   onComponentHide: PropTypes.func.isRequired,
   onComponentUnhide: PropTypes.func.isRequired,
+  onEditorBlurred: PropTypes.func.isRequired,
   onEditorCursorChange: PropTypes.func.isRequired,
   onEditorFocused: PropTypes.func.isRequired,
   onEditorInput: PropTypes.func.isRequired,

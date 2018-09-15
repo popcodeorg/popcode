@@ -21,19 +21,6 @@ export const editorBlurred = createAction(
   'EDITOR_BLURRED',
 );
 
-<<<<<<< HEAD
-export const editorResized = createAction(
-  'EDITOR_RESIZED',
-=======
-export const dragRowDivider = createAction(
-  'DRAG_ROW_DIVIDER',
-);
-
-export const dragColumnDivider = createAction(
-  'DRAG_COLUMN_DIVIDER',
->>>>>>> e90fafb... update window resize, update element highlighter, write unit test
-);
-
 export const startDragColumnDivider = createAction(
   'START_DRAG_COLUMN_DIVIDER',
 );

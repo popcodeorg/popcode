@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import React, {forwardRef} from 'react';
 import {t} from 'i18next';
 
-<<<<<<< HEAD
 const EditorContainer = forwardRef((
   {children, language, source, style, onHide},
   ref,
 ) => {
-=======
-function EditorContainer({children, language, source, style, onHide, onRef}) {
->>>>>>> fa1acd3... Element Highlighter
   let helpText;
 
   if (source === '') {

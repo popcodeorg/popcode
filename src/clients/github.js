@@ -4,12 +4,8 @@ import trim from 'lodash-es/trim';
 
 import retryingFailedImports from '../util/retryingFailedImports';
 import performWithRetries from '../util/performWithRetries';
-<<<<<<< HEAD
 import compileProject from '../util/compileProject';
 import ExtendableError from '../util/ExtendableError';
-=======
-import generatePreview from '../util/previewFrame';
->>>>>>> 621d5f6... Add saga, add ref to iframe element
 
 const COMMIT_MESSAGE = 'Created using Popcode: https://popcode.org';
 const MASTER = 'master';

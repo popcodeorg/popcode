@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-<<<<<<< HEAD
 import bindAll from 'lodash-es/bindAll';
 import constant from 'lodash-es/constant';
 import get from 'lodash-es/get';
@@ -9,14 +8,6 @@ import noop from 'lodash-es/noop';
 
 import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
 import {EditorLocation} from '../records';
-import {cssSelectorAtCursor} from '../util/cssSelectorAtCursor';
-=======
-import ACE from 'brace';
-import bindAll from 'lodash/bindAll';
-import get from 'lodash/get';
-import throttle from 'lodash/throttle';
-import noop from 'lodash/noop';
->>>>>>> 621d5f6... Add saga, add ref to iframe element
 
 import 'brace/ext/searchbox';
 import 'brace/mode/html';
@@ -123,25 +114,6 @@ class Editor extends React.Component {
       this._startNewSession(this.props.source);
       this._resizeEditor();
       this._editor.on('focus', this._resizeEditor);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      this._editor.on('blur', () => {
-        this.props.onEditorBlurred();
-      });
-      this._editor.on('focus', () => {
-        this.props.onEditorFocused(this.props.language);
-      });
-=======
->>>>>>> ec49c81... Handle fixed potion, handle body and html, handle resize, handle editor refocus to same line
-      this._editor.setOptions({
-        fontFamily: 'Inconsolata',
-        fontSize: '14px',
-      });
->>>>>>> 23eb7f2... Updates to element highlighter
-=======
->>>>>>> e90fafb... update window resize, update element highlighter, write unit test
     } else {
       this._editor.destroy();
     }
@@ -182,15 +154,6 @@ class Editor extends React.Component {
     this._editor.setSession(session);
     this._editor.moveCursorTo(0, 0);
     this._resizeEditor();
-  }
-
-  render() {
-    return (
-      <div
-        className="editors__editor"
-        ref={this._setupEditor}
-      />
-    );
   }
 }
 
