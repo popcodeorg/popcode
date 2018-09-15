@@ -1,3 +1,5 @@
+import {faInfoCircle, faPenSquare} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -108,21 +110,23 @@ export default class Workspace extends React.Component {
         })}
         onClick={this._handleClickInstructionsBar}
       >
-        <span
-          className={classnames('u__icon', {
-            u__icon_disabled: this.props.isEditingInstructions,
+        <FontAwesomeIcon
+          fixedWidth
+          className={classnames({
+            u__pointer: !this.props.isEditingInstructions,
           })}
-        >&#xf05a;</span>
+          icon={faInfoCircle}
+        />
         {!isInstructionsHidden && !this.props.isEditingInstructions &&
-          <span
-            className="u__icon layout__instructions-bar-edit-button"
+          <FontAwesomeIcon
+            fixedWidth
+            className="layout__instructions-bar-edit-button"
+            icon={faPenSquare}
             onClick={(e) => {
               e.stopPropagation();
               this._handleClickInstructionsEditButton();
             }}
-          >
-            &#xf14b;
-          </span>
+          />
         }
       </div>
     );

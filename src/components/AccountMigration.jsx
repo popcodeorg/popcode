@@ -1,3 +1,5 @@
+import {faExchangeAlt} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import isNull from 'lodash-es/isNull';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -48,10 +50,8 @@ export default function AccountMigration({
               {currentUserAccount.displayName}
             </div>
           </div>
-          <div
-            className="account-migration__merge-icon u__icon u__icon_disabled"
-          >
-            &#xf0ec;
+          <div className="account-migration__merge-icon">
+            <FontAwesomeIcon icon={faExchangeAlt} />
           </div>
           <div className="account-migration__account">
             <p className="account-migration__account-label">

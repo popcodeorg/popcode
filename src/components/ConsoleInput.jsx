@@ -1,8 +1,10 @@
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import bindAll from 'lodash-es/bindAll';
+import get from 'lodash-es/get';
 import isNil from 'lodash-es/isNil';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import get from 'lodash-es/get';
 import preventClickthrough from 'react-prevent-clickthrough';
 
 import {EditorLocation} from '../records';
@@ -120,7 +122,9 @@ export default class ConsoleInput extends Component {
         className="console__row console__input"
         onClick={preventClickthrough}
       >
-        <div className="console__chevron console__chevron_blue">&#xf054;</div>
+        <div className="console__chevron console__chevron_blue">
+          <FontAwesomeIcon icon={faChevronRight} />
+        </div>
         <div className="console__editor" ref={this._ref} />
       </div>
     );

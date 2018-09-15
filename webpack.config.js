@@ -121,10 +121,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         externals: [
           '/',
           'application.css',
-          'fonts/fontawesome-webfont.woff2',
-          'fonts/fontawesome-webfont.woff',
-          'fonts/fontawesome-webfont.ttf',
-          'fonts/fontawesome-webfont.eot',
           'images/pop/thinking.svg',
         ],
       }),

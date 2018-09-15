@@ -1,5 +1,11 @@
 /* eslint-disable react/prop-types */
 
+import {
+  faGithub,
+  faSlackHash,
+  faTwitter,
+} from '@fortawesome/free-brands-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {t} from 'i18next';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
@@ -52,23 +58,29 @@ const HamburgerMenu = createMenu({
 
         <div className="top-bar__menu-item top-bar__menu-item_icons">
           <a
-            className="u__icon top-bar__menu-item-icon"
+            className="top-bar__menu-item-icon"
             href="https://github.com/popcodeorg/popcode"
             rel="noopener noreferrer"
             target="_blank"
-          >&#xf09b;</a>
+          >
+            <FontAwesomeIcon icon={faGithub} />
+          </a>
           <a
-            className="u__icon top-bar__menu-item-icon"
+            className="top-bar__menu-item-icon"
             href="https://twitter.com/popcodeorg"
             rel="noopener noreferrer"
             target="_blank"
-          >&#xf099;</a>
+          >
+            <FontAwesomeIcon icon={faTwitter} />
+          </a>
           <a
-            className="u__icon top-bar__menu-item-icon"
+            className="top-bar__menu-item-icon"
             href="https://slack.popcode.org/"
             rel="noopener noreferrer"
             target="_blank"
-          >&#xf198;</a>
+          >
+            <FontAwesomeIcon icon={faSlackHash} />
+          </a>
         </div>
       </Fragment>
     );

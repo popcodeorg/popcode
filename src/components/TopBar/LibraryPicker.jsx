@@ -1,4 +1,6 @@
 import classnames from 'classnames';
+import {faCheck} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
@@ -23,10 +25,11 @@ const LibraryPicker = createMenu({
           key={key}
           onClick={partial(onToggleLibrary, key)}
         >
-          <span className={classnames('u__icon', {u__invisible: !isActive})}>
-            &#xf00c;{' '}
-          </span>
-          {library.name}
+          <FontAwesomeIcon
+            className={classnames({u__invisible: !isActive})}
+            icon={faCheck}
+          />
+          {` ${library.name}`}
         </MenuItem>
       );
     });

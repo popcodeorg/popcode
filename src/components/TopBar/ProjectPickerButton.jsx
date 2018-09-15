@@ -1,4 +1,6 @@
 import classnames from 'classnames';
+import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
 import {t} from 'i18next';
 import PropTypes from 'prop-types';
@@ -14,10 +16,10 @@ export default function ProjectPickerButton({shouldShowSavedIndicator}) {
         }
       >
         {t('top-bar.load-project')}
-        {' '}
-        <span className="u__icon top-bar__drop-down-button">
-          &#xf0d7;
-        </span>
+        <FontAwesomeIcon
+          className="top-bar__drop-down-button"
+          icon={faCaretDown}
+        />
       </span>
       <span
         className={
