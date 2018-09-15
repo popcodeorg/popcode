@@ -505,14 +505,20 @@ body {
 
 .editors__column-divider {
   background-color: var(--color-light-gray);
-  cursor: ew-resize;
   width: 0.5vh;
+}
+
+.editors__column-divider_draggable {
+  cursor: ew-resize;
 }
 
 .editors__row-divider {
   background-color: var(--color-light-gray);
-  cursor: ns-resize;
   height: 0.5vh;
+}
+
+.editors__row-divider_draggable {
+  cursor: ns-resize;
 }
 
 .editors__help-text {

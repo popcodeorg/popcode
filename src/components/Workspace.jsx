@@ -135,6 +135,7 @@ export default class Workspace extends React.Component {
   _renderEnvironment() {
     const {
       currentProject,
+      isFlexResizingSupported,
       resizableFlexGrow,
       resizableFlexRefs,
       onResizableFlexDividerDrag,
@@ -159,7 +160,10 @@ export default class Workspace extends React.Component {
           onStop={onStopDragColumnDivider}
         >
           <div
-            className="editors__column-divider"
+            className={classnames(
+              'editors__column-divider',
+              {'editors__column-divider_draggable': isFlexResizingSupported},
+            )}
           />
         </DraggableCore>
         <Output
@@ -191,6 +195,7 @@ export default class Workspace extends React.Component {
 Workspace.propTypes = {
   currentProject: PropTypes.object,
   isEditingInstructions: PropTypes.bool.isRequired,
+  isFlexResizingSupported: PropTypes.bool.isRequired,
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
   resizableFlexRefs: PropTypes.array.isRequired,
   onApplicationLoaded: PropTypes.func.isRequired,

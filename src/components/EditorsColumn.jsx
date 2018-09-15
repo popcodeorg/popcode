@@ -22,6 +22,7 @@ export default function EditorsColumn({
   errors,
   resizableFlexGrow,
   resizableFlexRefs,
+  isFlexResizingSupported,
   isTextSizeLarge,
   requestedFocusedLine,
   onComponentHide,
@@ -82,7 +83,12 @@ export default function EditorsColumn({
           key={`divider:${language}`}
           onDrag={partial(onResizableFlexDividerDrag, index)}
         >
-          <div className="editors__row-divider" />
+          <div
+            className={classnames(
+              'editors__row-divider',
+              {'editors__row-divider_draggable': isFlexResizingSupported},
+            )}
+          />
         </DraggableCore>,
       );
     }
@@ -128,6 +134,7 @@ export default function EditorsColumn({
 EditorsColumn.propTypes = {
   currentProject: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
+  isFlexResizingSupported: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
