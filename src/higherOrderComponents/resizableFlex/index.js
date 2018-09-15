@@ -13,10 +13,16 @@ import {updateResizableFlex} from '../../actions';
 
 import calculateFlexGrowAfterDrag from './calculateFlexGrowAfterDrag';
 import directionAdapterFor from './directionAdapterFor';
+import isFlexResizingSupported from './isFlexResizingSupported';
+import shamResizableFlex from './sham';
 
 let nextInstanceId = 1;
 
 export default function resizableFlex(size) {
+  if (!isFlexResizingSupported()) {
+    return shamResizableFlex(size);
+  }
+
   const instanceId = (nextInstanceId++).toString();
   const getResizableFlexGrow = makeGetResizableFlexGrow(instanceId);
 
@@ -26,6 +32,8 @@ export default function resizableFlex(size) {
       const initialMainSizes = times(size, () => null);
 
       const stateIndependentFunctions = {
+        isFlexResizingSupported: true,
+
         onResizableFlexDividerDrag(beforeIndex, event, payload) {
           const afterIndex = findIndex(regions, 'current', beforeIndex + 1);
           const [{current: before}, {current: after}] =

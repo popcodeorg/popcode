@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import prefixAll from 'inline-style-prefixer/static';
 import {t} from 'i18next';
+import classnames from 'classnames';
+import clone from 'lodash-es/clone';
 import isEmpty from 'lodash-es/isEmpty';
 import includes from 'lodash-es/includes';
 import map from 'lodash-es/map';
@@ -22,6 +24,7 @@ export default function EditorsColumn({
   errors,
   resizableFlexGrow,
   resizableFlexRefs,
+  isFlexResizingSupported,
   isTextSizeLarge,
   requestedFocusedLine,
   onComponentHide,
@@ -82,7 +85,12 @@ export default function EditorsColumn({
           key={`divider:${language}`}
           onDrag={partial(onResizableFlexDividerDrag, index)}
         >
-          <div className="editors__row-divider" />
+          <div
+            className={classnames(
+              'editors__row-divider',
+              {'editors__row-divider_draggable': isFlexResizingSupported},
+            )}
+          />
         </DraggableCore>,
       );
     }
@@ -116,7 +124,7 @@ export default function EditorsColumn({
     <div
       className="environment__column"
       ref={onRef}
-      style={prefixAll(style)}
+      style={prefixAll(clone(style))}
     >
       <div className="environment__column-contents editors">
         {children}
@@ -128,6 +136,7 @@ export default function EditorsColumn({
 EditorsColumn.propTypes = {
   currentProject: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
+  isFlexResizingSupported: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
