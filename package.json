@@ -232,14 +232,14 @@
   },
   "engines": {
     "node": "^8.12.0",
-    "yarn": "^1.9.4"
+    "npm": "^6.4.1"
   },
   "scripts": {
     "postinstall": "bower install",
-    "pretest": "yarn run lint",
-    "dev": "yarn install && gulp dev",
+    "pretest": "npm run lint",
+    "dev": "npm install && gulp dev",
     "test": "karma start --single-run --no-auto-watch",
-    "autotest": "yarn install && karma start --no-single-run --auto-watch",
+    "autotest": "npm install && karma start --no-single-run --auto-watch",
     "lint": "eslint --ext .js,.jsx --plugin react src test *.js && stylelint src/**/*.css",
     "fixlint": "eslint --ext .js,.jsx --plugin react --fix src test *.js",
     "toc": "doctoc README.md --github --title '## Table of Contents'",

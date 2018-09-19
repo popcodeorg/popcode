@@ -16,7 +16,7 @@ env:
   - secure: SfrceTUdcPMC9Jk7T9eIFVxDGdoOC9sUUg6nQX+3GerJ+vefoVFjspx/StYPr5Jci7NWqFCGns/8Ctu7eOK7p9lFnHeleuNGxKhotsmV2dfF3DjzkusuTisVhFMNKclVCxSSuQYswBZJ8ZUCdxMYq3XIyl5kfxD7t8Tb09cdeYWPw1SUkSdjMYbVUkL+Q+tidb4FudhIH5hZQ+gAAtRYidxG1esNj0cB1ITyN5eM3UkGM59/TFqvIGfolJEBJFW7gyeqedKlgiavdXVaEOvBk4kqu+2q7waMTYbCMPLBFNBBH7bEdPt4OA5hU5qlVuCMH7y3CKHOikSDiIBzLEIcx1cy1xmHzvxuDya340vW0IK8PnvSV2jp/3uy4XWc0SXq+zWAZTfHwYFObx32byo0pBTnx8CVkxdhwNZYwfCU7KIPHJ++WVpxTyx/BrJT5BkqmTbnccsJrpr75DNfm/lrthWjz66Es2sdZVb5Knn/ezfHyKP92hcl1jNhddkX4YWH1rZt5UYA1paQrsMgolKnt9oRBsaN5/2A5X+2hHzwDRSV20XP7d7ZLwDtUCsUQf7aMo5B4P6p3ElRGpLyA04YRm/x/aegQujVMrgdIKxZ/u/TtM0gPkkoeFcbDSrQq3PVEiOGMiDxKPrKMEE4f0nYqs6mpeyoBn6lSyCXDWhXcAo=
 cache:
   apt: true
-  yarn: true
+  npm: true
 addons:
   apt:
     sources:
@@ -24,21 +24,18 @@ addons:
     packages:
     - g++-4.8
   chrome: stable
-before_install:
-- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.9.4
-- export PATH="$HOME/.yarn/bin:$PATH"
 install:
-- yarn install --production=false --frozen-lockfile --non-interactive
+- npm ci --production=false
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 script:
-- yarn check
-- NODE_ENV=test yarn test
-- gulp build
-- eslint --no-eslintrc --env es5 dist
+- npm ls > /dev/null
+- NODE_ENV=test npm test
+- npx gulp build
+- npx eslint --no-eslintrc --env es5 dist
 before_deploy:
-- gulp syncFirebase
+- npx gulp syncFirebase
 deploy:
 - provider: s3
   access_key_id: AKIAJY2GYDQBE4HFF32Q

@@ -2,13 +2,12 @@ version: '3'
 services:
   app:
     build: .
-    command: yarn dev
+    command: npm run dev
     ports:
       - "3000:3000"
     volumes:
       - .:/app:cached
       - npm_cache:/root/.npm
-      - yarn_cache:/usr/local/share/.cache/yarn
     tmpfs:
       - /app/dist
     environment:
@@ -21,4 +20,3 @@ services:
       - ~/.travis:/travis
 volumes:
   npm_cache:
-  yarn_cache:
