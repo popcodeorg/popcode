@@ -185,7 +185,7 @@ on the major tools:
 * [React](https://facebook.github.io/react/docs/react-component.html) for
   constructing the user interface
 * [Redux](http://redux.js.org/) for managing application state
-* [cssnext](http://cssnext.io/features/) gives us cutting-edge CSS features
+* [postcss-preset-env](https://github.com/csstools/postcss-preset-env) gives us cutting-edge CSS features
 * [Block Element Modifier](https://en.bem.info/methodology/naming-convention/)
   provides a convention for organizing DOM classes
 * [Webpack](https://webpack.github.io/docs/configuration.html) builds the
@@ -265,4 +265,4 @@ src="https://cloud.githubusercontent.com/assets/14214/19059115/428a80f4-89ab-11e
 
 Feel free to email me at [mat.a.brown@gmail.com](mailto:mat.a.brown@gmail.com) if you have any questions.
 
-You can find our Slack team, including our #dev channel, [here](https://slack.popcode.org). 
+You can find our Slack team, including our #dev channel, [here](https://slack.popcode.org).

@@ -14,7 +14,7 @@ const cssnano = require('cssnano');
 const forOwn = require('lodash.forown');
 const git = require('git-rev-sync');
 const postcss = require('gulp-postcss');
-const cssnext = require('postcss-cssnext');
+const postcssPresetEnv = require('postcss-preset-env');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const cloudflare = require('cloudflare');
@@ -33,17 +33,17 @@ const highlightStylesheetsDir = 'node_modules/highlight.js/styles';
 const staticDir = path.join(srcDir, 'static');
 const bowerComponents = 'bower_components';
 
-const cssnextBrowsers = [];
+const postcssBrowsers = [];
 const supportedBrowsers =
   JSON.parse(fs.readFileSync('./config/browsers.json'));
 forOwn(supportedBrowsers, (version, browser) => {
-  let browserForCssnext = browser;
+  let browserForPostcss = browser;
   if (browser === 'msie') {
-    browserForCssnext = 'ie';
+    browserForPostcss = 'ie';
   } else if (browser === 'chromium') {
     return;
   }
-  cssnextBrowsers.push(`${browserForCssnext} >= ${version}`);
+  postcssBrowsers.push(`${browserForPostcss} >= ${version}`);
 });
 
 gulp.task('env', () => {
@@ -56,7 +56,7 @@ gulp.task('static', () => gulp.
 );
 
 gulp.task('css', () => {
-  const processors = [cssnext({browsers: cssnextBrowsers})];
+  const processors = [postcssPresetEnv({browsers: postcssBrowsers})];
   if (process.env.NODE_ENV === 'production') {
     processors.push(cssnano());
   }
