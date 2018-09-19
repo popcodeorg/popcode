@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- 8.11.2
+- 8.12.0
 env:
   global:
   - NODE_ENV=production

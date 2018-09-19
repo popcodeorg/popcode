@@ -1,4 +1,4 @@
-FROM node:8.11.3
+FROM node:8.12.0
 
 ENV YARN_VERSION 1.9.4
 
