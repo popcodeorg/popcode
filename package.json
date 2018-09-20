@@ -237,7 +237,8 @@
   "scripts": {
     "postinstall": "bower install",
     "pretest": "npm run lint",
-    "dev": "npm install && gulp dev",
+    "start": "gulp dev",
+    "dev": "npm install && npm start",
     "test": "karma start --single-run --no-auto-watch",
     "autotest": "npm install && karma start --no-single-run --auto-watch",
     "lint": "eslint --ext .js,.jsx --plugin react src test *.js && stylelint src/**/*.css",
