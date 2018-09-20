@@ -9,4 +9,10 @@ RUN npm config set unsafe-perm true
 
 WORKDIR /app
 
+ARG install_dependencies=true
+COPY package.json package-lock.json bower.json /app/
+RUN if [ $install_dependencies = true ]; then npm install; fi
+
+COPY . /app/
+
 EXPOSE 3000

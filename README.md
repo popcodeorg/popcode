@@ -172,7 +172,22 @@ source code.
 
 To improve the situation, you can use **debug mode**, which configures Babel to
 compile the JavaScript to target only the latest version of Chrome, which
-supports most modern ES features.
+supports most modern ES features. To run in debug mode, start your development
+server with:
+
+```bash
+$ DEBUG=true npm start
+```
+
+### Running with Docker
+
+Popcode also comes with a `docker-compose` file to support running inside Docker
+with no local Node installation needed. If you’re a Docker user, you can install
+and run Popcode locally with:
+
+```bash
+$ docker-compose up
+```
 
 ### Developer Reference ###
 

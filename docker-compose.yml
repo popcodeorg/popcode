@@ -7,16 +7,15 @@ services:
       - "3000:3000"
     volumes:
       - .:/app:cached
+      - node_modules:/app/node_modules
+      - bower_components:/app/bower_components
       - npm_cache:/root/.npm
     tmpfs:
       - /app/dist
     environment:
       - DEBUG
       - PROFILE_BUILD
-  travis:
-    image: andredumas/travis-ci-cli
-    volumes:
-      - .:/repo:cached
-      - ~/.travis:/travis
 volumes:
   npm_cache:
+  node_modules:
+  bower_components:
