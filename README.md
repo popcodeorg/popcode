@@ -139,20 +139,18 @@ too. A simple `docker-compose up` will do the trick.
 
 #### Without Docker
 
-Still pretty easy. Just check out the code. You’ll need
-[Yarn](https://yarnpkg.com/), which is the cool new NPM. It’s [easy to
-install](https://yarnpkg.com/en/docs/install).
+Still pretty easy. You’ll just need a local installation of [Node.js](https://nodejs.org/en/download/).
 
-Once you’ve got it just run:
+Once you’ve got it run:
 
 ```bash
-$ yarn
+$ npm install
 ```
 
 That'll pull down the dependencies. Then run:
 
 ```bash
-$ yarn run dev
+$ npm start
 ```
 
 This will start a local static server, and open it in your browser. The first
@@ -162,7 +160,7 @@ assets are recompiled incrementally and your browser automatically reloads.
 When you're done, lint and make sure tests pass before opening a pull request:
 
 ```bash
-$ yarn test
+$ npm test
 ```
 
 ### Debug Mode ###
@@ -174,7 +172,22 @@ source code.
 
 To improve the situation, you can use **debug mode**, which configures Babel to
 compile the JavaScript to target only the latest version of Chrome, which
-supports most modern ES features.
+supports most modern ES features. To run in debug mode, start your development
+server with:
+
+```bash
+$ DEBUG=true npm start
+```
+
+### Running with Docker
+
+Popcode also comes with a `docker-compose` file to support running inside Docker
+with no local Node installation needed. If you’re a Docker user, you can install
+and run Popcode locally with:
+
+```bash
+$ docker-compose up
+```
 
 ### Developer Reference ###
 
