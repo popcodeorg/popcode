@@ -17,19 +17,19 @@ script:
   --env GOOGLE_ANALYTICS_TRACKING_ID
   --volume="$TRAVIS_BUILD_DIR/dist:/app/dist"
   popcode
-  npx gulp build
+  gulp build
 - >-
   docker run
   --volume=$TRAVIS_BUILD_DIR/dist:/app/dist
   popcode
-  npx eslint --no-eslintrc --env es5 dist
+  eslint --no-eslintrc --env es5 dist
 before_deploy:
 - >-
   docker run
   --env FIREBASE_APP
   --env FIREBASE_SECRET
   popcode
-  npx gulp syncFirebase
+  gulp syncFirebase
 deploy:
 - provider: s3
   access_key_id: AKIAJY2GYDQBE4HFF32Q
@@ -71,7 +71,7 @@ after_deploy:
   --env CLOUDFLARE_ZONE
   --env HOSTNAME
   popcode
-  npx gulp purgeCache
+  gulp purgeCache
 notifications:
   slack:
     secure: IJ0LSnahbfPFMFFgEK+wwSYEUWjJ2AFZz89oSmzSuKqEchM7AA2tpkCAPvN37cUksPE4YozVXxx++SQ4j+fk1lmhhddEUYO9ueB/UqD3iu0xCFR/CJ30ka7QDkfzkatKkn0H8MVU3FwEJ6ZbHJR2zJVUALPFw7AQ08EE4GpTC2TfWSiYuv1AnuVUC8ZkvGBjwFN1lQrAnHFS62sreNmYtBR0FHHo9DEE+NanYdtLnFYyGeDauWx7I1ERT1vnv4G+0vx5Guu7TGwC1uzHCTlciqSGPeaifaC+uXR/8VaTabZS4G1PsR8ROYt3S/RFtCEAfuhBvlcWdNnfLH7/xLhET4W35H/hhHmSaMYJCy/gnQW/bXfLCxtO5/luwM5nOM4NeQcRybqreBL/q4K78giw6ttpTo5EumBxXrYKo4PRWfOWkOhePotQ/IRzpsoMqFHxzlJxv9HPSnFb+11OTe3BsxfWpsHs233eIBpKYOcjpzXPP4GSq7FH2V7jL2lg6Cc81XUK2v8upJpPoWRRfM52LxemNi+uEMBrgLro6VA2O5qRDN/+mhr8wYS4dLms5uk6Hq87UA9xhlIUl0P9d6kfN0vHi+QzxLMLvA1ateFncaG7MKTgMNjsckziKlR2B8FZ1c3lT55RB/zfojGzrDs0l7TCKB+WKP5uPJEWw5/UC2A=
