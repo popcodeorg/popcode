@@ -2,7 +2,8 @@ language: minimal
 services:
 - docker
 install:
-- docker build --cache-from popcodeorg/popcode:latest --tag popcode .
+- docker pull popcodeorg/popcode:latest
+- docker build --pull --cache-from popcodeorg/popcode:latest --tag popcode .
 script:
 - docker run popcode bash -c 'npm ls > /dev/null'
 - docker run --env NODE_ENV=test popcode npm test
