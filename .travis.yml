@@ -47,6 +47,15 @@ deploy:
   on:
     repo: popcodeorg/popcode
     branch: master
+- provider: script
+  script: >
+    echo "$DOCKER_PASSWORD" |
+    docker login -u "$DOCKER_USERNAME" --password-stdin &&
+    docker push popcodeorg/popcode
+  on:
+    repo: popcodeorg/popcode
+    branch: master
+
 after_deploy:
 - >
   docker run
