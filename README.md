@@ -132,14 +132,7 @@ feedback from dozens of instructors.
 
 ### Running locally ###
 
-#### With Docker
-
-If you already use Docker, your best bet is to use it for Popcode development
-too. A simple `docker-compose up` will do the trick.
-
-#### Without Docker
-
-Still pretty easy. You’ll just need a local installation of [Node.js](https://nodejs.org/en/download/).
+Make sure you have a local installation of [Node.js](https://nodejs.org/en/download/).
 
 Once you’ve got it run:
 
@@ -186,6 +179,7 @@ with no local Node installation needed. If you’re a Docker user, you can insta
 and run Popcode locally with:
 
 ```bash
+$ docker pull popcodeorg/popcode:latest # Not required, but will speed up installation
 $ docker-compose up
 ```
 
