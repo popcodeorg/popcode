@@ -12,7 +12,6 @@ const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
 const cssnano = require('cssnano');
 const forOwn = require('lodash.forown');
-const git = require('git-rev-sync');
 const postcss = require('gulp-postcss');
 const postcssPresetEnv = require('postcss-preset-env');
 const webpack = require('webpack');
@@ -46,10 +45,6 @@ forOwn(supportedBrowsers, (version, browser) => {
   postcssBrowsers.push(`${browserForPostcss} >= ${version}`);
 });
 
-gulp.task('env', () => {
-  process.env.GIT_REVISION = git.short();
-});
-
 gulp.task('static', () => gulp.
   src(path.join(staticDir, '**/*')).
   pipe(gulp.dest(distDir)),
@@ -75,7 +70,7 @@ gulp.task('css', () => {
     pipe(browserSync.stream());
 });
 
-gulp.task('js', ['env'], () => new Promise((resolve, reject) => {
+gulp.task('js', () => new Promise((resolve, reject) => {
   webpack(
     webpackConfiguration(process.env.NODE_ENV),
     (error, stats) => {
