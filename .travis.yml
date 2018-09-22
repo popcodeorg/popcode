@@ -2,7 +2,7 @@ language: minimal
 services:
 - docker
 install:
-- docker build -t popcode .
+- docker build --cache-from popcodeorg/popcode:latest --tag popcode .
 script:
 - docker run popcode bash -c 'npm ls > /dev/null'
 - docker run --env NODE_ENV=test popcode npm test
@@ -23,7 +23,7 @@ script:
   popcode
   npx eslint --no-eslintrc --env es5 dist
 before_deploy:
-- docker run --env FIREBASE_SECRET npx gulp syncFirebase
+- docker run --env FIREBASE_SECRET popcode npx gulp syncFirebase
 deploy:
 - provider: s3
   access_key_id: AKIAJY2GYDQBE4HFF32Q
