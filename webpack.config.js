@@ -14,7 +14,6 @@ const VisualizerPlugin = require('webpack-visualizer-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash.escaperegexp');
-const git = require('git-rev-sync');
 const babel = require('babel-core');
 
 const babelLoaderVersion =
@@ -68,7 +67,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       FIREBASE_CLIENT_ID:
       /* eslint-disable-next-line max-len */
         '488497217137-c0mdq8uca6ot5o9u9avo3j5mfsi1q9v5.apps.googleusercontent.com',
-      GIT_REVISION: git.short(),
       NODE_ENV: env,
       WARN_ON_DROPPED_ERRORS: 'false',
       GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2',

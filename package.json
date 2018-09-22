@@ -278,7 +278,6 @@
     "eslint-plugin-react": "^7.10.0",
     "eslint_d": "^5.1.0",
     "exports-loader": "^0.7.0",
-    "git-rev-sync": "^1.6.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-postcss": "^7.0.0",
