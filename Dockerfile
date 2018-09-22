@@ -17,4 +17,6 @@ RUN if [ $install_dependencies = true ]; then npm ci; fi
 
 COPY . /app/
 
+ENTRYPOINT ["npx", "--quiet", "--no-install"]
+
 EXPOSE 3000
