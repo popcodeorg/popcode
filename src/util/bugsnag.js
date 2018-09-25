@@ -11,6 +11,7 @@ export const bugsnagClient = bugsnag({
   apiKey: config.bugsnagApiKey,
   appVersion: config.gitRevision,
   releaseStage: config.nodeEnv,
+  autoCaptureSessions: true,
   beforeSend(payload) {
     if (!store) {
       return;
