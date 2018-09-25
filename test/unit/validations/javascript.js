@@ -31,7 +31,16 @@ test('invalid LHS error followed by comment', validationTest(
 test('for loop with only initializer', validationTest(
   'for(var count=1){',
   partialRight(javascript, analyzer),
-  {reason: 'unexpected-token', row: 0, payload: {token: ')'}},
+  {
+    reason: 'strict-operators.custom-case',
+    row: 0,
+    payload: {goodOperator: ';', badOperator: ')'},
+  },
+  {
+    reason: 'unmatched',
+    row: 0,
+    payload: {openingSymbol: '{', closingSymbol: '}'},
+  },
 ));
 
 test('undeclared variable', validationTest(
