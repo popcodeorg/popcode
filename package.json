@@ -155,10 +155,10 @@
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
   "license": "MIT",
   "dependencies": {
-    "@firebase/app": "^0.3.3",
+    "@firebase/app": "^0.3.4",
     "@firebase/app-types": "^0.3.2",
-    "@firebase/auth": "^0.7.2",
-    "@firebase/database": "^0.3.4",
+    "@firebase/auth": "^0.7.6",
+    "@firebase/database": "^0.3.6",
     "@fortawesome/fontawesome-svg-core": "^1.2.4",
     "@fortawesome/free-brands-svg-icons": "^5.3.1",
     "@fortawesome/free-solid-svg-icons": "^5.3.1",
