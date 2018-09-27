@@ -178,7 +178,7 @@
         ],
         "import/no-unassigned-import": [
           2,
-          "allow": ["brace/**/*", "@firebase/*"]
+          {"allow": ["brace/**/*", "@firebase/*"]}
         ],
         "import/no-unresolved": [
           2
@@ -826,7 +826,7 @@
             "never"
         ],
         "switch-colon-spacing": [
-          2,
+          2
         ],
         "use-isnan": [
           2
