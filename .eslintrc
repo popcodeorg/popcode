@@ -926,6 +926,9 @@
     "private-props"
   ],
   "settings": {
-    "import/resolver": "webpack"
+    "import/resolver": "webpack",
+    "react": {
+      "version": "16.4.2"
+    }
   }
 }

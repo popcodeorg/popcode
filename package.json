@@ -236,7 +236,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "pretest": "npm run lint",
+    "pretest": "script/check-configs && npm run lint",
     "start": "gulp dev",
     "dev": "npm install && npm dedupe && npm start",
     "test": "karma start --single-run --no-auto-watch",
