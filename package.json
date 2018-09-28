@@ -241,7 +241,7 @@
     "dev": "npm install && npm dedupe && npm start",
     "test": "karma start --single-run --no-auto-watch",
     "autotest": "npm install && npm dedupe && karma start --no-single-run --auto-watch",
-    "lint": "eslint --ext .js,.jsx --plugin react src test *.js && stylelint src/**/*.css",
+    "lint": "eslint --report-unused-disable-directives --ext .js,.jsx --plugin react src test *.js && stylelint src/**/*.css",
     "fixlint": "eslint --ext .js,.jsx --plugin react --fix src test *.js",
     "toc": "doctoc README.md --github --title '## Table of Contents'",
     "preview": "rm -rvf dist/* && NODE_ENV=production gulp build && static -a 0.0.0.0 -p 3000 dist",

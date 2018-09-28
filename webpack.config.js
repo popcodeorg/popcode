@@ -1,5 +1,4 @@
 /* eslint-env node */
-/* eslint-disable import/unambiguous */
 /* eslint-disable import/no-commonjs */
 
 const fs = require('fs');
