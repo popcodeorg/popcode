@@ -276,6 +276,9 @@
     "no-array-constructor": [
       "error"
     ],
+    "no-async-promise-executor": [
+      "error"
+    ],
     "no-await-in-loop": [
       "error"
     ],
@@ -407,6 +410,9 @@
       "error"
     ],
     "no-loop-func": [
+      "error"
+    ],
+    "no-misleading-character-class": [
       "error"
     ],
     "no-mixed-requires": [
