@@ -825,6 +825,9 @@
         "callbacksLast": true
       }
     ],
+    "require-atomic-updates": [
+      "error"
+    ],
     "require-yield": [
       2
     ],
