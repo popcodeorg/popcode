@@ -16,7 +16,7 @@ const allBrowsers = [
   ['Firefox', '48', 'OS X', 'Sierra'],
 ];
 
-module.exports = function(config) {
+module.exports = function configure(config) {
   config.set({
     basePath: '',
 
