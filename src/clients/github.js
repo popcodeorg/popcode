@@ -290,25 +290,27 @@ async function createBranch(
   oldBranch,
   newBranch,
 ) {
-  await performWithRetryNetworkErrors(() => github.getRepo(userName, repoName).
-    createBranch(oldBranch, newBranch),
+  await performWithRetryNetworkErrors(
+    () => github.getRepo(userName, repoName).
+      createBranch(oldBranch, newBranch),
   );
 }
 
 async function updateRepoDescription(github, userName, repoName) {
   const url = `https://${userName}.github.io/${repoName}`;
-  await performWithRetryNetworkErrors(() => github.getRepo(userName, repoName).
-    updateRepository({
-      name: repoName,
-      description: url,
-      homepage: url,
-    }),
+  await performWithRetryNetworkErrors(
+    () => github.getRepo(userName, repoName).
+      updateRepository({
+        name: repoName,
+        description: url,
+        homepage: url,
+      }),
   );
 }
 
 async function createClient(token = null) {
-  const {'default': GitHub} = await retryingFailedImports(() =>
-    import(
+  const {'default': GitHub} = await retryingFailedImports(
+    () => import(
       /* webpackChunkName: "mainAsync" */
       'github-api',
     ),

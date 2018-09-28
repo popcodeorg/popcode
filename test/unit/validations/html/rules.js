@@ -25,7 +25,8 @@ test('misplaced close tag', (t) => {
         },
         match: {row: 3, column: 13},
       },
-    ]);
+    ],
+  );
   t.end();
 });
 
@@ -48,7 +49,8 @@ test('unclosed tag', (t) => {
           name: 'div',
         },
       },
-    ]);
+    ],
+  );
   t.end();
 });
 
@@ -67,7 +69,8 @@ test('unopened tag', (t) => {
           name: 'p',
         },
       },
-    ]);
+    ],
+  );
   t.end();
 });
 

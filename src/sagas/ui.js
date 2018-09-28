@@ -29,7 +29,8 @@ function* projectExport(
   successAction,
   failureAction,
   notDisplayedAction,
-  displayedAction) {
+  displayedAction,
+) {
   const exportWindow =
     yield call(openWindowWithContent, spinnerPageHtml);
   const {type, payload: {url, exportType}} =

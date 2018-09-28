@@ -92,6 +92,10 @@
     "eqeqeq": [
       2
     ],
+    "function-paren-newline": [
+      "error",
+      "consistent"
+    ],
     "func-names": [
       0
     ],

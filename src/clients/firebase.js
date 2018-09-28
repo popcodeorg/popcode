@@ -34,8 +34,8 @@ for (const scope of GOOGLE_SCOPES) {
 const {auth, loadDatabase} = buildFirebase();
 
 async function loadDatabaseSdk() {
-  return retryingFailedImports(() =>
-    import(
+  return retryingFailedImports(
+    () => import(
       /* webpackChunkName: "mainAsync" */
       '@firebase/database',
     ),
