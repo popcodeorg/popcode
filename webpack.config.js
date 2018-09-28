@@ -45,9 +45,11 @@ const babelrc = {
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
     escapeRegExp(path.join('/node_modules', modulePath)),
+    'u',
   );
   const moduleDependencyPattern = new RegExp(
     escapeRegExp(path.join('/node_modules', modulePath, 'node_modules')),
+    'u',
   );
 
   return filePath =>
@@ -71,11 +73,11 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2',
     }),
     new CircularDependencyPlugin({
-      exclude: /node_modules/,
+      exclude: /node_modules/u,
       failOnError: true,
     }),
     new webpack.NormalModuleReplacementPlugin(
-      /node_modules\/stylelint\/lib\/requireRule.js$/,
+      /node_modules\/stylelint\/lib\/requireRule.js$/u,
       path.resolve(__dirname, 'src/patches/stylelint/lib/requireRule.js'),
     ),
   ];
@@ -106,7 +108,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     plugins.push(
       new OfflinePlugin({
         caches: {
-          main: [/(?:^|~)(?:main|preview)[-.~]/, ':externals:'],
+          main: [/(?:^|~)(?:main|preview)[-.~]/u, ':externals:'],
           additional: [':rest:'],
         },
         safeToUseOptionalCaches: isProduction,
@@ -129,16 +131,16 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         defaultAttribute: 'defer',
         prefetch: {
           chunks: 'async',
-          test: /\.js$/,
+          test: /\.js$/u,
         },
         custom: [
           {
-            test: /^(?!(|.*~)main[.~-])/,
+            test: /^(?!(|.*~)main[.~-])/u,
             attribute: 'type',
             value: 'ref',
           },
           {
-            test: /(^|~)preview[.~-]/,
+            test: /(^|~)preview[.~-]/u,
             attribute: 'class',
             value: 'preview-bundle',
           },
@@ -175,7 +177,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
+          test: /\.jsx?$/u,
           include: [
             path.resolve(__dirname, 'src'),
             path.resolve(__dirname, 'test'),
@@ -186,7 +188,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           ],
         },
         {
-          test: /\.js$/,
+          test: /\.js$/u,
           use: ['source-map-loader'],
           enforce: 'pre',
         },
@@ -198,7 +200,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           use: ['raw-loader'],
         },
         {
-          test: /\.svg$/,
+          test: /\.svg$/u,
           use: [
             'svg-react-loader',
             {
@@ -241,7 +243,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           use: ['transform-loader/cacheable?brfs'],
         },
         {
-          test: /\.js$/,
+          test: /\.js$/u,
           include: [matchModule('htmllint')],
           use: [
             {
@@ -254,7 +256,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           ],
         },
         {
-          test: /\.js$/,
+          test: /\.js$/u,
           include: [
             matchModule('ansi-styles'),
             matchModule('ast-types'),
@@ -280,7 +282,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           ],
         },
         {
-          test: /\.js$/,
+          test: /\.js$/u,
           include: [
             path.resolve(__dirname, 'node_modules/brace/worker'),
             matchModule('autoprefixer'),
@@ -292,7 +294,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           use: ['null-loader'],
         },
         {
-          test: /\.js$/,
+          test: /\.js$/u,
           include: matchModule('moment/locale'),
           use: ['null-loader'],
         },

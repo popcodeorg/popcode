@@ -11,7 +11,7 @@ function isParsingNativelySupported() {
 
 if (!isParsingNativelySupported()) {
   proto.parseFromString = function(markup, type, ...rest) {
-    if (/^\s*text\/html\s*(?:;|$)/i.test(type)) {
+    if (/^\s*text\/html\s*(?:;|$)/iu.test(type)) {
       const doc = document.implementation.createHTMLDocument('');
       if (markup.toLowerCase().indexOf('<!doctype') > -1) {
         doc.documentElement.innerHTML = markup;

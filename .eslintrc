@@ -806,6 +806,9 @@
     "require-atomic-updates": [
       "error"
     ],
+    "require-unicode-regexp": [
+      "error"
+    ],
     "require-yield": [
       "error"
     ],

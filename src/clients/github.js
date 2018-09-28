@@ -16,8 +16,8 @@ export class EmptyGistError extends ExtendableError {}
 
 function normalizeTitle(title) {
   const titleWithoutPunctuationAndWhitespace = title.
-    replace(/[^\w\s]|_/g, '').
-    replace(/\W/g, '-');
+    replace(/[^\w\s]|_/gu, '').
+    replace(/\W/gu, '-');
 
   return titleWithoutPunctuationAndWhitespace;
 }
