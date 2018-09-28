@@ -158,6 +158,12 @@
     "import/no-amd": [
       "error"
     ],
+    "import/no-anonymous-default-export": [
+      "error",
+      {
+        "allowArrowFunction": true
+      }
+    ],
     "import/no-commonjs": [
       "error"
     ],

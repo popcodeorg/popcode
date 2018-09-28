@@ -24,4 +24,4 @@ if (!isParsingNativelySupported()) {
   };
 }
 
-export default {};
+export {};
