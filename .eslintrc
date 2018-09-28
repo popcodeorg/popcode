@@ -654,6 +654,9 @@
     "promise/prefer-await-to-then": [
       "error"
     ],
+    "promise/valid-params": [
+      "error"
+    ],
     "radix": [
       "error"
     ],
