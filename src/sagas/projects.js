@@ -121,7 +121,7 @@ export function* saveCurrentProject() {
   }
 }
 
-export default function* () {
+export default function*() {
   yield all([
     takeEvery('APPLICATION_LOADED', applicationLoaded),
     takeEvery('CREATE_PROJECT', createProject),

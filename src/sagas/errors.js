@@ -66,7 +66,7 @@ export function* validateSource(
   yield put(validatedSource(language, errors));
 }
 
-export default function* () {
+export default function*() {
   const tasks = new Map();
 
   yield all([

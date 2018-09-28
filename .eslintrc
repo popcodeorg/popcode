@@ -107,7 +107,8 @@
       2,
       {
         "before": false,
-        "after": true
+        "after": true,
+        "anonymous": "neither"
       }
     ],
     "getter-return": [

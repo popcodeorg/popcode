@@ -62,7 +62,7 @@ export function* exportProject() {
   );
 }
 
-export default function* () {
+export default function*() {
   yield all([
     debounceFor('UPDATE_PROJECT_SOURCE', userDoneTyping, 1000),
     takeEvery('POP_OUT_PROJECT', popOutProject),

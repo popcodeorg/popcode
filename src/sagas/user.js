@@ -163,7 +163,7 @@ export function* logOut() {
   yield call(signOut);
 }
 
-export default function* () {
+export default function*() {
   yield all([
     takeEvery('APPLICATION_LOADED', applicationLoaded),
     takeEvery('LINK_GITHUB_IDENTITY', linkGithubIdentity),
