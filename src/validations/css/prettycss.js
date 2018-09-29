@@ -5,25 +5,22 @@ import endsWith from 'lodash-es/endsWith';
 import Validator from '../Validator';
 
 const RADIAL_GRADIENT_EXPR =
-  /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/u;
+  /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/;
 
 const FILTER_VALUE_EXPR =
-  new RegExp(
-    [
-      '^blur\\(',
-      '^brightness\\(',
-      '^contrast\\(',
-      '^drop-shadow\\(',
-      '^grayscale\\(',
-      '^hue-rotate\\(',
-      '^invert\\(',
-      '^opacity\\(',
-      '^saturate\\(',
-      '^sepia\\(',
-      '^inherit$',
-    ].join('|'),
-    'u',
-  );
+  new RegExp([
+    '^blur\\(',
+    '^brightness\\(',
+    '^contrast\\(',
+    '^drop-shadow\\(',
+    '^grayscale\\(',
+    '^hue-rotate\\(',
+    '^invert\\(',
+    '^opacity\\(',
+    '^saturate\\(',
+    '^sepia\\(',
+    '^inherit$',
+  ].join('|'));
 
 function isIncorrectlyRejectedValue(value) {
   return isIncorrectlyRejectedRadialGradientValue(value) ||
@@ -66,7 +63,7 @@ const errorMap = {
       const thisLine = lines[lineNumber - 1];
 
       if (
-        errorToken.charNum - 1 === /\S/u.exec(thisLine).index &&
+        errorToken.charNum - 1 === /\S/.exec(thisLine).index &&
         !endsWith(trim(previousLine), ';')
       ) {
         return {

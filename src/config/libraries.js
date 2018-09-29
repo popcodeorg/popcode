@@ -1,4 +1,4 @@
-const libraries = {
+export default {
   jquery: {
     name: 'jQuery',
     predefined: ['$', 'jQuery'],
@@ -346,5 +346,3 @@ const libraries = {
     ],
   },
 };
-
-export default libraries;

@@ -33,7 +33,7 @@ export function* validatedSource() {
   }
 }
 
-export default function* compiledProjects() {
+export default function* () {
   yield all([
     throttle(100, 'VALIDATED_SOURCE', validatedSource),
     takeEvery('PROJECT_CREATED', validatedSource),

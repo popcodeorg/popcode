@@ -132,21 +132,19 @@ tap(project(), (importedProject) => {
   ));
 });
 
-tap(
-  project(),
-  rehydratedProject =>
-    test('projectRestoredFromLastSession', reducerTest(
-      reducer,
-      states.initial,
-      partial(
-        projectRestoredFromLastSession,
-        rehydratedProject,
-      ),
-      states.initial.set(
-        rehydratedProject.projectKey,
-        Project.fromJS(rehydratedProject),
-      ),
-    )),
+tap(project(), rehydratedProject =>
+  test('projectRestoredFromLastSession', reducerTest(
+    reducer,
+    states.initial,
+    partial(
+      projectRestoredFromLastSession,
+      rehydratedProject,
+    ),
+    states.initial.set(
+      rehydratedProject.projectKey,
+      Project.fromJS(rehydratedProject),
+    ),
+  )),
 );
 
 test('gistImported', (t) => {
@@ -234,9 +232,8 @@ tap([project(), project()], (projectsIn) => {
   ));
 });
 
-tap(
-  initProjects({1: true, 2: true}),
-  projects => test('userLoggedOut', reducerTest(
+tap(initProjects({1: true, 2: true}), projects =>
+  test('userLoggedOut', reducerTest(
     rootReducer,
     Immutable.fromJS({currentProject: {projectKey: '1'}, projects}),
     userLoggedOut,
@@ -247,49 +244,40 @@ tap(
   )),
 );
 
-tap(
-  initProjects({1: false}),
-  projects => test(
-    'toggleLibrary',
-    reducerTest(
-      reducer,
-      projects,
-      partial(toggleLibrary, '1', 'jquery', now),
-      projects.update(
-        '1',
-        projectIn =>
-          projectIn.set('enabledLibraries', new Immutable.Set(['jquery'])).
-            set('updatedAt', now),
-      ),
+tap(initProjects({1: false}), projects =>
+  test('toggleLibrary', reducerTest(
+    reducer,
+    projects,
+    partial(toggleLibrary, '1', 'jquery', now),
+    projects.update('1', projectIn =>
+      projectIn.set('enabledLibraries', new Immutable.Set(['jquery'])).
+        set('updatedAt', now),
     ),
-  ),
+  )),
 );
 
-tap(
-  initProjects({1: true}),
-  projects =>
-    test('hideComponent', reducerTest(
-      reducer,
-      projects,
-      partial(hideComponent, '1', 'output', now),
-      projects.updateIn(
-        ['1', 'hiddenUIComponents'],
-        components => components.add('output'),
-      ),
-    )),
+tap(initProjects({1: true}), projects =>
+  test('hideComponent', reducerTest(
+    reducer,
+    projects,
+    partial(hideComponent, '1', 'output', now),
+    projects.updateIn(
+      ['1', 'hiddenUIComponents'],
+      components => components.add('output'),
+    ),
+  )),
 );
 
-tap(
-  initProjects({1: true}), projects =>
-    test('unhideComponent', reducerTest(
-      reducer,
-      projects.updateIn(
-        ['1', 'hiddenUIComponents'],
-        components => components.add('output'),
-      ),
-      partial(unhideComponent, '1', 'output', now),
-      projects,
-    )),
+tap(initProjects({1: true}), projects =>
+  test('unhideComponent', reducerTest(
+    reducer,
+    projects.updateIn(
+      ['1', 'hiddenUIComponents'],
+      components => components.add('output'),
+    ),
+    partial(unhideComponent, '1', 'output', now),
+    projects,
+  )),
 );
 
 test('toggleComponent', (t) => {

@@ -1,6 +1,7 @@
 /* global process */
 /* eslint-env commonjs */
 /* eslint-disable import/no-commonjs */
+/* eslint-disable import/unambiguous */
 
 module.exports = {
   nodeEnv: (process.env.NODE_ENV || 'development'),

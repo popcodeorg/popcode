@@ -61,12 +61,12 @@ export function* validateSource(
   const validations = yield call(importValidations);
   const task = yield fork(validations[language], source, projectAttributes);
   tasks.set(language, task);
-  const validationErrors = yield join(task);
+  const errors = yield join(task);
   tasks.delete(language);
-  yield put(validatedSource(language, validationErrors));
+  yield put(validatedSource(language, errors));
 }
 
-export default function* errors() {
+export default function* () {
   const tasks = new Map();
 
   yield all([

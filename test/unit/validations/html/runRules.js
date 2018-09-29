@@ -52,8 +52,7 @@ test('openTag skips void tag', async(t) => {
     {
       openTag(location, tag) {
         t.fail(
-          `location: ${JSON.stringify(location)} tag: ${JSON.stringify(tag)}`,
-        );
+          `location: ${JSON.stringify(location)} tag: ${JSON.stringify(tag)}`);
       },
 
       * done() {
@@ -68,8 +67,7 @@ test('openTag skips self-closing non-void tag', async(t) => {
     {
       openTag(location, tag) {
         t.fail(
-          `location: ${JSON.stringify(location)} tag: ${JSON.stringify(tag)}`,
-        );
+          `location: ${JSON.stringify(location)} tag: ${JSON.stringify(tag)}`);
       },
 
       * done() {

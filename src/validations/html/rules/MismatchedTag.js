@@ -23,7 +23,7 @@ import findLastIndex from 'lodash-es/findLastIndex';
 
 import Code from './Code';
 
-export default class MismatchedTag {
+export default class {
   constructor() {
     this._openTagStack = [];
     this._mismatchStacksByOpenName = new Map();

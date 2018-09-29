@@ -25,8 +25,7 @@ export default function ProjectPickerButton({shouldShowSavedIndicator}) {
         className={
           classnames(
             'top-bar__project-saved',
-            {u__invisible: !shouldShowSavedIndicator},
-          )
+            {u__invisible: !shouldShowSavedIndicator})
         }
       >
         {t('top-bar.project-saved')}

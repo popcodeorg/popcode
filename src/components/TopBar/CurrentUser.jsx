@@ -31,8 +31,7 @@ export default function CurrentUser({
   if (isUserAnonymous && isLoginAvailable) {
     return (
       <div
-        className={classnames(
-          'top-bar__current-user',
+        className={classnames('top-bar__current-user',
           'top-bar__menu-button',
           'top-bar__menu-button_primary',
         )}

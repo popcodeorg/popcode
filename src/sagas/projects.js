@@ -91,9 +91,9 @@ export function* userAuthenticated() {
   const state = yield select();
   yield fork(saveCurrentProject);
 
-  const allProjects = yield call(loadAllProjects, getCurrentUserId(state));
+  const projects = yield call(loadAllProjects, getCurrentUserId(state));
 
-  yield put(projectsLoaded(allProjects));
+  yield put(projectsLoaded(projects));
 }
 
 export function* toggleLibrary() {
@@ -121,7 +121,7 @@ export function* saveCurrentProject() {
   }
 }
 
-export default function* projects() {
+export default function* () {
   yield all([
     takeEvery('APPLICATION_LOADED', applicationLoaded),
     takeEvery('CREATE_PROJECT', createProject),

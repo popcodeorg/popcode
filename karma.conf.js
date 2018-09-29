@@ -1,4 +1,5 @@
 /* eslint-env node */
+/* eslint-disable import/unambiguous */
 /* eslint-disable import/no-commonjs */
 
 const isDocker = require('is-docker');
@@ -16,7 +17,7 @@ const allBrowsers = [
   ['Firefox', '48', 'OS X', 'Sierra'],
 ];
 
-module.exports = function configure(config) {
+module.exports = function(config) {
   config.set({
     basePath: '',
 
@@ -53,9 +54,9 @@ module.exports = function configure(config) {
       customLaunchers[`browserStack${browser[0]}${browser[2]}`] = {
         base: 'BrowserStack',
         browser: browser[0],
-        browser_version: browser[1],
+        browser_version: browser[1], // eslint-disable-line camelcase
         os: browser[2],
-        os_version: browser[3],
+        os_version: browser[3], // eslint-disable-line camelcase
       };
     });
 
