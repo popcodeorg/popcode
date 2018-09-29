@@ -43,9 +43,9 @@ export function* applicationLoaded() {
 }
 
 function* handleInitialAuth() {
-  const {user, credentials} = yield take(loginState);
+  const {user: authUser, credentials} = yield take(loginState);
 
-  if (isNil(user)) {
+  if (isNil(authUser)) {
     yield put(userLoggedOut());
   } else {
     if (isEmpty(credentials)) {
@@ -54,22 +54,22 @@ function* handleInitialAuth() {
     }
 
     const sessionUid = yield call(getSessionUid);
-    if (user.uid !== sessionUid) {
+    if (authUser.uid !== sessionUid) {
       yield call(signOut);
       return;
     }
 
-    yield put(userAuthenticated(user, credentials));
+    yield put(userAuthenticated(authUser, credentials));
   }
 }
 
 function* handleAuthChange() {
   while (true) {
-    const {user, credentials} = yield take(loginState);
-    if (isNil(user)) {
+    const {user: authUser, credentials} = yield take(loginState);
+    if (isNil(authUser)) {
       yield put(userLoggedOut());
     } else {
-      yield put(userAuthenticated(user, credentials));
+      yield put(userAuthenticated(authUser, credentials));
     }
   }
 }
@@ -163,7 +163,7 @@ export function* logOut() {
   yield call(signOut);
 }
 
-export default function* () {
+export default function* user() {
   yield all([
     takeEvery('APPLICATION_LOADED', applicationLoaded),
     takeEvery('LINK_GITHUB_IDENTITY', linkGithubIdentity),

@@ -34,7 +34,8 @@ export default class InstructionsEditor extends React.Component {
       <div className="instructions-editor">
         <div className="instructions-editor__menu">
           <button
-            className={classnames('instructions-editor__menu-button',
+            className={classnames(
+              'instructions-editor__menu-button',
               'instructions-editor__menu-button_secondary',
             )}
             onClick={this._handleCancelEditing}

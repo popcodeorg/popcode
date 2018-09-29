@@ -4,7 +4,7 @@ import inRange from 'lodash-es/inRange';
 
 import Validator from '../Validator';
 
-const UNEXPECTED_TOKEN_EXPR = /^Unexpected token (.+)$/;
+const UNEXPECTED_TOKEN_EXPR = /^Unexpected token (.+)$/u;
 
 const errorMap = {
   'Unexpected string': ({token}) => ({

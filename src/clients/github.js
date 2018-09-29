@@ -16,8 +16,8 @@ export class EmptyGistError extends ExtendableError {}
 
 function normalizeTitle(title) {
   const titleWithoutPunctuationAndWhitespace = title.
-    replace(/[^\w\s]|_/g, '').
-    replace(/\W/g, '-');
+    replace(/[^\w\s]|_/gu, '').
+    replace(/\W/gu, '-');
 
   return titleWithoutPunctuationAndWhitespace;
 }
@@ -290,25 +290,27 @@ async function createBranch(
   oldBranch,
   newBranch,
 ) {
-  await performWithRetryNetworkErrors(() => github.getRepo(userName, repoName).
-    createBranch(oldBranch, newBranch),
+  await performWithRetryNetworkErrors(
+    () => github.getRepo(userName, repoName).
+      createBranch(oldBranch, newBranch),
   );
 }
 
 async function updateRepoDescription(github, userName, repoName) {
   const url = `https://${userName}.github.io/${repoName}`;
-  await performWithRetryNetworkErrors(() => github.getRepo(userName, repoName).
-    updateRepository({
-      name: repoName,
-      description: url,
-      homepage: url,
-    }),
+  await performWithRetryNetworkErrors(
+    () => github.getRepo(userName, repoName).
+      updateRepository({
+        name: repoName,
+        description: url,
+        homepage: url,
+      }),
   );
 }
 
 async function createClient(token = null) {
-  const {'default': GitHub} = await retryingFailedImports(() =>
-    import(
+  const {'default': GitHub} = await retryingFailedImports(
+    () => import(
       /* webpackChunkName: "mainAsync" */
       'github-api',
     ),

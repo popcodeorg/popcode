@@ -29,7 +29,8 @@ function* projectExport(
   successAction,
   failureAction,
   notDisplayedAction,
-  displayedAction) {
+  displayedAction,
+) {
   const exportWindow =
     yield call(openWindowWithContent, spinnerPageHtml);
   const {type, payload: {url, exportType}} =
@@ -61,7 +62,7 @@ export function* exportProject() {
   );
 }
 
-export default function* () {
+export default function* ui() {
   yield all([
     debounceFor('UPDATE_PROJECT_SOURCE', userDoneTyping, 1000),
     takeEvery('POP_OUT_PROJECT', popOutProject),

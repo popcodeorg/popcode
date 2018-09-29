@@ -4,7 +4,7 @@ import resources from '../../locales';
 
 import applyCustomI18nFormatters from './i18nFormatting';
 
-export default function() {
+export default function initI18n() {
   init({
     fallbackLng: 'en',
     resources,

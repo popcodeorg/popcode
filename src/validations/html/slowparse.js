@@ -28,7 +28,7 @@ const errorMap = {
   INVALID_TAG_NAME: (error, source) => {
     const tagName = error.openTag.name;
     if (tagName === '') {
-      const tagMatch = /^<\s+([A-Za-z0-9-]+)/.exec(
+      const tagMatch = /^<\s+([A-Za-z0-9-]+)/u.exec(
         source.slice(error.openTag.start),
       );
       if (tagMatch) {
