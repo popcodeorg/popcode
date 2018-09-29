@@ -43,7 +43,7 @@ export default (rules, source) => {
     );
     parser.write(source);
     parser.end(() => {
-      resolve(function* getRules() {
+      resolve(function* () {
         for (const rule of rules) {
           yield* rule.done();
         }

@@ -58,8 +58,7 @@ function errors(stateIn, action) {
           'items',
           items => items.push(Error.fromJS(action.payload.error)).
             sortBy(error => error.get('row')),
-        ).set('state', 'runtime-error'),
-      );
+        ).set('state', 'runtime-error'));
 
     case 'VALIDATED_SOURCE':
       if (action.payload.errors.length) {

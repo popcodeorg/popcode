@@ -10,8 +10,8 @@ function isParsingNativelySupported() {
 }
 
 if (!isParsingNativelySupported()) {
-  proto.parseFromString = function parseFromString(markup, type, ...rest) {
-    if (/^\s*text\/html\s*(?:;|$)/iu.test(type)) {
+  proto.parseFromString = function(markup, type, ...rest) {
+    if (/^\s*text\/html\s*(?:;|$)/i.test(type)) {
       const doc = document.implementation.createHTMLDocument('');
       if (markup.toLowerCase().indexOf('<!doctype') > -1) {
         doc.documentElement.innerHTML = markup;
@@ -24,4 +24,4 @@ if (!isParsingNativelySupported()) {
   };
 }
 
-export {};
+export default {};

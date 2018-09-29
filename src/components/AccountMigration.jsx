@@ -34,7 +34,7 @@ export default function AccountMigration({
       <div className="account-migration">
         <h1 className="account-migration__header">
           {t(`account-migration.header.${
-            migration.state.key.toLowerCase().replace(/_/gu, '-')
+            migration.state.key.toLowerCase().replace(/_/g, '-')
           }`)}
         </h1>
         <div className="account-migration__accounts">
