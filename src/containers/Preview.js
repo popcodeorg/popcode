@@ -37,19 +37,19 @@ function generateConsoleLogDispatcher(dispatch, timeout) {
     queue = [];
   }
 
-  const timer = throttle(flushQueue, timeout, {
+  const throttledFlushQueue = throttle(flushQueue, timeout, {
     leading: true,
     trailing: true,
   });
 
   return function addLogEntry(value, compiledProjectKey) {
     queue.push({value, compiledProjectKey, key: uuid().toString()});
-    timer();
+    throttledFlushQueue();
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  const logDispatcher = generateConsoleLogDispatcher(dispatch, 1000);
+  const dispatchConsoleLog = generateConsoleLogDispatcher(dispatch, 1000);
   return {
     onConsoleError(key, name, message, compiledProjectKey) {
       dispatch(consoleErrorProduced(key, name, message, compiledProjectKey));
@@ -60,7 +60,7 @@ function mapDispatchToProps(dispatch) {
     },
 
     onConsoleLog(value, compiledProjectKey) {
-      logDispatcher(value, compiledProjectKey);
+      dispatchConsoleLog(value, compiledProjectKey);
     },
 
     onPopOutProject() {

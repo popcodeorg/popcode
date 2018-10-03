@@ -39,5 +39,5 @@ export const consoleInputChanged = createAction(
 
 export const consoleLogBatchProduced = createAction(
   'CONSOLE_LOG_BATCH_PRODUCED',
-  actions => ({actions}),
+  entries => ({entries}),
 );
