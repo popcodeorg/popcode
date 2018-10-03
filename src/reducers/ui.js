@@ -118,6 +118,9 @@ export default function ui(stateIn, action) {
         snapshotKey: action.payload,
       });
 
+    case 'LOGIN_REMINDER':
+      return addNotification(state, 'login-reminder', 'notice');
+
     case 'APPLICATION_LOADED':
       if (action.payload.isExperimental) {
         return state.set('isExperimental', true);

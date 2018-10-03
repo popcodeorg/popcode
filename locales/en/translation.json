@@ -74,7 +74,8 @@
     "gapi-client-unavailable": "It looks like you are having trouble with your internet connection. You can continue to work in Popcode but you won’t be able to log in or save your work. Proceed carefully!",
     "assignment-export-complete": "Your assignment is created on Google Classroom",
     "assignment-draft-export-complete": "Your assignment draft has been created on Google Classroom",
-    "assignment-not-created": "Your assignment was not created - make sure you are a teacher of this classroom to post assignments"
+    "assignment-not-created": "Your assignment was not created - make sure you are a teacher of this classroom to post assignments",
+    "login-reminder": "Don't forget to log in :)"
   },
   "languages": {
     "html": "HTML",
