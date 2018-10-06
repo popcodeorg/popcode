@@ -14,6 +14,7 @@ const cssnano = require('cssnano');
 const forOwn = require('lodash.forown');
 const postcss = require('gulp-postcss');
 const postcssPresetEnv = require('postcss-preset-env');
+const postcssNext = require('postcss-cssnext');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const cloudflare = require('cloudflare');
@@ -51,7 +52,10 @@ gulp.task('static', () => gulp.
 );
 
 gulp.task('css', () => {
-  const processors = [postcssPresetEnv({browsers: postcssBrowsers})];
+  const processors = [
+    postcssNext(),
+    postcssPresetEnv({browsers: postcssBrowsers}),
+  ];
   if (process.env.NODE_ENV === 'production') {
     processors.push(cssnano());
   }
