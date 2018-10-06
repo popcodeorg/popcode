@@ -17,7 +17,7 @@ export default class Project extends Record({
   sources: new Sources(),
   enabledLibraries: new Set(),
   hiddenUIComponents: new Set(['console']),
-  updatedAt: new Date(),
+  updatedAt: null,
   instructions: '',
   externalLocations: new ExternalLocations(),
 }) {
