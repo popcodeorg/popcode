@@ -51,7 +51,14 @@ gulp.task('static', () => gulp.
 );
 
 gulp.task('css', () => {
-  const processors = [postcssPresetEnv({browsers: postcssBrowsers})];
+  const processors = [
+    postcssPresetEnv({
+      features: {
+        'nesting-rules': true,
+      },
+      browsers: postcssBrowsers,
+    }),
+  ];
   if (process.env.NODE_ENV === 'production') {
     processors.push(cssnano());
   }
