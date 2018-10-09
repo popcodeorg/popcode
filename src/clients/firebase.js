@@ -264,7 +264,7 @@ export function setSessionUid() {
       uid,
       {
         expires: new Date(Date.now() + SESSION_TTL_MS),
-        secure: true
+        secure: true,
       },
     );
   }
