@@ -262,7 +262,8 @@ export function setSessionUid() {
     Cookies.set(
       VALID_SESSION_UID_COOKIE,
       uid,
-      {expires: new Date(Date.now() + SESSION_TTL_MS)},
+      {expires: new Date(Date.now() + SESSION_TTL_MS),
+       secure: true},
     );
   }
 }
