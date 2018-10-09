@@ -1,6 +1,10 @@
 import applicationLoaded from './applicationLoaded';
 
 import {
+  createAssignment,
+} from './assignments';
+
+import {
   createSnapshot,
   exportProject,
   projectExportDisplayed,
@@ -38,6 +42,10 @@ import {
   cancelEditingInstructions,
   showSaveIndicator,
   hideSaveIndicator,
+  openAssignmentCreator,
+  closeAssignmentCreator,
+  coursesLoaded,
+  coursesFullyLoaded,
 } from './ui';
 
 import {
@@ -130,4 +138,9 @@ export {
   updateResizableFlex,
   startAccountMigration,
   dismissAccountMigration,
+  createAssignment,
+  openAssignmentCreator,
+  closeAssignmentCreator,
+  coursesLoaded,
+  coursesFullyLoaded,
 };

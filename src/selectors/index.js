@@ -2,6 +2,8 @@ import getAllProjectKeys from './getAllProjectKeys';
 import getAllProjects from './getAllProjects';
 import getCompiledProjects from './getCompiledProjects';
 import getConsoleHistory from './getConsoleHistory';
+import getCourse from './getCourse';
+import getCourses from './getCourses';
 import getCurrentAccountMigration from './getCurrentAccountMigration';
 import getCurrentCompiledProjectKey from './getCurrentCompiledProjectKey';
 import getCurrentConsoleInputValue from './getCurrentConsoleInputValue';
@@ -9,6 +11,7 @@ import getCurrentProject from './getCurrentProject';
 import getCurrentProjectInstructions from './getCurrentProjectInstructions';
 import getCurrentProjectExportedRepoName
   from './getCurrentProjectExportedRepoName';
+import getCurrentProjectPreview from './getCurrentProjectPreview';
 import getCurrentProjectKey from './getCurrentProjectKey';
 import getCurrentUser from './getCurrentUser';
 import getCurrentUserId from './getCurrentUserId';
@@ -18,8 +21,10 @@ import getErrors from './getErrors';
 import getHiddenUIComponents from './getHiddenUIComponents';
 import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
+import getParsedDate from './getParsedDate';
 import getProject from './getProject';
 import getRequestedFocusedLine from './getRequestedFocusedLine';
+import isAssignmentCreatorOpen from './isAssignmentCreatorOpen';
 import isClassroomExportInProgress from './isClassroomExportInProgress';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
@@ -40,6 +45,8 @@ import isUserAuthenticatedWithGithub from './isUserAuthenticatedWithGithub';
 import isUserAuthenticatedWithGoogle from './isUserAuthenticatedWithGoogle';
 import makeGetProjectPreview from './makeGetProjectPreview';
 import makeGetResizableFlexGrow from './makeGetResizableFlexGrow';
+import makeIsRemoteCollectionFullyLoaded
+  from './makeIsRemoteCollectionFullyLoaded';
 
 export {
   getAllProjectKeys,
@@ -47,12 +54,15 @@ export {
   getCompiledProjects,
   getConsoleHistory,
   getCurrentAccountMigration,
+  getCourse,
+  getCourses,
   getCurrentCompiledProjectKey,
   getCurrentConsoleInputValue,
   getCurrentProject,
   getCurrentProjectExportedRepoName,
   getCurrentProjectInstructions,
   getCurrentProjectKey,
+  getCurrentProjectPreview,
   getCurrentUser,
   getCurrentUserId,
   getCurrentValidationState,
@@ -61,8 +71,10 @@ export {
   getHiddenUIComponents,
   getNotifications,
   getOpenTopBarMenu,
+  getParsedDate,
   getProject,
   getRequestedFocusedLine,
+  isAssignmentCreatorOpen,
   isClassroomExportInProgress,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
@@ -82,4 +94,5 @@ export {
   isUserAuthenticatedWithGoogle,
   makeGetProjectPreview,
   makeGetResizableFlexGrow,
+  makeIsRemoteCollectionFullyLoaded,
 };

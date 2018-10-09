@@ -13,3 +13,9 @@ export const AccountMigrationState = new Enum([
   'COMPLETE',
   'ERROR',
 ]);
+
+export const AssignmentState = new Enum([
+  'PUBLISHED',
+  'DRAFT',
+  'ASSIGNMENT',
+]);

@@ -43,6 +43,7 @@ export default function TopBar({
   isUserAnonymous,
   isUserAuthenticated,
   isUserAuthenticatedWithGithub,
+  isUserAuthenticatedWithGoogle,
   isUserTyping,
   isSnapshotInProgress,
   isTextSizeLarge,
@@ -60,6 +61,7 @@ export default function TopBar({
   onExportToClassroom,
   onLinkGitHub,
   onLogOut,
+  onOpenAssignmentCreator,
   onStartGithubLogIn,
   onStartGoogleLogIn,
   onStartEditingInstructions,
@@ -92,10 +94,12 @@ export default function TopBar({
         isOpen={openMenu === 'export'}
         isRepoExportInProgress={isRepoExportInProgress}
         isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
+        isUserAuthenticatedWithGoogle={isUserAuthenticatedWithGoogle}
         onClick={partial(onClickMenu, 'export')}
         onExportGist={onExportGist}
         onExportRepo={onExportRepo}
         onExportToClassroom={onExportToClassroom}
+        onOpenAssignmentCreator={onOpenAssignmentCreator}
         onUpdateRepo={onUpdateRepo}
       />
       <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
@@ -155,6 +159,7 @@ TopBar.propTypes = {
   isUserAnonymous: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
   isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
+  isUserAuthenticatedWithGoogle: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool.isRequired,
   openMenu: PropTypes.string,
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -170,6 +175,7 @@ TopBar.propTypes = {
   onExportToClassroom: PropTypes.func.isRequired,
   onLinkGitHub: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
+  onOpenAssignmentCreator: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
   onStartGithubLogIn: PropTypes.func.isRequired,
   onStartGoogleLogIn: PropTypes.func.isRequired,

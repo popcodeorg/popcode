@@ -68,3 +68,20 @@ export const showSaveIndicator = createAction(
 export const hideSaveIndicator = createAction(
   'HIDE_SAVE_INDICATOR',
 );
+
+export const openAssignmentCreator = createAction(
+  'OPEN_ASSIGNMENT_CREATOR',
+);
+
+export const closeAssignmentCreator = createAction(
+  'CLOSE_ASSIGNMENT_CREATOR',
+);
+
+export const coursesLoaded = createAction(
+  'COURSES_LOADED',
+  courses => ({courses}),
+);
+
+export const coursesFullyLoaded = createAction(
+  'COURSES_FULLY_LOADED',
+);

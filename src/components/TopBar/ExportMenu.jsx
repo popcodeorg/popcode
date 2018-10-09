@@ -17,10 +17,12 @@ const ExportMenu = createMenu({
     isRepoExportInProgress,
     isClassroomExportInProgress,
     isUserAuthenticatedWithGithub,
+    isUserAuthenticatedWithGoogle,
     onExportGist,
     onExportRepo,
     onUpdateRepo,
     onExportToClassroom,
+    onOpenAssignmentCreator,
   }) {
     return tap([], (items) => {
       items.push(
@@ -66,6 +68,16 @@ const ExportMenu = createMenu({
           );
         }
       }
+      if (isUserAuthenticatedWithGoogle) {
+        items.push(
+          <MenuItem
+            key="assignmentCreatorr"
+            onClick={onOpenAssignmentCreator}
+          >
+            {t('top-bar.create-assignment')}
+          </MenuItem>,
+        );
+      }
     });
   },
 })(ExportMenuButton);
@@ -78,9 +90,11 @@ ExportMenu.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,
   isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
+  isUserAuthenticatedWithGoogle: PropTypes.bool.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onExportToClassroom: PropTypes.func.isRequired,
+  onOpenAssignmentCreator: PropTypes.func.isRequired,
   onUpdateRepo: PropTypes.func.isRequired,
 };
 

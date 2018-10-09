@@ -23,6 +23,8 @@ import {
   cancelEditingInstructions,
   showSaveIndicator,
   hideSaveIndicator,
+  openAssignmentCreator,
+  closeAssignmentCreator,
 } from '../../../src/actions/ui';
 import {
   snapshotCreated,
@@ -45,6 +47,10 @@ import {
   projectCompiled,
   projectCompilationFailed,
 } from '../../../src/actions';
+import {
+  assignmentCreated,
+  assignmentNotCreated,
+} from '../../../src/actions/assignments';
 
 const initialState = new UiState();
 
@@ -368,3 +374,35 @@ test('toggleTopBarMenu', (t) => {
     initialState.set('openTopBarMenu', 'silly'),
   ));
 });
+
+test('assignmentCreatorOpenAndClose', (t) => {
+  t.test('open assignment creator', reducerTest(
+    reducer,
+    initialState,
+    openAssignmentCreator,
+    initialState.set('isAssignmentCreatorOpen', true),
+  ));
+
+  t.test('open assignment creator', reducerTest(
+    reducer,
+    initialState.set('isAssignmentCreatorOpen', true),
+    closeAssignmentCreator,
+    initialState,
+  ));
+});
+
+test('assignmentCreated', reducerTest(
+  reducer,
+  initialState,
+  partial(assignmentCreated, {}),
+  withNotification('project-export-complete', 'notice').
+    set('isAssignmentCreatorOpen', false),
+));
+
+test('assignmentCreated', reducerTest(
+  reducer,
+  initialState,
+  partial(assignmentNotCreated, {}),
+  withNotification('assignment-not-created', 'error').
+    set('isAssignmentCreatorOpen', false),
+));
