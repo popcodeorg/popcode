@@ -6,13 +6,20 @@ export default createSelector(
   projects => projects.
     sort((...args) => {
       const [firstProj, secondProj] = args;
-      if (isNull(firstProj.updatedAt)) {
+      const firstProjUpdateTime = firstProj.updatedAt;
+      const secondProjUpdateTime = secondProj.updatedAt;
+      const isFirstProjNull = isNull(firstProjUpdateTime);
+      const isSecondProjNull = isNull(secondProjUpdateTime);
+      if (isFirstProjNull && isSecondProjNull) {
+        return 0;
+      }
+      if (isFirstProjNull) {
         return -1;
       }
-      if (isNull(secondProj.updatedAt)) {
+      if (isSecondProjNull) {
         return 1;
       }
-      return secondProj.updatedAt - firstProj.updatedAt;
+      return secondProjUpdateTime - firstProjUpdateTime;
     }).
     keySeq().
     toJS(),
