@@ -73,17 +73,17 @@ export default function console(stateIn, {type, payload, meta}) {
       return initialState;
     case 'CONSOLE_INPUT_CHANGED':
       return state.set('currentInputValue', payload.value);
-    case 'CONSOLE_LOG_BATCH_PRODUCED': {
-      const newHistory = state.get('history').withMutations((map) => {
-        payload.entries.forEach(({value, compiledProjectKey, key}) => {
-          map.set(key, new ConsoleEntry({
-            value,
-            evaluatedByCompiledProjectKey: compiledProjectKey,
-          }));
-        });
-      });
-      return state.set('history', newHistory);
-    }
+    case 'CONSOLE_LOG_BATCH_PRODUCED':
+      return state.update('history', history =>
+        history.withMutations((map) => {
+          payload.entries.forEach(({value, compiledProjectKey, key}) => {
+            map.set(key, new ConsoleEntry({
+              value,
+              evaluatedByCompiledProjectKey: compiledProjectKey,
+            }));
+          });
+        }),
+      );
     case 'PREVIOUS_CONSOLE_HISTORY': {
       const historyIndex = state.historyEntryIndex + 1;
 
