@@ -5,21 +5,21 @@ export default createSelector(
   state => state.get('projects'),
   projects => projects.
     sort((...args) => {
-      const [firstProj, secondProj] = args;
-      const firstProjUpdateTime = firstProj.updatedAt;
-      const secondProjUpdateTime = secondProj.updatedAt;
-      const isFirstProjNull = isNull(firstProjUpdateTime);
-      const isSecondProjNull = isNull(secondProjUpdateTime);
-      if (isFirstProjNull && isSecondProjNull) {
+      const [firstProject, secondProject] = args;
+      const firstProjectUpdatedAt = firstProject.updatedAt;
+      const secondProjectUpdatedAt = secondProject.updatedAt;
+      const isFirstProjectNull = isNull(firstProjectUpdatedAt);
+      const isSecondProjectNull = isNull(secondProjectUpdatedAt);
+      if (isFirstProjectNull && isSecondProjectNull) {
         return 0;
       }
-      if (isFirstProjNull) {
+      if (isFirstProjectNull) {
         return -1;
       }
-      if (isSecondProjNull) {
+      if (isSecondProjectNull) {
         return 1;
       }
-      return secondProjUpdateTime - firstProjUpdateTime;
+      return secondProjectUpdatedAt - firstProjectUpdatedAt;
     }).
     keySeq().
     toJS(),
