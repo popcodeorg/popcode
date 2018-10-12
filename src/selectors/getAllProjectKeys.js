@@ -4,20 +4,19 @@ import isNull from 'lodash-es/isNull';
 export default createSelector(
   state => state.get('projects'),
   projects => projects.
-    sort((...args) => {
-      const [firstProject, secondProject] = args;
-      const firstProjectUpdatedAt = firstProject.updatedAt;
-      const secondProjectUpdatedAt = secondProject.updatedAt;
-      const isFirstProjectNull = isNull(firstProjectUpdatedAt);
-      const isSecondProjectNull = isNull(secondProjectUpdatedAt);
-      if (isFirstProjectNull && isSecondProjectNull) {
-        return 0;
-      }
-      if (isFirstProjectNull) {
+    sort((
+      {updatedAt: firstProjectUpdatedAt,
+        updatedAt: secondProjectUpdatedAt}) => {
+      const isFirstProjectPristine = isNull(firstProjectUpdatedAt);
+      const isSecondProjectPristine = isNull(secondProjectUpdatedAt);
+      if (isFirstProjectPristine) {
+        if (isSecondProjectPristine) {
+          return 0;
+        }
         return -1;
       }
-      if (isSecondProjectNull) {
-        return 1;
+      if (isSecondProjectPristine) {
+        return -1;
       }
       return secondProjectUpdatedAt - firstProjectUpdatedAt;
     }).
