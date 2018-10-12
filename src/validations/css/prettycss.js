@@ -8,6 +8,7 @@ const RADIAL_GRADIENT_EXPR =
   /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/u;
 
 const FILTER_VALUE_EXPR =
+  // eslint-disable-next-line require-unicode-regexp
   new RegExp(
     [
       '^blur\\(',
@@ -22,7 +23,6 @@ const FILTER_VALUE_EXPR =
       '^sepia\\(',
       '^inherit$',
     ].join('|'),
-    'u',
   );
 
 function isIncorrectlyRejectedValue(value) {
