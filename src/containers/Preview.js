@@ -1,10 +1,12 @@
 import {connect} from 'react-redux';
+import uuid from 'uuid/v4';
+import throttle from 'lodash-es/throttle';
 
 import Preview from '../components/Preview';
 import {
   addRuntimeError,
   consoleErrorProduced,
-  consoleLogProduced,
+  consoleLogBatchProduced,
   consoleValueProduced,
   popOutProject,
   refreshPreview,
@@ -27,7 +29,27 @@ function mapStateToProps(state) {
   };
 }
 
+function generateConsoleLogDispatcher(dispatch, timeout) {
+  let queue = [];
+
+  function flushQueue() {
+    dispatch(consoleLogBatchProduced(queue));
+    queue = [];
+  }
+
+  const throttledFlushQueue = throttle(flushQueue, timeout, {
+    leading: true,
+    trailing: true,
+  });
+
+  return function addLogEntry(value, compiledProjectKey) {
+    queue.push({value, compiledProjectKey, key: uuid().toString()});
+    throttledFlushQueue();
+  };
+}
+
 function mapDispatchToProps(dispatch) {
+  const dispatchConsoleLog = generateConsoleLogDispatcher(dispatch, 1000);
   return {
     onConsoleError(key, name, message, compiledProjectKey) {
       dispatch(consoleErrorProduced(key, name, message, compiledProjectKey));
@@ -38,7 +60,7 @@ function mapDispatchToProps(dispatch) {
     },
 
     onConsoleLog(value, compiledProjectKey) {
-      dispatch(consoleLogProduced(value, compiledProjectKey));
+      dispatchConsoleLog(value, compiledProjectKey);
     },
 
     onPopOutProject() {
