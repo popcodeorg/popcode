@@ -74,8 +74,9 @@ export default function console(stateIn, {type, payload, meta}) {
     case 'CONSOLE_INPUT_CHANGED':
       return state.set('currentInputValue', payload.value);
     case 'CONSOLE_LOG_BATCH_PRODUCED':
-      return state.update('history', history =>
-        history.withMutations((map) => {
+      return state.update(
+        'history',
+        history => history.withMutations((map) => {
           payload.entries.forEach(({value, compiledProjectKey, key}) => {
             map.set(key, new ConsoleEntry({
               value,
