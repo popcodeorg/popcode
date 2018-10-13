@@ -5,8 +5,9 @@ export default createSelector(
   state => state.get('projects'),
   projects => projects.
     sort((
-      {updatedAt: firstProjectUpdatedAt,
-        updatedAt: secondProjectUpdatedAt}) => {
+      {updatedAt: firstProjectUpdatedAt},
+      {updatedAt: secondProjectUpdatedAt},
+    ) => {
       const isFirstProjectPristine = isNull(firstProjectUpdatedAt);
       const isSecondProjectPristine = isNull(secondProjectUpdatedAt);
       if (isFirstProjectPristine) {
@@ -16,7 +17,7 @@ export default createSelector(
         return -1;
       }
       if (isSecondProjectPristine) {
-        return -1;
+        return 1;
       }
       return secondProjectUpdatedAt - firstProjectUpdatedAt;
     }).
