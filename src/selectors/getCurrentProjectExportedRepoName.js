@@ -6,7 +6,8 @@ import getCurrentProject from './getCurrentProject';
 export default createSelector(
   [getCurrentProject],
   currentProject =>
-    currentProject ? get(currentProject,
+    currentProject ? get(
+      currentProject,
       ['externalLocations', 'githubRepoName'],
       null,
     ) : null,

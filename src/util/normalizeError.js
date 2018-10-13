@@ -10,12 +10,12 @@ const normalizers = {
     TypeError: (message) => {
       let match;
 
-      match = /^(\w+) is not a function$/.exec(message);
+      match = /^(\w+) is not a function$/u.exec(message);
       if (match) {
         return {type: 'not-a-function', params: {name: match[1]}};
       }
 
-      match = /^Cannot (read|set) property '(.+)' of (null|undefined)$/.
+      match = /^Cannot (read|set) property '(.+)' of (null|undefined)$/u.
         exec(message);
       if (match) {
         return {
@@ -32,7 +32,7 @@ const normalizers = {
     TypeError: (message) => {
       let match;
 
-      match = /^(\w+) is not a function. \(In '\w+\(\)', '\w+' is (\w+|an instance of (\w+))\)$/.exec(message); // eslint-disable-line max-len
+      match = /^(\w+) is not a function. \(In '\w+\(\)', '\w+' is (\w+|an instance of (\w+))\)$/u.exec(message); // eslint-disable-line max-len
 
       if (match) {
         if (match[3]) {
@@ -55,7 +55,7 @@ const normalizers = {
         };
       }
 
-      match = /^(null|undefined) is not an object \(.*\)$/.exec(message);
+      match = /^(null|undefined) is not an object \(.*\)$/u.exec(message);
       if (match) {
         return {type: `access-property-of-${match[1]}`};
       }
@@ -68,12 +68,12 @@ const normalizers = {
     TypeError: (message) => {
       let match;
 
-      match = /^(\w+) is not a function$/.exec(message);
+      match = /^(\w+) is not a function$/u.exec(message);
       if (match) {
         return {type: 'not-a-function', params: {name: match[1]}};
       }
 
-      match = /^([\w.]+) is (null|undefined)$/.exec(message);
+      match = /^([\w.]+) is (null|undefined)$/u.exec(message);
       if (match) {
         return {
           type: `access-property-of-${match[2]}`,

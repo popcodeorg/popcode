@@ -76,7 +76,7 @@ export function* applicationLoaded() {
   }
 }
 
-export default function* () {
+export default function* clients() {
   yield all([
     takeEvery('CREATE_SNAPSHOT', createSnapshot),
     takeEvery('EXPORT_PROJECT', exportProject),
