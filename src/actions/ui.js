@@ -64,3 +64,12 @@ export const coursesLoaded = createAction('COURSES_LOADED', courses => ({
 export const coursesFullyLoaded = createAction('COURSES_FULLY_LOADED');
 
 export const toggleArchivedView = createAction('TOGGLE_ARCHIVED_VIEW');
+
+export const setLoginReminder = createAction('SET_LOGIN_REMINDER');
+
+export const disableLoginReminder = createAction('DISABLE_LOGIN_REMINDER');
+
+export const triggerLoginReminder = createAction(
+  'TRIGGER_LOGIN_REMINDER',
+  userIsAuthenticated => ({userIsAuthenticated}),
+);

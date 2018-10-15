@@ -295,6 +295,10 @@ export default class Workspace extends React.Component {
     );
   }
 
+  _setOrDisableLoginReminder() {
+    const {isUserAuthenticated} = this.props;
+  }
+
   render() {
     return (
       <div className="layout">
@@ -322,6 +326,7 @@ Workspace.propTypes = {
   isDraggingColumnDivider: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   isFlexResizingSupported: PropTypes.bool.isRequired,
+  isUserAuthenticated: PropTypes.bool.isRequired,
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
   resizableFlexRefs: PropTypes.array.isRequired,
   shouldRenderOutput: PropTypes.bool.isRequired,

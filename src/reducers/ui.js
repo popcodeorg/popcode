@@ -118,9 +118,6 @@ export default function ui(stateIn, action) {
         snapshotKey: action.payload,
       });
 
-    case 'LOGIN_REMINDER':
-      return addNotification(state, 'login-reminder', 'notice');
-
     case 'APPLICATION_LOADED':
       if (action.payload.isExperimental) {
         return state.set('isExperimental', true);
@@ -225,6 +222,18 @@ export default function ui(stateIn, action) {
         ['isAssignmentCreatorOpen'],
         false,
       );
+    case 'SET_LOGIN_REMINDER':
+      return state.set('loginReminder', 'PENDING');
+
+    case 'DISABLE_LOGIN_REMINDER':
+      return state.set('loginReminder', 'DISABLED');
+
+    case 'TRIGGER_LOGIN_REMINDER':
+      if (action.payload.userIsAuthenticated) {
+        state.set('loginReminder', 'TRIGGERED');
+        return addNotification(state, 'login-reminder', 'notice');
+      }
+      return state.set('loginReminder', 'DISABLED');
 
     default:
       return state;
