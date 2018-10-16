@@ -55,7 +55,8 @@ test('exportProject', (t) => {
       next().call(openWindowWithContent, spinnerPageHtml).
       next(mockWindow).take(['PROJECT_EXPORTED', 'PROJECT_EXPORT_ERROR']).
       next(projectExported(url, exportType)).put(
-        projectExportNotDisplayed(url, exportType)).
+        projectExportNotDisplayed(url, exportType),
+      ).
       next().isDone();
 
     assert.notOk(mockWindow.location.href);

@@ -1,5 +1,4 @@
 /* eslint-env node */
-/* eslint-disable import/unambiguous */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable import/no-nodejs-modules */
 
@@ -45,9 +44,11 @@ forOwn(supportedBrowsers, (version, browser) => {
   postcssBrowsers.push(`${browserForPostcss} >= ${version}`);
 });
 
-gulp.task('static', () => gulp.
-  src(path.join(staticDir, '**/*')).
-  pipe(gulp.dest(distDir)),
+gulp.task(
+  'static',
+  () => gulp.
+    src(path.join(staticDir, '**/*')).
+    pipe(gulp.dest(distDir)),
 );
 
 gulp.task('css', () => {
@@ -148,17 +149,19 @@ gulp.task('browserSync', ['static'], () => {
   });
 });
 
-gulp.task('purgeCache', () =>
-  cloudflare({
-    email: process.env.CLOUDFLARE_EMAIL,
-    key: process.env.CLOUDFLARE_KEY,
-  }).zones.purgeCache(
-    process.env.CLOUDFLARE_ZONE,
-    {
-      files: [
-        `https://${process.env.HOSTNAME}/index.html`,
-        `https://${process.env.HOSTNAME}/application.css`,
-      ],
-    },
-  ),
+gulp.task(
+  'purgeCache',
+  () =>
+    cloudflare({
+      email: process.env.CLOUDFLARE_EMAIL,
+      key: process.env.CLOUDFLARE_KEY,
+    }).zones.purgeCache(
+      process.env.CLOUDFLARE_ZONE,
+      {
+        files: [
+          `https://${process.env.HOSTNAME}/index.html`,
+          `https://${process.env.HOSTNAME}/application.css`,
+        ],
+      },
+    ),
 );

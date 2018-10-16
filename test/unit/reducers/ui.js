@@ -288,8 +288,9 @@ test('applicationLoaded', (t) => {
   ));
 });
 
-tap('123-456', snapshotKey =>
-  test('snapshotCreated', reducerTest(
+tap(
+  '123-456',
+  snapshotKey => test('snapshotCreated', reducerTest(
     reducer,
     initialState,
     partial(snapshotCreated, snapshotKey),
