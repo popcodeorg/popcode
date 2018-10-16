@@ -1,7 +1,5 @@
 /* eslint-env commonjs */
-/* eslint-disable import/no-commonjs */
 /* eslint-disable import/no-unassigned-import */
-/* eslint-disable import/unambiguous */
 
 import 'babel-polyfill';
 import 'es6-set/implement';

@@ -96,7 +96,7 @@ function attachCssLibrary(doc, css) {
 function attachJavascriptLibrary(doc, javascript) {
   const scriptTag = doc.createElement('script');
   const javascriptText = String(javascript);
-  scriptTag.innerHTML = javascriptText.replace(/<\/script>/g, '<\\/script>');
+  scriptTag.innerHTML = javascriptText.replace(/<\/script>/gu, '<\\/script>');
   // eslint-disable-next-line prefer-destructuring
   const firstScriptTag = doc.scripts[0];
   if (firstScriptTag) {

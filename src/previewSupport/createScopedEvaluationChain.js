@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 function createScopedEvaluationChain(__yieldScopedEval) {
   function __makeEvaluateExpression(evalInClosure) {
-    return function(expr) {
+    return function evaluateExpression(expr) {
       return evalInClosure(
         `
         __yieldScopedEval(__makeEvaluateExpression(function(expr) {

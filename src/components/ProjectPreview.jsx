@@ -10,9 +10,11 @@ export default function ProjectPreview({preview, project}) {
       <div className="project-preview__label">
         {preview.slice(0, MAX_LENGTH)}
       </div>
-      <div className="project-preview__timestamp">
-        {moment(project.updatedAt).fromNow()}
-      </div>
+      {project.updatedAt && (
+        <div className="project-preview__timestamp">
+          {moment(project.updatedAt).fromNow()}
+        </div>
+      )}
     </div>
   );
 }
