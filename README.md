@@ -12,7 +12,7 @@ giving specific, immediate, human-friendly feedback when the code contains error
 [![Build Status](https://travis-ci.org/popcodeorg/popcode.svg?branch=master)](https://travis-ci.org/popcodeorg/popcode) [![Dependency Status](https://david-dm.org/popcodeorg/popcode.svg)](https://david-dm.org/popcodeorg/popcode) ![License](https://img.shields.io/github/license/popcodeorg/popcode.svg)
 
 Popcode is the official first semester editing environment for the [ScriptEd
-program](https://scripted.org) in the 2017–2018 school year.
+program](https://scripted.org) in the 2018–2019 school year.
 
 ### Try it out ###
 
