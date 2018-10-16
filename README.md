@@ -5,7 +5,7 @@ environment for use in the classroom. It's a lot like [JSBin](http://jsbin.com),
 [JSFiddle](https://jsfiddle.net), or [CodePen](https://codepen.io), but it focuses on
 giving specific, immediate, human-friendly feedback when the code contains errors.
 
-[![](https://cl.ly/18cf27aea888/popcode_screen_20181016.jpg)](https://popcode.org)
+[![](https://user-images.githubusercontent.com/11786205/47036989-c012a580-d14b-11e8-91f1-52fdcea7d657.jpg)](https://popcode.org)
 
 ### Project status ###
 
