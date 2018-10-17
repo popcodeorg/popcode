@@ -37,8 +37,7 @@ export const consoleInputChanged = createAction(
   value => ({value}),
 );
 
-export const consoleLogProduced = createAction(
-  'CONSOLE_LOG_PRODUCED',
-  (value, compiledProjectKey) => ({value, compiledProjectKey}),
-  (_value, _compiledProjectKey, key = uuid().toString()) => ({key}),
+export const consoleLogBatchProduced = createAction(
+  'CONSOLE_LOG_BATCH_PRODUCED',
+  entries => ({entries}),
 );
