@@ -12,6 +12,15 @@ export const editorFocusedRequestedLine = createAction(
   'EDITOR_FOCUSED_REQUESTED_LINE',
 );
 
+export const editorFocused = createAction(
+  'EDITOR_FOCUSED',
+  (source, cursor, language) => ({source, cursor, language}),
+);
+
+export const editorBlurred = createAction(
+  'EDITOR_BLURRED',
+);
+
 export const startDragColumnDivider = createAction(
   'START_DRAG_COLUMN_DIVIDER',
 );
@@ -32,6 +41,15 @@ export const notificationTriggered = createAction(
 export const userDismissedNotification = createAction(
   'USER_DISMISSED_NOTIFICATION',
   type => ({type}),
+);
+
+export const currentCursorChanged = createAction(
+  'CURRENT_CURSOR_CHANGED',
+  (source, cursor, language) => ({source, cursor, language}),
+);
+
+export const currentFocusedSelectorChanged = createAction(
+  'CURRENT_FOCUSED_SELECTOR_CHANGED',
 );
 
 export const updateNotificationMetadata = createAction(

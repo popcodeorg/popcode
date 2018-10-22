@@ -66,6 +66,17 @@ export default function ui(stateIn, action) {
     case 'EDITOR_FOCUSED_REQUESTED_LINE':
       return state.set('requestedFocusedLine', null);
 
+    case 'CURRENT_FOCUSED_SELECTOR_CHANGED':
+      return state.setIn(
+        ['focusedSelector'], action.payload,
+      );
+
+    case 'EDITOR_BLURRED':
+      return state.setIn(
+        ['focusedSelector'],
+        null,
+      );
+
     case 'START_DRAG_COLUMN_DIVIDER':
       return state.set('isDraggingColumnDivider', true);
 

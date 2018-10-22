@@ -22,7 +22,10 @@ import {
 } from './projects';
 
 import {
+  currentCursorChanged,
   focusLine,
+  editorBlurred,
+  editorFocused,
   editorFocusedRequestedLine,
   startDragColumnDivider,
   stopDragColumnDivider,
@@ -93,6 +96,8 @@ export {
   unhideComponent,
   toggleComponent,
   focusLine,
+  editorBlurred,
+  editorFocused,
   editorFocusedRequestedLine,
   previousConsoleHistory,
   nextConsoleHistory,
@@ -100,6 +105,7 @@ export {
   stopDragColumnDivider,
   notificationTriggered,
   userDismissedNotification,
+  currentCursorChanged,
   updateNotificationMetadata,
   exportProject,
   projectExportDisplayed,

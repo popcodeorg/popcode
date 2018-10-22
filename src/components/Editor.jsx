@@ -129,8 +129,26 @@ class Editor extends React.Component {
 
   _startNewSession(source) {
     const session = createAceSessionWithoutWorker(this.props.language, source);
+    const cursor = session.selection.lead;
     session.on('change', () => {
       this.props.onInput(this._editor.getValue());
+    });
+    session.selection.on('changeCursor', () => {
+      this.props.onCursorChange(
+        this._editor.getValue(),
+        cursor,
+        this.props.language,
+      );
+    });
+    this._editor.on('blur', () => {
+      this.props.onEditorBlurred();
+    });
+    this._editor.on('focus', () => {
+      this.props.onEditorFocused(
+        this._editor.getValue(),
+        cursor,
+        this.props.language,
+      );
     });
     session.setAnnotations(this.props.errors);
     this._editor.setSession(session);
@@ -147,6 +165,9 @@ Editor.propTypes = {
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   source: PropTypes.string.isRequired,
   textSizeIsLarge: PropTypes.bool.isRequired,
+  onCursorChange: PropTypes.func.isRequired,
+  onEditorBlurred: PropTypes.func.isRequired,
+  onEditorFocused: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };
