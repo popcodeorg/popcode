@@ -93,9 +93,15 @@ test('gistImportError', reducerTest(
 
 test('updateProjectSource', reducerTest(
   reducer,
-  initialState,
+  initialState.setIn(['notifications', 'snapshot-created'], {
+    metadata: {snapshotKey: 'f941ba40-b111-42c5-882d-c21c99afb29d'},
+    severity: 'notice',
+    type: 'snapshot-created',
+  }),
   updateProjectSource,
-  initialState.set('isTyping', true),
+  initialState.
+    set('isTyping', true).
+    deleteIn(['notifications', 'snapshot-created']),
 ));
 
 test('userDoneTyping', reducerTest(
