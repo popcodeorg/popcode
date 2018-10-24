@@ -62,7 +62,7 @@ test('unclosed <html> tag', validationTest(
   {reason: 'unclosed-tag', row: 1, payload: {tag: 'html'}},
 ));
 
-test('text outside <html> tag', validationTest(
+test('tag outside <html> tag', validationTest(
   `<!DOCTYPE html>
 <html>
   <head><title>Title</title></head>
@@ -71,24 +71,39 @@ test('text outside <html> tag', validationTest(
 <p>Extra text here</p>`,
   html,
   {
-    reason: 'markup-outside-container',
+    reason: 'invalid-tag-outside-body',
     row: 5,
-    payload: {outsideTag: 'html', type: '<p> tags'},
+    payload: {tagName: 'p'},
   },
 ));
 
 test('text outside <body> tag', validationTest(
   `<!DOCTYPE html>
 <html>
-  <head><title>Title</title></head>
   Extra text here
+  <head><title>Title</title></head>
   <body></body>
 </html>`,
   html,
   {
-    reason: 'markup-outside-container',
+    reason: 'invalid-text-outside-body',
     row: 2,
-    payload: {outsideTag: 'body', type: 'text'},
+  },
+));
+
+test('text directly inside <head> tag', validationTest(
+  `<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    Shouldn't be here
+  </head>
+  <body></body>
+</html>`,
+  html,
+  {
+    reason: 'invalid-text-outside-body',
+    row: 4,
   },
 ));
 

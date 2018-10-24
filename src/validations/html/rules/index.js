@@ -3,7 +3,7 @@ import runRules from '../runRules';
 
 import Code from './Code';
 import MismatchedTag from './MismatchedTag';
-import MarkupOutsideContainer from './MarkupOutsideContainer';
+import NodeOutsideBody from './NodeOutsideBody';
 
 const errorMap = {
   [Code.MISPLACED_CLOSE_TAG]: ({openTag, closeTag}) => ({
@@ -22,9 +22,14 @@ const errorMap = {
     reason: 'unexpected-close-tag',
     payload: {tag: name},
   }),
-  [Code.MARKUP_OUTSIDE_CONTAINER]: ({type, outsideTag}) => ({
-    reason: 'markup-outside-container',
-    payload: {type, outsideTag},
+  [Code.INVALID_TEXT_OUTSIDE_BODY]: () => ({
+    reason: 'invalid-text-outside-body',
+    suppresses: ['invalid-tag-parent'],
+  }),
+  [Code.INVALID_TAG_OUTSIDE_BODY]: ({tagName}) => ({
+    reason: 'invalid-tag-outside-body',
+    payload: {tagName},
+    suppresses: ['invalid-tag-parent'],
   }),
 };
 
@@ -40,7 +45,7 @@ class RuleValidator extends Validator {
   async getRawErrors() {
     return Array.from(await runRules([
       new MismatchedTag(),
-      new MarkupOutsideContainer(),
+      new NodeOutsideBody(),
     ], this.source));
   }
 
@@ -51,7 +56,8 @@ class RuleValidator extends Validator {
       case Code.UNOPENED_TAG:
       case Code.UNCLOSED_TAG:
         return error.closeTag.location;
-      case Code.MARKUP_OUTSIDE_CONTAINER:
+      case Code.INVALID_TAG_OUTSIDE_BODY:
+      case Code.INVALID_TEXT_OUTSIDE_BODY:
         return error.location;
       default:
         throw new Error(`Unexpected code in ${JSON.stringify(error)}`);
