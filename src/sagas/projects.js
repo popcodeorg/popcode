@@ -24,7 +24,10 @@ import {
   snapshotNotFound,
   projectRestoredFromLastSession,
 } from '../actions/clients';
+import {updateSelectorLocations} from '../actions/selectorLocations';
 import {isPristineProject} from '../util/projectUtils';
+import getCssSelectorLocations from '../util/getCssSelectorLocations';
+import getJsSelectorLocations from '../util/getJsSelectorLocations';
 import {loadGistFromId} from '../clients/github';
 import {
   loadAllProjects,
@@ -53,6 +56,22 @@ export function* createProject() {
 
 export function* changeCurrentProject() {
   yield* saveCurrentProject();
+}
+
+export function* parseCurrentProjectSource() {
+  const currentProject = yield select(getCurrentProject);
+  const jsSelectorLocations = yield call(
+    getJsSelectorLocations,
+    currentProject.sources.javascript,
+  );
+  const cssSelectorLocations = yield call(
+    getCssSelectorLocations,
+    currentProject.sources.css,
+  );
+  yield put(updateSelectorLocations({
+    javascript: jsSelectorLocations,
+    css: cssSelectorLocations,
+  }));
 }
 
 export function* importSnapshot({payload: {snapshotKey}}) {
@@ -131,6 +150,10 @@ export default function* projects() {
       'UPDATE_PROJECT_SOURCE',
       'UPDATE_PROJECT_INSTRUCTIONS',
     ], updateProjectSource),
+    throttle(100, [
+      'UPDATE_PROJECT_SOURCE',
+      'PROJECT_RESTORED_FROM_LAST_SESSION',
+    ], parseCurrentProjectSource),
     takeEvery('USER_AUTHENTICATED', userAuthenticated),
     takeEvery('TOGGLE_LIBRARY', toggleLibrary),
   ]);

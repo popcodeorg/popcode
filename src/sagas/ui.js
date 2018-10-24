@@ -7,7 +7,10 @@ import {
   hideSaveIndicator,
   currentFocusedSelectorChanged,
 } from '../actions/ui';
-import {getCurrentProject} from '../selectors';
+import {
+  getCurrentProject,
+  getSelectorLocationsForLanguage,
+} from '../selectors';
 import {
   projectExportDisplayed,
   projectExportNotDisplayed,
@@ -72,9 +75,10 @@ export function* exportProject() {
   );
 }
 
-export function* updateFocusedSelector({payload: {source, cursor, language}}) {
+export function* updateFocusedSelector({payload: {cursor, language}}) {
   const {selectorAtCursor} = yield call(importSelectorAtCursor);
-  const selector = yield call(selectorAtCursor, source, cursor, language);
+  const selectors = yield select(getSelectorLocationsForLanguage, language);
+  const selector = yield call(selectorAtCursor, selectors, cursor);
   yield put(currentFocusedSelectorChanged(selector));
 }
 

@@ -77,6 +77,10 @@ import {
   updateResizableFlex,
 } from './resizableFlex';
 
+import {
+  updateSelectorLocations,
+} from './selectorLocations';
+
 export {
   clearConsoleEntries,
   consoleInputChanged,
@@ -132,4 +136,5 @@ export {
   updateResizableFlex,
   startAccountMigration,
   dismissAccountMigration,
+  updateSelectorLocations,
 };

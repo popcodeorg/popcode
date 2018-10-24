@@ -21,6 +21,8 @@ import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
 import getProject from './getProject';
 import getRequestedFocusedLine from './getRequestedFocusedLine';
+import getSelectorLocationsForLanguage
+  from './getSelectorLocationsForLanguage';
 import isClassroomExportInProgress from './isClassroomExportInProgress';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
@@ -65,6 +67,7 @@ export {
   getOpenTopBarMenu,
   getProject,
   getRequestedFocusedLine,
+  getSelectorLocationsForLanguage,
   isClassroomExportInProgress,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
