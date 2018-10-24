@@ -155,7 +155,8 @@ export async function migrateAccount(inboundAccountCredential) {
   const inboundAccountFirebase = buildFirebase('migration');
   const {auth: inboundAccountAuth} = inboundAccountFirebase;
   try {
-    await inboundAccountAuth.signInAndRetrieveDataWithCredential(inboundAccountCredential);
+    await inboundAccountAuth.
+      signInAndRetrieveDataWithCredential(inboundAccountCredential);
     const inboundUid = inboundAccountAuth.currentUser.uid;
     await logMigration(inboundUid, 'attempt');
 
