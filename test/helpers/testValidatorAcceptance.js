@@ -5,7 +5,8 @@ import validationTest from './validationTest';
 export default function testValidatorAcceptance(validator, language) {
   return (t) => {
     acceptance[language].forEach(
-      source => t.test(validationTest(source, validator)),
+      source => t.test(`Acceptance - ${language}`,
+        validationTest(source, validator)),
     );
   };
 }
