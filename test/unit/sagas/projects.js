@@ -11,6 +11,9 @@ import {
   toggleLibrary as toggleLibrarySaga,
   userAuthenticated as userAuthenticatedSaga,
   updateProjectSource as updateProjectSourceSaga,
+  parseCurrentProjectSource as parseCurrentProjectSourceSaga,
+  importGetJsSelectorLocations,
+  importGetCssSelectorLocations,
 } from '../../../src/sagas/projects';
 import {
   gistImportError,
@@ -20,7 +23,10 @@ import {
   updateProjectInstructions,
   updateProjectSource,
   projectSuccessfullySaved,
+
 } from '../../../src/actions/projects';
+import {updateSelectorLocations}
+  from '../../../src/actions/selectorLocations';
 import {
   snapshotImportError,
   snapshotNotFound,
@@ -44,6 +50,10 @@ import {
   getCurrentUserId,
   getCurrentProject,
 } from '../../../src/selectors/index';
+import getCssSelectorLocations
+  from '../../../src/util/getCssSelectorLocations';
+import getJsSelectorLocations
+  from '../../../src/util/getJsSelectorLocations';
 
 test('createProject()', (assert) => {
   let firstProjectKey;
@@ -292,5 +302,52 @@ test('toggleLibrary', (assert) => {
     ).
     next().put(projectSuccessfullySaved()).
     next().isDone();
+  assert.end();
+});
+
+test('parseCurrentProjectSource', (assert) => {
+  const currentProject = project();
+
+  const jsSelectors = [
+    {
+      loc: {
+        start: {line: 1},
+        end: {line: 3},
+      },
+      selector: 'body',
+    },
+  ];
+  const cssSelectors = [
+    {
+      loc: {
+        start: {line: 1},
+        end: {line: 1},
+      },
+      selector: '.gallery',
+    },
+  ];
+
+  testSaga(
+    parseCurrentProjectSourceSaga,
+  ).
+    next().call(importGetJsSelectorLocations).
+    next(getJsSelectorLocations).call(importGetCssSelectorLocations).
+    next(getCssSelectorLocations).select(getCurrentProject).
+    next(currentProject).
+    call(
+      getJsSelectorLocations,
+      currentProject.sources.javascript,
+    ).
+    next(jsSelectors).
+    call(
+      getCssSelectorLocations,
+      currentProject.sources.css,
+    ).
+    next(cssSelectors).put(updateSelectorLocations({
+      javascript: jsSelectors,
+      css: cssSelectors,
+    })).
+    next().isDone();
+
   assert.end();
 });

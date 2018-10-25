@@ -1,5 +1,7 @@
 import Immutable from 'immutable';
 
+import {SelectorLocations} from '../records';
+
 const emptyMap = new Immutable.Map();
 
 export default function reduceProjects(stateIn, action) {
@@ -13,7 +15,10 @@ export default function reduceProjects(stateIn, action) {
 
   switch (action.type) {
     case 'UPDATE_SELECTOR_LOCATIONS':
-      return state.set('selectors', action.payload.selectors);
+      return state.set(
+        'selectors',
+        new SelectorLocations(action.payload.selectors),
+      );
 
     default:
       return state;

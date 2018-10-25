@@ -10,11 +10,16 @@ export default function getJsSelectorLocations(source) {
 
     const visitor = {
       CallExpression(path) {
-        // Only matches code of the form $('selector')
+        // Only matches jquery or querySelector with string literals
         const expressionLoc = path.node.loc;
         const [selector] = path.node.arguments;
+        const callee = path.get('callee').toString();
+
         if (
-          path.get('callee').toString() === '$' &&
+          (
+            callee === '$' ||
+            callee.indexOf('querySelector') !== -1
+          ) &&
           isStringLiteral(selector)
         ) {
           foundMatches.push({

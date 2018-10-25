@@ -18,16 +18,8 @@ import {
 import {openWindowWithContent} from '../util';
 import spinnerPageHtml from '../../templates/project-export.html';
 import compileProject from '../util/compileProject';
-import retryingFailedImports from '../util/retryingFailedImports';
+import selectorAtCursor from '../util/selectorAtCursor';
 
-export async function importSelectorAtCursor() {
-  return retryingFailedImports(
-    () => import(
-      /* webpackChunkName: "mainAsync" */
-      '../util/selectorAtCursor',
-    ),
-  );
-}
 export function* userDoneTyping() {
   yield put(userDoneTypingAction());
 }
@@ -76,7 +68,6 @@ export function* exportProject() {
 }
 
 export function* updateFocusedSelector({payload: {cursor, language}}) {
-  const {selectorAtCursor} = yield call(importSelectorAtCursor);
   const selectors = yield select(getSelectorLocationsForLanguage, language);
   const selector = yield call(selectorAtCursor, selectors, cursor);
   yield put(currentFocusedSelectorChanged(selector));
