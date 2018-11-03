@@ -237,6 +237,11 @@ for all the sordid details.
 * [Limon Monte](https://limonte.github.io/)
 * [Matthew Armstrong](https://github.com/raingerber)
 * [Matt Garbis](http://www.mattgarbis.com/)
+* [Ilya Gribov](https://github.com/igrib)
+* [Chase Starr](http://www.twitter.com/captivechains)
+* [Alec Merdler](https://github.com/alecmerdler)
+* [Eric Snell](http://ericsnell.github.io/portfolio)
+* [Omar De Leo](https://github.com/omardeleo)
 * [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
 * Logo design, "Pop" concept, and branding elements by the team at
   [Red Peak](http://redpeakgroup.com): Andrew Haug, Aya Kawabata, Jieun Lee,
