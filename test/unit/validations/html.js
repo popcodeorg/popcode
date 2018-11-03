@@ -41,6 +41,12 @@ test('void tags without explicit close', validationTest(
   html,
 ));
 
+test('<a> tag with relative href property', validationTest(
+  htmlWithBody('<a href="./foo.bar">Bad link</a>'),
+  html,
+  {reason: 'href-style', row: htmlWithBody.offset},
+));
+
 test('missing doctype', validationTest(
   '<p>T</p>',
   html,

@@ -130,6 +130,7 @@
       "doctype": "The first line of your HTML should always be:\n`<!DOCTYPE html>`",
       "duplicated-id": "You can't use the id \"{{-id}}\" more than once in your HTML",
       "img-src": "`<img>` tags need a `src` attribute, with the URL of the image you want to display.",
+      "href-style": "The `<a>` tag should have an `href` attribute that starts with 'http' or 'https'",
       "deprecated-tag": {
         "b": "You shouldn't use the `<b>` tag. Use the `<strong>` tag or the CSS `font-weight` property instead",
         "big": "You shouldn't use the `<big>` tag. Use the CSS `font-size` property instead",
