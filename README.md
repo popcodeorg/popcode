@@ -5,14 +5,14 @@ environment for use in the classroom. It's a lot like [JSBin](http://jsbin.com),
 [JSFiddle](https://jsfiddle.net), or [CodePen](https://codepen.io), but it focuses on
 giving specific, immediate, human-friendly feedback when the code contains errors.
 
-[![](https://cl.ly/1W1e1h3w073u/popscreens.png)](https://popcode.org)
+[![](https://user-images.githubusercontent.com/11786205/47052459-6673a080-d176-11e8-9c1b-b433a2af7c72.jpg)](https://popcode.org)
 
 ### Project status ###
 
 [![Build Status](https://travis-ci.org/popcodeorg/popcode.svg?branch=master)](https://travis-ci.org/popcodeorg/popcode) [![Dependency Status](https://david-dm.org/popcodeorg/popcode.svg)](https://david-dm.org/popcodeorg/popcode) ![License](https://img.shields.io/github/license/popcodeorg/popcode.svg)
 
 Popcode is the official first semester editing environment for the [ScriptEd
-program](https://scripted.org) in the 2016–2017 school year.
+program](https://scripted.org) in the 2018–2019 school year.
 
 ### Try it out ###
 

@@ -363,7 +363,7 @@ body {
   height: 100%;
   padding: 0.5rem;
   box-sizing: border-box;
-  font-family: 'Inconsolata';
+  font-family: 'Inconsolata', monospace;
   font-size: 1rem;
   border: 0;
   outline: 0;
@@ -466,7 +466,7 @@ body {
 .editors {
   display: flex;
   flex-direction: column;
-  font-family: 'Inconsolata';
+  font-family: 'Inconsolata', monospace;
   font-size: 14px;
 }
 
@@ -582,7 +582,7 @@ body {
 .console__repl {
   display: flex;
   flex-direction: column-reverse;
-  font-family: 'Inconsolata';
+  font-family: 'Inconsolata', monospace;
   font-size: 14px;
   max-height: 100%;
   overflow: auto;

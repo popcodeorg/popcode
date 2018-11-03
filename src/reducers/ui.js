@@ -38,7 +38,9 @@ export default function ui(stateIn, action) {
       return state.set('isEditingInstructions', false);
 
     case 'UPDATE_PROJECT_SOURCE':
-      return state.set('isTyping', true);
+      return state.
+        set('isTyping', true).
+        deleteIn(['notifications', 'snapshot-created']);
 
     case 'USER_DONE_TYPING':
       return state.set('isTyping', false);
