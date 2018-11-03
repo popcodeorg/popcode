@@ -16,10 +16,13 @@ import getCurrentValidationState from './getCurrentValidationState';
 import getEnabledLibraries from './getEnabledLibraries';
 import getErrors from './getErrors';
 import getHiddenUIComponents from './getHiddenUIComponents';
+import getFocusedSelector from './getFocusedSelector';
 import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
 import getProject from './getProject';
 import getRequestedFocusedLine from './getRequestedFocusedLine';
+import getSelectorLocationsForLanguage
+  from './getSelectorLocationsForLanguage';
 import isClassroomExportInProgress from './isClassroomExportInProgress';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
@@ -59,10 +62,12 @@ export {
   getEnabledLibraries,
   getErrors,
   getHiddenUIComponents,
+  getFocusedSelector,
   getNotifications,
   getOpenTopBarMenu,
   getProject,
   getRequestedFocusedLine,
+  getSelectorLocationsForLanguage,
   isClassroomExportInProgress,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,

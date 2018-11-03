@@ -47,6 +47,7 @@ class PreviewFrame extends React.Component {
     const {consoleEntries, isActive} = this.props;
 
     if (this._channel && isActive) {
+      this._postFocusedSelectorToFrame(this.props.focusedSelector);
       for (const [key, {expression}] of consoleEntries) {
         if (!prevConsoleEntries.has(key) && expression) {
           this._evaluateConsoleExpression(key, expression);
@@ -135,6 +136,13 @@ class PreviewFrame extends React.Component {
     this.props.onConsoleLog(printedValue, compiledProjectKey);
   }
 
+  _postFocusedSelectorToFrame(selector) {
+    this._channel.notify({
+      method: 'highlightElement',
+      params: selector,
+    });
+  }
+
   _attachToFrame(frame) {
     if (!frame) {
       if (this._channel) {
@@ -168,11 +176,16 @@ class PreviewFrame extends React.Component {
 PreviewFrame.propTypes = {
   compiledProject: PropTypes.instanceOf(CompiledProjectRecord).isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
+  focusedSelector: PropTypes.string,
   isActive: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
   onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
+};
+
+PreviewFrame.defaultProps = {
+  focusedSelector: null,
 };
 
 export default PreviewFrame;

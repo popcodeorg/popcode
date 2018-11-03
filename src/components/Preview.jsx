@@ -13,6 +13,7 @@ import PreviewFrame from './PreviewFrame';
 export default function Preview({
   compiledProjects,
   consoleEntries,
+  focusedSelector,
   showingErrors,
   onConsoleError,
   onConsoleLog,
@@ -29,6 +30,7 @@ export default function Preview({
     <PreviewFrame
       compiledProject={compiledProject}
       consoleEntries={consoleEntries}
+      focusedSelector={focusedSelector}
       isActive={key === compiledProjects.keySeq().last()}
       key={compiledProject.compiledProjectKey}
       onConsoleError={onConsoleError}
@@ -63,6 +65,7 @@ export default function Preview({
 Preview.propTypes = {
   compiledProjects: ImmutablePropTypes.iterable.isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
+  focusedSelector: PropTypes.string,
   showingErrors: PropTypes.bool.isRequired,
   onConsoleError: PropTypes.func.isRequired,
   onConsoleLog: PropTypes.func.isRequired,
@@ -70,4 +73,8 @@ Preview.propTypes = {
   onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
+};
+
+Preview.defaultProps = {
+  focusedSelector: null,
 };

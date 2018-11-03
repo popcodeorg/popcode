@@ -14,6 +14,7 @@ import {
 import {
   getCompiledProjects,
   getConsoleHistory,
+  getFocusedSelector,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
 } from '../selectors';
@@ -22,6 +23,7 @@ function mapStateToProps(state) {
   return {
     compiledProjects: getCompiledProjects(state),
     consoleEntries: getConsoleHistory(state),
+    focusedSelector: getFocusedSelector(state),
     showingErrors: (
       !isUserTyping(state) &&
         !isCurrentProjectSyntacticallyValid(state)

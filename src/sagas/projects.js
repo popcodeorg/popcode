@@ -24,7 +24,9 @@ import {
   snapshotNotFound,
   projectRestoredFromLastSession,
 } from '../actions/clients';
+import {updateSelectorLocations} from '../actions/selectorLocations';
 import {isPristineProject} from '../util/projectUtils';
+import retryingFailedImports from '../util/retryingFailedImports';
 import {loadGistFromId} from '../clients/github';
 import {
   loadAllProjects,
@@ -53,6 +55,44 @@ export function* createProject() {
 
 export function* changeCurrentProject() {
   yield* saveCurrentProject();
+}
+
+export async function importGetJsSelectorLocations() {
+  const module = await retryingFailedImports(
+    () => import(
+      /* webpackChunkName: "mainAsync" */
+      '../util/getJsSelectorLocations',
+    ),
+  );
+  return module.default;
+}
+
+export async function importGetCssSelectorLocations() {
+  const module = await retryingFailedImports(
+    () => import(
+      /* webpackChunkName: "mainAsync" */
+      '../util/getCssSelectorLocations',
+    ),
+  );
+  return module.default;
+}
+
+export function* parseCurrentProjectSource() {
+  const getJsSelectorLocations = yield call(importGetJsSelectorLocations);
+  const getCssSelectorLocations = yield call(importGetCssSelectorLocations);
+  const currentProject = yield select(getCurrentProject);
+  const jsSelectorLocations = yield call(
+    getJsSelectorLocations,
+    currentProject.sources.javascript,
+  );
+  const cssSelectorLocations = yield call(
+    getCssSelectorLocations,
+    currentProject.sources.css,
+  );
+  yield put(updateSelectorLocations({
+    javascript: jsSelectorLocations,
+    css: cssSelectorLocations,
+  }));
 }
 
 export function* importSnapshot({payload: {snapshotKey}}) {
@@ -131,6 +171,10 @@ export default function* projects() {
       'UPDATE_PROJECT_SOURCE',
       'UPDATE_PROJECT_INSTRUCTIONS',
     ], updateProjectSource),
+    throttle(100, [
+      'UPDATE_PROJECT_SOURCE',
+      'PROJECT_RESTORED_FROM_LAST_SESSION',
+    ], parseCurrentProjectSource),
     takeEvery('USER_AUTHENTICATED', userAuthenticated),
     takeEvery('TOGGLE_LIBRARY', toggleLibrary),
   ]);

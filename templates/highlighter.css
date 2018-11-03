@@ -1,0 +1,21 @@
+.__popcode-highlighter {
+  z-index: 2000000;
+  margin: -1px 0px 0px -1px;
+  padding: 0px;
+  position: absolute;
+  pointer-events: none;
+  border-radius: 0px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #00b8ff;
+  box-shadow: #ffffff 0px 0px 1px;
+  box-sizing: content-box;
+  background-color: #00b8ff;
+  opacity: .5;
+  transition-property: opacity, background-color;
+  transition-duration: 300ms, 2.3s;
+}
+
+.__popcode-highlighter.fade {
+  background-color: #ffffff00;
+}

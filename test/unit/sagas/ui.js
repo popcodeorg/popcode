@@ -6,13 +6,18 @@ import {
   exportProject as exportProjectSaga,
   popOutProject as popOutProjectSaga,
   projectSuccessfullySaved as projectSuccessfullySavedSaga,
+  updateFocusedSelector as updateFocusedSelectorSaga,
 } from '../../../src/sagas/ui';
-import {getCurrentProject} from '../../../src/selectors';
+import {
+  getCurrentProject,
+  getSelectorLocationsForLanguage,
+} from '../../../src/selectors';
 import {
   userDoneTyping,
   popOutProject,
   showSaveIndicator,
   hideSaveIndicator,
+  currentFocusedSelectorChanged,
 } from '../../../src/actions/ui';
 import {
   projectExported,
@@ -23,6 +28,7 @@ import {
 import {openWindowWithContent} from '../../../src/util';
 import spinnerPageHtml from '../../../templates/project-export.html';
 import compileProject from '../../../src/util/compileProject';
+import selectorAtCursor from '../../../src/util/selectorAtCursor';
 
 test('userDoneTyping', (assert) => {
   testSaga(userDoneTypingSaga).
@@ -95,6 +101,28 @@ test('projectSuccessfullySaved', (assert) => {
     next().put(showSaveIndicator()).
     next().call(delay, 1000).
     next().put(hideSaveIndicator()).
+    next().isDone();
+  assert.end();
+});
+
+test('updateFocusedSelector', (assert) => {
+  const selectors = [
+    {
+      selector: 'body',
+      loc: {
+        start: {line: 1},
+        end: {line: 3},
+      },
+    },
+  ];
+  const cursor = {column: 1, row: 0};
+  const language = 'css';
+  const selector = 'body';
+
+  testSaga(updateFocusedSelectorSaga, {payload: {cursor, language}}).
+    next().select(getSelectorLocationsForLanguage, language).
+    next(selectors).call(selectorAtCursor, selectors, cursor).
+    next(selector).put(currentFocusedSelectorChanged(selector)).
     next().isDone();
   assert.end();
 });

@@ -5,8 +5,12 @@ import {
   userDoneTyping as userDoneTypingAction,
   showSaveIndicator,
   hideSaveIndicator,
+  currentFocusedSelectorChanged,
 } from '../actions/ui';
-import {getCurrentProject} from '../selectors';
+import {
+  getCurrentProject,
+  getSelectorLocationsForLanguage,
+} from '../selectors';
 import {
   projectExportDisplayed,
   projectExportNotDisplayed,
@@ -14,6 +18,7 @@ import {
 import {openWindowWithContent} from '../util';
 import spinnerPageHtml from '../../templates/project-export.html';
 import compileProject from '../util/compileProject';
+import selectorAtCursor from '../util/selectorAtCursor';
 
 export function* userDoneTyping() {
   yield put(userDoneTypingAction());
@@ -62,11 +67,19 @@ export function* exportProject() {
   );
 }
 
+export function* updateFocusedSelector({payload: {cursor, language}}) {
+  const selectors = yield select(getSelectorLocationsForLanguage, language);
+  const selector = yield call(selectorAtCursor, selectors, cursor);
+  yield put(currentFocusedSelectorChanged(selector));
+}
+
 export default function* ui() {
   yield all([
     debounceFor('UPDATE_PROJECT_SOURCE', userDoneTyping, 1000),
     takeEvery('POP_OUT_PROJECT', popOutProject),
     takeEvery('EXPORT_PROJECT', exportProject),
     debounceFor('PROJECT_SUCCESSFULLY_SAVED', projectSuccessfullySaved, 1000),
+    takeEvery('CURRENT_CURSOR_CHANGED', updateFocusedSelector),
+    takeEvery('EDITOR_FOCUSED', updateFocusedSelector),
   ]);
 }

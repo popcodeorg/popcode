@@ -155,6 +155,9 @@
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
   "license": "MIT",
   "dependencies": {
+    "@babel/parser": "^7.1.3",
+    "@babel/traverse": "^7.1.4",
+    "@babel/types": "^7.1.3",
     "@firebase/app": "^0.3.4",
     "@firebase/app-types": "^0.3.2",
     "@firebase/auth": "^0.7.6",

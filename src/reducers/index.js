@@ -10,6 +10,7 @@ import ui from './ui';
 import clients from './clients';
 import compiledProjects from './compiledProjects';
 import resizableFlex from './resizableFlex';
+import selectorLocations from './selectorLocations';
 
 const reduceRoot = combineReducers({
   user,
@@ -21,6 +22,7 @@ const reduceRoot = combineReducers({
   compiledProjects,
   console,
   resizableFlex,
+  selectorLocations,
 });
 
 export default reduceReducers(
