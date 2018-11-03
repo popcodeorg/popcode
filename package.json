@@ -149,6 +149,27 @@
       "name": "Matt Garbis",
       "url": "http://www.mattgarbis.com/",
       "email": "mgarbis@gmail.com"
+    },
+    {
+      "name": "Ilya Gribov",
+      "url": "https://github.com/igrib"
+    },
+    {
+      "name": "Chase Starr",
+      "url": "http://www.twitter.com/captivechains",
+      "email": "chasestarr@gmail.com"
+    },
+    {
+      "name": "Alec Merdler",
+      "url": "https://github.com/alecmerdler"
+    },
+    {
+      "name": "Eric Snell",
+      "url": "http://ericsnell.github.io/portfolio"
+    },
+    {
+      "name": "Omar De Leo",
+      "url": "https://github.com/omardeleo"
     }
   ],
   "keywords": "code editor education learning",
