@@ -13,7 +13,7 @@ const VisualizerPlugin = require('webpack-visualizer-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash.escaperegexp');
-const babel = require('babel-core');
+const babel = require('@babel/core');
 
 const babelLoaderVersion =
   require('./node_modules/babel-loader/package.json').version;
@@ -28,8 +28,8 @@ if (process.env.DEBUG === 'true') {
 }
 const babelrc = {
   presets: [
-    'react',
-    ['env', {targets, modules: false}],
+    '@babel/preset-react',
+    ['@babel/preset-env', {targets, modules: false}],
   ],
   plugins: ['syntax-dynamic-import'],
   compact: false,
@@ -153,7 +153,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     mode: isProduction ? 'production' : 'development',
     entry: isTest ? undefined : {
       main: [
-        'babel-polyfill',
+        '@babel/polyfill',
         'es6-set/implement',
         'whatwg-fetch',
         'raf/polyfill',
@@ -161,7 +161,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         './src/application.js',
       ],
       preview: [
-        'babel-polyfill',
+        '@babel/polyfill',
         './src/preview.js',
       ],
     },
