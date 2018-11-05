@@ -1,7 +1,6 @@
 /* eslint-env node */
 /* eslint-disable import/no-commonjs */
 
-const fs = require('fs');
 const path = require('path');
 
 const OfflinePlugin = require('offline-plugin');
@@ -18,29 +17,21 @@ const babel = require('@babel/core');
 const babelLoaderVersion =
   require('./node_modules/babel-loader/package.json').version;
 
-let targets;
-if (process.env.DEBUG === 'true') {
-  targets = {browsers: 'last 1 Chrome version'};
-} else {
-  targets = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, 'config/browsers.json')),
-  );
-}
-const babelrc = {
-  presets: [
-    '@babel/preset-react',
-    ['@babel/preset-env', {targets, modules: false}],
-  ],
-  plugins: ['syntax-dynamic-import'],
-  compact: false,
-  cacheDirectory: true,
-  cacheIdentifier: JSON.stringify({
-    babel: babel.version,
-    'babel-loader': babelLoaderVersion,
-    debug: process.env.DEBUG,
-    env: process.env.NODE_ENV || 'development',
-  }),
-};
+const babelrc = require('./babel.config.js');
+
+const babelLoaderConfig = Object.assign(
+  {},
+  babelrc,
+  {
+    cacheDirectory: true,
+    cacheIdentifier: JSON.stringify({
+      babel: babel.version,
+      'babel-loader': babelLoaderVersion,
+      debug: process.env.DEBUG,
+      env: process.env.NODE_ENV || 'development',
+    }),
+  },
+);
 
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
@@ -183,7 +174,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
             path.resolve(__dirname, 'test'),
           ],
           use: [
-            {loader: 'babel-loader', options: babelrc},
+            {loader: 'babel-loader', options: babelLoaderConfig},
             'eslint-loader',
           ],
         },
@@ -269,7 +260,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
             matchModule('redux'),
             matchModule('stylelint'),
           ],
-          use: {loader: 'babel-loader', options: babelrc},
+          use: {loader: 'babel-loader', options: babelLoaderConfig},
         },
         {
           include: matchModule('html-inspector'),
