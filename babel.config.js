@@ -18,6 +18,12 @@ module.exports = {
     '@babel/preset-react',
     ['@babel/preset-env', {targets, modules: false}],
   ],
-  plugins: ['syntax-dynamic-import'],
+  plugins: [
+    '@babel/plugin-syntax-dynamic-import',
+    [
+      '@babel/plugin-transform-runtime',
+      {useEsModules: true},
+    ],
+  ],
   compact: false,
-}
+};

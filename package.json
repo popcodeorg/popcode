@@ -176,6 +176,7 @@
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.1.2",
     "@firebase/app": "^0.3.4",
     "@firebase/app-types": "^0.3.2",
     "@firebase/auth": "^0.7.6",
@@ -272,6 +273,7 @@
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
