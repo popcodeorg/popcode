@@ -237,7 +237,6 @@
     "redux-actions": "^2.6.1",
     "redux-immutable": "^4.0.0",
     "redux-saga": "^0.16.0",
-    "redux-saga-debounce-effect": "^0.2.2",
     "remark": "^9.0.0",
     "remark-external-links": "^3.0.0",
     "remark-react": "^4.0.0",
