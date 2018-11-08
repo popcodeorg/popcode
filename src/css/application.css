@@ -317,6 +317,11 @@ body {
   & h5,
   & h6 {
     line-height: 1.2em;
+
+    /* postcss-bem-linter: ignore */
+    & code.hljs {
+      padding: 0 0.2em;
+    }
   }
 
   /* postcss-bem-linter: ignore */
