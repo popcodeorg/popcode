@@ -26,4 +26,10 @@ module.exports = {
     ],
   ],
   compact: false,
+  overrides: [
+    {
+      include: './node_modules/parse5-sax-parser/lib/index.js',
+      plugins: [['@babel/plugin-transform-runtime', {useEsModules: false}]],
+    },
+  ],
 };
