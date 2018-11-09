@@ -1,0 +1,10 @@
+HOST_VOLUME=/host_sync
+APP_VOLUME=/app_sync
+UNISON_SRC=/host_sync
+UNISON_DEST=/app_sync
+UNISON_DIR=/data
+UNISON_ARGS=-prefer /host_sync -numericids -auto -batch
+UNISON_WATCH_ARGS=-repeat watch
+TZ=Europe/London
+LANG=C.UTF-8
+HOME=/root

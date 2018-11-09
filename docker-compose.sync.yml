@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+  app:
+    depends_on: [app-syncer, node_modules-syncer, bower_components-syncer]
+    volumes:
+      - 'app-sync:/app:nocopy'
+      - 'node_modules-sync:/app/node_modules:nocopy'
+      - 'bower_components-sync:/app/bower_components:nocopy'
+  app-syncer: &syncer
+    image: eugenmayer/unison:2.51.2.1
+    command: /entrypoint.sh supervisord
+    volumes:
+      - .:/host_sync
+      - app-sync:/app_sync
+    env_file: ./.docker-sync-env
+    environment:
+      - UNISON_ARGS=-ignore='Name .git' -ignore='Name node_modules' -ignore='Name bower_components' -prefer /host_sync -numericids -auto -batch
+  node_modules-syncer:
+    <<: *syncer
+    volumes:
+      - ./node_modules:/host_sync
+      - node_modules-sync:/app_sync
+    environment: []
+  bower_components-syncer:
+    <<: *syncer
+    volumes:
+      - ./bower_components:/host_sync
+      - bower_components-sync:/app_sync
+    environment: []
+
+volumes:
+  ? app-sync
+  ? node_modules-sync
+  ? bower_components-sync
