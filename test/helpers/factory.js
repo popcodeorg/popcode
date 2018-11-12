@@ -29,13 +29,13 @@ export function gistData({
   return {files};
 }
 
-export function userWithCredentials({
+export function userCredential({
   user: userIn,
   credential: credentialIn,
 } = {}) {
   return {
     user: user(userIn),
-    credentials: [credential(credentialIn)],
+    credential: credential(credentialIn),
   };
 }
 

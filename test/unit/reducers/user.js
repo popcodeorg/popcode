@@ -5,7 +5,7 @@ import {Map} from 'immutable';
 
 import reducerTest from '../../helpers/reducerTest';
 import {user as states} from '../../helpers/referenceStates';
-import {userWithCredentials} from '../../helpers/factory';
+import {userCredential} from '../../helpers/factory';
 import reducer from '../../../src/reducers/user';
 import {
   accountMigrationComplete,
@@ -21,7 +21,7 @@ import {
 import {AccountMigrationState, LoginState} from '../../../src/enums';
 import {AccountMigration, User, UserAccount} from '../../../src/records';
 
-const userWithCredentialsIn = userWithCredentials();
+const userCredentialIn = userCredential();
 
 const loggedOutState = new User({
   loginState: LoginState.ANONYMOUS,
@@ -30,11 +30,11 @@ const loggedOutState = new User({
 const loggedInState = new User({
   loginState: LoginState.AUTHENTICATED,
   account: new UserAccount({
-    id: userWithCredentialsIn.user.uid,
-    displayName: userWithCredentialsIn.user.displayName,
-    avatarUrl: userWithCredentialsIn.user.photoURL,
+    id: userCredentialIn.user.uid,
+    displayName: userCredentialIn.user.displayName,
+    avatarUrl: userCredentialIn.user.photoURL,
     accessTokens: new Map({
-      'github.com': userWithCredentialsIn.credentials[0].accessToken,
+      'github.com': userCredentialIn.credential.accessToken,
     }),
   }),
 });
@@ -44,8 +44,8 @@ test('userAuthenticated', reducerTest(
   states.initial,
   partial(
     userAuthenticated,
-    userWithCredentialsIn.user,
-    userWithCredentialsIn.credentials,
+    userCredentialIn.user,
+    [userCredentialIn.credential],
   ),
   loggedInState,
 ));
