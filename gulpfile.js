@@ -141,7 +141,10 @@ gulp.task('browserSync', ['static'], () => {
   const compiler = webpack(webpackConfiguration(process.env.NODE_ENV));
   compiler.plugin('invalid', browserSync.reload);
   browserSync.init({
+    ghostMode: false,
+    notify: false,
     open: !isDocker(),
+    reloadOnRestart: true,
     server: {
       baseDir: distDir,
       middleware: [
