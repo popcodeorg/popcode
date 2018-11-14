@@ -19,6 +19,10 @@ const compose = get(
 export default function createApplicationStore() {
   const sagaMiddleware = createSagaMiddleware({
     onError(error) {
+      if (get(console, 'error')) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
       bugsnagClient.notify(error);
     },
   });

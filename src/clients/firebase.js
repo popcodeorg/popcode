@@ -1,10 +1,8 @@
 import Cookies from 'js-cookie';
 import get from 'lodash-es/get';
 import isEmpty from 'lodash-es/isEmpty';
-import isEqual from 'lodash-es/isEqual';
 import isNil from 'lodash-es/isNil';
 import isNull from 'lodash-es/isNull';
-import map from 'lodash-es/map';
 import omit from 'lodash-es/omit';
 import values from 'lodash-es/values';
 import uuid from 'uuid/v4';
@@ -60,14 +58,9 @@ function buildFirebase(appName = undefined) {
 }
 
 export function onAuthStateChanged(listener) {
-  const unsubscribe = auth.onAuthStateChanged(async(user) => {
-    if (isNull(user)) {
-      listener({user: null});
-    } else {
-      listener(await decorateUserWithCredentials(user));
-    }
+  return auth.onAuthStateChanged((user) => {
+    listener({user});
   });
-  return unsubscribe;
 }
 
 async function workspace(uid) {
@@ -107,22 +100,11 @@ export async function saveProject(uid, project) {
     setWithPriority(project, -Date.now());
 }
 
-async function decorateUserWithCredentials(user) {
+export async function loadCredentialsForUser(uid) {
   const database = await loadDatabase();
   const credentialEvent =
-    await database.ref(`authTokens/${user.uid}`).once('value');
-  const credentials = values(credentialEvent.val() || {});
-  if (
-    !isEqual(
-      map(credentials, 'providerId').sort(),
-      map(user.providerData, 'providerId').sort(),
-    )
-  ) {
-    await auth.signOut();
-    return {user: null};
-  }
-
-  return {user, credentials};
+    await database.ref(`authTokens/${uid}`).once('value');
+  return values(credentialEvent.val());
 }
 
 export async function signIn(provider) {
@@ -135,7 +117,6 @@ export async function signIn(provider) {
     } else if (provider === 'google') {
       userCredential = await signInWithGoogle();
     }
-    await saveUserCredential(userCredential);
     return userCredential;
   } finally {
     setTimeout(() => {
@@ -145,10 +126,9 @@ export async function signIn(provider) {
 }
 
 export async function linkGithub() {
-  const userCredential =
+  const {credential} =
     await auth.currentUser.linkWithPopup(githubAuthProvider);
-  await saveUserCredential(userCredential);
-  return userCredential.credential;
+  return credential;
 }
 
 export async function migrateAccount(inboundAccountCredential) {
@@ -174,7 +154,7 @@ export async function migrateAccount(inboundAccountCredential) {
 async function migrateCredential(credential, {auth: inboundAccountAuth}) {
   await inboundAccountAuth.currentUser.unlink(credential.providerId);
   await auth.currentUser.linkAndRetrieveDataWithCredential(credential);
-  await saveUserCredential({user: auth.currentUser, credential});
+  await saveCredentialForCurrentUser(credential);
 }
 
 async function migrateProjects({
@@ -235,10 +215,18 @@ export async function signOut() {
   return auth.signOut();
 }
 
-async function saveUserCredential({
+export async function saveUserCredential({
   user: {uid},
   credential,
 }) {
+  await saveCredentialForUser(uid, credential);
+}
+
+export async function saveCredentialForCurrentUser(credential) {
+  await saveCredentialForUser(auth.currentUser.uid, credential);
+}
+
+async function saveCredentialForUser(uid, credential) {
   const database = await loadDatabase();
   await database.
     ref(`authTokens/${providerPath(uid, credential.providerId)}`).

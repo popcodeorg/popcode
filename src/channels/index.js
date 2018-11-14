@@ -1,3 +1,1 @@
-import loginState from './loginState';
-
-export {loginState};
+export {default as makeLoginState} from './makeLoginState';
