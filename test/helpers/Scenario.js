@@ -3,11 +3,12 @@ import {
   projectCreated,
 } from '../../src/actions/projects';
 import {
+  identityLinked,
   userAuthenticated,
 } from '../../src/actions/user';
 import Analyzer from '../../src/analyzers';
 
-import {userCredential} from './factory';
+import {githubCredential, userCredential} from './factory';
 
 export default class Scenario {
   constructor() {
@@ -19,6 +20,12 @@ export default class Scenario {
     const {user, credential} = userCredential();
     this._reduce(userAuthenticated(user, [credential]));
     return this;
+  }
+
+  authGitHub() {
+    const credential = githubCredential();
+    this._reduce(identityLinked(credential));
+    return credential;
   }
 
   get project() {

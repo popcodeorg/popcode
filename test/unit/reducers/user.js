@@ -19,7 +19,12 @@ import {
   accountMigrationError,
 } from '../../../src/actions/user';
 import {AccountMigrationState, LoginState} from '../../../src/enums';
-import {AccountMigration, User, UserAccount} from '../../../src/records';
+import {
+  AccountMigration,
+  User,
+  UserAccount,
+  UserIdentityProvider,
+} from '../../../src/records';
 
 const userCredentialIn = userCredential();
 
@@ -33,8 +38,10 @@ const loggedInState = new User({
     id: userCredentialIn.user.uid,
     displayName: userCredentialIn.user.displayName,
     avatarUrl: userCredentialIn.user.photoURL,
-    accessTokens: new Map({
-      'github.com': userCredentialIn.credential.accessToken,
+    identityProviders: new Map({
+      'google.com': new UserIdentityProvider({
+        accessToken: userCredentialIn.credential.idToken,
+      }),
     }),
   }),
 });
@@ -57,7 +64,10 @@ test('identityLinked', reducerTest(
     identityLinked,
     {providerId: 'google.com', idToken: 'abc'},
   ),
-  loggedInState.setIn(['account', 'accessTokens', 'google.com'], 'abc'),
+  loggedInState.setIn(
+    ['account', 'identityProviders', 'google.com'],
+    new UserIdentityProvider({accessToken: 'abc'}),
+  ),
 ));
 
 tap(
@@ -72,7 +82,11 @@ tap(
         userAccountToMerge: new UserAccount({
           displayName: 'Popcode User',
           avatarUrl: 'https://github.com/popcodeuser.jpg',
-          accessTokens: new Map({'github.com': 'abc123'}),
+          identityProviders: new Map({
+            'github.com': new UserIdentityProvider({
+              accessToken: 'abc123',
+            }),
+          }),
         }),
         firebaseCredential: credential,
       }),
@@ -92,8 +106,8 @@ tap(
       ['currentMigration', 'state'],
       AccountMigrationState.COMPLETE,
     ).setIn(
-      ['account', 'accessTokens', 'github.com'],
-      credential.accessToken,
+      ['account', 'identityProviders', 'github.com'],
+      new UserIdentityProvider({accessToken: credential.accessToken}),
     );
 
     const errorState = undoGracePeriodState.setIn(

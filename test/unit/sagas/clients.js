@@ -54,6 +54,7 @@ test('export gist', (t) => {
   const exportType = 'gist';
   const scenario = new Scenario();
   scenario.logIn();
+  scenario.authGitHub();
 
   function initiateExport(assert) {
     return testSaga(exportProjectSaga, {payload: {exportType}}).
@@ -63,7 +64,11 @@ test('export gist', (t) => {
       next(scenario.state).call(
         createGistFromProject,
         scenario.project.toJS(),
-        scenario.user.account.accessTokens.get('github.com'),
+        scenario.user.account.getIn([
+          'identityProviders',
+          'github.com',
+          'accessToken',
+        ]),
       );
   }
 
@@ -98,6 +103,7 @@ test('export repo', (t) => {
   const exportType = 'repo';
   const scenario = new Scenario();
   scenario.logIn();
+  scenario.authGitHub();
 
   function initiateExport(assert) {
     return testSaga(exportProjectSaga, {payload: {exportType}}).
@@ -107,7 +113,11 @@ test('export repo', (t) => {
       next(scenario.state).call(
         createOrUpdateRepoFromProject,
         scenario.project.toJS(),
-        scenario.user.account.accessTokens.get('github.com'),
+        scenario.user.account.getIn([
+          'identityProviders',
+          'github.com',
+          'accessToken',
+        ]),
       );
   }
 
@@ -141,6 +151,7 @@ test('update repo', (t) => {
   const exportType = 'repo';
   const scenario = new Scenario();
   scenario.logIn();
+  scenario.authGitHub();
 
   function initiateExport(assert) {
     return testSaga(exportProjectSaga, {payload: {exportType}}).
@@ -150,7 +161,11 @@ test('update repo', (t) => {
       next(scenario.state).call(
         createOrUpdateRepoFromProject,
         scenario.project.toJS(),
-        scenario.user.account.accessTokens.get('github.com'),
+        scenario.user.account.getIn([
+          'identityProviders',
+          'github.com',
+          'accessToken',
+        ]),
       );
   }
 
