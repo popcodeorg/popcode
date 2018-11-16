@@ -80,7 +80,7 @@ test('tag outside <html> tag', validationTest(
 test('text outside <body> tag', validationTest(
   `<!DOCTYPE html>
 <html>
-  Extra text here
+  (Extra text here)
   <head><title>Title</title></head>
   <body></body>
 </html>`,
@@ -96,7 +96,7 @@ test('text directly inside <head> tag', validationTest(
 <html>
   <head>
     <title>Title</title>
-    Shouldn't be here
+    --- Shouldn't be here ---
   </head>
   <body></body>
 </html>`,

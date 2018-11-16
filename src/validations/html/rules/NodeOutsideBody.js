@@ -49,22 +49,21 @@ export default class NodeOutsideBody {
       this._isInsideHtmlTag() ||
       this._isDirectChildOfHead()
     )) {
-      const matchingWhitespaces = text.match(/^(\W+)/gu);
-      let replacementLocation = location;
+      const matchingWhitespaces = text.match(/^(\s+)/gu);
 
       if (matchingWhitespaces) {
         const whitespaces = matchingWhitespaces[0].split('\n');
         const blankLines = whitespaces.length - 1;
         const columnOffset = whitespaces[blankLines].length;
-        replacementLocation = {
-          row: location.row + blankLines,
-          column: columnOffset,
-        };
+        this._invalidTextLocations.push({
+          location: {
+            row: location.row + blankLines,
+            column: columnOffset,
+          },
+        });
+      } else {
+        this._invalidTextLocations.push({location});
       }
-
-      this._invalidTextLocations.push({
-        location: replacementLocation,
-      });
     }
   }
 
