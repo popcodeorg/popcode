@@ -13,7 +13,11 @@ import '@firebase/auth';
 import {bugsnagClient} from '../util/bugsnag';
 import config from '../config';
 import retryingFailedImports from '../util/retryingFailedImports';
-import {getGapiSync, SCOPES as GOOGLE_SCOPES} from '../services/gapi';
+import {
+  getGapiSync,
+  loadAndConfigureGapi,
+  SCOPES as GOOGLE_SCOPES,
+} from '../services/gapi';
 
 const GITHUB_SCOPES = ['gist', 'public_repo', 'read:user', 'user:email'];
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';
@@ -208,7 +212,7 @@ async function signInWithGoogle() {
 }
 
 export async function signOut() {
-  const gapi = getGapiSync();
+  const gapi = await loadAndConfigureGapi();
   if (await gapi.auth2.getAuthInstance().isSignedIn.get()) {
     gapi.auth2.getAuthInstance().signOut();
   }
