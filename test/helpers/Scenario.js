@@ -7,7 +7,7 @@ import {
 } from '../../src/actions/user';
 import Analyzer from '../../src/analyzers';
 
-import {userWithCredentials} from './factory';
+import {userCredential} from './factory';
 
 export default class Scenario {
   constructor() {
@@ -16,8 +16,8 @@ export default class Scenario {
   }
 
   logIn() {
-    const {user, credentials} = userWithCredentials();
-    this._reduce(userAuthenticated(user, credentials));
+    const {user, credential} = userCredential();
+    this._reduce(userAuthenticated(user, [credential]));
     return this;
   }
 

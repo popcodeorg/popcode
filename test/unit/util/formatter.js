@@ -1,5 +1,7 @@
 import test from 'tape';
+
 import Beautify from 'js-beautify';
+
 import {format, indexToNonWhitespaceIndex, nonWhitespaceIndexToIndex}
   from '../../../src/util/formatter';
 

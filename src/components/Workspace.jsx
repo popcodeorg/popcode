@@ -1,3 +1,5 @@
+import {faInfoCircle, faPenSquare} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -30,6 +32,7 @@ export default class Workspace extends React.Component {
       this,
       '_handleUnload',
       '_handleClickInstructionsBar',
+      '_handleClickInstructionsEditButton',
     );
     this.columnRefs = [null, null];
   }
@@ -76,6 +79,15 @@ export default class Workspace extends React.Component {
     }
   }
 
+  _handleClickInstructionsEditButton() {
+    const {isEditingInstructions, onClickInstructionsEditButton} = this.props;
+    if (!isEditingInstructions) {
+      onClickInstructionsEditButton(
+        get(this.props, ['currentProject', 'projectKey']),
+      );
+    }
+  }
+
   _renderInstructionsBar() {
     const currentInstructions = get(
       this.props,
@@ -85,6 +97,11 @@ export default class Workspace extends React.Component {
       return null;
     }
 
+    const isInstructionsHidden = get(
+      this.props,
+      ['currentProject', 'hiddenUIComponents'],
+    ).includes('instructions');
+
     return (
       <div
         className={classnames('layout__instructions-bar', {
@@ -93,11 +110,24 @@ export default class Workspace extends React.Component {
         })}
         onClick={this._handleClickInstructionsBar}
       >
-        <span
-          className={classnames('u__icon', {
-            u__icon_disabled: this.props.isEditingInstructions,
+        <FontAwesomeIcon
+          fixedWidth
+          className={classnames({
+            u__pointer: !this.props.isEditingInstructions,
           })}
-        >&#xf05a;</span>
+          icon={faInfoCircle}
+        />
+        {!isInstructionsHidden && !this.props.isEditingInstructions &&
+          <FontAwesomeIcon
+            fixedWidth
+            className="layout__instructions-bar-edit-button"
+            icon={faPenSquare}
+            onClick={(e) => {
+              e.stopPropagation();
+              this._handleClickInstructionsEditButton();
+            }}
+          />
+        }
       </div>
     );
   }
@@ -105,6 +135,7 @@ export default class Workspace extends React.Component {
   _renderEnvironment() {
     const {
       currentProject,
+      isFlexResizingSupported,
       resizableFlexGrow,
       resizableFlexRefs,
       onResizableFlexDividerDrag,
@@ -129,7 +160,10 @@ export default class Workspace extends React.Component {
           onStop={onStopDragColumnDivider}
         >
           <div
-            className="editors__column-divider"
+            className={classnames(
+              'editors__column-divider',
+              {'editors__column-divider_draggable': isFlexResizingSupported},
+            )}
           />
         </DraggableCore>
         <Output
@@ -145,13 +179,13 @@ export default class Workspace extends React.Component {
       <div className="layout">
         <TopBar />
         <NotificationList />
-        <main className="layout__columns">
+        <div className="layout__columns">
           <Instructions />
           {this._renderInstructionsBar()}
           <div className="workspace layout__main">
             {this._renderEnvironment()}
           </div>
-        </main>
+        </div>
         <AccountMigration />
       </div>
     );
@@ -161,9 +195,11 @@ export default class Workspace extends React.Component {
 Workspace.propTypes = {
   currentProject: PropTypes.object,
   isEditingInstructions: PropTypes.bool.isRequired,
+  isFlexResizingSupported: PropTypes.bool.isRequired,
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
   resizableFlexRefs: PropTypes.array.isRequired,
   onApplicationLoaded: PropTypes.func.isRequired,
+  onClickInstructionsEditButton: PropTypes.func.isRequired,
   onComponentToggle: PropTypes.func.isRequired,
   onResizableFlexDividerDrag: PropTypes.func.isRequired,
   onStartDragColumnDivider: PropTypes.func.isRequired,

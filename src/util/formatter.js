@@ -25,7 +25,7 @@ const BEAUTIFY_SETTINGS = {
 };
 
 export function indexToNonWhitespaceIndex(string, index) {
-  return string.slice(0, index).replace(/\s/g, '').length;
+  return string.slice(0, index).replace(/\s/gu, '').length;
 }
 
 export function nonWhitespaceIndexToIndex(string, charIndex) {
@@ -34,7 +34,7 @@ export function nonWhitespaceIndexToIndex(string, charIndex) {
     if (charI === charIndex) {
       return i;
     }
-    if (!/\s/.test(string[i])) {
+    if (!/\s/u.test(string[i])) {
       charI++;
     }
   }

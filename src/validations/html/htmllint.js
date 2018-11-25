@@ -46,6 +46,8 @@ const errorMap = {
 
   E008: () => ({reason: 'doctype'}),
 
+  E009: () => ({reason: 'href-style'}),
+
   E012: error => ({reason: 'duplicated-id', payload: {id: error.data.id}}),
 
   E014: () => ({reason: 'img-src'}),
@@ -58,7 +60,7 @@ const errorMap = {
 
   E018: (error, source) => {
     const lines = source.split('\n');
-    const tagNameExpr = /(.*?)\s*\/>/;
+    const tagNameExpr = /(.*?)\s*\/>/u;
     const [, tag] =
       tagNameExpr.exec(lines[error.line - 1].slice(error.column));
 
@@ -79,7 +81,7 @@ const errorMap = {
 
   E042: (error, source) => {
     const lines = source.split('\n');
-    const tagNameExpr = /[^\s>]+/;
+    const tagNameExpr = /[^\s>]+/u;
     const [tag] = tagNameExpr.exec(lines[error.line - 1].slice(error.column));
 
     return {
@@ -134,6 +136,7 @@ const htmlLintOptions = {
   'tag-name-lowercase': true,
   'tag-self-close': 'never',
   'title-no-dup': true,
+  'href-style': 'absolute',
 };
 
 const linter = new Linter(rules);

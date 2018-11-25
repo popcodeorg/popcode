@@ -14,6 +14,8 @@ const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/classroom/
 
 class LoadError extends ExtendableError {}
 
+let isGapiLoadedAndConfigured = false;
+
 const loadGapi = once(async() => new Promise((resolve, reject) => {
   loadjs('https://apis.google.com/js/client.js', {
     success() {
@@ -47,14 +49,17 @@ export const loadAndConfigureGapi = once(async() => {
     scope: SCOPES.join(' '),
   });
 
+  isGapiLoadedAndConfigured = true;
+
   return gapi;
 });
 
 export function getGapiSync() {
-  if ('gapi' in window) {
-    return window.gapi;
+  if (!isGapiLoadedAndConfigured) {
+    throw new Error(
+      'Attempted to synchronously access `gapi` before it was loaded',
+    );
   }
-  throw new Error(
-    'Attempted to synchronously access `gapi` before it was loaded',
-  );
+
+  return window.gapi;
 }

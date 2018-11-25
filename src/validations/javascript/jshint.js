@@ -107,7 +107,7 @@ const errorMap = {
     return {
       reason: 'strict-operators.custom-case',
       payload: {goodOperator: error.a, badOperator: error.b},
-      suppresses: ['expected-identifier'],
+      suppresses: ['expected-identifier', 'unexpected-token'],
     };
   },
 

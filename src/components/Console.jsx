@@ -1,4 +1,10 @@
 import classnames from 'classnames';
+import {
+  faBan,
+  faChevronDown,
+  faChevronUp,
+} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import partial from 'lodash-es/partial';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -10,17 +16,21 @@ import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
 
 export default function Console({
-  currentProjectKey,
   currentCompiledProjectKey,
-  onConsoleClicked,
+  currentInputValue,
+  currentProjectKey,
   history,
   isHidden,
   isOpen,
   isTextSizeLarge,
+  onChange,
   onClearConsoleEntries,
+  onConsoleClicked,
   onInput,
-  onToggleVisible,
+  onNextConsoleHistory,
+  onPreviousConsoleHistory,
   onRequestedLineFocused,
+  onToggleVisible,
   requestedFocusedLine,
 }) {
   const console = (
@@ -34,9 +44,13 @@ export default function Console({
         }
       >
         <ConsoleInput
+          currentInputValue={currentInputValue}
           isTextSizeLarge={isTextSizeLarge}
           requestedFocusedLine={requestedFocusedLine}
+          onChange={onChange}
           onInput={onInput}
+          onNextConsoleHistory={onNextConsoleHistory}
+          onPreviousConsoleHistory={onPreviousConsoleHistory}
           onRequestedLineFocused={onRequestedLineFocused}
         />
         {history.map((entry, key) => {
@@ -51,7 +65,7 @@ export default function Console({
     </div>
   );
 
-  const chevron = isOpen ? ' \uf078' : ' \uf077';
+  const chevron = isOpen ? faChevronDown : faChevronUp;
 
   return (
     <div
@@ -66,16 +80,16 @@ export default function Console({
       >
         <div>
           Console
-          <span className="u__icon">{chevron}</span>
+          {' '}
+          <FontAwesomeIcon icon={chevron} />
         </div>
         <div
-          className="console__button console__button_clear u__icon"
           onClick={(e) => {
             e.stopPropagation();
             onClearConsoleEntries();
           }}
         >
-          &#xf05e;
+          <FontAwesomeIcon icon={faBan} />
         </div>
       </div>
       {isOpen ? console : null}
@@ -85,15 +99,19 @@ export default function Console({
 
 Console.propTypes = {
   currentCompiledProjectKey: PropTypes.number,
+  currentInputValue: PropTypes.string.isRequired,
   currentProjectKey: PropTypes.string.isRequired,
   history: ImmutablePropTypes.iterable.isRequired,
   isHidden: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
+  onChange: PropTypes.func.isRequired,
   onClearConsoleEntries: PropTypes.func.isRequired,
   onConsoleClicked: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
+  onNextConsoleHistory: PropTypes.func.isRequired,
+  onPreviousConsoleHistory: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };

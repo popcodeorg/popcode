@@ -16,7 +16,8 @@ test('variable definition is not an expression statement',
 test('loop is not an expression statement', (assert) => {
   assert.isEqual(
     hasExpressionStatement('for (let i = 0; i < 10; ++i) console.log(i);'),
-    false);
+    false,
+  );
   assert.end();
 });
 

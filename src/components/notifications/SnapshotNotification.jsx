@@ -1,3 +1,5 @@
+import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import partial from 'lodash-es/partial';
@@ -17,7 +19,7 @@ export default function SnapshotNotification({
   if (metadata.get('isCopied')) {
     checkmark = [
       ' ',
-      <span className="u__icon" key="icon">&#xf058;</span>,
+      <FontAwesomeIcon icon={faCheckCircle} key="icon" />,
     ];
   }
 

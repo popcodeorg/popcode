@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export default function NotificationContainer(props) {
   return (
@@ -16,7 +18,9 @@ export default function NotificationContainer(props) {
       <span
         className="notification-list__dismiss"
         onClick={props.onDismissed}
-      >&#xf00d;</span>
+      >
+        <FontAwesomeIcon icon={faTimes} />
+      </span>
     </div>
   );
 }

@@ -24,8 +24,20 @@ export const clearConsoleEntries = createAction(
   'CLEAR_CONSOLE_ENTRIES',
 );
 
-export const consoleLogProduced = createAction(
-  'CONSOLE_LOG_PRODUCED',
-  (value, compiledProjectKey) => ({value, compiledProjectKey}),
-  (_value, _compiledProjectKey, key = uuid().toString()) => ({key}),
+export const previousConsoleHistory = createAction(
+  'PREVIOUS_CONSOLE_HISTORY',
+);
+
+export const nextConsoleHistory = createAction(
+  'NEXT_CONSOLE_HISTORY',
+);
+
+export const consoleInputChanged = createAction(
+  'CONSOLE_INPUT_CHANGED',
+  value => ({value}),
+);
+
+export const consoleLogBatchProduced = createAction(
+  'CONSOLE_LOG_BATCH_PRODUCED',
+  entries => ({entries}),
 );

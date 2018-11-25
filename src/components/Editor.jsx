@@ -76,7 +76,8 @@ class Editor extends React.Component {
     if (projectKey !== prevProjectKey) {
       this._startNewSession(source);
     } else if (source !== prevSource && source !== this._editor.getValue()) {
-      this._editor.setValue(source);
+      /* 1 is the ACE editor value to set selection to end */
+      this._editor.setValue(source, 1);
     }
 
     this._focusRequestedLine(requestedFocusedLine);
@@ -95,7 +96,7 @@ class Editor extends React.Component {
   }
 
   _loadBeautify() {
-    (async function() {
+    (async function load() {
       this.Beautify = await retryingFailedImports(() => import(
         /* webpackChunkName: "mainAsync" */
         'js-beautify',

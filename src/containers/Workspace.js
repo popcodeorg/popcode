@@ -7,6 +7,7 @@ import {
   applicationLoaded,
   startDragColumnDivider,
   stopDragColumnDivider,
+  startEditingInstructions,
 } from '../actions';
 import resizableFlex from '../higherOrderComponents/resizableFlex';
 
@@ -33,6 +34,10 @@ function mapDispatchToProps(dispatch) {
 
     onStopDragColumnDivider() {
       dispatch(stopDragColumnDivider());
+    },
+
+    onClickInstructionsEditButton(projectKey) {
+      dispatch(startEditingInstructions(projectKey));
     },
   };
 }

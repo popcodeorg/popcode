@@ -1,5 +1,4 @@
 /* eslint-env node */
-/* eslint-disable import/unambiguous */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable import/no-nodejs-modules */
 
@@ -12,9 +11,8 @@ const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
 const cssnano = require('cssnano');
 const forOwn = require('lodash.forown');
-const git = require('git-rev-sync');
 const postcss = require('gulp-postcss');
-const cssnext = require('postcss-cssnext');
+const postcssPresetEnv = require('postcss-preset-env');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const cloudflare = require('cloudflare');
@@ -33,45 +31,35 @@ const highlightStylesheetsDir = 'node_modules/highlight.js/styles';
 const staticDir = path.join(srcDir, 'static');
 const bowerComponents = 'bower_components';
 
-const cssnextBrowsers = [];
+const postcssBrowsers = [];
 const supportedBrowsers =
   JSON.parse(fs.readFileSync('./config/browsers.json'));
 forOwn(supportedBrowsers, (version, browser) => {
-  let browserForCssnext = browser;
+  let browserForPostcss = browser;
   if (browser === 'msie') {
-    browserForCssnext = 'ie';
+    browserForPostcss = 'ie';
   } else if (browser === 'chromium') {
     return;
   }
-  cssnextBrowsers.push(`${browserForCssnext} >= ${version}`);
+  postcssBrowsers.push(`${browserForPostcss} >= ${version}`);
 });
 
-gulp.task('env', () => {
-  process.env.GIT_REVISION = git.short();
-});
-
-gulp.task('static', () => gulp.
-  src(path.join(staticDir, '**/*')).
-  pipe(gulp.dest(distDir)),
-);
-
-gulp.task('fonts', () => gulp.
-  src([
-    path.join(
-      bowerComponents,
-      'inconsolata-webfont/fonts/inconsolata-regular.*',
-    ),
-    path.join(bowerComponents, 'fontawesome/fonts/fontawesome-webfont.*'),
-    path.join(
-      bowerComponents,
-      'roboto-webfont-bower/fonts/Roboto-{Bold,Regular}-webfont.*',
-    ),
-  ]).
-  pipe(gulp.dest(path.join(distDir, 'fonts'))),
+gulp.task(
+  'static',
+  () => gulp.
+    src(path.join(staticDir, '**/*')).
+    pipe(gulp.dest(distDir)),
 );
 
 gulp.task('css', () => {
-  const processors = [cssnext({browsers: cssnextBrowsers})];
+  const processors = [
+    postcssPresetEnv({
+      features: {
+        'nesting-rules': true,
+      },
+      browsers: postcssBrowsers,
+    }),
+  ];
   if (process.env.NODE_ENV === 'production') {
     processors.push(cssnano());
   }
@@ -90,7 +78,7 @@ gulp.task('css', () => {
     pipe(browserSync.stream());
 });
 
-gulp.task('js', ['env'], () => new Promise((resolve, reject) => {
+gulp.task('js', () => new Promise((resolve, reject) => {
   webpack(
     webpackConfiguration(process.env.NODE_ENV),
     (error, stats) => {
@@ -114,7 +102,7 @@ gulp.task('js', ['env'], () => new Promise((resolve, reject) => {
   );
 }));
 
-gulp.task('build', ['static', 'fonts', 'css', 'js']);
+gulp.task('build', ['static', 'css', 'js']);
 
 gulp.task('syncFirebase', async() => {
   const data = await pify(fs).readFile(
@@ -143,7 +131,7 @@ gulp.task('syncFirebase', async() => {
   });
 });
 
-gulp.task('dev', ['browserSync', 'static', 'fonts', 'css'], () => {
+gulp.task('dev', ['browserSync', 'static', 'css'], () => {
   gulp.watch(path.join(staticDir, '/**/*'), ['static']);
   gulp.watch(path.join(stylesheetsDir, '**/*.css'), ['css']);
   gulp.watch(path.join(distDir, '*')).on('change', browserSync.reload);
@@ -153,7 +141,10 @@ gulp.task('browserSync', ['static'], () => {
   const compiler = webpack(webpackConfiguration(process.env.NODE_ENV));
   compiler.plugin('invalid', browserSync.reload);
   browserSync.init({
+    ghostMode: false,
+    notify: false,
     open: !isDocker(),
+    reloadOnRestart: true,
     server: {
       baseDir: distDir,
       middleware: [
@@ -168,17 +159,19 @@ gulp.task('browserSync', ['static'], () => {
   });
 });
 
-gulp.task('purgeCache', () =>
-  cloudflare({
-    email: process.env.CLOUDFLARE_EMAIL,
-    key: process.env.CLOUDFLARE_KEY,
-  }).zones.purgeCache(
-    process.env.CLOUDFLARE_ZONE,
-    {
-      files: [
-        `https://${process.env.HOSTNAME}/index.html`,
-        `https://${process.env.HOSTNAME}/application.css`,
-      ],
-    },
-  ),
+gulp.task(
+  'purgeCache',
+  () =>
+    cloudflare({
+      email: process.env.CLOUDFLARE_EMAIL,
+      key: process.env.CLOUDFLARE_KEY,
+    }).zones.purgeCache(
+      process.env.CLOUDFLARE_ZONE,
+      {
+        files: [
+          `https://${process.env.HOSTNAME}/index.html`,
+          `https://${process.env.HOSTNAME}/application.css`,
+        ],
+      },
+    ),
 );

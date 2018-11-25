@@ -1,5 +1,4 @@
 /* eslint-env node */
-/* eslint-disable import/unambiguous */
 /* eslint-disable import/no-commonjs */
 
 const fs = require('fs');
@@ -14,7 +13,6 @@ const VisualizerPlugin = require('webpack-visualizer-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash.escaperegexp');
-const git = require('git-rev-sync');
 const babel = require('babel-core');
 
 const babelLoaderVersion =
@@ -47,9 +45,11 @@ const babelrc = {
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
     escapeRegExp(path.join('/node_modules', modulePath)),
+    'u',
   );
   const moduleDependencyPattern = new RegExp(
     escapeRegExp(path.join('/node_modules', modulePath, 'node_modules')),
+    'u',
   );
 
   return filePath =>
@@ -68,17 +68,16 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       FIREBASE_CLIENT_ID:
       /* eslint-disable-next-line max-len */
         '488497217137-c0mdq8uca6ot5o9u9avo3j5mfsi1q9v5.apps.googleusercontent.com',
-      GIT_REVISION: git.short(),
       NODE_ENV: env,
       WARN_ON_DROPPED_ERRORS: 'false',
       GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2',
     }),
     new CircularDependencyPlugin({
-      exclude: /node_modules/,
+      exclude: /node_modules/u,
       failOnError: true,
     }),
     new webpack.NormalModuleReplacementPlugin(
-      /node_modules\/stylelint\/lib\/requireRule.js$/,
+      /node_modules\/stylelint\/lib\/requireRule.js$/u,
       path.resolve(__dirname, 'src/patches/stylelint/lib/requireRule.js'),
     ),
   ];
@@ -109,7 +108,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     plugins.push(
       new OfflinePlugin({
         caches: {
-          main: [/(?:^|~)(?:main|preview)[-.~]/, ':externals:'],
+          main: [/(?:^|~)(?:main|preview)[-.~]/u, ':externals:'],
           additional: [':rest:'],
         },
         safeToUseOptionalCaches: isProduction,
@@ -121,20 +120,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         externals: [
           '/',
           'application.css',
-          'fonts/Roboto-Regular-webfont.woff',
-          'fonts/Roboto-Regular-webfont.ttf',
-          'fonts/Roboto-Regular-webfont.eot',
-          'fonts/Roboto-Bold-webfont.woff',
-          'fonts/Roboto-Bold-webfont.ttf',
-          'fonts/Roboto-Bold-webfont.eot',
-          'fonts/inconsolata-regular.woff2',
-          'fonts/inconsolata-regular.woff',
-          'fonts/inconsolata-regular.ttf',
-          'fonts/inconsolata-regular.eot',
-          'fonts/fontawesome-webfont.woff2',
-          'fonts/fontawesome-webfont.woff',
-          'fonts/fontawesome-webfont.ttf',
-          'fonts/fontawesome-webfont.eot',
           'images/pop/thinking.svg',
         ],
       }),
@@ -146,16 +131,16 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         defaultAttribute: 'defer',
         prefetch: {
           chunks: 'async',
-          test: /\.js$/,
+          test: /\.js$/u,
         },
         custom: [
           {
-            test: /^(?!(|.*~)main[.~-])/,
+            test: /^(?!(|.*~)main[.~-])/u,
             attribute: 'type',
             value: 'ref',
           },
           {
-            test: /(^|~)preview[.~-]/,
+            test: /(^|~)preview[.~-]/u,
             attribute: 'class',
             value: 'preview-bundle',
           },
@@ -171,6 +156,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         'babel-polyfill',
         'es6-set/implement',
         'whatwg-fetch',
+        'raf/polyfill',
         './src/init/DOMParserShim',
         './src/application.js',
       ],
@@ -191,7 +177,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
+          test: /\.jsx?$/u,
           include: [
             path.resolve(__dirname, 'src'),
             path.resolve(__dirname, 'test'),
@@ -202,7 +188,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           ],
         },
         {
-          test: /\.js$/,
+          test: /\.js$/u,
           use: ['source-map-loader'],
           enforce: 'pre',
         },
@@ -214,7 +200,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           use: ['raw-loader'],
         },
         {
-          test: /\.svg$/,
+          test: /\.svg$/u,
           use: [
             'svg-react-loader',
             {
@@ -257,7 +243,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           use: ['transform-loader/cacheable?brfs'],
         },
         {
-          test: /\.js$/,
+          test: /\.js$/u,
           include: [matchModule('htmllint')],
           use: [
             {
@@ -270,7 +256,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           ],
         },
         {
-          test: /\.js$/,
+          test: /\.js$/u,
           include: [
             matchModule('ansi-styles'),
             matchModule('ast-types'),
@@ -296,7 +282,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           ],
         },
         {
-          test: /\.js$/,
+          test: /\.js$/u,
           include: [
             path.resolve(__dirname, 'node_modules/brace/worker'),
             matchModule('autoprefixer'),
@@ -308,7 +294,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           use: ['null-loader'],
         },
         {
-          test: /\.js$/,
+          test: /\.js$/u,
           include: matchModule('moment/locale'),
           use: ['null-loader'],
         },

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import isNil from 'lodash-es/isNil';
 
 import {ConsoleEntry as ConsoleEntryRecord} from '../records';
@@ -20,7 +22,9 @@ export default function ConsoleExpression({entry: {expression}, isActive}) {
         )
       }
     >
-      <div className="console__chevron">&#xf054;</div>
+      <div className="console__chevron">
+        <FontAwesomeIcon icon={faChevronRight} />
+      </div>
       {expression}
     </div>
   );

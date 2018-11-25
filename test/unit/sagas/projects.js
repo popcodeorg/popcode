@@ -38,7 +38,7 @@ import Scenario from '../../helpers/Scenario';
 import {
   gistData,
   project,
-  userWithCredentials,
+  userCredential,
 } from '../../helpers/factory';
 import {
   getCurrentUserId,
@@ -226,7 +226,11 @@ test('importGist()', (t) => {
 test('userAuthenticated', (assert) => {
   const scenario = new Scenario().logIn();
   const projects = [project()];
-  testSaga(userAuthenticatedSaga, userAuthenticated(userWithCredentials())).
+  const {user, credential} = userCredential();
+  testSaga(
+    userAuthenticatedSaga,
+    userAuthenticated({user, credentials: [credential]}),
+  ).
     next().inspect(effect => assert.ok(effect.SELECT)).
     next(scenario.state).fork(saveCurrentProject).
     next(scenario.state).call(loadAllProjects, scenario.user.account.id).

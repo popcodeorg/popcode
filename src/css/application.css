@@ -1,49 +1,3 @@
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  src:
-    local('Roboto'),
-    url('fonts/Roboto-Regular-webfont.woff') format('woff'),
-    url('fonts/Roboto-Regular-webfont.ttf') format('ttf'),
-    url('fonts/Roboto-Regular-webfont.eot') format('eot');
-}
-
-@font-face {
-  font-family: 'Roboto';
-  font-style: bold;
-  font-weight: 700;
-  src:
-    local('Roboto'),
-    url('fonts/Roboto-Bold-webfont.woff') format('woff'),
-    url('fonts/Roboto-Bold-webfont.ttf') format('ttf'),
-    url('fonts/Roboto-Bold-webfont.eot') format('eot');
-}
-
-@font-face {
-  font-family: 'Inconsolata';
-  font-style: normal;
-  font-weight: 400;
-  src:
-    local('Inconsolata'),
-    url('fonts/inconsolata-regular.woff2') format('woff2'),
-    url('fonts/inconsolata-regular.woff') format('woff'),
-    url('fonts/inconsolata-regular.ttf') format('ttf'),
-    url('fonts/inconsolata-regular.eot') format('eot');
-}
-
-@font-face {
-  font-family: 'FontAwesome';
-  font-style: normal;
-  font-weight: 400;
-  src:
-    local('FontAwesome'),
-    url('fonts/fontawesome-webfont.woff2') format('woff2'),
-    url('fonts/fontawesome-webfont.woff') format('woff'),
-    url('fonts/fontawesome-webfont.ttf') format('ttf'),
-    url('fonts/fontawesome-webfont.eot') format('eot');
-}
-
 @keyframes pulsing {
   0% {
     transform: scale(1);
@@ -122,13 +76,25 @@ body {
   cursor: pointer;
   display: flex;
   flex: none;
+  flex-direction: column;
   font-size: 2em;
+  justify-content: space-between;
   text-align: center;
-  padding: 0.25em;
+  padding: 8px 2px;
 }
 
 .layout__instructions-bar_disabled {
   cursor: default;
+}
+
+.layout__instructions-bar-edit-button {
+  margin-top: 0.25em;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.layout__instructions-bar:hover .layout__instructions-bar-edit-button {
+  opacity: 0.6;
 }
 
 .layout__main {
@@ -230,10 +196,6 @@ body {
   box-shadow: inset 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3);
 }
 
-.top-bar__hamburger {
-  font-size: 1.5em;
-}
-
 .top-bar__menu {
   border-radius: var(--size-rounded-corners);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
@@ -275,6 +237,7 @@ body {
 }
 
 .top-bar__menu-item-icon {
+  color: inherit;
   padding-left: 0.75em;
   padding-right: 0.75em;
 }
@@ -354,6 +317,11 @@ body {
   & h5,
   & h6 {
     line-height: 1.2em;
+
+    /* postcss-bem-linter: ignore */
+    & code.hljs {
+      padding: 0 0.2em;
+    }
   }
 
   /* postcss-bem-linter: ignore */
@@ -400,7 +368,7 @@ body {
   height: 100%;
   padding: 0.5rem;
   box-sizing: border-box;
-  font-family: 'Inconsolata';
+  font-family: 'Inconsolata', monospace;
   font-size: 1rem;
   border: 0;
   outline: 0;
@@ -503,7 +471,7 @@ body {
 .editors {
   display: flex;
   flex-direction: column;
-  font-family: 'Inconsolata';
+  font-family: 'Inconsolata', monospace;
   font-size: 14px;
 }
 
@@ -542,14 +510,20 @@ body {
 
 .editors__column-divider {
   background-color: var(--color-light-gray);
-  cursor: ew-resize;
   width: 0.5vh;
+}
+
+.editors__column-divider_draggable {
+  cursor: ew-resize;
 }
 
 .editors__row-divider {
   background-color: var(--color-light-gray);
-  cursor: ns-resize;
   height: 0.5vh;
+}
+
+.editors__row-divider_draggable {
+  cursor: ns-resize;
 }
 
 .editors__help-text {
@@ -613,7 +587,7 @@ body {
 .console__repl {
   display: flex;
   flex-direction: column-reverse;
-  font-family: 'Inconsolata';
+  font-family: 'Inconsolata', monospace;
   font-size: 14px;
   max-height: 100%;
   overflow: auto;
@@ -630,7 +604,6 @@ body {
 
 .console__chevron {
   color: var(--color-light-gray);
-  font-family: 'FontAwesome';
   left: 0;
   position: absolute;
   top: 0;
@@ -729,6 +702,7 @@ body {
 
 .preview__button {
   padding: 0 0.5em;
+  cursor: pointer;
 }
 
 .preview__button_pop-out {
@@ -876,7 +850,6 @@ body {
   cursor: pointer;
   display: block;
   float: right;
-  font-family: 'FontAwesome';
   padding: 0 1rem;
 }
 
@@ -991,15 +964,6 @@ body {
   visibility: hidden;
 }
 
-.u__icon {
-  color: inherit;
+.u__pointer {
   cursor: pointer;
-  font-family: 'FontAwesome';
-  font-weight: normal;
-  user-select: none;
-  text-decoration: none;
-}
-
-.u__icon_disabled {
-  cursor: default;
 }

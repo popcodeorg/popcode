@@ -5,14 +5,14 @@ environment for use in the classroom. It's a lot like [JSBin](http://jsbin.com),
 [JSFiddle](https://jsfiddle.net), or [CodePen](https://codepen.io), but it focuses on
 giving specific, immediate, human-friendly feedback when the code contains errors.
 
-[![](https://cl.ly/1W1e1h3w073u/popscreens.png)](https://popcode.org)
+[![](https://user-images.githubusercontent.com/11786205/47052459-6673a080-d176-11e8-9c1b-b433a2af7c72.jpg)](https://popcode.org)
 
 ### Project status ###
 
 [![Build Status](https://travis-ci.org/popcodeorg/popcode.svg?branch=master)](https://travis-ci.org/popcodeorg/popcode) [![Dependency Status](https://david-dm.org/popcodeorg/popcode.svg)](https://david-dm.org/popcodeorg/popcode) ![License](https://img.shields.io/github/license/popcodeorg/popcode.svg)
 
 Popcode is the official first semester editing environment for the [ScriptEd
-program](https://scripted.org) in the 2016–2017 school year.
+program](https://scripted.org) in the 2018–2019 school year.
 
 ### Try it out ###
 
@@ -132,27 +132,18 @@ feedback from dozens of instructors.
 
 ### Running locally ###
 
-#### With Docker
+Make sure you have a local installation of [Node.js](https://nodejs.org/en/download/).
 
-If you already use Docker, your best bet is to use it for Popcode development
-too. A simple `docker-compose up` will do the trick.
-
-#### Without Docker
-
-Still pretty easy. Just check out the code. You’ll need
-[Yarn](https://yarnpkg.com/), which is the cool new NPM. It’s [easy to
-install](https://yarnpkg.com/en/docs/install).
-
-Once you’ve got it just run:
+Once you’ve got it run:
 
 ```bash
-$ yarn
+$ npm install
 ```
 
 That'll pull down the dependencies. Then run:
 
 ```bash
-$ yarn run dev
+$ npm start
 ```
 
 This will start a local static server, and open it in your browser. The first
@@ -162,7 +153,7 @@ assets are recompiled incrementally and your browser automatically reloads.
 When you're done, lint and make sure tests pass before opening a pull request:
 
 ```bash
-$ yarn test
+$ npm test
 ```
 
 ### Debug Mode ###
@@ -174,7 +165,23 @@ source code.
 
 To improve the situation, you can use **debug mode**, which configures Babel to
 compile the JavaScript to target only the latest version of Chrome, which
-supports most modern ES features.
+supports most modern ES features. To run in debug mode, start your development
+server with:
+
+```bash
+$ DEBUG=true npm start
+```
+
+### Running with Docker
+
+Popcode also comes with a `docker-compose` file to support running inside Docker
+with no local Node installation needed. If you’re a Docker user, you can install
+and run Popcode locally with:
+
+```bash
+$ docker pull popcodeorg/popcode:latest # Not required, but will speed up installation
+$ docker-compose up
+```
 
 ### Developer Reference ###
 
@@ -185,7 +192,7 @@ on the major tools:
 * [React](https://facebook.github.io/react/docs/react-component.html) for
   constructing the user interface
 * [Redux](http://redux.js.org/) for managing application state
-* [cssnext](http://cssnext.io/features/) gives us cutting-edge CSS features
+* [postcss-preset-env](https://github.com/csstools/postcss-preset-env) gives us cutting-edge CSS features
 * [Block Element Modifier](https://en.bem.info/methodology/naming-convention/)
   provides a convention for organizing DOM classes
 * [Webpack](https://webpack.github.io/docs/configuration.html) builds the
@@ -230,6 +237,11 @@ for all the sordid details.
 * [Limon Monte](https://limonte.github.io/)
 * [Matthew Armstrong](https://github.com/raingerber)
 * [Matt Garbis](http://www.mattgarbis.com/)
+* [Ilya Gribov](https://github.com/igrib)
+* [Chase Starr](http://www.twitter.com/captivechains)
+* [Alec Merdler](https://github.com/alecmerdler)
+* [Eric Snell](http://ericsnell.github.io/portfolio)
+* [Omar De Leo](https://github.com/omardeleo)
 * [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
 * Logo design, "Pop" concept, and branding elements by the team at
   [Red Peak](http://redpeakgroup.com): Andrew Haug, Aya Kawabata, Jieun Lee,
@@ -265,4 +277,4 @@ src="https://cloud.githubusercontent.com/assets/14214/19059115/428a80f4-89ab-11e
 
 Feel free to email me at [mat.a.brown@gmail.com](mailto:mat.a.brown@gmail.com) if you have any questions.
 
-You can find our Slack team, including our #dev channel, [here](https://slack.popcode.org). 
+You can find our Slack team, including our #dev channel, [here](https://slack.popcode.org).

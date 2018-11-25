@@ -1,3 +1,3 @@
-export default function(state) {
+export default function isTextSizeLarge(state) {
   return state.getIn(['ui', 'isTextSizeLarge']);
 }
