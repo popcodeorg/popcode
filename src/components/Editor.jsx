@@ -76,8 +76,7 @@ class Editor extends React.Component {
     if (projectKey !== prevProjectKey) {
       this._startNewSession(source);
     } else if (source !== prevSource && source !== this._editor.getValue()) {
-      /* 1 is the ACE editor value to set selection to end */
-      this._editor.setValue(source, 1);
+      this._editor.setValue(source);
     }
 
     this._focusRequestedLine(requestedFocusedLine);
