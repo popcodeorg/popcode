@@ -41,6 +41,16 @@ export default (rules, source) => {
         }
       },
     );
+    parser.on(
+      'text',
+      ({text, sourceCodeLocation: {startLine, startCol}}) => {
+        for (const rule of rules) {
+          if (rule.text) {
+            rule.text({row: startLine - 1, column: startCol - 1}, text);
+          }
+        }
+      },
+    );
     parser.write(source);
     parser.end(() => {
       resolve(function* getRules() {

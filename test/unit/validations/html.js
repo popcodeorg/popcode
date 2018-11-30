@@ -48,7 +48,7 @@ test('<a> tag with relative href property', validationTest(
 ));
 
 test('missing doctype', validationTest(
-  '<p>T</p>',
+  '<html></html>',
   html,
   {reason: 'doctype', row: 0},
 ));
@@ -60,6 +60,51 @@ test('unclosed <html> tag', validationTest(
   <body></body>`,
   html,
   {reason: 'unclosed-tag', row: 1, payload: {tag: 'html'}},
+));
+
+test('tag outside <html> tag', validationTest(
+  `<!DOCTYPE html>
+<html>
+  <head><title>Title</title></head>
+  <body></body>
+</html>
+<p>Extra text here</p>`,
+  html,
+  {
+    reason: 'invalid-tag-outside-body',
+    row: 5,
+    payload: {tagName: 'p'},
+  },
+));
+
+test('text outside <body> tag', validationTest(
+  `<!DOCTYPE html>
+<html>
+  (Extra text here)
+  <head><title>Title</title></head>
+  <body></body>
+</html>`,
+  html,
+  {
+    reason: 'invalid-text-outside-body',
+    row: 2,
+  },
+));
+
+test('text directly inside <head> tag', validationTest(
+  `<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    --- Shouldn't be here ---
+  </head>
+  <body></body>
+</html>`,
+  html,
+  {
+    reason: 'invalid-text-outside-body',
+    row: 4,
+  },
 ));
 
 test('missing internal closing tag', validationTest(
