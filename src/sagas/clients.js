@@ -34,17 +34,19 @@ export function* createSnapshot() {
 export function* exportProject({payload: {exportType}}) {
   const state = yield select();
   const project = getCurrentProject(state);
-  const user = state.get('user').toJS();
+  const user = state.get('user');
   let exportData = {};
   let url, name;
 
   try {
-    const accessToken = user.account.accessTokens['github.com'];
-
     if (exportType === 'gist') {
+      const {accessToken} = user.account.identityProviders.get('github.com');
+
       ({html_url: url} =
         yield call(createGistFromProject, project, accessToken));
     } else if (exportType === 'repo') {
+      const {accessToken} = user.account.identityProviders.get('github.com');
+
       ({url, name} =
         yield call(createOrUpdateRepoFromProject, project, accessToken));
       if (name) {

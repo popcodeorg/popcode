@@ -4,5 +4,5 @@ export default Record({
   id: null,
   displayName: null,
   avatarUrl: null,
-  accessTokens: new Map(),
+  identityProviders: new Map(),
 }, 'UserAccount');
