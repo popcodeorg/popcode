@@ -7,13 +7,6 @@ import get from 'lodash-es/get';
 import throttle from 'lodash-es/throttle';
 import noop from 'lodash-es/noop';
 
-import ACE from 'brace';
-import 'brace/ext/searchbox';
-import 'brace/mode/html';
-import 'brace/mode/css';
-import 'brace/mode/javascript';
-import 'brace/theme/monokai';
-
 import {EditorLocation} from '../records';
 import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
 
