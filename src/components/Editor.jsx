@@ -151,7 +151,8 @@ class Editor extends React.Component {
 
   _handleKeyPress(event) {
     if (
-      event.key === 'i' && event.metaKey && !event.altKey) {
+      event.key === 'i' && event.metaKey &&
+      !event.altKey && !event.ctrlKey) {
       this.props.onAutoFormat();
     }
   }
