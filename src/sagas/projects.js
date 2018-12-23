@@ -110,11 +110,7 @@ export function* loadAndBeautifyProjectSource() {
   const beautifiedSourcesMap = new Map();
   for (const language of Reflect.ownKeys(currentProject.sources)) {
     const source = currentProject.sources[language];
-    const {
-      code: newSource,
-      // startIndex: newStartIndex,
-      // endIndex: newEndIndex,
-    } = format(
+    const newSource = format(
       beautify,
       source,
       language,

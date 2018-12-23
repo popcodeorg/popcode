@@ -16,8 +16,6 @@ import 'brace/theme/monokai';
 
 import {EditorLocation} from '../records';
 import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
-import retryingFailedImports from '../util/retryingFailedImports';
-const {Range} = ACE.acequire('ace/range');
 
 
 const RESIZE_THROTTLE = 250;
@@ -33,8 +31,6 @@ class Editor extends React.Component {
         this._resizeEditor();
       }
     }, RESIZE_THROTTLE);
-
-    // this._loadBeautify();
 
     bindAll(this,
       '_handleWindowResize',
@@ -90,15 +86,6 @@ class Editor extends React.Component {
   componentWillUnmount() {
     this._editor.destroy();
     window.removeEventListener('resize', this._handleWindowResize);
-  }
-
-  _loadBeautify() {
-    (async function load() {
-      this.Beautify = await retryingFailedImports(() => import(
-        /* webpackChunkName: "mainAsync" */
-        'js-beautify',
-      ));
-    }).bind(this)();
   }
 
   _focusRequestedLine(requestedFocusedLine) {
@@ -162,61 +149,9 @@ class Editor extends React.Component {
     this._resizeEditor();
   }
 
-  // _autoIndent(event) {
-  //   this.props.onAutoFormat();
-    // if (!this.Beautify) {
-    //   return;
-    // }
-    //
-    // const {session, selection} = this._editor;
-    // const doc = session.getDocument();
-    // const range = selection.getRange();
-    //
-    // const options = {};
-    // if (session.getUseSoftTabs()) {
-    //   options.indent_char = ' ';
-    //   options.indent_size = session.getTabSize();
-    // } else {
-    //   options.indent_char = '\t';
-    //   options.indent_size = 1;
-    // }
-    //
-    // const startIndex = doc.positionToIndex(range.start);
-    // const endIndex = doc.positionToIndex(range.end);
-    //
-    // const source = session.getValue();
-    //
-    // const {
-    //   code: newSource,
-    //   startIndex: newStartIndex,
-    //   endIndex: newEndIndex,
-    // } = format(
-    //   this.Beautify,
-    //   source,
-    //   startIndex,
-    //   endIndex,
-    //   this.props.language,
-    //   options,
-    // );
-    //
-    // // Make sure we set the new value for the editor via editor.setValue
-    // // instead of session.setValue otherwise the undo/redo stack will be
-    // // clobbered!
-    // this._editor.setValue(newSource);
-    // const newRange = Range.fromPoints(
-    //   doc.indexToPosition(newStartIndex),
-    //   doc.indexToPosition(newEndIndex),
-    // );
-    //
-    // selection.setSelectionRange(newRange);
-    //
-    // event.preventDefault();
-  // }
-
   _handleKeyPress(event) {
     if (
-      event.key === 'i' && (event.metaKey || event.ctrlKey) &&
-      !event.altKey && !event.ctrlKey) {
+      event.key === 'i' && event.metaKey && !event.altKey) {
       this.props.onAutoFormat();
     }
   }
