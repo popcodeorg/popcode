@@ -22,6 +22,8 @@ const BEAUTIFY_SETTINGS = {
   e4x: false,
   comma_first: false,
   operator_position: 'before-newline',
+  /* don't add new lines before head,body,/html https://github.com/beautify-web/js-beautify */
+  extra_liners: [],
 };
 
 export function indexToNonWhitespaceIndex(string, index) {
