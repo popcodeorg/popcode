@@ -1,31 +1,15 @@
-import AccountMigration from './AccountMigration';
-import CompiledProject from './CompiledProject';
-import ConsoleEntry from './ConsoleEntry';
-import ConsoleError from './ConsoleError';
-import ConsoleState from './ConsoleState';
-import EditorLocation from './EditorLocation';
-import Error from './Error';
-import ErrorList from './ErrorList';
-import ErrorReport from './ErrorReport';
-import Notification from './Notification';
-import Project from './Project';
-import UiState from './UiState';
-import User from './User';
-import UserAccount from './UserAccount';
-
-export {
-  AccountMigration,
-  CompiledProject,
-  ConsoleEntry,
-  ConsoleError,
-  ConsoleState,
-  EditorLocation,
-  Error,
-  ErrorList,
-  ErrorReport,
-  Notification,
-  Project,
-  User,
-  UserAccount,
-  UiState,
-};
+export {default as AccountMigration} from './AccountMigration';
+export {default as CompiledProject} from './CompiledProject';
+export {default as ConsoleEntry} from './ConsoleEntry';
+export {default as ConsoleError} from './ConsoleError';
+export {default as ConsoleState} from './ConsoleState';
+export {default as EditorLocation} from './EditorLocation';
+export {default as Error} from './Error';
+export {default as ErrorList} from './ErrorList';
+export {default as ErrorReport} from './ErrorReport';
+export {default as Notification} from './Notification';
+export {default as Project} from './Project';
+export {default as UiState} from './UiState';
+export {default as User} from './User';
+export {default as UserAccount} from './UserAccount';
+export {default as UserIdentityProvider} from './UserIdentityProvider';

@@ -43,25 +43,26 @@ export function* handleInitialAuth(user) {
 export function* handleAuthChange(user, {newCredential} = {}) {
   if (isNil(user)) {
     yield put(userLoggedOut());
-  } else {
-    if (!isNil(newCredential)) {
-      yield fork(saveUserCredential, {user, credential: newCredential});
-    }
-    let credentials;
-
-    const storedCredentials = yield call(loadCredentialsForUser, user.uid);
-    if (isNil(newCredential)) {
-      credentials = storedCredentials;
-    } else {
-      credentials = reject(
-        storedCredentials,
-        {providerId: newCredential.providerId},
-      );
-      credentials.push(newCredential);
-    }
-
-    yield put(userAuthenticated(user, credentials));
+    return;
   }
+
+  if (!isNil(newCredential)) {
+    yield fork(saveUserCredential, {user, credential: newCredential});
+  }
+  let credentials;
+
+  const storedCredentials = yield call(loadCredentialsForUser, user.uid);
+  if (isNil(newCredential)) {
+    credentials = storedCredentials;
+  } else {
+    credentials = reject(
+      storedCredentials,
+      {providerId: newCredential.providerId},
+    );
+    credentials.push(newCredential);
+  }
+
+  yield put(userAuthenticated(user, credentials));
 }
 export function* handleAuthError(e) {
   if ('message' in e && e.message === 'popup_closed_by_user') {
