@@ -10,6 +10,7 @@ import {
 } from './clients';
 
 import {
+  beautifyProjectSource,
   createProject,
   changeCurrentProject,
   toggleLibrary,
@@ -75,6 +76,7 @@ import {
 } from './resizableFlex';
 
 export {
+  beautifyProjectSource,
   clearConsoleEntries,
   consoleInputChanged,
   consoleValueProduced,

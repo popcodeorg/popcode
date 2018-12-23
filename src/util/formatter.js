@@ -41,7 +41,7 @@ export function nonWhitespaceIndexToIndex(string, charIndex) {
   return string.length;
 }
 
-export function format(Beautify, code, startIndex, endIndex, mode, opts = {}) {
+export function format(Beautify, code, mode, opts = {}) {
   const options = Object.assign({}, BEAUTIFY_SETTINGS, opts);
 
   let newCode = code;
@@ -55,16 +55,16 @@ export function format(Beautify, code, startIndex, endIndex, mode, opts = {}) {
     throw new Error(`could not format code of type ${mode}`);
   }
 
-  const charStartIndex = indexToNonWhitespaceIndex(code, startIndex);
-  const charEndIndex = indexToNonWhitespaceIndex(code, endIndex);
-
-  const newStartIndex = nonWhitespaceIndexToIndex(newCode, charStartIndex);
-  const newEndIndex = nonWhitespaceIndexToIndex(newCode, charEndIndex);
+  // const charStartIndex = indexToNonWhitespaceIndex(code, startIndex);
+  // const charEndIndex = indexToNonWhitespaceIndex(code, endIndex);
+  //
+  // const newStartIndex = nonWhitespaceIndexToIndex(newCode, charStartIndex);
+  // const newEndIndex = nonWhitespaceIndexToIndex(newCode, charEndIndex);
 
   return {
     code: newCode,
-    startIndex: newStartIndex,
-    endIndex: newEndIndex,
+    // startIndex: newStartIndex,
+    // endIndex: newEndIndex,
   };
 }
 

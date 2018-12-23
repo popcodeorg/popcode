@@ -6,6 +6,7 @@ import {
   select,
   takeEvery,
   throttle,
+  takeLatest,
 } from 'redux-saga/effects';
 import isNull from 'lodash-es/isNull';
 import isString from 'lodash-es/isString';
@@ -17,6 +18,7 @@ import {
   projectCreated,
   projectsLoaded,
   projectSuccessfullySaved,
+  projectBeautified,
 } from '../actions/projects';
 import {
   snapshotImported,
@@ -32,6 +34,9 @@ import {
   saveProject,
 } from '../clients/firebase';
 import {getCurrentProject, getCurrentUserId} from '../selectors';
+import retryingFailedImports from '../util/retryingFailedImports';
+import {format} from '../util/formatter';
+import ProjectSources from '../records/ProjectSources';
 
 export function* applicationLoaded(action) {
   if (isString(action.payload.gistId)) {
@@ -87,6 +92,40 @@ export function* updateProjectSource() {
   yield* saveCurrentProject();
 }
 
+export async function importBeautify() {
+  return retryingFailedImports(
+    () => import(
+      /* webpackChunkName: "mainAsync" */
+      'js-beautify',
+    ),
+  );
+}
+
+export function* loadAndBeautifyProjectSource() {
+  const beautify = yield call(importBeautify);
+
+  const state = yield select();
+  const currentProject = getCurrentProject(state);
+
+  const beautifiedSourcesMap = new Map();
+  for (const language of Reflect.ownKeys(currentProject.sources)) {
+    const source = currentProject.sources[language];
+    const {
+      code: newSource,
+      // startIndex: newStartIndex,
+      // endIndex: newEndIndex,
+    } = format(
+      beautify,
+      source,
+      language,
+    );
+    beautifiedSourcesMap.set(language, newSource);
+  }
+  const beautifiedSources = new ProjectSources(beautifiedSourcesMap);
+  yield put(projectBeautified(currentProject.projectKey, beautifiedSources));
+}
+
+
 export function* userAuthenticated() {
   const state = yield select();
   yield fork(saveCurrentProject);
@@ -133,5 +172,6 @@ export default function* projects() {
     ], updateProjectSource),
     takeEvery('USER_AUTHENTICATED', userAuthenticated),
     takeEvery('TOGGLE_LIBRARY', toggleLibrary),
+    takeLatest('BEAUTIFY_PROJECT_SOURCE', loadAndBeautifyProjectSource),
   ]);
 }

@@ -118,6 +118,14 @@ export default function reduceProjects(stateIn, action) {
         action.meta.timestamp,
       );
 
+    case 'PROJECT_BEAUTIFIED':
+      return state.setIn([action.payload.projectKey, 'sources'],
+        action.payload.projectSources,
+      ).setIn(
+        [action.payload.projectKey, 'updatedAt'],
+        action.meta.timestamp,
+      );
+
     case 'UPDATE_PROJECT_INSTRUCTIONS':
       return state.setIn(
         [action.payload.projectKey, 'instructions'],

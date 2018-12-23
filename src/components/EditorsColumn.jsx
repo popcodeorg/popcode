@@ -27,6 +27,7 @@ export default function EditorsColumn({
   isFlexResizingSupported,
   isTextSizeLarge,
   requestedFocusedLine,
+  onAutoFormat,
   onComponentHide,
   onComponentUnhide,
   onEditorInput,
@@ -70,6 +71,7 @@ export default function EditorsColumn({
           requestedFocusedLine={requestedFocusedLine}
           source={currentProject.sources[language]}
           textSizeIsLarge={isTextSizeLarge}
+          onAutoFormat={onAutoFormat}
           onInput={partial(
             onEditorInput,
             currentProject.projectKey,
@@ -142,6 +144,7 @@ EditorsColumn.propTypes = {
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
   resizableFlexRefs: PropTypes.array.isRequired,
   style: PropTypes.object.isRequired,
+  onAutoFormat: PropTypes.func.isRequired,
   onComponentHide: PropTypes.func.isRequired,
   onComponentUnhide: PropTypes.func.isRequired,
   onEditorInput: PropTypes.func.isRequired,
