@@ -106,19 +106,21 @@ export function* loadAndBeautifyProjectSource() {
 
   const state = yield select();
   const currentProject = getCurrentProject(state);
-
-  const beautifiedSourcesMap = new Map();
-  for (const language of Reflect.ownKeys(currentProject.sources)) {
-    const source = currentProject.sources[language];
-    const newSource = format(
-      beautify,
-      source,
-      language,
-    );
-    beautifiedSourcesMap.set(language, newSource);
-  }
-  const beautifiedSources = new ProjectSources(beautifiedSourcesMap);
-  yield put(projectBeautified(currentProject.projectKey, beautifiedSources));
+  const allFormattedSources = yield all(
+    Reflect.ownKeys(currentProject.sources).map((language) => {
+      const source = currentProject.sources[language];
+      return call(format,
+        beautify,
+        source,
+        language);
+    }),
+  );
+  const sourcesMap = new Map();
+  allFormattedSources.map(({formatted, language}) => {
+    sourcesMap.set(language, formatted);
+  });
+  const projectSources = new ProjectSources(sourcesMap);
+  yield put(projectBeautified(currentProject.projectKey, projectSources));
 }
 
 

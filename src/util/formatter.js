@@ -1,6 +1,6 @@
 
 const BEAUTIFY_SETTINGS = {
-  indent_size: 2,
+  indent_size: 4,
   indent_char: ' ',
   indent_with_tabs: false,
   eol: '\n',
@@ -57,6 +57,9 @@ export function format(Beautify, code, mode, opts = {}) {
     throw new Error(`could not format code of type ${mode}`);
   }
 
-  return newCode;
+  return {
+    formatted: newCode,
+    language: mode,
+  };
 }
 
