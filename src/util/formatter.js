@@ -26,23 +26,6 @@ const BEAUTIFY_SETTINGS = {
   extra_liners: [],
 };
 
-export function indexToNonWhitespaceIndex(string, index) {
-  return string.slice(0, index).replace(/\s/gu, '').length;
-}
-
-export function nonWhitespaceIndexToIndex(string, charIndex) {
-  let charI = 0;
-  for (let i = 0; i < string.length; i++) {
-    if (charI === charIndex) {
-      return i;
-    }
-    if (!/\s/u.test(string[i])) {
-      charI++;
-    }
-  }
-  return string.length;
-}
-
 export function format(Beautify, code, mode, opts = {}) {
   const options = Object.assign({}, BEAUTIFY_SETTINGS, opts);
 
