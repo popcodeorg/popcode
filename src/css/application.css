@@ -555,6 +555,11 @@ body {
   flex: 0 1 auto;
 }
 
+.output__item_collapsed {
+  flex: none;
+  height: 4.4vh; /* take up the height of the absolutely positioned child, 2.2vh + 1vh padding + 1vh padding */
+}
+
 .output__delayed-error-overlay {
   position: absolute;
   top: 0;
@@ -709,7 +714,8 @@ body {
   float: left;
 }
 
-.preview__button_reset {
+.preview__button_reset,
+.preview__button_toggle-visibility {
   float: right;
 }
 

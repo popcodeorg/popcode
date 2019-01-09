@@ -22,6 +22,7 @@ import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
 import EditorsColumn from '../containers/EditorsColumn';
 import Output from '../containers/Output';
+import Preview from '../containers/Preview';
 
 import PopThrobber from './PopThrobber';
 
@@ -86,6 +87,17 @@ export default class Workspace extends React.Component {
         get(this.props, ['currentProject', 'projectKey']),
       );
     }
+  }
+
+  _isOutputHidden() {
+    if (isNull(this.props.currentProject)) {
+      return false;
+    }
+    const isOutputHidden = get(
+      this.props,
+      ['currentProject', 'hiddenUIComponents'],
+    ).includes('output');
+    return isOutputHidden;
   }
 
   _renderInstructionsBar() {
@@ -166,11 +178,19 @@ export default class Workspace extends React.Component {
             )}
           />
         </DraggableCore>
-        <Output
-          style={{flexGrow: resizableFlexGrow.get(1)}}
-          onRef={_handleOutputRef}
-        />
+        {!this._isOutputHidden() &&
+          <Output
+            style={{flexGrow: resizableFlexGrow.get(1)}}
+            onRef={_handleOutputRef}
+          />
+        }
       </div>
+    );
+  }
+
+  _maybeRenderCollapsedPreview() {
+    return (this._isOutputHidden() &&
+      <Preview />
     );
   }
 
@@ -186,6 +206,7 @@ export default class Workspace extends React.Component {
             {this._renderEnvironment()}
           </div>
         </div>
+        {this._maybeRenderCollapsedPreview()}
         <AccountMigration />
       </div>
     );
