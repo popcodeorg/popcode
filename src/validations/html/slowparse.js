@@ -114,12 +114,8 @@ function findChildNode({childNodes}, nodeName) {
 }
 
 function emptyTitleElementDetector(_, root) {
-  /*function not running if opening title is there
-     head has 3 nodes if title is there with opening and closing tag, if it is only opening it thinks there is only one node with text*/
   const html = findChildNode(root, 'HTML');
   const head = html ? findChildNode(html, 'HEAD') : null;
-  // eslint-disable-next-line no-console
-  console.log('head', head);
   const title = head ? findChildNode(head, 'TITLE') : null;
   return title && !title.childNodes.length
     ? {type: 'EMPTY_TITLE_ELEMENT', cursor: title.parseInfo.openTag.end}
@@ -135,7 +131,6 @@ class SlowparseValidator extends Validator {
 
   async getRawErrors() {
     let error;
-      console.log(error)
     try {
       ({error} = Slowparse.HTML(document, this.source, {errorDetectors}));
     } catch (e) {
