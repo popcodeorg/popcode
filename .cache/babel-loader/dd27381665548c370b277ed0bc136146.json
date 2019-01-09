@@ -1,0 +1,29 @@
+{
+  "ast": null,
+  "code": "import React from 'react';\nimport { createPortal } from 'react-dom';\nimport PropTypes from 'prop-types';\nexport default function Modal(_ref) {\n  var children = _ref.children,\n      isOpen = _ref.isOpen;\n\n  if (!isOpen) {\n    return null;\n  }\n\n  return createPortal(React.createElement(\"div\", {\n    className: \"modal\"\n  }, React.createElement(\"div\", {\n    className: \"modal__contents\"\n  }, children)), document.getElementById('modals'));\n}\nModal.propTypes = {\n  children: PropTypes.node.isRequired,\n  isOpen: PropTypes.bool\n};\nModal.defaultProps = {\n  isOpen: true\n};",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/components/Modal.jsx"],
+    "names": [
+      "React",
+      "createPortal",
+      "PropTypes",
+      "Modal",
+      "children",
+      "isOpen",
+      "document",
+      "getElementById",
+      "propTypes",
+      "node",
+      "isRequired",
+      "bool",
+      "defaultProps"
+    ],
+    "mappings": "AAAA,OAAOA,KAAP,MAAkB,OAAlB;AACA,SAAQC,YAAR,QAA2B,WAA3B;AACA,OAAOC,SAAP,MAAsB,YAAtB;AAEA,eAAe,SAASC,KAAT,OAAmC;AAAA,MAAnBC,QAAmB,QAAnBA,QAAmB;AAAA,MAATC,MAAS,QAATA,MAAS;;AAChD,MAAI,CAACA,MAAL,EAAa;AACX,WAAO,IAAP;AACD;;AAED,SAAOJ,YAAY,CACjB;AAAK,IAAA,SAAS,EAAC;AAAf,KACE;AAAK,IAAA,SAAS,EAAC;AAAf,KAAkCG,QAAlC,CADF,CADiB,EAIjBE,QAAQ,CAACC,cAAT,CAAwB,QAAxB,CAJiB,CAAnB;AAMD;AAEDJ,KAAK,CAACK,SAAN,GAAkB;AAChBJ,EAAAA,QAAQ,EAAEF,SAAS,CAACO,IAAV,CAAeC,UADT;AAEhBL,EAAAA,MAAM,EAAEH,SAAS,CAACS;AAFF,CAAlB;AAKAR,KAAK,CAACS,YAAN,GAAqB;AACnBP,EAAAA,MAAM,EAAE;AADW,CAArB",
+    "sourcesContent": [
+      "import React from 'react';\nimport {createPortal} from 'react-dom';\nimport PropTypes from 'prop-types';\n\nexport default function Modal({children, isOpen}) {\n  if (!isOpen) {\n    return null;\n  }\n\n  return createPortal(\n    <div className=\"modal\">\n      <div className=\"modal__contents\">{children}</div>\n    </div>,\n    document.getElementById('modals'),\n  );\n}\n\nModal.propTypes = {\n  children: PropTypes.node.isRequired,\n  isOpen: PropTypes.bool,\n};\n\nModal.defaultProps = {\n  isOpen: true,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

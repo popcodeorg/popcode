@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "exports.WEEKDAY_OFFSET = {\n  'domingo': 0,\n  'dom': 0,\n  'lunes': 1,\n  'lun': 1,\n  'martes': 2,\n  'mar': 2,\n  'miércoles': 3,\n  'miercoles': 3,\n  'mie': 3,\n  'jueves': 4,\n  'jue': 4,\n  'viernes': 5,\n  'vie': 5,\n  'sábado': 6,\n  'sabado': 6,\n  'sab': 6\n};\nexports.MONTH_OFFSET = {\n  'enero': 1,\n  'ene': 1,\n  'ene.': 1,\n  'febrero': 2,\n  'feb': 2,\n  'feb.': 2,\n  'marzo': 3,\n  'mar': 3,\n  'mar.': 3,\n  'abril': 4,\n  'abr': 4,\n  'abr.': 4,\n  'mayo': 5,\n  'may': 5,\n  'may.': 5,\n  'junio': 6,\n  'jun': 6,\n  'jun.': 6,\n  'julio': 7,\n  'jul': 7,\n  'jul.': 7,\n  'agosto': 8,\n  'ago': 8,\n  'ago.': 8,\n  'septiembre': 9,\n  'sep': 9,\n  'sept': 9,\n  'sep.': 9,\n  'sept.': 9,\n  'octubre': 10,\n  'oct': 10,\n  'oct.': 10,\n  'noviembre': 11,\n  'nov': 11,\n  'nov.': 11,\n  'diciembre': 12,\n  'dic': 12,\n  'dic.': 12\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/chrono-node/src/utils/ES.js"
+    ],
+    "names": ["exports", "WEEKDAY_OFFSET", "MONTH_OFFSET"],
+    "mappings": "AAAAA,OAAO,CAACC,cAAR,GAAyB;AACrB,aAAW,CADU;AAErB,SAAO,CAFc;AAGrB,WAAS,CAHY;AAIrB,SAAO,CAJc;AAKrB,YAAU,CALW;AAMrB,SAAM,CANe;AAOrB,eAAa,CAPQ;AAQrB,eAAa,CARQ;AASrB,SAAO,CATc;AAUrB,YAAU,CAVW;AAWrB,SAAO,CAXc;AAYrB,aAAW,CAZU;AAarB,SAAO,CAbc;AAcrB,YAAU,CAdW;AAerB,YAAU,CAfW;AAgBrB,SAAO;AAhBc,CAAzB;AAkBAD,OAAO,CAACE,YAAR,GAAuB;AACnB,WAAS,CADU;AAEnB,SAAO,CAFY;AAGnB,UAAQ,CAHW;AAInB,aAAW,CAJQ;AAKnB,SAAO,CALY;AAMnB,UAAQ,CANW;AAOnB,WAAS,CAPU;AAQnB,SAAO,CARY;AASnB,UAAQ,CATW;AAUnB,WAAS,CAVU;AAWnB,SAAO,CAXY;AAYnB,UAAQ,CAZW;AAanB,UAAQ,CAbW;AAcnB,SAAO,CAdY;AAenB,UAAQ,CAfW;AAgBnB,WAAS,CAhBU;AAiBnB,SAAO,CAjBY;AAkBnB,UAAQ,CAlBW;AAmBnB,WAAS,CAnBU;AAoBnB,SAAO,CApBY;AAqBnB,UAAQ,CArBW;AAsBnB,YAAU,CAtBS;AAuBnB,SAAO,CAvBY;AAwBnB,UAAQ,CAxBW;AAyBnB,gBAAc,CAzBK;AA0BnB,SAAO,CA1BY;AA2BnB,UAAQ,CA3BW;AA4BnB,UAAQ,CA5BW;AA6BnB,WAAS,CA7BU;AA8BnB,aAAW,EA9BQ;AA+BnB,SAAO,EA/BY;AAgCnB,UAAQ,EAhCW;AAiCnB,eAAa,EAjCM;AAkCnB,SAAO,EAlCY;AAmCnB,UAAQ,EAnCW;AAoCnB,eAAa,EApCM;AAqCnB,SAAO,EArCY;AAsCnB,UAAQ;AAtCW,CAAvB",
+    "sourcesContent": [
+      "exports.WEEKDAY_OFFSET = {\n    'domingo': 0,\n    'dom': 0,\n    'lunes': 1,\n    'lun': 1,\n    'martes': 2,\n    'mar':2,\n    'miércoles': 3,\n    'miercoles': 3,\n    'mie': 3,\n    'jueves': 4,\n    'jue': 4,\n    'viernes': 5,\n    'vie': 5,\n    'sábado': 6,\n    'sabado': 6,\n    'sab': 6,}\n\nexports.MONTH_OFFSET = {\n    'enero': 1,\n    'ene': 1,\n    'ene.': 1,\n    'febrero': 2,\n    'feb': 2,\n    'feb.': 2,\n    'marzo': 3,\n    'mar': 3,\n    'mar.': 3,\n    'abril': 4,\n    'abr': 4,\n    'abr.': 4,\n    'mayo': 5,\n    'may': 5,\n    'may.': 5,\n    'junio': 6,\n    'jun': 6,\n    'jun.': 6,\n    'julio': 7,\n    'jul': 7,\n    'jul.': 7,\n    'agosto': 8,\n    'ago': 8,\n    'ago.': 8,\n    'septiembre': 9,\n    'sep': 9,\n    'sept': 9,\n    'sep.': 9,\n    'sept.': 9,\n    'octubre': 10,\n    'oct': 10,\n    'oct.': 10,\n    'noviembre': 11,\n    'nov': 11,\n    'nov.': 11,\n    'diciembre': 12,\n    'dic': 12,\n    'dic.': 12,\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,51 @@
+{
+  "ast": null,
+  "code": "/*\r\n\r\n\r\n*/\nvar moment = require('moment');\n\nvar Parser = require('../parser').Parser;\n\nvar ParsedResult = require('../../result').ParsedResult;\n\nvar PATTERN = /(\\W|^)il y a\\s*([0-9]+|une?)\\s*(minutes?|heures?|semaines?|jours?|mois|années?|ans?)(?=(?:\\W|$))/i;\n\nexports.Parser = function FRTimeAgoFormatParser() {\n  Parser.apply(this, arguments);\n\n  this.pattern = function () {\n    return PATTERN;\n  };\n\n  this.extract = function (text, ref, match, opt) {\n    if (match.index > 0 && text[match.index - 1].match(/\\w/)) return null;\n    var text = match[0];\n    text = match[0].substr(match[1].length, match[0].length - match[1].length);\n    index = match.index + match[1].length;\n    var result = new ParsedResult({\n      index: index,\n      text: text,\n      ref: ref\n    });\n    result.tags['FRTimeAgoFormatParser'] = true;\n    var num = parseInt(match[2]);\n\n    if (isNaN(num)) {\n      if (match[2].match(/demi/)) {\n        num = 0.5;\n      } else {\n        num = 1;\n      }\n    }\n\n    var date = moment(ref);\n\n    if (match[3].match(/heure/) || match[3].match(/minute/)) {\n      if (match[3].match(/heure/)) {\n        date.add(-num, 'hour');\n      } else if (match[3].match(/minute/)) {\n        date.add(-num, 'minute');\n      }\n\n      result.start.imply('day', date.date());\n      result.start.imply('month', date.month() + 1);\n      result.start.imply('year', date.year());\n      result.start.assign('hour', date.hour());\n      result.start.assign('minute', date.minute());\n      return result;\n    }\n\n    if (match[3].match(/semaine/)) {\n      date.add(-num, 'week');\n      result.start.imply('day', date.date());\n      result.start.imply('month', date.month() + 1);\n      result.start.imply('year', date.year());\n      result.start.imply('weekday', date.day());\n      return result;\n    }\n\n    if (match[3].match(/jour/)) {\n      date.add(-num, 'd');\n    }\n\n    if (match[3].match(/mois/)) {\n      date.add(-num, 'month');\n    }\n\n    if (match[3].match(/années?|ans?/)) {\n      date.add(-num, 'year');\n    }\n\n    result.start.assign('day', date.date());\n    result.start.assign('month', date.month() + 1);\n    result.start.assign('year', date.year());\n    return result;\n  };\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/chrono-node/src/parsers/fr/FRTimeAgoFormatParser.js"
+    ],
+    "names": [
+      "moment",
+      "require",
+      "Parser",
+      "ParsedResult",
+      "PATTERN",
+      "exports",
+      "FRTimeAgoFormatParser",
+      "apply",
+      "arguments",
+      "pattern",
+      "extract",
+      "text",
+      "ref",
+      "match",
+      "opt",
+      "index",
+      "substr",
+      "length",
+      "result",
+      "tags",
+      "num",
+      "parseInt",
+      "isNaN",
+      "date",
+      "add",
+      "start",
+      "imply",
+      "month",
+      "year",
+      "assign",
+      "hour",
+      "minute",
+      "day"
+    ],
+    "mappings": "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",
+    "sourcesContent": [
+      "/*\r\n\r\n\r\n*/\r\n\r\nvar moment = require('moment');\r\nvar Parser = require('../parser').Parser;\r\nvar ParsedResult = require('../../result').ParsedResult;\r\n\r\nvar PATTERN = /(\\W|^)il y a\\s*([0-9]+|une?)\\s*(minutes?|heures?|semaines?|jours?|mois|années?|ans?)(?=(?:\\W|$))/i;\r\n\r\nexports.Parser = function FRTimeAgoFormatParser(){\r\n    Parser.apply(this, arguments);\r\n\r\n    this.pattern = function() {\r\n        return PATTERN;\r\n    }\r\n\r\n    this.extract = function(text, ref, match, opt){\r\n\r\n        if (match.index > 0 && text[match.index-1].match(/\\w/)) return null;\r\n\r\n        var text = match[0];\r\n        text  = match[0].substr(match[1].length, match[0].length - match[1].length);\r\n        index = match.index + match[1].length;\r\n\r\n        var result = new ParsedResult({\r\n            index: index,\r\n            text: text,\r\n            ref: ref,\r\n        });\r\n        result.tags['FRTimeAgoFormatParser'] = true;\r\n        \r\n        var num = parseInt(match[2]);\r\n        if (isNaN(num)) {\r\n          if (match[2].match(/demi/)) {\r\n            num = 0.5;\r\n          } else {\r\n            num = 1;\r\n          }\r\n        }\r\n\r\n        var date = moment(ref);\r\n\r\n        if (match[3].match(/heure/) || match[3].match(/minute/)) {\r\n            if (match[3].match(/heure/)) {\r\n\r\n                date.add(-num, 'hour');\r\n\r\n            } else if (match[3].match(/minute/)) {\r\n\r\n                date.add(-num, 'minute');\r\n            }\r\n\r\n            result.start.imply('day', date.date());\r\n            result.start.imply('month', date.month() + 1);\r\n            result.start.imply('year', date.year());\r\n            result.start.assign('hour', date.hour());\r\n            result.start.assign('minute', date.minute());\r\n\r\n            return result;\r\n        }\r\n\r\n        if (match[3].match(/semaine/)) {\r\n            date.add(-num, 'week');\r\n\r\n            result.start.imply('day', date.date());\r\n            result.start.imply('month', date.month() + 1);\r\n            result.start.imply('year', date.year());\r\n            result.start.imply('weekday', date.day());\r\n            return result;\r\n        }\r\n\r\n        if (match[3].match(/jour/)) {\r\n            date.add(-num, 'd');\r\n        }\r\n\r\n        if (match[3].match(/mois/)) {\r\n            date.add(-num, 'month');\r\n        }\r\n\r\n        if (match[3].match(/années?|ans?/)) {\r\n\r\n            date.add(-num, 'year');\r\n        }\r\n\r\n        result.start.assign('day', date.date());\r\n        result.start.assign('month', date.month() + 1);\r\n        result.start.assign('year', date.year());\r\n        return result;\r\n\r\n    };\r\n}\r\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

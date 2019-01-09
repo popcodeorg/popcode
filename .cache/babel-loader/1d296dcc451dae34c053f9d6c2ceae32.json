@@ -1,0 +1,26 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = blockquote;\n\nvar wrap = require('../wrap');\n\nvar all = require('../all');\n\nfunction blockquote(h, node) {\n  return h(node, 'blockquote', wrap(all(h, node), true));\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/handlers/blockquote.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "blockquote",
+      "wrap",
+      "require",
+      "all",
+      "h",
+      "node"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,UAAjB;;AAEA,IAAIC,IAAI,GAAGC,OAAO,CAAC,SAAD,CAAlB;;AACA,IAAIC,GAAG,GAAGD,OAAO,CAAC,QAAD,CAAjB;;AAEA,SAASF,UAAT,CAAoBI,CAApB,EAAuBC,IAAvB,EAA6B;AAC3B,SAAOD,CAAC,CAACC,IAAD,EAAO,YAAP,EAAqBJ,IAAI,CAACE,GAAG,CAACC,CAAD,EAAIC,IAAJ,CAAJ,EAAe,IAAf,CAAzB,CAAR;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = blockquote\n\nvar wrap = require('../wrap')\nvar all = require('../all')\n\nfunction blockquote(h, node) {\n  return h(node, 'blockquote', wrap(all(h, node), true))\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,28 @@
+{
+  "ast": null,
+  "code": "import classnames from 'classnames';\nimport PropTypes from 'prop-types';\nimport React, { Fragment } from 'react';\nimport { t } from 'i18next';\nexport default function AccountMigrationError(_ref) {\n  var onDismiss = _ref.onDismiss;\n  return React.createElement(Fragment, null, React.createElement(\"p\", null, t('account-migration.error')), React.createElement(\"div\", {\n    className: \"account-migration__buttons\"\n  }, React.createElement(\"button\", {\n    className: classnames('account-migration__button'),\n    onClick: onDismiss\n  }, t('account-migration.buttons.dismiss'))));\n}\nAccountMigrationError.propTypes = {\n  onDismiss: PropTypes.func.isRequired\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/AccountMigrationError.jsx"
+    ],
+    "names": [
+      "classnames",
+      "PropTypes",
+      "React",
+      "Fragment",
+      "t",
+      "AccountMigrationError",
+      "onDismiss",
+      "propTypes",
+      "func",
+      "isRequired"
+    ],
+    "mappings": "AAAA,OAAOA,UAAP,MAAuB,YAAvB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AACA,OAAOC,KAAP,IAAeC,QAAf,QAA8B,OAA9B;AACA,SAAQC,CAAR,QAAgB,SAAhB;AAEA,eAAe,SAASC,qBAAT,OAA4C;AAAA,MAAZC,SAAY,QAAZA,SAAY;AACzD,SACE,oBAAC,QAAD,QACE,+BAAIF,CAAC,CAAC,yBAAD,CAAL,CADF,EAEE;AAAK,IAAA,SAAS,EAAC;AAAf,KACE;AACE,IAAA,SAAS,EAAEJ,UAAU,CAAC,2BAAD,CADvB;AAEE,IAAA,OAAO,EAAEM;AAFX,KAIGF,CAAC,CAAC,mCAAD,CAJJ,CADF,CAFF,CADF;AAaD;AAEDC,qBAAqB,CAACE,SAAtB,GAAkC;AAChCD,EAAAA,SAAS,EAAEL,SAAS,CAACO,IAAV,CAAeC;AADM,CAAlC",
+    "sourcesContent": [
+      "import classnames from 'classnames';\nimport PropTypes from 'prop-types';\nimport React, {Fragment} from 'react';\nimport {t} from 'i18next';\n\nexport default function AccountMigrationError({onDismiss}) {\n  return (\n    <Fragment>\n      <p>{t('account-migration.error')}</p>\n      <div className=\"account-migration__buttons\">\n        <button\n          className={classnames('account-migration__button')}\n          onClick={onDismiss}\n        >\n          {t('account-migration.buttons.dismiss')}\n        </button>\n      </div>\n    </Fragment>\n  );\n}\n\nAccountMigrationError.propTypes = {\n  onDismiss: PropTypes.func.isRequired,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

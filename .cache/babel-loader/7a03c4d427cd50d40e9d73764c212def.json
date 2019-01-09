@@ -1,0 +1,32 @@
+{
+  "ast": null,
+  "code": "function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nimport React from 'react';\nimport PropTypes from 'prop-types';\nimport { faCaretDown } from '@fortawesome/free-solid-svg-icons';\nimport { FontAwesomeIcon } from '@fortawesome/react-fontawesome';\nexport default function AssignmentCreatorSelectField(_ref) {\n  var children = _ref.children,\n      input = _ref.input,\n      _ref$meta = _ref.meta,\n      touched = _ref$meta.touched,\n      error = _ref$meta.error;\n  return React.createElement(\"div\", null, React.createElement(\"div\", {\n    className: \"assignment-creator__select-field\"\n  }, React.createElement(\"select\", _extends({\n    className: \"assignment-creator__select\"\n  }, input), children), React.createElement(\"span\", {\n    className: \"assignment-creator__caret\"\n  }, React.createElement(FontAwesomeIcon, {\n    icon: faCaretDown\n  }))), touched && error && React.createElement(\"span\", {\n    className: \"assignment-creator__assignment-notification\"\n  }, error));\n}\nAssignmentCreatorSelectField.propTypes = {\n  children: PropTypes.array.isRequired,\n  input: PropTypes.object.isRequired,\n  meta: PropTypes.object.isRequired\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/AssignmentCreatorSelectField.jsx"
+    ],
+    "names": [
+      "React",
+      "PropTypes",
+      "faCaretDown",
+      "FontAwesomeIcon",
+      "AssignmentCreatorSelectField",
+      "children",
+      "input",
+      "meta",
+      "touched",
+      "error",
+      "propTypes",
+      "array",
+      "isRequired",
+      "object"
+    ],
+    "mappings": ";;AAAA,OAAOA,KAAP,MAAkB,OAAlB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AAEA,SAAQC,WAAR,QAA0B,mCAA1B;AACA,SAAQC,eAAR,QAA8B,gCAA9B;AAEA,eAAe,SAASC,4BAAT,OAIZ;AAAA,MAHDC,QAGC,QAHDA,QAGC;AAAA,MAFDC,KAEC,QAFDA,KAEC;AAAA,uBADDC,IACC;AAAA,MADMC,OACN,aADMA,OACN;AAAA,MADeC,KACf,aADeA,KACf;AACD,SACE,iCACE;AAAK,IAAA,SAAS,EAAC;AAAf,KACE;AAAQ,IAAA,SAAS,EAAC;AAAlB,KAAmDH,KAAnD,GACGD,QADH,CADF,EAIE;AAAM,IAAA,SAAS,EAAC;AAAhB,KACE,oBAAC,eAAD;AAAiB,IAAA,IAAI,EAAEH;AAAvB,IADF,CAJF,CADF,EASGM,OAAO,IAAIC,KAAX,IACC;AAAM,IAAA,SAAS,EAAC;AAAhB,KACGA,KADH,CAVJ,CADF;AAiBD;AAEDL,4BAA4B,CAACM,SAA7B,GAAyC;AACvCL,EAAAA,QAAQ,EAAEJ,SAAS,CAACU,KAAV,CAAgBC,UADa;AAEvCN,EAAAA,KAAK,EAAEL,SAAS,CAACY,MAAV,CAAiBD,UAFe;AAGvCL,EAAAA,IAAI,EAAEN,SAAS,CAACY,MAAV,CAAiBD;AAHgB,CAAzC",
+    "sourcesContent": [
+      "import React from 'react';\nimport PropTypes from 'prop-types';\n\nimport {faCaretDown} from '@fortawesome/free-solid-svg-icons';\nimport {FontAwesomeIcon} from '@fortawesome/react-fontawesome';\n\nexport default function AssignmentCreatorSelectField({\n  children,\n  input,\n  meta: {touched, error},\n}) {\n  return (\n    <div>\n      <div className=\"assignment-creator__select-field\">\n        <select className=\"assignment-creator__select\" {...input}>\n          {children}\n        </select>\n        <span className=\"assignment-creator__caret\">\n          <FontAwesomeIcon icon={faCaretDown} />\n        </span>\n      </div>\n      {touched && error && (\n        <span className=\"assignment-creator__assignment-notification\">\n          {error}\n        </span>\n      )}\n    </div>\n  );\n}\n\nAssignmentCreatorSelectField.propTypes = {\n  children: PropTypes.array.isRequired,\n  input: PropTypes.object.isRequired,\n  meta: PropTypes.object.isRequired,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

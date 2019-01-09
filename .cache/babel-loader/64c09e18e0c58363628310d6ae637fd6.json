@@ -1,0 +1,23 @@
+{
+  "ast": null,
+  "code": "import { Record } from 'immutable';\nexport default Record({\n  expression: null,\n  value: null,\n  error: null,\n  evaluatedByCompiledProjectKey: null\n}, 'ConsoleEntry');",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/records/ConsoleEntry.js"
+    ],
+    "names": [
+      "Record",
+      "expression",
+      "value",
+      "error",
+      "evaluatedByCompiledProjectKey"
+    ],
+    "mappings": "AAAA,SAAQA,MAAR,QAAqB,WAArB;AAEA,eAAeA,MAAM,CACnB;AACEC,EAAAA,UAAU,EAAE,IADd;AAEEC,EAAAA,KAAK,EAAE,IAFT;AAGEC,EAAAA,KAAK,EAAE,IAHT;AAIEC,EAAAA,6BAA6B,EAAE;AAJjC,CADmB,EAOnB,cAPmB,CAArB",
+    "sourcesContent": [
+      "import {Record} from 'immutable';\n\nexport default Record(\n  {\n    expression: null,\n    value: null,\n    error: null,\n    evaluatedByCompiledProjectKey: null,\n  },\n  'ConsoleEntry',\n);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

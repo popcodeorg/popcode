@@ -1,0 +1,55 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = react;\n\nvar toHAST = require('mdast-util-to-hast');\n\nvar sanitize = require('hast-util-sanitize');\n\nvar toH = require('hast-to-hyperscript');\n\nvar tableCellStyle = require('@mapbox/hast-util-table-cell-style');\n\nvar globalReact;\nvar globalCreateElement;\nvar globalFragment;\n/* istanbul ignore next - Hard to test */\n\ntry {\n  globalReact = require('react');\n  globalCreateElement = globalReact.createElement;\n  globalFragment = globalReact.Fragment;\n} catch (error) {}\n\nvar own = {}.hasOwnProperty;\n\nfunction react(options) {\n  var settings = options || {};\n  var createElement = settings.createElement || globalCreateElement;\n  var Fragment = settings.fragment || globalFragment;\n  var clean = settings.sanitize !== false;\n  var scheme = clean && typeof settings.sanitize !== 'boolean' ? settings.sanitize : null;\n  var toHastOptions = settings.toHast || {};\n  var components = settings.remarkReactComponents || {};\n  this.Compiler = compile; // Wrapper around `createElement` to pass components in.\n\n  function h(name, props, children) {\n    return createElement(own.call(components, name) ? components[name] : name, props, children);\n  } // Compile mdast to React.\n\n\n  function compile(node) {\n    var tree = toHAST(node, toHastOptions);\n    var root;\n\n    if (clean) {\n      tree = sanitize(tree, scheme);\n    }\n\n    root = toH(h, tableCellStyle(tree), settings.prefix); // If this compiled to a `<div>`, but fragment are possible, use those.\n\n    if (root.type === 'div' && Fragment) {\n      root = createElement(Fragment, {}, root.props.children);\n    }\n\n    return root;\n  }\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/remark-react/index.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "react",
+      "toHAST",
+      "require",
+      "sanitize",
+      "toH",
+      "tableCellStyle",
+      "globalReact",
+      "globalCreateElement",
+      "globalFragment",
+      "createElement",
+      "Fragment",
+      "error",
+      "own",
+      "hasOwnProperty",
+      "options",
+      "settings",
+      "fragment",
+      "clean",
+      "scheme",
+      "toHastOptions",
+      "toHast",
+      "components",
+      "remarkReactComponents",
+      "Compiler",
+      "compile",
+      "h",
+      "name",
+      "props",
+      "children",
+      "call",
+      "node",
+      "tree",
+      "root",
+      "prefix",
+      "type"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,KAAjB;;AAEA,IAAIC,MAAM,GAAGC,OAAO,CAAC,oBAAD,CAApB;;AACA,IAAIC,QAAQ,GAAGD,OAAO,CAAC,oBAAD,CAAtB;;AACA,IAAIE,GAAG,GAAGF,OAAO,CAAC,qBAAD,CAAjB;;AACA,IAAIG,cAAc,GAAGH,OAAO,CAAC,oCAAD,CAA5B;;AAEA,IAAII,WAAJ;AACA,IAAIC,mBAAJ;AACA,IAAIC,cAAJ;AAEA;;AACA,IAAI;AACFF,EAAAA,WAAW,GAAGJ,OAAO,CAAC,OAAD,CAArB;AACAK,EAAAA,mBAAmB,GAAGD,WAAW,CAACG,aAAlC;AACAD,EAAAA,cAAc,GAAGF,WAAW,CAACI,QAA7B;AACD,CAJD,CAIE,OAAOC,KAAP,EAAc,CAAE;;AAElB,IAAIC,GAAG,GAAG,GAAGC,cAAb;;AAEA,SAASb,KAAT,CAAec,OAAf,EAAwB;AACtB,MAAIC,QAAQ,GAAGD,OAAO,IAAI,EAA1B;AACA,MAAIL,aAAa,GAAGM,QAAQ,CAACN,aAAT,IAA0BF,mBAA9C;AACA,MAAIG,QAAQ,GAAGK,QAAQ,CAACC,QAAT,IAAqBR,cAApC;AACA,MAAIS,KAAK,GAAGF,QAAQ,CAACZ,QAAT,KAAsB,KAAlC;AACA,MAAIe,MAAM,GACRD,KAAK,IAAI,OAAOF,QAAQ,CAACZ,QAAhB,KAA6B,SAAtC,GAAkDY,QAAQ,CAACZ,QAA3D,GAAsE,IADxE;AAEA,MAAIgB,aAAa,GAAGJ,QAAQ,CAACK,MAAT,IAAmB,EAAvC;AACA,MAAIC,UAAU,GAAGN,QAAQ,CAACO,qBAAT,IAAkC,EAAnD;AAEA,OAAKC,QAAL,GAAgBC,OAAhB,CAVsB,CAYtB;;AACA,WAASC,CAAT,CAAWC,IAAX,EAAiBC,KAAjB,EAAwBC,QAAxB,EAAkC;AAChC,WAAOnB,aAAa,CAClBG,GAAG,CAACiB,IAAJ,CAASR,UAAT,EAAqBK,IAArB,IAA6BL,UAAU,CAACK,IAAD,CAAvC,GAAgDA,IAD9B,EAElBC,KAFkB,EAGlBC,QAHkB,CAApB;AAKD,GAnBqB,CAqBtB;;;AACA,WAASJ,OAAT,CAAiBM,IAAjB,EAAuB;AACrB,QAAIC,IAAI,GAAG9B,MAAM,CAAC6B,IAAD,EAAOX,aAAP,CAAjB;AACA,QAAIa,IAAJ;;AAEA,QAAIf,KAAJ,EAAW;AACTc,MAAAA,IAAI,GAAG5B,QAAQ,CAAC4B,IAAD,EAAOb,MAAP,CAAf;AACD;;AAEDc,IAAAA,IAAI,GAAG5B,GAAG,CAACqB,CAAD,EAAIpB,cAAc,CAAC0B,IAAD,CAAlB,EAA0BhB,QAAQ,CAACkB,MAAnC,CAAV,CARqB,CAUrB;;AACA,QAAID,IAAI,CAACE,IAAL,KAAc,KAAd,IAAuBxB,QAA3B,EAAqC;AACnCsB,MAAAA,IAAI,GAAGvB,aAAa,CAACC,QAAD,EAAW,EAAX,EAAesB,IAAI,CAACL,KAAL,CAAWC,QAA1B,CAApB;AACD;;AAED,WAAOI,IAAP;AACD;AACF",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = react\n\nvar toHAST = require('mdast-util-to-hast')\nvar sanitize = require('hast-util-sanitize')\nvar toH = require('hast-to-hyperscript')\nvar tableCellStyle = require('@mapbox/hast-util-table-cell-style')\n\nvar globalReact\nvar globalCreateElement\nvar globalFragment\n\n/* istanbul ignore next - Hard to test */\ntry {\n  globalReact = require('react')\n  globalCreateElement = globalReact.createElement\n  globalFragment = globalReact.Fragment\n} catch (error) {}\n\nvar own = {}.hasOwnProperty\n\nfunction react(options) {\n  var settings = options || {}\n  var createElement = settings.createElement || globalCreateElement\n  var Fragment = settings.fragment || globalFragment\n  var clean = settings.sanitize !== false\n  var scheme =\n    clean && typeof settings.sanitize !== 'boolean' ? settings.sanitize : null\n  var toHastOptions = settings.toHast || {}\n  var components = settings.remarkReactComponents || {}\n\n  this.Compiler = compile\n\n  // Wrapper around `createElement` to pass components in.\n  function h(name, props, children) {\n    return createElement(\n      own.call(components, name) ? components[name] : name,\n      props,\n      children\n    )\n  }\n\n  // Compile mdast to React.\n  function compile(node) {\n    var tree = toHAST(node, toHastOptions)\n    var root\n\n    if (clean) {\n      tree = sanitize(tree, scheme)\n    }\n\n    root = toH(h, tableCellStyle(tree), settings.prefix)\n\n    // If this compiled to a `<div>`, but fragment are possible, use those.\n    if (root.type === 'div' && Fragment) {\n      root = createElement(Fragment, {}, root.props.children)\n    }\n\n    return root\n  }\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

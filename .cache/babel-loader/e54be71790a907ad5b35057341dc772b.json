@@ -1,0 +1,42 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = detab;\n\nvar repeat = require('repeat-string');\n\nvar TAB = 0x09;\nvar LF = 0x0A;\nvar CR = 0x0D;\n/* Replace tabs with spaces, being smart about which\n * column the tab is at and which size should be used. */\n\nfunction detab(value, size) {\n  var string = typeof value === 'string';\n  var length = string && value.length;\n  var start = 0;\n  var index = -1;\n  var column = -1;\n  var tabSize = size || 4;\n  var results = [];\n  var code;\n  var add;\n\n  if (!string) {\n    throw new Error('detab expected string');\n  }\n\n  while (++index < length) {\n    code = value.charCodeAt(index);\n\n    if (code === TAB) {\n      add = tabSize - (column + 1) % tabSize;\n      column += add;\n      results.push(value.slice(start, index) + repeat(' ', add));\n      start = index + 1;\n    } else if (code === LF || code === CR) {\n      column = -1;\n    } else {\n      column++;\n    }\n  }\n\n  results.push(value.slice(start));\n  return results.join('');\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/detab/index.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "detab",
+      "repeat",
+      "require",
+      "TAB",
+      "LF",
+      "CR",
+      "value",
+      "size",
+      "string",
+      "length",
+      "start",
+      "index",
+      "column",
+      "tabSize",
+      "results",
+      "code",
+      "add",
+      "Error",
+      "charCodeAt",
+      "push",
+      "slice",
+      "join"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,KAAjB;;AAEA,IAAIC,MAAM,GAAGC,OAAO,CAAC,eAAD,CAApB;;AAEA,IAAIC,GAAG,GAAG,IAAV;AACA,IAAIC,EAAE,GAAG,IAAT;AACA,IAAIC,EAAE,GAAG,IAAT;AAEA;;;AAEA,SAASL,KAAT,CAAeM,KAAf,EAAsBC,IAAtB,EAA4B;AAC1B,MAAIC,MAAM,GAAG,OAAOF,KAAP,KAAiB,QAA9B;AACA,MAAIG,MAAM,GAAGD,MAAM,IAAIF,KAAK,CAACG,MAA7B;AACA,MAAIC,KAAK,GAAG,CAAZ;AACA,MAAIC,KAAK,GAAG,CAAC,CAAb;AACA,MAAIC,MAAM,GAAG,CAAC,CAAd;AACA,MAAIC,OAAO,GAAGN,IAAI,IAAI,CAAtB;AACA,MAAIO,OAAO,GAAG,EAAd;AACA,MAAIC,IAAJ;AACA,MAAIC,GAAJ;;AAEA,MAAI,CAACR,MAAL,EAAa;AACX,UAAM,IAAIS,KAAJ,CAAU,uBAAV,CAAN;AACD;;AAED,SAAO,EAAEN,KAAF,GAAUF,MAAjB,EAAyB;AACvBM,IAAAA,IAAI,GAAGT,KAAK,CAACY,UAAN,CAAiBP,KAAjB,CAAP;;AAEA,QAAII,IAAI,KAAKZ,GAAb,EAAkB;AAChBa,MAAAA,GAAG,GAAGH,OAAO,GAAI,CAACD,MAAM,GAAG,CAAV,IAAeC,OAAhC;AACAD,MAAAA,MAAM,IAAII,GAAV;AACAF,MAAAA,OAAO,CAACK,IAAR,CAAab,KAAK,CAACc,KAAN,CAAYV,KAAZ,EAAmBC,KAAnB,IAA4BV,MAAM,CAAC,GAAD,EAAMe,GAAN,CAA/C;AACAN,MAAAA,KAAK,GAAGC,KAAK,GAAG,CAAhB;AACD,KALD,MAKO,IAAII,IAAI,KAAKX,EAAT,IAAeW,IAAI,KAAKV,EAA5B,EAAgC;AACrCO,MAAAA,MAAM,GAAG,CAAC,CAAV;AACD,KAFM,MAEA;AACLA,MAAAA,MAAM;AACP;AACF;;AAEDE,EAAAA,OAAO,CAACK,IAAR,CAAab,KAAK,CAACc,KAAN,CAAYV,KAAZ,CAAb;AAEA,SAAOI,OAAO,CAACO,IAAR,CAAa,EAAb,CAAP;AACD",
+    "sourcesContent": [
+      "'use strict';\n\nmodule.exports = detab;\n\nvar repeat = require('repeat-string');\n\nvar TAB = 0x09;\nvar LF = 0x0A;\nvar CR = 0x0D;\n\n/* Replace tabs with spaces, being smart about which\n * column the tab is at and which size should be used. */\nfunction detab(value, size) {\n  var string = typeof value === 'string';\n  var length = string && value.length;\n  var start = 0;\n  var index = -1;\n  var column = -1;\n  var tabSize = size || 4;\n  var results = [];\n  var code;\n  var add;\n\n  if (!string) {\n    throw new Error('detab expected string');\n  }\n\n  while (++index < length) {\n    code = value.charCodeAt(index);\n\n    if (code === TAB) {\n      add = tabSize - ((column + 1) % tabSize);\n      column += add;\n      results.push(value.slice(start, index) + repeat(' ', add));\n      start = index + 1;\n    } else if (code === LF || code === CR) {\n      column = -1;\n    } else {\n      column++;\n    }\n  }\n\n  results.push(value.slice(start));\n\n  return results.join('');\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

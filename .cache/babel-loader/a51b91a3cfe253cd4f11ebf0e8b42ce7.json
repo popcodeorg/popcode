@@ -1,0 +1,36 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = imageSet;\n\nvar _isPrefixedValue = require('css-in-js-utils/lib/isPrefixedValue');\n\nvar _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);\n\nfunction _interopRequireDefault(obj) {\n  return obj && obj.__esModule ? obj : {\n    default: obj\n  };\n} // http://caniuse.com/#feat=css-image-set\n\n\nvar prefixes = ['-webkit-', ''];\n\nfunction imageSet(property, value) {\n  if (typeof value === 'string' && !(0, _isPrefixedValue2.default)(value) && value.indexOf('image-set(') > -1) {\n    return prefixes.map(function (prefix) {\n      return value.replace(/image-set\\(/g, prefix + 'image-set(');\n    });\n  }\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/inline-style-prefixer/lib/plugins/imageSet.js"
+    ],
+    "names": [
+      "Object",
+      "defineProperty",
+      "exports",
+      "value",
+      "default",
+      "imageSet",
+      "_isPrefixedValue",
+      "require",
+      "_isPrefixedValue2",
+      "_interopRequireDefault",
+      "obj",
+      "__esModule",
+      "prefixes",
+      "property",
+      "indexOf",
+      "map",
+      "prefix",
+      "replace"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,cAAP,CAAsBC,OAAtB,EAA+B,YAA/B,EAA6C;AAC3CC,EAAAA,KAAK,EAAE;AADoC,CAA7C;AAGAD,OAAO,CAACE,OAAR,GAAkBC,QAAlB;;AAEA,IAAIC,gBAAgB,GAAGC,OAAO,CAAC,qCAAD,CAA9B;;AAEA,IAAIC,iBAAiB,GAAGC,sBAAsB,CAACH,gBAAD,CAA9C;;AAEA,SAASG,sBAAT,CAAgCC,GAAhC,EAAqC;AAAE,SAAOA,GAAG,IAAIA,GAAG,CAACC,UAAX,GAAwBD,GAAxB,GAA8B;AAAEN,IAAAA,OAAO,EAAEM;AAAX,GAArC;AAAwD,C,CAE/F;;;AACA,IAAIE,QAAQ,GAAG,CAAC,UAAD,EAAa,EAAb,CAAf;;AACA,SAASP,QAAT,CAAkBQ,QAAlB,EAA4BV,KAA5B,EAAmC;AACjC,MAAI,OAAOA,KAAP,KAAiB,QAAjB,IAA6B,CAAC,CAAC,GAAGK,iBAAiB,CAACJ,OAAtB,EAA+BD,KAA/B,CAA9B,IAAuEA,KAAK,CAACW,OAAN,CAAc,YAAd,IAA8B,CAAC,CAA1G,EAA6G;AAC3G,WAAOF,QAAQ,CAACG,GAAT,CAAa,UAAUC,MAAV,EAAkB;AACpC,aAAOb,KAAK,CAACc,OAAN,CAAc,cAAd,EAA8BD,MAAM,GAAG,YAAvC,CAAP;AACD,KAFM,CAAP;AAGD;AACF",
+    "sourcesContent": [
+      "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = imageSet;\n\nvar _isPrefixedValue = require('css-in-js-utils/lib/isPrefixedValue');\n\nvar _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n// http://caniuse.com/#feat=css-image-set\nvar prefixes = ['-webkit-', ''];\nfunction imageSet(property, value) {\n  if (typeof value === 'string' && !(0, _isPrefixedValue2.default)(value) && value.indexOf('image-set(') > -1) {\n    return prefixes.map(function (prefix) {\n      return value.replace(/image-set\\(/g, prefix + 'image-set(');\n    });\n  }\n}"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

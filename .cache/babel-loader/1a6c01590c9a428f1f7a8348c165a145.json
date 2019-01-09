@@ -1,0 +1,15 @@
+{
+  "ast": null,
+  "code": "import { Record } from 'immutable';\nexport default Record({\n  string: null,\n  parsedDate: null\n}, 'FormDate');",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/records/FormDate.js"],
+    "names": ["Record", "string", "parsedDate"],
+    "mappings": "AAAA,SAAQA,MAAR,QAAqB,WAArB;AAEA,eAAeA,MAAM,CACnB;AACEC,EAAAA,MAAM,EAAE,IADV;AAEEC,EAAAA,UAAU,EAAE;AAFd,CADmB,EAKnB,UALmB,CAArB",
+    "sourcesContent": [
+      "import {Record} from 'immutable';\n\nexport default Record(\n  {\n    string: null,\n    parsedDate: null,\n  },\n  'FormDate',\n);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

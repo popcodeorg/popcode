@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "export default function capitalizeString(str) {\n  return str.charAt(0).toUpperCase() + str.slice(1);\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/inline-style-prefixer/es/utils/capitalizeString.js"
+    ],
+    "names": ["capitalizeString", "str", "charAt", "toUpperCase", "slice"],
+    "mappings": "AAAA,eAAe,SAASA,gBAAT,CAA0BC,GAA1B,EAA+B;AAC5C,SAAOA,GAAG,CAACC,MAAJ,CAAW,CAAX,EAAcC,WAAd,KAA8BF,GAAG,CAACG,KAAJ,CAAU,CAAV,CAArC;AACD",
+    "sourcesContent": [
+      "export default function capitalizeString(str) {\n  return str.charAt(0).toUpperCase() + str.slice(1);\n}"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

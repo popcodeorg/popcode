@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "import { createSelector } from 'reselect';\nimport get from 'lodash-es/get';\nimport getCurrentProject from './getCurrentProject';\nexport default createSelector([getCurrentProject], function (currentProject) {\n  return currentProject ? get(currentProject, ['externalLocations', 'githubRepoName'], null) : null;\n});",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/selectors/getCurrentProjectExportedRepoName.js"
+    ],
+    "names": ["createSelector", "get", "getCurrentProject", "currentProject"],
+    "mappings": "AAAA,SAAQA,cAAR,QAA6B,UAA7B;AACA,OAAOC,GAAP,MAAgB,eAAhB;AAEA,OAAOC,iBAAP,MAA8B,qBAA9B;AAEA,eAAeF,cAAc,CAC3B,CAACE,iBAAD,CAD2B,EAE3B,UAAAC,cAAc;AAAA,SACZA,cAAc,GACVF,GAAG,CAACE,cAAD,EAAiB,CAAC,mBAAD,EAAsB,gBAAtB,CAAjB,EAA0D,IAA1D,CADO,GAEV,IAHQ;AAAA,CAFa,CAA7B",
+    "sourcesContent": [
+      "import {createSelector} from 'reselect';\nimport get from 'lodash-es/get';\n\nimport getCurrentProject from './getCurrentProject';\n\nexport default createSelector(\n  [getCurrentProject],\n  currentProject =>\n    currentProject\n      ? get(currentProject, ['externalLocations', 'githubRepoName'], null)\n      : null,\n);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,31 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nvar normalize = require('mdurl/encode');\n\nmodule.exports = image;\n\nfunction image(h, node) {\n  var props = {\n    src: normalize(node.url),\n    alt: node.alt\n  };\n\n  if (node.title !== null && node.title !== undefined) {\n    props.title = node.title;\n  }\n\n  return h(node, 'img', props);\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/handlers/image.js"
+    ],
+    "names": [
+      "normalize",
+      "require",
+      "module",
+      "exports",
+      "image",
+      "h",
+      "node",
+      "props",
+      "src",
+      "url",
+      "alt",
+      "title",
+      "undefined"
+    ],
+    "mappings": "AAAA;;AAEA,IAAIA,SAAS,GAAGC,OAAO,CAAC,cAAD,CAAvB;;AAEAC,MAAM,CAACC,OAAP,GAAiBC,KAAjB;;AAEA,SAASA,KAAT,CAAeC,CAAf,EAAkBC,IAAlB,EAAwB;AACtB,MAAIC,KAAK,GAAG;AAACC,IAAAA,GAAG,EAAER,SAAS,CAACM,IAAI,CAACG,GAAN,CAAf;AAA2BC,IAAAA,GAAG,EAAEJ,IAAI,CAACI;AAArC,GAAZ;;AAEA,MAAIJ,IAAI,CAACK,KAAL,KAAe,IAAf,IAAuBL,IAAI,CAACK,KAAL,KAAeC,SAA1C,EAAqD;AACnDL,IAAAA,KAAK,CAACI,KAAN,GAAcL,IAAI,CAACK,KAAnB;AACD;;AAED,SAAON,CAAC,CAACC,IAAD,EAAO,KAAP,EAAcC,KAAd,CAAR;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nvar normalize = require('mdurl/encode')\n\nmodule.exports = image\n\nfunction image(h, node) {\n  var props = {src: normalize(node.url), alt: node.alt}\n\n  if (node.title !== null && node.title !== undefined) {\n    props.title = node.title\n  }\n\n  return h(node, 'img', props)\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

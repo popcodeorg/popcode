@@ -1,0 +1,33 @@
+{
+  "ast": null,
+  "code": "import React from 'react';\nimport PropTypes from 'prop-types';\nimport classnames from 'classnames';\nimport { faTimes } from '@fortawesome/free-solid-svg-icons';\nimport { FontAwesomeIcon } from '@fortawesome/react-fontawesome';\nexport default function NotificationContainer(props) {\n  return React.createElement(\"div\", {\n    className: classnames('notification-list__notification', \"notification-list__notification_\".concat(props.severity))\n  }, props.children, React.createElement(\"span\", {\n    className: \"notification-list__dismiss\",\n    onClick: props.onDismissed\n  }, React.createElement(FontAwesomeIcon, {\n    icon: faTimes\n  })));\n}\nNotificationContainer.propTypes = {\n  children: PropTypes.node.isRequired,\n  severity: PropTypes.string.isRequired,\n  onDismissed: PropTypes.func.isRequired\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/NotificationContainer.jsx"
+    ],
+    "names": [
+      "React",
+      "PropTypes",
+      "classnames",
+      "faTimes",
+      "FontAwesomeIcon",
+      "NotificationContainer",
+      "props",
+      "severity",
+      "children",
+      "onDismissed",
+      "propTypes",
+      "node",
+      "isRequired",
+      "string",
+      "func"
+    ],
+    "mappings": "AAAA,OAAOA,KAAP,MAAkB,OAAlB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AACA,OAAOC,UAAP,MAAuB,YAAvB;AACA,SAAQC,OAAR,QAAsB,mCAAtB;AACA,SAAQC,eAAR,QAA8B,gCAA9B;AAEA,eAAe,SAASC,qBAAT,CAA+BC,KAA/B,EAAsC;AACnD,SACE;AACE,IAAA,SAAS,EAAEJ,UAAU,CACnB,iCADmB,4CAEgBI,KAAK,CAACC,QAFtB;AADvB,KAMGD,KAAK,CAACE,QANT,EAOE;AAAM,IAAA,SAAS,EAAC,4BAAhB;AAA6C,IAAA,OAAO,EAAEF,KAAK,CAACG;AAA5D,KACE,oBAAC,eAAD;AAAiB,IAAA,IAAI,EAAEN;AAAvB,IADF,CAPF,CADF;AAaD;AAEDE,qBAAqB,CAACK,SAAtB,GAAkC;AAChCF,EAAAA,QAAQ,EAAEP,SAAS,CAACU,IAAV,CAAeC,UADO;AAEhCL,EAAAA,QAAQ,EAAEN,SAAS,CAACY,MAAV,CAAiBD,UAFK;AAGhCH,EAAAA,WAAW,EAAER,SAAS,CAACa,IAAV,CAAeF;AAHI,CAAlC",
+    "sourcesContent": [
+      "import React from 'react';\nimport PropTypes from 'prop-types';\nimport classnames from 'classnames';\nimport {faTimes} from '@fortawesome/free-solid-svg-icons';\nimport {FontAwesomeIcon} from '@fortawesome/react-fontawesome';\n\nexport default function NotificationContainer(props) {\n  return (\n    <div\n      className={classnames(\n        'notification-list__notification',\n        `notification-list__notification_${props.severity}`,\n      )}\n    >\n      {props.children}\n      <span className=\"notification-list__dismiss\" onClick={props.onDismissed}>\n        <FontAwesomeIcon icon={faTimes} />\n      </span>\n    </div>\n  );\n}\n\nNotificationContainer.propTypes = {\n  children: PropTypes.node.isRequired,\n  severity: PropTypes.string.isRequired,\n  onDismissed: PropTypes.func.isRequired,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

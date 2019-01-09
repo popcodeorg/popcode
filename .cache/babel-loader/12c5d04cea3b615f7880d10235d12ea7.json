@@ -1,0 +1,31 @@
+{
+  "ast": null,
+  "code": "'use strict';\n/* Expose. */\n\nvar position = exports;\nposition.start = factory('start');\nposition.end = factory('end');\n/* Factory to get a `type` point in the positional info of a node. */\n\nfunction factory(type) {\n  point.displayName = type;\n  return point;\n  /* Get a point in `node.position` at a bound `type`. */\n\n  function point(node) {\n    var point = node && node.position && node.position[type] || {};\n    return {\n      line: point.line || null,\n      column: point.column || null,\n      offset: isNaN(point.offset) ? null : point.offset\n    };\n  }\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/unist-util-position/index.js"
+    ],
+    "names": [
+      "position",
+      "exports",
+      "start",
+      "factory",
+      "end",
+      "type",
+      "point",
+      "displayName",
+      "node",
+      "line",
+      "column",
+      "offset",
+      "isNaN"
+    ],
+    "mappings": "AAAA;AAEA;;AACA,IAAIA,QAAQ,GAAGC,OAAf;AAEAD,QAAQ,CAACE,KAAT,GAAiBC,OAAO,CAAC,OAAD,CAAxB;AACAH,QAAQ,CAACI,GAAT,GAAeD,OAAO,CAAC,KAAD,CAAtB;AAEA;;AACA,SAASA,OAAT,CAAiBE,IAAjB,EAAuB;AACrBC,EAAAA,KAAK,CAACC,WAAN,GAAoBF,IAApB;AAEA,SAAOC,KAAP;AAEA;;AACA,WAASA,KAAT,CAAeE,IAAf,EAAqB;AACnB,QAAIF,KAAK,GAAIE,IAAI,IAAIA,IAAI,CAACR,QAAb,IAAyBQ,IAAI,CAACR,QAAL,CAAcK,IAAd,CAA1B,IAAkD,EAA9D;AAEA,WAAO;AACLI,MAAAA,IAAI,EAAEH,KAAK,CAACG,IAAN,IAAc,IADf;AAELC,MAAAA,MAAM,EAAEJ,KAAK,CAACI,MAAN,IAAgB,IAFnB;AAGLC,MAAAA,MAAM,EAAEC,KAAK,CAACN,KAAK,CAACK,MAAP,CAAL,GAAsB,IAAtB,GAA6BL,KAAK,CAACK;AAHtC,KAAP;AAKD;AACF",
+    "sourcesContent": [
+      "'use strict'\n\n/* Expose. */\nvar position = exports\n\nposition.start = factory('start')\nposition.end = factory('end')\n\n/* Factory to get a `type` point in the positional info of a node. */\nfunction factory(type) {\n  point.displayName = type\n\n  return point\n\n  /* Get a point in `node.position` at a bound `type`. */\n  function point(node) {\n    var point = (node && node.position && node.position[type]) || {}\n\n    return {\n      line: point.line || null,\n      column: point.column || null,\n      offset: isNaN(point.offset) ? null : point.offset\n    }\n  }\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

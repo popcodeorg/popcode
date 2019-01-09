@@ -1,0 +1,52 @@
+{
+  "ast": null,
+  "code": "function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }\n\nfunction _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"next\", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"throw\", err); } _next(undefined); }); }; }\n\nimport retryingFailedImports from './retryingFailedImports';\nvar BEAUTIFY_SETTINGS = {\n  indent_size: 4,\n  indent_char: ' ',\n  indent_with_tabs: false,\n  eol: '\\n',\n  end_with_newline: false,\n  indent_inner_html: true,\n  indent_level: 0,\n  preserve_newlines: true,\n  max_preserve_newlines: 10,\n  space_in_paren: false,\n  space_in_empty_paren: false,\n  jslint_happy: false,\n  space_after_anon_function: false,\n  brace_style: 'collapse',\n  unindent_chained_methods: false,\n  break_chained_methods: false,\n  keep_array_indentation: false,\n  unescape_strings: false,\n  wrap_line_length: 0,\n  e4x: false,\n  comma_first: false,\n  operator_position: 'before-newline',\n\n  /* don't add new lines before head,body,/html https://github.com/beautify-web/js-beautify */\n  extra_liners: []\n};\nvar importingBeautify = importBeautify();\n\nfunction importBeautify() {\n  return _importBeautify.apply(this, arguments);\n}\n\nfunction _importBeautify() {\n  _importBeautify = _asyncToGenerator(\n  /*#__PURE__*/\n  regeneratorRuntime.mark(function _callee() {\n    return regeneratorRuntime.wrap(function _callee$(_context) {\n      while (1) {\n        switch (_context.prev = _context.next) {\n          case 0:\n            return _context.abrupt(\"return\", retryingFailedImports(function () {\n              return import(\n              /* webpackChunkName: \"mainAsync\" */\n              'js-beautify');\n            }));\n\n          case 1:\n          case \"end\":\n            return _context.stop();\n        }\n      }\n    }, _callee);\n  }));\n  return _importBeautify.apply(this, arguments);\n}\n\nexport default function beautifySource(_x, _x2) {\n  return _beautifySource.apply(this, arguments);\n}\n\nfunction _beautifySource() {\n  _beautifySource = _asyncToGenerator(\n  /*#__PURE__*/\n  regeneratorRuntime.mark(function _callee2(code, mode) {\n    var Beautify;\n    return regeneratorRuntime.wrap(function _callee2$(_context2) {\n      while (1) {\n        switch (_context2.prev = _context2.next) {\n          case 0:\n            _context2.next = 2;\n            return importingBeautify;\n\n          case 2:\n            Beautify = _context2.sent;\n            return _context2.abrupt(\"return\", formatCode(Beautify, code, mode));\n\n          case 4:\n          case \"end\":\n            return _context2.stop();\n        }\n      }\n    }, _callee2);\n  }));\n  return _beautifySource.apply(this, arguments);\n}\n\nfunction formatCode(Beautify, code, mode) {\n  if (mode === 'html') {\n    return Beautify.html(code, BEAUTIFY_SETTINGS);\n  } else if (mode === 'javascript') {\n    return Beautify.js(code, BEAUTIFY_SETTINGS);\n  } else if (mode === 'css') {\n    return Beautify.css(code, BEAUTIFY_SETTINGS);\n  }\n\n  throw new Error(\"could not format code of type \".concat(mode));\n}",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/util/beautifySource.js"],
+    "names": [
+      "retryingFailedImports",
+      "BEAUTIFY_SETTINGS",
+      "indent_size",
+      "indent_char",
+      "indent_with_tabs",
+      "eol",
+      "end_with_newline",
+      "indent_inner_html",
+      "indent_level",
+      "preserve_newlines",
+      "max_preserve_newlines",
+      "space_in_paren",
+      "space_in_empty_paren",
+      "jslint_happy",
+      "space_after_anon_function",
+      "brace_style",
+      "unindent_chained_methods",
+      "break_chained_methods",
+      "keep_array_indentation",
+      "unescape_strings",
+      "wrap_line_length",
+      "e4x",
+      "comma_first",
+      "operator_position",
+      "extra_liners",
+      "importingBeautify",
+      "importBeautify",
+      "beautifySource",
+      "code",
+      "mode",
+      "Beautify",
+      "formatCode",
+      "html",
+      "js",
+      "css",
+      "Error"
+    ],
+    "mappings": ";;;;AAAA,OAAOA,qBAAP,MAAkC,yBAAlC;AAEA,IAAMC,iBAAiB,GAAG;AACxBC,EAAAA,WAAW,EAAE,CADW;AAExBC,EAAAA,WAAW,EAAE,GAFW;AAGxBC,EAAAA,gBAAgB,EAAE,KAHM;AAIxBC,EAAAA,GAAG,EAAE,IAJmB;AAKxBC,EAAAA,gBAAgB,EAAE,KALM;AAMxBC,EAAAA,iBAAiB,EAAE,IANK;AAOxBC,EAAAA,YAAY,EAAE,CAPU;AAQxBC,EAAAA,iBAAiB,EAAE,IARK;AASxBC,EAAAA,qBAAqB,EAAE,EATC;AAUxBC,EAAAA,cAAc,EAAE,KAVQ;AAWxBC,EAAAA,oBAAoB,EAAE,KAXE;AAYxBC,EAAAA,YAAY,EAAE,KAZU;AAaxBC,EAAAA,yBAAyB,EAAE,KAbH;AAcxBC,EAAAA,WAAW,EAAE,UAdW;AAexBC,EAAAA,wBAAwB,EAAE,KAfF;AAgBxBC,EAAAA,qBAAqB,EAAE,KAhBC;AAiBxBC,EAAAA,sBAAsB,EAAE,KAjBA;AAkBxBC,EAAAA,gBAAgB,EAAE,KAlBM;AAmBxBC,EAAAA,gBAAgB,EAAE,CAnBM;AAoBxBC,EAAAA,GAAG,EAAE,KApBmB;AAqBxBC,EAAAA,WAAW,EAAE,KArBW;AAsBxBC,EAAAA,iBAAiB,EAAE,gBAtBK;;AAuBxB;AACAC,EAAAA,YAAY,EAAE;AAxBU,CAA1B;AA2BA,IAAMC,iBAAiB,GAAGC,cAAc,EAAxC;;SAEeA,c;;;;;;;0BAAf;AAAA;AAAA;AAAA;AAAA;AAAA,6CACS1B,qBAAqB,CAAC;AAAA,qBAC3B;AACE;AACA,2BAFF,CAD2B;AAAA,aAAD,CAD9B;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,G;;;;AASA,wBAA8B2B,cAA9B;AAAA;AAAA;;;;;0BAAe,kBAA8BC,IAA9B,EAAoCC,IAApC;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,mBACUJ,iBADV;;AAAA;AACPK,YAAAA,QADO;AAAA,8CAENC,UAAU,CAACD,QAAD,EAAWF,IAAX,EAAiBC,IAAjB,CAFJ;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,G;;;;AAKf,SAASE,UAAT,CAAoBD,QAApB,EAA8BF,IAA9B,EAAoCC,IAApC,EAA0C;AACxC,MAAIA,IAAI,KAAK,MAAb,EAAqB;AACnB,WAAOC,QAAQ,CAACE,IAAT,CAAcJ,IAAd,EAAoB3B,iBAApB,CAAP;AACD,GAFD,MAEO,IAAI4B,IAAI,KAAK,YAAb,EAA2B;AAChC,WAAOC,QAAQ,CAACG,EAAT,CAAYL,IAAZ,EAAkB3B,iBAAlB,CAAP;AACD,GAFM,MAEA,IAAI4B,IAAI,KAAK,KAAb,EAAoB;AACzB,WAAOC,QAAQ,CAACI,GAAT,CAAaN,IAAb,EAAmB3B,iBAAnB,CAAP;AACD;;AACD,QAAM,IAAIkC,KAAJ,yCAA2CN,IAA3C,EAAN;AACD",
+    "sourcesContent": [
+      "import retryingFailedImports from './retryingFailedImports';\n\nconst BEAUTIFY_SETTINGS = {\n  indent_size: 4,\n  indent_char: ' ',\n  indent_with_tabs: false,\n  eol: '\\n',\n  end_with_newline: false,\n  indent_inner_html: true,\n  indent_level: 0,\n  preserve_newlines: true,\n  max_preserve_newlines: 10,\n  space_in_paren: false,\n  space_in_empty_paren: false,\n  jslint_happy: false,\n  space_after_anon_function: false,\n  brace_style: 'collapse',\n  unindent_chained_methods: false,\n  break_chained_methods: false,\n  keep_array_indentation: false,\n  unescape_strings: false,\n  wrap_line_length: 0,\n  e4x: false,\n  comma_first: false,\n  operator_position: 'before-newline',\n  /* don't add new lines before head,body,/html https://github.com/beautify-web/js-beautify */\n  extra_liners: [],\n};\n\nconst importingBeautify = importBeautify();\n\nasync function importBeautify() {\n  return retryingFailedImports(() =>\n    import(\n      /* webpackChunkName: \"mainAsync\" */\n      'js-beautify'\n    ),\n  );\n}\n\nexport default async function beautifySource(code, mode) {\n  const Beautify = await importingBeautify;\n  return formatCode(Beautify, code, mode);\n}\n\nfunction formatCode(Beautify, code, mode) {\n  if (mode === 'html') {\n    return Beautify.html(code, BEAUTIFY_SETTINGS);\n  } else if (mode === 'javascript') {\n    return Beautify.js(code, BEAUTIFY_SETTINGS);\n  } else if (mode === 'css') {\n    return Beautify.css(code, BEAUTIFY_SETTINGS);\n  }\n  throw new Error(`could not format code of type ${mode}`);\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

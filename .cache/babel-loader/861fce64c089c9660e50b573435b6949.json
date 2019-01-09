@@ -1,0 +1,56 @@
+{
+  "ast": null,
+  "code": "/*\n    Date format with slash \"/\" (also \"-\" and \".\") between numbers\n    - Tuesday 11/3/2015\n    - 11/3/2015\n    - 11/3\n*/\nvar moment = require('moment');\n\nvar Parser = require('../parser').Parser;\n\nvar ParsedResult = require('../../result').ParsedResult;\n\nvar PATTERN = new RegExp('(\\\\W|^)' + '(?:' + '(?:am\\\\s*?)?' + '((?:sonntag|so|montag|mo|dienstag|di|mittwoch|mi|donnerstag|do|freitag|fr|samstag|sa))' + '\\\\s*\\\\,?\\\\s*' + '(?:den\\\\s*)?' + ')?' + '([0-3]{0,1}[0-9]{1})[\\\\/\\\\.\\\\-]([0-3]{0,1}[0-9]{1})' + '(?:' + '[\\\\/\\\\.\\\\-]' + '([0-9]{4}\\s*\\,?\\s*|[0-9]{2}\\s*\\,?\\s*)' + ')?' + '(\\\\W|$)', 'i');\nvar DAYS_OFFSET = {\n  'sonntag': 0,\n  'so': 0,\n  'montag': 1,\n  'mo': 1,\n  'dienstag': 2,\n  'di': 2,\n  'mittwoch': 3,\n  'mi': 3,\n  'donnerstag': 4,\n  'do': 4,\n  'freitag': 5,\n  'fr': 5,\n  'samstag': 6,\n  'sa': 6\n};\nvar OPENNING_GROUP = 1;\nvar ENDING_GROUP = 6;\nvar WEEKDAY_GROUP = 2;\nvar DAY_GROUP = 3;\nvar MONTH_GROUP = 4;\nvar YEAR_GROUP = 5;\n\nexports.Parser = function DESlashDateFormatParser(argument) {\n  Parser.apply(this, arguments);\n\n  this.pattern = function () {\n    return PATTERN;\n  };\n\n  this.extract = function (text, ref, match, opt) {\n    if (match[OPENNING_GROUP] == '/' || match[ENDING_GROUP] == '/') {\n      // Long skip, if there is some overlapping like:\n      // XX[/YY/ZZ]\n      // [XX/YY/]ZZ\n      match.index += match[0].length;\n      return;\n    }\n\n    var index = match.index + match[OPENNING_GROUP].length;\n    var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[ENDING_GROUP].length);\n    var result = new ParsedResult({\n      text: text,\n      index: index,\n      ref: ref\n    });\n    if (text.match(/^\\d\\.\\d$/)) return;\n    if (text.match(/^\\d\\.\\d{1,2}\\.\\d{1,2}$/)) return; // MM/dd -> OK\n    // MM.dd -> NG\n\n    if (!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;\n    var date = null;\n    var year = match[YEAR_GROUP] || moment(ref).year() + '';\n    var month = match[MONTH_GROUP];\n    var day = match[DAY_GROUP];\n    month = parseInt(month);\n    day = parseInt(day);\n    year = parseInt(year);\n    if (month < 1 || month > 12) return null;\n    if (day < 1 || day > 31) return null;\n\n    if (year < 100) {\n      if (year > 50) {\n        year = year + 1900;\n      } else {\n        year = year + 2000;\n      }\n    }\n\n    result.start.assign('day', day);\n    result.start.assign('month', month);\n    result.start.assign('year', year); //Day of week\n\n    if (match[WEEKDAY_GROUP]) {\n      result.start.assign('weekday', DAYS_OFFSET[match[WEEKDAY_GROUP].toLowerCase()]);\n    }\n\n    result.tags['DESlashDateFormatParser'] = true;\n    return result;\n  };\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/chrono-node/src/parsers/de/DESlashDateFormatParser.js"
+    ],
+    "names": [
+      "moment",
+      "require",
+      "Parser",
+      "ParsedResult",
+      "PATTERN",
+      "RegExp",
+      "DAYS_OFFSET",
+      "OPENNING_GROUP",
+      "ENDING_GROUP",
+      "WEEKDAY_GROUP",
+      "DAY_GROUP",
+      "MONTH_GROUP",
+      "YEAR_GROUP",
+      "exports",
+      "DESlashDateFormatParser",
+      "argument",
+      "apply",
+      "arguments",
+      "pattern",
+      "extract",
+      "text",
+      "ref",
+      "match",
+      "opt",
+      "index",
+      "length",
+      "substr",
+      "result",
+      "indexOf",
+      "date",
+      "year",
+      "month",
+      "day",
+      "parseInt",
+      "start",
+      "assign",
+      "toLowerCase",
+      "tags"
+    ],
+    "mappings": "AAAA;;;;;;AAMA,IAAIA,MAAM,GAAGC,OAAO,CAAC,QAAD,CAApB;;AACA,IAAIC,MAAM,GAAGD,OAAO,CAAC,WAAD,CAAP,CAAqBC,MAAlC;;AACA,IAAIC,YAAY,GAAGF,OAAO,CAAC,cAAD,CAAP,CAAwBE,YAA3C;;AAEA,IAAIC,OAAO,GAAG,IAAIC,MAAJ,CAAW,YACrB,KADqB,GAEjB,cAFiB,GAGjB,wFAHiB,GAIjB,cAJiB,GAKjB,cALiB,GAMrB,IANqB,GAOrB,qDAPqB,GAQrB,KARqB,GASjB,aATiB,GAUjB,uCAViB,GAWrB,IAXqB,GAYrB,SAZU,EAYC,GAZD,CAAd;AAcA,IAAIC,WAAW,GAAG;AACd,aAAW,CADG;AACA,QAAM,CADN;AAEd,YAAU,CAFI;AAED,QAAM,CAFL;AAGd,cAAY,CAHE;AAGC,QAAM,CAHP;AAId,cAAY,CAJE;AAIC,QAAM,CAJP;AAKd,gBAAc,CALA;AAKG,QAAM,CALT;AAMd,aAAW,CANG;AAMA,QAAM,CANN;AAOd,aAAW,CAPG;AAOA,QAAM;AAPN,CAAlB;AAWA,IAAIC,cAAc,GAAG,CAArB;AACA,IAAIC,YAAY,GAAG,CAAnB;AAEA,IAAIC,aAAa,GAAG,CAApB;AACA,IAAIC,SAAS,GAAG,CAAhB;AACA,IAAIC,WAAW,GAAG,CAAlB;AACA,IAAIC,UAAU,GAAG,CAAjB;;AAEAC,OAAO,CAACX,MAAR,GAAiB,SAASY,uBAAT,CAAiCC,QAAjC,EAA2C;AACxDb,EAAAA,MAAM,CAACc,KAAP,CAAa,IAAb,EAAmBC,SAAnB;;AAEA,OAAKC,OAAL,GAAe,YAAY;AAAE,WAAOd,OAAP;AAAiB,GAA9C;;AACA,OAAKe,OAAL,GAAe,UAASC,IAAT,EAAeC,GAAf,EAAoBC,KAApB,EAA2BC,GAA3B,EAA+B;AAE1C,QAAGD,KAAK,CAACf,cAAD,CAAL,IAAyB,GAAzB,IAAgCe,KAAK,CAACd,YAAD,CAAL,IAAuB,GAA1D,EAA+D;AAC3D;AACA;AACA;AACAc,MAAAA,KAAK,CAACE,KAAN,IAAeF,KAAK,CAAC,CAAD,CAAL,CAASG,MAAxB;AACA;AACH;;AAED,QAAID,KAAK,GAAGF,KAAK,CAACE,KAAN,GAAcF,KAAK,CAACf,cAAD,CAAL,CAAsBkB,MAAhD;AACA,QAAIL,IAAI,GAAGE,KAAK,CAAC,CAAD,CAAL,CAASI,MAAT,CAAgBJ,KAAK,CAACf,cAAD,CAAL,CAAsBkB,MAAtC,EAA8CH,KAAK,CAAC,CAAD,CAAL,CAASG,MAAT,GAAkBH,KAAK,CAACd,YAAD,CAAL,CAAoBiB,MAApF,CAAX;AAGA,QAAIE,MAAM,GAAG,IAAIxB,YAAJ,CAAiB;AAC1BiB,MAAAA,IAAI,EAAEA,IADoB;AAE1BI,MAAAA,KAAK,EAAEA,KAFmB;AAG1BH,MAAAA,GAAG,EAAEA;AAHqB,KAAjB,CAAb;AAMA,QAAGD,IAAI,CAACE,KAAL,CAAW,UAAX,CAAH,EAA2B;AAC3B,QAAGF,IAAI,CAACE,KAAL,CAAW,wBAAX,CAAH,EAAyC,OArBC,CAuB1C;AACA;;AACA,QAAG,CAACA,KAAK,CAACV,UAAD,CAAN,IAAsBU,KAAK,CAAC,CAAD,CAAL,CAASM,OAAT,CAAiB,GAAjB,IAAwB,CAAjD,EAAoD;AAEpD,QAAIC,IAAI,GAAG,IAAX;AACA,QAAIC,IAAI,GAAGR,KAAK,CAACV,UAAD,CAAL,IAAqBZ,MAAM,CAACqB,GAAD,CAAN,CAAYS,IAAZ,KAAqB,EAArD;AACA,QAAIC,KAAK,GAAGT,KAAK,CAACX,WAAD,CAAjB;AACA,QAAIqB,GAAG,GAAKV,KAAK,CAACZ,SAAD,CAAjB;AAEAqB,IAAAA,KAAK,GAAGE,QAAQ,CAACF,KAAD,CAAhB;AACAC,IAAAA,GAAG,GAAIC,QAAQ,CAACD,GAAD,CAAf;AACAF,IAAAA,IAAI,GAAGG,QAAQ,CAACH,IAAD,CAAf;AAEA,QAAIC,KAAK,GAAG,CAAR,IAAaA,KAAK,GAAG,EAAzB,EAA6B,OAAO,IAAP;AAC7B,QAAGC,GAAG,GAAG,CAAN,IAAWA,GAAG,GAAG,EAApB,EAAwB,OAAO,IAAP;;AAExB,QAAGF,IAAI,GAAG,GAAV,EAAc;AACV,UAAIA,IAAI,GAAG,EAAX,EAAe;AACXA,QAAAA,IAAI,GAAGA,IAAI,GAAG,IAAd;AACH,OAFD,MAEO;AACHA,QAAAA,IAAI,GAAGA,IAAI,GAAG,IAAd;AACH;AACJ;;AAEDH,IAAAA,MAAM,CAACO,KAAP,CAAaC,MAAb,CAAoB,KAApB,EAA2BH,GAA3B;AACAL,IAAAA,MAAM,CAACO,KAAP,CAAaC,MAAb,CAAoB,OAApB,EAA6BJ,KAA7B;AACAJ,IAAAA,MAAM,CAACO,KAAP,CAAaC,MAAb,CAAoB,MAApB,EAA4BL,IAA5B,EAjD0C,CAmD1C;;AACA,QAAGR,KAAK,CAACb,aAAD,CAAR,EAAyB;AACrBkB,MAAAA,MAAM,CAACO,KAAP,CAAaC,MAAb,CAAoB,SAApB,EAA+B7B,WAAW,CAACgB,KAAK,CAACb,aAAD,CAAL,CAAqB2B,WAArB,EAAD,CAA1C;AACH;;AAEDT,IAAAA,MAAM,CAACU,IAAP,CAAY,yBAAZ,IAAyC,IAAzC;AACA,WAAOV,MAAP;AACH,GA1DD;AA2DH,CA/DD",
+    "sourcesContent": [
+      "/*\n    Date format with slash \"/\" (also \"-\" and \".\") between numbers\n    - Tuesday 11/3/2015\n    - 11/3/2015\n    - 11/3\n*/\nvar moment = require('moment');\nvar Parser = require('../parser').Parser;\nvar ParsedResult = require('../../result').ParsedResult;\n\nvar PATTERN = new RegExp('(\\\\W|^)' +\n    '(?:' +\n        '(?:am\\\\s*?)?' +\n        '((?:sonntag|so|montag|mo|dienstag|di|mittwoch|mi|donnerstag|do|freitag|fr|samstag|sa))' +\n        '\\\\s*\\\\,?\\\\s*' +\n        '(?:den\\\\s*)?' +\n    ')?' +\n    '([0-3]{0,1}[0-9]{1})[\\\\/\\\\.\\\\-]([0-3]{0,1}[0-9]{1})' +\n    '(?:' +\n        '[\\\\/\\\\.\\\\-]' +\n        '([0-9]{4}\\s*\\,?\\s*|[0-9]{2}\\s*\\,?\\s*)' +\n    ')?' +\n    '(\\\\W|$)', 'i');\n\nvar DAYS_OFFSET = {\n    'sonntag': 0, 'so': 0,\n    'montag': 1, 'mo': 1,\n    'dienstag': 2, 'di': 2,\n    'mittwoch': 3, 'mi': 3,\n    'donnerstag': 4, 'do': 4,\n    'freitag': 5, 'fr': 5,\n    'samstag': 6, 'sa': 6\n};\n\n\nvar OPENNING_GROUP = 1;\nvar ENDING_GROUP = 6;\n\nvar WEEKDAY_GROUP = 2;\nvar DAY_GROUP = 3;\nvar MONTH_GROUP = 4;\nvar YEAR_GROUP = 5;\n\nexports.Parser = function DESlashDateFormatParser(argument) {\n    Parser.apply(this, arguments);\n\n    this.pattern = function () { return PATTERN; };\n    this.extract = function(text, ref, match, opt){\n\n        if(match[OPENNING_GROUP] == '/' || match[ENDING_GROUP] == '/') {\n            // Long skip, if there is some overlapping like:\n            // XX[/YY/ZZ]\n            // [XX/YY/]ZZ\n            match.index += match[0].length\n            return;\n        }\n\n        var index = match.index + match[OPENNING_GROUP].length;\n        var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[ENDING_GROUP].length);\n\n\n        var result = new ParsedResult({\n            text: text,\n            index: index,\n            ref: ref,\n        });\n\n        if(text.match(/^\\d\\.\\d$/)) return;\n        if(text.match(/^\\d\\.\\d{1,2}\\.\\d{1,2}$/)) return;\n\n        // MM/dd -> OK\n        // MM.dd -> NG\n        if(!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;\n\n        var date = null;\n        var year = match[YEAR_GROUP] || moment(ref).year() + '';\n        var month = match[MONTH_GROUP];\n        var day   = match[DAY_GROUP];\n\n        month = parseInt(month);\n        day  = parseInt(day);\n        year = parseInt(year);\n\n        if (month < 1 || month > 12) return null;\n        if(day < 1 || day > 31) return null;\n\n        if(year < 100){\n            if (year > 50) {\n                year = year + 1900;\n            } else {\n                year = year + 2000;\n            }\n        }\n\n        result.start.assign('day', day);\n        result.start.assign('month', month);\n        result.start.assign('year', year);\n\n        //Day of week\n        if(match[WEEKDAY_GROUP]) {\n            result.start.assign('weekday', DAYS_OFFSET[match[WEEKDAY_GROUP].toLowerCase()]);\n        }\n\n        result.tags['DESlashDateFormatParser'] = true;\n        return result;\n    };\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

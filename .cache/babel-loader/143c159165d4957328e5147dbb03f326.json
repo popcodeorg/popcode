@@ -1,0 +1,36 @@
+{
+  "ast": null,
+  "code": "var parse = require('css/lib/parse');\n/**\n * Parses inline style.\n *\n * Example: 'color:red' => { color: 'red' }\n *\n * @param  {String}      style      - The inline style.\n * @param  {Function}    [iterator] - The iterator function.\n * @return {null|Object}\n */\n\n\nmodule.exports = function parseInlineStyle(style, iterator) {\n  if (!style || typeof style !== 'string') return null; // make sure to wrap declarations in placeholder\n\n  var declarations = parse('p{' + style + '}').stylesheet.rules[0].declarations;\n  var declaration, property, value;\n  var output = null;\n  var hasIterator = typeof iterator === 'function';\n\n  for (var i = 0, len = declarations.length; i < len; i++) {\n    declaration = declarations[i];\n    property = declaration.property;\n    value = declaration.value;\n\n    if (hasIterator) {\n      iterator(property, value, declaration);\n    } else if (value) {\n      output || (output = {});\n      output[property] = value;\n    }\n  }\n\n  return output;\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/style-to-object/index.js"
+    ],
+    "names": [
+      "parse",
+      "require",
+      "module",
+      "exports",
+      "parseInlineStyle",
+      "style",
+      "iterator",
+      "declarations",
+      "stylesheet",
+      "rules",
+      "declaration",
+      "property",
+      "value",
+      "output",
+      "hasIterator",
+      "i",
+      "len",
+      "length"
+    ],
+    "mappings": "AAAA,IAAIA,KAAK,GAAGC,OAAO,CAAC,eAAD,CAAnB;AAEA;;;;;;;;;;;AASAC,MAAM,CAACC,OAAP,GAAiB,SAASC,gBAAT,CAA0BC,KAA1B,EAAiCC,QAAjC,EAA2C;AAC1D,MAAI,CAACD,KAAD,IAAU,OAAOA,KAAP,KAAiB,QAA/B,EAAyC,OAAO,IAAP,CADiB,CAG1D;;AACA,MAAIE,YAAY,GAAGP,KAAK,CAAC,OAAOK,KAAP,GAAe,GAAhB,CAAL,CAA0BG,UAA1B,CAAqCC,KAArC,CAA2C,CAA3C,EAA8CF,YAAjE;AACA,MAAIG,WAAJ,EAAiBC,QAAjB,EAA2BC,KAA3B;AAEA,MAAIC,MAAM,GAAG,IAAb;AACA,MAAIC,WAAW,GAAG,OAAOR,QAAP,KAAoB,UAAtC;;AAEA,OAAK,IAAIS,CAAC,GAAG,CAAR,EAAWC,GAAG,GAAGT,YAAY,CAACU,MAAnC,EAA2CF,CAAC,GAAGC,GAA/C,EAAoDD,CAAC,EAArD,EAAyD;AACvDL,IAAAA,WAAW,GAAGH,YAAY,CAACQ,CAAD,CAA1B;AACAJ,IAAAA,QAAQ,GAAGD,WAAW,CAACC,QAAvB;AACAC,IAAAA,KAAK,GAAGF,WAAW,CAACE,KAApB;;AAEA,QAAIE,WAAJ,EAAiB;AACfR,MAAAA,QAAQ,CAACK,QAAD,EAAWC,KAAX,EAAkBF,WAAlB,CAAR;AACD,KAFD,MAEO,IAAIE,KAAJ,EAAW;AAChBC,MAAAA,MAAM,KAAKA,MAAM,GAAG,EAAd,CAAN;AACAA,MAAAA,MAAM,CAACF,QAAD,CAAN,GAAmBC,KAAnB;AACD;AACF;;AAED,SAAOC,MAAP;AACD,CAxBD",
+    "sourcesContent": [
+      "var parse = require('css/lib/parse');\n\n/**\n * Parses inline style.\n *\n * Example: 'color:red' => { color: 'red' }\n *\n * @param  {String}      style      - The inline style.\n * @param  {Function}    [iterator] - The iterator function.\n * @return {null|Object}\n */\nmodule.exports = function parseInlineStyle(style, iterator) {\n  if (!style || typeof style !== 'string') return null;\n\n  // make sure to wrap declarations in placeholder\n  var declarations = parse('p{' + style + '}').stylesheet.rules[0].declarations;\n  var declaration, property, value;\n\n  var output = null;\n  var hasIterator = typeof iterator === 'function';\n\n  for (var i = 0, len = declarations.length; i < len; i++) {\n    declaration = declarations[i];\n    property = declaration.property;\n    value = declaration.value;\n\n    if (hasIterator) {\n      iterator(property, value, declaration);\n    } else if (value) {\n      output || (output = {});\n      output[property] = value;\n    }\n  }\n\n  return output;\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

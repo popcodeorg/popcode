@@ -1,0 +1,26 @@
+{
+  "ast": null,
+  "code": "import { parse } from 'esprima';\nimport find from 'lodash-es/find';\n\nfunction tryParse(javascript) {\n  try {\n    return parse(javascript);\n  } catch (e) {\n    return null;\n  }\n}\n\nexport function hasExpressionStatement(javascript) {\n  var maybeParsed = tryParse(javascript);\n  return Boolean(maybeParsed && find(maybeParsed.body, function (_ref) {\n    var type = _ref.type;\n    return type === 'ExpressionStatement';\n  }));\n}",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/util/javascript.js"],
+    "names": [
+      "parse",
+      "find",
+      "tryParse",
+      "javascript",
+      "e",
+      "hasExpressionStatement",
+      "maybeParsed",
+      "Boolean",
+      "body",
+      "type"
+    ],
+    "mappings": "AAAA,SAAQA,KAAR,QAAoB,SAApB;AACA,OAAOC,IAAP,MAAiB,gBAAjB;;AAEA,SAASC,QAAT,CAAkBC,UAAlB,EAA8B;AAC5B,MAAI;AACF,WAAOH,KAAK,CAACG,UAAD,CAAZ;AACD,GAFD,CAEE,OAAOC,CAAP,EAAU;AACV,WAAO,IAAP;AACD;AACF;;AAED,OAAO,SAASC,sBAAT,CAAgCF,UAAhC,EAA4C;AACjD,MAAMG,WAAW,GAAGJ,QAAQ,CAACC,UAAD,CAA5B;AACA,SAAOI,OAAO,CACZD,WAAW,IACTL,IAAI,CAACK,WAAW,CAACE,IAAb,EAAmB;AAAA,QAAEC,IAAF,QAAEA,IAAF;AAAA,WAAYA,IAAI,KAAK,qBAArB;AAAA,GAAnB,CAFM,CAAd;AAID",
+    "sourcesContent": [
+      "import {parse} from 'esprima';\nimport find from 'lodash-es/find';\n\nfunction tryParse(javascript) {\n  try {\n    return parse(javascript);\n  } catch (e) {\n    return null;\n  }\n}\n\nexport function hasExpressionStatement(javascript) {\n  const maybeParsed = tryParse(javascript);\n  return Boolean(\n    maybeParsed &&\n      find(maybeParsed.body, ({type}) => type === 'ExpressionStatement'),\n  );\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

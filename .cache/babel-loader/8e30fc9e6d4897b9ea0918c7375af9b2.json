@@ -1,0 +1,28 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = text;\n\nvar u = require('unist-builder');\n\nvar trimLines = require('trim-lines');\n\nfunction text(h, node) {\n  return h.augment(node, u('text', trimLines(node.value)));\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/handlers/text.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "text",
+      "u",
+      "require",
+      "trimLines",
+      "h",
+      "node",
+      "augment",
+      "value"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,IAAjB;;AAEA,IAAIC,CAAC,GAAGC,OAAO,CAAC,eAAD,CAAf;;AACA,IAAIC,SAAS,GAAGD,OAAO,CAAC,YAAD,CAAvB;;AAEA,SAASF,IAAT,CAAcI,CAAd,EAAiBC,IAAjB,EAAuB;AACrB,SAAOD,CAAC,CAACE,OAAF,CAAUD,IAAV,EAAgBJ,CAAC,CAAC,MAAD,EAASE,SAAS,CAACE,IAAI,CAACE,KAAN,CAAlB,CAAjB,CAAP;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = text\n\nvar u = require('unist-builder')\nvar trimLines = require('trim-lines')\n\nfunction text(h, node) {\n  return h.augment(node, u('text', trimLines(node.value)))\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

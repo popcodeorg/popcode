@@ -1,0 +1,15 @@
+{
+  "ast": null,
+  "code": "import { Record } from 'immutable';\nexport default Record({\n  id: null,\n  name: null,\n  section: null,\n  ownerId: null,\n  alternateLink: null\n}, 'Course');",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/records/Course.js"],
+    "names": ["Record", "id", "name", "section", "ownerId", "alternateLink"],
+    "mappings": "AAAA,SAAQA,MAAR,QAAqB,WAArB;AAEA,eAAeA,MAAM,CACnB;AACEC,EAAAA,EAAE,EAAE,IADN;AAEEC,EAAAA,IAAI,EAAE,IAFR;AAGEC,EAAAA,OAAO,EAAE,IAHX;AAIEC,EAAAA,OAAO,EAAE,IAJX;AAKEC,EAAAA,aAAa,EAAE;AALjB,CADmB,EAQnB,QARmB,CAArB",
+    "sourcesContent": [
+      "import {Record} from 'immutable';\n\nexport default Record(\n  {\n    id: null,\n    name: null,\n    section: null,\n    ownerId: null,\n    alternateLink: null,\n  },\n  'Course',\n);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

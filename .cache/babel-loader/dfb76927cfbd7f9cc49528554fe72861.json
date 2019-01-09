@@ -1,0 +1,29 @@
+{
+  "ast": null,
+  "code": "import normalizeError from './normalizeError';\nexport function noValidationErrors(errors) {\n  return !errors.find(function (list) {\n    return list.get('items').find(function (error) {\n      return error.get('phase') === 'validation';\n    });\n  });\n}\nexport function createError(error) {\n  var ErrorConstructor = window[error.name] || Error;\n  return normalizeError(new ErrorConstructor(error.message));\n}",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/util/errorUtils.js"],
+    "names": [
+      "normalizeError",
+      "noValidationErrors",
+      "errors",
+      "find",
+      "list",
+      "get",
+      "error",
+      "createError",
+      "ErrorConstructor",
+      "window",
+      "name",
+      "Error",
+      "message"
+    ],
+    "mappings": "AAAA,OAAOA,cAAP,MAA2B,kBAA3B;AAEA,OAAO,SAASC,kBAAT,CAA4BC,MAA5B,EAAoC;AACzC,SAAO,CAACA,MAAM,CAACC,IAAP,CAAY,UAAAC,IAAI;AAAA,WACtBA,IAAI,CAACC,GAAL,CAAS,OAAT,EAAkBF,IAAlB,CAAuB,UAAAG,KAAK;AAAA,aAAIA,KAAK,CAACD,GAAN,CAAU,OAAV,MAAuB,YAA3B;AAAA,KAA5B,CADsB;AAAA,GAAhB,CAAR;AAGD;AAED,OAAO,SAASE,WAAT,CAAqBD,KAArB,EAA4B;AACjC,MAAME,gBAAgB,GAAGC,MAAM,CAACH,KAAK,CAACI,IAAP,CAAN,IAAsBC,KAA/C;AACA,SAAOX,cAAc,CAAC,IAAIQ,gBAAJ,CAAqBF,KAAK,CAACM,OAA3B,CAAD,CAArB;AACD",
+    "sourcesContent": [
+      "import normalizeError from './normalizeError';\n\nexport function noValidationErrors(errors) {\n  return !errors.find(list =>\n    list.get('items').find(error => error.get('phase') === 'validation'),\n  );\n}\n\nexport function createError(error) {\n  const ErrorConstructor = window[error.name] || Error;\n  return normalizeError(new ErrorConstructor(error.message));\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,44 @@
+{
+  "ast": null,
+  "code": "/* eslint-disable react/prop-types */\nimport { faGithub, faSlackHash, faTwitter } from '@fortawesome/free-brands-svg-icons';\nimport { FontAwesomeIcon } from '@fortawesome/react-fontawesome';\nimport { t } from 'i18next';\nimport PropTypes from 'prop-types';\nimport React, { Fragment } from 'react';\nimport config from '../../config';\nimport createMenu, { MenuItem } from './createMenu';\nimport HamburgerMenuButton from './HamburgerMenuButton';\nvar HamburgerMenu = createMenu({\n  menuClass: 'top-bar__menu_right',\n  name: 'hamburger',\n  renderItems: function renderItems(_ref) {\n    var hasInstructions = _ref.hasInstructions,\n        isEditingInstructions = _ref.isEditingInstructions,\n        isUserAuthenticated = _ref.isUserAuthenticated,\n        onStartEditingInstructions = _ref.onStartEditingInstructions,\n        onStartGithubLogIn = _ref.onStartGithubLogIn;\n    return React.createElement(Fragment, null, React.createElement(MenuItem, {\n      isDisabled: isEditingInstructions,\n      onClick: onStartEditingInstructions\n    }, hasInstructions ? t('top-bar.edit-instructions') : t('top-bar.add-instructions')), !isUserAuthenticated && React.createElement(MenuItem, {\n      onClick: onStartGithubLogIn\n    }, t('top-bar.session.log-in-github')), React.createElement(\"a\", {\n      className: \"top-bar__menu-item\",\n      href: config.feedbackUrl,\n      rel: \"noopener noreferrer\",\n      target: \"blank\"\n    }, t('top-bar.send-feedback')), React.createElement(\"div\", {\n      className: \"top-bar__menu-item top-bar__menu-item_icons\"\n    }, React.createElement(\"a\", {\n      className: \"top-bar__menu-item-icon\",\n      href: \"https://github.com/popcodeorg/popcode\",\n      rel: \"noopener noreferrer\",\n      target: \"_blank\"\n    }, React.createElement(FontAwesomeIcon, {\n      icon: faGithub\n    })), React.createElement(\"a\", {\n      className: \"top-bar__menu-item-icon\",\n      href: \"https://twitter.com/popcodeorg\",\n      rel: \"noopener noreferrer\",\n      target: \"_blank\"\n    }, React.createElement(FontAwesomeIcon, {\n      icon: faTwitter\n    })), React.createElement(\"a\", {\n      className: \"top-bar__menu-item-icon\",\n      href: \"https://slack.popcode.org/\",\n      rel: \"noopener noreferrer\",\n      target: \"_blank\"\n    }, React.createElement(FontAwesomeIcon, {\n      icon: faSlackHash\n    }))));\n  }\n})(HamburgerMenuButton);\nHamburgerMenu.propTypes = {\n  hasInstructions: PropTypes.bool.isRequired,\n  isEditingInstructions: PropTypes.bool.isRequired,\n  isUserAuthenticated: PropTypes.bool.isRequired,\n  onStartEditingInstructions: PropTypes.func.isRequired,\n  onStartGithubLogIn: PropTypes.func.isRequired\n};\nexport default HamburgerMenu;",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/TopBar/HamburgerMenu.jsx"
+    ],
+    "names": [
+      "faGithub",
+      "faSlackHash",
+      "faTwitter",
+      "FontAwesomeIcon",
+      "t",
+      "PropTypes",
+      "React",
+      "Fragment",
+      "config",
+      "createMenu",
+      "MenuItem",
+      "HamburgerMenuButton",
+      "HamburgerMenu",
+      "menuClass",
+      "name",
+      "renderItems",
+      "hasInstructions",
+      "isEditingInstructions",
+      "isUserAuthenticated",
+      "onStartEditingInstructions",
+      "onStartGithubLogIn",
+      "feedbackUrl",
+      "propTypes",
+      "bool",
+      "isRequired",
+      "func"
+    ],
+    "mappings": "AAAA;AAEA,SACEA,QADF,EAEEC,WAFF,EAGEC,SAHF,QAIO,oCAJP;AAKA,SAAQC,eAAR,QAA8B,gCAA9B;AACA,SAAQC,CAAR,QAAgB,SAAhB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AACA,OAAOC,KAAP,IAAeC,QAAf,QAA8B,OAA9B;AAEA,OAAOC,MAAP,MAAmB,cAAnB;AAEA,OAAOC,UAAP,IAAoBC,QAApB,QAAmC,cAAnC;AACA,OAAOC,mBAAP,MAAgC,uBAAhC;AAEA,IAAMC,aAAa,GAAGH,UAAU,CAAC;AAC/BI,EAAAA,SAAS,EAAE,qBADoB;AAE/BC,EAAAA,IAAI,EAAE,WAFyB;AAI/BC,EAAAA,WAJ+B,6BAU5B;AAAA,QALDC,eAKC,QALDA,eAKC;AAAA,QAJDC,qBAIC,QAJDA,qBAIC;AAAA,QAHDC,mBAGC,QAHDA,mBAGC;AAAA,QAFDC,0BAEC,QAFDA,0BAEC;AAAA,QADDC,kBACC,QADDA,kBACC;AACD,WACE,oBAAC,QAAD,QACE,oBAAC,QAAD;AACE,MAAA,UAAU,EAAEH,qBADd;AAEE,MAAA,OAAO,EAAEE;AAFX,OAIGH,eAAe,GACZZ,CAAC,CAAC,2BAAD,CADW,GAEZA,CAAC,CAAC,0BAAD,CANP,CADF,EAUG,CAACc,mBAAD,IACC,oBAAC,QAAD;AAAU,MAAA,OAAO,EAAEE;AAAnB,OACGhB,CAAC,CAAC,+BAAD,CADJ,CAXJ,EAgBE;AACE,MAAA,SAAS,EAAC,oBADZ;AAEE,MAAA,IAAI,EAAEI,MAAM,CAACa,WAFf;AAGE,MAAA,GAAG,EAAC,qBAHN;AAIE,MAAA,MAAM,EAAC;AAJT,OAMGjB,CAAC,CAAC,uBAAD,CANJ,CAhBF,EAyBE;AAAK,MAAA,SAAS,EAAC;AAAf,OACE;AACE,MAAA,SAAS,EAAC,yBADZ;AAEE,MAAA,IAAI,EAAC,uCAFP;AAGE,MAAA,GAAG,EAAC,qBAHN;AAIE,MAAA,MAAM,EAAC;AAJT,OAME,oBAAC,eAAD;AAAiB,MAAA,IAAI,EAAEJ;AAAvB,MANF,CADF,EASE;AACE,MAAA,SAAS,EAAC,yBADZ;AAEE,MAAA,IAAI,EAAC,gCAFP;AAGE,MAAA,GAAG,EAAC,qBAHN;AAIE,MAAA,MAAM,EAAC;AAJT,OAME,oBAAC,eAAD;AAAiB,MAAA,IAAI,EAAEE;AAAvB,MANF,CATF,EAiBE;AACE,MAAA,SAAS,EAAC,yBADZ;AAEE,MAAA,IAAI,EAAC,4BAFP;AAGE,MAAA,GAAG,EAAC,qBAHN;AAIE,MAAA,MAAM,EAAC;AAJT,OAME,oBAAC,eAAD;AAAiB,MAAA,IAAI,EAAED;AAAvB,MANF,CAjBF,CAzBF,CADF;AAsDD;AAjE8B,CAAD,CAAV,CAkEnBU,mBAlEmB,CAAtB;AAoEAC,aAAa,CAACU,SAAd,GAA0B;AACxBN,EAAAA,eAAe,EAAEX,SAAS,CAACkB,IAAV,CAAeC,UADR;AAExBP,EAAAA,qBAAqB,EAAEZ,SAAS,CAACkB,IAAV,CAAeC,UAFd;AAGxBN,EAAAA,mBAAmB,EAAEb,SAAS,CAACkB,IAAV,CAAeC,UAHZ;AAIxBL,EAAAA,0BAA0B,EAAEd,SAAS,CAACoB,IAAV,CAAeD,UAJnB;AAKxBJ,EAAAA,kBAAkB,EAAEf,SAAS,CAACoB,IAAV,CAAeD;AALX,CAA1B;AAQA,eAAeZ,aAAf",
+    "sourcesContent": [
+      "/* eslint-disable react/prop-types */\n\nimport {\n  faGithub,\n  faSlackHash,\n  faTwitter,\n} from '@fortawesome/free-brands-svg-icons';\nimport {FontAwesomeIcon} from '@fortawesome/react-fontawesome';\nimport {t} from 'i18next';\nimport PropTypes from 'prop-types';\nimport React, {Fragment} from 'react';\n\nimport config from '../../config';\n\nimport createMenu, {MenuItem} from './createMenu';\nimport HamburgerMenuButton from './HamburgerMenuButton';\n\nconst HamburgerMenu = createMenu({\n  menuClass: 'top-bar__menu_right',\n  name: 'hamburger',\n\n  renderItems({\n    hasInstructions,\n    isEditingInstructions,\n    isUserAuthenticated,\n    onStartEditingInstructions,\n    onStartGithubLogIn,\n  }) {\n    return (\n      <Fragment>\n        <MenuItem\n          isDisabled={isEditingInstructions}\n          onClick={onStartEditingInstructions}\n        >\n          {hasInstructions\n            ? t('top-bar.edit-instructions')\n            : t('top-bar.add-instructions')}\n        </MenuItem>\n\n        {!isUserAuthenticated && (\n          <MenuItem onClick={onStartGithubLogIn}>\n            {t('top-bar.session.log-in-github')}\n          </MenuItem>\n        )}\n\n        <a\n          className=\"top-bar__menu-item\"\n          href={config.feedbackUrl}\n          rel=\"noopener noreferrer\"\n          target=\"blank\"\n        >\n          {t('top-bar.send-feedback')}\n        </a>\n\n        <div className=\"top-bar__menu-item top-bar__menu-item_icons\">\n          <a\n            className=\"top-bar__menu-item-icon\"\n            href=\"https://github.com/popcodeorg/popcode\"\n            rel=\"noopener noreferrer\"\n            target=\"_blank\"\n          >\n            <FontAwesomeIcon icon={faGithub} />\n          </a>\n          <a\n            className=\"top-bar__menu-item-icon\"\n            href=\"https://twitter.com/popcodeorg\"\n            rel=\"noopener noreferrer\"\n            target=\"_blank\"\n          >\n            <FontAwesomeIcon icon={faTwitter} />\n          </a>\n          <a\n            className=\"top-bar__menu-item-icon\"\n            href=\"https://slack.popcode.org/\"\n            rel=\"noopener noreferrer\"\n            target=\"_blank\"\n          >\n            <FontAwesomeIcon icon={faSlackHash} />\n          </a>\n        </div>\n      </Fragment>\n    );\n  },\n})(HamburgerMenuButton);\n\nHamburgerMenu.propTypes = {\n  hasInstructions: PropTypes.bool.isRequired,\n  isEditingInstructions: PropTypes.bool.isRequired,\n  isUserAuthenticated: PropTypes.bool.isRequired,\n  onStartEditingInstructions: PropTypes.func.isRequired,\n  onStartGithubLogIn: PropTypes.func.isRequired,\n};\n\nexport default HamburgerMenu;\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

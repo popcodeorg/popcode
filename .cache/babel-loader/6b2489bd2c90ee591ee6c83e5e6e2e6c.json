@@ -1,0 +1,41 @@
+{
+  "ast": null,
+  "code": "import { compose as composeWithoutDevTools, createStore, applyMiddleware } from 'redux';\nimport createSagaMiddleware from 'redux-saga';\nimport { createLogicMiddleware } from 'redux-logic';\nimport get from 'lodash-es/get';\nimport reducers from './reducers';\nimport rootSaga from './sagas';\nimport rootLogic from './logic';\nimport { bugsnagClient } from './util/bugsnag';\nvar compose = get(window, '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__', composeWithoutDevTools);\nexport default function createApplicationStore() {\n  var sagaMiddleware = createSagaMiddleware({\n    onError: function onError(error) {\n      if (get(console, 'error')) {\n        // eslint-disable-next-line no-console\n        console.error(error);\n      }\n\n      bugsnagClient.notify(error);\n    }\n  });\n  var sagaEnhancer = applyMiddleware(sagaMiddleware);\n  var logicMiddleware = createLogicMiddleware(rootLogic);\n  var logicEnhancer = applyMiddleware(logicMiddleware);\n  var store = createStore(reducers, compose(sagaEnhancer, logicEnhancer));\n  sagaMiddleware.run(rootSaga);\n  return store;\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/createApplicationStore.js"
+    ],
+    "names": [
+      "compose",
+      "composeWithoutDevTools",
+      "createStore",
+      "applyMiddleware",
+      "createSagaMiddleware",
+      "createLogicMiddleware",
+      "get",
+      "reducers",
+      "rootSaga",
+      "rootLogic",
+      "bugsnagClient",
+      "window",
+      "createApplicationStore",
+      "sagaMiddleware",
+      "onError",
+      "error",
+      "console",
+      "notify",
+      "sagaEnhancer",
+      "logicMiddleware",
+      "logicEnhancer",
+      "store",
+      "run"
+    ],
+    "mappings": "AAAA,SACEA,OAAO,IAAIC,sBADb,EAEEC,WAFF,EAGEC,eAHF,QAIO,OAJP;AAKA,OAAOC,oBAAP,MAAiC,YAAjC;AACA,SAAQC,qBAAR,QAAoC,aAApC;AACA,OAAOC,GAAP,MAAgB,eAAhB;AAEA,OAAOC,QAAP,MAAqB,YAArB;AACA,OAAOC,QAAP,MAAqB,SAArB;AACA,OAAOC,SAAP,MAAsB,SAAtB;AACA,SAAQC,aAAR,QAA4B,gBAA5B;AAEA,IAAMV,OAAO,GAAGM,GAAG,CACjBK,MADiB,EAEjB,sCAFiB,EAGjBV,sBAHiB,CAAnB;AAMA,eAAe,SAASW,sBAAT,GAAkC;AAC/C,MAAMC,cAAc,GAAGT,oBAAoB,CAAC;AAC1CU,IAAAA,OAD0C,mBAClCC,KADkC,EAC3B;AACb,UAAIT,GAAG,CAACU,OAAD,EAAU,OAAV,CAAP,EAA2B;AACzB;AACAA,QAAAA,OAAO,CAACD,KAAR,CAAcA,KAAd;AACD;;AACDL,MAAAA,aAAa,CAACO,MAAd,CAAqBF,KAArB;AACD;AAPyC,GAAD,CAA3C;AASA,MAAMG,YAAY,GAAGf,eAAe,CAACU,cAAD,CAApC;AAEA,MAAMM,eAAe,GAAGd,qBAAqB,CAACI,SAAD,CAA7C;AACA,MAAMW,aAAa,GAAGjB,eAAe,CAACgB,eAAD,CAArC;AAEA,MAAME,KAAK,GAAGnB,WAAW,CACvBK,QADuB,EAEvBP,OAAO,CACLkB,YADK,EAELE,aAFK,CAFgB,CAAzB;AAOAP,EAAAA,cAAc,CAACS,GAAf,CAAmBd,QAAnB;AAEA,SAAOa,KAAP;AACD",
+    "sourcesContent": [
+      "import {\n  compose as composeWithoutDevTools,\n  createStore,\n  applyMiddleware,\n} from 'redux';\nimport createSagaMiddleware from 'redux-saga';\nimport {createLogicMiddleware} from 'redux-logic';\nimport get from 'lodash-es/get';\n\nimport reducers from './reducers';\nimport rootSaga from './sagas';\nimport rootLogic from './logic';\nimport {bugsnagClient} from './util/bugsnag';\n\nconst compose = get(\n  window,\n  '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__',\n  composeWithoutDevTools,\n);\n\nexport default function createApplicationStore() {\n  const sagaMiddleware = createSagaMiddleware({\n    onError(error) {\n      if (get(console, 'error')) {\n        // eslint-disable-next-line no-console\n        console.error(error);\n      }\n      bugsnagClient.notify(error);\n    },\n  });\n  const sagaEnhancer = applyMiddleware(sagaMiddleware);\n\n  const logicMiddleware = createLogicMiddleware(rootLogic);\n  const logicEnhancer = applyMiddleware(logicMiddleware);\n\n  const store = createStore(\n    reducers,\n    compose(\n      sagaEnhancer,\n      logicEnhancer,\n    ),\n  );\n  sagaMiddleware.run(rootSaga);\n\n  return store;\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

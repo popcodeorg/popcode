@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "import get from 'lodash-es/get';\nexport default function getCurrentCompiledProjectKey(state) {\n  return get(state.get('compiledProjects').last(), 'compiledProjectKey');\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/selectors/getCurrentCompiledProjectKey.js"
+    ],
+    "names": ["get", "getCurrentCompiledProjectKey", "state", "last"],
+    "mappings": "AAAA,OAAOA,GAAP,MAAgB,eAAhB;AAEA,eAAe,SAASC,4BAAT,CAAsCC,KAAtC,EAA6C;AAC1D,SAAOF,GAAG,CAACE,KAAK,CAACF,GAAN,CAAU,kBAAV,EAA8BG,IAA9B,EAAD,EAAuC,oBAAvC,CAAV;AACD",
+    "sourcesContent": [
+      "import get from 'lodash-es/get';\n\nexport default function getCurrentCompiledProjectKey(state) {\n  return get(state.get('compiledProjects').last(), 'compiledProjectKey');\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

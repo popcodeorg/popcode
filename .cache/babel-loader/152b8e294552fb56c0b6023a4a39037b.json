@@ -1,0 +1,31 @@
+{
+  "ast": null,
+  "code": "import { faSearchMinus, faSearchPlus } from '@fortawesome/free-solid-svg-icons';\nimport { FontAwesomeIcon } from '@fortawesome/react-fontawesome';\nimport React from 'react';\nimport PropTypes from 'prop-types';\nexport default function TextSize(_ref) {\n  var isLarge = _ref.isLarge,\n      onToggle = _ref.onToggle;\n  var icon = isLarge ? faSearchMinus : faSearchPlus;\n  return React.createElement(\"div\", {\n    className: \"top-bar__menu-button top-bar__text-size\",\n    onClick: onToggle\n  }, React.createElement(FontAwesomeIcon, {\n    icon: icon\n  }));\n}\nTextSize.propTypes = {\n  isLarge: PropTypes.bool.isRequired,\n  onToggle: PropTypes.func.isRequired\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/TopBar/TextSize.jsx"
+    ],
+    "names": [
+      "faSearchMinus",
+      "faSearchPlus",
+      "FontAwesomeIcon",
+      "React",
+      "PropTypes",
+      "TextSize",
+      "isLarge",
+      "onToggle",
+      "icon",
+      "propTypes",
+      "bool",
+      "isRequired",
+      "func"
+    ],
+    "mappings": "AAAA,SAAQA,aAAR,EAAuBC,YAAvB,QAA0C,mCAA1C;AACA,SAAQC,eAAR,QAA8B,gCAA9B;AACA,OAAOC,KAAP,MAAkB,OAAlB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AAEA,eAAe,SAASC,QAAT,OAAuC;AAAA,MAApBC,OAAoB,QAApBA,OAAoB;AAAA,MAAXC,QAAW,QAAXA,QAAW;AACpD,MAAMC,IAAI,GAAGF,OAAO,GAAGN,aAAH,GAAmBC,YAAvC;AAEA,SACE;AAAK,IAAA,SAAS,EAAC,yCAAf;AAAyD,IAAA,OAAO,EAAEM;AAAlE,KACE,oBAAC,eAAD;AAAiB,IAAA,IAAI,EAAEC;AAAvB,IADF,CADF;AAKD;AAEDH,QAAQ,CAACI,SAAT,GAAqB;AACnBH,EAAAA,OAAO,EAAEF,SAAS,CAACM,IAAV,CAAeC,UADL;AAEnBJ,EAAAA,QAAQ,EAAEH,SAAS,CAACQ,IAAV,CAAeD;AAFN,CAArB",
+    "sourcesContent": [
+      "import {faSearchMinus, faSearchPlus} from '@fortawesome/free-solid-svg-icons';\nimport {FontAwesomeIcon} from '@fortawesome/react-fontawesome';\nimport React from 'react';\nimport PropTypes from 'prop-types';\n\nexport default function TextSize({isLarge, onToggle}) {\n  const icon = isLarge ? faSearchMinus : faSearchPlus;\n\n  return (\n    <div className=\"top-bar__menu-button top-bar__text-size\" onClick={onToggle}>\n      <FontAwesomeIcon icon={icon} />\n    </div>\n  );\n}\n\nTextSize.propTypes = {\n  isLarge: PropTypes.bool.isRequired,\n  onToggle: PropTypes.func.isRequired,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

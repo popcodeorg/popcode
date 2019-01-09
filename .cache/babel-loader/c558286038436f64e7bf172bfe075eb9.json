@@ -1,0 +1,26 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = trimLines;\nvar ws = /[ \\t]*\\n+[ \\t]*/g;\nvar newline = '\\n';\n\nfunction trimLines(value) {\n  return String(value).replace(ws, newline);\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/trim-lines/index.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "trimLines",
+      "ws",
+      "newline",
+      "value",
+      "String",
+      "replace"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,SAAjB;AAEA,IAAIC,EAAE,GAAG,kBAAT;AACA,IAAIC,OAAO,GAAG,IAAd;;AAEA,SAASF,SAAT,CAAmBG,KAAnB,EAA0B;AACxB,SAAOC,MAAM,CAACD,KAAD,CAAN,CAAcE,OAAd,CAAsBJ,EAAtB,EAA0BC,OAA1B,CAAP;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = trimLines\n\nvar ws = /[ \\t]*\\n+[ \\t]*/g\nvar newline = '\\n'\n\nfunction trimLines(value) {\n  return String(value).replace(ws, newline)\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

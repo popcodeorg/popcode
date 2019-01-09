@@ -1,0 +1,37 @@
+{
+  "ast": null,
+  "code": "import { connect } from 'react-redux';\nimport ProjectPreview from '../components/ProjectPreview';\nimport { archiveProject, changeCurrentProject } from '../actions';\nimport { makeGetProjectPreview, getCurrentProjectKey, getProject } from '../selectors';\n\nfunction makeMapStateToProps() {\n  var getProjectPreview = makeGetProjectPreview();\n  return function mapStateToProps(state, _ref) {\n    var projectKey = _ref.projectKey;\n    return {\n      preview: getProjectPreview(state, {\n        projectKey: projectKey\n      }),\n      isCurrentProject: projectKey === getCurrentProjectKey(state),\n      project: getProject(state, {\n        projectKey: projectKey\n      })\n    };\n  };\n}\n\nfunction mapDispatchToProps(dispatch, _ref2) {\n  var projectKey = _ref2.projectKey;\n  return {\n    onProjectSelected: function onProjectSelected() {\n      dispatch(changeCurrentProject(projectKey));\n    },\n    onProjectArchived: function onProjectArchived() {\n      dispatch(archiveProject(projectKey));\n    }\n  };\n}\n\nexport default connect(makeMapStateToProps, mapDispatchToProps)(ProjectPreview);",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/containers/ProjectPreview.js"
+    ],
+    "names": [
+      "connect",
+      "ProjectPreview",
+      "archiveProject",
+      "changeCurrentProject",
+      "makeGetProjectPreview",
+      "getCurrentProjectKey",
+      "getProject",
+      "makeMapStateToProps",
+      "getProjectPreview",
+      "mapStateToProps",
+      "state",
+      "projectKey",
+      "preview",
+      "isCurrentProject",
+      "project",
+      "mapDispatchToProps",
+      "dispatch",
+      "onProjectSelected",
+      "onProjectArchived"
+    ],
+    "mappings": "AAAA,SAAQA,OAAR,QAAsB,aAAtB;AAEA,OAAOC,cAAP,MAA2B,8BAA3B;AACA,SAAQC,cAAR,EAAwBC,oBAAxB,QAAmD,YAAnD;AACA,SACEC,qBADF,EAEEC,oBAFF,EAGEC,UAHF,QAIO,cAJP;;AAMA,SAASC,mBAAT,GAA+B;AAC7B,MAAMC,iBAAiB,GAAGJ,qBAAqB,EAA/C;AAEA,SAAO,SAASK,eAAT,CAAyBC,KAAzB,QAA8C;AAAA,QAAbC,UAAa,QAAbA,UAAa;AACnD,WAAO;AACLC,MAAAA,OAAO,EAAEJ,iBAAiB,CAACE,KAAD,EAAQ;AAACC,QAAAA,UAAU,EAAVA;AAAD,OAAR,CADrB;AAELE,MAAAA,gBAAgB,EAAEF,UAAU,KAAKN,oBAAoB,CAACK,KAAD,CAFhD;AAGLI,MAAAA,OAAO,EAAER,UAAU,CAACI,KAAD,EAAQ;AAACC,QAAAA,UAAU,EAAVA;AAAD,OAAR;AAHd,KAAP;AAKD,GAND;AAOD;;AAED,SAASI,kBAAT,CAA4BC,QAA5B,SAAoD;AAAA,MAAbL,UAAa,SAAbA,UAAa;AAClD,SAAO;AACLM,IAAAA,iBADK,+BACe;AAClBD,MAAAA,QAAQ,CAACb,oBAAoB,CAACQ,UAAD,CAArB,CAAR;AACD,KAHI;AAILO,IAAAA,iBAJK,+BAIe;AAClBF,MAAAA,QAAQ,CAACd,cAAc,CAACS,UAAD,CAAf,CAAR;AACD;AANI,GAAP;AAQD;;AAED,eAAeX,OAAO,CACpBO,mBADoB,EAEpBQ,kBAFoB,CAAP,CAGbd,cAHa,CAAf",
+    "sourcesContent": [
+      "import {connect} from 'react-redux';\n\nimport ProjectPreview from '../components/ProjectPreview';\nimport {archiveProject, changeCurrentProject} from '../actions';\nimport {\n  makeGetProjectPreview,\n  getCurrentProjectKey,\n  getProject,\n} from '../selectors';\n\nfunction makeMapStateToProps() {\n  const getProjectPreview = makeGetProjectPreview();\n\n  return function mapStateToProps(state, {projectKey}) {\n    return {\n      preview: getProjectPreview(state, {projectKey}),\n      isCurrentProject: projectKey === getCurrentProjectKey(state),\n      project: getProject(state, {projectKey}),\n    };\n  };\n}\n\nfunction mapDispatchToProps(dispatch, {projectKey}) {\n  return {\n    onProjectSelected() {\n      dispatch(changeCurrentProject(projectKey));\n    },\n    onProjectArchived() {\n      dispatch(archiveProject(projectKey));\n    },\n  };\n}\n\nexport default connect(\n  makeMapStateToProps,\n  mapDispatchToProps,\n)(ProjectPreview);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

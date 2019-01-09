@@ -1,0 +1,44 @@
+{
+  "ast": null,
+  "code": "import { createAction } from 'redux-actions';\nexport var createSnapshot = createAction('CREATE_SNAPSHOT');\nexport var snapshotCreated = createAction('SNAPSHOT_CREATED');\nexport var snapshotExportError = createAction('SNAPSHOT_EXPORT_ERROR');\nexport var snapshotNotFound = createAction('SNAPSHOT_NOT_FOUND');\nexport var snapshotImported = createAction('SNAPSHOT_IMPORTED', function (projectKey, project) {\n  return {\n    projectKey: projectKey,\n    project: project\n  };\n});\nexport var snapshotImportError = createAction('SNAPSHOT_IMPORT_ERROR');\nexport var projectRestoredFromLastSession = createAction('PROJECT_RESTORED_FROM_LAST_SESSION');\nexport var exportProject = createAction('EXPORT_PROJECT', function (exportType) {\n  return {\n    exportType: exportType\n  };\n});\nexport var projectExported = createAction('PROJECT_EXPORTED', function (url, exportType, projectKey, exportData) {\n  return {\n    url: url,\n    exportType: exportType,\n    projectKey: projectKey,\n    exportData: exportData\n  };\n}, function (_url, _exportType, _projectKey, _exportData) {\n  var timestamp = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : Date.now();\n  return {\n    timestamp: timestamp\n  };\n});\nexport var projectExportError = createAction('PROJECT_EXPORT_ERROR', function (exportType) {\n  return {\n    exportType: exportType\n  };\n});\nexport var projectExportDisplayed = createAction('PROJECT_EXPORT_DISPLAYED');\nexport var projectExportNotDisplayed = createAction('PROJECT_EXPORT_NOT_DISPLAYED', function (url, exportType) {\n  return {\n    url: url,\n    exportType: exportType\n  };\n});\nexport var gapiClientReady = createAction('GAPI_CLIENT_READY');\nexport var gapiClientUnavailable = createAction('GAPI_CLIENT_UNAVAILABLE', function (error) {\n  return {\n    error: error\n  };\n});",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/actions/clients.js"],
+    "names": [
+      "createAction",
+      "createSnapshot",
+      "snapshotCreated",
+      "snapshotExportError",
+      "snapshotNotFound",
+      "snapshotImported",
+      "projectKey",
+      "project",
+      "snapshotImportError",
+      "projectRestoredFromLastSession",
+      "exportProject",
+      "exportType",
+      "projectExported",
+      "url",
+      "exportData",
+      "_url",
+      "_exportType",
+      "_projectKey",
+      "_exportData",
+      "timestamp",
+      "Date",
+      "now",
+      "projectExportError",
+      "projectExportDisplayed",
+      "projectExportNotDisplayed",
+      "gapiClientReady",
+      "gapiClientUnavailable",
+      "error"
+    ],
+    "mappings": "AAAA,SAAQA,YAAR,QAA2B,eAA3B;AAEA,OAAO,IAAMC,cAAc,GAAGD,YAAY,CAAC,iBAAD,CAAnC;AACP,OAAO,IAAME,eAAe,GAAGF,YAAY,CAAC,kBAAD,CAApC;AACP,OAAO,IAAMG,mBAAmB,GAAGH,YAAY,CAAC,uBAAD,CAAxC;AACP,OAAO,IAAMI,gBAAgB,GAAGJ,YAAY,CAAC,oBAAD,CAArC;AACP,OAAO,IAAMK,gBAAgB,GAAGL,YAAY,CAC1C,mBAD0C,EAE1C,UAACM,UAAD,EAAaC,OAAb;AAAA,SAA0B;AAACD,IAAAA,UAAU,EAAVA,UAAD;AAAaC,IAAAA,OAAO,EAAPA;AAAb,GAA1B;AAAA,CAF0C,CAArC;AAIP,OAAO,IAAMC,mBAAmB,GAAGR,YAAY,CAAC,uBAAD,CAAxC;AACP,OAAO,IAAMS,8BAA8B,GAAGT,YAAY,CACxD,oCADwD,CAAnD;AAGP,OAAO,IAAMU,aAAa,GAAGV,YAAY,CAAC,gBAAD,EAAmB,UAAAW,UAAU;AAAA,SAAK;AACzEA,IAAAA,UAAU,EAAVA;AADyE,GAAL;AAAA,CAA7B,CAAlC;AAGP,OAAO,IAAMC,eAAe,GAAGZ,YAAY,CACzC,kBADyC,EAEzC,UAACa,GAAD,EAAMF,UAAN,EAAkBL,UAAlB,EAA8BQ,UAA9B;AAAA,SAA8C;AAC5CD,IAAAA,GAAG,EAAHA,GAD4C;AAE5CF,IAAAA,UAAU,EAAVA,UAF4C;AAG5CL,IAAAA,UAAU,EAAVA,UAH4C;AAI5CQ,IAAAA,UAAU,EAAVA;AAJ4C,GAA9C;AAAA,CAFyC,EAQzC,UAACC,IAAD,EAAOC,WAAP,EAAoBC,WAApB,EAAiCC,WAAjC;AAAA,MAA8CC,SAA9C,uEAA0DC,IAAI,CAACC,GAAL,EAA1D;AAAA,SAA0E;AACxEF,IAAAA,SAAS,EAATA;AADwE,GAA1E;AAAA,CARyC,CAApC;AAYP,OAAO,IAAMG,kBAAkB,GAAGtB,YAAY,CAC5C,sBAD4C,EAE5C,UAAAW,UAAU;AAAA,SAAK;AAACA,IAAAA,UAAU,EAAVA;AAAD,GAAL;AAAA,CAFkC,CAAvC;AAIP,OAAO,IAAMY,sBAAsB,GAAGvB,YAAY,CAAC,0BAAD,CAA3C;AACP,OAAO,IAAMwB,yBAAyB,GAAGxB,YAAY,CACnD,8BADmD,EAEnD,UAACa,GAAD,EAAMF,UAAN;AAAA,SAAsB;AAACE,IAAAA,GAAG,EAAHA,GAAD;AAAMF,IAAAA,UAAU,EAAVA;AAAN,GAAtB;AAAA,CAFmD,CAA9C;AAKP,OAAO,IAAMc,eAAe,GAAGzB,YAAY,CAAC,mBAAD,CAApC;AAEP,OAAO,IAAM0B,qBAAqB,GAAG1B,YAAY,CAC/C,yBAD+C,EAE/C,UAAA2B,KAAK;AAAA,SAAK;AAACA,IAAAA,KAAK,EAALA;AAAD,GAAL;AAAA,CAF0C,CAA1C",
+    "sourcesContent": [
+      "import {createAction} from 'redux-actions';\n\nexport const createSnapshot = createAction('CREATE_SNAPSHOT');\nexport const snapshotCreated = createAction('SNAPSHOT_CREATED');\nexport const snapshotExportError = createAction('SNAPSHOT_EXPORT_ERROR');\nexport const snapshotNotFound = createAction('SNAPSHOT_NOT_FOUND');\nexport const snapshotImported = createAction(\n  'SNAPSHOT_IMPORTED',\n  (projectKey, project) => ({projectKey, project}),\n);\nexport const snapshotImportError = createAction('SNAPSHOT_IMPORT_ERROR');\nexport const projectRestoredFromLastSession = createAction(\n  'PROJECT_RESTORED_FROM_LAST_SESSION',\n);\nexport const exportProject = createAction('EXPORT_PROJECT', exportType => ({\n  exportType,\n}));\nexport const projectExported = createAction(\n  'PROJECT_EXPORTED',\n  (url, exportType, projectKey, exportData) => ({\n    url,\n    exportType,\n    projectKey,\n    exportData,\n  }),\n  (_url, _exportType, _projectKey, _exportData, timestamp = Date.now()) => ({\n    timestamp,\n  }),\n);\nexport const projectExportError = createAction(\n  'PROJECT_EXPORT_ERROR',\n  exportType => ({exportType}),\n);\nexport const projectExportDisplayed = createAction('PROJECT_EXPORT_DISPLAYED');\nexport const projectExportNotDisplayed = createAction(\n  'PROJECT_EXPORT_NOT_DISPLAYED',\n  (url, exportType) => ({url, exportType}),\n);\n\nexport const gapiClientReady = createAction('GAPI_CLIENT_READY');\n\nexport const gapiClientUnavailable = createAction(\n  'GAPI_CLIENT_UNAVAILABLE',\n  error => ({error}),\n);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

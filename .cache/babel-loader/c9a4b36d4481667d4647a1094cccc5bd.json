@@ -1,0 +1,30 @@
+{
+  "ast": null,
+  "code": "import classnames from 'classnames';\nimport { faCaretDown } from '@fortawesome/free-solid-svg-icons';\nimport { FontAwesomeIcon } from '@fortawesome/react-fontawesome';\nimport React from 'react';\nimport { t } from 'i18next';\nimport PropTypes from 'prop-types';\nexport default function ProjectPickerButton(_ref) {\n  var shouldShowSavedIndicator = _ref.shouldShowSavedIndicator;\n  return React.createElement(\"div\", null, React.createElement(\"span\", {\n    className: classnames({\n      u__invisible: shouldShowSavedIndicator\n    })\n  }, t('top-bar.load-project'), React.createElement(FontAwesomeIcon, {\n    className: \"top-bar__drop-down-button\",\n    icon: faCaretDown\n  })), React.createElement(\"span\", {\n    className: classnames('top-bar__project-saved', {\n      u__invisible: !shouldShowSavedIndicator\n    })\n  }, t('top-bar.project-saved')));\n}\nProjectPickerButton.propTypes = {\n  shouldShowSavedIndicator: PropTypes.bool.isRequired\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/TopBar/ProjectPickerButton.jsx"
+    ],
+    "names": [
+      "classnames",
+      "faCaretDown",
+      "FontAwesomeIcon",
+      "React",
+      "t",
+      "PropTypes",
+      "ProjectPickerButton",
+      "shouldShowSavedIndicator",
+      "u__invisible",
+      "propTypes",
+      "bool",
+      "isRequired"
+    ],
+    "mappings": "AAAA,OAAOA,UAAP,MAAuB,YAAvB;AACA,SAAQC,WAAR,QAA0B,mCAA1B;AACA,SAAQC,eAAR,QAA8B,gCAA9B;AACA,OAAOC,KAAP,MAAkB,OAAlB;AACA,SAAQC,CAAR,QAAgB,SAAhB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AAEA,eAAe,SAASC,mBAAT,OAAyD;AAAA,MAA3BC,wBAA2B,QAA3BA,wBAA2B;AACtE,SACE,iCACE;AAAM,IAAA,SAAS,EAAEP,UAAU,CAAC;AAACQ,MAAAA,YAAY,EAAED;AAAf,KAAD;AAA3B,KACGH,CAAC,CAAC,sBAAD,CADJ,EAEE,oBAAC,eAAD;AACE,IAAA,SAAS,EAAC,2BADZ;AAEE,IAAA,IAAI,EAAEH;AAFR,IAFF,CADF,EAQE;AACE,IAAA,SAAS,EAAED,UAAU,CAAC,wBAAD,EAA2B;AAC9CQ,MAAAA,YAAY,EAAE,CAACD;AAD+B,KAA3B;AADvB,KAKGH,CAAC,CAAC,uBAAD,CALJ,CARF,CADF;AAkBD;AAEDE,mBAAmB,CAACG,SAApB,GAAgC;AAC9BF,EAAAA,wBAAwB,EAAEF,SAAS,CAACK,IAAV,CAAeC;AADX,CAAhC",
+    "sourcesContent": [
+      "import classnames from 'classnames';\nimport {faCaretDown} from '@fortawesome/free-solid-svg-icons';\nimport {FontAwesomeIcon} from '@fortawesome/react-fontawesome';\nimport React from 'react';\nimport {t} from 'i18next';\nimport PropTypes from 'prop-types';\n\nexport default function ProjectPickerButton({shouldShowSavedIndicator}) {\n  return (\n    <div>\n      <span className={classnames({u__invisible: shouldShowSavedIndicator})}>\n        {t('top-bar.load-project')}\n        <FontAwesomeIcon\n          className=\"top-bar__drop-down-button\"\n          icon={faCaretDown}\n        />\n      </span>\n      <span\n        className={classnames('top-bar__project-saved', {\n          u__invisible: !shouldShowSavedIndicator,\n        })}\n      >\n        {t('top-bar.project-saved')}\n      </span>\n    </div>\n  );\n}\n\nProjectPickerButton.propTypes = {\n  shouldShowSavedIndicator: PropTypes.bool.isRequired,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

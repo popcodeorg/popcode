@@ -1,0 +1,48 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = {\n  blockquote: require('./blockquote'),\n  break: require('./break'),\n  code: require('./code'),\n  delete: require('./delete'),\n  emphasis: require('./emphasis'),\n  footnoteReference: require('./footnote-reference'),\n  footnote: require('./footnote'),\n  heading: require('./heading'),\n  html: require('./html'),\n  imageReference: require('./image-reference'),\n  image: require('./image'),\n  inlineCode: require('./inline-code'),\n  linkReference: require('./link-reference'),\n  link: require('./link'),\n  listItem: require('./list-item'),\n  list: require('./list'),\n  paragraph: require('./paragraph'),\n  root: require('./root'),\n  strong: require('./strong'),\n  table: require('./table'),\n  text: require('./text'),\n  thematicBreak: require('./thematic-break'),\n  toml: ignore,\n  yaml: ignore,\n  definition: ignore,\n  footnoteDefinition: ignore // Return nothing for nodes which are ignored.\n\n};\n\nfunction ignore() {\n  return null;\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/handlers/index.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "blockquote",
+      "require",
+      "break",
+      "code",
+      "delete",
+      "emphasis",
+      "footnoteReference",
+      "footnote",
+      "heading",
+      "html",
+      "imageReference",
+      "image",
+      "inlineCode",
+      "linkReference",
+      "link",
+      "listItem",
+      "list",
+      "paragraph",
+      "root",
+      "strong",
+      "table",
+      "text",
+      "thematicBreak",
+      "toml",
+      "ignore",
+      "yaml",
+      "definition",
+      "footnoteDefinition"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiB;AACfC,EAAAA,UAAU,EAAEC,OAAO,CAAC,cAAD,CADJ;AAEfC,EAAAA,KAAK,EAAED,OAAO,CAAC,SAAD,CAFC;AAGfE,EAAAA,IAAI,EAAEF,OAAO,CAAC,QAAD,CAHE;AAIfG,EAAAA,MAAM,EAAEH,OAAO,CAAC,UAAD,CAJA;AAKfI,EAAAA,QAAQ,EAAEJ,OAAO,CAAC,YAAD,CALF;AAMfK,EAAAA,iBAAiB,EAAEL,OAAO,CAAC,sBAAD,CANX;AAOfM,EAAAA,QAAQ,EAAEN,OAAO,CAAC,YAAD,CAPF;AAQfO,EAAAA,OAAO,EAAEP,OAAO,CAAC,WAAD,CARD;AASfQ,EAAAA,IAAI,EAAER,OAAO,CAAC,QAAD,CATE;AAUfS,EAAAA,cAAc,EAAET,OAAO,CAAC,mBAAD,CAVR;AAWfU,EAAAA,KAAK,EAAEV,OAAO,CAAC,SAAD,CAXC;AAYfW,EAAAA,UAAU,EAAEX,OAAO,CAAC,eAAD,CAZJ;AAafY,EAAAA,aAAa,EAAEZ,OAAO,CAAC,kBAAD,CAbP;AAcfa,EAAAA,IAAI,EAAEb,OAAO,CAAC,QAAD,CAdE;AAefc,EAAAA,QAAQ,EAAEd,OAAO,CAAC,aAAD,CAfF;AAgBfe,EAAAA,IAAI,EAAEf,OAAO,CAAC,QAAD,CAhBE;AAiBfgB,EAAAA,SAAS,EAAEhB,OAAO,CAAC,aAAD,CAjBH;AAkBfiB,EAAAA,IAAI,EAAEjB,OAAO,CAAC,QAAD,CAlBE;AAmBfkB,EAAAA,MAAM,EAAElB,OAAO,CAAC,UAAD,CAnBA;AAoBfmB,EAAAA,KAAK,EAAEnB,OAAO,CAAC,SAAD,CApBC;AAqBfoB,EAAAA,IAAI,EAAEpB,OAAO,CAAC,QAAD,CArBE;AAsBfqB,EAAAA,aAAa,EAAErB,OAAO,CAAC,kBAAD,CAtBP;AAuBfsB,EAAAA,IAAI,EAAEC,MAvBS;AAwBfC,EAAAA,IAAI,EAAED,MAxBS;AAyBfE,EAAAA,UAAU,EAAEF,MAzBG;AA0BfG,EAAAA,kBAAkB,EAAEH,MA1BL,CA6BjB;;AA7BiB,CAAjB;;AA8BA,SAASA,MAAT,GAAkB;AAChB,SAAO,IAAP;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = {\n  blockquote: require('./blockquote'),\n  break: require('./break'),\n  code: require('./code'),\n  delete: require('./delete'),\n  emphasis: require('./emphasis'),\n  footnoteReference: require('./footnote-reference'),\n  footnote: require('./footnote'),\n  heading: require('./heading'),\n  html: require('./html'),\n  imageReference: require('./image-reference'),\n  image: require('./image'),\n  inlineCode: require('./inline-code'),\n  linkReference: require('./link-reference'),\n  link: require('./link'),\n  listItem: require('./list-item'),\n  list: require('./list'),\n  paragraph: require('./paragraph'),\n  root: require('./root'),\n  strong: require('./strong'),\n  table: require('./table'),\n  text: require('./text'),\n  thematicBreak: require('./thematic-break'),\n  toml: ignore,\n  yaml: ignore,\n  definition: ignore,\n  footnoteDefinition: ignore\n}\n\n// Return nothing for nodes which are ignored.\nfunction ignore() {\n  return null\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

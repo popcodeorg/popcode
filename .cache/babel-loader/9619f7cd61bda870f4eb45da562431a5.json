@@ -1,0 +1,38 @@
+{
+  "ast": null,
+  "code": "function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }\n\nfunction _nonIterableSpread() { throw new TypeError(\"Invalid attempt to spread non-iterable instance\"); }\n\nfunction _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === \"[object Arguments]\") return Array.from(iter); }\n\nfunction _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }\n\nimport memoize from 'lodash-es/memoize';\nimport remark from 'remark';\nimport remarkReact from 'remark-react';\nimport externalLinks from 'remark-external-links';\nimport remarkLowlight from 'remark-react-lowlight';\nimport css from 'highlight.js/lib/languages/css';\nimport xml from 'highlight.js/lib/languages/xml';\nimport js from 'highlight.js/lib/languages/javascript';\nimport githubSchema from 'hast-util-sanitize/lib/github.json';\nvar remarkWithHighlighting = memoize(function () {\n  var schema = Object.assign({}, githubSchema, {\n    attributes: Object.assign({}, githubSchema.attributes, {\n      code: [].concat(_toConsumableArray(githubSchema.attributes.code || []), ['className'])\n    })\n  });\n  return remark().use(externalLinks).use(remarkReact, {\n    sanitize: schema,\n    remarkReactComponents: {\n      code: remarkLowlight({\n        css: css,\n        js: js,\n        xml: xml\n      })\n    }\n  });\n});\nexport function toReact(markdown) {\n  return remarkWithHighlighting().processSync(markdown).contents;\n}",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/util/markdown.js"],
+    "names": [
+      "memoize",
+      "remark",
+      "remarkReact",
+      "externalLinks",
+      "remarkLowlight",
+      "css",
+      "xml",
+      "js",
+      "githubSchema",
+      "remarkWithHighlighting",
+      "schema",
+      "Object",
+      "assign",
+      "attributes",
+      "code",
+      "use",
+      "sanitize",
+      "remarkReactComponents",
+      "toReact",
+      "markdown",
+      "processSync",
+      "contents"
+    ],
+    "mappings": ";;;;;;;;AAAA,OAAOA,OAAP,MAAoB,mBAApB;AACA,OAAOC,MAAP,MAAmB,QAAnB;AACA,OAAOC,WAAP,MAAwB,cAAxB;AACA,OAAOC,aAAP,MAA0B,uBAA1B;AACA,OAAOC,cAAP,MAA2B,uBAA3B;AACA,OAAOC,GAAP,MAAgB,gCAAhB;AACA,OAAOC,GAAP,MAAgB,gCAAhB;AACA,OAAOC,EAAP,MAAe,uCAAf;AACA,OAAOC,YAAP,MAAyB,oCAAzB;AAEA,IAAMC,sBAAsB,GAAGT,OAAO,CAAC,YAAM;AAC3C,MAAMU,MAAM,GAAGC,MAAM,CAACC,MAAP,CAAc,EAAd,EAAkBJ,YAAlB,EAAgC;AAC7CK,IAAAA,UAAU,EAAEF,MAAM,CAACC,MAAP,CAAc,EAAd,EAAkBJ,YAAY,CAACK,UAA/B,EAA2C;AACrDC,MAAAA,IAAI,+BAAON,YAAY,CAACK,UAAb,CAAwBC,IAAxB,IAAgC,EAAvC,IAA4C,WAA5C;AADiD,KAA3C;AADiC,GAAhC,CAAf;AAMA,SAAOb,MAAM,GACVc,GADI,CACAZ,aADA,EAEJY,GAFI,CAEAb,WAFA,EAEa;AAChBc,IAAAA,QAAQ,EAAEN,MADM;AAEhBO,IAAAA,qBAAqB,EAAE;AACrBH,MAAAA,IAAI,EAAEV,cAAc,CAAC;AAACC,QAAAA,GAAG,EAAHA,GAAD;AAAME,QAAAA,EAAE,EAAFA,EAAN;AAAUD,QAAAA,GAAG,EAAHA;AAAV,OAAD;AADC;AAFP,GAFb,CAAP;AAQD,CAfqC,CAAtC;AAiBA,OAAO,SAASY,OAAT,CAAiBC,QAAjB,EAA2B;AAChC,SAAOV,sBAAsB,GAAGW,WAAzB,CAAqCD,QAArC,EAA+CE,QAAtD;AACD",
+    "sourcesContent": [
+      "import memoize from 'lodash-es/memoize';\nimport remark from 'remark';\nimport remarkReact from 'remark-react';\nimport externalLinks from 'remark-external-links';\nimport remarkLowlight from 'remark-react-lowlight';\nimport css from 'highlight.js/lib/languages/css';\nimport xml from 'highlight.js/lib/languages/xml';\nimport js from 'highlight.js/lib/languages/javascript';\nimport githubSchema from 'hast-util-sanitize/lib/github.json';\n\nconst remarkWithHighlighting = memoize(() => {\n  const schema = Object.assign({}, githubSchema, {\n    attributes: Object.assign({}, githubSchema.attributes, {\n      code: [...(githubSchema.attributes.code || []), 'className'],\n    }),\n  });\n\n  return remark()\n    .use(externalLinks)\n    .use(remarkReact, {\n      sanitize: schema,\n      remarkReactComponents: {\n        code: remarkLowlight({css, js, xml}),\n      },\n    });\n});\n\nexport function toReact(markdown) {\n  return remarkWithHighlighting().processSync(markdown).contents;\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

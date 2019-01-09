@@ -1,0 +1,58 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = logical;\nvar alternativeProps = {\n  marginBlockStart: ['WebkitMarginBefore'],\n  marginBlockEnd: ['WebkitMarginAfter'],\n  marginInlineStart: ['WebkitMarginStart', 'MozMarginStart'],\n  marginInlineEnd: ['WebkitMarginEnd', 'MozMarginEnd'],\n  paddingBlockStart: ['WebkitPaddingBefore'],\n  paddingBlockEnd: ['WebkitPaddingAfter'],\n  paddingInlineStart: ['WebkitPaddingStart', 'MozPaddingStart'],\n  paddingInlineEnd: ['WebkitPaddingEnd', 'MozPaddingEnd'],\n  borderBlockStart: ['WebkitBorderBefore'],\n  borderBlockStartColor: ['WebkitBorderBeforeColor'],\n  borderBlockStartStyle: ['WebkitBorderBeforeStyle'],\n  borderBlockStartWidth: ['WebkitBorderBeforeWidth'],\n  borderBlockEnd: ['WebkitBorderAfter'],\n  borderBlockEndColor: ['WebkitBorderAfterColor'],\n  borderBlockEndStyle: ['WebkitBorderAfterStyle'],\n  borderBlockEndWidth: ['WebkitBorderAfterWidth'],\n  borderInlineStart: ['WebkitBorderStart', 'MozBorderStart'],\n  borderInlineStartColor: ['WebkitBorderStartColor', 'MozBorderStartColor'],\n  borderInlineStartStyle: ['WebkitBorderStartStyle', 'MozBorderStartStyle'],\n  borderInlineStartWidth: ['WebkitBorderStartWidth', 'MozBorderStartWidth'],\n  borderInlineEnd: ['WebkitBorderEnd', 'MozBorderEnd'],\n  borderInlineEndColor: ['WebkitBorderEndColor', 'MozBorderEndColor'],\n  borderInlineEndStyle: ['WebkitBorderEndStyle', 'MozBorderEndStyle'],\n  borderInlineEndWidth: ['WebkitBorderEndWidth', 'MozBorderEndWidth']\n};\n\nfunction logical(property, value, style) {\n  if (Object.prototype.hasOwnProperty.call(alternativeProps, property)) {\n    var alternativePropList = alternativeProps[property];\n\n    for (var i = 0, len = alternativePropList.length; i < len; ++i) {\n      style[alternativePropList[i]] = value;\n    }\n  }\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/inline-style-prefixer/lib/plugins/logical.js"
+    ],
+    "names": [
+      "Object",
+      "defineProperty",
+      "exports",
+      "value",
+      "default",
+      "logical",
+      "alternativeProps",
+      "marginBlockStart",
+      "marginBlockEnd",
+      "marginInlineStart",
+      "marginInlineEnd",
+      "paddingBlockStart",
+      "paddingBlockEnd",
+      "paddingInlineStart",
+      "paddingInlineEnd",
+      "borderBlockStart",
+      "borderBlockStartColor",
+      "borderBlockStartStyle",
+      "borderBlockStartWidth",
+      "borderBlockEnd",
+      "borderBlockEndColor",
+      "borderBlockEndStyle",
+      "borderBlockEndWidth",
+      "borderInlineStart",
+      "borderInlineStartColor",
+      "borderInlineStartStyle",
+      "borderInlineStartWidth",
+      "borderInlineEnd",
+      "borderInlineEndColor",
+      "borderInlineEndStyle",
+      "borderInlineEndWidth",
+      "property",
+      "style",
+      "prototype",
+      "hasOwnProperty",
+      "call",
+      "alternativePropList",
+      "i",
+      "len",
+      "length"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,cAAP,CAAsBC,OAAtB,EAA+B,YAA/B,EAA6C;AAC3CC,EAAAA,KAAK,EAAE;AADoC,CAA7C;AAGAD,OAAO,CAACE,OAAR,GAAkBC,OAAlB;AACA,IAAIC,gBAAgB,GAAG;AACrBC,EAAAA,gBAAgB,EAAE,CAAC,oBAAD,CADG;AAErBC,EAAAA,cAAc,EAAE,CAAC,mBAAD,CAFK;AAGrBC,EAAAA,iBAAiB,EAAE,CAAC,mBAAD,EAAsB,gBAAtB,CAHE;AAIrBC,EAAAA,eAAe,EAAE,CAAC,iBAAD,EAAoB,cAApB,CAJI;AAKrBC,EAAAA,iBAAiB,EAAE,CAAC,qBAAD,CALE;AAMrBC,EAAAA,eAAe,EAAE,CAAC,oBAAD,CANI;AAOrBC,EAAAA,kBAAkB,EAAE,CAAC,oBAAD,EAAuB,iBAAvB,CAPC;AAQrBC,EAAAA,gBAAgB,EAAE,CAAC,kBAAD,EAAqB,eAArB,CARG;AASrBC,EAAAA,gBAAgB,EAAE,CAAC,oBAAD,CATG;AAUrBC,EAAAA,qBAAqB,EAAE,CAAC,yBAAD,CAVF;AAWrBC,EAAAA,qBAAqB,EAAE,CAAC,yBAAD,CAXF;AAYrBC,EAAAA,qBAAqB,EAAE,CAAC,yBAAD,CAZF;AAarBC,EAAAA,cAAc,EAAE,CAAC,mBAAD,CAbK;AAcrBC,EAAAA,mBAAmB,EAAE,CAAC,wBAAD,CAdA;AAerBC,EAAAA,mBAAmB,EAAE,CAAC,wBAAD,CAfA;AAgBrBC,EAAAA,mBAAmB,EAAE,CAAC,wBAAD,CAhBA;AAiBrBC,EAAAA,iBAAiB,EAAE,CAAC,mBAAD,EAAsB,gBAAtB,CAjBE;AAkBrBC,EAAAA,sBAAsB,EAAE,CAAC,wBAAD,EAA2B,qBAA3B,CAlBH;AAmBrBC,EAAAA,sBAAsB,EAAE,CAAC,wBAAD,EAA2B,qBAA3B,CAnBH;AAoBrBC,EAAAA,sBAAsB,EAAE,CAAC,wBAAD,EAA2B,qBAA3B,CApBH;AAqBrBC,EAAAA,eAAe,EAAE,CAAC,iBAAD,EAAoB,cAApB,CArBI;AAsBrBC,EAAAA,oBAAoB,EAAE,CAAC,sBAAD,EAAyB,mBAAzB,CAtBD;AAuBrBC,EAAAA,oBAAoB,EAAE,CAAC,sBAAD,EAAyB,mBAAzB,CAvBD;AAwBrBC,EAAAA,oBAAoB,EAAE,CAAC,sBAAD,EAAyB,mBAAzB;AAxBD,CAAvB;;AA2BA,SAASzB,OAAT,CAAiB0B,QAAjB,EAA2B5B,KAA3B,EAAkC6B,KAAlC,EAAyC;AACvC,MAAIhC,MAAM,CAACiC,SAAP,CAAiBC,cAAjB,CAAgCC,IAAhC,CAAqC7B,gBAArC,EAAuDyB,QAAvD,CAAJ,EAAsE;AACpE,QAAIK,mBAAmB,GAAG9B,gBAAgB,CAACyB,QAAD,CAA1C;;AACA,SAAK,IAAIM,CAAC,GAAG,CAAR,EAAWC,GAAG,GAAGF,mBAAmB,CAACG,MAA1C,EAAkDF,CAAC,GAAGC,GAAtD,EAA2D,EAAED,CAA7D,EAAgE;AAC9DL,MAAAA,KAAK,CAACI,mBAAmB,CAACC,CAAD,CAApB,CAAL,GAAgClC,KAAhC;AACD;AACF;AACF",
+    "sourcesContent": [
+      "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = logical;\nvar alternativeProps = {\n  marginBlockStart: ['WebkitMarginBefore'],\n  marginBlockEnd: ['WebkitMarginAfter'],\n  marginInlineStart: ['WebkitMarginStart', 'MozMarginStart'],\n  marginInlineEnd: ['WebkitMarginEnd', 'MozMarginEnd'],\n  paddingBlockStart: ['WebkitPaddingBefore'],\n  paddingBlockEnd: ['WebkitPaddingAfter'],\n  paddingInlineStart: ['WebkitPaddingStart', 'MozPaddingStart'],\n  paddingInlineEnd: ['WebkitPaddingEnd', 'MozPaddingEnd'],\n  borderBlockStart: ['WebkitBorderBefore'],\n  borderBlockStartColor: ['WebkitBorderBeforeColor'],\n  borderBlockStartStyle: ['WebkitBorderBeforeStyle'],\n  borderBlockStartWidth: ['WebkitBorderBeforeWidth'],\n  borderBlockEnd: ['WebkitBorderAfter'],\n  borderBlockEndColor: ['WebkitBorderAfterColor'],\n  borderBlockEndStyle: ['WebkitBorderAfterStyle'],\n  borderBlockEndWidth: ['WebkitBorderAfterWidth'],\n  borderInlineStart: ['WebkitBorderStart', 'MozBorderStart'],\n  borderInlineStartColor: ['WebkitBorderStartColor', 'MozBorderStartColor'],\n  borderInlineStartStyle: ['WebkitBorderStartStyle', 'MozBorderStartStyle'],\n  borderInlineStartWidth: ['WebkitBorderStartWidth', 'MozBorderStartWidth'],\n  borderInlineEnd: ['WebkitBorderEnd', 'MozBorderEnd'],\n  borderInlineEndColor: ['WebkitBorderEndColor', 'MozBorderEndColor'],\n  borderInlineEndStyle: ['WebkitBorderEndStyle', 'MozBorderEndStyle'],\n  borderInlineEndWidth: ['WebkitBorderEndWidth', 'MozBorderEndWidth']\n};\n\nfunction logical(property, value, style) {\n  if (Object.prototype.hasOwnProperty.call(alternativeProps, property)) {\n    var alternativePropList = alternativeProps[property];\n    for (var i = 0, len = alternativePropList.length; i < len; ++i) {\n      style[alternativePropList[i]] = value;\n    }\n  }\n}"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

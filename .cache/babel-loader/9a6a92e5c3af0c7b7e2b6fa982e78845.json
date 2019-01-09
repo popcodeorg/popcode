@@ -1,0 +1,29 @@
+{
+  "ast": null,
+  "code": "function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }\n\nfunction _nonIterableRest() { throw new TypeError(\"Invalid attempt to destructure non-iterable instance\"); }\n\nfunction _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i[\"return\"] != null) _i[\"return\"](); } finally { if (_d) throw _e; } } return _arr; }\n\nfunction _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }\n\nimport { createSelector } from 'reselect';\nimport includes from 'lodash-es/includes';\nimport map from 'lodash-es/map';\nimport partition from 'lodash-es/partition';\nimport { LANGUAGES } from '../util/editor';\nimport getHiddenUIComponents from './getHiddenUIComponents';\nexport default createSelector([getHiddenUIComponents], function (hiddenUIComponents) {\n  var _partition = partition(map(LANGUAGES, function (language, index) {\n    return {\n      language: language,\n      index: index\n    };\n  }), function (_ref) {\n    var language = _ref.language;\n    return includes(hiddenUIComponents, \"editor.\".concat(language));\n  }),\n      _partition2 = _slicedToArray(_partition, 2),\n      hiddenLanguages = _partition2[0],\n      visibleLanguages = _partition2[1];\n\n  return {\n    hiddenLanguages: hiddenLanguages,\n    visibleLanguages: visibleLanguages\n  };\n});",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/selectors/getHiddenAndVisibleLanguages.js"
+    ],
+    "names": [
+      "createSelector",
+      "includes",
+      "map",
+      "partition",
+      "LANGUAGES",
+      "getHiddenUIComponents",
+      "hiddenUIComponents",
+      "language",
+      "index",
+      "hiddenLanguages",
+      "visibleLanguages"
+    ],
+    "mappings": ";;;;;;;;AAAA,SAAQA,cAAR,QAA6B,UAA7B;AACA,OAAOC,QAAP,MAAqB,oBAArB;AACA,OAAOC,GAAP,MAAgB,eAAhB;AACA,OAAOC,SAAP,MAAsB,qBAAtB;AAEA,SAAQC,SAAR,QAAwB,gBAAxB;AAEA,OAAOC,qBAAP,MAAkC,yBAAlC;AAEA,eAAeL,cAAc,CAC3B,CAACK,qBAAD,CAD2B,EAE3B,UAAAC,kBAAkB,EAAI;AAAA,mBACwBH,SAAS,CACnDD,GAAG,CAACE,SAAD,EAAY,UAACG,QAAD,EAAWC,KAAX;AAAA,WAAsB;AAACD,MAAAA,QAAQ,EAARA,QAAD;AAAWC,MAAAA,KAAK,EAALA;AAAX,KAAtB;AAAA,GAAZ,CADgD,EAEnD;AAAA,QAAED,QAAF,QAAEA,QAAF;AAAA,WAAgBN,QAAQ,CAACK,kBAAD,mBAA+BC,QAA/B,EAAxB;AAAA,GAFmD,CADjC;AAAA;AAAA,MACbE,eADa;AAAA,MACIC,gBADJ;;AAKpB,SAAO;AAACD,IAAAA,eAAe,EAAfA,eAAD;AAAkBC,IAAAA,gBAAgB,EAAhBA;AAAlB,GAAP;AACD,CAR0B,CAA7B",
+    "sourcesContent": [
+      "import {createSelector} from 'reselect';\nimport includes from 'lodash-es/includes';\nimport map from 'lodash-es/map';\nimport partition from 'lodash-es/partition';\n\nimport {LANGUAGES} from '../util/editor';\n\nimport getHiddenUIComponents from './getHiddenUIComponents';\n\nexport default createSelector(\n  [getHiddenUIComponents],\n  hiddenUIComponents => {\n    const [hiddenLanguages, visibleLanguages] = partition(\n      map(LANGUAGES, (language, index) => ({language, index})),\n      ({language}) => includes(hiddenUIComponents, `editor.${language}`),\n    );\n    return {hiddenLanguages, visibleLanguages};\n  },\n);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

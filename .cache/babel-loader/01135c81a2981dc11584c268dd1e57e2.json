@@ -1,0 +1,29 @@
+{
+  "ast": null,
+  "code": "import classnames from 'classnames';\nimport PropTypes from 'prop-types';\nimport React from 'react';\nimport { t } from 'i18next';\nexport default function SnapshotButton(_ref) {\n  var isInProgress = _ref.isInProgress,\n      onClick = _ref.onClick;\n  return React.createElement(\"div\", {\n    className: classnames('top-bar__menu-button', 'top-bar__snapshot', 'top-bar__menu-button_primary', {\n      'top-bar__snapshot_in-progress': isInProgress\n    }),\n    onClick: onClick\n  }, t('top-bar.create-snapshot'));\n}\nSnapshotButton.propTypes = {\n  isInProgress: PropTypes.bool.isRequired,\n  onClick: PropTypes.func.isRequired\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/TopBar/SnapshotButton.jsx"
+    ],
+    "names": [
+      "classnames",
+      "PropTypes",
+      "React",
+      "t",
+      "SnapshotButton",
+      "isInProgress",
+      "onClick",
+      "propTypes",
+      "bool",
+      "isRequired",
+      "func"
+    ],
+    "mappings": "AAAA,OAAOA,UAAP,MAAuB,YAAvB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AACA,OAAOC,KAAP,MAAkB,OAAlB;AACA,SAAQC,CAAR,QAAgB,SAAhB;AAEA,eAAe,SAASC,cAAT,OAAiD;AAAA,MAAxBC,YAAwB,QAAxBA,YAAwB;AAAA,MAAVC,OAAU,QAAVA,OAAU;AAC9D,SACE;AACE,IAAA,SAAS,EAAEN,UAAU,CACnB,sBADmB,EAEnB,mBAFmB,EAGnB,8BAHmB,EAInB;AAAC,uCAAiCK;AAAlC,KAJmB,CADvB;AAOE,IAAA,OAAO,EAAEC;AAPX,KASGH,CAAC,CAAC,yBAAD,CATJ,CADF;AAaD;AAEDC,cAAc,CAACG,SAAf,GAA2B;AACzBF,EAAAA,YAAY,EAAEJ,SAAS,CAACO,IAAV,CAAeC,UADJ;AAEzBH,EAAAA,OAAO,EAAEL,SAAS,CAACS,IAAV,CAAeD;AAFC,CAA3B",
+    "sourcesContent": [
+      "import classnames from 'classnames';\nimport PropTypes from 'prop-types';\nimport React from 'react';\nimport {t} from 'i18next';\n\nexport default function SnapshotButton({isInProgress, onClick}) {\n  return (\n    <div\n      className={classnames(\n        'top-bar__menu-button',\n        'top-bar__snapshot',\n        'top-bar__menu-button_primary',\n        {'top-bar__snapshot_in-progress': isInProgress},\n      )}\n      onClick={onClick}\n    >\n      {t('top-bar.create-snapshot')}\n    </div>\n  );\n}\n\nSnapshotButton.propTypes = {\n  isInProgress: PropTypes.bool.isRequired,\n  onClick: PropTypes.func.isRequired,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

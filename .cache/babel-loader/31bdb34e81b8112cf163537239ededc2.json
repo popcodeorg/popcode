@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "var values = {\n  flex: ['-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex', 'flex'],\n  'inline-flex': ['-webkit-inline-box', '-moz-inline-box', '-ms-inline-flexbox', '-webkit-inline-flex', 'inline-flex']\n};\nexport default function flex(property, value) {\n  if (property === 'display' && values.hasOwnProperty(value)) {\n    return values[value];\n  }\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/inline-style-prefixer/es/plugins/flex.js"
+    ],
+    "names": ["values", "flex", "property", "value", "hasOwnProperty"],
+    "mappings": "AAAA,IAAIA,MAAM,GAAG;AACXC,EAAAA,IAAI,EAAE,CAAC,aAAD,EAAgB,UAAhB,EAA4B,aAA5B,EAA2C,cAA3C,EAA2D,MAA3D,CADK;AAEX,iBAAe,CAAC,oBAAD,EAAuB,iBAAvB,EAA0C,oBAA1C,EAAgE,qBAAhE,EAAuF,aAAvF;AAFJ,CAAb;AAKA,eAAe,SAASA,IAAT,CAAcC,QAAd,EAAwBC,KAAxB,EAA+B;AAC5C,MAAID,QAAQ,KAAK,SAAb,IAA0BF,MAAM,CAACI,cAAP,CAAsBD,KAAtB,CAA9B,EAA4D;AAC1D,WAAOH,MAAM,CAACG,KAAD,CAAb;AACD;AACF",
+    "sourcesContent": [
+      "var values = {\n  flex: ['-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex', 'flex'],\n  'inline-flex': ['-webkit-inline-box', '-moz-inline-box', '-ms-inline-flexbox', '-webkit-inline-flex', 'inline-flex']\n};\n\nexport default function flex(property, value) {\n  if (property === 'display' && values.hasOwnProperty(value)) {\n    return values[value];\n  }\n}"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

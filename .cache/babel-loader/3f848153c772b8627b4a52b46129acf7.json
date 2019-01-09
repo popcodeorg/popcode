@@ -1,0 +1,51 @@
+{
+  "ast": null,
+  "code": "var visit = require('unist-util-visit');\n\nvar definitions = require('mdast-util-definitions');\n\nvar spaceSeparated = require('space-separated-tokens').parse;\n\nvar isAbsoluteURL = require('is-absolute-url');\n\nmodule.exports = externalLinks;\nvar defaultTarget = '_blank';\nvar defaultRel = ['nofollow', 'noopener', 'noreferrer'];\nvar defaultProtocols = ['http', 'https'];\n\nfunction externalLinks(options) {\n  var opts = options || {};\n  var target = opts.target;\n  var rel = opts.rel;\n  var protocols = opts.protocols || defaultProtocols;\n\n  if (typeof rel === 'string') {\n    rel = spaceSeparated(rel);\n  }\n\n  return transform;\n\n  function transform(tree) {\n    var definition = definitions(tree);\n    visit(tree, ['link', 'linkReference'], visitor);\n\n    function visitor(node) {\n      var ctx = node.type === 'link' ? node : definition(node.identifier);\n      if (!ctx) return;\n      var protocol = ctx.url.slice(0, ctx.url.indexOf(':'));\n      var data;\n      var props;\n\n      if (isAbsoluteURL(ctx.url) && protocols.indexOf(protocol) !== -1) {\n        data = node.data || (node.data = {});\n        props = data.hProperties || (data.hProperties = {});\n\n        if (target !== false) {\n          props.target = target || defaultTarget;\n        }\n\n        if (rel !== false) {\n          props.rel = (rel || defaultRel).concat();\n        }\n      }\n    }\n  }\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/remark-external-links/index.js"
+    ],
+    "names": [
+      "visit",
+      "require",
+      "definitions",
+      "spaceSeparated",
+      "parse",
+      "isAbsoluteURL",
+      "module",
+      "exports",
+      "externalLinks",
+      "defaultTarget",
+      "defaultRel",
+      "defaultProtocols",
+      "options",
+      "opts",
+      "target",
+      "rel",
+      "protocols",
+      "transform",
+      "tree",
+      "definition",
+      "visitor",
+      "node",
+      "ctx",
+      "type",
+      "identifier",
+      "protocol",
+      "url",
+      "slice",
+      "indexOf",
+      "data",
+      "props",
+      "hProperties",
+      "concat"
+    ],
+    "mappings": "AAAA,IAAIA,KAAK,GAAGC,OAAO,CAAC,kBAAD,CAAnB;;AACA,IAAIC,WAAW,GAAGD,OAAO,CAAC,wBAAD,CAAzB;;AACA,IAAIE,cAAc,GAAGF,OAAO,CAAC,wBAAD,CAAP,CAAkCG,KAAvD;;AACA,IAAIC,aAAa,GAAGJ,OAAO,CAAC,iBAAD,CAA3B;;AAEAK,MAAM,CAACC,OAAP,GAAiBC,aAAjB;AAEA,IAAIC,aAAa,GAAG,QAApB;AACA,IAAIC,UAAU,GAAG,CAAC,UAAD,EAAa,UAAb,EAAyB,YAAzB,CAAjB;AACA,IAAIC,gBAAgB,GAAG,CAAC,MAAD,EAAS,OAAT,CAAvB;;AAEA,SAASH,aAAT,CAAuBI,OAAvB,EAAgC;AAC9B,MAAIC,IAAI,GAAGD,OAAO,IAAI,EAAtB;AACA,MAAIE,MAAM,GAAGD,IAAI,CAACC,MAAlB;AACA,MAAIC,GAAG,GAAGF,IAAI,CAACE,GAAf;AACA,MAAIC,SAAS,GAAGH,IAAI,CAACG,SAAL,IAAkBL,gBAAlC;;AAEA,MAAI,OAAOI,GAAP,KAAe,QAAnB,EAA6B;AAC3BA,IAAAA,GAAG,GAAGZ,cAAc,CAACY,GAAD,CAApB;AACD;;AAED,SAAOE,SAAP;;AAEA,WAASA,SAAT,CAAmBC,IAAnB,EAAyB;AACvB,QAAIC,UAAU,GAAGjB,WAAW,CAACgB,IAAD,CAA5B;AAEAlB,IAAAA,KAAK,CAACkB,IAAD,EAAO,CAAC,MAAD,EAAS,eAAT,CAAP,EAAkCE,OAAlC,CAAL;;AAEA,aAASA,OAAT,CAAiBC,IAAjB,EAAuB;AACrB,UAAIC,GAAG,GAAGD,IAAI,CAACE,IAAL,KAAc,MAAd,GAAuBF,IAAvB,GAA8BF,UAAU,CAACE,IAAI,CAACG,UAAN,CAAlD;AAEA,UAAI,CAACF,GAAL,EAAU;AAEV,UAAIG,QAAQ,GAAGH,GAAG,CAACI,GAAJ,CAAQC,KAAR,CAAc,CAAd,EAAiBL,GAAG,CAACI,GAAJ,CAAQE,OAAR,CAAgB,GAAhB,CAAjB,CAAf;AACA,UAAIC,IAAJ;AACA,UAAIC,KAAJ;;AAEA,UAAIzB,aAAa,CAACiB,GAAG,CAACI,GAAL,CAAb,IAA0BV,SAAS,CAACY,OAAV,CAAkBH,QAAlB,MAAgC,CAAC,CAA/D,EAAkE;AAChEI,QAAAA,IAAI,GAAGR,IAAI,CAACQ,IAAL,KAAcR,IAAI,CAACQ,IAAL,GAAY,EAA1B,CAAP;AACAC,QAAAA,KAAK,GAAGD,IAAI,CAACE,WAAL,KAAqBF,IAAI,CAACE,WAAL,GAAmB,EAAxC,CAAR;;AAEA,YAAIjB,MAAM,KAAK,KAAf,EAAsB;AACpBgB,UAAAA,KAAK,CAAChB,MAAN,GAAeA,MAAM,IAAIL,aAAzB;AACD;;AAED,YAAIM,GAAG,KAAK,KAAZ,EAAmB;AACjBe,UAAAA,KAAK,CAACf,GAAN,GAAY,CAACA,GAAG,IAAIL,UAAR,EAAoBsB,MAApB,EAAZ;AACD;AACF;AACF;AACF;AACF",
+    "sourcesContent": [
+      "var visit = require('unist-util-visit')\nvar definitions = require('mdast-util-definitions')\nvar spaceSeparated = require('space-separated-tokens').parse\nvar isAbsoluteURL = require('is-absolute-url')\n\nmodule.exports = externalLinks\n\nvar defaultTarget = '_blank'\nvar defaultRel = ['nofollow', 'noopener', 'noreferrer']\nvar defaultProtocols = ['http', 'https']\n\nfunction externalLinks(options) {\n  var opts = options || {}\n  var target = opts.target\n  var rel = opts.rel\n  var protocols = opts.protocols || defaultProtocols\n\n  if (typeof rel === 'string') {\n    rel = spaceSeparated(rel)\n  }\n\n  return transform\n\n  function transform(tree) {\n    var definition = definitions(tree)\n\n    visit(tree, ['link', 'linkReference'], visitor)\n\n    function visitor(node) {\n      var ctx = node.type === 'link' ? node : definition(node.identifier)\n\n      if (!ctx) return\n\n      var protocol = ctx.url.slice(0, ctx.url.indexOf(':'))\n      var data\n      var props\n\n      if (isAbsoluteURL(ctx.url) && protocols.indexOf(protocol) !== -1) {\n        data = node.data || (node.data = {})\n        props = data.hProperties || (data.hProperties = {})\n\n        if (target !== false) {\n          props.target = target || defaultTarget\n        }\n\n        if (rel !== false) {\n          props.rel = (rel || defaultRel).concat()\n        }\n      }\n    }\n  }\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

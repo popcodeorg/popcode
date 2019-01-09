@@ -1,0 +1,38 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = sizing;\nvar prefixes = ['-webkit-', '-moz-', ''];\nvar properties = {\n  maxHeight: true,\n  maxWidth: true,\n  width: true,\n  height: true,\n  columnWidth: true,\n  minWidth: true,\n  minHeight: true\n};\nvar values = {\n  'min-content': true,\n  'max-content': true,\n  'fill-available': true,\n  'fit-content': true,\n  'contain-floats': true\n};\n\nfunction sizing(property, value) {\n  if (properties.hasOwnProperty(property) && values.hasOwnProperty(value)) {\n    return prefixes.map(function (prefix) {\n      return prefix + value;\n    });\n  }\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/inline-style-prefixer/lib/plugins/sizing.js"
+    ],
+    "names": [
+      "Object",
+      "defineProperty",
+      "exports",
+      "value",
+      "default",
+      "sizing",
+      "prefixes",
+      "properties",
+      "maxHeight",
+      "maxWidth",
+      "width",
+      "height",
+      "columnWidth",
+      "minWidth",
+      "minHeight",
+      "values",
+      "property",
+      "hasOwnProperty",
+      "map",
+      "prefix"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,cAAP,CAAsBC,OAAtB,EAA+B,YAA/B,EAA6C;AAC3CC,EAAAA,KAAK,EAAE;AADoC,CAA7C;AAGAD,OAAO,CAACE,OAAR,GAAkBC,MAAlB;AACA,IAAIC,QAAQ,GAAG,CAAC,UAAD,EAAa,OAAb,EAAsB,EAAtB,CAAf;AAEA,IAAIC,UAAU,GAAG;AACfC,EAAAA,SAAS,EAAE,IADI;AAEfC,EAAAA,QAAQ,EAAE,IAFK;AAGfC,EAAAA,KAAK,EAAE,IAHQ;AAIfC,EAAAA,MAAM,EAAE,IAJO;AAKfC,EAAAA,WAAW,EAAE,IALE;AAMfC,EAAAA,QAAQ,EAAE,IANK;AAOfC,EAAAA,SAAS,EAAE;AAPI,CAAjB;AASA,IAAIC,MAAM,GAAG;AACX,iBAAe,IADJ;AAEX,iBAAe,IAFJ;AAGX,oBAAkB,IAHP;AAIX,iBAAe,IAJJ;AAKX,oBAAkB;AALP,CAAb;;AAQA,SAASV,MAAT,CAAgBW,QAAhB,EAA0Bb,KAA1B,EAAiC;AAC/B,MAAII,UAAU,CAACU,cAAX,CAA0BD,QAA1B,KAAuCD,MAAM,CAACE,cAAP,CAAsBd,KAAtB,CAA3C,EAAyE;AACvE,WAAOG,QAAQ,CAACY,GAAT,CAAa,UAAUC,MAAV,EAAkB;AACpC,aAAOA,MAAM,GAAGhB,KAAhB;AACD,KAFM,CAAP;AAGD;AACF",
+    "sourcesContent": [
+      "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = sizing;\nvar prefixes = ['-webkit-', '-moz-', ''];\n\nvar properties = {\n  maxHeight: true,\n  maxWidth: true,\n  width: true,\n  height: true,\n  columnWidth: true,\n  minWidth: true,\n  minHeight: true\n};\nvar values = {\n  'min-content': true,\n  'max-content': true,\n  'fill-available': true,\n  'fit-content': true,\n  'contain-floats': true\n};\n\nfunction sizing(property, value) {\n  if (properties.hasOwnProperty(property) && values.hasOwnProperty(value)) {\n    return prefixes.map(function (prefix) {\n      return prefix + value;\n    });\n  }\n}"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,32 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nvar trim = require('trim');\n\nexports.parse = parse;\nexports.stringify = stringify;\nvar empty = '';\nvar space = ' ';\nvar whiteSpace = /[ \\t\\n\\r\\f]+/g;\n\nfunction parse(value) {\n  var input = trim(String(value || empty));\n  return input === empty ? [] : input.split(whiteSpace);\n}\n\nfunction stringify(values) {\n  return trim(values.join(space));\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/space-separated-tokens/index.js"
+    ],
+    "names": [
+      "trim",
+      "require",
+      "exports",
+      "parse",
+      "stringify",
+      "empty",
+      "space",
+      "whiteSpace",
+      "value",
+      "input",
+      "String",
+      "split",
+      "values",
+      "join"
+    ],
+    "mappings": "AAAA;;AAEA,IAAIA,IAAI,GAAGC,OAAO,CAAC,MAAD,CAAlB;;AAEAC,OAAO,CAACC,KAAR,GAAgBA,KAAhB;AACAD,OAAO,CAACE,SAAR,GAAoBA,SAApB;AAEA,IAAIC,KAAK,GAAG,EAAZ;AACA,IAAIC,KAAK,GAAG,GAAZ;AACA,IAAIC,UAAU,GAAG,eAAjB;;AAEA,SAASJ,KAAT,CAAeK,KAAf,EAAsB;AACpB,MAAIC,KAAK,GAAGT,IAAI,CAACU,MAAM,CAACF,KAAK,IAAIH,KAAV,CAAP,CAAhB;AACA,SAAOI,KAAK,KAAKJ,KAAV,GAAkB,EAAlB,GAAuBI,KAAK,CAACE,KAAN,CAAYJ,UAAZ,CAA9B;AACD;;AAED,SAASH,SAAT,CAAmBQ,MAAnB,EAA2B;AACzB,SAAOZ,IAAI,CAACY,MAAM,CAACC,IAAP,CAAYP,KAAZ,CAAD,CAAX;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nvar trim = require('trim')\n\nexports.parse = parse\nexports.stringify = stringify\n\nvar empty = ''\nvar space = ' '\nvar whiteSpace = /[ \\t\\n\\r\\f]+/g\n\nfunction parse(value) {\n  var input = trim(String(value || empty))\n  return input === empty ? [] : input.split(whiteSpace)\n}\n\nfunction stringify(values) {\n  return trim(values.join(space))\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

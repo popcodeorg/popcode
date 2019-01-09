@@ -1,0 +1,35 @@
+{
+  "ast": null,
+  "code": "import { connect } from 'react-redux';\nimport ErrorReport from '../components/ErrorReport';\nimport { focusLine } from '../actions';\nimport { getErrors, isCurrentlyValidating, isCurrentProjectSyntacticallyValid, isUserTyping } from '../selectors';\n\nfunction mapStateToProps(state) {\n  return {\n    errors: getErrors(state),\n    isValidating: isCurrentlyValidating(state) || isUserTyping(state) && !isCurrentProjectSyntacticallyValid(state)\n  };\n}\n\nfunction mapDispatchToProps(dispatch) {\n  return {\n    onErrorClick: function onErrorClick(language, line, column) {\n      dispatch(focusLine(\"editor.\".concat(language), line, column));\n    }\n  };\n}\n\nexport default connect(mapStateToProps, mapDispatchToProps)(ErrorReport);",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/containers/ErrorReport.js"
+    ],
+    "names": [
+      "connect",
+      "ErrorReport",
+      "focusLine",
+      "getErrors",
+      "isCurrentlyValidating",
+      "isCurrentProjectSyntacticallyValid",
+      "isUserTyping",
+      "mapStateToProps",
+      "state",
+      "errors",
+      "isValidating",
+      "mapDispatchToProps",
+      "dispatch",
+      "onErrorClick",
+      "language",
+      "line",
+      "column"
+    ],
+    "mappings": "AAAA,SAAQA,OAAR,QAAsB,aAAtB;AAEA,OAAOC,WAAP,MAAwB,2BAAxB;AACA,SAAQC,SAAR,QAAwB,YAAxB;AACA,SACEC,SADF,EAEEC,qBAFF,EAGEC,kCAHF,EAIEC,YAJF,QAKO,cALP;;AAOA,SAASC,eAAT,CAAyBC,KAAzB,EAAgC;AAC9B,SAAO;AACLC,IAAAA,MAAM,EAAEN,SAAS,CAACK,KAAD,CADZ;AAELE,IAAAA,YAAY,EACVN,qBAAqB,CAACI,KAAD,CAArB,IACCF,YAAY,CAACE,KAAD,CAAZ,IAAuB,CAACH,kCAAkC,CAACG,KAAD;AAJxD,GAAP;AAMD;;AAED,SAASG,kBAAT,CAA4BC,QAA5B,EAAsC;AACpC,SAAO;AACLC,IAAAA,YADK,wBACQC,QADR,EACkBC,IADlB,EACwBC,MADxB,EACgC;AACnCJ,MAAAA,QAAQ,CAACV,SAAS,kBAAWY,QAAX,GAAuBC,IAAvB,EAA6BC,MAA7B,CAAV,CAAR;AACD;AAHI,GAAP;AAKD;;AAED,eAAehB,OAAO,CACpBO,eADoB,EAEpBI,kBAFoB,CAAP,CAGbV,WAHa,CAAf",
+    "sourcesContent": [
+      "import {connect} from 'react-redux';\n\nimport ErrorReport from '../components/ErrorReport';\nimport {focusLine} from '../actions';\nimport {\n  getErrors,\n  isCurrentlyValidating,\n  isCurrentProjectSyntacticallyValid,\n  isUserTyping,\n} from '../selectors';\n\nfunction mapStateToProps(state) {\n  return {\n    errors: getErrors(state),\n    isValidating:\n      isCurrentlyValidating(state) ||\n      (isUserTyping(state) && !isCurrentProjectSyntacticallyValid(state)),\n  };\n}\n\nfunction mapDispatchToProps(dispatch) {\n  return {\n    onErrorClick(language, line, column) {\n      dispatch(focusLine(`editor.${language}`, line, column));\n    },\n  };\n}\n\nexport default connect(\n  mapStateToProps,\n  mapDispatchToProps,\n)(ErrorReport);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

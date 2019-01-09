@@ -1,0 +1,33 @@
+{
+  "ast": null,
+  "code": "import capitalizeString from './capitalizeString';\nexport default function prefixProperty(prefixProperties, property, style) {\n  if (prefixProperties.hasOwnProperty(property)) {\n    var newStyle = {};\n    var requiredPrefixes = prefixProperties[property];\n    var capitalizedProperty = capitalizeString(property);\n    var keys = Object.keys(style);\n\n    for (var i = 0; i < keys.length; i++) {\n      var styleProperty = keys[i];\n\n      if (styleProperty === property) {\n        for (var j = 0; j < requiredPrefixes.length; j++) {\n          newStyle[requiredPrefixes[j] + capitalizedProperty] = style[property];\n        }\n      }\n\n      newStyle[styleProperty] = style[styleProperty];\n    }\n\n    return newStyle;\n  }\n\n  return style;\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/inline-style-prefixer/es/utils/prefixProperty.js"
+    ],
+    "names": [
+      "capitalizeString",
+      "prefixProperty",
+      "prefixProperties",
+      "property",
+      "style",
+      "hasOwnProperty",
+      "newStyle",
+      "requiredPrefixes",
+      "capitalizedProperty",
+      "keys",
+      "Object",
+      "i",
+      "length",
+      "styleProperty",
+      "j"
+    ],
+    "mappings": "AAAA,OAAOA,gBAAP,MAA6B,oBAA7B;AAGA,eAAe,SAASC,cAAT,CAAwBC,gBAAxB,EAA0CC,QAA1C,EAAoDC,KAApD,EAA2D;AACxE,MAAIF,gBAAgB,CAACG,cAAjB,CAAgCF,QAAhC,CAAJ,EAA+C;AAC7C,QAAIG,QAAQ,GAAG,EAAf;AACA,QAAIC,gBAAgB,GAAGL,gBAAgB,CAACC,QAAD,CAAvC;AACA,QAAIK,mBAAmB,GAAGR,gBAAgB,CAACG,QAAD,CAA1C;AACA,QAAIM,IAAI,GAAGC,MAAM,CAACD,IAAP,CAAYL,KAAZ,CAAX;;AACA,SAAK,IAAIO,CAAC,GAAG,CAAb,EAAgBA,CAAC,GAAGF,IAAI,CAACG,MAAzB,EAAiCD,CAAC,EAAlC,EAAsC;AACpC,UAAIE,aAAa,GAAGJ,IAAI,CAACE,CAAD,CAAxB;;AACA,UAAIE,aAAa,KAAKV,QAAtB,EAAgC;AAC9B,aAAK,IAAIW,CAAC,GAAG,CAAb,EAAgBA,CAAC,GAAGP,gBAAgB,CAACK,MAArC,EAA6CE,CAAC,EAA9C,EAAkD;AAChDR,UAAAA,QAAQ,CAACC,gBAAgB,CAACO,CAAD,CAAhB,GAAsBN,mBAAvB,CAAR,GAAsDJ,KAAK,CAACD,QAAD,CAA3D;AACD;AACF;;AACDG,MAAAA,QAAQ,CAACO,aAAD,CAAR,GAA0BT,KAAK,CAACS,aAAD,CAA/B;AACD;;AACD,WAAOP,QAAP;AACD;;AACD,SAAOF,KAAP;AACD",
+    "sourcesContent": [
+      "import capitalizeString from './capitalizeString';\n\n\nexport default function prefixProperty(prefixProperties, property, style) {\n  if (prefixProperties.hasOwnProperty(property)) {\n    var newStyle = {};\n    var requiredPrefixes = prefixProperties[property];\n    var capitalizedProperty = capitalizeString(property);\n    var keys = Object.keys(style);\n    for (var i = 0; i < keys.length; i++) {\n      var styleProperty = keys[i];\n      if (styleProperty === property) {\n        for (var j = 0; j < requiredPrefixes.length; j++) {\n          newStyle[requiredPrefixes[j] + capitalizedProperty] = style[property];\n        }\n      }\n      newStyle[styleProperty] = style[styleProperty];\n    }\n    return newStyle;\n  }\n  return style;\n}"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

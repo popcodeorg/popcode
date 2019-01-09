@@ -1,0 +1,25 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = backgroundClip; // https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Browser_compatibility\n\nfunction backgroundClip(property, value) {\n  if (typeof value === 'string' && value === 'text') {\n    return ['-webkit-text', 'text'];\n  }\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/inline-style-prefixer/lib/plugins/backgroundClip.js"
+    ],
+    "names": [
+      "Object",
+      "defineProperty",
+      "exports",
+      "value",
+      "default",
+      "backgroundClip",
+      "property"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,cAAP,CAAsBC,OAAtB,EAA+B,YAA/B,EAA6C;AAC3CC,EAAAA,KAAK,EAAE;AADoC,CAA7C;AAGAD,OAAO,CAACE,OAAR,GAAkBC,cAAlB,C,CAEA;;AACA,SAASA,cAAT,CAAwBC,QAAxB,EAAkCH,KAAlC,EAAyC;AACvC,MAAI,OAAOA,KAAP,KAAiB,QAAjB,IAA6BA,KAAK,KAAK,MAA3C,EAAmD;AACjD,WAAO,CAAC,cAAD,EAAiB,MAAjB,CAAP;AACD;AACF",
+    "sourcesContent": [
+      "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = backgroundClip;\n\n// https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Browser_compatibility\nfunction backgroundClip(property, value) {\n  if (typeof value === 'string' && value === 'text') {\n    return ['-webkit-text', 'text'];\n  }\n}"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

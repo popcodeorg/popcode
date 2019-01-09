@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = emphasis;\n\nvar all = require('../all');\n\nfunction emphasis(h, node) {\n  return h(node, 'em', all(h, node));\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/handlers/emphasis.js"
+    ],
+    "names": ["module", "exports", "emphasis", "all", "require", "h", "node"],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,QAAjB;;AAEA,IAAIC,GAAG,GAAGC,OAAO,CAAC,QAAD,CAAjB;;AAEA,SAASF,QAAT,CAAkBG,CAAlB,EAAqBC,IAArB,EAA2B;AACzB,SAAOD,CAAC,CAACC,IAAD,EAAO,IAAP,EAAaH,GAAG,CAACE,CAAD,EAAIC,IAAJ,CAAhB,CAAR;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = emphasis\n\nvar all = require('../all')\n\nfunction emphasis(h, node) {\n  return h(node, 'em', all(h, node))\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

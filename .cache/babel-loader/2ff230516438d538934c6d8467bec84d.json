@@ -1,0 +1,28 @@
+{
+  "ast": null,
+  "code": "/**\n * to-hankaku.js\n * convert to ascii code strings.\n *\n * @version 1.0.1\n * @author think49\n * @url https://gist.github.com/964592\n * @license http://www.opensource.org/licenses/mit-license.php (The MIT License)\n */\nexports.toHankaku = function (String, fromCharCode) {\n  function toHankaku(string) {\n    return String(string).replace(/\\u2019/g, \"'\").replace(/\\u201D/g, \"\\\"\").replace(/\\u3000/g, \" \").replace(/\\uFFE5/g, \"\\xA5\").replace(/[\\uFF01\\uFF03-\\uFF06\\uFF08\\uFF09\\uFF0C-\\uFF19\\uFF1C-\\uFF1F\\uFF21-\\uFF3B\\uFF3D\\uFF3F\\uFF41-\\uFF5B\\uFF5D\\uFF5E]/g, alphaNum);\n  }\n\n  function alphaNum(token) {\n    return fromCharCode(token.charCodeAt(0) - 65248);\n  }\n\n  return toHankaku;\n}(String, String.fromCharCode);\n/**\n * to-zenkaku.js\n * convert to multi byte strings.\n *\n * @version 1.0.2\n * @author think49\n * @url https://gist.github.com/964592\n * @license http://www.opensource.org/licenses/mit-license.php (The MIT License)\n */\n\n\nexports.toZenkaku = function (String, fromCharCode) {\n  function toZenkaku(string) {\n    return String(string).replace(/\\u0020/g, \"\\u3000\").replace(/\\u0022/g, \"\\u201D\").replace(/\\u0027/g, \"\\u2019\").replace(/\\u00A5/g, \"\\uFFE5\").replace(/[!#-&(),-9\\u003C-?A-[\\u005D_a-{}~]/g, alphaNum);\n  }\n\n  function alphaNum(token) {\n    return fromCharCode(token.charCodeAt(0) + 65248);\n  }\n\n  return toZenkaku;\n}(String, String.fromCharCode);",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/chrono-node/src/utils/JP.js"
+    ],
+    "names": [
+      "exports",
+      "toHankaku",
+      "String",
+      "fromCharCode",
+      "string",
+      "replace",
+      "alphaNum",
+      "token",
+      "charCodeAt",
+      "toZenkaku"
+    ],
+    "mappings": "AAEA;;;;;;;;;AAUAA,OAAO,CAACC,SAAR,GAAqB,UAAUC,MAAV,EAAkBC,YAAlB,EAAgC;AAEjD,WAASF,SAAT,CAAoBG,MAApB,EAA4B;AACxB,WAAOF,MAAM,CAACE,MAAD,CAAN,CAAeC,OAAf,CAAuB,SAAvB,EAAkC,GAAlC,EAA4CA,OAA5C,CAAoD,SAApD,EAA+D,IAA/D,EAAyEA,OAAzE,CAAiF,SAAjF,EAA4F,GAA5F,EAAsGA,OAAtG,CAA8G,SAA9G,EAAyH,MAAzH,EAAmIA,OAAnI,CAA2I,gHAA3I,EAA6PC,QAA7P,CAAP;AACH;;AAED,WAASA,QAAT,CAAmBC,KAAnB,EAA0B;AACtB,WAAOJ,YAAY,CAACI,KAAK,CAACC,UAAN,CAAiB,CAAjB,IAAsB,KAAvB,CAAnB;AACH;;AAED,SAAOP,SAAP;AACH,CAXmB,CAWjBC,MAXiB,EAWTA,MAAM,CAACC,YAXE,CAApB;AAaA;;;;;;;;;;;AASAH,OAAO,CAACS,SAAR,GAAqB,UAAUP,MAAV,EAAkBC,YAAlB,EAAgC;AAEjD,WAASM,SAAT,CAAoBL,MAApB,EAA4B;AACxB,WAAOF,MAAM,CAACE,MAAD,CAAN,CAAeC,OAAf,CAAuB,SAAvB,EAAkC,QAAlC,EAA4CA,OAA5C,CAAoD,SAApD,EAA+D,QAA/D,EAAyEA,OAAzE,CAAiF,SAAjF,EAA4F,QAA5F,EAAsGA,OAAtG,CAA8G,SAA9G,EAAyH,QAAzH,EAAmIA,OAAnI,CAA2I,qCAA3I,EAAkLC,QAAlL,CAAP;AACH;;AAED,WAASA,QAAT,CAAmBC,KAAnB,EAA0B;AACtB,WAAOJ,YAAY,CAACI,KAAK,CAACC,UAAN,CAAiB,CAAjB,IAAsB,KAAvB,CAAnB;AACH;;AAED,SAAOC,SAAP;AACH,CAXmB,CAWjBP,MAXiB,EAWTA,MAAM,CAACC,YAXE,CAApB",
+    "sourcesContent": [
+      "\n\n/**\n * to-hankaku.js\n * convert to ascii code strings.\n *\n * @version 1.0.1\n * @author think49\n * @url https://gist.github.com/964592\n * @license http://www.opensource.org/licenses/mit-license.php (The MIT License)\n */\n \nexports.toHankaku = (function (String, fromCharCode) {\n \n    function toHankaku (string) {\n        return String(string).replace(/\\u2019/g, '\\u0027').replace(/\\u201D/g, '\\u0022').replace(/\\u3000/g, '\\u0020').replace(/\\uFFE5/g, '\\u00A5').replace(/[\\uFF01\\uFF03-\\uFF06\\uFF08\\uFF09\\uFF0C-\\uFF19\\uFF1C-\\uFF1F\\uFF21-\\uFF3B\\uFF3D\\uFF3F\\uFF41-\\uFF5B\\uFF5D\\uFF5E]/g, alphaNum);\n    }\n \n    function alphaNum (token) {\n        return fromCharCode(token.charCodeAt(0) - 65248);\n    }\n \n    return toHankaku;\n})(String, String.fromCharCode);\n\n/**\n * to-zenkaku.js\n * convert to multi byte strings.\n *\n * @version 1.0.2\n * @author think49\n * @url https://gist.github.com/964592\n * @license http://www.opensource.org/licenses/mit-license.php (The MIT License)\n */\nexports.toZenkaku = (function (String, fromCharCode) {\n \n    function toZenkaku (string) {\n        return String(string).replace(/\\u0020/g, '\\u3000').replace(/\\u0022/g, '\\u201D').replace(/\\u0027/g, '\\u2019').replace(/\\u00A5/g, '\\uFFE5').replace(/[!#-&(),-9\\u003C-?A-[\\u005D_a-{}~]/g, alphaNum);\n    }\n \n    function alphaNum (token) {\n        return fromCharCode(token.charCodeAt(0) + 65248);\n    }\n \n    return toZenkaku;\n})(String, String.fromCharCode);"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

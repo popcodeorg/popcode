@@ -1,0 +1,25 @@
+{
+  "ast": null,
+  "code": "/*\n  \n*/\nvar ENMergeDateRangeRefiner = require('../en/ENMergeDateRangeRefiner').Refiner;\n\nexports.Refiner = function DEMergeDateRangeRefiner() {\n  ENMergeDateRangeRefiner.call(this);\n\n  this.pattern = function () {\n    return /^\\s*(bis(?:\\s*(?:am|zum))?|\\-)\\s*$/i;\n  };\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/chrono-node/src/refiners/de/DEMergeDateRangeRefiner.js"
+    ],
+    "names": [
+      "ENMergeDateRangeRefiner",
+      "require",
+      "Refiner",
+      "exports",
+      "DEMergeDateRangeRefiner",
+      "call",
+      "pattern"
+    ],
+    "mappings": "AAAA;;;AAGA,IAAIA,uBAAuB,GAAGC,OAAO,CAAC,+BAAD,CAAP,CAAyCC,OAAvE;;AAEAC,OAAO,CAACD,OAAR,GAAkB,SAASE,uBAAT,GAAmC;AACjDJ,EAAAA,uBAAuB,CAACK,IAAxB,CAA6B,IAA7B;;AAEA,OAAKC,OAAL,GAAe,YAAY;AACvB,WAAO,qCAAP;AACH,GAFD;AAGH,CAND",
+    "sourcesContent": [
+      "/*\n  \n*/\nvar ENMergeDateRangeRefiner = require('../en/ENMergeDateRangeRefiner').Refiner;\n\nexports.Refiner = function DEMergeDateRangeRefiner() {\n    ENMergeDateRangeRefiner.call(this);\n\n    this.pattern = function () {\n        return /^\\s*(bis(?:\\s*(?:am|zum))?|\\-)\\s*$/i\n    };\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

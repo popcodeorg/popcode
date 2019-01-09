@@ -1,0 +1,31 @@
+{
+  "ast": null,
+  "code": "var _require = require('inline-style-prefixer/lib/generator'),\n    generateData = _require.default,\n    generateFile = _require.generateFile;\n\nvar browserList = require('../../../config/browsers.json');\n\nmodule.exports = function () {\n  var browserListForInlineStylePrefixer = {};\n\n  for (var browser in browserList) {\n    if (browser !== 'chromium') {\n      browserListForInlineStylePrefixer[browser] = Number(browserList[browser]);\n    }\n  }\n\n  var _generateData = generateData(browserListForInlineStylePrefixer),\n      prefixMap = _generateData.prefixMap,\n      plugins = _generateData.plugins;\n\n  return {\n    code: generateFile(prefixMap, plugins, false)\n  };\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/services/inlineStylePrefixer/prefixData.gen.js"
+    ],
+    "names": [
+      "require",
+      "generateData",
+      "default",
+      "generateFile",
+      "browserList",
+      "module",
+      "exports",
+      "browserListForInlineStylePrefixer",
+      "browser",
+      "Number",
+      "prefixMap",
+      "plugins",
+      "code"
+    ],
+    "mappings": "eAGIA,OAAO,CAAC,qCAAD,C;IAFAC,Y,YAATC,O;IACAC,Y,YAAAA,Y;;AAGF,IAAMC,WAAW,GAAGJ,OAAO,CAAC,+BAAD,CAA3B;;AAEAK,MAAM,CAACC,OAAP,GAAiB,YAAM;AACrB,MAAMC,iCAAiC,GAAG,EAA1C;;AAEA,OAAK,IAAMC,OAAX,IAAsBJ,WAAtB,EAAmC;AACjC,QAAII,OAAO,KAAK,UAAhB,EAA4B;AAC1BD,MAAAA,iCAAiC,CAACC,OAAD,CAAjC,GAA6CC,MAAM,CAACL,WAAW,CAACI,OAAD,CAAZ,CAAnD;AACD;AACF;;AAPoB,sBASQP,YAAY,CAACM,iCAAD,CATpB;AAAA,MASdG,SATc,iBASdA,SATc;AAAA,MASHC,OATG,iBASHA,OATG;;AAWrB,SAAO;AAACC,IAAAA,IAAI,EAAET,YAAY,CAACO,SAAD,EAAYC,OAAZ,EAAqB,KAArB;AAAnB,GAAP;AACD,CAZD",
+    "sourcesContent": [
+      "const {\n  default: generateData,\n  generateFile,\n} = require('inline-style-prefixer/lib/generator');\n\nconst browserList = require('../../../config/browsers.json');\n\nmodule.exports = () => {\n  const browserListForInlineStylePrefixer = {};\n\n  for (const browser in browserList) {\n    if (browser !== 'chromium') {\n      browserListForInlineStylePrefixer[browser] = Number(browserList[browser]);\n    }\n  }\n\n  const {prefixMap, plugins} = generateData(browserListForInlineStylePrefixer);\n\n  return {code: generateFile(prefixMap, plugins, false)};\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

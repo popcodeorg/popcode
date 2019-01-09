@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "import { Record } from 'immutable';\nimport RemoteColection from './RemoteCollection';\nexport default Record({\n  courses: new RemoteColection()\n}, 'GoogleClassroom');",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/records/GoogleClassroom.js"
+    ],
+    "names": ["Record", "RemoteColection", "courses"],
+    "mappings": "AAAA,SAAQA,MAAR,QAAqB,WAArB;AAEA,OAAOC,eAAP,MAA4B,oBAA5B;AAEA,eAAeD,MAAM,CACnB;AACEE,EAAAA,OAAO,EAAE,IAAID,eAAJ;AADX,CADmB,EAInB,iBAJmB,CAArB",
+    "sourcesContent": [
+      "import {Record} from 'immutable';\n\nimport RemoteColection from './RemoteCollection';\n\nexport default Record(\n  {\n    courses: new RemoteColection(),\n  },\n  'GoogleClassroom',\n);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

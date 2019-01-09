@@ -1,0 +1,28 @@
+{
+  "ast": null,
+  "code": "\"use strict\";\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = capitalizeString;\n\nfunction capitalizeString(str) {\n  return str.charAt(0).toUpperCase() + str.slice(1);\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/inline-style-prefixer/lib/utils/capitalizeString.js"
+    ],
+    "names": [
+      "Object",
+      "defineProperty",
+      "exports",
+      "value",
+      "default",
+      "capitalizeString",
+      "str",
+      "charAt",
+      "toUpperCase",
+      "slice"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,cAAP,CAAsBC,OAAtB,EAA+B,YAA/B,EAA6C;AAC3CC,EAAAA,KAAK,EAAE;AADoC,CAA7C;AAGAD,OAAO,CAACE,OAAR,GAAkBC,gBAAlB;;AACA,SAASA,gBAAT,CAA0BC,GAA1B,EAA+B;AAC7B,SAAOA,GAAG,CAACC,MAAJ,CAAW,CAAX,EAAcC,WAAd,KAA8BF,GAAG,CAACG,KAAJ,CAAU,CAAV,CAArC;AACD",
+    "sourcesContent": [
+      "\"use strict\";\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = capitalizeString;\nfunction capitalizeString(str) {\n  return str.charAt(0).toUpperCase() + str.slice(1);\n}"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

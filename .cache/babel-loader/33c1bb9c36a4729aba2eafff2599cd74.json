@@ -1,0 +1,40 @@
+{
+  "ast": null,
+  "code": "import React from 'react';\nimport PropTypes from 'prop-types';\nimport partial from 'lodash-es/partial';\nimport remark from 'remark';\nimport remarkReact from 'remark-react';\nvar parser = remark().use(remarkReact);\n\nfunction ErrorItem(props) {\n  var lineLabel = props.row >= 0 ? React.createElement(\"div\", null, \"On line \", props.row + 1, \":\") : null;\n  return React.createElement(\"li\", {\n    className: \"error-list__error\",\n    \"data-error-reason\": props.reason,\n    onClick: partial(props.onClick, props.row, props.column)\n  }, lineLabel, React.createElement(\"div\", {\n    className: \"error-list__message\"\n  }, parser.processSync(props.raw).contents));\n}\n\nErrorItem.propTypes = {\n  column: PropTypes.number.isRequired,\n  raw: PropTypes.string.isRequired,\n  reason: PropTypes.string.isRequired,\n  row: PropTypes.number.isRequired,\n  onClick: PropTypes.func.isRequired\n};\nexport default ErrorItem;",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/ErrorItem.jsx"
+    ],
+    "names": [
+      "React",
+      "PropTypes",
+      "partial",
+      "remark",
+      "remarkReact",
+      "parser",
+      "use",
+      "ErrorItem",
+      "props",
+      "lineLabel",
+      "row",
+      "reason",
+      "onClick",
+      "column",
+      "processSync",
+      "raw",
+      "contents",
+      "propTypes",
+      "number",
+      "isRequired",
+      "string",
+      "func"
+    ],
+    "mappings": "AAAA,OAAOA,KAAP,MAAkB,OAAlB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AACA,OAAOC,OAAP,MAAoB,mBAApB;AACA,OAAOC,MAAP,MAAmB,QAAnB;AACA,OAAOC,WAAP,MAAwB,cAAxB;AAEA,IAAMC,MAAM,GAAGF,MAAM,GAAGG,GAAT,CAAaF,WAAb,CAAf;;AAEA,SAASG,SAAT,CAAmBC,KAAnB,EAA0B;AACxB,MAAMC,SAAS,GAAGD,KAAK,CAACE,GAAN,IAAa,CAAb,GAAiB,6CAAcF,KAAK,CAACE,GAAN,GAAY,CAA1B,MAAjB,GAAuD,IAAzE;AAEA,SACE;AACE,IAAA,SAAS,EAAC,mBADZ;AAEE,yBAAmBF,KAAK,CAACG,MAF3B;AAGE,IAAA,OAAO,EAAET,OAAO,CAACM,KAAK,CAACI,OAAP,EAAgBJ,KAAK,CAACE,GAAtB,EAA2BF,KAAK,CAACK,MAAjC;AAHlB,KAKGJ,SALH,EAME;AAAK,IAAA,SAAS,EAAC;AAAf,KACGJ,MAAM,CAACS,WAAP,CAAmBN,KAAK,CAACO,GAAzB,EAA8BC,QADjC,CANF,CADF;AAYD;;AAEDT,SAAS,CAACU,SAAV,GAAsB;AACpBJ,EAAAA,MAAM,EAAEZ,SAAS,CAACiB,MAAV,CAAiBC,UADL;AAEpBJ,EAAAA,GAAG,EAAEd,SAAS,CAACmB,MAAV,CAAiBD,UAFF;AAGpBR,EAAAA,MAAM,EAAEV,SAAS,CAACmB,MAAV,CAAiBD,UAHL;AAIpBT,EAAAA,GAAG,EAAET,SAAS,CAACiB,MAAV,CAAiBC,UAJF;AAKpBP,EAAAA,OAAO,EAAEX,SAAS,CAACoB,IAAV,CAAeF;AALJ,CAAtB;AAQA,eAAeZ,SAAf",
+    "sourcesContent": [
+      "import React from 'react';\nimport PropTypes from 'prop-types';\nimport partial from 'lodash-es/partial';\nimport remark from 'remark';\nimport remarkReact from 'remark-react';\n\nconst parser = remark().use(remarkReact);\n\nfunction ErrorItem(props) {\n  const lineLabel = props.row >= 0 ? <div>On line {props.row + 1}:</div> : null;\n\n  return (\n    <li\n      className=\"error-list__error\"\n      data-error-reason={props.reason}\n      onClick={partial(props.onClick, props.row, props.column)}\n    >\n      {lineLabel}\n      <div className=\"error-list__message\">\n        {parser.processSync(props.raw).contents}\n      </div>\n    </li>\n  );\n}\n\nErrorItem.propTypes = {\n  column: PropTypes.number.isRequired,\n  raw: PropTypes.string.isRequired,\n  reason: PropTypes.string.isRequired,\n  row: PropTypes.number.isRequired,\n  onClick: PropTypes.func.isRequired,\n};\n\nexport default ErrorItem;\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

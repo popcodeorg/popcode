@@ -1,0 +1,23 @@
+{
+  "ast": null,
+  "code": "import trim from 'lodash-es/trim';\nimport mergeValidations from './mergeValidations';\nimport validateWithHtmlInspector from './html/htmlInspector';\nimport validateWithHtmllint from './html/htmllint';\nimport validateWithRules from './html/rules';\nimport validateWithSlowparse from './html/slowparse';\nexport default (function (source) {\n  return mergeValidations([validateWithHtmlInspector(source), validateWithHtmllint(source), validateWithSlowparse(trim(source)), validateWithRules(source)]);\n});",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/validations/html.js"],
+    "names": [
+      "trim",
+      "mergeValidations",
+      "validateWithHtmlInspector",
+      "validateWithHtmllint",
+      "validateWithRules",
+      "validateWithSlowparse",
+      "source"
+    ],
+    "mappings": "AAAA,OAAOA,IAAP,MAAiB,gBAAjB;AAEA,OAAOC,gBAAP,MAA6B,oBAA7B;AACA,OAAOC,yBAAP,MAAsC,sBAAtC;AACA,OAAOC,oBAAP,MAAiC,iBAAjC;AACA,OAAOC,iBAAP,MAA8B,cAA9B;AACA,OAAOC,qBAAP,MAAkC,kBAAlC;AAEA,gBAAe,UAAAC,MAAM;AAAA,SACnBL,gBAAgB,CAAC,CACfC,yBAAyB,CAACI,MAAD,CADV,EAEfH,oBAAoB,CAACG,MAAD,CAFL,EAGfD,qBAAqB,CAACL,IAAI,CAACM,MAAD,CAAL,CAHN,EAIfF,iBAAiB,CAACE,MAAD,CAJF,CAAD,CADG;AAAA,CAArB",
+    "sourcesContent": [
+      "import trim from 'lodash-es/trim';\n\nimport mergeValidations from './mergeValidations';\nimport validateWithHtmlInspector from './html/htmlInspector';\nimport validateWithHtmllint from './html/htmllint';\nimport validateWithRules from './html/rules';\nimport validateWithSlowparse from './html/slowparse';\n\nexport default source =>\n  mergeValidations([\n    validateWithHtmlInspector(source),\n    validateWithHtmllint(source),\n    validateWithSlowparse(trim(source)),\n    validateWithRules(source),\n  ]);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,26 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = heading;\n\nvar all = require('../all');\n\nfunction heading(h, node) {\n  return h(node, 'h' + node.depth, all(h, node));\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/handlers/heading.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "heading",
+      "all",
+      "require",
+      "h",
+      "node",
+      "depth"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,OAAjB;;AAEA,IAAIC,GAAG,GAAGC,OAAO,CAAC,QAAD,CAAjB;;AAEA,SAASF,OAAT,CAAiBG,CAAjB,EAAoBC,IAApB,EAA0B;AACxB,SAAOD,CAAC,CAACC,IAAD,EAAO,MAAMA,IAAI,CAACC,KAAlB,EAAyBJ,GAAG,CAACE,CAAD,EAAIC,IAAJ,CAA5B,CAAR;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = heading\n\nvar all = require('../all')\n\nfunction heading(h, node) {\n  return h(node, 'h' + node.depth, all(h, node))\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

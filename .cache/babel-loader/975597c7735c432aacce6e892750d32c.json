@@ -1,0 +1,37 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = all;\n\nvar trim = require('trim');\n\nvar one = require('./one');\n\nfunction all(h, parent) {\n  var nodes = parent.children || [];\n  var length = nodes.length;\n  var values = [];\n  var index = -1;\n  var result;\n  var head;\n\n  while (++index < length) {\n    result = one(h, nodes[index], parent);\n\n    if (result) {\n      if (index && nodes[index - 1].type === 'break') {\n        if (result.value) {\n          result.value = trim.left(result.value);\n        }\n\n        head = result.children && result.children[0];\n\n        if (head && head.value) {\n          head.value = trim.left(head.value);\n        }\n      }\n\n      values = values.concat(result);\n    }\n  }\n\n  return values;\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/all.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "all",
+      "trim",
+      "require",
+      "one",
+      "h",
+      "parent",
+      "nodes",
+      "children",
+      "length",
+      "values",
+      "index",
+      "result",
+      "head",
+      "type",
+      "value",
+      "left",
+      "concat"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,GAAjB;;AAEA,IAAIC,IAAI,GAAGC,OAAO,CAAC,MAAD,CAAlB;;AACA,IAAIC,GAAG,GAAGD,OAAO,CAAC,OAAD,CAAjB;;AAEA,SAASF,GAAT,CAAaI,CAAb,EAAgBC,MAAhB,EAAwB;AACtB,MAAIC,KAAK,GAAGD,MAAM,CAACE,QAAP,IAAmB,EAA/B;AACA,MAAIC,MAAM,GAAGF,KAAK,CAACE,MAAnB;AACA,MAAIC,MAAM,GAAG,EAAb;AACA,MAAIC,KAAK,GAAG,CAAC,CAAb;AACA,MAAIC,MAAJ;AACA,MAAIC,IAAJ;;AAEA,SAAO,EAAEF,KAAF,GAAUF,MAAjB,EAAyB;AACvBG,IAAAA,MAAM,GAAGR,GAAG,CAACC,CAAD,EAAIE,KAAK,CAACI,KAAD,CAAT,EAAkBL,MAAlB,CAAZ;;AAEA,QAAIM,MAAJ,EAAY;AACV,UAAID,KAAK,IAAIJ,KAAK,CAACI,KAAK,GAAG,CAAT,CAAL,CAAiBG,IAAjB,KAA0B,OAAvC,EAAgD;AAC9C,YAAIF,MAAM,CAACG,KAAX,EAAkB;AAChBH,UAAAA,MAAM,CAACG,KAAP,GAAeb,IAAI,CAACc,IAAL,CAAUJ,MAAM,CAACG,KAAjB,CAAf;AACD;;AAEDF,QAAAA,IAAI,GAAGD,MAAM,CAACJ,QAAP,IAAmBI,MAAM,CAACJ,QAAP,CAAgB,CAAhB,CAA1B;;AAEA,YAAIK,IAAI,IAAIA,IAAI,CAACE,KAAjB,EAAwB;AACtBF,UAAAA,IAAI,CAACE,KAAL,GAAab,IAAI,CAACc,IAAL,CAAUH,IAAI,CAACE,KAAf,CAAb;AACD;AACF;;AAEDL,MAAAA,MAAM,GAAGA,MAAM,CAACO,MAAP,CAAcL,MAAd,CAAT;AACD;AACF;;AAED,SAAOF,MAAP;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = all\n\nvar trim = require('trim')\nvar one = require('./one')\n\nfunction all(h, parent) {\n  var nodes = parent.children || []\n  var length = nodes.length\n  var values = []\n  var index = -1\n  var result\n  var head\n\n  while (++index < length) {\n    result = one(h, nodes[index], parent)\n\n    if (result) {\n      if (index && nodes[index - 1].type === 'break') {\n        if (result.value) {\n          result.value = trim.left(result.value)\n        }\n\n        head = result.children && result.children[0]\n\n        if (head && head.value) {\n          head.value = trim.left(head.value)\n        }\n      }\n\n      values = values.concat(result)\n    }\n  }\n\n  return values\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,34 @@
+{
+  "ast": null,
+  "code": "import { reduxForm } from 'redux-form/immutable';\nimport { t } from 'i18next';\nimport isEmpty from 'lodash-es/isEmpty';\nimport isNil from 'lodash-es/isNil';\nimport get from 'lodash-es/get';\nimport AssignmentCreatorFormComponent from '../components/AssignmentCreatorForm';\n\nfunction validate(values) {\n  var errors = {};\n  var course = values.get('course');\n  var date = values.get('date');\n\n  if (isEmpty(course)) {\n    errors.course = t('assignment-creator.no-class-selected');\n  }\n\n  if (isNil(get(date, 'parsedDate'))) {\n    errors.date = t('assignment-creator.date-not-valid');\n  } else if (date.parsedDate < Date.now()) {\n    errors.date = t('assignment-creator.past-date-not-valid');\n  }\n\n  return errors;\n}\n\nvar AssignmentCreatorForm = reduxForm({\n  form: 'assignmentCreator',\n  validate: validate\n})(AssignmentCreatorFormComponent);\nexport default AssignmentCreatorForm;",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/containers/AssignmentCreatorForm.js"
+    ],
+    "names": [
+      "reduxForm",
+      "t",
+      "isEmpty",
+      "isNil",
+      "get",
+      "AssignmentCreatorFormComponent",
+      "validate",
+      "values",
+      "errors",
+      "course",
+      "date",
+      "parsedDate",
+      "Date",
+      "now",
+      "AssignmentCreatorForm",
+      "form"
+    ],
+    "mappings": "AAAA,SAAQA,SAAR,QAAwB,sBAAxB;AACA,SAAQC,CAAR,QAAgB,SAAhB;AACA,OAAOC,OAAP,MAAoB,mBAApB;AACA,OAAOC,KAAP,MAAkB,iBAAlB;AACA,OAAOC,GAAP,MAAgB,eAAhB;AAEA,OAAOC,8BAAP,MAA2C,qCAA3C;;AAEA,SAASC,QAAT,CAAkBC,MAAlB,EAA0B;AACxB,MAAMC,MAAM,GAAG,EAAf;AACA,MAAMC,MAAM,GAAGF,MAAM,CAACH,GAAP,CAAW,QAAX,CAAf;AACA,MAAMM,IAAI,GAAGH,MAAM,CAACH,GAAP,CAAW,MAAX,CAAb;;AAEA,MAAIF,OAAO,CAACO,MAAD,CAAX,EAAqB;AACnBD,IAAAA,MAAM,CAACC,MAAP,GAAgBR,CAAC,CAAC,sCAAD,CAAjB;AACD;;AACD,MAAIE,KAAK,CAACC,GAAG,CAACM,IAAD,EAAO,YAAP,CAAJ,CAAT,EAAoC;AAClCF,IAAAA,MAAM,CAACE,IAAP,GAAcT,CAAC,CAAC,mCAAD,CAAf;AACD,GAFD,MAEO,IAAIS,IAAI,CAACC,UAAL,GAAkBC,IAAI,CAACC,GAAL,EAAtB,EAAkC;AACvCL,IAAAA,MAAM,CAACE,IAAP,GAAcT,CAAC,CAAC,wCAAD,CAAf;AACD;;AACD,SAAOO,MAAP;AACD;;AAED,IAAMM,qBAAqB,GAAGd,SAAS,CAAC;AACtCe,EAAAA,IAAI,EAAE,mBADgC;AAEtCT,EAAAA,QAAQ,EAARA;AAFsC,CAAD,CAAT,CAG3BD,8BAH2B,CAA9B;AAKA,eAAeS,qBAAf",
+    "sourcesContent": [
+      "import {reduxForm} from 'redux-form/immutable';\nimport {t} from 'i18next';\nimport isEmpty from 'lodash-es/isEmpty';\nimport isNil from 'lodash-es/isNil';\nimport get from 'lodash-es/get';\n\nimport AssignmentCreatorFormComponent from '../components/AssignmentCreatorForm';\n\nfunction validate(values) {\n  const errors = {};\n  const course = values.get('course');\n  const date = values.get('date');\n\n  if (isEmpty(course)) {\n    errors.course = t('assignment-creator.no-class-selected');\n  }\n  if (isNil(get(date, 'parsedDate'))) {\n    errors.date = t('assignment-creator.date-not-valid');\n  } else if (date.parsedDate < Date.now()) {\n    errors.date = t('assignment-creator.past-date-not-valid');\n  }\n  return errors;\n}\n\nconst AssignmentCreatorForm = reduxForm({\n  form: 'assignmentCreator',\n  validate,\n})(AssignmentCreatorFormComponent);\n\nexport default AssignmentCreatorForm;\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

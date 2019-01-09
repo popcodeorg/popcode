@@ -1,0 +1,21 @@
+{
+  "ast": null,
+  "code": "import mergeValidations from './mergeValidations';\nimport validateWithCss from './css/css';\nimport validateWithPrettyCSS from './css/prettycss';\nimport validateWithStyleLint from './css/stylelint';\nexport default (function (source) {\n  return mergeValidations([validateWithCss(source), validateWithPrettyCSS(source), validateWithStyleLint(source)]);\n});",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/validations/css.js"],
+    "names": [
+      "mergeValidations",
+      "validateWithCss",
+      "validateWithPrettyCSS",
+      "validateWithStyleLint",
+      "source"
+    ],
+    "mappings": "AAAA,OAAOA,gBAAP,MAA6B,oBAA7B;AACA,OAAOC,eAAP,MAA4B,WAA5B;AACA,OAAOC,qBAAP,MAAkC,iBAAlC;AACA,OAAOC,qBAAP,MAAkC,iBAAlC;AAEA,gBAAe,UAAAC,MAAM;AAAA,SACnBJ,gBAAgB,CAAC,CACfC,eAAe,CAACG,MAAD,CADA,EAEfF,qBAAqB,CAACE,MAAD,CAFN,EAGfD,qBAAqB,CAACC,MAAD,CAHN,CAAD,CADG;AAAA,CAArB",
+    "sourcesContent": [
+      "import mergeValidations from './mergeValidations';\nimport validateWithCss from './css/css';\nimport validateWithPrettyCSS from './css/prettycss';\nimport validateWithStyleLint from './css/stylelint';\n\nexport default source =>\n  mergeValidations([\n    validateWithCss(source),\n    validateWithPrettyCSS(source),\n    validateWithStyleLint(source),\n  ]);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

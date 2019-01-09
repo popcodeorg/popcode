@@ -1,0 +1,15 @@
+{
+  "ast": null,
+  "code": "import linkGithubIdentity from './linkGithubIdentity';\nimport unlinkGithubIdentity from './unlinkGithubIdentity';\nexport default [linkGithubIdentity, unlinkGithubIdentity];",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/logic/index.js"],
+    "names": ["linkGithubIdentity", "unlinkGithubIdentity"],
+    "mappings": "AAAA,OAAOA,kBAAP,MAA+B,sBAA/B;AACA,OAAOC,oBAAP,MAAiC,wBAAjC;AAEA,eAAe,CAACD,kBAAD,EAAqBC,oBAArB,CAAf",
+    "sourcesContent": [
+      "import linkGithubIdentity from './linkGithubIdentity';\nimport unlinkGithubIdentity from './unlinkGithubIdentity';\n\nexport default [linkGithubIdentity, unlinkGithubIdentity];\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

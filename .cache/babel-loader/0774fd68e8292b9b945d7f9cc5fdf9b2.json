@@ -1,0 +1,56 @@
+{
+  "ast": null,
+  "code": "import classnames from 'classnames';\nimport isEmpty from 'lodash-es/isEmpty';\nimport some from 'lodash-es/some';\nimport filter from 'lodash-es/filter';\nimport map from 'lodash-es/map';\nimport partial from 'lodash-es/partial';\nimport PropTypes from 'prop-types';\nimport React from 'react';\nimport { t } from 'i18next';\nimport ProjectPreview from '../../containers/ProjectPreview';\nimport ProjectPickerButton from './ProjectPickerButton';\nimport createMenu, { MenuItem } from './createMenu';\nvar ProjectPicker = createMenu({\n  menuClass: 'top-bar__menu_right top-bar__menu_project-picker',\n  name: 'projectPicker',\n  isVisible: function isVisible(_ref) {\n    var currentProjectKey = _ref.currentProjectKey,\n        isUserAuthenticated = _ref.isUserAuthenticated,\n        projectKeys = _ref.projectKeys;\n    return Boolean(currentProjectKey) && !isEmpty(projectKeys) && isUserAuthenticated;\n  },\n  renderItems: function renderItems(_ref2) {\n    var currentProjectKey = _ref2.currentProjectKey,\n        projects = _ref2.projects,\n        shouldShowArchivedProjects = _ref2.shouldShowArchivedProjects,\n        onChangeCurrentProject = _ref2.onChangeCurrentProject,\n        onToggleViewArchived = _ref2.onToggleViewArchived;\n    var visibleProjects = shouldShowArchivedProjects ? projects : filter(projects, function (_ref3) {\n      var isArchived = _ref3.isArchived;\n      return !isArchived;\n    });\n    var items = map(visibleProjects, function (_ref4) {\n      var projectKey = _ref4.projectKey;\n      return React.createElement(MenuItem, {\n        isActive: projectKey === currentProjectKey,\n        key: projectKey,\n        onClick: partial(onChangeCurrentProject, projectKey)\n      }, React.createElement(ProjectPreview, {\n        projectKey: projectKey\n      }));\n    });\n\n    if (some(projects, 'isArchived')) {\n      items.push(React.createElement(\"div\", {\n        className: classnames('top-bar__menu-item', 'top-bar__menu-item_toggle-archived-projects-button'),\n        key: \"toggleShowArchivedProjects\",\n        onClick: onToggleViewArchived\n      }, React.createElement(\"div\", null, shouldShowArchivedProjects ? t('top-bar.hide-projects') : t('top-bar.show-projects'))));\n    }\n\n    return items;\n  }\n})(ProjectPickerButton);\nProjectPicker.propTypes = {\n  currentProjectKey: PropTypes.string,\n  projects: PropTypes.array.isRequired,\n  shouldShowArchivedProjects: PropTypes.bool.isRequired,\n  onToggleViewArchived: PropTypes.func.isRequired\n};\nProjectPicker.defaultProps = {\n  currentProjectKey: null\n};\nexport default ProjectPicker;",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/TopBar/ProjectPicker.jsx"
+    ],
+    "names": [
+      "classnames",
+      "isEmpty",
+      "some",
+      "filter",
+      "map",
+      "partial",
+      "PropTypes",
+      "React",
+      "t",
+      "ProjectPreview",
+      "ProjectPickerButton",
+      "createMenu",
+      "MenuItem",
+      "ProjectPicker",
+      "menuClass",
+      "name",
+      "isVisible",
+      "currentProjectKey",
+      "isUserAuthenticated",
+      "projectKeys",
+      "Boolean",
+      "renderItems",
+      "projects",
+      "shouldShowArchivedProjects",
+      "onChangeCurrentProject",
+      "onToggleViewArchived",
+      "visibleProjects",
+      "isArchived",
+      "items",
+      "projectKey",
+      "push",
+      "propTypes",
+      "string",
+      "array",
+      "isRequired",
+      "bool",
+      "func",
+      "defaultProps"
+    ],
+    "mappings": "AAAA,OAAOA,UAAP,MAAuB,YAAvB;AACA,OAAOC,OAAP,MAAoB,mBAApB;AACA,OAAOC,IAAP,MAAiB,gBAAjB;AACA,OAAOC,MAAP,MAAmB,kBAAnB;AACA,OAAOC,GAAP,MAAgB,eAAhB;AACA,OAAOC,OAAP,MAAoB,mBAApB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AACA,OAAOC,KAAP,MAAkB,OAAlB;AACA,SAAQC,CAAR,QAAgB,SAAhB;AAEA,OAAOC,cAAP,MAA2B,iCAA3B;AAEA,OAAOC,mBAAP,MAAgC,uBAAhC;AACA,OAAOC,UAAP,IAAoBC,QAApB,QAAmC,cAAnC;AAEA,IAAMC,aAAa,GAAGF,UAAU,CAAC;AAC/BG,EAAAA,SAAS,EAAE,kDADoB;AAE/BC,EAAAA,IAAI,EAAE,eAFyB;AAI/BC,EAAAA,SAJ+B,2BAIkC;AAAA,QAAtDC,iBAAsD,QAAtDA,iBAAsD;AAAA,QAAnCC,mBAAmC,QAAnCA,mBAAmC;AAAA,QAAdC,WAAc,QAAdA,WAAc;AAC/D,WACEC,OAAO,CAACH,iBAAD,CAAP,IAA8B,CAAChB,OAAO,CAACkB,WAAD,CAAtC,IAAuDD,mBADzD;AAGD,GAR8B;AAU/BG,EAAAA,WAV+B,8BAgB5B;AAAA,QALDJ,iBAKC,SALDA,iBAKC;AAAA,QAJDK,QAIC,SAJDA,QAIC;AAAA,QAHDC,0BAGC,SAHDA,0BAGC;AAAA,QAFDC,sBAEC,SAFDA,sBAEC;AAAA,QADDC,oBACC,SADDA,oBACC;AACD,QAAMC,eAAe,GAAGH,0BAA0B,GAC9CD,QAD8C,GAE9CnB,MAAM,CAACmB,QAAD,EAAW;AAAA,UAAEK,UAAF,SAAEA,UAAF;AAAA,aAAkB,CAACA,UAAnB;AAAA,KAAX,CAFV;AAGA,QAAMC,KAAK,GAAGxB,GAAG,CAACsB,eAAD,EAAkB;AAAA,UAAEG,UAAF,SAAEA,UAAF;AAAA,aACjC,oBAAC,QAAD;AACE,QAAA,QAAQ,EAAEA,UAAU,KAAKZ,iBAD3B;AAEE,QAAA,GAAG,EAAEY,UAFP;AAGE,QAAA,OAAO,EAAExB,OAAO,CAACmB,sBAAD,EAAyBK,UAAzB;AAHlB,SAKE,oBAAC,cAAD;AAAgB,QAAA,UAAU,EAAEA;AAA5B,QALF,CADiC;AAAA,KAAlB,CAAjB;;AAUA,QAAI3B,IAAI,CAACoB,QAAD,EAAW,YAAX,CAAR,EAAkC;AAChCM,MAAAA,KAAK,CAACE,IAAN,CACE;AACE,QAAA,SAAS,EAAE9B,UAAU,CACnB,oBADmB,EAEnB,oDAFmB,CADvB;AAKE,QAAA,GAAG,EAAC,4BALN;AAME,QAAA,OAAO,EAAEyB;AANX,SAQE,iCACGF,0BAA0B,GACvBf,CAAC,CAAC,uBAAD,CADsB,GAEvBA,CAAC,CAAC,uBAAD,CAHP,CARF,CADF;AAgBD;;AAED,WAAOoB,KAAP;AACD;AAlD8B,CAAD,CAAV,CAmDnBlB,mBAnDmB,CAAtB;AAqDAG,aAAa,CAACkB,SAAd,GAA0B;AACxBd,EAAAA,iBAAiB,EAAEX,SAAS,CAAC0B,MADL;AAExBV,EAAAA,QAAQ,EAAEhB,SAAS,CAAC2B,KAAV,CAAgBC,UAFF;AAGxBX,EAAAA,0BAA0B,EAAEjB,SAAS,CAAC6B,IAAV,CAAeD,UAHnB;AAIxBT,EAAAA,oBAAoB,EAAEnB,SAAS,CAAC8B,IAAV,CAAeF;AAJb,CAA1B;AAOArB,aAAa,CAACwB,YAAd,GAA6B;AAC3BpB,EAAAA,iBAAiB,EAAE;AADQ,CAA7B;AAIA,eAAeJ,aAAf",
+    "sourcesContent": [
+      "import classnames from 'classnames';\nimport isEmpty from 'lodash-es/isEmpty';\nimport some from 'lodash-es/some';\nimport filter from 'lodash-es/filter';\nimport map from 'lodash-es/map';\nimport partial from 'lodash-es/partial';\nimport PropTypes from 'prop-types';\nimport React from 'react';\nimport {t} from 'i18next';\n\nimport ProjectPreview from '../../containers/ProjectPreview';\n\nimport ProjectPickerButton from './ProjectPickerButton';\nimport createMenu, {MenuItem} from './createMenu';\n\nconst ProjectPicker = createMenu({\n  menuClass: 'top-bar__menu_right top-bar__menu_project-picker',\n  name: 'projectPicker',\n\n  isVisible({currentProjectKey, isUserAuthenticated, projectKeys}) {\n    return (\n      Boolean(currentProjectKey) && !isEmpty(projectKeys) && isUserAuthenticated\n    );\n  },\n\n  renderItems({\n    currentProjectKey,\n    projects,\n    shouldShowArchivedProjects,\n    onChangeCurrentProject,\n    onToggleViewArchived,\n  }) {\n    const visibleProjects = shouldShowArchivedProjects\n      ? projects\n      : filter(projects, ({isArchived}) => !isArchived);\n    const items = map(visibleProjects, ({projectKey}) => (\n      <MenuItem\n        isActive={projectKey === currentProjectKey}\n        key={projectKey}\n        onClick={partial(onChangeCurrentProject, projectKey)}\n      >\n        <ProjectPreview projectKey={projectKey} />\n      </MenuItem>\n    ));\n\n    if (some(projects, 'isArchived')) {\n      items.push(\n        <div\n          className={classnames(\n            'top-bar__menu-item',\n            'top-bar__menu-item_toggle-archived-projects-button',\n          )}\n          key=\"toggleShowArchivedProjects\"\n          onClick={onToggleViewArchived}\n        >\n          <div>\n            {shouldShowArchivedProjects\n              ? t('top-bar.hide-projects')\n              : t('top-bar.show-projects')}\n          </div>\n        </div>,\n      );\n    }\n\n    return items;\n  },\n})(ProjectPickerButton);\n\nProjectPicker.propTypes = {\n  currentProjectKey: PropTypes.string,\n  projects: PropTypes.array.isRequired,\n  shouldShowArchivedProjects: PropTypes.bool.isRequired,\n  onToggleViewArchived: PropTypes.func.isRequired,\n};\n\nProjectPicker.defaultProps = {\n  currentProjectKey: null,\n};\n\nexport default ProjectPicker;\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

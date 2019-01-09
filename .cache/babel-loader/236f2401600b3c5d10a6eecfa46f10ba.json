@@ -1,0 +1,29 @@
+{
+  "ast": null,
+  "code": "import isPrefixedValue from 'css-in-js-utils/lib/isPrefixedValue';\nvar prefixes = ['-webkit-', '-moz-', ''];\nvar values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/gi;\nexport default function gradient(property, value) {\n  if (typeof value === 'string' && !isPrefixedValue(value) && values.test(value)) {\n    return prefixes.map(function (prefix) {\n      return value.replace(values, function (grad) {\n        return prefix + grad;\n      });\n    });\n  }\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/inline-style-prefixer/es/plugins/gradient.js"
+    ],
+    "names": [
+      "isPrefixedValue",
+      "prefixes",
+      "values",
+      "gradient",
+      "property",
+      "value",
+      "test",
+      "map",
+      "prefix",
+      "replace",
+      "grad"
+    ],
+    "mappings": "AAAA,OAAOA,eAAP,MAA4B,qCAA5B;AAEA,IAAIC,QAAQ,GAAG,CAAC,UAAD,EAAa,OAAb,EAAsB,EAAtB,CAAf;AACA,IAAIC,MAAM,GAAG,uFAAb;AAEA,eAAe,SAASC,QAAT,CAAkBC,QAAlB,EAA4BC,KAA5B,EAAmC;AAChD,MAAI,OAAOA,KAAP,KAAiB,QAAjB,IAA6B,CAACL,eAAe,CAACK,KAAD,CAA7C,IAAwDH,MAAM,CAACI,IAAP,CAAYD,KAAZ,CAA5D,EAAgF;AAC9E,WAAOJ,QAAQ,CAACM,GAAT,CAAa,UAAUC,MAAV,EAAkB;AACpC,aAAOH,KAAK,CAACI,OAAN,CAAcP,MAAd,EAAsB,UAAUQ,IAAV,EAAgB;AAC3C,eAAOF,MAAM,GAAGE,IAAhB;AACD,OAFM,CAAP;AAGD,KAJM,CAAP;AAKD;AACF",
+    "sourcesContent": [
+      "import isPrefixedValue from 'css-in-js-utils/lib/isPrefixedValue';\n\nvar prefixes = ['-webkit-', '-moz-', ''];\nvar values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/gi;\n\nexport default function gradient(property, value) {\n  if (typeof value === 'string' && !isPrefixedValue(value) && values.test(value)) {\n    return prefixes.map(function (prefix) {\n      return value.replace(values, function (grad) {\n        return prefix + grad;\n      });\n    });\n  }\n}"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,60 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nfunction _typeof(obj) { if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }; } return _typeof(obj); }\n\nmodule.exports = toHast;\n\nvar xtend = require('xtend');\n\nvar u = require('unist-builder');\n\nvar visit = require('unist-util-visit');\n\nvar position = require('unist-util-position');\n\nvar generated = require('unist-util-generated');\n\nvar definitions = require('mdast-util-definitions');\n\nvar one = require('./one');\n\nvar footer = require('./footer');\n\nvar handlers = require('./handlers'); // Factory to transform.\n\n\nfunction factory(tree, options) {\n  var settings = options || {};\n  var dangerous = settings.allowDangerousHTML;\n  h.dangerous = dangerous;\n  h.definition = definitions(tree, settings);\n  h.footnotes = [];\n  h.augment = augment;\n  h.handlers = xtend(handlers, settings.handlers || {});\n  visit(tree, 'footnoteDefinition', visitor);\n  return h; // Finalise the created `right`, a hast node, from `left`, an mdast node.\n\n  function augment(left, right) {\n    var data;\n    var ctx; // Handle `data.hName`, `data.hProperties, `hChildren`.\n\n    if (left && 'data' in left) {\n      data = left.data;\n\n      if (right.type === 'element' && data.hName) {\n        right.tagName = data.hName;\n      }\n\n      if (right.type === 'element' && data.hProperties) {\n        right.properties = xtend(right.properties, data.hProperties);\n      }\n\n      if (right.children && data.hChildren) {\n        right.children = data.hChildren;\n      }\n    }\n\n    ctx = left && left.position ? left : {\n      position: left\n    };\n\n    if (!generated(ctx)) {\n      right.position = {\n        start: position.start(ctx),\n        end: position.end(ctx)\n      };\n    }\n\n    return right;\n  } // Create an element for a `node`.\n\n\n  function h(node, tagName, props, children) {\n    if ((children === undefined || children === null) && _typeof(props) === 'object' && 'length' in props) {\n      children = props;\n      props = {};\n    }\n\n    return augment(node, {\n      type: 'element',\n      tagName: tagName,\n      properties: props || {},\n      children: children || []\n    });\n  }\n\n  function visitor(definition) {\n    h.footnotes.push(definition);\n  }\n} // Transform `tree`, which is an mdast node, to a hast node.\n\n\nfunction toHast(tree, options) {\n  var h = factory(tree, options);\n  var node = one(h, tree);\n  var footnotes = footer(h);\n\n  if (node && node.children && footnotes) {\n    node.children = node.children.concat(u('text', '\\n'), footnotes);\n  }\n\n  return node;\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/index.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "toHast",
+      "xtend",
+      "require",
+      "u",
+      "visit",
+      "position",
+      "generated",
+      "definitions",
+      "one",
+      "footer",
+      "handlers",
+      "factory",
+      "tree",
+      "options",
+      "settings",
+      "dangerous",
+      "allowDangerousHTML",
+      "h",
+      "definition",
+      "footnotes",
+      "augment",
+      "visitor",
+      "left",
+      "right",
+      "data",
+      "ctx",
+      "type",
+      "hName",
+      "tagName",
+      "hProperties",
+      "properties",
+      "children",
+      "hChildren",
+      "start",
+      "end",
+      "node",
+      "props",
+      "undefined",
+      "push",
+      "concat"
+    ],
+    "mappings": "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",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = toHast\n\nvar xtend = require('xtend')\nvar u = require('unist-builder')\nvar visit = require('unist-util-visit')\nvar position = require('unist-util-position')\nvar generated = require('unist-util-generated')\nvar definitions = require('mdast-util-definitions')\nvar one = require('./one')\nvar footer = require('./footer')\nvar handlers = require('./handlers')\n\n// Factory to transform.\nfunction factory(tree, options) {\n  var settings = options || {}\n  var dangerous = settings.allowDangerousHTML\n\n  h.dangerous = dangerous\n  h.definition = definitions(tree, settings)\n  h.footnotes = []\n  h.augment = augment\n  h.handlers = xtend(handlers, settings.handlers || {})\n\n  visit(tree, 'footnoteDefinition', visitor)\n\n  return h\n\n  // Finalise the created `right`, a hast node, from `left`, an mdast node.\n  function augment(left, right) {\n    var data\n    var ctx\n\n    // Handle `data.hName`, `data.hProperties, `hChildren`.\n    if (left && 'data' in left) {\n      data = left.data\n\n      if (right.type === 'element' && data.hName) {\n        right.tagName = data.hName\n      }\n\n      if (right.type === 'element' && data.hProperties) {\n        right.properties = xtend(right.properties, data.hProperties)\n      }\n\n      if (right.children && data.hChildren) {\n        right.children = data.hChildren\n      }\n    }\n\n    ctx = left && left.position ? left : {position: left}\n\n    if (!generated(ctx)) {\n      right.position = {\n        start: position.start(ctx),\n        end: position.end(ctx)\n      }\n    }\n\n    return right\n  }\n\n  // Create an element for a `node`.\n  function h(node, tagName, props, children) {\n    if (\n      (children === undefined || children === null) &&\n      typeof props === 'object' &&\n      'length' in props\n    ) {\n      children = props\n      props = {}\n    }\n\n    return augment(node, {\n      type: 'element',\n      tagName: tagName,\n      properties: props || {},\n      children: children || []\n    })\n  }\n\n  function visitor(definition) {\n    h.footnotes.push(definition)\n  }\n}\n\n// Transform `tree`, which is an mdast node, to a hast node.\nfunction toHast(tree, options) {\n  var h = factory(tree, options)\n  var node = one(h, tree)\n  var footnotes = footer(h)\n\n  if (node && node.children && footnotes) {\n    node.children = node.children.concat(u('text', '\\n'), footnotes)\n  }\n\n  return node\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

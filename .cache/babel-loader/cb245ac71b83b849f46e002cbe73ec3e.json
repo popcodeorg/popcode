@@ -1,0 +1,35 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = imageReference;\n\nvar normalize = require('mdurl/encode');\n\nvar revert = require('../revert');\n\nfunction imageReference(h, node) {\n  var def = h.definition(node.identifier);\n  var props;\n\n  if (!def) {\n    return revert(h, node);\n  }\n\n  props = {\n    src: normalize(def.url || ''),\n    alt: node.alt\n  };\n\n  if (def.title !== null && def.title !== undefined) {\n    props.title = def.title;\n  }\n\n  return h(node, 'img', props);\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/handlers/image-reference.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "imageReference",
+      "normalize",
+      "require",
+      "revert",
+      "h",
+      "node",
+      "def",
+      "definition",
+      "identifier",
+      "props",
+      "src",
+      "url",
+      "alt",
+      "title",
+      "undefined"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,cAAjB;;AAEA,IAAIC,SAAS,GAAGC,OAAO,CAAC,cAAD,CAAvB;;AACA,IAAIC,MAAM,GAAGD,OAAO,CAAC,WAAD,CAApB;;AAEA,SAASF,cAAT,CAAwBI,CAAxB,EAA2BC,IAA3B,EAAiC;AAC/B,MAAIC,GAAG,GAAGF,CAAC,CAACG,UAAF,CAAaF,IAAI,CAACG,UAAlB,CAAV;AACA,MAAIC,KAAJ;;AAEA,MAAI,CAACH,GAAL,EAAU;AACR,WAAOH,MAAM,CAACC,CAAD,EAAIC,IAAJ,CAAb;AACD;;AAEDI,EAAAA,KAAK,GAAG;AAACC,IAAAA,GAAG,EAAET,SAAS,CAACK,GAAG,CAACK,GAAJ,IAAW,EAAZ,CAAf;AAAgCC,IAAAA,GAAG,EAAEP,IAAI,CAACO;AAA1C,GAAR;;AAEA,MAAIN,GAAG,CAACO,KAAJ,KAAc,IAAd,IAAsBP,GAAG,CAACO,KAAJ,KAAcC,SAAxC,EAAmD;AACjDL,IAAAA,KAAK,CAACI,KAAN,GAAcP,GAAG,CAACO,KAAlB;AACD;;AAED,SAAOT,CAAC,CAACC,IAAD,EAAO,KAAP,EAAcI,KAAd,CAAR;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = imageReference\n\nvar normalize = require('mdurl/encode')\nvar revert = require('../revert')\n\nfunction imageReference(h, node) {\n  var def = h.definition(node.identifier)\n  var props\n\n  if (!def) {\n    return revert(h, node)\n  }\n\n  props = {src: normalize(def.url || ''), alt: node.alt}\n\n  if (def.title !== null && def.title !== undefined) {\n    props.title = def.title\n  }\n\n  return h(node, 'img', props)\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

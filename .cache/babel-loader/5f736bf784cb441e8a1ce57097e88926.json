@@ -1,0 +1,20 @@
+{
+  "ast": null,
+  "code": "import handleErrors from './previewSupport/handleErrors';\nimport handleConsoleExpressions from './previewSupport/handleConsoleExpressions';\nimport handleConsoleLogs from './previewSupport/handleConsoleLogs';\nimport overrideAlert from './previewSupport/overrideAlert';\nhandleErrors();\nhandleConsoleExpressions();\nhandleConsoleLogs();\noverrideAlert();",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/preview.js"],
+    "names": [
+      "handleErrors",
+      "handleConsoleExpressions",
+      "handleConsoleLogs",
+      "overrideAlert"
+    ],
+    "mappings": "AAAA,OAAOA,YAAP,MAAyB,+BAAzB;AACA,OAAOC,wBAAP,MAAqC,2CAArC;AACA,OAAOC,iBAAP,MAA8B,oCAA9B;AACA,OAAOC,aAAP,MAA0B,gCAA1B;AAEAH,YAAY;AACZC,wBAAwB;AACxBC,iBAAiB;AACjBC,aAAa",
+    "sourcesContent": [
+      "import handleErrors from './previewSupport/handleErrors';\nimport handleConsoleExpressions from './previewSupport/handleConsoleExpressions';\nimport handleConsoleLogs from './previewSupport/handleConsoleLogs';\nimport overrideAlert from './previewSupport/overrideAlert';\n\nhandleErrors();\nhandleConsoleExpressions();\nhandleConsoleLogs();\noverrideAlert();\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

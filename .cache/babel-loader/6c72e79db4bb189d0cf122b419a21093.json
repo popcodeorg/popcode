@@ -1,0 +1,54 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nvar lineNumberify = function lineNumberify(ast) {\n  var lineNumber = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;\n  return ast.reduce(function (result, node) {\n    if (node.type === 'text') {\n      if (node.value.indexOf('\\n') === -1) {\n        node.lineNumber = lineNumber;\n        result.nodes.push(node);\n        return result;\n      }\n\n      var lines = node.value.split('\\n');\n\n      for (var i = 0; i < lines.length; i++) {\n        result.nodes.push({\n          type: 'text',\n          value: i === lines.length - 1 ? lines[i] : lines[i] + '\\n',\n          lineNumber: i === 0 ? lineNumber : ++lineNumber\n        });\n      }\n\n      result.lineNumber = lineNumber;\n      return result;\n    }\n\n    if (node.children) {\n      node.lineNumber = lineNumber;\n      var processed = lineNumberify(node.children, lineNumber);\n      node.children = processed.nodes;\n      result.lineNumber = processed.lineNumber;\n      result.nodes.push(node);\n      return result;\n    }\n\n    result.nodes.push(node);\n    return result;\n  }, {\n    nodes: [],\n    lineNumber: lineNumber\n  });\n};\n\nvar wrapLines = function wrapLines(ast, markers, options) {\n  var i = 0;\n  var wrapped = markers.reduce(function (nodes, marker) {\n    var line = marker.line;\n    var children = [];\n\n    for (; i < ast.length; i++) {\n      if (ast[i].lineNumber < line) {\n        nodes.push(ast[i]);\n        continue;\n      }\n\n      if (ast[i].lineNumber === line) {\n        children.push(ast[i]);\n        continue;\n      }\n\n      if (ast[i].lineNumber > line) {\n        break;\n      }\n    }\n\n    nodes.push({\n      type: 'element',\n      tagName: 'div',\n      properties: {\n        className: [marker.className || options.prefix + 'marker']\n      },\n      children: children,\n      lineNumber: line\n    });\n    return nodes;\n  }, []);\n\n  for (; i < ast.length; i++) {\n    wrapped.push(ast[i]);\n  }\n\n  return wrapped;\n};\n\nmodule.exports = function (ast, options) {\n  var markers = options.markers.map(function (marker) {\n    return marker.line ? marker : {\n      line: marker\n    };\n  }).sort(function (nodeA, nodeB) {\n    return nodeA.line - nodeB.line;\n  });\n  var numbered = lineNumberify(ast).nodes;\n  var wrapped = wrapLines(numbered, markers, options);\n  return wrapped;\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/react-lowlight/src/addMarkers.js"
+    ],
+    "names": [
+      "lineNumberify",
+      "ast",
+      "lineNumber",
+      "arguments",
+      "length",
+      "undefined",
+      "reduce",
+      "result",
+      "node",
+      "type",
+      "value",
+      "indexOf",
+      "nodes",
+      "push",
+      "lines",
+      "split",
+      "i",
+      "children",
+      "processed",
+      "wrapLines",
+      "markers",
+      "options",
+      "wrapped",
+      "marker",
+      "line",
+      "tagName",
+      "properties",
+      "className",
+      "prefix",
+      "module",
+      "exports",
+      "map",
+      "sort",
+      "nodeA",
+      "nodeB",
+      "numbered"
+    ],
+    "mappings": "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",
+    "sourcesContent": [
+      "'use strict'\n\nvar lineNumberify = function lineNumberify (ast) {\n  var lineNumber = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1\n\n  return ast.reduce(function (result, node) {\n    if (node.type === 'text') {\n      if (node.value.indexOf('\\n') === -1) {\n        node.lineNumber = lineNumber\n        result.nodes.push(node)\n        return result\n      }\n\n      var lines = node.value.split('\\n')\n      for (var i = 0; i < lines.length; i++) {\n        result.nodes.push({\n          type: 'text',\n          value: i === lines.length - 1 ? lines[i] : lines[i] + '\\n',\n          lineNumber: i === 0 ? lineNumber : ++lineNumber\n        })\n      }\n\n      result.lineNumber = lineNumber\n      return result\n    }\n\n    if (node.children) {\n      node.lineNumber = lineNumber\n      var processed = lineNumberify(node.children, lineNumber)\n      node.children = processed.nodes\n      result.lineNumber = processed.lineNumber\n      result.nodes.push(node)\n      return result\n    }\n\n    result.nodes.push(node)\n    return result\n  }, {nodes: [], lineNumber: lineNumber})\n}\n\nvar wrapLines = function wrapLines (ast, markers, options) {\n  var i = 0\n  var wrapped = markers.reduce(function (nodes, marker) {\n    var line = marker.line\n    var children = []\n    for (; i < ast.length; i++) {\n      if (ast[i].lineNumber < line) {\n        nodes.push(ast[i])\n        continue\n      }\n\n      if (ast[i].lineNumber === line) {\n        children.push(ast[i])\n        continue\n      }\n\n      if (ast[i].lineNumber > line) {\n        break\n      }\n    }\n\n    nodes.push({\n      type: 'element',\n      tagName: 'div',\n      properties: {className: [marker.className || (options.prefix + 'marker')]},\n      children: children,\n      lineNumber: line\n    })\n\n    return nodes\n  }, [])\n\n  for (; i < ast.length; i++) {\n    wrapped.push(ast[i])\n  }\n\n  return wrapped\n}\n\nmodule.exports = function (ast, options) {\n  var markers = options.markers.map(function (marker) {\n    return marker.line ? marker : {line: marker}\n  }).sort(function (nodeA, nodeB) {\n    return nodeA.line - nodeB.line\n  })\n\n  var numbered = lineNumberify(ast).nodes\n  var wrapped = wrapLines(numbered, markers, options)\n  return wrapped\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

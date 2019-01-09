@@ -1,0 +1,23 @@
+{
+  "ast": null,
+  "code": "exports.WEEKDAY_OFFSET = {\n  'sonntag': 0,\n  'so': 0,\n  'montag': 1,\n  'mo': 1,\n  'dienstag': 2,\n  'di': 2,\n  'mittwoch': 3,\n  'mi': 3,\n  'donnerstag': 4,\n  'do': 4,\n  'freitag': 5,\n  'fr': 5,\n  'samstag': 6,\n  'sa': 6\n};\nexports.MONTH_OFFSET = {\n  'januar': 1,\n  'jan': 1,\n  'jan.': 1,\n  'februar': 2,\n  'feb': 2,\n  'feb.': 2,\n  'märz': 3,\n  'maerz': 3,\n  'mär': 3,\n  'mär.': 3,\n  'mrz': 3,\n  'mrz.': 3,\n  'april': 4,\n  'apr': 4,\n  'apr.': 4,\n  'mai': 5,\n  'juni': 6,\n  'jun': 6,\n  'jun.': 6,\n  'juli': 7,\n  'jul': 7,\n  'jul.': 7,\n  'august': 8,\n  'aug': 8,\n  'aug.': 8,\n  'september': 9,\n  'sep': 9,\n  'sep.': 9,\n  'sept': 9,\n  'sept.': 9,\n  'oktober': 10,\n  'okt': 10,\n  'okt.': 10,\n  'november': 11,\n  'nov': 11,\n  'nov.': 11,\n  'dezember': 12,\n  'dez': 12,\n  'dez.': 12\n};\nexports.INTEGER_WORDS_PATTERN = '(?:eins|zwei|drei|vier|fünf|fuenf|sechs|sieben|acht|neun|zehn|elf|zwölf|zwoelf)';\nexports.INTEGER_WORDS = {\n  'eins': 1,\n  'zwei': 2,\n  'drei': 3,\n  'vier': 4,\n  'fünf': 5,\n  'fuenf': 5,\n  'sechs': 6,\n  'sieben': 7,\n  'acht': 8,\n  'neun': 9,\n  'zehn': 10,\n  'elf': 11,\n  'zwölf': 12,\n  'zwoelf': 12\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/chrono-node/src/utils/DE.js"
+    ],
+    "names": [
+      "exports",
+      "WEEKDAY_OFFSET",
+      "MONTH_OFFSET",
+      "INTEGER_WORDS_PATTERN",
+      "INTEGER_WORDS"
+    ],
+    "mappings": "AAAAA,OAAO,CAACC,cAAR,GAAyB;AACrB,aAAW,CADU;AAErB,QAAM,CAFe;AAGrB,YAAU,CAHW;AAIrB,QAAM,CAJe;AAKrB,cAAY,CALS;AAMrB,QAAK,CANgB;AAOrB,cAAY,CAPS;AAQrB,QAAM,CARe;AASrB,gBAAc,CATO;AAUrB,QAAM,CAVe;AAWrB,aAAW,CAXU;AAYrB,QAAM,CAZe;AAarB,aAAW,CAbU;AAcrB,QAAM;AAde,CAAzB;AAiBAD,OAAO,CAACE,YAAR,GAAuB;AACnB,YAAU,CADS;AAEnB,SAAO,CAFY;AAGnB,UAAQ,CAHW;AAInB,aAAW,CAJQ;AAKnB,SAAO,CALY;AAMnB,UAAQ,CANW;AAOnB,UAAQ,CAPW;AAQnB,WAAS,CARU;AASnB,SAAO,CATY;AAUnB,UAAQ,CAVW;AAWnB,SAAO,CAXY;AAYnB,UAAQ,CAZW;AAanB,WAAS,CAbU;AAcnB,SAAO,CAdY;AAenB,UAAQ,CAfW;AAgBnB,SAAO,CAhBY;AAiBnB,UAAQ,CAjBW;AAkBnB,SAAO,CAlBY;AAmBnB,UAAQ,CAnBW;AAoBnB,UAAQ,CApBW;AAqBnB,SAAO,CArBY;AAsBnB,UAAQ,CAtBW;AAuBnB,YAAU,CAvBS;AAwBnB,SAAO,CAxBY;AAyBnB,UAAQ,CAzBW;AA0BnB,eAAa,CA1BM;AA2BnB,SAAO,CA3BY;AA4BnB,UAAQ,CA5BW;AA6BnB,UAAQ,CA7BW;AA8BnB,WAAS,CA9BU;AA+BnB,aAAW,EA/BQ;AAgCnB,SAAO,EAhCY;AAiCnB,UAAQ,EAjCW;AAkCnB,cAAY,EAlCO;AAmCnB,SAAO,EAnCY;AAoCnB,UAAQ,EApCW;AAqCnB,cAAY,EArCO;AAsCnB,SAAO,EAtCY;AAuCnB,UAAQ;AAvCW,CAAvB;AA0CAF,OAAO,CAACG,qBAAR,GAAgC,iFAAhC;AACAH,OAAO,CAACI,aAAR,GAAwB;AACpB,UAAS,CADW;AAEpB,UAAS,CAFW;AAGpB,UAAS,CAHW;AAIpB,UAAS,CAJW;AAKpB,UAAS,CALW;AAMpB,WAAS,CANW;AAOpB,WAAU,CAPU;AAQpB,YAAW,CARS;AASpB,UAAS,CATW;AAUpB,UAAS,CAVW;AAWpB,UAAS,EAXW;AAYpB,SAAQ,EAZY;AAapB,WAAU,EAbU;AAcpB,YAAW;AAdS,CAAxB",
+    "sourcesContent": [
+      "exports.WEEKDAY_OFFSET = { \n    'sonntag': 0, \n    'so': 0, \n    'montag': 1, \n    'mo': 1,\n    'dienstag': 2, \n    'di':2, \n    'mittwoch': 3, \n    'mi': 3, \n    'donnerstag': 4, \n    'do': 4, \n    'freitag': 5, \n    'fr': 5,\n    'samstag': 6, \n    'sa': 6\n};\n    \nexports.MONTH_OFFSET = { \n    'januar': 1,\n    'jan': 1,\n    'jan.': 1,\n    'februar': 2,\n    'feb': 2,\n    'feb.': 2,\n    'märz': 3,\n    'maerz': 3,\n    'mär': 3,\n    'mär.': 3,\n    'mrz': 3,\n    'mrz.': 3,\n    'april': 4,\n    'apr': 4,\n    'apr.': 4,\n    'mai': 5,\n    'juni': 6,\n    'jun': 6,\n    'jun.': 6,\n    'juli': 7,\n    'jul': 7,\n    'jul.': 7,\n    'august': 8,\n    'aug': 8,\n    'aug.': 8,\n    'september': 9,\n    'sep': 9,\n    'sep.': 9,\n    'sept': 9,\n    'sept.': 9,\n    'oktober': 10,\n    'okt': 10,\n    'okt.': 10,\n    'november': 11,\n    'nov': 11,\n    'nov.': 11,\n    'dezember': 12,\n    'dez': 12,\n    'dez.': 12\n};\n\nexports.INTEGER_WORDS_PATTERN = '(?:eins|zwei|drei|vier|fünf|fuenf|sechs|sieben|acht|neun|zehn|elf|zwölf|zwoelf)';\nexports.INTEGER_WORDS = {\n    'eins' : 1,\n    'zwei' : 2,\n    'drei' : 3,\n    'vier' : 4,\n    'fünf' : 5,\n    'fuenf': 5,\n    'sechs' : 6,\n    'sieben' : 7,\n    'acht' : 8,\n    'neun' : 9,\n    'zehn' : 10,\n    'elf' : 11,\n    'zwölf' : 12,\n    'zwoelf' : 12\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

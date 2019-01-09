@@ -1,0 +1,35 @@
+{
+  "ast": null,
+  "code": "function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nimport { t } from 'i18next';\nimport React from 'react';\nimport PropTypes from 'prop-types';\nexport default function AssignmentCreatorTextField(_ref) {\n  var input = _ref.input,\n      placeholder = _ref.placeholder,\n      valueLabel = _ref.valueLabel,\n      _ref$meta = _ref.meta,\n      touched = _ref$meta.touched,\n      error = _ref$meta.error;\n  return React.createElement(\"div\", null, React.createElement(\"div\", {\n    className: \"assignment-creator__input_field\"\n  }, React.createElement(\"input\", _extends({\n    className: \"assignment-creator__input\"\n  }, input, {\n    placeholder: placeholder\n  }))), React.createElement(\"div\", {\n    className: \"assignment-creator__input_warning\"\n  }, React.createElement(\"span\", null, t('assignment-creator.value-label', {\n    valueLabel: valueLabel\n  }))), React.createElement(\"div\", null, touched && error && React.createElement(\"span\", {\n    className: \"assignment-creator__assignment-notification\"\n  }, error)));\n}\nAssignmentCreatorTextField.propTypes = {\n  input: PropTypes.object.isRequired,\n  meta: PropTypes.object.isRequired,\n  placeholder: PropTypes.string.isRequired,\n  valueLabel: PropTypes.instanceOf(Date)\n};\nAssignmentCreatorTextField.defaultProps = {\n  valueLabel: null\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/AssignmentCreatorTextField.jsx"
+    ],
+    "names": [
+      "t",
+      "React",
+      "PropTypes",
+      "AssignmentCreatorTextField",
+      "input",
+      "placeholder",
+      "valueLabel",
+      "meta",
+      "touched",
+      "error",
+      "propTypes",
+      "object",
+      "isRequired",
+      "string",
+      "instanceOf",
+      "Date",
+      "defaultProps"
+    ],
+    "mappings": ";;AAAA,SAAQA,CAAR,QAAgB,SAAhB;AACA,OAAOC,KAAP,MAAkB,OAAlB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AAEA,eAAe,SAASC,0BAAT,OAKZ;AAAA,MAJDC,KAIC,QAJDA,KAIC;AAAA,MAHDC,WAGC,QAHDA,WAGC;AAAA,MAFDC,UAEC,QAFDA,UAEC;AAAA,uBADDC,IACC;AAAA,MADMC,OACN,aADMA,OACN;AAAA,MADeC,KACf,aADeA,KACf;AACD,SACE,iCACE;AAAK,IAAA,SAAS,EAAC;AAAf,KACE;AACE,IAAA,SAAS,EAAC;AADZ,KAEML,KAFN;AAGE,IAAA,WAAW,EAAEC;AAHf,KADF,CADF,EAQE;AAAK,IAAA,SAAS,EAAC;AAAf,KACE,kCAAOL,CAAC,CAAC,gCAAD,EAAmC;AAACM,IAAAA,UAAU,EAAVA;AAAD,GAAnC,CAAR,CADF,CARF,EAWE,iCACGE,OAAO,IAAIC,KAAX,IACC;AAAM,IAAA,SAAS,EAAC;AAAhB,KACGA,KADH,CAFJ,CAXF,CADF;AAqBD;AAEDN,0BAA0B,CAACO,SAA3B,GAAuC;AACrCN,EAAAA,KAAK,EAAEF,SAAS,CAACS,MAAV,CAAiBC,UADa;AAErCL,EAAAA,IAAI,EAAEL,SAAS,CAACS,MAAV,CAAiBC,UAFc;AAGrCP,EAAAA,WAAW,EAAEH,SAAS,CAACW,MAAV,CAAiBD,UAHO;AAIrCN,EAAAA,UAAU,EAAEJ,SAAS,CAACY,UAAV,CAAqBC,IAArB;AAJyB,CAAvC;AAOAZ,0BAA0B,CAACa,YAA3B,GAA0C;AACxCV,EAAAA,UAAU,EAAE;AAD4B,CAA1C",
+    "sourcesContent": [
+      "import {t} from 'i18next';\nimport React from 'react';\nimport PropTypes from 'prop-types';\n\nexport default function AssignmentCreatorTextField({\n  input,\n  placeholder,\n  valueLabel,\n  meta: {touched, error},\n}) {\n  return (\n    <div>\n      <div className=\"assignment-creator__input_field\">\n        <input\n          className=\"assignment-creator__input\"\n          {...input}\n          placeholder={placeholder}\n        />\n      </div>\n      <div className=\"assignment-creator__input_warning\">\n        <span>{t('assignment-creator.value-label', {valueLabel})}</span>\n      </div>\n      <div>\n        {touched && error && (\n          <span className=\"assignment-creator__assignment-notification\">\n            {error}\n          </span>\n        )}\n      </div>\n    </div>\n  );\n}\n\nAssignmentCreatorTextField.propTypes = {\n  input: PropTypes.object.isRequired,\n  meta: PropTypes.object.isRequired,\n  placeholder: PropTypes.string.isRequired,\n  valueLabel: PropTypes.instanceOf(Date),\n};\n\nAssignmentCreatorTextField.defaultProps = {\n  valueLabel: null,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

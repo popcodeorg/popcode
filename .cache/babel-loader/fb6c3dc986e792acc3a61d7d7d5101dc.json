@@ -1,0 +1,62 @@
+{
+  "ast": null,
+  "code": "import { DraggableCore } from 'react-draggable';\nimport React from 'react';\nimport PropTypes from 'prop-types';\nimport ImmutablePropTypes from 'react-immutable-proptypes';\nimport classnames from 'classnames';\nimport isEmpty from 'lodash-es/isEmpty';\nimport partial from 'lodash-es/partial';\nimport { EditorLocation } from '../records';\nimport EditorContainer from './EditorContainer';\nimport Editor from './Editor';\nexport default function EditorsColumn(_ref) {\n  var currentProject = _ref.currentProject,\n      errors = _ref.errors,\n      resizableFlexGrow = _ref.resizableFlexGrow,\n      resizableFlexRefs = _ref.resizableFlexRefs,\n      isFlexResizingSupported = _ref.isFlexResizingSupported,\n      isTextSizeLarge = _ref.isTextSizeLarge,\n      requestedFocusedLine = _ref.requestedFocusedLine,\n      onAutoFormat = _ref.onAutoFormat,\n      onComponentHide = _ref.onComponentHide,\n      onEditorInput = _ref.onEditorInput,\n      onRequestedLineFocused = _ref.onRequestedLineFocused,\n      onResizableFlexDividerDrag = _ref.onResizableFlexDividerDrag,\n      visibleLanguages = _ref.visibleLanguages;\n  var editors = [];\n  visibleLanguages.forEach(function (_ref2) {\n    var language = _ref2.language,\n        index = _ref2.index;\n    editors.push(React.createElement(EditorContainer, {\n      key: language,\n      language: language,\n      ref: resizableFlexRefs[index],\n      source: currentProject.sources[language],\n      style: {\n        flexGrow: resizableFlexGrow.get(index)\n      },\n      onHide: partial(onComponentHide, currentProject.projectKey, \"editor.\".concat(language))\n    }, React.createElement(Editor, {\n      errors: errors[language].items,\n      language: language,\n      percentageOfHeight: 1 / visibleLanguages.length,\n      projectKey: currentProject.projectKey,\n      requestedFocusedLine: requestedFocusedLine,\n      source: currentProject.sources[language],\n      textSizeIsLarge: isTextSizeLarge,\n      onAutoFormat: onAutoFormat,\n      onInput: partial(onEditorInput, currentProject.projectKey, language),\n      onRequestedLineFocused: onRequestedLineFocused\n    })));\n\n    if (index < visibleLanguages.length - 1) {\n      editors.push(React.createElement(DraggableCore, {\n        key: \"divider:\".concat(language),\n        onDrag: partial(onResizableFlexDividerDrag, index)\n      }, React.createElement(\"div\", {\n        className: classnames('editors__row-divider', {\n          'editors__row-divider_draggable': isFlexResizingSupported\n        })\n      })));\n    }\n  });\n\n  if (isEmpty(editors)) {\n    return null;\n  }\n\n  return React.createElement(\"div\", {\n    className: \"editors\"\n  }, editors);\n}\nEditorsColumn.propTypes = {\n  currentProject: PropTypes.object.isRequired,\n  errors: PropTypes.object.isRequired,\n  isFlexResizingSupported: PropTypes.bool.isRequired,\n  isTextSizeLarge: PropTypes.bool.isRequired,\n  requestedFocusedLine: PropTypes.instanceOf(EditorLocation),\n  resizableFlexGrow: ImmutablePropTypes.list.isRequired,\n  resizableFlexRefs: PropTypes.array.isRequired,\n  visibleLanguages: PropTypes.array.isRequired,\n  onAutoFormat: PropTypes.func.isRequired,\n  onComponentHide: PropTypes.func.isRequired,\n  onEditorInput: PropTypes.func.isRequired,\n  onRequestedLineFocused: PropTypes.func.isRequired,\n  onResizableFlexDividerDrag: PropTypes.func.isRequired\n};\nEditorsColumn.defaultProps = {\n  requestedFocusedLine: null\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/EditorsColumn.jsx"
+    ],
+    "names": [
+      "DraggableCore",
+      "React",
+      "PropTypes",
+      "ImmutablePropTypes",
+      "classnames",
+      "isEmpty",
+      "partial",
+      "EditorLocation",
+      "EditorContainer",
+      "Editor",
+      "EditorsColumn",
+      "currentProject",
+      "errors",
+      "resizableFlexGrow",
+      "resizableFlexRefs",
+      "isFlexResizingSupported",
+      "isTextSizeLarge",
+      "requestedFocusedLine",
+      "onAutoFormat",
+      "onComponentHide",
+      "onEditorInput",
+      "onRequestedLineFocused",
+      "onResizableFlexDividerDrag",
+      "visibleLanguages",
+      "editors",
+      "forEach",
+      "language",
+      "index",
+      "push",
+      "sources",
+      "flexGrow",
+      "get",
+      "projectKey",
+      "items",
+      "length",
+      "propTypes",
+      "object",
+      "isRequired",
+      "bool",
+      "instanceOf",
+      "list",
+      "array",
+      "func",
+      "defaultProps"
+    ],
+    "mappings": "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",
+    "sourcesContent": [
+      "import {DraggableCore} from 'react-draggable';\nimport React from 'react';\nimport PropTypes from 'prop-types';\nimport ImmutablePropTypes from 'react-immutable-proptypes';\nimport classnames from 'classnames';\nimport isEmpty from 'lodash-es/isEmpty';\nimport partial from 'lodash-es/partial';\n\nimport {EditorLocation} from '../records';\n\nimport EditorContainer from './EditorContainer';\nimport Editor from './Editor';\n\nexport default function EditorsColumn({\n  currentProject,\n  errors,\n  resizableFlexGrow,\n  resizableFlexRefs,\n  isFlexResizingSupported,\n  isTextSizeLarge,\n  requestedFocusedLine,\n  onAutoFormat,\n  onComponentHide,\n  onEditorInput,\n  onRequestedLineFocused,\n  onResizableFlexDividerDrag,\n  visibleLanguages,\n}) {\n  const editors = [];\n\n  visibleLanguages.forEach(({language, index}) => {\n    editors.push(\n      <EditorContainer\n        key={language}\n        language={language}\n        ref={resizableFlexRefs[index]}\n        source={currentProject.sources[language]}\n        style={{flexGrow: resizableFlexGrow.get(index)}}\n        onHide={partial(\n          onComponentHide,\n          currentProject.projectKey,\n          `editor.${language}`,\n        )}\n      >\n        <Editor\n          errors={errors[language].items}\n          language={language}\n          percentageOfHeight={1 / visibleLanguages.length}\n          projectKey={currentProject.projectKey}\n          requestedFocusedLine={requestedFocusedLine}\n          source={currentProject.sources[language]}\n          textSizeIsLarge={isTextSizeLarge}\n          onAutoFormat={onAutoFormat}\n          onInput={partial(onEditorInput, currentProject.projectKey, language)}\n          onRequestedLineFocused={onRequestedLineFocused}\n        />\n      </EditorContainer>,\n    );\n    if (index < visibleLanguages.length - 1) {\n      editors.push(\n        <DraggableCore\n          key={`divider:${language}`}\n          onDrag={partial(onResizableFlexDividerDrag, index)}\n        >\n          <div\n            className={classnames('editors__row-divider', {\n              'editors__row-divider_draggable': isFlexResizingSupported,\n            })}\n          />\n        </DraggableCore>,\n      );\n    }\n  });\n\n  if (isEmpty(editors)) {\n    return null;\n  }\n\n  return <div className=\"editors\">{editors}</div>;\n}\n\nEditorsColumn.propTypes = {\n  currentProject: PropTypes.object.isRequired,\n  errors: PropTypes.object.isRequired,\n  isFlexResizingSupported: PropTypes.bool.isRequired,\n  isTextSizeLarge: PropTypes.bool.isRequired,\n  requestedFocusedLine: PropTypes.instanceOf(EditorLocation),\n  resizableFlexGrow: ImmutablePropTypes.list.isRequired,\n  resizableFlexRefs: PropTypes.array.isRequired,\n  visibleLanguages: PropTypes.array.isRequired,\n  onAutoFormat: PropTypes.func.isRequired,\n  onComponentHide: PropTypes.func.isRequired,\n  onEditorInput: PropTypes.func.isRequired,\n  onRequestedLineFocused: PropTypes.func.isRequired,\n  onResizableFlexDividerDrag: PropTypes.func.isRequired,\n};\n\nEditorsColumn.defaultProps = {\n  requestedFocusedLine: null,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

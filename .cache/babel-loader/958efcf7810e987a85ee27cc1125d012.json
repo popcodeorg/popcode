@@ -1,0 +1,30 @@
+{
+  "ast": null,
+  "code": "/*\n  \n*/\nvar Filter = require('./refiner').Filter;\n\nexports.Refiner = function UnlikelyFormatFilter() {\n  Filter.call(this);\n\n  this.isValid = function (text, result, opt) {\n    if (result.text.replace(' ', '').match(/^\\d*(\\.\\d*)?$/)) {\n      return false;\n    }\n\n    return true;\n  };\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/chrono-node/src/refiners/UnlikelyFormatFilter.js"
+    ],
+    "names": [
+      "Filter",
+      "require",
+      "exports",
+      "Refiner",
+      "UnlikelyFormatFilter",
+      "call",
+      "isValid",
+      "text",
+      "result",
+      "opt",
+      "replace",
+      "match"
+    ],
+    "mappings": "AAAA;;;AAGA,IAAIA,MAAM,GAAGC,OAAO,CAAC,WAAD,CAAP,CAAqBD,MAAlC;;AAEAE,OAAO,CAACC,OAAR,GAAkB,SAASC,oBAAT,GAAgC;AAC9CJ,EAAAA,MAAM,CAACK,IAAP,CAAY,IAAZ;;AAGA,OAAKC,OAAL,GAAe,UAASC,IAAT,EAAeC,MAAf,EAAuBC,GAAvB,EAA4B;AAEvC,QAAID,MAAM,CAACD,IAAP,CAAYG,OAAZ,CAAoB,GAApB,EAAwB,EAAxB,EAA4BC,KAA5B,CAAkC,eAAlC,CAAJ,EAAwD;AACpD,aAAO,KAAP;AACH;;AAED,WAAO,IAAP;AACH,GAPD;AAQH,CAZD",
+    "sourcesContent": [
+      "/*\n  \n*/\nvar Filter = require('./refiner').Filter;\n\nexports.Refiner = function UnlikelyFormatFilter() {\n    Filter.call(this);\n    \n\n    this.isValid = function(text, result, opt) { \n\n        if (result.text.replace(' ','').match(/^\\d*(\\.\\d*)?$/)) {\n            return false;\n        }\n\n        return true; \n    }\n}"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

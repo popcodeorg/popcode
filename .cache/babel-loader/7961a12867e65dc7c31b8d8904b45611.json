@@ -1,0 +1,42 @@
+{
+  "ast": null,
+  "code": "var _marked =\n/*#__PURE__*/\nregeneratorRuntime.mark(validatedSource),\n    _marked2 =\n/*#__PURE__*/\nregeneratorRuntime.mark(compiledProjects);\n\nimport { all, call, put, select, throttle, takeEvery } from 'redux-saga/effects';\nimport every from 'lodash-es/every';\nimport { getCurrentProject, getErrors } from '../selectors';\nimport compileProject from '../util/compileProject';\nimport { bugsnagClient } from '../util/bugsnag';\nimport { projectCompiled, projectCompilationFailed } from '../actions';\nexport function validatedSource() {\n  var errors, currentProject, timestamp, preview;\n  return regeneratorRuntime.wrap(function validatedSource$(_context) {\n    while (1) {\n      switch (_context.prev = _context.next) {\n        case 0:\n          _context.next = 2;\n          return select(getErrors);\n\n        case 2:\n          errors = _context.sent;\n\n          if (!every(errors, function (errorList) {\n            return errorList.state === 'passed';\n          })) {\n            _context.next = 22;\n            break;\n          }\n\n          _context.next = 6;\n          return select(getCurrentProject);\n\n        case 6:\n          currentProject = _context.sent;\n          timestamp = Date.now();\n          _context.prev = 8;\n          _context.next = 11;\n          return call(compileProject, currentProject, {\n            isInlinePreview: true\n          });\n\n        case 11:\n          preview = _context.sent;\n          _context.next = 14;\n          return put(projectCompiled(preview, timestamp));\n\n        case 14:\n          _context.next = 22;\n          break;\n\n        case 16:\n          _context.prev = 16;\n          _context.t0 = _context[\"catch\"](8);\n          _context.next = 20;\n          return call([bugsnagClient, 'notify'], _context.t0);\n\n        case 20:\n          _context.next = 22;\n          return put(projectCompilationFailed(_context.t0));\n\n        case 22:\n        case \"end\":\n          return _context.stop();\n      }\n    }\n  }, _marked, null, [[8, 16]]);\n}\nexport default function compiledProjects() {\n  return regeneratorRuntime.wrap(function compiledProjects$(_context2) {\n    while (1) {\n      switch (_context2.prev = _context2.next) {\n        case 0:\n          _context2.next = 2;\n          return all([throttle(100, 'VALIDATED_SOURCE', validatedSource), takeEvery('PROJECT_CREATED', validatedSource)]);\n\n        case 2:\n        case \"end\":\n          return _context2.stop();\n      }\n    }\n  }, _marked2);\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/sagas/compiledProjects.js"
+    ],
+    "names": [
+      "validatedSource",
+      "compiledProjects",
+      "all",
+      "call",
+      "put",
+      "select",
+      "throttle",
+      "takeEvery",
+      "every",
+      "getCurrentProject",
+      "getErrors",
+      "compileProject",
+      "bugsnagClient",
+      "projectCompiled",
+      "projectCompilationFailed",
+      "errors",
+      "errorList",
+      "state",
+      "currentProject",
+      "timestamp",
+      "Date",
+      "now",
+      "isInlinePreview",
+      "preview"
+    ],
+    "mappings": ";;wBASiBA,e;;;wBAiBQC,gB;;AA1BzB,SAAQC,GAAR,EAAaC,IAAb,EAAmBC,GAAnB,EAAwBC,MAAxB,EAAgCC,QAAhC,EAA0CC,SAA1C,QAA0D,oBAA1D;AAEA,OAAOC,KAAP,MAAkB,iBAAlB;AAEA,SAAQC,iBAAR,EAA2BC,SAA3B,QAA2C,cAA3C;AACA,OAAOC,cAAP,MAA2B,wBAA3B;AACA,SAAQC,aAAR,QAA4B,iBAA5B;AACA,SAAQC,eAAR,EAAyBC,wBAAzB,QAAwD,YAAxD;AAEA,OAAO,SAAUd,eAAV;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AACU,iBAAMK,MAAM,CAACK,SAAD,CAAZ;;AADV;AACCK,UAAAA,MADD;;AAAA,eAEDP,KAAK,CAACO,MAAD,EAAS,UAAAC,SAAS;AAAA,mBAAIA,SAAS,CAACC,KAAV,KAAoB,QAAxB;AAAA,WAAlB,CAFJ;AAAA;AAAA;AAAA;;AAAA;AAGoB,iBAAMZ,MAAM,CAACI,iBAAD,CAAZ;;AAHpB;AAGGS,UAAAA,cAHH;AAIGC,UAAAA,SAJH,GAIeC,IAAI,CAACC,GAAL,EAJf;AAAA;AAAA;AAMe,iBAAMlB,IAAI,CAACQ,cAAD,EAAiBO,cAAjB,EAAiC;AACzDI,YAAAA,eAAe,EAAE;AADwC,WAAjC,CAAV;;AANf;AAMKC,UAAAA,OANL;AAAA;AASD,iBAAMnB,GAAG,CAACS,eAAe,CAACU,OAAD,EAAUJ,SAAV,CAAhB,CAAT;;AATC;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;AAWD,iBAAMhB,IAAI,CAAC,CAACS,aAAD,EAAgB,QAAhB,CAAD,cAAV;;AAXC;AAAA;AAYD,iBAAMR,GAAG,CAACU,wBAAwB,aAAzB,CAAT;;AAZC;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAiBP,eAAe,SAAUb,gBAAV;AAAA;AAAA;AAAA;AAAA;AAAA;AACb,iBAAMC,GAAG,CAAC,CACRI,QAAQ,CAAC,GAAD,EAAM,kBAAN,EAA0BN,eAA1B,CADA,EAERO,SAAS,CAAC,iBAAD,EAAoBP,eAApB,CAFD,CAAD,CAAT;;AADa;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA",
+    "sourcesContent": [
+      "import {all, call, put, select, throttle, takeEvery} from 'redux-saga/effects';\n\nimport every from 'lodash-es/every';\n\nimport {getCurrentProject, getErrors} from '../selectors';\nimport compileProject from '../util/compileProject';\nimport {bugsnagClient} from '../util/bugsnag';\nimport {projectCompiled, projectCompilationFailed} from '../actions';\n\nexport function* validatedSource() {\n  const errors = yield select(getErrors);\n  if (every(errors, errorList => errorList.state === 'passed')) {\n    const currentProject = yield select(getCurrentProject);\n    const timestamp = Date.now();\n    try {\n      const preview = yield call(compileProject, currentProject, {\n        isInlinePreview: true,\n      });\n      yield put(projectCompiled(preview, timestamp));\n    } catch (e) {\n      yield call([bugsnagClient, 'notify'], e);\n      yield put(projectCompilationFailed(e));\n    }\n  }\n}\n\nexport default function* compiledProjects() {\n  yield all([\n    throttle(100, 'VALIDATED_SOURCE', validatedSource),\n    takeEvery('PROJECT_CREATED', validatedSource),\n  ]);\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

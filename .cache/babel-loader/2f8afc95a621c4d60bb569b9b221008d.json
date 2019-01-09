@@ -1,0 +1,42 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = table;\n\nvar position = require('unist-util-position');\n\nvar wrap = require('../wrap');\n\nvar all = require('../all');\n\nfunction table(h, node) {\n  var rows = node.children;\n  var index = rows.length;\n  var align = node.align;\n  var alignLength = align.length;\n  var result = [];\n  var pos;\n  var row;\n  var out;\n  var name;\n  var cell;\n\n  while (index--) {\n    row = rows[index].children;\n    name = index === 0 ? 'th' : 'td';\n    pos = alignLength;\n    out = [];\n\n    while (pos--) {\n      cell = row[pos];\n      out[pos] = h(cell, name, {\n        align: align[pos]\n      }, cell ? all(h, cell) : []);\n    }\n\n    result[index] = h(rows[index], 'tr', wrap(out, true));\n  }\n\n  return h(node, 'table', wrap([h(result[0].position, 'thead', wrap([result[0]], true)), h({\n    start: position.start(result[1]),\n    end: position.end(result[result.length - 1])\n  }, 'tbody', wrap(result.slice(1), true))], true));\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/handlers/table.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "table",
+      "position",
+      "require",
+      "wrap",
+      "all",
+      "h",
+      "node",
+      "rows",
+      "children",
+      "index",
+      "length",
+      "align",
+      "alignLength",
+      "result",
+      "pos",
+      "row",
+      "out",
+      "name",
+      "cell",
+      "start",
+      "end",
+      "slice"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,KAAjB;;AAEA,IAAIC,QAAQ,GAAGC,OAAO,CAAC,qBAAD,CAAtB;;AACA,IAAIC,IAAI,GAAGD,OAAO,CAAC,SAAD,CAAlB;;AACA,IAAIE,GAAG,GAAGF,OAAO,CAAC,QAAD,CAAjB;;AAEA,SAASF,KAAT,CAAeK,CAAf,EAAkBC,IAAlB,EAAwB;AACtB,MAAIC,IAAI,GAAGD,IAAI,CAACE,QAAhB;AACA,MAAIC,KAAK,GAAGF,IAAI,CAACG,MAAjB;AACA,MAAIC,KAAK,GAAGL,IAAI,CAACK,KAAjB;AACA,MAAIC,WAAW,GAAGD,KAAK,CAACD,MAAxB;AACA,MAAIG,MAAM,GAAG,EAAb;AACA,MAAIC,GAAJ;AACA,MAAIC,GAAJ;AACA,MAAIC,GAAJ;AACA,MAAIC,IAAJ;AACA,MAAIC,IAAJ;;AAEA,SAAOT,KAAK,EAAZ,EAAgB;AACdM,IAAAA,GAAG,GAAGR,IAAI,CAACE,KAAD,CAAJ,CAAYD,QAAlB;AACAS,IAAAA,IAAI,GAAGR,KAAK,KAAK,CAAV,GAAc,IAAd,GAAqB,IAA5B;AACAK,IAAAA,GAAG,GAAGF,WAAN;AACAI,IAAAA,GAAG,GAAG,EAAN;;AAEA,WAAOF,GAAG,EAAV,EAAc;AACZI,MAAAA,IAAI,GAAGH,GAAG,CAACD,GAAD,CAAV;AACAE,MAAAA,GAAG,CAACF,GAAD,CAAH,GAAWT,CAAC,CAACa,IAAD,EAAOD,IAAP,EAAa;AAACN,QAAAA,KAAK,EAAEA,KAAK,CAACG,GAAD;AAAb,OAAb,EAAkCI,IAAI,GAAGd,GAAG,CAACC,CAAD,EAAIa,IAAJ,CAAN,GAAkB,EAAxD,CAAZ;AACD;;AAEDL,IAAAA,MAAM,CAACJ,KAAD,CAAN,GAAgBJ,CAAC,CAACE,IAAI,CAACE,KAAD,CAAL,EAAc,IAAd,EAAoBN,IAAI,CAACa,GAAD,EAAM,IAAN,CAAxB,CAAjB;AACD;;AAED,SAAOX,CAAC,CACNC,IADM,EAEN,OAFM,EAGNH,IAAI,CACF,CACEE,CAAC,CAACQ,MAAM,CAAC,CAAD,CAAN,CAAUZ,QAAX,EAAqB,OAArB,EAA8BE,IAAI,CAAC,CAACU,MAAM,CAAC,CAAD,CAAP,CAAD,EAAc,IAAd,CAAlC,CADH,EAEER,CAAC,CACC;AACEc,IAAAA,KAAK,EAAElB,QAAQ,CAACkB,KAAT,CAAeN,MAAM,CAAC,CAAD,CAArB,CADT;AAEEO,IAAAA,GAAG,EAAEnB,QAAQ,CAACmB,GAAT,CAAaP,MAAM,CAACA,MAAM,CAACH,MAAP,GAAgB,CAAjB,CAAnB;AAFP,GADD,EAKC,OALD,EAMCP,IAAI,CAACU,MAAM,CAACQ,KAAP,CAAa,CAAb,CAAD,EAAkB,IAAlB,CANL,CAFH,CADE,EAYF,IAZE,CAHE,CAAR;AAkBD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = table\n\nvar position = require('unist-util-position')\nvar wrap = require('../wrap')\nvar all = require('../all')\n\nfunction table(h, node) {\n  var rows = node.children\n  var index = rows.length\n  var align = node.align\n  var alignLength = align.length\n  var result = []\n  var pos\n  var row\n  var out\n  var name\n  var cell\n\n  while (index--) {\n    row = rows[index].children\n    name = index === 0 ? 'th' : 'td'\n    pos = alignLength\n    out = []\n\n    while (pos--) {\n      cell = row[pos]\n      out[pos] = h(cell, name, {align: align[pos]}, cell ? all(h, cell) : [])\n    }\n\n    result[index] = h(rows[index], 'tr', wrap(out, true))\n  }\n\n  return h(\n    node,\n    'table',\n    wrap(\n      [\n        h(result[0].position, 'thead', wrap([result[0]], true)),\n        h(\n          {\n            start: position.start(result[1]),\n            end: position.end(result[result.length - 1])\n          },\n          'tbody',\n          wrap(result.slice(1), true)\n        )\n      ],\n      true\n    )\n  )\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

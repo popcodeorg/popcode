@@ -1,0 +1,30 @@
+{
+  "ast": null,
+  "code": "var NUMBER = {\n  '零': 0,\n  '一': 1,\n  '二': 2,\n  '兩': 2,\n  '三': 3,\n  '四': 4,\n  '五': 5,\n  '六': 6,\n  '七': 7,\n  '八': 8,\n  '九': 9,\n  '十': 10,\n  '廿': 20,\n  '卅': 30\n};\nvar WEEKDAY_OFFSET = {\n  '天': 0,\n  '日': 0,\n  '一': 1,\n  '二': 2,\n  '三': 3,\n  '四': 4,\n  '五': 5,\n  '六': 6\n};\nexports.NUMBER = NUMBER;\nexports.WEEKDAY_OFFSET = WEEKDAY_OFFSET;\n\nexports.zhStringToNumber = function (text) {\n  var number = 0;\n\n  for (var i = 0; i < text.length; i++) {\n    var char = text[i];\n\n    if (char === '十') {\n      number = number === 0 ? NUMBER[char] : number * NUMBER[char];\n    } else {\n      number += NUMBER[char];\n    }\n  }\n\n  return number;\n};\n\nexports.zhStringToYear = function (text) {\n  var string = '';\n\n  for (var i = 0; i < text.length; i++) {\n    var char = text[i];\n    string = string + NUMBER[char];\n  }\n\n  return parseInt(string);\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/chrono-node/src/utils/ZH-Hant.js"
+    ],
+    "names": [
+      "NUMBER",
+      "WEEKDAY_OFFSET",
+      "exports",
+      "zhStringToNumber",
+      "text",
+      "number",
+      "i",
+      "length",
+      "char",
+      "zhStringToYear",
+      "string",
+      "parseInt"
+    ],
+    "mappings": "AAAA,IAAIA,MAAM,GAAE;AACV,OAAI,CADM;AAEV,OAAI,CAFM;AAGV,OAAI,CAHM;AAIV,OAAI,CAJM;AAKV,OAAI,CALM;AAMV,OAAI,CANM;AAOV,OAAI,CAPM;AAQV,OAAI,CARM;AASV,OAAI,CATM;AAUV,OAAI,CAVM;AAWV,OAAI,CAXM;AAYV,OAAI,EAZM;AAaV,OAAI,EAbM;AAcV,OAAI;AAdM,CAAZ;AAiBA,IAAIC,cAAc,GAAE;AAClB,OAAI,CADc;AAElB,OAAI,CAFc;AAGlB,OAAI,CAHc;AAIlB,OAAI,CAJc;AAKlB,OAAI,CALc;AAMlB,OAAI,CANc;AAOlB,OAAI,CAPc;AAQlB,OAAI;AARc,CAApB;AAWAC,OAAO,CAACF,MAAR,GAAiBA,MAAjB;AACAE,OAAO,CAACD,cAAR,GAAyBA,cAAzB;;AAEAC,OAAO,CAACC,gBAAR,GAAyB,UAASC,IAAT,EAAc;AACrC,MAAIC,MAAM,GAAG,CAAb;;AACA,OAAI,IAAIC,CAAC,GAAC,CAAV,EAAaA,CAAC,GAACF,IAAI,CAACG,MAApB,EAA4BD,CAAC,EAA7B,EAAgC;AAC9B,QAAIE,IAAI,GAAGJ,IAAI,CAACE,CAAD,CAAf;;AACA,QAAGE,IAAI,KAAK,GAAZ,EAAgB;AACdH,MAAAA,MAAM,GAAGA,MAAM,KAAI,CAAV,GAAcL,MAAM,CAACQ,IAAD,CAApB,GAA8BH,MAAM,GAAGL,MAAM,CAACQ,IAAD,CAAtD;AACD,KAFD,MAEK;AACHH,MAAAA,MAAM,IAAIL,MAAM,CAACQ,IAAD,CAAhB;AACD;AACF;;AACD,SAAOH,MAAP;AACD,CAXD;;AAaAH,OAAO,CAACO,cAAR,GAAuB,UAASL,IAAT,EAAc;AACnC,MAAIM,MAAM,GAAG,EAAb;;AACA,OAAI,IAAIJ,CAAC,GAAC,CAAV,EAAaA,CAAC,GAACF,IAAI,CAACG,MAApB,EAA4BD,CAAC,EAA7B,EAAgC;AAC9B,QAAIE,IAAI,GAAGJ,IAAI,CAACE,CAAD,CAAf;AACAI,IAAAA,MAAM,GAAGA,MAAM,GAAGV,MAAM,CAACQ,IAAD,CAAxB;AACD;;AACD,SAAOG,QAAQ,CAACD,MAAD,CAAf;AACD,CAPD",
+    "sourcesContent": [
+      "var NUMBER ={\n  '零':0,\n  '一':1,\n  '二':2,\n  '兩':2,\n  '三':3,\n  '四':4,\n  '五':5,\n  '六':6,\n  '七':7,\n  '八':8,\n  '九':9,\n  '十':10,\n  '廿':20,\n  '卅':30,\n};\n\nvar WEEKDAY_OFFSET ={\n  '天':0,\n  '日':0,\n  '一':1,\n  '二':2,\n  '三':3,\n  '四':4,\n  '五':5,\n  '六':6,\n};\n\nexports.NUMBER = NUMBER;\nexports.WEEKDAY_OFFSET = WEEKDAY_OFFSET;\n\nexports.zhStringToNumber=function(text){\n  var number = 0;\n  for(var i=0; i<text.length ;i++){\n    var char = text[i];\n    if(char === '十'){\n      number = number=== 0 ? NUMBER[char] : (number * NUMBER[char]);\n    }else{\n      number += NUMBER[char];\n    }\n  }\n  return number;\n};\n\nexports.zhStringToYear=function(text){\n  var string = '';\n  for(var i=0; i<text.length ;i++){\n    var char = text[i];\n    string = string + NUMBER[char];\n  }\n  return parseInt(string);\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

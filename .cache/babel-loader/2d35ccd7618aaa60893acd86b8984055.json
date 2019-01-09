@@ -1,0 +1,23 @@
+{
+  "ast": null,
+  "code": "import React from 'react';\nimport { faBars } from '@fortawesome/free-solid-svg-icons';\nimport { FontAwesomeIcon } from '@fortawesome/react-fontawesome';\nexport default function HamburgerMenuButton() {\n  return React.createElement(FontAwesomeIcon, {\n    icon: faBars,\n    size: \"lg\"\n  });\n}\nHamburgerMenuButton.propTypes = {};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/TopBar/HamburgerMenuButton.jsx"
+    ],
+    "names": [
+      "React",
+      "faBars",
+      "FontAwesomeIcon",
+      "HamburgerMenuButton",
+      "propTypes"
+    ],
+    "mappings": "AAAA,OAAOA,KAAP,MAAkB,OAAlB;AACA,SAAQC,MAAR,QAAqB,mCAArB;AACA,SAAQC,eAAR,QAA8B,gCAA9B;AAEA,eAAe,SAASC,mBAAT,GAA+B;AAC5C,SAAO,oBAAC,eAAD;AAAiB,IAAA,IAAI,EAAEF,MAAvB;AAA+B,IAAA,IAAI,EAAC;AAApC,IAAP;AACD;AAEDE,mBAAmB,CAACC,SAApB,GAAgC,EAAhC",
+    "sourcesContent": [
+      "import React from 'react';\nimport {faBars} from '@fortawesome/free-solid-svg-icons';\nimport {FontAwesomeIcon} from '@fortawesome/react-fontawesome';\n\nexport default function HamburgerMenuButton() {\n  return <FontAwesomeIcon icon={faBars} size=\"lg\" />;\n}\n\nHamburgerMenuButton.propTypes = {};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

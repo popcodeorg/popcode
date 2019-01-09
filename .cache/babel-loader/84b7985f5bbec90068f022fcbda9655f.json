@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "export default function isProjectExportInProgress(state, exportKey) {\n  return state.getIn(['clients', 'projectExports', exportKey, 'status']) === 'waiting';\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/selectors/isProjectExportInProgress.js"
+    ],
+    "names": ["isProjectExportInProgress", "state", "exportKey", "getIn"],
+    "mappings": "AAAA,eAAe,SAASA,yBAAT,CAAmCC,KAAnC,EAA0CC,SAA1C,EAAqD;AAClE,SACED,KAAK,CAACE,KAAN,CAAY,CAAC,SAAD,EAAY,gBAAZ,EAA8BD,SAA9B,EAAyC,QAAzC,CAAZ,MACA,SAFF;AAID",
+    "sourcesContent": [
+      "export default function isProjectExportInProgress(state, exportKey) {\n  return (\n    state.getIn(['clients', 'projectExports', exportKey, 'status']) ===\n    'waiting'\n  );\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

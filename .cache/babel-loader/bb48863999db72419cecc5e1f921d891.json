@@ -1,0 +1,27 @@
+{
+  "ast": null,
+  "code": "import { createSelector } from 'reselect';\nexport default createSelector(function (state) {\n  return state.get('errors');\n}, function (errors) {\n  var errorStates = [errors.html.state, errors.css.state, errors.javascript.state];\n\n  if (errorStates.includes('validation-error')) {\n    return 'validation-error';\n  }\n\n  if (errorStates.includes('validating')) {\n    return 'validating';\n  }\n\n  if (errorStates.includes('runtime-error')) {\n    return 'runtime-error';\n  }\n\n  return 'passed';\n});",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/selectors/getCurrentValidationState.js"
+    ],
+    "names": [
+      "createSelector",
+      "state",
+      "get",
+      "errors",
+      "errorStates",
+      "html",
+      "css",
+      "javascript",
+      "includes"
+    ],
+    "mappings": "AAAA,SAAQA,cAAR,QAA6B,UAA7B;AAEA,eAAeA,cAAc,CAC3B,UAAAC,KAAK;AAAA,SAAIA,KAAK,CAACC,GAAN,CAAU,QAAV,CAAJ;AAAA,CADsB,EAE3B,UAAAC,MAAM,EAAI;AACR,MAAMC,WAAW,GAAG,CAClBD,MAAM,CAACE,IAAP,CAAYJ,KADM,EAElBE,MAAM,CAACG,GAAP,CAAWL,KAFO,EAGlBE,MAAM,CAACI,UAAP,CAAkBN,KAHA,CAApB;;AAMA,MAAIG,WAAW,CAACI,QAAZ,CAAqB,kBAArB,CAAJ,EAA8C;AAC5C,WAAO,kBAAP;AACD;;AAED,MAAIJ,WAAW,CAACI,QAAZ,CAAqB,YAArB,CAAJ,EAAwC;AACtC,WAAO,YAAP;AACD;;AAED,MAAIJ,WAAW,CAACI,QAAZ,CAAqB,eAArB,CAAJ,EAA2C;AACzC,WAAO,eAAP;AACD;;AAED,SAAO,QAAP;AACD,CAtB0B,CAA7B",
+    "sourcesContent": [
+      "import {createSelector} from 'reselect';\n\nexport default createSelector(\n  state => state.get('errors'),\n  errors => {\n    const errorStates = [\n      errors.html.state,\n      errors.css.state,\n      errors.javascript.state,\n    ];\n\n    if (errorStates.includes('validation-error')) {\n      return 'validation-error';\n    }\n\n    if (errorStates.includes('validating')) {\n      return 'validating';\n    }\n\n    if (errorStates.includes('runtime-error')) {\n      return 'runtime-error';\n    }\n\n    return 'passed';\n  },\n);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

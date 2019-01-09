@@ -1,0 +1,47 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = generateFootnotes;\n\nvar thematicBreak = require('./handlers/thematic-break');\n\nvar list = require('./handlers/list');\n\nvar wrap = require('./wrap');\n\nfunction generateFootnotes(h) {\n  var footnotes = h.footnotes;\n  var length = footnotes.length;\n  var index = -1;\n  var listItems = [];\n  var def;\n  var backReference;\n  var content;\n  var tail;\n\n  if (!length) {\n    return null;\n  }\n\n  while (++index < length) {\n    def = footnotes[index];\n    content = def.children.concat();\n    tail = content[content.length - 1];\n    backReference = {\n      type: 'link',\n      url: '#fnref-' + def.identifier,\n      data: {\n        hProperties: {\n          className: ['footnote-backref']\n        }\n      },\n      children: [{\n        type: 'text',\n        value: '↩'\n      }]\n    };\n\n    if (!tail || tail.type !== 'paragraph') {\n      tail = {\n        type: 'paragraph',\n        children: []\n      };\n      content.push(tail);\n    }\n\n    tail.children.push(backReference);\n    listItems[index] = {\n      type: 'listItem',\n      data: {\n        hProperties: {\n          id: 'fn-' + def.identifier\n        }\n      },\n      children: content,\n      position: def.position\n    };\n  }\n\n  return h(null, 'div', {\n    className: ['footnotes']\n  }, wrap([thematicBreak(h), list(h, {\n    type: 'list',\n    ordered: true,\n    children: listItems\n  })], true));\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/footer.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "generateFootnotes",
+      "thematicBreak",
+      "require",
+      "list",
+      "wrap",
+      "h",
+      "footnotes",
+      "length",
+      "index",
+      "listItems",
+      "def",
+      "backReference",
+      "content",
+      "tail",
+      "children",
+      "concat",
+      "type",
+      "url",
+      "identifier",
+      "data",
+      "hProperties",
+      "className",
+      "value",
+      "push",
+      "id",
+      "position",
+      "ordered"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,iBAAjB;;AAEA,IAAIC,aAAa,GAAGC,OAAO,CAAC,2BAAD,CAA3B;;AACA,IAAIC,IAAI,GAAGD,OAAO,CAAC,iBAAD,CAAlB;;AACA,IAAIE,IAAI,GAAGF,OAAO,CAAC,QAAD,CAAlB;;AAEA,SAASF,iBAAT,CAA2BK,CAA3B,EAA8B;AAC5B,MAAIC,SAAS,GAAGD,CAAC,CAACC,SAAlB;AACA,MAAIC,MAAM,GAAGD,SAAS,CAACC,MAAvB;AACA,MAAIC,KAAK,GAAG,CAAC,CAAb;AACA,MAAIC,SAAS,GAAG,EAAhB;AACA,MAAIC,GAAJ;AACA,MAAIC,aAAJ;AACA,MAAIC,OAAJ;AACA,MAAIC,IAAJ;;AAEA,MAAI,CAACN,MAAL,EAAa;AACX,WAAO,IAAP;AACD;;AAED,SAAO,EAAEC,KAAF,GAAUD,MAAjB,EAAyB;AACvBG,IAAAA,GAAG,GAAGJ,SAAS,CAACE,KAAD,CAAf;AACAI,IAAAA,OAAO,GAAGF,GAAG,CAACI,QAAJ,CAAaC,MAAb,EAAV;AACAF,IAAAA,IAAI,GAAGD,OAAO,CAACA,OAAO,CAACL,MAAR,GAAiB,CAAlB,CAAd;AACAI,IAAAA,aAAa,GAAG;AACdK,MAAAA,IAAI,EAAE,MADQ;AAEdC,MAAAA,GAAG,EAAE,YAAYP,GAAG,CAACQ,UAFP;AAGdC,MAAAA,IAAI,EAAE;AAACC,QAAAA,WAAW,EAAE;AAACC,UAAAA,SAAS,EAAE,CAAC,kBAAD;AAAZ;AAAd,OAHQ;AAIdP,MAAAA,QAAQ,EAAE,CAAC;AAACE,QAAAA,IAAI,EAAE,MAAP;AAAeM,QAAAA,KAAK,EAAE;AAAtB,OAAD;AAJI,KAAhB;;AAOA,QAAI,CAACT,IAAD,IAASA,IAAI,CAACG,IAAL,KAAc,WAA3B,EAAwC;AACtCH,MAAAA,IAAI,GAAG;AAACG,QAAAA,IAAI,EAAE,WAAP;AAAoBF,QAAAA,QAAQ,EAAE;AAA9B,OAAP;AACAF,MAAAA,OAAO,CAACW,IAAR,CAAaV,IAAb;AACD;;AAEDA,IAAAA,IAAI,CAACC,QAAL,CAAcS,IAAd,CAAmBZ,aAAnB;AAEAF,IAAAA,SAAS,CAACD,KAAD,CAAT,GAAmB;AACjBQ,MAAAA,IAAI,EAAE,UADW;AAEjBG,MAAAA,IAAI,EAAE;AAACC,QAAAA,WAAW,EAAE;AAACI,UAAAA,EAAE,EAAE,QAAQd,GAAG,CAACQ;AAAjB;AAAd,OAFW;AAGjBJ,MAAAA,QAAQ,EAAEF,OAHO;AAIjBa,MAAAA,QAAQ,EAAEf,GAAG,CAACe;AAJG,KAAnB;AAMD;;AAED,SAAOpB,CAAC,CACN,IADM,EAEN,KAFM,EAGN;AAACgB,IAAAA,SAAS,EAAE,CAAC,WAAD;AAAZ,GAHM,EAINjB,IAAI,CACF,CACEH,aAAa,CAACI,CAAD,CADf,EAEEF,IAAI,CAACE,CAAD,EAAI;AAACW,IAAAA,IAAI,EAAE,MAAP;AAAeU,IAAAA,OAAO,EAAE,IAAxB;AAA8BZ,IAAAA,QAAQ,EAAEL;AAAxC,GAAJ,CAFN,CADE,EAKF,IALE,CAJE,CAAR;AAYD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = generateFootnotes\n\nvar thematicBreak = require('./handlers/thematic-break')\nvar list = require('./handlers/list')\nvar wrap = require('./wrap')\n\nfunction generateFootnotes(h) {\n  var footnotes = h.footnotes\n  var length = footnotes.length\n  var index = -1\n  var listItems = []\n  var def\n  var backReference\n  var content\n  var tail\n\n  if (!length) {\n    return null\n  }\n\n  while (++index < length) {\n    def = footnotes[index]\n    content = def.children.concat()\n    tail = content[content.length - 1]\n    backReference = {\n      type: 'link',\n      url: '#fnref-' + def.identifier,\n      data: {hProperties: {className: ['footnote-backref']}},\n      children: [{type: 'text', value: '↩'}]\n    }\n\n    if (!tail || tail.type !== 'paragraph') {\n      tail = {type: 'paragraph', children: []}\n      content.push(tail)\n    }\n\n    tail.children.push(backReference)\n\n    listItems[index] = {\n      type: 'listItem',\n      data: {hProperties: {id: 'fn-' + def.identifier}},\n      children: content,\n      position: def.position\n    }\n  }\n\n  return h(\n    null,\n    'div',\n    {className: ['footnotes']},\n    wrap(\n      [\n        thematicBreak(h),\n        list(h, {type: 'list', ordered: true, children: listItems})\n      ],\n      true\n    )\n  )\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,27 @@
+{
+  "ast": null,
+  "code": "import { createSelector } from 'reselect';\nvar syntacticallyValidStates = new Set(['passed', 'runtime-error']);\nexport default createSelector(function (state) {\n  return state.get('errors');\n}, function (errors) {\n  return !errors.find(function (error) {\n    return !syntacticallyValidStates.has(error.get('state'));\n  });\n});",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/selectors/isCurrentProjectSyntacticallyValid.js"
+    ],
+    "names": [
+      "createSelector",
+      "syntacticallyValidStates",
+      "Set",
+      "state",
+      "get",
+      "errors",
+      "find",
+      "error",
+      "has"
+    ],
+    "mappings": "AAAA,SAAQA,cAAR,QAA6B,UAA7B;AAEA,IAAMC,wBAAwB,GAAG,IAAIC,GAAJ,CAAQ,CAAC,QAAD,EAAW,eAAX,CAAR,CAAjC;AAEA,eAAeF,cAAc,CAC3B,UAAAG,KAAK;AAAA,SAAIA,KAAK,CAACC,GAAN,CAAU,QAAV,CAAJ;AAAA,CADsB,EAE3B,UAAAC,MAAM;AAAA,SACJ,CAACA,MAAM,CAACC,IAAP,CAAY,UAAAC,KAAK;AAAA,WAAI,CAACN,wBAAwB,CAACO,GAAzB,CAA6BD,KAAK,CAACH,GAAN,CAAU,OAAV,CAA7B,CAAL;AAAA,GAAjB,CADG;AAAA,CAFqB,CAA7B",
+    "sourcesContent": [
+      "import {createSelector} from 'reselect';\n\nconst syntacticallyValidStates = new Set(['passed', 'runtime-error']);\n\nexport default createSelector(\n  state => state.get('errors'),\n  errors =>\n    !errors.find(error => !syntacticallyValidStates.has(error.get('state'))),\n);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

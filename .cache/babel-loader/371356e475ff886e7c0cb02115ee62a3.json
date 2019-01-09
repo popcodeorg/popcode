@@ -1,0 +1,55 @@
+{
+  "ast": null,
+  "code": "/*\n    ISO 8601\n    http://www.w3.org/TR/NOTE-datetime\n    - YYYY-MM-DD\n    - YYYY-MM-DDThh:mmTZD\n    - YYYY-MM-DDThh:mm:ssTZD\n    - YYYY-MM-DDThh:mm:ss.sTZD \n    - TZD = (Z or +hh:mm or -hh:mm)\n*/\nvar moment = require('moment');\n\nvar Parser = require('../parser').Parser;\n\nvar ParsedResult = require('../../result').ParsedResult;\n\nvar PATTERN = new RegExp('(\\\\W|^)' + '([0-9]{4})\\\\-([0-9]{1,2})\\\\-([0-9]{1,2})' + '(?:T' //..\n+ '([0-9]{1,2}):([0-9]{1,2})' // hh:mm\n+ '(?::([0-9]{1,2})(?:\\\\.(\\\\d{1,4}))?)?' // :ss.s\n+ '(?:Z|([+-]\\\\d{2}):?(\\\\d{2})?)?' // TZD (Z or ±hh:mm or ±hhmm or ±hh)\n+ ')?' //..\n+ '(?=\\\\W|$)', 'i');\nvar YEAR_NUMBER_GROUP = 2;\nvar MONTH_NUMBER_GROUP = 3;\nvar DATE_NUMBER_GROUP = 4;\nvar HOUR_NUMBER_GROUP = 5;\nvar MINUTE_NUMBER_GROUP = 6;\nvar SECOND_NUMBER_GROUP = 7;\nvar MILLISECOND_NUMBER_GROUP = 8;\nvar TZD_HOUR_OFFSET_GROUP = 9;\nvar TZD_MINUTE_OFFSET_GROUP = 10;\n\nexports.Parser = function ENISOFormatParser() {\n  Parser.apply(this, arguments);\n\n  this.pattern = function () {\n    return PATTERN;\n  };\n\n  this.extract = function (text, ref, match, opt) {\n    var text = match[0].substr(match[1].length);\n    var index = match.index + match[1].length;\n    var result = new ParsedResult({\n      text: text,\n      index: index,\n      ref: ref\n    });\n    result.start.assign('year', parseInt(match[YEAR_NUMBER_GROUP]));\n    result.start.assign('month', parseInt(match[MONTH_NUMBER_GROUP]));\n    result.start.assign('day', parseInt(match[DATE_NUMBER_GROUP]));\n\n    if (moment(result.start.get('month')) > 12 || moment(result.start.get('month')) < 1 || moment(result.start.get('day')) > 31 || moment(result.start.get('day')) < 1) {\n      return null;\n    }\n\n    if (match[HOUR_NUMBER_GROUP] != null) {\n      result.start.assign('hour', parseInt(match[HOUR_NUMBER_GROUP]));\n      result.start.assign('minute', parseInt(match[MINUTE_NUMBER_GROUP]));\n\n      if (match[SECOND_NUMBER_GROUP] != null) {\n        result.start.assign('second', parseInt(match[SECOND_NUMBER_GROUP]));\n      }\n\n      if (match[MILLISECOND_NUMBER_GROUP] != null) {\n        result.start.assign('millisecond', parseInt(match[MILLISECOND_NUMBER_GROUP]));\n      }\n\n      if (match[TZD_HOUR_OFFSET_GROUP] == null) {\n        result.start.assign('timezoneOffset', 0);\n      } else {\n        var minuteOffset = 0;\n        var hourOffset = parseInt(match[TZD_HOUR_OFFSET_GROUP]);\n        if (match[TZD_MINUTE_OFFSET_GROUP] != null) minuteOffset = parseInt(match[TZD_MINUTE_OFFSET_GROUP]);\n        var offset = hourOffset * 60;\n\n        if (offset < 0) {\n          offset -= minuteOffset;\n        } else {\n          offset += minuteOffset;\n        }\n\n        result.start.assign('timezoneOffset', offset);\n      }\n    }\n\n    result.tags['ENISOFormatParser'] = true;\n    return result;\n  };\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/chrono-node/src/parsers/en/ENISOFormatParser.js"
+    ],
+    "names": [
+      "moment",
+      "require",
+      "Parser",
+      "ParsedResult",
+      "PATTERN",
+      "RegExp",
+      "YEAR_NUMBER_GROUP",
+      "MONTH_NUMBER_GROUP",
+      "DATE_NUMBER_GROUP",
+      "HOUR_NUMBER_GROUP",
+      "MINUTE_NUMBER_GROUP",
+      "SECOND_NUMBER_GROUP",
+      "MILLISECOND_NUMBER_GROUP",
+      "TZD_HOUR_OFFSET_GROUP",
+      "TZD_MINUTE_OFFSET_GROUP",
+      "exports",
+      "ENISOFormatParser",
+      "apply",
+      "arguments",
+      "pattern",
+      "extract",
+      "text",
+      "ref",
+      "match",
+      "opt",
+      "substr",
+      "length",
+      "index",
+      "result",
+      "start",
+      "assign",
+      "parseInt",
+      "get",
+      "minuteOffset",
+      "hourOffset",
+      "offset",
+      "tags"
+    ],
+    "mappings": "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",
+    "sourcesContent": [
+      "/*\n    ISO 8601\n    http://www.w3.org/TR/NOTE-datetime\n    - YYYY-MM-DD\n    - YYYY-MM-DDThh:mmTZD\n    - YYYY-MM-DDThh:mm:ssTZD\n    - YYYY-MM-DDThh:mm:ss.sTZD \n    - TZD = (Z or +hh:mm or -hh:mm)\n*/\nvar moment = require('moment');\nvar Parser = require('../parser').Parser;\nvar ParsedResult = require('../../result').ParsedResult;\n\nvar PATTERN = new RegExp('(\\\\W|^)' \n            + '([0-9]{4})\\\\-([0-9]{1,2})\\\\-([0-9]{1,2})'\n            + '(?:T' //..\n                + '([0-9]{1,2}):([0-9]{1,2})' // hh:mm\n                + '(?::([0-9]{1,2})(?:\\\\.(\\\\d{1,4}))?)?' // :ss.s\n                + '(?:Z|([+-]\\\\d{2}):?(\\\\d{2})?)?' // TZD (Z or ±hh:mm or ±hhmm or ±hh)\n            + ')?'  //..\n            + '(?=\\\\W|$)', 'i');\n\nvar YEAR_NUMBER_GROUP = 2;\nvar MONTH_NUMBER_GROUP = 3;\nvar DATE_NUMBER_GROUP  = 4;\nvar HOUR_NUMBER_GROUP  = 5;\nvar MINUTE_NUMBER_GROUP = 6;\nvar SECOND_NUMBER_GROUP = 7;\nvar MILLISECOND_NUMBER_GROUP = 8;\nvar TZD_HOUR_OFFSET_GROUP = 9;\nvar TZD_MINUTE_OFFSET_GROUP = 10;\n\nexports.Parser = function ENISOFormatParser(){\n    Parser.apply(this, arguments);\n    \n    this.pattern = function() { return PATTERN; }\n    \n    this.extract = function(text, ref, match, opt){ \n        \n        var text = match[0].substr(match[1].length);\n        var index = match.index + match[1].length;\n\n        var result = new ParsedResult({\n            text: text,\n            index: index,\n            ref: ref,\n        })\n        \n        result.start.assign('year', parseInt(match[YEAR_NUMBER_GROUP]));\n        result.start.assign('month', parseInt(match[MONTH_NUMBER_GROUP]));\n        result.start.assign('day', parseInt(match[DATE_NUMBER_GROUP]));\n\n        if (moment(result.start.get('month')) > 12 || moment(result.start.get('month')) < 1 ||\n            moment(result.start.get('day')) > 31 || moment(result.start.get('day')) < 1) {\n            return null;\n        }\n\n        if (match[HOUR_NUMBER_GROUP] != null) {\n            \n            result.start.assign('hour',\n                    parseInt(match[HOUR_NUMBER_GROUP]));\n            result.start.assign('minute',\n                    parseInt(match[MINUTE_NUMBER_GROUP]));\n\n            if (match[SECOND_NUMBER_GROUP] != null) {\n\n                result.start.assign('second',\n                        parseInt(match[SECOND_NUMBER_GROUP]));\n            }\n\n            if (match[MILLISECOND_NUMBER_GROUP] != null) {\n\n                result.start.assign('millisecond',\n                        parseInt(match[MILLISECOND_NUMBER_GROUP]));\n            }\n\n            if (match[TZD_HOUR_OFFSET_GROUP] == null) {\n\n                result.start.assign('timezoneOffset', 0);\n            } else {\n\n                var minuteOffset = 0;\n                var hourOffset = parseInt(match[TZD_HOUR_OFFSET_GROUP]);\n                if (match[TZD_MINUTE_OFFSET_GROUP] != null)\n                    minuteOffset = parseInt(match[TZD_MINUTE_OFFSET_GROUP]);\n\n                var offset = hourOffset * 60;\n                if (offset < 0) {\n                    offset -= minuteOffset;\n                } else {\n                    offset += minuteOffset;\n                }\n\n                result.start.assign('timezoneOffset', offset);\n            }\n        }\n        \n        result.tags['ENISOFormatParser'] = true;\n        return result;\n    };\n\n}\n\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

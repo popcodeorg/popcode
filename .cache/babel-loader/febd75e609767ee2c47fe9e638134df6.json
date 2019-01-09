@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "export default function getCourses(state) {\n  return state.getIn(['googleClassroom', 'courses', 'items']);\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/selectors/getCourses.js"
+    ],
+    "names": ["getCourses", "state", "getIn"],
+    "mappings": "AAAA,eAAe,SAASA,UAAT,CAAoBC,KAApB,EAA2B;AACxC,SAAOA,KAAK,CAACC,KAAN,CAAY,CAAC,iBAAD,EAAoB,SAApB,EAA+B,OAA/B,CAAZ,CAAP;AACD",
+    "sourcesContent": [
+      "export default function getCourses(state) {\n  return state.getIn(['googleClassroom', 'courses', 'items']);\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

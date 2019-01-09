@@ -1,0 +1,42 @@
+{
+  "ast": null,
+  "code": "function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nimport React from 'react';\nimport PropTypes from 'prop-types';\nimport map from 'lodash-es/map';\nimport partial from 'lodash-es/partial';\nimport { t } from 'i18next';\nimport ErrorItem from './ErrorItem';\n\nfunction ErrorList(_ref) {\n  var errors = _ref.errors,\n      onErrorClick = _ref.onErrorClick,\n      language = _ref.language;\n\n  if (errors.state === 'passed') {\n    return false;\n  }\n\n  var errorItems = map(errors.items, function (error) {\n    return React.createElement(ErrorItem, _extends({}, error, {\n      key: [error.reason, error.row],\n      onClick: partial(onErrorClick, language)\n    }));\n  });\n  var errorMessage = t('errors.notice', {\n    count: errors.items.length,\n    language: language\n  });\n  return React.createElement(\"div\", null, React.createElement(\"h2\", {\n    className: \"error-list__header\"\n  }, errorMessage), React.createElement(\"ul\", {\n    className: \"error-list__errors\"\n  }, errorItems));\n}\n\nErrorList.propTypes = {\n  errors: PropTypes.object.isRequired,\n  language: PropTypes.oneOf(['html', 'css', 'javascript']).isRequired,\n  onErrorClick: PropTypes.func.isRequired\n};\nexport default ErrorList;",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/ErrorList.jsx"
+    ],
+    "names": [
+      "React",
+      "PropTypes",
+      "map",
+      "partial",
+      "t",
+      "ErrorItem",
+      "ErrorList",
+      "errors",
+      "onErrorClick",
+      "language",
+      "state",
+      "errorItems",
+      "items",
+      "error",
+      "reason",
+      "row",
+      "errorMessage",
+      "count",
+      "length",
+      "propTypes",
+      "object",
+      "isRequired",
+      "oneOf",
+      "func"
+    ],
+    "mappings": ";;AAAA,OAAOA,KAAP,MAAkB,OAAlB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AACA,OAAOC,GAAP,MAAgB,eAAhB;AACA,OAAOC,OAAP,MAAoB,mBAApB;AACA,SAAQC,CAAR,QAAgB,SAAhB;AAEA,OAAOC,SAAP,MAAsB,aAAtB;;AAEA,SAASC,SAAT,OAAqD;AAAA,MAAjCC,MAAiC,QAAjCA,MAAiC;AAAA,MAAzBC,YAAyB,QAAzBA,YAAyB;AAAA,MAAXC,QAAW,QAAXA,QAAW;;AACnD,MAAIF,MAAM,CAACG,KAAP,KAAiB,QAArB,EAA+B;AAC7B,WAAO,KAAP;AACD;;AAED,MAAMC,UAAU,GAAGT,GAAG,CAACK,MAAM,CAACK,KAAR,EAAe,UAAAC,KAAK;AAAA,WACxC,oBAAC,SAAD,eACMA,KADN;AAEE,MAAA,GAAG,EAAE,CAACA,KAAK,CAACC,MAAP,EAAeD,KAAK,CAACE,GAArB,CAFP;AAGE,MAAA,OAAO,EAAEZ,OAAO,CAACK,YAAD,EAAeC,QAAf;AAHlB,OADwC;AAAA,GAApB,CAAtB;AAQA,MAAMO,YAAY,GAAGZ,CAAC,CAAC,eAAD,EAAkB;AACtCa,IAAAA,KAAK,EAAEV,MAAM,CAACK,KAAP,CAAaM,MADkB;AAEtCT,IAAAA,QAAQ,EAARA;AAFsC,GAAlB,CAAtB;AAKA,SACE,iCACE;AAAI,IAAA,SAAS,EAAC;AAAd,KAAoCO,YAApC,CADF,EAEE;AAAI,IAAA,SAAS,EAAC;AAAd,KAAoCL,UAApC,CAFF,CADF;AAMD;;AAEDL,SAAS,CAACa,SAAV,GAAsB;AACpBZ,EAAAA,MAAM,EAAEN,SAAS,CAACmB,MAAV,CAAiBC,UADL;AAEpBZ,EAAAA,QAAQ,EAAER,SAAS,CAACqB,KAAV,CAAgB,CAAC,MAAD,EAAS,KAAT,EAAgB,YAAhB,CAAhB,EAA+CD,UAFrC;AAGpBb,EAAAA,YAAY,EAAEP,SAAS,CAACsB,IAAV,CAAeF;AAHT,CAAtB;AAMA,eAAef,SAAf",
+    "sourcesContent": [
+      "import React from 'react';\nimport PropTypes from 'prop-types';\nimport map from 'lodash-es/map';\nimport partial from 'lodash-es/partial';\nimport {t} from 'i18next';\n\nimport ErrorItem from './ErrorItem';\n\nfunction ErrorList({errors, onErrorClick, language}) {\n  if (errors.state === 'passed') {\n    return false;\n  }\n\n  const errorItems = map(errors.items, error => (\n    <ErrorItem\n      {...error}\n      key={[error.reason, error.row]}\n      onClick={partial(onErrorClick, language)}\n    />\n  ));\n\n  const errorMessage = t('errors.notice', {\n    count: errors.items.length,\n    language,\n  });\n\n  return (\n    <div>\n      <h2 className=\"error-list__header\">{errorMessage}</h2>\n      <ul className=\"error-list__errors\">{errorItems}</ul>\n    </div>\n  );\n}\n\nErrorList.propTypes = {\n  errors: PropTypes.object.isRequired,\n  language: PropTypes.oneOf(['html', 'css', 'javascript']).isRequired,\n  onErrorClick: PropTypes.func.isRequired,\n};\n\nexport default ErrorList;\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

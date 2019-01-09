@@ -1,0 +1,58 @@
+{
+  "ast": null,
+  "code": "var moment = require('moment');\n\nvar Parser = require('../parser').Parser;\n\nvar ParsedResult = require('../../result').ParsedResult;\n\nvar util = require('../../utils/EN');\n\nvar PATTERN = new RegExp('' + '(\\\\W|^)' + '(?:within\\\\s*)?' + '(' + util.TIME_UNIT_PATTERN + ')' + '(?:ago|before|earlier)(?=(?:\\\\W|$))', 'i');\nvar STRICT_PATTERN = new RegExp('' + '(\\\\W|^)' + '(?:within\\\\s*)?' + '(' + util.TIME_UNIT_STRICT_PATTERN + ')' + 'ago(?=(?:\\\\W|$))', 'i');\n\nexports.Parser = function ENTimeAgoFormatParser() {\n  Parser.apply(this, arguments);\n\n  this.pattern = function () {\n    return this.isStrictMode() ? STRICT_PATTERN : PATTERN;\n  };\n\n  this.extract = function (text, ref, match, opt) {\n    if (match.index > 0 && text[match.index - 1].match(/\\w/)) return null;\n    var text = match[0];\n    text = match[0].substr(match[1].length, match[0].length - match[1].length);\n    var index = match.index + match[1].length;\n    var result = new ParsedResult({\n      index: index,\n      text: text,\n      ref: ref\n    });\n    var fragments = util.extractDateTimeUnitFragments(match[2]);\n    var date = moment(ref);\n\n    for (var key in fragments) {\n      date.add(-fragments[key], key);\n    }\n\n    if (fragments['hour'] > 0 || fragments['minute'] > 0 || fragments['second'] > 0) {\n      result.start.assign('hour', date.hour());\n      result.start.assign('minute', date.minute());\n      result.start.assign('second', date.second());\n      result.tags['ENTimeAgoFormatParser'] = true;\n    }\n\n    if (fragments['d'] > 0 || fragments['month'] > 0 || fragments['year'] > 0) {\n      result.start.assign('day', date.date());\n      result.start.assign('month', date.month() + 1);\n      result.start.assign('year', date.year());\n    } else {\n      if (fragments['week'] > 0) {\n        result.start.imply('weekday', date.day());\n      }\n\n      result.start.imply('day', date.date());\n      result.start.imply('month', date.month() + 1);\n      result.start.imply('year', date.year());\n    }\n\n    return result;\n  };\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/chrono-node/src/parsers/en/ENTimeAgoFormatParser.js"
+    ],
+    "names": [
+      "moment",
+      "require",
+      "Parser",
+      "ParsedResult",
+      "util",
+      "PATTERN",
+      "RegExp",
+      "TIME_UNIT_PATTERN",
+      "STRICT_PATTERN",
+      "TIME_UNIT_STRICT_PATTERN",
+      "exports",
+      "ENTimeAgoFormatParser",
+      "apply",
+      "arguments",
+      "pattern",
+      "isStrictMode",
+      "extract",
+      "text",
+      "ref",
+      "match",
+      "opt",
+      "index",
+      "substr",
+      "length",
+      "result",
+      "fragments",
+      "extractDateTimeUnitFragments",
+      "date",
+      "key",
+      "add",
+      "start",
+      "assign",
+      "hour",
+      "minute",
+      "second",
+      "tags",
+      "month",
+      "year",
+      "imply",
+      "day"
+    ],
+    "mappings": "AAAA,IAAIA,MAAM,GAAGC,OAAO,CAAC,QAAD,CAApB;;AACA,IAAIC,MAAM,GAAGD,OAAO,CAAC,WAAD,CAAP,CAAqBC,MAAlC;;AACA,IAAIC,YAAY,GAAGF,OAAO,CAAC,cAAD,CAAP,CAAwBE,YAA3C;;AACA,IAAIC,IAAI,GAAIH,OAAO,CAAC,gBAAD,CAAnB;;AAEA,IAAII,OAAO,GAAG,IAAIC,MAAJ,CAAW,KACrB,SADqB,GAErB,iBAFqB,GAGrB,GAHqB,GAGfF,IAAI,CAACG,iBAHU,GAGU,GAHV,GAIrB,qCAJU,EAI6B,GAJ7B,CAAd;AAMA,IAAIC,cAAc,GAAG,IAAIF,MAAJ,CAAW,KAC5B,SAD4B,GAE5B,iBAF4B,GAG5B,GAH4B,GAGtBF,IAAI,CAACK,wBAHiB,GAGU,GAHV,GAI5B,kBAJiB,EAIG,GAJH,CAArB;;AAMAC,OAAO,CAACR,MAAR,GAAiB,SAASS,qBAAT,GAAgC;AAC7CT,EAAAA,MAAM,CAACU,KAAP,CAAa,IAAb,EAAmBC,SAAnB;;AAEA,OAAKC,OAAL,GAAe,YAAW;AACtB,WAAO,KAAKC,YAAL,KAAqBP,cAArB,GAAsCH,OAA7C;AACH,GAFD;;AAIA,OAAKW,OAAL,GAAe,UAASC,IAAT,EAAeC,GAAf,EAAoBC,KAApB,EAA2BC,GAA3B,EAA+B;AAE1C,QAAID,KAAK,CAACE,KAAN,GAAc,CAAd,IAAmBJ,IAAI,CAACE,KAAK,CAACE,KAAN,GAAY,CAAb,CAAJ,CAAoBF,KAApB,CAA0B,IAA1B,CAAvB,EAAwD,OAAO,IAAP;AAExD,QAAIF,IAAI,GAAGE,KAAK,CAAC,CAAD,CAAhB;AACAF,IAAAA,IAAI,GAAIE,KAAK,CAAC,CAAD,CAAL,CAASG,MAAT,CAAgBH,KAAK,CAAC,CAAD,CAAL,CAASI,MAAzB,EAAiCJ,KAAK,CAAC,CAAD,CAAL,CAASI,MAAT,GAAkBJ,KAAK,CAAC,CAAD,CAAL,CAASI,MAA5D,CAAR;AACA,QAAIF,KAAK,GAAGF,KAAK,CAACE,KAAN,GAAcF,KAAK,CAAC,CAAD,CAAL,CAASI,MAAnC;AAEA,QAAIC,MAAM,GAAG,IAAIrB,YAAJ,CAAiB;AAC1BkB,MAAAA,KAAK,EAAEA,KADmB;AAE1BJ,MAAAA,IAAI,EAAEA,IAFoB;AAG1BC,MAAAA,GAAG,EAAEA;AAHqB,KAAjB,CAAb;AAMA,QAAIO,SAAS,GAAGrB,IAAI,CAACsB,4BAAL,CAAkCP,KAAK,CAAC,CAAD,CAAvC,CAAhB;AACA,QAAIQ,IAAI,GAAG3B,MAAM,CAACkB,GAAD,CAAjB;;AAEA,SAAK,IAAIU,GAAT,IAAgBH,SAAhB,EAA2B;AACvBE,MAAAA,IAAI,CAACE,GAAL,CAAS,CAACJ,SAAS,CAACG,GAAD,CAAnB,EAA0BA,GAA1B;AACH;;AAED,QAAIH,SAAS,CAAC,MAAD,CAAT,GAAoB,CAApB,IAAyBA,SAAS,CAAC,QAAD,CAAT,GAAsB,CAA/C,IAAoDA,SAAS,CAAC,QAAD,CAAT,GAAsB,CAA9E,EAAiF;AAC7ED,MAAAA,MAAM,CAACM,KAAP,CAAaC,MAAb,CAAoB,MAApB,EAA4BJ,IAAI,CAACK,IAAL,EAA5B;AACAR,MAAAA,MAAM,CAACM,KAAP,CAAaC,MAAb,CAAoB,QAApB,EAA8BJ,IAAI,CAACM,MAAL,EAA9B;AACAT,MAAAA,MAAM,CAACM,KAAP,CAAaC,MAAb,CAAoB,QAApB,EAA8BJ,IAAI,CAACO,MAAL,EAA9B;AACAV,MAAAA,MAAM,CAACW,IAAP,CAAY,uBAAZ,IAAuC,IAAvC;AACH;;AAED,QAAIV,SAAS,CAAC,GAAD,CAAT,GAAiB,CAAjB,IAAsBA,SAAS,CAAC,OAAD,CAAT,GAAqB,CAA3C,IAAgDA,SAAS,CAAC,MAAD,CAAT,GAAoB,CAAxE,EAA2E;AACvED,MAAAA,MAAM,CAACM,KAAP,CAAaC,MAAb,CAAoB,KAApB,EAA2BJ,IAAI,CAACA,IAAL,EAA3B;AACAH,MAAAA,MAAM,CAACM,KAAP,CAAaC,MAAb,CAAoB,OAApB,EAA6BJ,IAAI,CAACS,KAAL,KAAe,CAA5C;AACAZ,MAAAA,MAAM,CAACM,KAAP,CAAaC,MAAb,CAAoB,MAApB,EAA4BJ,IAAI,CAACU,IAAL,EAA5B;AACH,KAJD,MAIO;AACH,UAAIZ,SAAS,CAAC,MAAD,CAAT,GAAoB,CAAxB,EAA2B;AACvBD,QAAAA,MAAM,CAACM,KAAP,CAAaQ,KAAb,CAAmB,SAAnB,EAA8BX,IAAI,CAACY,GAAL,EAA9B;AACH;;AAEDf,MAAAA,MAAM,CAACM,KAAP,CAAaQ,KAAb,CAAmB,KAAnB,EAA0BX,IAAI,CAACA,IAAL,EAA1B;AACAH,MAAAA,MAAM,CAACM,KAAP,CAAaQ,KAAb,CAAmB,OAAnB,EAA4BX,IAAI,CAACS,KAAL,KAAe,CAA3C;AACAZ,MAAAA,MAAM,CAACM,KAAP,CAAaQ,KAAb,CAAmB,MAAnB,EAA2BX,IAAI,CAACU,IAAL,EAA3B;AACH;;AAED,WAAOb,MAAP;AACH,GA3CD;AA4CH,CAnDD",
+    "sourcesContent": [
+      "var moment = require('moment');\nvar Parser = require('../parser').Parser;\nvar ParsedResult = require('../../result').ParsedResult;\nvar util  = require('../../utils/EN');\n\nvar PATTERN = new RegExp('' +\n    '(\\\\W|^)' +\n    '(?:within\\\\s*)?' +\n    '(' + util.TIME_UNIT_PATTERN + ')' +\n    '(?:ago|before|earlier)(?=(?:\\\\W|$))', 'i');\n\nvar STRICT_PATTERN = new RegExp('' +\n    '(\\\\W|^)' +\n    '(?:within\\\\s*)?' +\n    '(' + util.TIME_UNIT_STRICT_PATTERN + ')' +\n    'ago(?=(?:\\\\W|$))', 'i');\n\nexports.Parser = function ENTimeAgoFormatParser(){\n    Parser.apply(this, arguments);\n\n    this.pattern = function() {\n        return this.isStrictMode()? STRICT_PATTERN : PATTERN;\n    };\n\n    this.extract = function(text, ref, match, opt){\n\n        if (match.index > 0 && text[match.index-1].match(/\\w/)) return null;\n\n        var text = match[0];\n        text  = match[0].substr(match[1].length, match[0].length - match[1].length);\n        var index = match.index + match[1].length;\n\n        var result = new ParsedResult({\n            index: index,\n            text: text,\n            ref: ref\n        });\n\n        var fragments = util.extractDateTimeUnitFragments(match[2]);\n        var date = moment(ref);\n\n        for (var key in fragments) {\n            date.add(-fragments[key], key);\n        }\n\n        if (fragments['hour'] > 0 || fragments['minute'] > 0 || fragments['second'] > 0) {\n            result.start.assign('hour', date.hour());\n            result.start.assign('minute', date.minute());\n            result.start.assign('second', date.second());\n            result.tags['ENTimeAgoFormatParser'] = true;\n        } \n        \n        if (fragments['d'] > 0 || fragments['month'] > 0 || fragments['year'] > 0) {\n            result.start.assign('day', date.date());\n            result.start.assign('month', date.month() + 1);\n            result.start.assign('year', date.year());\n        } else {\n            if (fragments['week'] > 0) {\n                result.start.imply('weekday', date.day());\n            }\n\n            result.start.imply('day', date.date());\n            result.start.imply('month', date.month() + 1);\n            result.start.imply('year', date.year());\n        }\n\n        return result;\n    };\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

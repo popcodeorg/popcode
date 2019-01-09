@@ -1,0 +1,47 @@
+{
+  "ast": null,
+  "code": "import { connect } from 'react-redux';\nimport { AssignmentState } from '../enums';\nimport { closeAssignmentCreator, createAssignment } from '../actions';\nimport { getCourses, isAssignmentCreatorOpen, isAssignmentExportInProgress, getCurrentProjectPreview, getParsedDate, makeIsRemoteCollectionFullyLoaded } from '../selectors';\nimport AssignmentCreator from '../components/AssignmentCreator';\nvar areCoursesLoaded = makeIsRemoteCollectionFullyLoaded(['googleClassroom', 'courses']);\n\nfunction mapStateToProps(state) {\n  return {\n    courses: getCourses(state),\n    areCoursesLoaded: areCoursesLoaded(state),\n    isAssignmentExportInProgress: isAssignmentExportInProgress(state),\n    isOpen: isAssignmentCreatorOpen(state),\n    projectTitle: getCurrentProjectPreview(state),\n    parsedDate: getParsedDate(state)\n  };\n}\n\nfunction mapDispatchToProps(dispatch) {\n  return {\n    onAssignAssignment: function onAssignAssignment(data) {\n      var selectedCourseId = data.get('course');\n      var dueDate = data.get('date').parsedDate;\n      dispatch(createAssignment(selectedCourseId, dueDate, AssignmentState.PUBLISHED));\n    },\n    onDraftAssignment: function onDraftAssignment(data) {\n      var selectedCourseId = data.get('course');\n      var dueDate = data.get('date').parsedDate;\n      dispatch(createAssignment(selectedCourseId, dueDate, AssignmentState.DRAFT));\n    },\n    onCloseAssignmentCreator: function onCloseAssignmentCreator() {\n      dispatch(closeAssignmentCreator());\n    }\n  };\n}\n\nexport default connect(mapStateToProps, mapDispatchToProps)(AssignmentCreator);",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/containers/AssignmentCreator.js"
+    ],
+    "names": [
+      "connect",
+      "AssignmentState",
+      "closeAssignmentCreator",
+      "createAssignment",
+      "getCourses",
+      "isAssignmentCreatorOpen",
+      "isAssignmentExportInProgress",
+      "getCurrentProjectPreview",
+      "getParsedDate",
+      "makeIsRemoteCollectionFullyLoaded",
+      "AssignmentCreator",
+      "areCoursesLoaded",
+      "mapStateToProps",
+      "state",
+      "courses",
+      "isOpen",
+      "projectTitle",
+      "parsedDate",
+      "mapDispatchToProps",
+      "dispatch",
+      "onAssignAssignment",
+      "data",
+      "selectedCourseId",
+      "get",
+      "dueDate",
+      "PUBLISHED",
+      "onDraftAssignment",
+      "DRAFT",
+      "onCloseAssignmentCreator"
+    ],
+    "mappings": "AAAA,SAAQA,OAAR,QAAsB,aAAtB;AAEA,SAAQC,eAAR,QAA8B,UAA9B;AAEA,SAAQC,sBAAR,EAAgCC,gBAAhC,QAAuD,YAAvD;AACA,SACEC,UADF,EAEEC,uBAFF,EAGEC,4BAHF,EAIEC,wBAJF,EAKEC,aALF,EAMEC,iCANF,QAOO,cAPP;AASA,OAAOC,iBAAP,MAA8B,iCAA9B;AAEA,IAAMC,gBAAgB,GAAGF,iCAAiC,CAAC,CACzD,iBADyD,EAEzD,SAFyD,CAAD,CAA1D;;AAKA,SAASG,eAAT,CAAyBC,KAAzB,EAAgC;AAC9B,SAAO;AACLC,IAAAA,OAAO,EAAEV,UAAU,CAACS,KAAD,CADd;AAELF,IAAAA,gBAAgB,EAAEA,gBAAgB,CAACE,KAAD,CAF7B;AAGLP,IAAAA,4BAA4B,EAAEA,4BAA4B,CAACO,KAAD,CAHrD;AAILE,IAAAA,MAAM,EAAEV,uBAAuB,CAACQ,KAAD,CAJ1B;AAKLG,IAAAA,YAAY,EAAET,wBAAwB,CAACM,KAAD,CALjC;AAMLI,IAAAA,UAAU,EAAET,aAAa,CAACK,KAAD;AANpB,GAAP;AAQD;;AAED,SAASK,kBAAT,CAA4BC,QAA5B,EAAsC;AACpC,SAAO;AACLC,IAAAA,kBADK,8BACcC,IADd,EACoB;AACvB,UAAMC,gBAAgB,GAAGD,IAAI,CAACE,GAAL,CAAS,QAAT,CAAzB;AACA,UAAMC,OAAO,GAAGH,IAAI,CAACE,GAAL,CAAS,MAAT,EAAiBN,UAAjC;AACAE,MAAAA,QAAQ,CACNhB,gBAAgB,CAACmB,gBAAD,EAAmBE,OAAnB,EAA4BvB,eAAe,CAACwB,SAA5C,CADV,CAAR;AAGD,KAPI;AASLC,IAAAA,iBATK,6BASaL,IATb,EASmB;AACtB,UAAMC,gBAAgB,GAAGD,IAAI,CAACE,GAAL,CAAS,QAAT,CAAzB;AACA,UAAMC,OAAO,GAAGH,IAAI,CAACE,GAAL,CAAS,MAAT,EAAiBN,UAAjC;AACAE,MAAAA,QAAQ,CACNhB,gBAAgB,CAACmB,gBAAD,EAAmBE,OAAnB,EAA4BvB,eAAe,CAAC0B,KAA5C,CADV,CAAR;AAGD,KAfI;AAiBLC,IAAAA,wBAjBK,sCAiBsB;AACzBT,MAAAA,QAAQ,CAACjB,sBAAsB,EAAvB,CAAR;AACD;AAnBI,GAAP;AAqBD;;AAED,eAAeF,OAAO,CACpBY,eADoB,EAEpBM,kBAFoB,CAAP,CAGbR,iBAHa,CAAf",
+    "sourcesContent": [
+      "import {connect} from 'react-redux';\n\nimport {AssignmentState} from '../enums';\n\nimport {closeAssignmentCreator, createAssignment} from '../actions';\nimport {\n  getCourses,\n  isAssignmentCreatorOpen,\n  isAssignmentExportInProgress,\n  getCurrentProjectPreview,\n  getParsedDate,\n  makeIsRemoteCollectionFullyLoaded,\n} from '../selectors';\n\nimport AssignmentCreator from '../components/AssignmentCreator';\n\nconst areCoursesLoaded = makeIsRemoteCollectionFullyLoaded([\n  'googleClassroom',\n  'courses',\n]);\n\nfunction mapStateToProps(state) {\n  return {\n    courses: getCourses(state),\n    areCoursesLoaded: areCoursesLoaded(state),\n    isAssignmentExportInProgress: isAssignmentExportInProgress(state),\n    isOpen: isAssignmentCreatorOpen(state),\n    projectTitle: getCurrentProjectPreview(state),\n    parsedDate: getParsedDate(state),\n  };\n}\n\nfunction mapDispatchToProps(dispatch) {\n  return {\n    onAssignAssignment(data) {\n      const selectedCourseId = data.get('course');\n      const dueDate = data.get('date').parsedDate;\n      dispatch(\n        createAssignment(selectedCourseId, dueDate, AssignmentState.PUBLISHED),\n      );\n    },\n\n    onDraftAssignment(data) {\n      const selectedCourseId = data.get('course');\n      const dueDate = data.get('date').parsedDate;\n      dispatch(\n        createAssignment(selectedCourseId, dueDate, AssignmentState.DRAFT),\n      );\n    },\n\n    onCloseAssignmentCreator() {\n      dispatch(closeAssignmentCreator());\n    },\n  };\n}\n\nexport default connect(\n  mapStateToProps,\n  mapDispatchToProps,\n)(AssignmentCreator);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

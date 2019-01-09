@@ -1,0 +1,27 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = isPrefixedValue;\nvar regex = /-webkit-|-moz-|-ms-/;\n\nfunction isPrefixedValue(value) {\n  return typeof value === 'string' && regex.test(value);\n}\n\nmodule.exports = exports['default'];",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/css-in-js-utils/lib/isPrefixedValue.js"
+    ],
+    "names": [
+      "Object",
+      "defineProperty",
+      "exports",
+      "value",
+      "default",
+      "isPrefixedValue",
+      "regex",
+      "test",
+      "module"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,cAAP,CAAsBC,OAAtB,EAA+B,YAA/B,EAA6C;AAC3CC,EAAAA,KAAK,EAAE;AADoC,CAA7C;AAGAD,OAAO,CAACE,OAAR,GAAkBC,eAAlB;AACA,IAAIC,KAAK,GAAG,qBAAZ;;AAEA,SAASD,eAAT,CAAyBF,KAAzB,EAAgC;AAC9B,SAAO,OAAOA,KAAP,KAAiB,QAAjB,IAA6BG,KAAK,CAACC,IAAN,CAAWJ,KAAX,CAApC;AACD;;AACDK,MAAM,CAACN,OAAP,GAAiBA,OAAO,CAAC,SAAD,CAAxB",
+    "sourcesContent": [
+      "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = isPrefixedValue;\nvar regex = /-webkit-|-moz-|-ms-/;\n\nfunction isPrefixedValue(value) {\n  return typeof value === 'string' && regex.test(value);\n}\nmodule.exports = exports['default'];"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

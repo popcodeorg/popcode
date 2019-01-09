@@ -1,0 +1,43 @@
+{
+  "ast": null,
+  "code": "import { List } from 'immutable';\nimport { CompiledProject } from '../records';\nvar initialState = new List();\n\nfunction trimRight(list, maxLength) {\n  if (list.size <= maxLength) {\n    return list;\n  }\n\n  return list.splice(0, list.size - maxLength);\n}\n\nexport default function compiledProjects(stateIn, action) {\n  var state = stateIn;\n\n  if (state === undefined) {\n    state = initialState;\n  }\n\n  switch (action.type) {\n    case 'PROJECT_CREATED':\n      return initialState;\n\n    case 'CHANGE_CURRENT_PROJECT':\n      return initialState;\n\n    case 'REFRESH_PREVIEW':\n      {\n        if (state.isEmpty()) {\n          return state;\n        }\n\n        var _state$last = state.last(),\n            source = _state$last.source,\n            title = _state$last.title;\n\n        return trimRight(state.push(new CompiledProject({\n          source: source,\n          title: title,\n          compiledProjectKey: action.payload.timestamp\n        })));\n      }\n\n    case 'PROJECT_COMPILED':\n      return trimRight(state.push(new CompiledProject({\n        source: action.payload.source,\n        title: action.payload.title,\n        compiledProjectKey: action.meta.timestamp\n      })), 2);\n\n    case 'USER_DONE_TYPING':\n      return trimRight(state, 1);\n\n    case 'VALIDATED_SOURCE':\n      if (action.payload.errors.length) {\n        return initialState;\n      }\n\n      return state;\n  }\n\n  return state;\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/reducers/compiledProjects.js"
+    ],
+    "names": [
+      "List",
+      "CompiledProject",
+      "initialState",
+      "trimRight",
+      "list",
+      "maxLength",
+      "size",
+      "splice",
+      "compiledProjects",
+      "stateIn",
+      "action",
+      "state",
+      "undefined",
+      "type",
+      "isEmpty",
+      "last",
+      "source",
+      "title",
+      "push",
+      "compiledProjectKey",
+      "payload",
+      "timestamp",
+      "meta",
+      "errors",
+      "length"
+    ],
+    "mappings": "AAAA,SAAQA,IAAR,QAAmB,WAAnB;AAEA,SAAQC,eAAR,QAA8B,YAA9B;AAEA,IAAMC,YAAY,GAAG,IAAIF,IAAJ,EAArB;;AAEA,SAASG,SAAT,CAAmBC,IAAnB,EAAyBC,SAAzB,EAAoC;AAClC,MAAID,IAAI,CAACE,IAAL,IAAaD,SAAjB,EAA4B;AAC1B,WAAOD,IAAP;AACD;;AAED,SAAOA,IAAI,CAACG,MAAL,CAAY,CAAZ,EAAeH,IAAI,CAACE,IAAL,GAAYD,SAA3B,CAAP;AACD;;AAED,eAAe,SAASG,gBAAT,CAA0BC,OAA1B,EAAmCC,MAAnC,EAA2C;AACxD,MAAIC,KAAK,GAAGF,OAAZ;;AACA,MAAIE,KAAK,KAAKC,SAAd,EAAyB;AACvBD,IAAAA,KAAK,GAAGT,YAAR;AACD;;AAED,UAAQQ,MAAM,CAACG,IAAf;AACE,SAAK,iBAAL;AACE,aAAOX,YAAP;;AAEF,SAAK,wBAAL;AACE,aAAOA,YAAP;;AAEF,SAAK,iBAAL;AAAwB;AACtB,YAAIS,KAAK,CAACG,OAAN,EAAJ,EAAqB;AACnB,iBAAOH,KAAP;AACD;;AAHqB,0BAKEA,KAAK,CAACI,IAAN,EALF;AAAA,YAKfC,MALe,eAKfA,MALe;AAAA,YAKPC,KALO,eAKPA,KALO;;AAMtB,eAAOd,SAAS,CACdQ,KAAK,CAACO,IAAN,CACE,IAAIjB,eAAJ,CAAoB;AAClBe,UAAAA,MAAM,EAANA,MADkB;AAElBC,UAAAA,KAAK,EAALA,KAFkB;AAGlBE,UAAAA,kBAAkB,EAAET,MAAM,CAACU,OAAP,CAAeC;AAHjB,SAApB,CADF,CADc,CAAhB;AASD;;AAED,SAAK,kBAAL;AACE,aAAOlB,SAAS,CACdQ,KAAK,CAACO,IAAN,CACE,IAAIjB,eAAJ,CAAoB;AAClBe,QAAAA,MAAM,EAAEN,MAAM,CAACU,OAAP,CAAeJ,MADL;AAElBC,QAAAA,KAAK,EAAEP,MAAM,CAACU,OAAP,CAAeH,KAFJ;AAGlBE,QAAAA,kBAAkB,EAAET,MAAM,CAACY,IAAP,CAAYD;AAHd,OAApB,CADF,CADc,EAQd,CARc,CAAhB;;AAWF,SAAK,kBAAL;AACE,aAAOlB,SAAS,CAACQ,KAAD,EAAQ,CAAR,CAAhB;;AAEF,SAAK,kBAAL;AACE,UAAID,MAAM,CAACU,OAAP,CAAeG,MAAf,CAAsBC,MAA1B,EAAkC;AAChC,eAAOtB,YAAP;AACD;;AACD,aAAOS,KAAP;AA3CJ;;AA8CA,SAAOA,KAAP;AACD",
+    "sourcesContent": [
+      "import {List} from 'immutable';\n\nimport {CompiledProject} from '../records';\n\nconst initialState = new List();\n\nfunction trimRight(list, maxLength) {\n  if (list.size <= maxLength) {\n    return list;\n  }\n\n  return list.splice(0, list.size - maxLength);\n}\n\nexport default function compiledProjects(stateIn, action) {\n  let state = stateIn;\n  if (state === undefined) {\n    state = initialState;\n  }\n\n  switch (action.type) {\n    case 'PROJECT_CREATED':\n      return initialState;\n\n    case 'CHANGE_CURRENT_PROJECT':\n      return initialState;\n\n    case 'REFRESH_PREVIEW': {\n      if (state.isEmpty()) {\n        return state;\n      }\n\n      const {source, title} = state.last();\n      return trimRight(\n        state.push(\n          new CompiledProject({\n            source,\n            title,\n            compiledProjectKey: action.payload.timestamp,\n          }),\n        ),\n      );\n    }\n\n    case 'PROJECT_COMPILED':\n      return trimRight(\n        state.push(\n          new CompiledProject({\n            source: action.payload.source,\n            title: action.payload.title,\n            compiledProjectKey: action.meta.timestamp,\n          }),\n        ),\n        2,\n      );\n\n    case 'USER_DONE_TYPING':\n      return trimRight(state, 1);\n\n    case 'VALIDATED_SOURCE':\n      if (action.payload.errors.length) {\n        return initialState;\n      }\n      return state;\n  }\n\n  return state;\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,53 @@
+{
+  "ast": null,
+  "code": "var _marked =\n/*#__PURE__*/\nregeneratorRuntime.mark(userDoneTyping),\n    _marked2 =\n/*#__PURE__*/\nregeneratorRuntime.mark(projectSuccessfullySaved),\n    _marked3 =\n/*#__PURE__*/\nregeneratorRuntime.mark(projectExport),\n    _marked4 =\n/*#__PURE__*/\nregeneratorRuntime.mark(popOutProject),\n    _marked5 =\n/*#__PURE__*/\nregeneratorRuntime.mark(exportProject),\n    _marked6 =\n/*#__PURE__*/\nregeneratorRuntime.mark(ui);\n\nimport { all, call, debounce, delay, put, select, take, takeEvery } from 'redux-saga/effects';\nimport { userDoneTyping as userDoneTypingAction, showSaveIndicator, hideSaveIndicator } from '../actions/ui';\nimport { getCurrentProject } from '../selectors';\nimport { projectExportDisplayed, projectExportNotDisplayed } from '../actions/clients';\nimport { openWindowWithContent } from '../util';\nimport spinnerPageHtml from '../../templates/project-export.html';\nimport compileProject from '../util/compileProject';\nexport function userDoneTyping() {\n  return regeneratorRuntime.wrap(function userDoneTyping$(_context) {\n    while (1) {\n      switch (_context.prev = _context.next) {\n        case 0:\n          _context.next = 2;\n          return put(userDoneTypingAction());\n\n        case 2:\n        case \"end\":\n          return _context.stop();\n      }\n    }\n  }, _marked);\n}\nexport function projectSuccessfullySaved() {\n  return regeneratorRuntime.wrap(function projectSuccessfullySaved$(_context2) {\n    while (1) {\n      switch (_context2.prev = _context2.next) {\n        case 0:\n          _context2.next = 2;\n          return put(showSaveIndicator());\n\n        case 2:\n          _context2.next = 4;\n          return delay(1000);\n\n        case 4:\n          _context2.next = 6;\n          return put(hideSaveIndicator());\n\n        case 6:\n        case \"end\":\n          return _context2.stop();\n      }\n    }\n  }, _marked2);\n}\n\nfunction projectExport(successAction, failureAction, notDisplayedAction, displayedAction) {\n  var exportWindow, _ref, type, _ref$payload, url, exportType;\n\n  return regeneratorRuntime.wrap(function projectExport$(_context3) {\n    while (1) {\n      switch (_context3.prev = _context3.next) {\n        case 0:\n          _context3.next = 2;\n          return call(openWindowWithContent, spinnerPageHtml);\n\n        case 2:\n          exportWindow = _context3.sent;\n          _context3.next = 5;\n          return take([successAction, failureAction]);\n\n        case 5:\n          _ref = _context3.sent;\n          type = _ref.type;\n          _ref$payload = _ref.payload;\n          url = _ref$payload.url;\n          exportType = _ref$payload.exportType;\n\n          if (!(type === successAction)) {\n            _context3.next = 21;\n            break;\n          }\n\n          if (!exportWindow.closed) {\n            _context3.next = 16;\n            break;\n          }\n\n          _context3.next = 14;\n          return put(notDisplayedAction(url, exportType));\n\n        case 14:\n          _context3.next = 19;\n          break;\n\n        case 16:\n          exportWindow.location.href = url;\n          _context3.next = 19;\n          return put(displayedAction());\n\n        case 19:\n          _context3.next = 23;\n          break;\n\n        case 21:\n          _context3.next = 23;\n          return call([exportWindow, 'close']);\n\n        case 23:\n        case \"end\":\n          return _context3.stop();\n      }\n    }\n  }, _marked3);\n}\n\nexport function popOutProject() {\n  var project, _ref2, source;\n\n  return regeneratorRuntime.wrap(function popOutProject$(_context4) {\n    while (1) {\n      switch (_context4.prev = _context4.next) {\n        case 0:\n          _context4.next = 2;\n          return select(getCurrentProject);\n\n        case 2:\n          project = _context4.sent;\n          _context4.next = 5;\n          return call(compileProject, project);\n\n        case 5:\n          _ref2 = _context4.sent;\n          source = _ref2.source;\n          _context4.next = 9;\n          return call(openWindowWithContent, source);\n\n        case 9:\n        case \"end\":\n          return _context4.stop();\n      }\n    }\n  }, _marked4);\n}\nexport function exportProject() {\n  return regeneratorRuntime.wrap(function exportProject$(_context5) {\n    while (1) {\n      switch (_context5.prev = _context5.next) {\n        case 0:\n          return _context5.delegateYield(projectExport('PROJECT_EXPORTED', 'PROJECT_EXPORT_ERROR', projectExportNotDisplayed, projectExportDisplayed), \"t0\", 1);\n\n        case 1:\n        case \"end\":\n          return _context5.stop();\n      }\n    }\n  }, _marked5);\n}\nexport default function ui() {\n  return regeneratorRuntime.wrap(function ui$(_context6) {\n    while (1) {\n      switch (_context6.prev = _context6.next) {\n        case 0:\n          _context6.next = 2;\n          return all([debounce(1000, 'UPDATE_PROJECT_SOURCE', userDoneTyping), takeEvery('POP_OUT_PROJECT', popOutProject), takeEvery('EXPORT_PROJECT', exportProject), debounce(1000, 'PROJECT_SUCCESSFULLY_SAVED', projectSuccessfullySaved)]);\n\n        case 2:\n        case \"end\":\n          return _context6.stop();\n      }\n    }\n  }, _marked6);\n}",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/sagas/ui.js"],
+    "names": [
+      "userDoneTyping",
+      "projectSuccessfullySaved",
+      "projectExport",
+      "popOutProject",
+      "exportProject",
+      "ui",
+      "all",
+      "call",
+      "debounce",
+      "delay",
+      "put",
+      "select",
+      "take",
+      "takeEvery",
+      "userDoneTypingAction",
+      "showSaveIndicator",
+      "hideSaveIndicator",
+      "getCurrentProject",
+      "projectExportDisplayed",
+      "projectExportNotDisplayed",
+      "openWindowWithContent",
+      "spinnerPageHtml",
+      "compileProject",
+      "successAction",
+      "failureAction",
+      "notDisplayedAction",
+      "displayedAction",
+      "exportWindow",
+      "type",
+      "payload",
+      "url",
+      "exportType",
+      "closed",
+      "location",
+      "href",
+      "project",
+      "source"
+    ],
+    "mappings": "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",
+    "sourcesContent": [
+      "import {\n  all,\n  call,\n  debounce,\n  delay,\n  put,\n  select,\n  take,\n  takeEvery,\n} from 'redux-saga/effects';\nimport {\n  userDoneTyping as userDoneTypingAction,\n  showSaveIndicator,\n  hideSaveIndicator,\n} from '../actions/ui';\nimport {getCurrentProject} from '../selectors';\nimport {\n  projectExportDisplayed,\n  projectExportNotDisplayed,\n} from '../actions/clients';\nimport {openWindowWithContent} from '../util';\nimport spinnerPageHtml from '../../templates/project-export.html';\nimport compileProject from '../util/compileProject';\n\nexport function* userDoneTyping() {\n  yield put(userDoneTypingAction());\n}\n\nexport function* projectSuccessfullySaved() {\n  yield put(showSaveIndicator());\n  yield delay(1000);\n  yield put(hideSaveIndicator());\n}\n\nfunction* projectExport(\n  successAction,\n  failureAction,\n  notDisplayedAction,\n  displayedAction,\n) {\n  const exportWindow = yield call(openWindowWithContent, spinnerPageHtml);\n  const {\n    type,\n    payload: {url, exportType},\n  } = yield take([successAction, failureAction]);\n  if (type === successAction) {\n    if (exportWindow.closed) {\n      yield put(notDisplayedAction(url, exportType));\n    } else {\n      exportWindow.location.href = url;\n      yield put(displayedAction());\n    }\n  } else {\n    yield call([exportWindow, 'close']);\n  }\n}\n\nexport function* popOutProject() {\n  const project = yield select(getCurrentProject);\n  const {source} = yield call(compileProject, project);\n  yield call(openWindowWithContent, source);\n}\n\nexport function* exportProject() {\n  yield* projectExport(\n    'PROJECT_EXPORTED',\n    'PROJECT_EXPORT_ERROR',\n    projectExportNotDisplayed,\n    projectExportDisplayed,\n  );\n}\n\nexport default function* ui() {\n  yield all([\n    debounce(1000, 'UPDATE_PROJECT_SOURCE', userDoneTyping),\n    takeEvery('POP_OUT_PROJECT', popOutProject),\n    takeEvery('EXPORT_PROJECT', exportProject),\n    debounce(1000, 'PROJECT_SUCCESSFULLY_SAVED', projectSuccessfullySaved),\n  ]);\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

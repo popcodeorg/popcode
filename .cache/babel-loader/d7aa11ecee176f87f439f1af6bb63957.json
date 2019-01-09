@@ -1,0 +1,33 @@
+{
+  "ast": null,
+  "code": "function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }\n\nfunction _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"next\", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"throw\", err); } _next(undefined); }); }; }\n\nimport groupBy from 'lodash-es/groupBy';\nimport values from 'lodash-es/values';\nimport flatten from 'lodash-es/flatten';\nimport flatMap from 'lodash-es/flatMap';\nimport sortBy from 'lodash-es/sortBy';\nimport omit from 'lodash-es/omit';\n\nfunction filterErrors(errors) {\n  var groupedErrors = groupBy(errors, 'reason');\n  var suppressedTypes = flatMap(flatten(values(groupedErrors)), 'suppresses');\n  return flatten(values(omit(groupedErrors, suppressedTypes)));\n}\n\nfunction mergeValidations(_x) {\n  return _mergeValidations.apply(this, arguments);\n}\n\nfunction _mergeValidations() {\n  _mergeValidations = _asyncToGenerator(\n  /*#__PURE__*/\n  regeneratorRuntime.mark(function _callee(errors) {\n    var results, filteredErrors;\n    return regeneratorRuntime.wrap(function _callee$(_context) {\n      while (1) {\n        switch (_context.prev = _context.next) {\n          case 0:\n            _context.next = 2;\n            return Promise.all(errors);\n\n          case 2:\n            results = _context.sent;\n            filteredErrors = filterErrors(flatten(results));\n            return _context.abrupt(\"return\", sortBy(filteredErrors, 'row'));\n\n          case 5:\n          case \"end\":\n            return _context.stop();\n        }\n      }\n    }, _callee);\n  }));\n  return _mergeValidations.apply(this, arguments);\n}\n\nexport default mergeValidations;",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/validations/mergeValidations.js"
+    ],
+    "names": [
+      "groupBy",
+      "values",
+      "flatten",
+      "flatMap",
+      "sortBy",
+      "omit",
+      "filterErrors",
+      "errors",
+      "groupedErrors",
+      "suppressedTypes",
+      "mergeValidations",
+      "Promise",
+      "all",
+      "results",
+      "filteredErrors"
+    ],
+    "mappings": ";;;;AAAA,OAAOA,OAAP,MAAoB,mBAApB;AACA,OAAOC,MAAP,MAAmB,kBAAnB;AACA,OAAOC,OAAP,MAAoB,mBAApB;AACA,OAAOC,OAAP,MAAoB,mBAApB;AACA,OAAOC,MAAP,MAAmB,kBAAnB;AACA,OAAOC,IAAP,MAAiB,gBAAjB;;AAEA,SAASC,YAAT,CAAsBC,MAAtB,EAA8B;AAC5B,MAAMC,aAAa,GAAGR,OAAO,CAACO,MAAD,EAAS,QAAT,CAA7B;AAEA,MAAME,eAAe,GAAGN,OAAO,CAACD,OAAO,CAACD,MAAM,CAACO,aAAD,CAAP,CAAR,EAAiC,YAAjC,CAA/B;AAEA,SAAON,OAAO,CAACD,MAAM,CAACI,IAAI,CAACG,aAAD,EAAgBC,eAAhB,CAAL,CAAP,CAAd;AACD;;SAEcC,gB;;;;;;;0BAAf,iBAAgCH,MAAhC;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,mBACwBI,OAAO,CAACC,GAAR,CAAYL,MAAZ,CADxB;;AAAA;AACQM,YAAAA,OADR;AAEQC,YAAAA,cAFR,GAEyBR,YAAY,CAACJ,OAAO,CAACW,OAAD,CAAR,CAFrC;AAAA,6CAGST,MAAM,CAACU,cAAD,EAAiB,KAAjB,CAHf;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,G;;;;AAMA,eAAeJ,gBAAf",
+    "sourcesContent": [
+      "import groupBy from 'lodash-es/groupBy';\nimport values from 'lodash-es/values';\nimport flatten from 'lodash-es/flatten';\nimport flatMap from 'lodash-es/flatMap';\nimport sortBy from 'lodash-es/sortBy';\nimport omit from 'lodash-es/omit';\n\nfunction filterErrors(errors) {\n  const groupedErrors = groupBy(errors, 'reason');\n\n  const suppressedTypes = flatMap(flatten(values(groupedErrors)), 'suppresses');\n\n  return flatten(values(omit(groupedErrors, suppressedTypes)));\n}\n\nasync function mergeValidations(errors) {\n  const results = await Promise.all(errors);\n  const filteredErrors = filterErrors(flatten(results));\n  return sortBy(filteredErrors, 'row');\n}\n\nexport default mergeValidations;\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

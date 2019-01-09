@@ -1,0 +1,38 @@
+{
+  "ast": null,
+  "code": "/* global process */\n\n/* eslint-env commonjs */\n\n/* eslint-disable import/no-commonjs */\nmodule.exports = {\n  nodeEnv: process.env.NODE_ENV || 'development',\n  logReduxActions: function logReduxActions() {\n    return process.env.LOG_REDUX_ACTIONS === 'true';\n  },\n  warnOnDroppedErrors: process.env.WARN_ON_DROPPED_ERRORS === 'true',\n  firebaseApp: process.env.FIREBASE_APP,\n  firebaseApiKey: process.env.FIREBASE_API_KEY,\n  firebaseClientId: process.env.FIREBASE_CLIENT_ID,\n  feedbackUrl: 'https://gitreports.com/issue/popcodeorg/popcode',\n  bugsnagApiKey: '3cc590a735bc2e50d2a21e467cf62fee',\n  gitRevision: process.env.GIT_REVISION,\n  googleAnalyticsTrackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID\n};",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/config.js"],
+    "names": [
+      "module",
+      "exports",
+      "nodeEnv",
+      "process",
+      "env",
+      "NODE_ENV",
+      "logReduxActions",
+      "LOG_REDUX_ACTIONS",
+      "warnOnDroppedErrors",
+      "WARN_ON_DROPPED_ERRORS",
+      "firebaseApp",
+      "FIREBASE_APP",
+      "firebaseApiKey",
+      "FIREBASE_API_KEY",
+      "firebaseClientId",
+      "FIREBASE_CLIENT_ID",
+      "feedbackUrl",
+      "bugsnagApiKey",
+      "gitRevision",
+      "GIT_REVISION",
+      "googleAnalyticsTrackingId",
+      "GOOGLE_ANALYTICS_TRACKING_ID"
+    ],
+    "mappings": "AAAA;;AACA;;AACA;AAEAA,MAAM,CAACC,OAAP,GAAiB;AACfC,EAAAA,OAAO,EAAEC,OAAO,CAACC,GAAR,CAAYC,QAAZ,IAAwB,aADlB;AAEfC,EAAAA,eAAe,EAAE;AAAA,WAAMH,OAAO,CAACC,GAAR,CAAYG,iBAAZ,KAAkC,MAAxC;AAAA,GAFF;AAGfC,EAAAA,mBAAmB,EAAEL,OAAO,CAACC,GAAR,CAAYK,sBAAZ,KAAuC,MAH7C;AAKfC,EAAAA,WAAW,EAAEP,OAAO,CAACC,GAAR,CAAYO,YALV;AAMfC,EAAAA,cAAc,EAAET,OAAO,CAACC,GAAR,CAAYS,gBANb;AAOfC,EAAAA,gBAAgB,EAAEX,OAAO,CAACC,GAAR,CAAYW,kBAPf;AASfC,EAAAA,WAAW,EAAE,iDATE;AAWfC,EAAAA,aAAa,EAAE,kCAXA;AAafC,EAAAA,WAAW,EAAEf,OAAO,CAACC,GAAR,CAAYe,YAbV;AAefC,EAAAA,yBAAyB,EAAEjB,OAAO,CAACC,GAAR,CAAYiB;AAfxB,CAAjB",
+    "sourcesContent": [
+      "/* global process */\n/* eslint-env commonjs */\n/* eslint-disable import/no-commonjs */\n\nmodule.exports = {\n  nodeEnv: process.env.NODE_ENV || 'development',\n  logReduxActions: () => process.env.LOG_REDUX_ACTIONS === 'true',\n  warnOnDroppedErrors: process.env.WARN_ON_DROPPED_ERRORS === 'true',\n\n  firebaseApp: process.env.FIREBASE_APP,\n  firebaseApiKey: process.env.FIREBASE_API_KEY,\n  firebaseClientId: process.env.FIREBASE_CLIENT_ID,\n\n  feedbackUrl: 'https://gitreports.com/issue/popcodeorg/popcode',\n\n  bugsnagApiKey: '3cc590a735bc2e50d2a21e467cf62fee',\n\n  gitRevision: process.env.GIT_REVISION,\n\n  googleAnalyticsTrackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

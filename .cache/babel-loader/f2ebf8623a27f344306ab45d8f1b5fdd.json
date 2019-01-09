@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "export default function isAssignmentExportInProgress(state) {\n  return state.getIn(['clients', 'exportingAssignment']);\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/selectors/isAssignmentExportInProgress.js"
+    ],
+    "names": ["isAssignmentExportInProgress", "state", "getIn"],
+    "mappings": "AAAA,eAAe,SAASA,4BAAT,CAAsCC,KAAtC,EAA6C;AAC1D,SAAOA,KAAK,CAACC,KAAN,CAAY,CAAC,SAAD,EAAY,qBAAZ,CAAZ,CAAP;AACD",
+    "sourcesContent": [
+      "export default function isAssignmentExportInProgress(state) {\n  return state.getIn(['clients', 'exportingAssignment']);\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

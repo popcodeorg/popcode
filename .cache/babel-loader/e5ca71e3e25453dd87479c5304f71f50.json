@@ -1,0 +1,36 @@
+{
+  "ast": null,
+  "code": "import React from 'react';\nimport PropTypes from 'prop-types';\nimport classnames from 'classnames';\nimport { faChevronRight } from '@fortawesome/free-solid-svg-icons';\nimport { FontAwesomeIcon } from '@fortawesome/react-fontawesome';\nimport isNil from 'lodash-es/isNil';\nimport { ConsoleEntry as ConsoleEntryRecord } from '../records';\nexport default function ConsoleExpression(_ref) {\n  var expression = _ref.entry.expression,\n      isActive = _ref.isActive;\n\n  if (isNil(expression)) {\n    return null;\n  }\n\n  return React.createElement(\"div\", {\n    className: classnames('console__row', 'console__expression', {\n      console__expression_inactive: !isActive\n    })\n  }, React.createElement(\"div\", {\n    className: \"console__chevron\"\n  }, React.createElement(FontAwesomeIcon, {\n    icon: faChevronRight\n  })), expression);\n}\nConsoleExpression.propTypes = {\n  entry: PropTypes.instanceOf(ConsoleEntryRecord).isRequired,\n  isActive: PropTypes.bool.isRequired\n};\nConsoleExpression.defaultProps = {\n  expression: null\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/ConsoleExpression.jsx"
+    ],
+    "names": [
+      "React",
+      "PropTypes",
+      "classnames",
+      "faChevronRight",
+      "FontAwesomeIcon",
+      "isNil",
+      "ConsoleEntry",
+      "ConsoleEntryRecord",
+      "ConsoleExpression",
+      "expression",
+      "entry",
+      "isActive",
+      "console__expression_inactive",
+      "propTypes",
+      "instanceOf",
+      "isRequired",
+      "bool",
+      "defaultProps"
+    ],
+    "mappings": "AAAA,OAAOA,KAAP,MAAkB,OAAlB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AACA,OAAOC,UAAP,MAAuB,YAAvB;AACA,SAAQC,cAAR,QAA6B,mCAA7B;AACA,SAAQC,eAAR,QAA8B,gCAA9B;AACA,OAAOC,KAAP,MAAkB,iBAAlB;AAEA,SAAQC,YAAY,IAAIC,kBAAxB,QAAiD,YAAjD;AAEA,eAAe,SAASC,iBAAT,OAA4D;AAAA,MAAxBC,UAAwB,QAAhCC,KAAgC,CAAxBD,UAAwB;AAAA,MAAXE,QAAW,QAAXA,QAAW;;AACzE,MAAIN,KAAK,CAACI,UAAD,CAAT,EAAuB;AACrB,WAAO,IAAP;AACD;;AAED,SACE;AACE,IAAA,SAAS,EAAEP,UAAU,CAAC,cAAD,EAAiB,qBAAjB,EAAwC;AAC3DU,MAAAA,4BAA4B,EAAE,CAACD;AAD4B,KAAxC;AADvB,KAKE;AAAK,IAAA,SAAS,EAAC;AAAf,KACE,oBAAC,eAAD;AAAiB,IAAA,IAAI,EAAER;AAAvB,IADF,CALF,EAQGM,UARH,CADF;AAYD;AAEDD,iBAAiB,CAACK,SAAlB,GAA8B;AAC5BH,EAAAA,KAAK,EAAET,SAAS,CAACa,UAAV,CAAqBP,kBAArB,EAAyCQ,UADpB;AAE5BJ,EAAAA,QAAQ,EAAEV,SAAS,CAACe,IAAV,CAAeD;AAFG,CAA9B;AAKAP,iBAAiB,CAACS,YAAlB,GAAiC;AAC/BR,EAAAA,UAAU,EAAE;AADmB,CAAjC",
+    "sourcesContent": [
+      "import React from 'react';\nimport PropTypes from 'prop-types';\nimport classnames from 'classnames';\nimport {faChevronRight} from '@fortawesome/free-solid-svg-icons';\nimport {FontAwesomeIcon} from '@fortawesome/react-fontawesome';\nimport isNil from 'lodash-es/isNil';\n\nimport {ConsoleEntry as ConsoleEntryRecord} from '../records';\n\nexport default function ConsoleExpression({entry: {expression}, isActive}) {\n  if (isNil(expression)) {\n    return null;\n  }\n\n  return (\n    <div\n      className={classnames('console__row', 'console__expression', {\n        console__expression_inactive: !isActive,\n      })}\n    >\n      <div className=\"console__chevron\">\n        <FontAwesomeIcon icon={faChevronRight} />\n      </div>\n      {expression}\n    </div>\n  );\n}\n\nConsoleExpression.propTypes = {\n  entry: PropTypes.instanceOf(ConsoleEntryRecord).isRequired,\n  isActive: PropTypes.bool.isRequired,\n};\n\nConsoleExpression.defaultProps = {\n  expression: null,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

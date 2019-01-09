@@ -1,0 +1,25 @@
+{
+  "ast": null,
+  "code": "/**\r\n * Prevents clickthrough of DOM items in React\r\n * @param e event containing nativeEvent property\r\n * @param cb optional callback to pass\r\n * @returns {*}\r\n */\nmodule.exports = function (e, cb) {\n  if (e) {\n    if (e.stopPropagation) {\n      e.stopPropagation();\n    }\n\n    if (e.nativeEvent && e.nativeEvent.stopImmediatePropagation) {\n      e.nativeEvent.stopImmediatePropagation();\n    }\n  } // trigger callback if one was provided\n\n\n  if (cb && typeof cb == 'function') {\n    return cb(e);\n  } else return e; //otherwise simply funnel back event\n\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/react-prevent-clickthrough/preventClickthrough.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "e",
+      "cb",
+      "stopPropagation",
+      "nativeEvent",
+      "stopImmediatePropagation"
+    ],
+    "mappings": "AAAA;;;;;;AAMAA,MAAM,CAACC,OAAP,GAAiB,UAASC,CAAT,EAAYC,EAAZ,EACjB;AACI,MAAGD,CAAH,EACA;AACI,QAAGA,CAAC,CAACE,eAAL,EAAqB;AAAEF,MAAAA,CAAC,CAACE,eAAF;AAAqB;;AAC5C,QAAGF,CAAC,CAACG,WAAF,IAAiBH,CAAC,CAACG,WAAF,CAAcC,wBAAlC,EACA;AACIJ,MAAAA,CAAC,CAACG,WAAF,CAAcC,wBAAd;AACH;AACJ,GARL,CASI;;;AACA,MAAGH,EAAE,IAAI,OAAOA,EAAP,IAAa,UAAtB,EAAiC;AAAE,WAAOA,EAAE,CAACD,CAAD,CAAT;AAAc,GAAjD,MACK,OAAOA,CAAP,CAXT,CAWkD;;AACjD,CAbD",
+    "sourcesContent": [
+      "/**\r\n * Prevents clickthrough of DOM items in React\r\n * @param e event containing nativeEvent property\r\n * @param cb optional callback to pass\r\n * @returns {*}\r\n */\r\nmodule.exports = function(e, cb)\r\n{\r\n    if(e)\r\n    {\r\n        if(e.stopPropagation){ e.stopPropagation() }\r\n        if(e.nativeEvent && e.nativeEvent.stopImmediatePropagation)\r\n        {\r\n            e.nativeEvent.stopImmediatePropagation()\r\n        }\r\n    }\r\n    // trigger callback if one was provided\r\n    if(cb && typeof cb == 'function'){ return cb(e) }\r\n    else return e;                                //otherwise simply funnel back event\r\n};"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,32 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = hyphenateProperty;\n\nvar _hyphenateStyleName = require('hyphenate-style-name');\n\nvar _hyphenateStyleName2 = _interopRequireDefault(_hyphenateStyleName);\n\nfunction _interopRequireDefault(obj) {\n  return obj && obj.__esModule ? obj : {\n    default: obj\n  };\n}\n\nfunction hyphenateProperty(property) {\n  return (0, _hyphenateStyleName2.default)(property);\n}\n\nmodule.exports = exports['default'];",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/css-in-js-utils/lib/hyphenateProperty.js"
+    ],
+    "names": [
+      "Object",
+      "defineProperty",
+      "exports",
+      "value",
+      "default",
+      "hyphenateProperty",
+      "_hyphenateStyleName",
+      "require",
+      "_hyphenateStyleName2",
+      "_interopRequireDefault",
+      "obj",
+      "__esModule",
+      "property",
+      "module"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,cAAP,CAAsBC,OAAtB,EAA+B,YAA/B,EAA6C;AAC3CC,EAAAA,KAAK,EAAE;AADoC,CAA7C;AAGAD,OAAO,CAACE,OAAR,GAAkBC,iBAAlB;;AAEA,IAAIC,mBAAmB,GAAGC,OAAO,CAAC,sBAAD,CAAjC;;AAEA,IAAIC,oBAAoB,GAAGC,sBAAsB,CAACH,mBAAD,CAAjD;;AAEA,SAASG,sBAAT,CAAgCC,GAAhC,EAAqC;AAAE,SAAOA,GAAG,IAAIA,GAAG,CAACC,UAAX,GAAwBD,GAAxB,GAA8B;AAAEN,IAAAA,OAAO,EAAEM;AAAX,GAArC;AAAwD;;AAE/F,SAASL,iBAAT,CAA2BO,QAA3B,EAAqC;AACnC,SAAO,CAAC,GAAGJ,oBAAoB,CAACJ,OAAzB,EAAkCQ,QAAlC,CAAP;AACD;;AACDC,MAAM,CAACX,OAAP,GAAiBA,OAAO,CAAC,SAAD,CAAxB",
+    "sourcesContent": [
+      "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = hyphenateProperty;\n\nvar _hyphenateStyleName = require('hyphenate-style-name');\n\nvar _hyphenateStyleName2 = _interopRequireDefault(_hyphenateStyleName);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction hyphenateProperty(property) {\n  return (0, _hyphenateStyleName2.default)(property);\n}\nmodule.exports = exports['default'];"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

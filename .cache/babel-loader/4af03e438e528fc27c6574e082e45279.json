@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "export default function isAssignmentCreatorOpen(state) {\n  return state.getIn(['ui', 'isAssignmentCreatorOpen']);\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/selectors/isAssignmentCreatorOpen.js"
+    ],
+    "names": ["isAssignmentCreatorOpen", "state", "getIn"],
+    "mappings": "AAAA,eAAe,SAASA,uBAAT,CAAiCC,KAAjC,EAAwC;AACrD,SAAOA,KAAK,CAACC,KAAN,CAAY,CAAC,IAAD,EAAO,yBAAP,CAAZ,CAAP;AACD",
+    "sourcesContent": [
+      "export default function isAssignmentCreatorOpen(state) {\n  return state.getIn(['ui', 'isAssignmentCreatorOpen']);\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,55 @@
+{
+  "ast": null,
+  "code": "/*\n\n\n*/\nvar moment = require('moment');\n\nvar Parser = require('../parser').Parser;\n\nvar ParsedResult = require('../../result').ParsedResult;\n\nvar PATTERN = /(\\W|^)(now|today|tonight|last\\s*night|(?:tomorrow|tmr|yesterday)\\s*|tomorrow|tmr|yesterday)(?=\\W|$)/i;\n\nexports.Parser = function ENCasualDateParser() {\n  Parser.apply(this, arguments);\n\n  this.pattern = function () {\n    return PATTERN;\n  };\n\n  this.extract = function (text, ref, match, opt) {\n    var text = match[0].substr(match[1].length);\n    var index = match.index + match[1].length;\n    var result = new ParsedResult({\n      index: index,\n      text: text,\n      ref: ref\n    });\n    var refMoment = moment(ref);\n    var startMoment = refMoment.clone();\n    var lowerText = text.toLowerCase();\n\n    if (lowerText == 'tonight') {\n      // Normally means this coming midnight\n      result.start.imply('hour', 22);\n      result.start.imply('meridiem', 1);\n    } else if (/^tomorrow|^tmr/.test(lowerText)) {\n      // Check not \"Tomorrow\" on late night\n      if (refMoment.hour() > 1) {\n        startMoment.add(1, 'day');\n      }\n    } else if (/^yesterday/.test(lowerText)) {\n      startMoment.add(-1, 'day');\n    } else if (lowerText.match(/last\\s*night/)) {\n      result.start.imply('hour', 0);\n\n      if (refMoment.hour() > 6) {\n        startMoment.add(-1, 'day');\n      }\n    } else if (lowerText.match(\"now\")) {\n      result.start.assign('hour', refMoment.hour());\n      result.start.assign('minute', refMoment.minute());\n      result.start.assign('second', refMoment.second());\n      result.start.assign('millisecond', refMoment.millisecond());\n    }\n\n    result.start.assign('day', startMoment.date());\n    result.start.assign('month', startMoment.month() + 1);\n    result.start.assign('year', startMoment.year());\n    result.tags['ENCasualDateParser'] = true;\n    return result;\n  };\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/chrono-node/src/parsers/en/ENCasualDateParser.js"
+    ],
+    "names": [
+      "moment",
+      "require",
+      "Parser",
+      "ParsedResult",
+      "PATTERN",
+      "exports",
+      "ENCasualDateParser",
+      "apply",
+      "arguments",
+      "pattern",
+      "extract",
+      "text",
+      "ref",
+      "match",
+      "opt",
+      "substr",
+      "length",
+      "index",
+      "result",
+      "refMoment",
+      "startMoment",
+      "clone",
+      "lowerText",
+      "toLowerCase",
+      "start",
+      "imply",
+      "test",
+      "hour",
+      "add",
+      "assign",
+      "minute",
+      "second",
+      "millisecond",
+      "date",
+      "month",
+      "year",
+      "tags"
+    ],
+    "mappings": "AAAA;;;;AAKA,IAAIA,MAAM,GAAGC,OAAO,CAAC,QAAD,CAApB;;AACA,IAAIC,MAAM,GAAGD,OAAO,CAAC,WAAD,CAAP,CAAqBC,MAAlC;;AACA,IAAIC,YAAY,GAAGF,OAAO,CAAC,cAAD,CAAP,CAAwBE,YAA3C;;AAEA,IAAIC,OAAO,GAAG,sGAAd;;AAEAC,OAAO,CAACH,MAAR,GAAiB,SAASI,kBAAT,GAA6B;AAE1CJ,EAAAA,MAAM,CAACK,KAAP,CAAa,IAAb,EAAmBC,SAAnB;;AAEA,OAAKC,OAAL,GAAe,YAAW;AAAE,WAAOL,OAAP;AAAiB,GAA7C;;AAEA,OAAKM,OAAL,GAAe,UAASC,IAAT,EAAeC,GAAf,EAAoBC,KAApB,EAA2BC,GAA3B,EAA+B;AAE1C,QAAIH,IAAI,GAAGE,KAAK,CAAC,CAAD,CAAL,CAASE,MAAT,CAAgBF,KAAK,CAAC,CAAD,CAAL,CAASG,MAAzB,CAAX;AACA,QAAIC,KAAK,GAAGJ,KAAK,CAACI,KAAN,GAAcJ,KAAK,CAAC,CAAD,CAAL,CAASG,MAAnC;AACA,QAAIE,MAAM,GAAG,IAAIf,YAAJ,CAAiB;AAC1Bc,MAAAA,KAAK,EAAEA,KADmB;AAE1BN,MAAAA,IAAI,EAAEA,IAFoB;AAG1BC,MAAAA,GAAG,EAAEA;AAHqB,KAAjB,CAAb;AAMA,QAAIO,SAAS,GAAGnB,MAAM,CAACY,GAAD,CAAtB;AACA,QAAIQ,WAAW,GAAGD,SAAS,CAACE,KAAV,EAAlB;AACA,QAAIC,SAAS,GAAGX,IAAI,CAACY,WAAL,EAAhB;;AAEA,QAAGD,SAAS,IAAI,SAAhB,EAA0B;AACtB;AACAJ,MAAAA,MAAM,CAACM,KAAP,CAAaC,KAAb,CAAmB,MAAnB,EAA2B,EAA3B;AACAP,MAAAA,MAAM,CAACM,KAAP,CAAaC,KAAb,CAAmB,UAAnB,EAA+B,CAA/B;AAEH,KALD,MAKO,IAAI,iBAAiBC,IAAjB,CAAsBJ,SAAtB,CAAJ,EAAsC;AAEzC;AACA,UAAGH,SAAS,CAACQ,IAAV,KAAmB,CAAtB,EAAyB;AACrBP,QAAAA,WAAW,CAACQ,GAAZ,CAAgB,CAAhB,EAAmB,KAAnB;AACH;AAEJ,KAPM,MAOA,IAAI,aAAaF,IAAb,CAAkBJ,SAAlB,CAAJ,EAAkC;AAErCF,MAAAA,WAAW,CAACQ,GAAZ,CAAgB,CAAC,CAAjB,EAAoB,KAApB;AAEH,KAJM,MAIA,IAAGN,SAAS,CAACT,KAAV,CAAgB,cAAhB,CAAH,EAAoC;AAEvCK,MAAAA,MAAM,CAACM,KAAP,CAAaC,KAAb,CAAmB,MAAnB,EAA2B,CAA3B;;AACA,UAAIN,SAAS,CAACQ,IAAV,KAAmB,CAAvB,EAA0B;AACtBP,QAAAA,WAAW,CAACQ,GAAZ,CAAgB,CAAC,CAAjB,EAAoB,KAApB;AACH;AAEJ,KAPM,MAOA,IAAIN,SAAS,CAACT,KAAV,CAAgB,KAAhB,CAAJ,EAA4B;AAEjCK,MAAAA,MAAM,CAACM,KAAP,CAAaK,MAAb,CAAoB,MAApB,EAA4BV,SAAS,CAACQ,IAAV,EAA5B;AACAT,MAAAA,MAAM,CAACM,KAAP,CAAaK,MAAb,CAAoB,QAApB,EAA8BV,SAAS,CAACW,MAAV,EAA9B;AACAZ,MAAAA,MAAM,CAACM,KAAP,CAAaK,MAAb,CAAoB,QAApB,EAA8BV,SAAS,CAACY,MAAV,EAA9B;AACAb,MAAAA,MAAM,CAACM,KAAP,CAAaK,MAAb,CAAoB,aAApB,EAAmCV,SAAS,CAACa,WAAV,EAAnC;AAED;;AAEDd,IAAAA,MAAM,CAACM,KAAP,CAAaK,MAAb,CAAoB,KAApB,EAA2BT,WAAW,CAACa,IAAZ,EAA3B;AACAf,IAAAA,MAAM,CAACM,KAAP,CAAaK,MAAb,CAAoB,OAApB,EAA6BT,WAAW,CAACc,KAAZ,KAAsB,CAAnD;AACAhB,IAAAA,MAAM,CAACM,KAAP,CAAaK,MAAb,CAAoB,MAApB,EAA4BT,WAAW,CAACe,IAAZ,EAA5B;AACAjB,IAAAA,MAAM,CAACkB,IAAP,CAAY,oBAAZ,IAAoC,IAApC;AACA,WAAOlB,MAAP;AACH,GAnDD;AAoDH,CA1DD",
+    "sourcesContent": [
+      "/*\n\n\n*/\n\nvar moment = require('moment');\nvar Parser = require('../parser').Parser;\nvar ParsedResult = require('../../result').ParsedResult;\n\nvar PATTERN = /(\\W|^)(now|today|tonight|last\\s*night|(?:tomorrow|tmr|yesterday)\\s*|tomorrow|tmr|yesterday)(?=\\W|$)/i;\n\nexports.Parser = function ENCasualDateParser(){\n\n    Parser.apply(this, arguments);\n\n    this.pattern = function() { return PATTERN; }\n\n    this.extract = function(text, ref, match, opt){\n\n        var text = match[0].substr(match[1].length);\n        var index = match.index + match[1].length;\n        var result = new ParsedResult({\n            index: index,\n            text: text,\n            ref: ref,\n        });\n\n        var refMoment = moment(ref);\n        var startMoment = refMoment.clone();\n        var lowerText = text.toLowerCase();\n\n        if(lowerText == 'tonight'){\n            // Normally means this coming midnight\n            result.start.imply('hour', 22);\n            result.start.imply('meridiem', 1);\n\n        } else if (/^tomorrow|^tmr/.test(lowerText)) {\n\n            // Check not \"Tomorrow\" on late night\n            if(refMoment.hour() > 1) {\n                startMoment.add(1, 'day');\n            }\n\n        } else if (/^yesterday/.test(lowerText)) {\n\n            startMoment.add(-1, 'day');\n\n        } else if(lowerText.match(/last\\s*night/)) {\n\n            result.start.imply('hour', 0);\n            if (refMoment.hour() > 6) {\n                startMoment.add(-1, 'day');\n            }\n\n        } else if (lowerText.match(\"now\")) {\n\n          result.start.assign('hour', refMoment.hour());\n          result.start.assign('minute', refMoment.minute());\n          result.start.assign('second', refMoment.second());\n          result.start.assign('millisecond', refMoment.millisecond());\n\n        }\n\n        result.start.assign('day', startMoment.date())\n        result.start.assign('month', startMoment.month() + 1)\n        result.start.assign('year', startMoment.year())\n        result.tags['ENCasualDateParser'] = true;\n        return result;\n    }\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,34 @@
+{
+  "ast": null,
+  "code": "import React from 'react';\nimport ImmutablePropTypes from 'react-immutable-proptypes';\nimport PropTypes from 'prop-types';\nimport { t } from 'i18next';\nimport GenericNotificationWithURL from './GenericNotificationWithURL';\nexport default function ProjectExportNotification(_ref) {\n  var metadata = _ref.metadata;\n  var url = metadata.get('url');\n  var exportType = metadata.get('exportType');\n  var linkText = t('notifications.project-export-link');\n  var text = t(\"notifications.\".concat(exportType, \"-export-complete\"));\n  return React.createElement(GenericNotificationWithURL, {\n    linkText: linkText,\n    text: text,\n    url: url\n  });\n}\nProjectExportNotification.propTypes = {\n  metadata: ImmutablePropTypes.contains({\n    url: PropTypes.string.isRequired,\n    exportType: PropTypes.string.isRequired\n  }).isRequired\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/notifications/ProjectExportNotification.jsx"
+    ],
+    "names": [
+      "React",
+      "ImmutablePropTypes",
+      "PropTypes",
+      "t",
+      "GenericNotificationWithURL",
+      "ProjectExportNotification",
+      "metadata",
+      "url",
+      "get",
+      "exportType",
+      "linkText",
+      "text",
+      "propTypes",
+      "contains",
+      "string",
+      "isRequired"
+    ],
+    "mappings": "AAAA,OAAOA,KAAP,MAAkB,OAAlB;AACA,OAAOC,kBAAP,MAA+B,2BAA/B;AACA,OAAOC,SAAP,MAAsB,YAAtB;AACA,SAAQC,CAAR,QAAgB,SAAhB;AAEA,OAAOC,0BAAP,MAAuC,8BAAvC;AAEA,eAAe,SAASC,yBAAT,OAA+C;AAAA,MAAXC,QAAW,QAAXA,QAAW;AAC5D,MAAMC,GAAG,GAAGD,QAAQ,CAACE,GAAT,CAAa,KAAb,CAAZ;AACA,MAAMC,UAAU,GAAGH,QAAQ,CAACE,GAAT,CAAa,YAAb,CAAnB;AACA,MAAME,QAAQ,GAAGP,CAAC,CAAC,mCAAD,CAAlB;AACA,MAAMQ,IAAI,GAAGR,CAAC,yBAAkBM,UAAlB,sBAAd;AAEA,SACE,oBAAC,0BAAD;AAA4B,IAAA,QAAQ,EAAEC,QAAtC;AAAgD,IAAA,IAAI,EAAEC,IAAtD;AAA4D,IAAA,GAAG,EAAEJ;AAAjE,IADF;AAGD;AAEDF,yBAAyB,CAACO,SAA1B,GAAsC;AACpCN,EAAAA,QAAQ,EAAEL,kBAAkB,CAACY,QAAnB,CAA4B;AACpCN,IAAAA,GAAG,EAAEL,SAAS,CAACY,MAAV,CAAiBC,UADc;AAEpCN,IAAAA,UAAU,EAAEP,SAAS,CAACY,MAAV,CAAiBC;AAFO,GAA5B,EAGPA;AAJiC,CAAtC",
+    "sourcesContent": [
+      "import React from 'react';\nimport ImmutablePropTypes from 'react-immutable-proptypes';\nimport PropTypes from 'prop-types';\nimport {t} from 'i18next';\n\nimport GenericNotificationWithURL from './GenericNotificationWithURL';\n\nexport default function ProjectExportNotification({metadata}) {\n  const url = metadata.get('url');\n  const exportType = metadata.get('exportType');\n  const linkText = t('notifications.project-export-link');\n  const text = t(`notifications.${exportType}-export-complete`);\n\n  return (\n    <GenericNotificationWithURL linkText={linkText} text={text} url={url} />\n  );\n}\n\nProjectExportNotification.propTypes = {\n  metadata: ImmutablePropTypes.contains({\n    url: PropTypes.string.isRequired,\n    exportType: PropTypes.string.isRequired,\n  }).isRequired,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

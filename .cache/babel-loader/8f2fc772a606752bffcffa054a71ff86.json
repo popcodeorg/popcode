@@ -1,0 +1,27 @@
+{
+  "ast": null,
+  "code": "import React from 'react';\nimport PropTypes from 'prop-types';\nexport default function GenericNotificationWithURL(_ref) {\n  var text = _ref.text,\n      url = _ref.url,\n      linkText = _ref.linkText;\n  return React.createElement(\"span\", null, text, ' ', React.createElement(\"a\", {\n    href: url,\n    rel: \"noopener noreferrer\",\n    target: \"_blank\"\n  }, linkText));\n}\nGenericNotificationWithURL.propTypes = {\n  linkText: PropTypes.string.isRequired,\n  text: PropTypes.string.isRequired,\n  url: PropTypes.string.isRequired\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/notifications/GenericNotificationWithURL.jsx"
+    ],
+    "names": [
+      "React",
+      "PropTypes",
+      "GenericNotificationWithURL",
+      "text",
+      "url",
+      "linkText",
+      "propTypes",
+      "string",
+      "isRequired"
+    ],
+    "mappings": "AAAA,OAAOA,KAAP,MAAkB,OAAlB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AAEA,eAAe,SAASC,0BAAT,OAA2D;AAAA,MAAtBC,IAAsB,QAAtBA,IAAsB;AAAA,MAAhBC,GAAgB,QAAhBA,GAAgB;AAAA,MAAXC,QAAW,QAAXA,QAAW;AACxE,SACE,kCACGF,IADH,EACS,GADT,EAEE;AAAG,IAAA,IAAI,EAAEC,GAAT;AAAc,IAAA,GAAG,EAAC,qBAAlB;AAAwC,IAAA,MAAM,EAAC;AAA/C,KACGC,QADH,CAFF,CADF;AAQD;AAEDH,0BAA0B,CAACI,SAA3B,GAAuC;AACrCD,EAAAA,QAAQ,EAAEJ,SAAS,CAACM,MAAV,CAAiBC,UADU;AAErCL,EAAAA,IAAI,EAAEF,SAAS,CAACM,MAAV,CAAiBC,UAFc;AAGrCJ,EAAAA,GAAG,EAAEH,SAAS,CAACM,MAAV,CAAiBC;AAHe,CAAvC",
+    "sourcesContent": [
+      "import React from 'react';\nimport PropTypes from 'prop-types';\n\nexport default function GenericNotificationWithURL({text, url, linkText}) {\n  return (\n    <span>\n      {text}{' '}\n      <a href={url} rel=\"noopener noreferrer\" target=\"_blank\">\n        {linkText}\n      </a>\n    </span>\n  );\n}\n\nGenericNotificationWithURL.propTypes = {\n  linkText: PropTypes.string.isRequired,\n  text: PropTypes.string.isRequired,\n  url: PropTypes.string.isRequired,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

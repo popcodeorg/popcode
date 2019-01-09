@@ -1,0 +1,36 @@
+{
+  "ast": null,
+  "code": "import { faChevronUp } from '@fortawesome/free-solid-svg-icons';\nimport { FontAwesomeIcon } from '@fortawesome/react-fontawesome';\nimport React from 'react';\nimport PropTypes from 'prop-types';\nimport partial from 'lodash-es/partial';\nimport classnames from 'classnames';\nexport default function CollapsedComponent(_ref) {\n  var component = _ref.component,\n      isRightJustified = _ref.isRightJustified,\n      onComponentUnhide = _ref.onComponentUnhide,\n      projectKey = _ref.projectKey,\n      text = _ref.text;\n  return React.createElement(\"div\", {\n    className: \"collapsed-component\",\n    onClick: partial(onComponentUnhide, projectKey, component)\n  }, React.createElement(\"div\", {\n    className: classnames('label', 'collapsed-component__label', {\n      'collapsed-component__label_left': !isRightJustified\n    })\n  }, text, \" \", React.createElement(FontAwesomeIcon, {\n    icon: faChevronUp\n  })));\n}\nCollapsedComponent.propTypes = {\n  component: PropTypes.string.isRequired,\n  isRightJustified: PropTypes.bool.isRequired,\n  projectKey: PropTypes.string.isRequired,\n  text: PropTypes.string.isRequired,\n  onComponentUnhide: PropTypes.func.isRequired\n};\nCollapsedComponent.defaultProps = {\n  isRightJustified: true\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/CollapsedComponent.jsx"
+    ],
+    "names": [
+      "faChevronUp",
+      "FontAwesomeIcon",
+      "React",
+      "PropTypes",
+      "partial",
+      "classnames",
+      "CollapsedComponent",
+      "component",
+      "isRightJustified",
+      "onComponentUnhide",
+      "projectKey",
+      "text",
+      "propTypes",
+      "string",
+      "isRequired",
+      "bool",
+      "func",
+      "defaultProps"
+    ],
+    "mappings": "AAAA,SAAQA,WAAR,QAA0B,mCAA1B;AACA,SAAQC,eAAR,QAA8B,gCAA9B;AACA,OAAOC,KAAP,MAAkB,OAAlB;AACA,OAAOC,SAAP,MAAsB,YAAtB;AACA,OAAOC,OAAP,MAAoB,mBAApB;AACA,OAAOC,UAAP,MAAuB,YAAvB;AAEA,eAAe,SAASC,kBAAT,OAMZ;AAAA,MALDC,SAKC,QALDA,SAKC;AAAA,MAJDC,gBAIC,QAJDA,gBAIC;AAAA,MAHDC,iBAGC,QAHDA,iBAGC;AAAA,MAFDC,UAEC,QAFDA,UAEC;AAAA,MADDC,IACC,QADDA,IACC;AACD,SACE;AACE,IAAA,SAAS,EAAC,qBADZ;AAEE,IAAA,OAAO,EAAEP,OAAO,CAACK,iBAAD,EAAoBC,UAApB,EAAgCH,SAAhC;AAFlB,KAIE;AACE,IAAA,SAAS,EAAEF,UAAU,CAAC,OAAD,EAAU,4BAAV,EAAwC;AAC3D,yCAAmC,CAACG;AADuB,KAAxC;AADvB,KAKGG,IALH,OAKS,oBAAC,eAAD;AAAiB,IAAA,IAAI,EAAEX;AAAvB,IALT,CAJF,CADF;AAcD;AAEDM,kBAAkB,CAACM,SAAnB,GAA+B;AAC7BL,EAAAA,SAAS,EAAEJ,SAAS,CAACU,MAAV,CAAiBC,UADC;AAE7BN,EAAAA,gBAAgB,EAAEL,SAAS,CAACY,IAAV,CAAeD,UAFJ;AAG7BJ,EAAAA,UAAU,EAAEP,SAAS,CAACU,MAAV,CAAiBC,UAHA;AAI7BH,EAAAA,IAAI,EAAER,SAAS,CAACU,MAAV,CAAiBC,UAJM;AAK7BL,EAAAA,iBAAiB,EAAEN,SAAS,CAACa,IAAV,CAAeF;AALL,CAA/B;AAQAR,kBAAkB,CAACW,YAAnB,GAAkC;AAChCT,EAAAA,gBAAgB,EAAE;AADc,CAAlC",
+    "sourcesContent": [
+      "import {faChevronUp} from '@fortawesome/free-solid-svg-icons';\nimport {FontAwesomeIcon} from '@fortawesome/react-fontawesome';\nimport React from 'react';\nimport PropTypes from 'prop-types';\nimport partial from 'lodash-es/partial';\nimport classnames from 'classnames';\n\nexport default function CollapsedComponent({\n  component,\n  isRightJustified,\n  onComponentUnhide,\n  projectKey,\n  text,\n}) {\n  return (\n    <div\n      className=\"collapsed-component\"\n      onClick={partial(onComponentUnhide, projectKey, component)}\n    >\n      <div\n        className={classnames('label', 'collapsed-component__label', {\n          'collapsed-component__label_left': !isRightJustified,\n        })}\n      >\n        {text} <FontAwesomeIcon icon={faChevronUp} />\n      </div>\n    </div>\n  );\n}\n\nCollapsedComponent.propTypes = {\n  component: PropTypes.string.isRequired,\n  isRightJustified: PropTypes.bool.isRequired,\n  projectKey: PropTypes.string.isRequired,\n  text: PropTypes.string.isRequired,\n  onComponentUnhide: PropTypes.func.isRequired,\n};\n\nCollapsedComponent.defaultProps = {\n  isRightJustified: true,\n};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

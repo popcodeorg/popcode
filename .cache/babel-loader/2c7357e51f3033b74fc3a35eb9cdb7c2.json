@@ -1,0 +1,53 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = require('react');\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _propTypes = require('prop-types');\n\nvar _propTypes2 = _interopRequireDefault(_propTypes);\n\nvar _reactLowlight = require('react-lowlight');\n\nvar _reactLowlight2 = _interopRequireDefault(_reactLowlight);\n\nfunction _interopRequireDefault(obj) {\n  return obj && obj.__esModule ? obj : {\n    default: obj\n  };\n}\n\nexports.default = function (languageDefinitions) {\n  Object.keys(languageDefinitions).forEach(function (language) {\n    var definition = languageDefinitions[language];\n\n    _reactLowlight2.default.registerLanguage(language, definition);\n  });\n\n  var Code = function Code(_ref) {\n    var _ref$className = _ref.className,\n        className = _ref$className === undefined ? '' : _ref$className,\n        children = _ref.children;\n    var language = className.split('-')[1] || '';\n    var value = children[0] || '';\n    var props = {\n      value: value,\n      inline: true\n    };\n\n    if (Object.keys(languageDefinitions).indexOf(language) > -1) {\n      // Include the language only if it was previously registered\n      props.language = language;\n    }\n\n    return _react2.default.createElement(_reactLowlight2.default, props);\n  };\n\n  Code.propTypes = {\n    className: _propTypes2.default.string,\n    children: _propTypes2.default.node\n  };\n  return Code;\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/remark-react-lowlight/lib/index.js"
+    ],
+    "names": [
+      "Object",
+      "defineProperty",
+      "exports",
+      "value",
+      "_react",
+      "require",
+      "_react2",
+      "_interopRequireDefault",
+      "_propTypes",
+      "_propTypes2",
+      "_reactLowlight",
+      "_reactLowlight2",
+      "obj",
+      "__esModule",
+      "default",
+      "languageDefinitions",
+      "keys",
+      "forEach",
+      "language",
+      "definition",
+      "registerLanguage",
+      "Code",
+      "_ref",
+      "_ref$className",
+      "className",
+      "undefined",
+      "children",
+      "split",
+      "props",
+      "inline",
+      "indexOf",
+      "createElement",
+      "propTypes",
+      "string",
+      "node"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,cAAP,CAAsBC,OAAtB,EAA+B,YAA/B,EAA6C;AAC3CC,EAAAA,KAAK,EAAE;AADoC,CAA7C;;AAIA,IAAIC,MAAM,GAAGC,OAAO,CAAC,OAAD,CAApB;;AAEA,IAAIC,OAAO,GAAGC,sBAAsB,CAACH,MAAD,CAApC;;AAEA,IAAII,UAAU,GAAGH,OAAO,CAAC,YAAD,CAAxB;;AAEA,IAAII,WAAW,GAAGF,sBAAsB,CAACC,UAAD,CAAxC;;AAEA,IAAIE,cAAc,GAAGL,OAAO,CAAC,gBAAD,CAA5B;;AAEA,IAAIM,eAAe,GAAGJ,sBAAsB,CAACG,cAAD,CAA5C;;AAEA,SAASH,sBAAT,CAAgCK,GAAhC,EAAqC;AAAE,SAAOA,GAAG,IAAIA,GAAG,CAACC,UAAX,GAAwBD,GAAxB,GAA8B;AAAEE,IAAAA,OAAO,EAAEF;AAAX,GAArC;AAAwD;;AAE/FV,OAAO,CAACY,OAAR,GAAkB,UAAUC,mBAAV,EAA+B;AAC/Cf,EAAAA,MAAM,CAACgB,IAAP,CAAYD,mBAAZ,EAAiCE,OAAjC,CAAyC,UAAUC,QAAV,EAAoB;AAC3D,QAAIC,UAAU,GAAGJ,mBAAmB,CAACG,QAAD,CAApC;;AAEAP,IAAAA,eAAe,CAACG,OAAhB,CAAwBM,gBAAxB,CAAyCF,QAAzC,EAAmDC,UAAnD;AACD,GAJD;;AAMA,MAAIE,IAAI,GAAG,SAASA,IAAT,CAAcC,IAAd,EAAoB;AAC7B,QAAIC,cAAc,GAAGD,IAAI,CAACE,SAA1B;AAAA,QACIA,SAAS,GAAGD,cAAc,KAAKE,SAAnB,GAA+B,EAA/B,GAAoCF,cADpD;AAAA,QAEIG,QAAQ,GAAGJ,IAAI,CAACI,QAFpB;AAIA,QAAIR,QAAQ,GAAGM,SAAS,CAACG,KAAV,CAAgB,GAAhB,EAAqB,CAArB,KAA2B,EAA1C;AACA,QAAIxB,KAAK,GAAGuB,QAAQ,CAAC,CAAD,CAAR,IAAe,EAA3B;AACA,QAAIE,KAAK,GAAG;AAAEzB,MAAAA,KAAK,EAAEA,KAAT;AAAgB0B,MAAAA,MAAM,EAAE;AAAxB,KAAZ;;AAEA,QAAI7B,MAAM,CAACgB,IAAP,CAAYD,mBAAZ,EAAiCe,OAAjC,CAAyCZ,QAAzC,IAAqD,CAAC,CAA1D,EAA6D;AAC3D;AACAU,MAAAA,KAAK,CAACV,QAAN,GAAiBA,QAAjB;AACD;;AAED,WAAOZ,OAAO,CAACQ,OAAR,CAAgBiB,aAAhB,CAA8BpB,eAAe,CAACG,OAA9C,EAAuDc,KAAvD,CAAP;AACD,GAfD;;AAgBAP,EAAAA,IAAI,CAACW,SAAL,GAAiB;AACfR,IAAAA,SAAS,EAAEf,WAAW,CAACK,OAAZ,CAAoBmB,MADhB;AAEfP,IAAAA,QAAQ,EAAEjB,WAAW,CAACK,OAAZ,CAAoBoB;AAFf,GAAjB;AAKA,SAAOb,IAAP;AACD,CA7BD",
+    "sourcesContent": [
+      "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = require('react');\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _propTypes = require('prop-types');\n\nvar _propTypes2 = _interopRequireDefault(_propTypes);\n\nvar _reactLowlight = require('react-lowlight');\n\nvar _reactLowlight2 = _interopRequireDefault(_reactLowlight);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = function (languageDefinitions) {\n  Object.keys(languageDefinitions).forEach(function (language) {\n    var definition = languageDefinitions[language];\n\n    _reactLowlight2.default.registerLanguage(language, definition);\n  });\n\n  var Code = function Code(_ref) {\n    var _ref$className = _ref.className,\n        className = _ref$className === undefined ? '' : _ref$className,\n        children = _ref.children;\n\n    var language = className.split('-')[1] || '';\n    var value = children[0] || '';\n    var props = { value: value, inline: true };\n\n    if (Object.keys(languageDefinitions).indexOf(language) > -1) {\n      // Include the language only if it was previously registered\n      props.language = language;\n    }\n\n    return _react2.default.createElement(_reactLowlight2.default, props);\n  };\n  Code.propTypes = {\n    className: _propTypes2.default.string,\n    children: _propTypes2.default.node\n  };\n\n  return Code;\n};"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

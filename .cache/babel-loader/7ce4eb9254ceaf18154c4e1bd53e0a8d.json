@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "import React from 'react';\nimport { t } from 'i18next';\nexport default function AccountMigrationInProgress() {\n  return React.createElement(\"p\", null, t('account-migration.in-progress'));\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/AccountMigrationInProgress.jsx"
+    ],
+    "names": ["React", "t", "AccountMigrationInProgress"],
+    "mappings": "AAAA,OAAOA,KAAP,MAAkB,OAAlB;AACA,SAAQC,CAAR,QAAgB,SAAhB;AAEA,eAAe,SAASC,0BAAT,GAAsC;AACnD,SAAO,+BAAID,CAAC,CAAC,+BAAD,CAAL,CAAP;AACD",
+    "sourcesContent": [
+      "import React from 'react';\nimport {t} from 'i18next';\n\nexport default function AccountMigrationInProgress() {\n  return <p>{t('account-migration.in-progress')}</p>;\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

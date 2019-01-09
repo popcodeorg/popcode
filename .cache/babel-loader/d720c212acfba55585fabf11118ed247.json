@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "export default function getParsedDate(state) {\n  var date = state.getIn(['form', 'assignmentCreator', 'values', 'date']);\n\n  if (date) {\n    return date.parsedDate;\n  }\n\n  return null;\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/selectors/getParsedDate.js"
+    ],
+    "names": ["getParsedDate", "state", "date", "getIn", "parsedDate"],
+    "mappings": "AAAA,eAAe,SAASA,aAAT,CAAuBC,KAAvB,EAA8B;AAC3C,MAAMC,IAAI,GAAGD,KAAK,CAACE,KAAN,CAAY,CAAC,MAAD,EAAS,mBAAT,EAA8B,QAA9B,EAAwC,MAAxC,CAAZ,CAAb;;AACA,MAAID,IAAJ,EAAU;AACR,WAAOA,IAAI,CAACE,UAAZ;AACD;;AACD,SAAO,IAAP;AACD",
+    "sourcesContent": [
+      "export default function getParsedDate(state) {\n  const date = state.getIn(['form', 'assignmentCreator', 'values', 'date']);\n  if (date) {\n    return date.parsedDate;\n  }\n  return null;\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

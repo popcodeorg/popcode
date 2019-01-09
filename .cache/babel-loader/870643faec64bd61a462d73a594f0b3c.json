@@ -1,0 +1,38 @@
+{
+  "ast": null,
+  "code": "import channel from './channel';\nimport prettyPrint from './prettyPrint';\nvar consoleFunctions = ['log', 'info', 'warn', 'error', 'debug'];\n\nfunction notifyChannel(args) {\n  if (args.length > 0) {\n    channel.notify({\n      method: 'log',\n      params: args.map(prettyPrint).join(' ')\n    });\n  }\n}\n\nexport default function handleConsoleLogs() {\n  consoleFunctions.forEach(function (functionName) {\n    var browserFunction; // eslint-disable-next-line no-console\n\n    if (console[functionName]) {\n      // eslint-disable-next-line no-console\n      browserFunction = console[functionName].bind(console);\n    }\n\n    Reflect.defineProperty(console, functionName, {\n      value: function value() {\n        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {\n          args[_key] = arguments[_key];\n        }\n\n        notifyChannel(args);\n\n        if (browserFunction) {\n          browserFunction.apply(void 0, args);\n        }\n      }\n    });\n  });\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/previewSupport/handleConsoleLogs.js"
+    ],
+    "names": [
+      "channel",
+      "prettyPrint",
+      "consoleFunctions",
+      "notifyChannel",
+      "args",
+      "length",
+      "notify",
+      "method",
+      "params",
+      "map",
+      "join",
+      "handleConsoleLogs",
+      "forEach",
+      "functionName",
+      "browserFunction",
+      "console",
+      "bind",
+      "Reflect",
+      "defineProperty",
+      "value"
+    ],
+    "mappings": "AAAA,OAAOA,OAAP,MAAoB,WAApB;AACA,OAAOC,WAAP,MAAwB,eAAxB;AAEA,IAAMC,gBAAgB,GAAG,CAAC,KAAD,EAAQ,MAAR,EAAgB,MAAhB,EAAwB,OAAxB,EAAiC,OAAjC,CAAzB;;AAEA,SAASC,aAAT,CAAuBC,IAAvB,EAA6B;AAC3B,MAAIA,IAAI,CAACC,MAAL,GAAc,CAAlB,EAAqB;AACnBL,IAAAA,OAAO,CAACM,MAAR,CAAe;AACbC,MAAAA,MAAM,EAAE,KADK;AAEbC,MAAAA,MAAM,EAAEJ,IAAI,CAACK,GAAL,CAASR,WAAT,EAAsBS,IAAtB,CAA2B,GAA3B;AAFK,KAAf;AAID;AACF;;AAED,eAAe,SAASC,iBAAT,GAA6B;AAC1CT,EAAAA,gBAAgB,CAACU,OAAjB,CAAyB,UAAAC,YAAY,EAAI;AACvC,QAAIC,eAAJ,CADuC,CAEvC;;AACA,QAAIC,OAAO,CAACF,YAAD,CAAX,EAA2B;AACzB;AACAC,MAAAA,eAAe,GAAGC,OAAO,CAACF,YAAD,CAAP,CAAsBG,IAAtB,CAA2BD,OAA3B,CAAlB;AACD;;AAEDE,IAAAA,OAAO,CAACC,cAAR,CAAuBH,OAAvB,EAAgCF,YAAhC,EAA8C;AAC5CM,MAAAA,KAAK,EAAE,iBAAa;AAAA,0CAATf,IAAS;AAATA,UAAAA,IAAS;AAAA;;AAClBD,QAAAA,aAAa,CAACC,IAAD,CAAb;;AACA,YAAIU,eAAJ,EAAqB;AACnBA,UAAAA,eAAe,MAAf,SAAmBV,IAAnB;AACD;AACF;AAN2C,KAA9C;AAQD,GAhBD;AAiBD",
+    "sourcesContent": [
+      "import channel from './channel';\nimport prettyPrint from './prettyPrint';\n\nconst consoleFunctions = ['log', 'info', 'warn', 'error', 'debug'];\n\nfunction notifyChannel(args) {\n  if (args.length > 0) {\n    channel.notify({\n      method: 'log',\n      params: args.map(prettyPrint).join(' '),\n    });\n  }\n}\n\nexport default function handleConsoleLogs() {\n  consoleFunctions.forEach(functionName => {\n    let browserFunction;\n    // eslint-disable-next-line no-console\n    if (console[functionName]) {\n      // eslint-disable-next-line no-console\n      browserFunction = console[functionName].bind(console);\n    }\n\n    Reflect.defineProperty(console, functionName, {\n      value: (...args) => {\n        notifyChannel(args);\n        if (browserFunction) {\n          browserFunction(...args);\n        }\n      },\n    });\n  });\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

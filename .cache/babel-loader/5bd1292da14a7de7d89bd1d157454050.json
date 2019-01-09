@@ -1,0 +1,28 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = html;\n\nvar u = require('unist-builder'); // Return either a `raw` node, in dangerous mode, or nothing.\n\n\nfunction html(h, node) {\n  return h.dangerous ? h.augment(node, u('raw', node.value)) : null;\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/handlers/html.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "html",
+      "u",
+      "require",
+      "h",
+      "node",
+      "dangerous",
+      "augment",
+      "value"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,IAAjB;;AAEA,IAAIC,CAAC,GAAGC,OAAO,CAAC,eAAD,CAAf,C,CAEA;;;AACA,SAASF,IAAT,CAAcG,CAAd,EAAiBC,IAAjB,EAAuB;AACrB,SAAOD,CAAC,CAACE,SAAF,GAAcF,CAAC,CAACG,OAAF,CAAUF,IAAV,EAAgBH,CAAC,CAAC,KAAD,EAAQG,IAAI,CAACG,KAAb,CAAjB,CAAd,GAAsD,IAA7D;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = html\n\nvar u = require('unist-builder')\n\n// Return either a `raw` node, in dangerous mode, or nothing.\nfunction html(h, node) {\n  return h.dangerous ? h.augment(node, u('raw', node.value)) : null\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

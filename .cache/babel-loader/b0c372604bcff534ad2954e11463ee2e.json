@@ -1,0 +1,30 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = footnoteReference;\n\nvar u = require('unist-builder');\n\nfunction footnoteReference(h, node) {\n  var identifier = node.identifier;\n  return h(node.position, 'sup', {\n    id: 'fnref-' + identifier\n  }, [h(node, 'a', {\n    href: '#fn-' + identifier,\n    className: ['footnote-ref']\n  }, [u('text', identifier)])]);\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/handlers/footnote-reference.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "footnoteReference",
+      "u",
+      "require",
+      "h",
+      "node",
+      "identifier",
+      "position",
+      "id",
+      "href",
+      "className"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,iBAAjB;;AAEA,IAAIC,CAAC,GAAGC,OAAO,CAAC,eAAD,CAAf;;AAEA,SAASF,iBAAT,CAA2BG,CAA3B,EAA8BC,IAA9B,EAAoC;AAClC,MAAIC,UAAU,GAAGD,IAAI,CAACC,UAAtB;AAEA,SAAOF,CAAC,CAACC,IAAI,CAACE,QAAN,EAAgB,KAAhB,EAAuB;AAACC,IAAAA,EAAE,EAAE,WAAWF;AAAhB,GAAvB,EAAoD,CAC1DF,CAAC,CAACC,IAAD,EAAO,GAAP,EAAY;AAACI,IAAAA,IAAI,EAAE,SAASH,UAAhB;AAA4BI,IAAAA,SAAS,EAAE,CAAC,cAAD;AAAvC,GAAZ,EAAsE,CACrER,CAAC,CAAC,MAAD,EAASI,UAAT,CADoE,CAAtE,CADyD,CAApD,CAAR;AAKD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = footnoteReference\n\nvar u = require('unist-builder')\n\nfunction footnoteReference(h, node) {\n  var identifier = node.identifier\n\n  return h(node.position, 'sup', {id: 'fnref-' + identifier}, [\n    h(node, 'a', {href: '#fn-' + identifier, className: ['footnote-ref']}, [\n      u('text', identifier)\n    ])\n  ])\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,41 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nvar visit = require('unist-util-visit');\n\nmodule.exports = getDefinitionFactory;\nvar own = {}.hasOwnProperty;\n/* Get a definition in `node` by `identifier`. */\n\nfunction getDefinitionFactory(node, options) {\n  return getterFactory(gather(node, options));\n}\n/* Gather all definitions in `node` */\n\n\nfunction gather(node, options) {\n  var cache = {};\n\n  if (!node || !node.type) {\n    throw new Error('mdast-util-definitions expected node');\n  }\n\n  visit(node, 'definition', options && options.commonmark ? commonmark : normal);\n  return cache;\n\n  function commonmark(definition) {\n    var id = normalise(definition.identifier);\n\n    if (!own.call(cache, id)) {\n      cache[id] = definition;\n    }\n  }\n\n  function normal(definition) {\n    cache[normalise(definition.identifier)] = definition;\n  }\n}\n/* Factory to get a node from the given definition-cache. */\n\n\nfunction getterFactory(cache) {\n  return getter;\n  /* Get a node from the bound definition-cache. */\n\n  function getter(identifier) {\n    var id = identifier && normalise(identifier);\n    return id && own.call(cache, id) ? cache[id] : null;\n  }\n}\n\nfunction normalise(identifier) {\n  return identifier.toUpperCase();\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-definitions/index.js"
+    ],
+    "names": [
+      "visit",
+      "require",
+      "module",
+      "exports",
+      "getDefinitionFactory",
+      "own",
+      "hasOwnProperty",
+      "node",
+      "options",
+      "getterFactory",
+      "gather",
+      "cache",
+      "type",
+      "Error",
+      "commonmark",
+      "normal",
+      "definition",
+      "id",
+      "normalise",
+      "identifier",
+      "call",
+      "getter",
+      "toUpperCase"
+    ],
+    "mappings": "AAAA;;AAEA,IAAIA,KAAK,GAAGC,OAAO,CAAC,kBAAD,CAAnB;;AAEAC,MAAM,CAACC,OAAP,GAAiBC,oBAAjB;AAEA,IAAIC,GAAG,GAAG,GAAGC,cAAb;AAEA;;AACA,SAASF,oBAAT,CAA8BG,IAA9B,EAAoCC,OAApC,EAA6C;AAC3C,SAAOC,aAAa,CAACC,MAAM,CAACH,IAAD,EAAOC,OAAP,CAAP,CAApB;AACD;AAED;;;AACA,SAASE,MAAT,CAAgBH,IAAhB,EAAsBC,OAAtB,EAA+B;AAC7B,MAAIG,KAAK,GAAG,EAAZ;;AAEA,MAAI,CAACJ,IAAD,IAAS,CAACA,IAAI,CAACK,IAAnB,EAAyB;AACvB,UAAM,IAAIC,KAAJ,CAAU,sCAAV,CAAN;AACD;;AAEDb,EAAAA,KAAK,CAACO,IAAD,EAAO,YAAP,EAAqBC,OAAO,IAAIA,OAAO,CAACM,UAAnB,GAAgCA,UAAhC,GAA6CC,MAAlE,CAAL;AAEA,SAAOJ,KAAP;;AAEA,WAASG,UAAT,CAAoBE,UAApB,EAAgC;AAC9B,QAAIC,EAAE,GAAGC,SAAS,CAACF,UAAU,CAACG,UAAZ,CAAlB;;AACA,QAAI,CAACd,GAAG,CAACe,IAAJ,CAAST,KAAT,EAAgBM,EAAhB,CAAL,EAA0B;AACxBN,MAAAA,KAAK,CAACM,EAAD,CAAL,GAAYD,UAAZ;AACD;AACF;;AAED,WAASD,MAAT,CAAgBC,UAAhB,EAA4B;AAC1BL,IAAAA,KAAK,CAACO,SAAS,CAACF,UAAU,CAACG,UAAZ,CAAV,CAAL,GAA0CH,UAA1C;AACD;AACF;AAED;;;AACA,SAASP,aAAT,CAAuBE,KAAvB,EAA8B;AAC5B,SAAOU,MAAP;AAEA;;AACA,WAASA,MAAT,CAAgBF,UAAhB,EAA4B;AAC1B,QAAIF,EAAE,GAAGE,UAAU,IAAID,SAAS,CAACC,UAAD,CAAhC;AACA,WAAOF,EAAE,IAAIZ,GAAG,CAACe,IAAJ,CAAST,KAAT,EAAgBM,EAAhB,CAAN,GAA4BN,KAAK,CAACM,EAAD,CAAjC,GAAwC,IAA/C;AACD;AACF;;AAED,SAASC,SAAT,CAAmBC,UAAnB,EAA+B;AAC7B,SAAOA,UAAU,CAACG,WAAX,EAAP;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nvar visit = require('unist-util-visit')\n\nmodule.exports = getDefinitionFactory\n\nvar own = {}.hasOwnProperty\n\n/* Get a definition in `node` by `identifier`. */\nfunction getDefinitionFactory(node, options) {\n  return getterFactory(gather(node, options))\n}\n\n/* Gather all definitions in `node` */\nfunction gather(node, options) {\n  var cache = {}\n\n  if (!node || !node.type) {\n    throw new Error('mdast-util-definitions expected node')\n  }\n\n  visit(node, 'definition', options && options.commonmark ? commonmark : normal)\n\n  return cache\n\n  function commonmark(definition) {\n    var id = normalise(definition.identifier)\n    if (!own.call(cache, id)) {\n      cache[id] = definition\n    }\n  }\n\n  function normal(definition) {\n    cache[normalise(definition.identifier)] = definition\n  }\n}\n\n/* Factory to get a node from the given definition-cache. */\nfunction getterFactory(cache) {\n  return getter\n\n  /* Get a node from the bound definition-cache. */\n  function getter(identifier) {\n    var id = identifier && normalise(identifier)\n    return id && own.call(cache, id) ? cache[id] : null\n  }\n}\n\nfunction normalise(identifier) {\n  return identifier.toUpperCase()\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

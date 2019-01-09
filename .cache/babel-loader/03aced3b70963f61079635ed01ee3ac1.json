@@ -1,0 +1,32 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = code;\n\nvar detab = require('detab');\n\nvar u = require('unist-builder');\n\nfunction code(h, node) {\n  var value = node.value ? detab(node.value + '\\n') : '';\n  var lang = node.lang && node.lang.match(/^[^ \\t]+(?=[ \\t]|$)/);\n  var props = {};\n\n  if (lang) {\n    props.className = ['language-' + lang];\n  }\n\n  return h(node.position, 'pre', [h(node, 'code', props, [u('text', value)])]);\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/handlers/code.js"
+    ],
+    "names": [
+      "module",
+      "exports",
+      "code",
+      "detab",
+      "require",
+      "u",
+      "h",
+      "node",
+      "value",
+      "lang",
+      "match",
+      "props",
+      "className",
+      "position"
+    ],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,IAAjB;;AAEA,IAAIC,KAAK,GAAGC,OAAO,CAAC,OAAD,CAAnB;;AACA,IAAIC,CAAC,GAAGD,OAAO,CAAC,eAAD,CAAf;;AAEA,SAASF,IAAT,CAAcI,CAAd,EAAiBC,IAAjB,EAAuB;AACrB,MAAIC,KAAK,GAAGD,IAAI,CAACC,KAAL,GAAaL,KAAK,CAACI,IAAI,CAACC,KAAL,GAAa,IAAd,CAAlB,GAAwC,EAApD;AACA,MAAIC,IAAI,GAAGF,IAAI,CAACE,IAAL,IAAaF,IAAI,CAACE,IAAL,CAAUC,KAAV,CAAgB,qBAAhB,CAAxB;AACA,MAAIC,KAAK,GAAG,EAAZ;;AAEA,MAAIF,IAAJ,EAAU;AACRE,IAAAA,KAAK,CAACC,SAAN,GAAkB,CAAC,cAAcH,IAAf,CAAlB;AACD;;AAED,SAAOH,CAAC,CAACC,IAAI,CAACM,QAAN,EAAgB,KAAhB,EAAuB,CAACP,CAAC,CAACC,IAAD,EAAO,MAAP,EAAeI,KAAf,EAAsB,CAACN,CAAC,CAAC,MAAD,EAASG,KAAT,CAAF,CAAtB,CAAF,CAAvB,CAAR;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = code\n\nvar detab = require('detab')\nvar u = require('unist-builder')\n\nfunction code(h, node) {\n  var value = node.value ? detab(node.value + '\\n') : ''\n  var lang = node.lang && node.lang.match(/^[^ \\t]+(?=[ \\t]|$)/)\n  var props = {}\n\n  if (lang) {\n    props.className = ['language-' + lang]\n  }\n\n  return h(node.position, 'pre', [h(node, 'code', props, [u('text', value)])])\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

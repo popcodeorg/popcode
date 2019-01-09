@@ -1,0 +1,33 @@
+{
+  "ast": null,
+  "code": "import { combineReducers } from 'redux-immutable';\nimport reduceReducers from 'reduce-reducers';\nimport { reducer as formReducer } from 'redux-form/immutable';\nimport user from './user';\nimport projects, { reduceRoot as reduceRootForProjects } from './projects';\nimport console from './console';\nimport currentProject from './currentProject';\nimport errors from './errors';\nimport googleClassroom from './googleClassroom';\nimport ui from './ui';\nimport clients from './clients';\nimport compiledProjects from './compiledProjects';\nimport resizableFlex from './resizableFlex';\nvar reduceRoot = combineReducers({\n  user: user,\n  projects: projects,\n  currentProject: currentProject,\n  errors: errors,\n  googleClassroom: googleClassroom,\n  ui: ui,\n  clients: clients,\n  compiledProjects: compiledProjects,\n  console: console,\n  resizableFlex: resizableFlex,\n  form: formReducer\n});\nexport default reduceReducers(reduceRoot, reduceRootForProjects);",
+  "map": {
+    "version": 3,
+    "sources": ["/Users/peter/Desktop/code/popcode/src/reducers/index.js"],
+    "names": [
+      "combineReducers",
+      "reduceReducers",
+      "reducer",
+      "formReducer",
+      "user",
+      "projects",
+      "reduceRoot",
+      "reduceRootForProjects",
+      "console",
+      "currentProject",
+      "errors",
+      "googleClassroom",
+      "ui",
+      "clients",
+      "compiledProjects",
+      "resizableFlex",
+      "form"
+    ],
+    "mappings": "AAAA,SAAQA,eAAR,QAA8B,iBAA9B;AACA,OAAOC,cAAP,MAA2B,iBAA3B;AACA,SAAQC,OAAO,IAAIC,WAAnB,QAAqC,sBAArC;AAEA,OAAOC,IAAP,MAAiB,QAAjB;AACA,OAAOC,QAAP,IAAkBC,UAAU,IAAIC,qBAAhC,QAA4D,YAA5D;AACA,OAAOC,OAAP,MAAoB,WAApB;AACA,OAAOC,cAAP,MAA2B,kBAA3B;AACA,OAAOC,MAAP,MAAmB,UAAnB;AACA,OAAOC,eAAP,MAA4B,mBAA5B;AACA,OAAOC,EAAP,MAAe,MAAf;AACA,OAAOC,OAAP,MAAoB,WAApB;AACA,OAAOC,gBAAP,MAA6B,oBAA7B;AACA,OAAOC,aAAP,MAA0B,iBAA1B;AAEA,IAAMT,UAAU,GAAGN,eAAe,CAAC;AACjCI,EAAAA,IAAI,EAAJA,IADiC;AAEjCC,EAAAA,QAAQ,EAARA,QAFiC;AAGjCI,EAAAA,cAAc,EAAdA,cAHiC;AAIjCC,EAAAA,MAAM,EAANA,MAJiC;AAKjCC,EAAAA,eAAe,EAAfA,eALiC;AAMjCC,EAAAA,EAAE,EAAFA,EANiC;AAOjCC,EAAAA,OAAO,EAAPA,OAPiC;AAQjCC,EAAAA,gBAAgB,EAAhBA,gBARiC;AASjCN,EAAAA,OAAO,EAAPA,OATiC;AAUjCO,EAAAA,aAAa,EAAbA,aAViC;AAWjCC,EAAAA,IAAI,EAAEb;AAX2B,CAAD,CAAlC;AAcA,eAAeF,cAAc,CAACK,UAAD,EAAaC,qBAAb,CAA7B",
+    "sourcesContent": [
+      "import {combineReducers} from 'redux-immutable';\nimport reduceReducers from 'reduce-reducers';\nimport {reducer as formReducer} from 'redux-form/immutable';\n\nimport user from './user';\nimport projects, {reduceRoot as reduceRootForProjects} from './projects';\nimport console from './console';\nimport currentProject from './currentProject';\nimport errors from './errors';\nimport googleClassroom from './googleClassroom';\nimport ui from './ui';\nimport clients from './clients';\nimport compiledProjects from './compiledProjects';\nimport resizableFlex from './resizableFlex';\n\nconst reduceRoot = combineReducers({\n  user,\n  projects,\n  currentProject,\n  errors,\n  googleClassroom,\n  ui,\n  clients,\n  compiledProjects,\n  console,\n  resizableFlex,\n  form: formReducer,\n});\n\nexport default reduceReducers(reduceRoot, reduceRootForProjects);\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

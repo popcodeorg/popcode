@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nmodule.exports = strong;\n\nvar all = require('../all');\n\nfunction strong(h, node) {\n  return h(node, 'strong', all(h, node));\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/mdast-util-to-hast/lib/handlers/strong.js"
+    ],
+    "names": ["module", "exports", "strong", "all", "require", "h", "node"],
+    "mappings": "AAAA;;AAEAA,MAAM,CAACC,OAAP,GAAiBC,MAAjB;;AAEA,IAAIC,GAAG,GAAGC,OAAO,CAAC,QAAD,CAAjB;;AAEA,SAASF,MAAT,CAAgBG,CAAhB,EAAmBC,IAAnB,EAAyB;AACvB,SAAOD,CAAC,CAACC,IAAD,EAAO,QAAP,EAAiBH,GAAG,CAACE,CAAD,EAAIC,IAAJ,CAApB,CAAR;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nmodule.exports = strong\n\nvar all = require('../all')\n\nfunction strong(h, node) {\n  return h(node, 'strong', all(h, node))\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

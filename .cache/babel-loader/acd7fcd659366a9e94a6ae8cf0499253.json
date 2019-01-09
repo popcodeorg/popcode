@@ -1,0 +1,35 @@
+{
+  "ast": null,
+  "code": "export default function calculateFlexGrowAfterDrag(_ref, _ref2) {\n  var currentBeforeFlexGrow = _ref.currentFlexGrow,\n      currentBeforeSize = _ref.currentSize,\n      desiredBeforeSize = _ref.desiredSize,\n      beforeInitialMainSize = _ref.initialMainSize;\n  var currentAfterFlexGrow = _ref2.currentFlexGrow,\n      currentAfterSize = _ref2.currentSize,\n      afterInitialMainSize = _ref2.initialMainSize;\n\n  if (desiredBeforeSize < beforeInitialMainSize) {\n    return [currentBeforeFlexGrow, currentAfterFlexGrow];\n  }\n\n  var desiredAfterSize = currentBeforeSize + currentAfterSize - desiredBeforeSize;\n\n  if (desiredAfterSize < afterInitialMainSize) {\n    return [currentBeforeFlexGrow, currentAfterFlexGrow];\n  }\n\n  var desiredRatio = desiredBeforeSize / (currentBeforeSize + currentAfterSize);\n  var totalFlexGrow = currentBeforeFlexGrow + currentAfterFlexGrow;\n  var desiredBeforeFlexGrow = totalFlexGrow * desiredRatio;\n  var desiredAfterFlexGrow = totalFlexGrow * (1 - desiredRatio);\n  return [desiredBeforeFlexGrow, desiredAfterFlexGrow];\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/higherOrderComponents/resizableFlex/calculateFlexGrowAfterDrag.js"
+    ],
+    "names": [
+      "calculateFlexGrowAfterDrag",
+      "currentBeforeFlexGrow",
+      "currentFlexGrow",
+      "currentBeforeSize",
+      "currentSize",
+      "desiredBeforeSize",
+      "desiredSize",
+      "beforeInitialMainSize",
+      "initialMainSize",
+      "currentAfterFlexGrow",
+      "currentAfterSize",
+      "afterInitialMainSize",
+      "desiredAfterSize",
+      "desiredRatio",
+      "totalFlexGrow",
+      "desiredBeforeFlexGrow",
+      "desiredAfterFlexGrow"
+    ],
+    "mappings": "AAAA,eAAe,SAASA,0BAAT,cAYb;AAAA,MAVmBC,qBAUnB,QAVEC,eAUF;AAAA,MATeC,iBASf,QATEC,WASF;AAAA,MAReC,iBAQf,QAREC,WAQF;AAAA,MAPmBC,qBAOnB,QAPEC,eAOF;AAAA,MAJmBC,oBAInB,SAJEP,eAIF;AAAA,MAHeQ,gBAGf,SAHEN,WAGF;AAAA,MAFmBO,oBAEnB,SAFEH,eAEF;;AACA,MAAIH,iBAAiB,GAAGE,qBAAxB,EAA+C;AAC7C,WAAO,CAACN,qBAAD,EAAwBQ,oBAAxB,CAAP;AACD;;AAED,MAAMG,gBAAgB,GACpBT,iBAAiB,GAAGO,gBAApB,GAAuCL,iBADzC;;AAEA,MAAIO,gBAAgB,GAAGD,oBAAvB,EAA6C;AAC3C,WAAO,CAACV,qBAAD,EAAwBQ,oBAAxB,CAAP;AACD;;AAED,MAAMI,YAAY,GAChBR,iBAAiB,IAAIF,iBAAiB,GAAGO,gBAAxB,CADnB;AAEA,MAAMI,aAAa,GAAGb,qBAAqB,GAAGQ,oBAA9C;AAEA,MAAMM,qBAAqB,GAAGD,aAAa,GAAGD,YAA9C;AACA,MAAMG,oBAAoB,GAAGF,aAAa,IAAI,IAAID,YAAR,CAA1C;AAEA,SAAO,CAACE,qBAAD,EAAwBC,oBAAxB,CAAP;AACD",
+    "sourcesContent": [
+      "export default function calculateFlexGrowAfterDrag(\n  {\n    currentFlexGrow: currentBeforeFlexGrow,\n    currentSize: currentBeforeSize,\n    desiredSize: desiredBeforeSize,\n    initialMainSize: beforeInitialMainSize,\n  },\n  {\n    currentFlexGrow: currentAfterFlexGrow,\n    currentSize: currentAfterSize,\n    initialMainSize: afterInitialMainSize,\n  },\n) {\n  if (desiredBeforeSize < beforeInitialMainSize) {\n    return [currentBeforeFlexGrow, currentAfterFlexGrow];\n  }\n\n  const desiredAfterSize =\n    currentBeforeSize + currentAfterSize - desiredBeforeSize;\n  if (desiredAfterSize < afterInitialMainSize) {\n    return [currentBeforeFlexGrow, currentAfterFlexGrow];\n  }\n\n  const desiredRatio =\n    desiredBeforeSize / (currentBeforeSize + currentAfterSize);\n  const totalFlexGrow = currentBeforeFlexGrow + currentAfterFlexGrow;\n\n  const desiredBeforeFlexGrow = totalFlexGrow * desiredRatio;\n  const desiredAfterFlexGrow = totalFlexGrow * (1 - desiredRatio);\n\n  return [desiredBeforeFlexGrow, desiredAfterFlexGrow];\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

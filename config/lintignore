@@ -6,3 +6,5 @@
 /src/validations/__tests__/acceptance.json
 /src/validations/__tests__/acceptance
 /templates
+/nodeenv
+.cache

@@ -1,0 +1,43 @@
+{
+  "ast": null,
+  "code": "'use strict';\n\nvar Info = require('./info');\n\nvar types = require('./types');\n\nmodule.exports = DefinedInfo;\nDefinedInfo.prototype = new Info();\nDefinedInfo.prototype.defined = true;\n\nfunction DefinedInfo(property, attribute, mask, space) {\n  mark(this, 'space', space);\n  Info.call(this, property, attribute);\n  mark(this, 'boolean', check(mask, types.boolean));\n  mark(this, 'booleanish', check(mask, types.booleanish));\n  mark(this, 'overloadedBoolean', check(mask, types.overloadedBoolean));\n  mark(this, 'number', check(mask, types.number));\n  mark(this, 'commaSeparated', check(mask, types.commaSeparated));\n  mark(this, 'spaceSeparated', check(mask, types.spaceSeparated));\n  mark(this, 'commaOrSpaceSeparated', check(mask, types.commaOrSpaceSeparated));\n}\n\nfunction mark(values, key, value) {\n  if (value) {\n    values[key] = value;\n  }\n}\n\nfunction check(value, mask) {\n  return (value & mask) === mask;\n}",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/property-information/lib/util/defined-info.js"
+    ],
+    "names": [
+      "Info",
+      "require",
+      "types",
+      "module",
+      "exports",
+      "DefinedInfo",
+      "prototype",
+      "defined",
+      "property",
+      "attribute",
+      "mask",
+      "space",
+      "mark",
+      "call",
+      "check",
+      "boolean",
+      "booleanish",
+      "overloadedBoolean",
+      "number",
+      "commaSeparated",
+      "spaceSeparated",
+      "commaOrSpaceSeparated",
+      "values",
+      "key",
+      "value"
+    ],
+    "mappings": "AAAA;;AAEA,IAAIA,IAAI,GAAGC,OAAO,CAAC,QAAD,CAAlB;;AACA,IAAIC,KAAK,GAAGD,OAAO,CAAC,SAAD,CAAnB;;AAEAE,MAAM,CAACC,OAAP,GAAiBC,WAAjB;AAEAA,WAAW,CAACC,SAAZ,GAAwB,IAAIN,IAAJ,EAAxB;AACAK,WAAW,CAACC,SAAZ,CAAsBC,OAAtB,GAAgC,IAAhC;;AAEA,SAASF,WAAT,CAAqBG,QAArB,EAA+BC,SAA/B,EAA0CC,IAA1C,EAAgDC,KAAhD,EAAuD;AACrDC,EAAAA,IAAI,CAAC,IAAD,EAAO,OAAP,EAAgBD,KAAhB,CAAJ;AACAX,EAAAA,IAAI,CAACa,IAAL,CAAU,IAAV,EAAgBL,QAAhB,EAA0BC,SAA1B;AACAG,EAAAA,IAAI,CAAC,IAAD,EAAO,SAAP,EAAkBE,KAAK,CAACJ,IAAD,EAAOR,KAAK,CAACa,OAAb,CAAvB,CAAJ;AACAH,EAAAA,IAAI,CAAC,IAAD,EAAO,YAAP,EAAqBE,KAAK,CAACJ,IAAD,EAAOR,KAAK,CAACc,UAAb,CAA1B,CAAJ;AACAJ,EAAAA,IAAI,CAAC,IAAD,EAAO,mBAAP,EAA4BE,KAAK,CAACJ,IAAD,EAAOR,KAAK,CAACe,iBAAb,CAAjC,CAAJ;AACAL,EAAAA,IAAI,CAAC,IAAD,EAAO,QAAP,EAAiBE,KAAK,CAACJ,IAAD,EAAOR,KAAK,CAACgB,MAAb,CAAtB,CAAJ;AACAN,EAAAA,IAAI,CAAC,IAAD,EAAO,gBAAP,EAAyBE,KAAK,CAACJ,IAAD,EAAOR,KAAK,CAACiB,cAAb,CAA9B,CAAJ;AACAP,EAAAA,IAAI,CAAC,IAAD,EAAO,gBAAP,EAAyBE,KAAK,CAACJ,IAAD,EAAOR,KAAK,CAACkB,cAAb,CAA9B,CAAJ;AACAR,EAAAA,IAAI,CAAC,IAAD,EAAO,uBAAP,EAAgCE,KAAK,CAACJ,IAAD,EAAOR,KAAK,CAACmB,qBAAb,CAArC,CAAJ;AACD;;AAED,SAAST,IAAT,CAAcU,MAAd,EAAsBC,GAAtB,EAA2BC,KAA3B,EAAkC;AAChC,MAAIA,KAAJ,EAAW;AACTF,IAAAA,MAAM,CAACC,GAAD,CAAN,GAAcC,KAAd;AACD;AACF;;AAED,SAASV,KAAT,CAAeU,KAAf,EAAsBd,IAAtB,EAA4B;AAC1B,SAAO,CAACc,KAAK,GAAGd,IAAT,MAAmBA,IAA1B;AACD",
+    "sourcesContent": [
+      "'use strict'\n\nvar Info = require('./info')\nvar types = require('./types')\n\nmodule.exports = DefinedInfo\n\nDefinedInfo.prototype = new Info()\nDefinedInfo.prototype.defined = true\n\nfunction DefinedInfo(property, attribute, mask, space) {\n  mark(this, 'space', space)\n  Info.call(this, property, attribute)\n  mark(this, 'boolean', check(mask, types.boolean))\n  mark(this, 'booleanish', check(mask, types.booleanish))\n  mark(this, 'overloadedBoolean', check(mask, types.overloadedBoolean))\n  mark(this, 'number', check(mask, types.number))\n  mark(this, 'commaSeparated', check(mask, types.commaSeparated))\n  mark(this, 'spaceSeparated', check(mask, types.spaceSeparated))\n  mark(this, 'commaOrSpaceSeparated', check(mask, types.commaOrSpaceSeparated))\n}\n\nfunction mark(values, key, value) {\n  if (value) {\n    values[key] = value\n  }\n}\n\nfunction check(value, mask) {\n  return (value & mask) === mask\n}\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

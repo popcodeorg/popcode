@@ -1,0 +1,23 @@
+{
+  "ast": null,
+  "code": "import { faCaretDown } from '@fortawesome/free-solid-svg-icons';\nimport { FontAwesomeIcon } from '@fortawesome/react-fontawesome';\nimport React from 'react';\nexport default function ExportMenuButton() {\n  return React.createElement(FontAwesomeIcon, {\n    icon: faCaretDown\n  });\n}\nExportMenuButton.propTypes = {};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/src/components/TopBar/ExportMenuButton.jsx"
+    ],
+    "names": [
+      "faCaretDown",
+      "FontAwesomeIcon",
+      "React",
+      "ExportMenuButton",
+      "propTypes"
+    ],
+    "mappings": "AAAA,SAAQA,WAAR,QAA0B,mCAA1B;AACA,SAAQC,eAAR,QAA8B,gCAA9B;AACA,OAAOC,KAAP,MAAkB,OAAlB;AAEA,eAAe,SAASC,gBAAT,GAA4B;AACzC,SAAO,oBAAC,eAAD;AAAiB,IAAA,IAAI,EAAEH;AAAvB,IAAP;AACD;AAEDG,gBAAgB,CAACC,SAAjB,GAA6B,EAA7B",
+    "sourcesContent": [
+      "import {faCaretDown} from '@fortawesome/free-solid-svg-icons';\nimport {FontAwesomeIcon} from '@fortawesome/react-fontawesome';\nimport React from 'react';\n\nexport default function ExportMenuButton() {\n  return <FontAwesomeIcon icon={faCaretDown} />;\n}\n\nExportMenuButton.propTypes = {};\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

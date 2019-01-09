@@ -1,0 +1,60 @@
+{
+  "ast": null,
+  "code": "/*\n    \n    \n*/\nvar moment = require('moment');\n\nvar Parser = require('../parser').Parser;\n\nvar ParsedResult = require('../../result').ParsedResult;\n\nvar util = require('../../utils/JP');\n\nvar PATTERN = /(?:(同|((昭和|平成)?([0-9０-９]{2,4})))年\\s*)?([0-9０-９]{1,2})月\\s*([0-9０-９]{1,2})日/i;\nvar YEAR_GROUP = 2;\nvar ERA_GROUP = 3;\nvar YEAR_NUMBER_GROUP = 4;\nvar MONTH_GROUP = 5;\nvar DAY_GROUP = 6;\n\nexports.Parser = function JPStandardParser() {\n  Parser.apply(this, arguments);\n\n  this.pattern = function () {\n    return PATTERN;\n  };\n\n  this.extract = function (text, ref, match, opt) {\n    var startMoment = moment(ref);\n    var result = new ParsedResult({\n      text: match[0],\n      index: match.index,\n      ref: ref\n    });\n    var month = match[MONTH_GROUP];\n    month = util.toHankaku(month);\n    month = parseInt(month);\n    var day = match[DAY_GROUP];\n    day = util.toHankaku(day);\n    day = parseInt(day);\n    startMoment.set('date', day);\n    startMoment.set('month', month - 1);\n    result.start.assign('day', startMoment.date());\n    result.start.assign('month', startMoment.month() + 1);\n\n    if (!match[YEAR_GROUP]) {\n      //Find the most appropriated year\n      startMoment.year(moment(ref).year());\n      var nextYear = startMoment.clone().add(1, 'y');\n      var lastYear = startMoment.clone().add(-1, 'y');\n\n      if (Math.abs(nextYear.diff(moment(ref))) < Math.abs(startMoment.diff(moment(ref)))) {\n        startMoment = nextYear;\n      } else if (Math.abs(lastYear.diff(moment(ref))) < Math.abs(startMoment.diff(moment(ref)))) {\n        startMoment = lastYear;\n      }\n\n      result.start.assign('day', startMoment.date());\n      result.start.assign('month', startMoment.month() + 1);\n      result.start.imply('year', startMoment.year());\n    } else if (match[YEAR_GROUP].match('同年')) {\n      result.start.assign('year', startMoment.year());\n    } else {\n      var year = match[YEAR_NUMBER_GROUP];\n      year = util.toHankaku(year);\n      year = parseInt(year);\n\n      if (match[ERA_GROUP] == '平成') {\n        year += 1988;\n      } else if (match[ERA_GROUP] == '昭和') {\n        year += 1925;\n      }\n\n      result.start.assign('year', year);\n    }\n\n    result.tags['JPStandardParser'] = true;\n    return result;\n  };\n};",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/peter/Desktop/code/popcode/node_modules/chrono-node/src/parsers/ja/JPStandardParser.js"
+    ],
+    "names": [
+      "moment",
+      "require",
+      "Parser",
+      "ParsedResult",
+      "util",
+      "PATTERN",
+      "YEAR_GROUP",
+      "ERA_GROUP",
+      "YEAR_NUMBER_GROUP",
+      "MONTH_GROUP",
+      "DAY_GROUP",
+      "exports",
+      "JPStandardParser",
+      "apply",
+      "arguments",
+      "pattern",
+      "extract",
+      "text",
+      "ref",
+      "match",
+      "opt",
+      "startMoment",
+      "result",
+      "index",
+      "month",
+      "toHankaku",
+      "parseInt",
+      "day",
+      "set",
+      "start",
+      "assign",
+      "date",
+      "year",
+      "nextYear",
+      "clone",
+      "add",
+      "lastYear",
+      "Math",
+      "abs",
+      "diff",
+      "imply",
+      "tags"
+    ],
+    "mappings": "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",
+    "sourcesContent": [
+      "/*\n    \n    \n*/\n\nvar moment = require('moment');\n\nvar Parser = require('../parser').Parser;\nvar ParsedResult = require('../../result').ParsedResult;\n\nvar util  = require('../../utils/JP'); \nvar PATTERN = /(?:(同|((昭和|平成)?([0-9０-９]{2,4})))年\\s*)?([0-9０-９]{1,2})月\\s*([0-9０-９]{1,2})日/i;\n  \nvar YEAR_GROUP        = 2;\nvar ERA_GROUP         = 3;\nvar YEAR_NUMBER_GROUP = 4;\nvar MONTH_GROUP       = 5;\nvar DAY_GROUP         = 6;\n\nexports.Parser = function JPStandardParser(){\n    Parser.apply(this, arguments);\n    \n    this.pattern = function() { return PATTERN; }\n    \n    this.extract = function(text, ref, match, opt){ \n\n        var startMoment = moment(ref);\n        var result = new ParsedResult({\n            text: match[0],\n            index: match.index,\n            ref: ref,\n        });\n        \n        var month = match[MONTH_GROUP];\n        month = util.toHankaku(month);\n        month = parseInt(month);\n\n        var day = match[DAY_GROUP];\n        day = util.toHankaku(day);\n        day = parseInt(day);\n\n        startMoment.set('date', day);\n        startMoment.set('month', month - 1);\n        result.start.assign('day', startMoment.date());\n        result.start.assign('month', startMoment.month() + 1);\n            \n        if (!match[YEAR_GROUP]) {\n            \n            //Find the most appropriated year\n            startMoment.year(moment(ref).year());\n            var nextYear = startMoment.clone().add(1, 'y');\n            var lastYear = startMoment.clone().add(-1, 'y');\n            if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(startMoment.diff(moment(ref))) ){  \n                startMoment = nextYear;\n            }\n            else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(startMoment.diff(moment(ref))) ){ \n                startMoment = lastYear;\n            }\n\n            result.start.assign('day', startMoment.date());\n            result.start.assign('month', startMoment.month() + 1);\n            result.start.imply('year', startMoment.year());\n\n        } else if (match[YEAR_GROUP].match('同年')) {\n\n            result.start.assign('year', startMoment.year());\n\n        } else {\n            var year = match[YEAR_NUMBER_GROUP];\n            year = util.toHankaku(year);\n            year = parseInt(year);\n\n            if (match[ERA_GROUP] == '平成') {\n                year += 1988;\n            } else if (match[ERA_GROUP] == '昭和') {\n                year += 1925;\n            }\n\n            result.start.assign('year', year);\n        }\n        \n\n        result.tags['JPStandardParser'] = true;\n        return result;\n    };\n\n}\n\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}
