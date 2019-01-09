@@ -12,6 +12,11 @@ const errorMap = {
     payload: {tag: error.closeTag.name},
   }),
 
+    MISMATCHED_CLOSE_TAG:  error=> ({
+    reason: 'mismatched_close_tag',
+    payload: {tag: error.openTag.name},
+  }),
+
   EMPTY_TITLE_ELEMENT: () => ({
     reason: 'empty-title-element',
     suppresses: ['missing-title'],
