@@ -74,10 +74,21 @@ class PreviewFrame extends React.Component {
         );
       },
       error: (name, message) => {
+        let errorMessage;
+        if (name === 'TypeError') {
+          const ErrorConstructor = window[name] || Error;
+          const normalizedError = normalizeError(
+            new ErrorConstructor(message),
+          );
+          errorMessage = normalizedError.message;
+        }
+        if (!errorMessage) {
+          errorMessage = message;
+        }
         this.props.onConsoleError(
           key,
           name,
-          message,
+          errorMessage,
           this.props.compiledProject.compiledProjectKey,
         );
       },
