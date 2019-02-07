@@ -92,7 +92,7 @@ test('popOutProject', (assert) => {
 test('projectSuccessfullySaved', (assert) => {
   testSaga(projectSuccessfullySavedSaga).
     next().put(showSaveIndicator()).
-    next().delay().
+    next().delay(1000).
     next().put(hideSaveIndicator()).
     next().isDone();
   assert.end();

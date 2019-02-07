@@ -276,7 +276,7 @@ test('handleAuthChange', (t) => {
       testSaga(handleAuthChange, user, {newCredential}).
         next().fork(saveUserCredential, {user, credential: newCredential}).
         next().call(loadCredentialsForUser, user.uid).
-        next(credentials).inspect(({PUT: {action}}) => {
+        next(credentials).inspect(({payload: {action}}) => {
           assert.deepEqual(
             action,
             userAuthenticated(user, [credentials[1], newCredential]),

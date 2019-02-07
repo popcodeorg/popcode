@@ -51,7 +51,7 @@ test('createProject()', (assert) => {
   const clock = sinon.useFakeTimers();
 
   testSaga(createProjectSaga).
-    next().inspect(({PUT: {action}}) => {
+    next().inspect(({payload: {action}}) => {
       firstProjectKey = action.payload.projectKey;
       assert.ok(
         firstProjectKey,
@@ -63,7 +63,7 @@ test('createProject()', (assert) => {
   clock.tick(10);
 
   testSaga(createProjectSaga).
-    next().inspect(({PUT: {action}}) => {
+    next().inspect(({payload: {action}}) => {
       const secondProjectKey = action.payload.projectKey;
       assert.ok(secondProjectKey, 'generator yields action with project key');
       assert.notEqual(
@@ -141,7 +141,15 @@ test('importSnapshot()', (t) => {
     testSaga(importSnapshotSaga, applicationLoaded({snapshotKey})).
       next().call(loadProjectSnapshot, snapshotKey).
       next(projectData).inspect(({
-        PUT: {action: {type, payload: {projectKey, project: payloadProject}}},
+        payload: {
+          action: {
+            type,
+            payload: {
+              projectKey,
+              project: payloadProject,
+            },
+          },
+        },
       }) => {
         assert.equal(type, 'SNAPSHOT_IMPORTED');
         assert.same(payloadProject, projectData);
@@ -182,18 +190,18 @@ test('importGist()', (t) => {
 
     const gist = gistData({html: '<!doctype html>test'});
     saga.next(gist).inspect((effect) => {
-      assert.ok(effect.PUT, 'yielded effect is a PUT');
+      assert.equals(effect.type, 'PUT', 'yielded effect is a PUT');
       assert.equal(
-        effect.PUT.action.type,
+        effect.payload.action.type,
         'GIST_IMPORTED',
         'action is GIST_IMPORTED',
       );
       assert.ok(
-        effect.PUT.action.payload.projectKey,
+        effect.payload.action.payload.projectKey,
         'assigns a project key',
       );
       assert.deepEqual(
-        effect.PUT.action.payload.gistData,
+        effect.payload.action.payload.gistData,
         gist,
         'includes gist in action payload',
       );
@@ -231,7 +239,9 @@ test('userAuthenticated', (assert) => {
     userAuthenticatedSaga,
     userAuthenticated({user, credentials: [credential]}),
   ).
-    next().inspect(effect => assert.ok(effect.SELECT)).
+    next().inspect((effect) => {
+      assert.equals(effect.type, 'SELECT', 'effect type is select');
+    }).
     next(scenario.state).fork(saveCurrentProject).
     next(scenario.state).call(loadAllProjects, scenario.user.account.id).
     next(projects).put(projectsLoaded(projects)).
