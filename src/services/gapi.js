@@ -10,7 +10,7 @@ export const SCOPES = [
   'https://www.googleapis.com/auth/classroom.coursework.me',
 ];
 
-const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/classroom/v1/rest'];
+const DISCOVERY_DOCS = ['https://classroom.googleapis.com/$discovery/rest?version=v1'];
 
 class LoadError extends ExtendableError {}
 
