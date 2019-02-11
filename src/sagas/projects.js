@@ -34,7 +34,6 @@ import {
   saveProject,
 } from '../clients/firebase';
 import {getCurrentProject, getCurrentUserId} from '../selectors';
-import retryingFailedImports from '../util/retryingFailedImports';
 import beautifySource from '../util/beautifySource';
 
 export function* applicationLoaded(action) {
@@ -91,18 +90,7 @@ export function* updateProjectSource() {
   yield* saveCurrentProject();
 }
 
-export async function importBeautify() {
-  return retryingFailedImports(
-    () => import(
-      /* webpackChunkName: "mainAsync" */
-      'js-beautify',
-    ),
-  );
-}
-
 export function* loadAndBeautifyProjectSource() {
-  const beautify = yield call(importBeautify);
-
   const state = yield select();
   const currentProject = getCurrentProject(state);
   const allFormattedSources = yield all(
@@ -110,7 +98,6 @@ export function* loadAndBeautifyProjectSource() {
       const source = currentProject.sources[language];
       return call(
         beautifySource,
-        beautify,
         source,
         language,
       );
