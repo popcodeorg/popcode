@@ -1,4 +1,4 @@
-import {initialize, pageview} from 'react-ga';
+import ReactGA from 'react-ga';
 
 import config from '../config';
 
@@ -8,12 +8,12 @@ const cookieDomain =
     window.location.hostname;
 
 export function init() {
-  initialize(
+  ReactGA.initialize(
     config.googleAnalyticsTrackingId,
     {gaOptions: {cookieDomain}},
   );
 }
 
 export function logPageview() {
-  pageview(window.location.pathname);
+  ReactGA.pageview(window.location.pathname);
 }
