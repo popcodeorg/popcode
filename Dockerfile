@@ -1,11 +1,11 @@
-FROM node:8.12.0
+FROM node:8.15.0
 
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
         apt-get update && \
         apt-get install -y google-chrome-stable
 
-RUN npm install --global npm@6.4.1
+RUN npm install --global npm@6.7.0
 
 RUN echo '{"allow_root": true}' > /root/.bowerrc && \
     npm config set unsafe-perm true
