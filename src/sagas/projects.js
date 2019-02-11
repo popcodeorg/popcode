@@ -35,8 +35,7 @@ import {
 } from '../clients/firebase';
 import {getCurrentProject, getCurrentUserId} from '../selectors';
 import retryingFailedImports from '../util/retryingFailedImports';
-import {format} from '../util/formatter';
-import ProjectSources from '../records/ProjectSources';
+import beautifySource from '../util/beautifySource';
 
 export function* applicationLoaded(action) {
   if (isString(action.payload.gistId)) {
@@ -109,18 +108,19 @@ export function* loadAndBeautifyProjectSource() {
   const allFormattedSources = yield all(
     Reflect.ownKeys(currentProject.sources).map((language) => {
       const source = currentProject.sources[language];
-      return call(format,
+      return call(
+        beautifySource,
         beautify,
         source,
-        language);
+        language,
+      );
     }),
   );
   const sourcesMap = new Map();
   allFormattedSources.map(({formatted, language}) => {
     sourcesMap.set(language, formatted);
   });
-  const projectSources = new ProjectSources(sourcesMap);
-  yield put(projectBeautified(currentProject.projectKey, projectSources));
+  yield put(projectBeautified(currentProject.projectKey, sourcesMap));
 }
 
 

@@ -25,11 +25,13 @@ class Editor extends React.Component {
       }
     }, RESIZE_THROTTLE);
 
-    bindAll(this,
+    bindAll(
+      this,
       '_handleWindowResize',
       '_resizeEditor',
       '_setupEditor',
-      '_handleKeyPress');
+      '_handleKeyPress',
+    );
 
     this.render = constant(
       <div

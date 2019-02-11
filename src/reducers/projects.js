@@ -10,6 +10,7 @@ import values from 'lodash-es/values';
 
 import {Project} from '../records';
 import {isPristineProject} from '../util/projectUtils';
+import ProjectSources from '../records/ProjectSources';
 
 const emptyMap = new Immutable.Map();
 
@@ -119,8 +120,10 @@ export default function reduceProjects(stateIn, action) {
       );
 
     case 'PROJECT_BEAUTIFIED':
-      return state.setIn([action.payload.projectKey, 'sources'],
-        action.payload.projectSources).setIn(
+      return state.setIn(
+        [action.payload.projectKey, 'sources'],
+        new ProjectSources(action.payload.projectSources),
+      ).setIn(
         [action.payload.projectKey, 'updatedAt'],
         action.meta.timestamp,
       );
