@@ -11,16 +11,17 @@ export default function CurrentUser({
   isLoginAvailable,
   isUserAnonymous,
   isUserAuthenticated,
-  isUserAuthenticatedWithGithub,
   user,
   onLinkGitHub,
   onLogOut,
   onStartLogIn,
 }) {
   if (isUserAuthenticated) {
+    const githubIdentityProvider =
+      user.identityProviders.get('github.com');
     return (
       <CurrentUserMenu
-        isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
+        githubIdentityProvider={githubIdentityProvider}
         user={user}
         onLinkGitHub={onLinkGitHub}
         onLogOut={onLogOut}
@@ -50,7 +51,6 @@ CurrentUser.propTypes = {
   isLoginAvailable: PropTypes.bool.isRequired,
   isUserAnonymous: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
-  isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
   user: PropTypes.instanceOf(UserAccount),
   onLinkGitHub: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
