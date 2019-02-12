@@ -10,6 +10,11 @@ import noop from 'lodash-es/noop';
 import {EditorLocation} from '../records';
 import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
 
+import 'brace/ext/searchbox';
+import 'brace/mode/html';
+import 'brace/mode/css';
+import 'brace/mode/javascript';
+import 'brace/theme/monokai';
 
 const RESIZE_THROTTLE = 250;
 const NORMAL_FONTSIZE = 14;
