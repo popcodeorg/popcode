@@ -39,7 +39,7 @@ async function loadDatabaseSdk() {
   return retryingFailedImports(
     () => import(
       /* webpackChunkName: "mainAsync" */
-      '@firebase/database',
+      '@firebase/database' // eslint-disable-line comma-dangle
     ),
   );
 }
