@@ -2,13 +2,13 @@ import {bugsnagClient} from '../util/bugsnag';
 import {
   all,
   call,
+  delay,
   put,
   race,
   select,
   take,
   takeEvery,
 } from 'redux-saga/effects';
-import {delay} from 'redux-saga';
 import {
   accountMigrationComplete,
   accountMigrationNeeded,
@@ -51,7 +51,7 @@ export function* linkGithubIdentity() {
 
 export function* startAccountMigration() {
   const {shouldContinue} = yield race({
-    shouldContinue: call(delay, 5000, true),
+    shouldContinue: delay(5000, true),
     cancel: take('DISMISS_ACCOUNT_MIGRATION'),
   });
 
