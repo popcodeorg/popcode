@@ -126,7 +126,7 @@ async function librariesWithDependencies(libraryKeys) {
 async function importLibraries() {
   return retryingFailedImports(() => import(
     /* webpackChunkName: "previewLibraries" */
-    '../config/libraryAssets',
+    '../config/libraryAssets' // eslint-disable-line comma-dangle
   ));
 }
 
@@ -170,7 +170,7 @@ async function addJavascript(
     const {'default': loopBreaker} = await retryingFailedImports(
       () => import(
         /* webpackChunkName: "mainAsync" */
-        'loop-breaker',
+        'loop-breaker' // eslint-disable-line comma-dangle
       ),
     );
     source = loopBreaker(source);
