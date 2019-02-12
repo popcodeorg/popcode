@@ -1,7 +1,6 @@
 import test from 'tape';
 import {testSaga} from 'redux-saga-test-plan';
-import {delay} from 'redux-saga';
-import {call, take, race} from 'redux-saga/effects';
+import {delay, take, race} from 'redux-saga/effects';
 
 import {linkGithubIdentity} from '../../../src/actions';
 import {
@@ -93,7 +92,7 @@ test('startAccountMigration', (t) => {
           assert.deepEqual(
             effect,
             race({
-              shouldContinue: call(delay, 5000, true),
+              shouldContinue: delay(5000, true),
               cancel: take('DISMISS_ACCOUNT_MIGRATION'),
             }),
           );
@@ -116,7 +115,7 @@ test('startAccountMigration', (t) => {
         assert.deepEqual(
           effect,
           race({
-            shouldContinue: call(delay, 5000, true),
+            shouldContinue: delay(5000, true),
             cancel: take('DISMISS_ACCOUNT_MIGRATION'),
           }),
         );
@@ -137,7 +136,7 @@ test('startAccountMigration', (t) => {
         assert.deepEqual(
           effect,
           race({
-            shouldContinue: call(delay, 5000, true),
+            shouldContinue: delay(5000, true),
             cancel: take('DISMISS_ACCOUNT_MIGRATION'),
           }),
         );

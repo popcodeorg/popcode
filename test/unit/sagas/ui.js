@@ -1,6 +1,5 @@
 import test from 'tape';
 import {testSaga} from 'redux-saga-test-plan';
-import {delay} from 'redux-saga';
 import {
   userDoneTyping as userDoneTypingSaga,
   exportProject as exportProjectSaga,
@@ -93,7 +92,7 @@ test('popOutProject', (assert) => {
 test('projectSuccessfullySaved', (assert) => {
   testSaga(projectSuccessfullySavedSaga).
     next().put(showSaveIndicator()).
-    next().call(delay, 1000).
+    next().delay(1000).
     next().put(hideSaveIndicator()).
     next().isDone();
   assert.end();

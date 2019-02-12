@@ -312,7 +312,7 @@ async function createClient(token = null) {
   const {'default': GitHub} = await retryingFailedImports(
     () => import(
       /* webpackChunkName: "mainAsync" */
-      'github-api',
+      'github-api' // eslint-disable-line comma-dangle
     ),
   );
 
