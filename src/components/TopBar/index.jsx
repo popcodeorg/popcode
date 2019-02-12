@@ -65,6 +65,7 @@ export default function TopBar({
   onStartEditingInstructions,
   onToggleLibrary,
   onToggleTextSize,
+  onUnlinkGitHub,
   onUpdateRepo,
 }) {
   const {popVariant, modifier} = uiVariants({validationState, isUserTyping});
@@ -122,6 +123,7 @@ export default function TopBar({
         onLinkGitHub={onLinkGitHub}
         onLogOut={onLogOut}
         onStartLogIn={onStartGoogleLogIn}
+        onUnlinkGitHub={onUnlinkGitHub}
       />
       <HamburgerMenu
         hasInstructions={hasInstructions}
@@ -173,6 +175,7 @@ TopBar.propTypes = {
   onStartGoogleLogIn: PropTypes.func.isRequired,
   onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,
+  onUnlinkGitHub: PropTypes.func.isRequired,
   onUpdateRepo: PropTypes.func.isRequired,
 };
 

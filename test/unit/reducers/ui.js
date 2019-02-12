@@ -174,7 +174,11 @@ test('linkGithubIdentity', (t) => {
 test('identityLinked', reducerTest(
   reducer,
   initialState,
-  partial(identityLinked, {providerId: 'github.com'}),
+  partial(
+    identityLinked,
+    {providerData: [{providerId: 'github.com'}]},
+    {providerId: 'github.com'},
+  ),
   withNotification('identity-linked', 'notice', {provider: 'github.com'}),
 ));
 

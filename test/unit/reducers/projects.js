@@ -217,21 +217,26 @@ tap([project(), project()], (projectsIn) => {
     ),
   ));
 
-  test('accountMigrationComplete', reducerTest(
-    reducer,
-    states.initial,
-    partial(accountMigrationComplete, projectsIn, {}),
-    projectsIn.reduce(
-      (map, projectIn) => map.set(
-        projectIn.projectKey,
-        buildProject(
-          projectIn.projectKey,
-          projectIn.sources,
-        ).set('updatedAt', projectIn.updatedAt),
-      ),
-      new Immutable.Map(),
-    ),
-  ));
+  tap(
+    {providerData: [{providerId: 'google.com'}, {providerId: 'github.com'}]},
+    (firebaseUser) => {
+      test('accountMigrationComplete', reducerTest(
+        reducer,
+        states.initial,
+        partial(accountMigrationComplete, firebaseUser, {}, projectsIn),
+        projectsIn.reduce(
+          (map, projectIn) => map.set(
+            projectIn.projectKey,
+            buildProject(
+              projectIn.projectKey,
+              projectIn.sources,
+            ).set('updatedAt', projectIn.updatedAt),
+          ),
+          new Immutable.Map(),
+        ),
+      ));
+    },
+  );
 });
 
 tap(

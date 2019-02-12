@@ -1,10 +1,10 @@
-import isNull from 'lodash-es/isNull';
+import isUndefined from 'lodash-es/isUndefined';
 
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 import {t} from 'i18next';
 
-import {UserIdentityProvider} from '../../records';
+import {UserAccount} from '../../records';
 
 import createMenu, {MenuItem} from './createMenu';
 import CurrentUserButton from './CurrentUserButton';
@@ -15,16 +15,19 @@ const CurrentUserMenu = createMenu({
 
   renderItems({
     /* eslint-disable react/prop-types */
-    githubIdentityProvider,
     onLinkGitHub,
     onLogOut,
     onUnlinkGitHub,
+    user,
     /* eslint-enable react/prop-types */
   }) {
+    const githubIdentityProvider =
+      user.identityProviders.get('github.com');
+
     return (
       <Fragment>
         {
-          isNull(githubIdentityProvider) ? (
+          isUndefined(githubIdentityProvider) ? (
             <MenuItem onClick={onLinkGitHub}>
               {t('top-bar.session.link-github')}
             </MenuItem>
@@ -46,13 +49,14 @@ const CurrentUserMenu = createMenu({
 })(CurrentUserButton);
 
 CurrentUserMenu.propTypes = {
-  githubIdentityProvider: PropTypes.instanceOf(UserIdentityProvider),
+  user: PropTypes.instanceOf(UserAccount),
   onLinkGitHub: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
+  onUnlinkGitHub: PropTypes.func.isRequired,
 };
 
 CurrentUserMenu.defaultProps = {
-  githubIdentityProvider: null,
+  user: null,
 };
 
 export default CurrentUserMenu;

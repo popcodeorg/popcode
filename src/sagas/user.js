@@ -16,6 +16,7 @@ import {
   identityLinked,
   linkIdentityFailed,
   accountMigrationError,
+  identityUnlinked,
 } from '../actions/user';
 import {getCurrentAccountMigration} from '../selectors';
 import {
@@ -23,14 +24,15 @@ import {
   migrateAccount,
   signOut,
   saveCredentialForCurrentUser,
+  unlinkGithub,
 } from '../clients/firebase';
 import {getProfileForAuthenticatedUser} from '../clients/github';
 
 export function* linkGithubIdentity() {
   try {
-    const credential = yield call(linkGithub);
+    const {user: userData, credential} = yield call(linkGithub);
     yield call(saveCredentialForCurrentUser, credential);
-    yield put(identityLinked(credential));
+    yield put(identityLinked(userData, credential));
   } catch (e) {
     switch (e.code) {
       case 'auth/credential-already-in-use': {
@@ -49,6 +51,11 @@ export function* linkGithubIdentity() {
   }
 }
 
+export function* unlinkGithubIdentity() {
+  yield call(unlinkGithub);
+  yield put(identityUnlinked('github.com'));
+}
+
 export function* startAccountMigration() {
   const {shouldContinue} = yield race({
     shouldContinue: delay(5000, true),
@@ -62,8 +69,14 @@ export function* startAccountMigration() {
   yield put(accountMigrationUndoPeriodExpired());
   const {firebaseCredential} = yield select(getCurrentAccountMigration);
   try {
-    const projects = yield call(migrateAccount, firebaseCredential);
-    yield put(accountMigrationComplete(projects, firebaseCredential));
+    const {user: userData, migratedProjects} =
+      yield call(migrateAccount, firebaseCredential);
+
+    yield put(accountMigrationComplete(
+      userData,
+      firebaseCredential,
+      migratedProjects,
+    ));
   } catch (e) {
     yield call([bugsnagClient, 'notify'], e);
     yield put(accountMigrationError(e));
@@ -77,6 +90,7 @@ export function* logOut() {
 export default function* user() {
   yield all([
     takeEvery('LINK_GITHUB_IDENTITY', linkGithubIdentity),
+    takeEvery('UNLINK_GITHUB_IDENTITY', unlinkGithubIdentity),
     takeEvery('LOG_OUT', logOut),
     takeEvery('START_ACCOUNT_MIGRATION', startAccountMigration),
   ]);

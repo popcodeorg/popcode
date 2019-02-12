@@ -52,6 +52,7 @@
     "project-compilation-failed": "Something went wrong trying to display a preview of your project. This is a bug in Popcode and we have been notified. Making another change to your code will likely fix this error.",
     "identity-linked": "Your GitHub account is now linked!",
     "link-identity-failed": "There was a problem linking your GitHub account.",
+    "identity-unlinked": "The linked GitHub account has been unlinked.",
     "gapi-client-unavailable": "It looks like you are having trouble with your internet connection. You can continue to work in Popcode but you won’t be able to log in or save your work. Proceed carefully!"
   },
   "languages": {

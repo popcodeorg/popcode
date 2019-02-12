@@ -41,6 +41,8 @@ const loggedInState = new User({
     identityProviders: new Map({
       'google.com': new UserIdentityProvider({
         accessToken: userCredentialIn.credential.idToken,
+        avatarUrl: userCredentialIn.user.photoURL,
+        displayName: userCredentialIn.user.displayName,
       }),
     }),
   }),
@@ -62,29 +64,58 @@ test('identityLinked', reducerTest(
   loggedInState,
   partial(
     identityLinked,
+    {
+      displayName: 'Popcode User',
+      photoURL: null,
+      providerData: [
+        {
+          displayName: 'Popcode User',
+          photoURL: null,
+          providerId: 'google.com',
+        },
+      ],
+    },
     {providerId: 'google.com', idToken: 'abc'},
   ),
   loggedInState.setIn(
     ['account', 'identityProviders', 'google.com'],
-    new UserIdentityProvider({accessToken: 'abc'}),
+    new UserIdentityProvider({
+      displayName: 'Popcode User',
+      accessToken: 'abc',
+    }),
   ),
 ));
 
 tap(
   [
     {name: 'Popcode User', avatar_url: 'https://github.com/popcodeuser.jpg'},
+    {providerData: [
+      {
+        photoURL: 'https://google.com/face.jpg',
+        displayName: 'Google User',
+        providerId: 'google.com',
+      },
+      {
+        photoURL: 'https://github.com/face.jpg',
+        displayName: 'GitHub User',
+        providerId: 'github.com',
+      },
+    ]},
     {providerId: 'github.com', accessToken: 'abc123'},
   ],
-  ([githubProfile, credential]) => {
+
+  ([githubProfile, firebaseUser, credential]) => {
     const proposedState = loggedInState.set(
       'currentMigration',
       new AccountMigration({
         userAccountToMerge: new UserAccount({
-          displayName: 'Popcode User',
           avatarUrl: 'https://github.com/popcodeuser.jpg',
+          displayName: 'Popcode User',
           identityProviders: new Map({
             'github.com': new UserIdentityProvider({
               accessToken: 'abc123',
+              avatarUrl: 'https://github.com/popcodeuser.jpg',
+              displayName: 'Popcode User',
             }),
           }),
         }),
@@ -107,7 +138,11 @@ tap(
       AccountMigrationState.COMPLETE,
     ).setIn(
       ['account', 'identityProviders', 'github.com'],
-      new UserIdentityProvider({accessToken: credential.accessToken}),
+      new UserIdentityProvider({
+        accessToken: credential.accessToken,
+        avatarUrl: 'https://github.com/face.jpg',
+        displayName: 'GitHub User',
+      }),
     );
 
     const errorState = undoGracePeriodState.setIn(
@@ -150,7 +185,7 @@ tap(
     test('accountMigrationComplete', reducerTest(
       reducer,
       inProgressState,
-      partial(accountMigrationComplete, [], credential),
+      partial(accountMigrationComplete, firebaseUser, credential, []),
       completeState,
     ));
 

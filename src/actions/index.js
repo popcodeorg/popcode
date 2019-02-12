@@ -47,6 +47,7 @@ import {
 import {
   dismissAccountMigration,
   linkGithubIdentity,
+  unlinkGithubIdentity,
   logIn,
   logOut,
   startAccountMigration,
@@ -125,6 +126,7 @@ export {
   showSaveIndicator,
   hideSaveIndicator,
   linkGithubIdentity,
+  unlinkGithubIdentity,
   updateResizableFlex,
   startAccountMigration,
   dismissAccountMigration,

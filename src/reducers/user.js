@@ -79,8 +79,16 @@ function user(stateIn, action) {
     case 'IDENTITY_LINKED':
       return addIdentityProvider(
         state,
+        action.payload.user,
         action.payload.credential,
       );
+
+    case 'IDENTITY_UNLINKED':
+      return state.deleteIn([
+        'account',
+        'identityProviders',
+        action.payload.providerId,
+      ]);
 
     case 'ACCOUNT_MIGRATION_NEEDED':
       return state.set(
@@ -115,6 +123,7 @@ function user(stateIn, action) {
           ['currentMigration', 'state'],
           AccountMigrationState.COMPLETE,
         ),
+        action.payload.user,
         action.payload.credential,
       );
 
