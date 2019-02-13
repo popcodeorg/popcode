@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 import partial from 'lodash-es/partial';
 import tap from 'lodash-es/tap';
 import {Map} from 'immutable';

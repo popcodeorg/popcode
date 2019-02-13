@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 
 import css from '../../../src/validations/css';
 import validationTest from '../../helpers/validationTest';

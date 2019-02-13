@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 
 import Analyzer from '../../src/analyzers';
 import {Project} from '../../src/records';

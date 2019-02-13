@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 import Immutable from 'immutable';
 import partial from 'lodash-es/partial';
 

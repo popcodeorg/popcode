@@ -336,6 +336,7 @@
     "svgo": "^1.0.1",
     "svgo-loader": "^2.0.0",
     "tape": "^4.6.3",
+    "tape-catch": "^1.0.6",
     "transform-loader": "^0.2.3",
     "webpack": "^4.16.5",
     "webpack-bundle-analyzer": "^2.11.1",

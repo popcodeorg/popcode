@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 import {testSaga} from 'redux-saga-test-plan';
 import {call, take} from 'redux-saga/effects';
 import {channel} from 'redux-saga';
