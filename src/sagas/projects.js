@@ -94,8 +94,9 @@ export function* updateProjectSource() {
 export function* loadAndBeautifyProjectSource() {
   const currentProject = yield select(getCurrentProject);
   const allFormattedSources = yield all(
-    map(currentProject.sources, (source, language) =>
-      call(
+    map(
+      currentProject.sources,
+      (source, language) => call(
         beautifySource,
         source,
         language,
