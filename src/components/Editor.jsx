@@ -35,14 +35,12 @@ class Editor extends React.Component {
       '_handleWindowResize',
       '_resizeEditor',
       '_setupEditor',
-      '_handleKeyPress',
     );
 
     this.render = constant(
       <div
         className="editors__editor"
         ref={this._setupEditor}
-        onKeyPress={this._handleKeyPress}
       />,
     );
   }
@@ -125,6 +123,13 @@ class Editor extends React.Component {
       this._startNewSession(this.props.source);
       this._resizeEditor();
       this._editor.on('focus', this._resizeEditor);
+      this._editor.commands.addCommand({
+        name: 'autoFormat',
+        bindKey: {win: 'Ctrl-i', mac: 'Command-i'},
+        exec: () => {
+          this.props.onAutoFormat();
+        },
+      });
     } else {
       this._editor.destroy();
     }
@@ -147,14 +152,6 @@ class Editor extends React.Component {
     this._editor.setSession(session);
     this._editor.moveCursorTo(0, 0);
     this._resizeEditor();
-  }
-
-  _handleKeyPress(event) {
-    if (
-      event.key === 'i' && event.metaKey &&
-      !event.altKey && !event.ctrlKey) {
-      this.props.onAutoFormat();
-    }
   }
 }
 

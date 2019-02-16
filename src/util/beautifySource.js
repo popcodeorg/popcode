@@ -32,7 +32,7 @@ const importingBeautify = importBeautify();
 async function importBeautify() {
   return retryingFailedImports(() => import(
     /* webpackChunkName: "mainAsync" */
-    'js-beautify',
+    'js-beautify' // eslint-disable-line comma-dangle
   ));
 }
 
