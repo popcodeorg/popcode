@@ -36,6 +36,14 @@ test('valid text-shadow declaration', validationTest(
   css,
 ));
 
+test('valid background-position declarations', validationTest(
+  `img {
+     background-position-x: 10px;
+     background-position-y: 15%;
+  }`,
+  css,
+));
+
 test('bogus flex value', validationTest(
   '.flex-item { flex: bogus; }',
   css,
