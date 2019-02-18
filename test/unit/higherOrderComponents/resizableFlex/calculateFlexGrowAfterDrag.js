@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 import almostEqual from 'almost-equal';
 import every from 'lodash-es/every';
 import zip from 'lodash-es/zip';

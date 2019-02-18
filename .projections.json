@@ -32,7 +32,7 @@
   },
   "test/unit/*.js": {
     "type": "test",
-    "template": "import test from 'tape';\n\ntest('{}', (assert) => {open}\n{close});"
+    "template": "import test from 'tape-catch';\n\ntest('{}', (assert) => {open}\n{close});"
   },
   "src/validations/*.js": {"type": "validation"},
   "src/static/*": {"type": "static"},

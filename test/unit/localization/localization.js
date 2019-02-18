@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 
 import getI18nInstance from '../../helpers/i18nFactory';
 import localizationTest from '../../helpers/localizationTest';
