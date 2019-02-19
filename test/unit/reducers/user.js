@@ -17,6 +17,7 @@ import {
   userAuthenticated,
   userLoggedOut,
   accountMigrationError,
+  identityUnlinked,
 } from '../../../src/actions/user';
 import {AccountMigrationState, LoginState} from '../../../src/enums';
 import {
@@ -71,19 +72,35 @@ test('identityLinked', reducerTest(
         {
           displayName: 'Popcode User',
           photoURL: null,
-          providerId: 'google.com',
+          providerId: 'github.com',
         },
       ],
     },
-    {providerId: 'google.com', idToken: 'abc'},
+    {providerId: 'github.com', accessToken: 'abc'},
   ),
   loggedInState.setIn(
-    ['account', 'identityProviders', 'google.com'],
+    ['account', 'identityProviders', 'github.com'],
     new UserIdentityProvider({
       displayName: 'Popcode User',
       accessToken: 'abc',
     }),
   ),
+));
+
+test('identityUnlinked', reducerTest(
+  reducer,
+  loggedInState.setIn(
+    ['account', 'identityProviders', 'github.com'],
+    new UserIdentityProvider({
+      displayName: 'Popcode User',
+      accessToken: 'abc',
+    }),
+  ),
+  partial(
+    identityUnlinked,
+    'github.com',
+  ),
+  loggedInState,
 ));
 
 tap(
