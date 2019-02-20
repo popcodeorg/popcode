@@ -41,9 +41,15 @@ export function userCredential({
 export function user(userIn) {
   return defaultsDeep({}, userIn, {
     displayName: 'Popcode User',
-    photoURL: 'https://camo.github.com/popcodeuser.jpg',
+    photoURL: 'https://google.com/popcodeuser.jpg',
     uid: 'abc123',
-    providerData: [{providerId: 'google.com'}],
+    providerData: [
+      {
+        displayName: 'Popcode User',
+        photoURL: 'https://google.com/popcodeuser.jpg',
+        providerId: 'google.com',
+      },
+    ],
   });
 }
 

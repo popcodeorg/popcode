@@ -12,6 +12,8 @@ import {
   linkIdentityFailed,
   logOut,
   startAccountMigration,
+  unlinkGithubIdentity,
+  identityUnlinked,
 } from '../../../src/actions/user';
 import {getCurrentAccountMigration} from '../../../src/selectors';
 import {
@@ -22,23 +24,26 @@ import {
   migrateAccount,
   signOut,
   saveCredentialForCurrentUser,
+  unlinkGithub,
 } from '../../../src/clients/firebase';
 import {getProfileForAuthenticatedUser} from '../../../src/clients/github';
 import {
   logOut as logOutSaga,
   linkGithubIdentity as linkGithubIdentitySaga,
+  unlinkGithubIdentity as unlinkGithubIdentitySaga,
   startAccountMigration as startAccountMigrationSaga,
 } from '../../../src/sagas/user';
 import {bugsnagClient} from '../../../src/util/bugsnag';
 
 test('linkGithubIdentity', (t) => {
   t.test('success', (assert) => {
+    const user = {};
     const credential = {providerId: 'github.com'};
 
     testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
       next().call(linkGithub).
-      next(credential).call(saveCredentialForCurrentUser, credential).
-      next().put(identityLinked(credential));
+      next({user, credential}).call(saveCredentialForCurrentUser, credential).
+      next().put(identityLinked(user, credential));
 
     assert.end();
   });
@@ -77,8 +82,9 @@ test('linkGithubIdentity', (t) => {
 });
 
 test('startAccountMigration', (t) => {
+  const user = {};
   const firebaseCredential = {};
-  const loadedProjects = [{}];
+  const migratedProjects = [{}];
   const migration = new AccountMigration().set(
     'firebaseCredential',
     firebaseCredential,
@@ -101,8 +107,12 @@ test('startAccountMigration', (t) => {
         put(accountMigrationUndoPeriodExpired()).
         next().select(getCurrentAccountMigration).
         next(migration).call(migrateAccount, firebaseCredential).
-        next(loadedProjects).
-        put(accountMigrationComplete(loadedProjects, firebaseCredential)).
+        next({user, migratedProjects}).
+        put(accountMigrationComplete(
+          user,
+          firebaseCredential,
+          migratedProjects,
+        )).
         next().isDone();
       assert.end();
     },
@@ -147,6 +157,13 @@ test('startAccountMigration', (t) => {
       }).isDone();
     assert.end();
   });
+});
+
+test('unlinkGithubIdentity', (assert) => {
+  testSaga(unlinkGithubIdentitySaga, unlinkGithubIdentity).
+    next().call(unlinkGithub).
+    next().put(identityUnlinked('github.com'));
+  assert.end();
 });
 
 test('logOut', (assert) => {

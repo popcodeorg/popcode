@@ -1,4 +1,5 @@
 import {Map} from 'immutable';
+import find from 'lodash-es/find';
 import reduce from 'lodash-es/reduce';
 
 import {
@@ -18,10 +19,18 @@ function getToken(credential) {
   return null;
 }
 
-function addIdentityProviderFromCredential(state, credential) {
+function addIdentityProvider(state, userData, credential) {
+  const providerData = find(
+    userData.providerData,
+    {providerId: credential.providerId},
+  );
   return state.setIn(
     ['account', 'identityProviders', credential.providerId],
-    new UserIdentityProvider({accessToken: getToken(credential)}),
+    new UserIdentityProvider({
+      accessToken: getToken(credential),
+      avatarUrl: providerData.photoURL,
+      displayName: providerData.displayName,
+    }),
   );
 }
 
@@ -30,12 +39,16 @@ function createUserAccountFromProfileAndCredential(profile, credential) {
     throw new Error(`Unexpected credential provider ${credential.providerId}`);
   }
 
+  const displayName = profile.name || profile.login;
+  const avatarUrl = profile.avatar_url;
   return new UserAccount({
-    displayName: profile.name || profile.login,
-    avatarUrl: profile.avatar_url,
+    displayName,
+    avatarUrl,
     identityProviders: new Map({
       'github.com': new UserIdentityProvider({
         accessToken: getToken(credential),
+        avatarUrl,
+        displayName,
       }),
     }),
   });
@@ -50,7 +63,8 @@ function user(stateIn, action) {
 
       return reduce(
         credentials,
-        addIdentityProviderFromCredential,
+        (intermediateState, credential) =>
+          addIdentityProvider(intermediateState, userData, credential),
         state.merge({
           loginState: LoginState.AUTHENTICATED,
           account: new UserAccount({
@@ -63,10 +77,18 @@ function user(stateIn, action) {
     }
 
     case 'IDENTITY_LINKED':
-      return addIdentityProviderFromCredential(
+      return addIdentityProvider(
         state,
+        action.payload.user,
         action.payload.credential,
       );
+
+    case 'IDENTITY_UNLINKED':
+      return state.deleteIn([
+        'account',
+        'identityProviders',
+        action.payload.providerId,
+      ]);
 
     case 'ACCOUNT_MIGRATION_NEEDED':
       return state.set(
@@ -96,11 +118,12 @@ function user(stateIn, action) {
       );
 
     case 'ACCOUNT_MIGRATION_COMPLETE':
-      return addIdentityProviderFromCredential(
+      return addIdentityProvider(
         state.setIn(
           ['currentMigration', 'state'],
           AccountMigrationState.COMPLETE,
         ),
+        action.payload.user,
         action.payload.credential,
       );
 
