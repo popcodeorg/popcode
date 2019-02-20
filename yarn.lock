@@ -1105,10 +1105,10 @@
     "@webassemblyjs/wast-parser" "1.5.13"
     long "^3.2.0"
 
-PrettyCSS@^0.3.17:
-  version "0.3.17"
-  resolved "https://registry.yarnpkg.com/PrettyCSS/-/PrettyCSS-0.3.17.tgz#46ab47815220e5e6dc45f74ace27a5cf63d3f5a6"
-  integrity sha512-E6RUMvuq41DqA9uvgqrinYrug3SpgamH1HEeF9zy9HHYxwoAW6fBKmf/NDoNl0MWspLReaKXFNhjTYwZy3bmlQ==
+PrettyCSS@^0.3.19:
+  version "0.3.19"
+  resolved "https://registry.yarnpkg.com/PrettyCSS/-/PrettyCSS-0.3.19.tgz#c0c6d4b91134fa776fa6cf1639b17ad0362ddcf8"
+  integrity sha512-LcHWEnyu/flM+KGgbgd+FAp/2mKlo9JerZL2i5ZioJPqp5JKK1QaprEyD2/aCMQRAVgie4xjNrfOD9XclrGV8w==
   dependencies:
     option-parser "~1.0.0"
 
