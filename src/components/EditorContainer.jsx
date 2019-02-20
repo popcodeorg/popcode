@@ -39,8 +39,6 @@ const EditorContainer = forwardRef((
   );
 });
 
-EditorContainer.displayName = 'EditorContainer';
-
 EditorContainer.propTypes = {
   children: PropTypes.node.isRequired,
   language: PropTypes.string.isRequired,
