@@ -38,10 +38,7 @@ async function importBeautify() {
 
 export default async function beautifySource(code, mode) {
   const Beautify = await importingBeautify;
-  return {
-    formatted: formatCode(Beautify, code, mode),
-    language: mode,
-  };
+  return formatCode(Beautify, code, mode);
 }
 
 function formatCode(Beautify, code, mode) {

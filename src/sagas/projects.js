@@ -11,7 +11,7 @@ import {
 import isNull from 'lodash-es/isNull';
 import isString from 'lodash-es/isString';
 import get from 'lodash-es/get';
-import map from 'lodash-es/map';
+import reduce from 'lodash-es/reduce';
 import {
   gistImported,
   gistImportError,
@@ -93,23 +93,21 @@ export function* updateProjectSource() {
 
 export function* loadAndBeautifyProjectSource() {
   const currentProject = yield select(getCurrentProject);
-  const allFormattedSources = yield all(
-    map(
+  const sourcesMap = yield all(
+    reduce(
       currentProject.sources,
-      (source, language) => call(
-        beautifySource,
-        source,
-        language,
-      ),
+      (calls, source, language) => Object.assign(calls, {
+        [language]: call(
+          beautifySource,
+          source,
+          language,
+        ),
+      }),
+      {},
     ),
   );
-  const sourcesMap = {};
-  allFormattedSources.forEach(({formatted, language}) => {
-    sourcesMap[language] = formatted;
-  });
   yield put(projectBeautified(currentProject.projectKey, sourcesMap));
 }
-
 
 export function* userAuthenticated() {
   const state = yield select();
