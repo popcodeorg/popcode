@@ -12,8 +12,8 @@ const errorMap = {
     payload: {tag: error.closeTag.name},
   }),
 
-    MISMATCHED_CLOSE_TAG:  error=> ({
-    reason: 'unclosed-tag',
+   MISMATCHED_CLOSE_TAG:  error=> ({
+    reason: 'unclosed-title-tag',
     payload: {tag: error.openTag.name},
   }),
 
@@ -71,6 +71,7 @@ const errorMap = {
   UNCLOSED_TAG: error => ({
     reason: 'unclosed-tag',
     payload: {tag: error.openTag.name},
+
   }),
 
   UNEXPECTED_CLOSE_TAG: error => ({
