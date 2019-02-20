@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 
 import Code from '../../../../src/validations/html/rules/Code';
 import MismatchedTag

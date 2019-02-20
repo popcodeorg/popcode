@@ -1,5 +1,5 @@
 import assign from 'lodash-es/assign';
-import test from 'tape';
+import test from 'tape-catch';
 import reduce from 'lodash-es/reduce';
 import tap from 'lodash-es/tap';
 import partial from 'lodash-es/partial';

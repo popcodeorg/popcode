@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 import isEqual from 'lodash-es/isEqual';
 import {createMockTask} from '@redux-saga/testing-utils';
 import {testSaga} from 'redux-saga-test-plan';
