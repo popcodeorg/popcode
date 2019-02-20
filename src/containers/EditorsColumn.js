@@ -9,6 +9,7 @@ import {
   isTextSizeLarge,
 } from '../selectors';
 import {
+  beautifyProjectSource,
   editorFocusedRequestedLine,
   hideComponent,
   updateProjectSource,
@@ -40,6 +41,9 @@ function mapDispatchToProps(dispatch) {
 
     onRequestedLineFocused() {
       dispatch(editorFocusedRequestedLine());
+    },
+    onAutoFormat() {
+      dispatch(beautifyProjectSource());
     },
   };
 }

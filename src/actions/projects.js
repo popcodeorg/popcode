@@ -18,6 +18,16 @@ export const updateProjectSource = createAction(
   (_projectKey, _language, _newValue, timestamp = Date.now()) => ({timestamp}),
 );
 
+export const beautifyProjectSource = createAction(
+  'BEAUTIFY_PROJECT_SOURCE',
+);
+
+export const projectBeautified = createAction(
+  'PROJECT_BEAUTIFIED',
+  (projectKey, projectSources) => ({projectKey, projectSources}),
+  (_projectKey, _projectSources, timestamp = Date.now()) => ({timestamp}),
+);
+
 export const updateProjectInstructions = createAction(
   'UPDATE_PROJECT_INSTRUCTIONS',
   (projectKey, newValue) => ({projectKey, newValue}),
