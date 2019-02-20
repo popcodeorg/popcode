@@ -71,7 +71,6 @@ const errorMap = {
   UNCLOSED_TAG: error => ({
     reason: 'unclosed-tag',
     payload: {tag: error.openTag.name},
-
   }),
 
   UNEXPECTED_CLOSE_TAG: error => ({
