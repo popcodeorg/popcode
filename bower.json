@@ -27,7 +27,6 @@
     "ember": "^2.5.1",
     "foundation": "^5.5.3",
     "handlebars": "^4.0.5",
-    "jquery": "^3.2.1",
     "lodash": "^4.11.2",
     "mustache.js": "mustache#^2.2.1",
     "normalize-css": "normalize.css#^4.1.1",
