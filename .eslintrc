@@ -491,6 +491,10 @@
     "no-regex-spaces": [
       "error"
     ],
+    "no-restricted-imports": [
+      "error",
+      "jquery"
+    ],
     "no-return-assign": [
       "error"
     ],

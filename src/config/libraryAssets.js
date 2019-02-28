@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 
-import JQUERY from '../../bower_components/jquery/dist/jquery.min.js';
+import JQUERY from '../../node_modules/jquery/dist/jquery.min.js';
 import LODASH from '../../bower_components/lodash/dist/lodash.min.js';
 import MUSTACHE from '../../bower_components/mustache.js/mustache.js';
 import BOOTSTRAP_CSS from
