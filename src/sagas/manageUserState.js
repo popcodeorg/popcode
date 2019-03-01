@@ -1,8 +1,10 @@
 import {all, call, fork, put, race, take} from 'redux-saga/effects';
+import difference from 'lodash-es/difference';
 import isEmpty from 'lodash-es/isEmpty';
 import isError from 'lodash-es/isError';
 import isNil from 'lodash-es/isNil';
 import isString from 'lodash-es/isString';
+import map from 'lodash-es/map';
 import reject from 'lodash-es/reject';
 
 import {bugsnagClient} from '../util/bugsnag';
@@ -37,6 +39,8 @@ export function* handleInitialAuth(user) {
     return;
   }
 
+  yield* reportUserCredentialMismatch(user, credentials);
+
   yield put(userAuthenticated(user, credentials));
 }
 
@@ -61,6 +65,8 @@ export function* handleAuthChange(user, {newCredential} = {}) {
     );
     credentials.push(newCredential);
   }
+
+  yield* reportUserCredentialMismatch(user, credentials);
 
   yield put(userAuthenticated(user, credentials));
 }
@@ -103,6 +109,43 @@ export function* handleAuthError(e) {
         yield call([bugsnagClient, 'notify'], new Error(e));
       }
       break;
+  }
+}
+
+function* reportUserCredentialMismatch(user, credentials) {
+  const userProviders = map(user.providerData, 'providerId');
+  const credentialProviders = map(credentials, 'providerId');
+
+  const missingUserProviders = difference(userProviders, credentialProviders);
+  const missingCredentialProviders = difference(
+    credentialProviders,
+    userProviders,
+  );
+
+  if (!isEmpty(missingUserProviders)) {
+    debugger;
+    const e = new Error(
+      `User ${user.uid} has credentials for ` +
+        `${missingUserProviders.join(',')} + but no linked account`,
+    );
+    yield call(
+      [bugsnagClient, 'notify'],
+      e,
+      {metaData: {user, credentials}, severity: 'warning'},
+    );
+  }
+
+  if (!isEmpty(missingCredentialProviders)) {
+    debugger;
+    const e = new Error(
+      `User ${user.uid} has linked accounts for ` +
+        `${missingCredentialProviders.join(',')} + but no credentials`,
+    );
+    yield call(
+      [bugsnagClient, 'notify'],
+      e,
+      {metaData: {user, credentials}, severity: 'warning'},
+    );
   }
 }
 
