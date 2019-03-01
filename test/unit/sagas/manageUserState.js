@@ -252,6 +252,12 @@ test('handleAuthError', (t) => {
 
 test('handleAuthChange', (t) => {
   const user = createUser();
+  user.providerData.push({
+    providerId: 'github.com',
+    displayName: 'GitHub User',
+    photoURL: 'https://github.com/popcodeuser.jpg',
+  });
+
   const credentials = [
     createCredential({providerId: 'google.com'}),
     createCredential({providerId: 'github.com'}),
@@ -261,7 +267,8 @@ test('handleAuthChange', (t) => {
     assert.doesNotThrow(() => {
       testSaga(handleAuthChange, user).
         next().call(loadCredentialsForUser, user.uid).
-        next(credentials).put(userAuthenticated(user, credentials));
+        next(credentials).
+        put(userAuthenticated(user, credentials));
     });
     assert.end();
   });
