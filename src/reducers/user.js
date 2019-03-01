@@ -1,5 +1,6 @@
 import {Map} from 'immutable';
 import find from 'lodash-es/find';
+import isUndefined from 'lodash-es/isUndefined';
 import reduce from 'lodash-es/reduce';
 
 import {
@@ -24,6 +25,9 @@ function addIdentityProvider(state, userData, credential) {
     userData.providerData,
     {providerId: credential.providerId},
   );
+  if (isUndefined(providerData)) {
+    return state;
+  }
   return state.setIn(
     ['account', 'identityProviders', credential.providerId],
     new UserIdentityProvider({
