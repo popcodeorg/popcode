@@ -267,8 +267,10 @@
     "dev": "yarn install --frozen-lockfile && yarn start",
     "test": "karma start --single-run --no-auto-watch",
     "autotest": "yarn install --frozen-lockfile && karma start --no-single-run --auto-watch",
-    "lint": "eslint --report-unused-disable-directives --ext .js,.jsx --plugin react src test *.js && stylelint src/**/*.css",
-    "fixlint": "eslint --ext .js,.jsx --plugin react --fix src test *.js",
+    "lint-js": "eslint --max-warnings=0 --report-unused-disable-directives --ext .js,.jsx -- src test *.js",
+    "lint-css": "stylelint src/**/*.css",
+    "lint": "yarn run lint-js && yarn run lint-css",
+    "fixlint": "eslint --ext .js,.jsx --fix src test *.js",
     "toc": "doctoc README.md --github --title '## Table of Contents'",
     "preview": "rm -rvf dist/* && NODE_ENV=production gulp build && static -a 0.0.0.0 -p 3000 dist",
     "analyze-bundle": "gulp js --production && source-map-explorer ./dist/application.js"
