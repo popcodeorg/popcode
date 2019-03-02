@@ -175,7 +175,13 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           ],
           use: [
             {loader: 'babel-loader', options: babelLoaderConfig},
-            'eslint-loader',
+            {
+              loader: 'eslint-loader',
+              options: {
+                emitWarning: true,
+                failOnError: true,
+              },
+            },
           ],
         },
         {
