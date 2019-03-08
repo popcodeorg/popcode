@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import bindAll from 'lodash-es/bindAll';
 import constant from 'lodash-es/constant';
 import get from 'lodash-es/get';
 import throttle from 'lodash-es/throttle';
 import noop from 'lodash-es/noop';
 
-import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
 import {EditorLocation} from '../records';
+import {createAceEditor, createAceSessionWithoutWorker} from '../util/ace';
 
 import 'brace/ext/searchbox';
 import 'brace/mode/html';
@@ -29,10 +30,18 @@ class Editor extends React.Component {
       }
     }, RESIZE_THROTTLE);
 
-    bindAll(this, '_handleWindowResize', '_resizeEditor', '_setupEditor');
+    bindAll(
+      this,
+      '_handleWindowResize',
+      '_resizeEditor',
+      '_setupEditor',
+    );
 
     this.render = constant(
-      <div className="editors__editor" ref={this._setupEditor} />,
+      <div
+        className="editors__editor"
+        ref={this._setupEditor}
+      />,
     );
   }
 
@@ -59,7 +68,7 @@ class Editor extends React.Component {
     if (projectKey !== prevProjectKey) {
       this._startNewSession(source);
     } else if (source !== prevSource && source !== this._editor.getValue()) {
-      this._editor.setValue(source);
+      this._editor.setValue(source, 1);
     }
 
     this._focusRequestedLine(requestedFocusedLine);
@@ -114,6 +123,13 @@ class Editor extends React.Component {
       this._startNewSession(this.props.source);
       this._resizeEditor();
       this._editor.on('focus', this._resizeEditor);
+      this._editor.commands.addCommand({
+        name: 'autoFormat',
+        bindKey: {win: 'Ctrl-i', mac: 'Command-i'},
+        exec: () => {
+          this.props.onAutoFormat();
+        },
+      });
     } else {
       this._editor.destroy();
     }
@@ -147,6 +163,7 @@ Editor.propTypes = {
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   source: PropTypes.string.isRequired,
   textSizeIsLarge: PropTypes.bool.isRequired,
+  onAutoFormat: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
 };

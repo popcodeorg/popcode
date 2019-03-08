@@ -59,7 +59,7 @@ class PreviewFrame extends React.Component {
     const {hasExpressionStatement} = await retryingFailedImports(
       () => import(
         /* webpackChunkName: "mainAsync" */
-        '../util/javascript',
+        '../util/javascript' // eslint-disable-line comma-dangle
       ),
     );
     // eslint-disable-next-line prefer-reflect

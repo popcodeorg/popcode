@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 
 import runRules from '../../../../src/validations/html/runRules';
 

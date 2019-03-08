@@ -132,18 +132,18 @@ feedback from dozens of instructors.
 
 ### Running locally ###
 
-Make sure you have a local installation of [Node.js](https://nodejs.org/en/download/).
+Make sure you have a local installation of [Node.js](https://nodejs.org/en/download/) and [yarn](https://yarnpkg.com/lang/en/docs/install/).
 
 Once you’ve got it run:
 
 ```bash
-$ npm install
+$ yarn install
 ```
 
 That'll pull down the dependencies. Then run:
 
 ```bash
-$ npm start
+$ yarn start
 ```
 
 This will start a local static server, and open it in your browser. The first
@@ -153,7 +153,7 @@ assets are recompiled incrementally and your browser automatically reloads.
 When you're done, lint and make sure tests pass before opening a pull request:
 
 ```bash
-$ npm test
+$ yarn test
 ```
 
 ### Debug Mode ###
@@ -169,7 +169,7 @@ supports most modern ES features. To run in debug mode, start your development
 server with:
 
 ```bash
-$ DEBUG=true npm start
+$ DEBUG=true yarn start
 ```
 
 ### Running with Docker

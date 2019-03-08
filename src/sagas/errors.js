@@ -17,7 +17,7 @@ export async function importValidations() {
   return retryingFailedImports(
     () => import(
       /* webpackChunkName: "mainAsync" */
-      '../validations',
+      '../validations' // eslint-disable-line comma-dangle
     ),
   );
 }

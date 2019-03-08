@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 import tap from 'lodash-es/tap';
 import partial from 'lodash-es/partial';
 import {Map} from 'immutable';
@@ -38,6 +38,7 @@ import {
   linkGithubIdentity,
   linkIdentityFailed,
   userLoggedOut,
+  unlinkGithubIdentity,
 } from '../../../src/actions/user';
 import {
   applicationLoaded,
@@ -171,10 +172,37 @@ test('linkGithubIdentity', (t) => {
   ));
 });
 
+test('unlinkGithubIdentity', (t) => {
+  t.test('with no top bar menu open', reducerTest(
+    reducer,
+    initialState,
+    unlinkGithubIdentity,
+    initialState,
+  ));
+
+  t.test('with currentUser menu open', reducerTest(
+    reducer,
+    initialState.set('openTopBarMenu', 'currentUser'),
+    unlinkGithubIdentity,
+    initialState,
+  ));
+
+  t.test('with different menu open', reducerTest(
+    reducer,
+    initialState.set('openTopBarMenu', 'silly'),
+    unlinkGithubIdentity,
+    initialState.set('openTopBarMenu', 'silly'),
+  ));
+});
+
 test('identityLinked', reducerTest(
   reducer,
   initialState,
-  partial(identityLinked, {providerId: 'github.com'}),
+  partial(
+    identityLinked,
+    {providerData: [{providerId: 'github.com'}]},
+    {providerId: 'github.com'},
+  ),
   withNotification('identity-linked', 'notice', {provider: 'github.com'}),
 ));
 

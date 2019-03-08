@@ -47,4 +47,6 @@ EditorContainer.propTypes = {
   onHide: PropTypes.func.isRequired,
 };
 
+EditorContainer.displayName = 'EditorContainer';
+
 export default EditorContainer;

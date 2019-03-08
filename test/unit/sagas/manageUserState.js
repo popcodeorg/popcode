@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 import {testSaga} from 'redux-saga-test-plan';
 import {call, take} from 'redux-saga/effects';
 import {channel} from 'redux-saga';
@@ -252,6 +252,12 @@ test('handleAuthError', (t) => {
 
 test('handleAuthChange', (t) => {
   const user = createUser();
+  user.providerData.push({
+    providerId: 'github.com',
+    displayName: 'GitHub User',
+    photoURL: 'https://github.com/popcodeuser.jpg',
+  });
+
   const credentials = [
     createCredential({providerId: 'google.com'}),
     createCredential({providerId: 'github.com'}),
@@ -261,7 +267,8 @@ test('handleAuthChange', (t) => {
     assert.doesNotThrow(() => {
       testSaga(handleAuthChange, user).
         next().call(loadCredentialsForUser, user.uid).
-        next(credentials).put(userAuthenticated(user, credentials));
+        next(credentials).
+        put(userAuthenticated(user, credentials));
     });
     assert.end();
   });
@@ -276,7 +283,7 @@ test('handleAuthChange', (t) => {
       testSaga(handleAuthChange, user, {newCredential}).
         next().fork(saveUserCredential, {user, credential: newCredential}).
         next().call(loadCredentialsForUser, user.uid).
-        next(credentials).inspect(({PUT: {action}}) => {
+        next(credentials).inspect(({payload: {action}}) => {
           assert.deepEqual(
             action,
             userAuthenticated(user, [credentials[1], newCredential]),

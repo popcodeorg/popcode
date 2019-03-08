@@ -31,6 +31,7 @@ import {
   createSnapshot,
   exportProject,
   linkGithubIdentity,
+  unlinkGithubIdentity,
   startEditingInstructions,
   toggleEditorTextSize,
   toggleLibrary,
@@ -129,6 +130,10 @@ function mapDispatchToProps(dispatch) {
 
     onStartGoogleLogIn() {
       dispatch(logIn('google'));
+    },
+
+    onUnlinkGitHub() {
+      dispatch(unlinkGithubIdentity());
     },
 
     onToggleTextSize() {

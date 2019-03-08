@@ -18,6 +18,13 @@ function dismissNotification(state, type) {
   );
 }
 
+function closeTopBarMenu(state, menuToClose) {
+  return state.update(
+    'openTopBarMenu',
+    menu => menu === menuToClose ? null : menu,
+  );
+}
+
 /* eslint-disable complexity */
 export default function ui(stateIn, action) {
   let state = stateIn;
@@ -27,12 +34,8 @@ export default function ui(stateIn, action) {
 
   switch (action.type) {
     case 'CHANGE_CURRENT_PROJECT':
-      return state.
-        set('isEditingInstructions', false).
-        update(
-          'openTopBarMenu',
-          menu => menu === 'projectPicker' ? null : menu,
-        );
+      return closeTopBarMenu(state, 'projectPicker').
+        set('isEditingInstructions', false);
 
     case 'PROJECT_CREATED':
       return state.set('isEditingInstructions', false);
@@ -109,9 +112,14 @@ export default function ui(stateIn, action) {
 
     case 'USER_LOGGED_OUT':
     case 'LINK_GITHUB_IDENTITY':
-      return state.update(
-        'openTopBarMenu',
-        menu => menu === 'currentUser' ? null : menu,
+    case 'UNLINK_GITHUB_IDENTITY':
+      return closeTopBarMenu(state, 'currentUser');
+
+    case 'IDENTITY_UNLINKED':
+      return addNotification(
+        state,
+        'identity-unlinked',
+        'notice',
       );
 
     case 'SNAPSHOT_CREATED':

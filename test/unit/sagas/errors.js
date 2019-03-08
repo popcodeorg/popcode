@@ -1,6 +1,6 @@
-import test from 'tape';
+import test from 'tape-catch';
 import isEqual from 'lodash-es/isEqual';
-import {createMockTask} from 'redux-saga/utils';
+import {createMockTask} from '@redux-saga/testing-utils';
 import {testSaga} from 'redux-saga-test-plan';
 import Scenario from '../../helpers/Scenario';
 import {javascript} from '../../../src/validations';
@@ -24,8 +24,8 @@ test('validateCurrentProject()', (assert) => {
   assert.ok(isEqual(scenario.analyzer, scenario.analyzer));
   const saga = testSaga(validateCurrentProjectSaga, tasks).
     next().inspect((effect) => {
-      assert.ok(effect.SELECT, 'invokes select effect');
-      ({selector} = effect.SELECT);
+      assert.equals(effect.type, 'SELECT', 'invokes select effect');
+      ({selector} = effect.payload);
     });
 
   const args = [selector(scenario.state)];

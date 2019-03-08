@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 import {testSaga} from 'redux-saga-test-plan';
 import {
   createSnapshot as createSnapshotSaga,
@@ -59,7 +59,7 @@ test('export gist', (t) => {
   function initiateExport(assert) {
     return testSaga(exportProjectSaga, {payload: {exportType}}).
       next().inspect((effect) => {
-        assert.ok(effect.SELECT, 'invokes select effect');
+        assert.equals(effect.type, 'SELECT', 'invokes select effect');
       }).
       next(scenario.state).call(
         createGistFromProject,
@@ -108,7 +108,7 @@ test('export repo', (t) => {
   function initiateExport(assert) {
     return testSaga(exportProjectSaga, {payload: {exportType}}).
       next().inspect((effect) => {
-        assert.ok(effect.SELECT, 'invokes select effect');
+        assert.equals(effect.type, 'SELECT', 'invokes select effect');
       }).
       next(scenario.state).call(
         createOrUpdateRepoFromProject,
@@ -156,7 +156,7 @@ test('update repo', (t) => {
   function initiateExport(assert) {
     return testSaga(exportProjectSaga, {payload: {exportType}}).
       next().inspect((effect) => {
-        assert.ok(effect.SELECT, 'invokes select effect');
+        assert.equals(effect.type, 'SELECT', 'invokes select effect');
       }).
       next(scenario.state).call(
         createOrUpdateRepoFromProject,
@@ -206,7 +206,7 @@ test('export to classroom', (t) => {
   function initiateExport(assert) {
     return testSaga(exportProjectSaga, {payload: {exportType}}).
       next().inspect((effect) => {
-        assert.ok(effect.SELECT, 'invokes select effect');
+        assert.equals(effect.type, 'SELECT', 'invokes select effect');
       }).
       next(scenario.state).call(
         createProjectSnapshot,

@@ -39,7 +39,7 @@ async function loadDatabaseSdk() {
   return retryingFailedImports(
     () => import(
       /* webpackChunkName: "mainAsync" */
-      '@firebase/database',
+      '@firebase/database' // eslint-disable-line comma-dangle
     ),
   );
 }
@@ -132,7 +132,14 @@ export async function signIn(provider) {
 export async function linkGithub() {
   const {credential} =
     await auth.currentUser.linkWithPopup(githubAuthProvider);
-  return credential;
+  return {user: auth.currentUser, credential};
+}
+
+export async function unlinkGithub() {
+  await Promise.all([
+    auth.currentUser.unlink('github.com'),
+    deleteCredentialForUser(auth.currentUser.uid, 'github.com'),
+  ]);
 }
 
 export async function migrateAccount(inboundAccountCredential) {
@@ -149,7 +156,7 @@ export async function migrateAccount(inboundAccountCredential) {
 
     await logMigration(inboundUid, 'success');
 
-    return migratedProjects;
+    return {user: auth.currentUser, migratedProjects};
   } finally {
     inboundAccountAuth.app.delete();
   }
@@ -235,6 +242,11 @@ async function saveCredentialForUser(uid, credential) {
   await database.
     ref(`authTokens/${providerPath(uid, credential.providerId)}`).
     set(credential);
+}
+
+async function deleteCredentialForUser(uid, providerId) {
+  const database = await loadDatabase();
+  await database.ref(`authTokens/${providerPath(uid, providerId)}`).remove();
 }
 
 function providerPath(uid, providerId) {

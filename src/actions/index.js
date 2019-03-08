@@ -10,6 +10,7 @@ import {
 } from './clients';
 
 import {
+  beautifyProjectSource,
   createProject,
   changeCurrentProject,
   toggleLibrary,
@@ -46,6 +47,7 @@ import {
 import {
   dismissAccountMigration,
   linkGithubIdentity,
+  unlinkGithubIdentity,
   logIn,
   logOut,
   startAccountMigration,
@@ -75,6 +77,7 @@ import {
 } from './resizableFlex';
 
 export {
+  beautifyProjectSource,
   clearConsoleEntries,
   consoleInputChanged,
   consoleValueProduced,
@@ -123,6 +126,7 @@ export {
   showSaveIndicator,
   hideSaveIndicator,
   linkGithubIdentity,
+  unlinkGithubIdentity,
   updateResizableFlex,
   startAccountMigration,
   dismissAccountMigration,

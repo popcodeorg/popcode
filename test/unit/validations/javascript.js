@@ -1,4 +1,4 @@
-import test from 'tape';
+import test from 'tape-catch';
 import partialRight from 'lodash-es/partialRight';
 
 import validationTest from '../../helpers/validationTest';

@@ -24,7 +24,18 @@ export default class Scenario {
 
   authGitHub() {
     const credential = githubCredential();
-    this._reduce(identityLinked(credential));
+    this._reduce(identityLinked(
+      {
+        providerData: [
+          {
+            providerId: 'github.com',
+            displayName: 'popcode user',
+            avatarURL: 'https://github.com/popcode.jpg',
+          },
+        ],
+      },
+      credential,
+    ));
     return credential;
   }
 

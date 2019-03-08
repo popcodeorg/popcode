@@ -7,14 +7,21 @@ export const logIn = createAction(
 
 export const linkGithubIdentity = createAction('LINK_GITHUB_IDENTITY');
 
+export const unlinkGithubIdentity = createAction('UNLINK_GITHUB_IDENTITY');
+
 export const identityLinked = createAction(
   'IDENTITY_LINKED',
-  credential => ({credential}),
+  (user, credential) => ({user, credential}),
 );
 
 export const linkIdentityFailed = createAction(
   'LINK_IDENTITY_FAILED',
   error => ({error}),
+);
+
+export const identityUnlinked = createAction(
+  'IDENTITY_UNLINKED',
+  providerId => ({providerId}),
 );
 
 export const accountMigrationNeeded = createAction(
@@ -32,7 +39,7 @@ export const accountMigrationUndoPeriodExpired =
 
 export const accountMigrationComplete = createAction(
   'ACCOUNT_MIGRATION_COMPLETE',
-  (projects, credential) => ({projects, credential}),
+  (user, credential, projects) => ({user, credential, projects}),
 );
 
 export const accountMigrationError = createAction(

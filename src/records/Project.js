@@ -1,12 +1,6 @@
 import {Record, Set} from 'immutable';
 
-import HTML_TEMPLATE from '../../templates/new.html';
-
-const Sources = Record({
-  html: HTML_TEMPLATE,
-  css: '',
-  javascript: '',
-});
+import ProjectSources from './ProjectSources';
 
 const ExternalLocations = Record({
   githubRepoName: null,
@@ -14,7 +8,7 @@ const ExternalLocations = Record({
 
 export default class Project extends Record({
   projectKey: null,
-  sources: new Sources(),
+  sources: new ProjectSources(),
   enabledLibraries: new Set(),
   hiddenUIComponents: new Set(['console']),
   updatedAt: null,
@@ -32,7 +26,7 @@ export default class Project extends Record({
   }) {
     return new Project({
       projectKey,
-      sources: new Sources(sources),
+      sources: new ProjectSources(sources),
       enabledLibraries: new Set(enabledLibraries),
       hiddenUIComponents: new Set(hiddenUIComponents),
       updatedAt,

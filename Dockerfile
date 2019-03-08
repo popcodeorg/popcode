@@ -1,23 +1,26 @@
-FROM node:8.12.0
+FROM node:8.15.0
 
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
         apt-get update && \
         apt-get install -y google-chrome-stable
 
-RUN npm install --global npm@6.4.1
+ENV YARN_VERSION 1.13.0
 
-RUN echo '{"allow_root": true}' > /root/.bowerrc && \
-    npm config set unsafe-perm true
+RUN curl -fsSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
+    && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ \
+    && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
+    && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
+    && rm yarn-v$YARN_VERSION.tar.gz
+
+RUN echo '{"allow_root": true}' > /root/.bowerrc
 
 WORKDIR /app
 
 ARG install_dependencies=true
-COPY package.json package-lock.json bower.json /app/
-RUN if [ $install_dependencies = true ]; then npm ci; fi
+COPY package.json yarn.lock bower.json /app/
+RUN if [ $install_dependencies = true ]; then yarn install --frozen-lockfile; fi
 
 COPY . /app/
-
-ENTRYPOINT ["npx", "--quiet", "--no-install"]
 
 EXPOSE 3000

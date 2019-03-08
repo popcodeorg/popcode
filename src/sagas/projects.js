@@ -6,10 +6,12 @@ import {
   select,
   takeEvery,
   throttle,
+  takeLatest,
 } from 'redux-saga/effects';
 import isNull from 'lodash-es/isNull';
 import isString from 'lodash-es/isString';
 import get from 'lodash-es/get';
+import reduce from 'lodash-es/reduce';
 import {
   gistImported,
   gistImportError,
@@ -17,6 +19,7 @@ import {
   projectCreated,
   projectsLoaded,
   projectSuccessfullySaved,
+  projectBeautified,
 } from '../actions/projects';
 import {
   snapshotImported,
@@ -32,6 +35,7 @@ import {
   saveProject,
 } from '../clients/firebase';
 import {getCurrentProject, getCurrentUserId} from '../selectors';
+import beautifySource from '../util/beautifySource';
 
 export function* applicationLoaded(action) {
   if (isString(action.payload.gistId)) {
@@ -87,6 +91,24 @@ export function* updateProjectSource() {
   yield* saveCurrentProject();
 }
 
+export function* loadAndBeautifyProjectSource() {
+  const currentProject = yield select(getCurrentProject);
+  const sourcesMap = yield all(
+    reduce(
+      currentProject.sources,
+      (calls, source, language) => Object.assign(calls, {
+        [language]: call(
+          beautifySource,
+          source,
+          language,
+        ),
+      }),
+      {},
+    ),
+  );
+  yield put(projectBeautified(currentProject.projectKey, sourcesMap));
+}
+
 export function* userAuthenticated() {
   const state = yield select();
   yield fork(saveCurrentProject);
@@ -133,5 +155,6 @@ export default function* projects() {
     ], updateProjectSource),
     takeEvery('USER_AUTHENTICATED', userAuthenticated),
     takeEvery('TOGGLE_LIBRARY', toggleLibrary),
+    takeLatest('BEAUTIFY_PROJECT_SOURCE', loadAndBeautifyProjectSource),
   ]);
 }
