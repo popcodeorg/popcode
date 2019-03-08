@@ -47,6 +47,11 @@ test('<a> tag with relative href property', validationTest(
   {reason: 'href-style', row: htmlWithBody.offset},
 ));
 
+test('<a> tag with fragment-only URL href', validationTest(
+  htmlWithBody('<a href="#fragment">Fragment</a>'),
+  html,
+));
+
 test('missing doctype', validationTest(
   '<html></html>',
   html,
