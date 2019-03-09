@@ -4,10 +4,12 @@ import {
   applyMiddleware,
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import {createLogicMiddleware} from 'redux-logic';
 import get from 'lodash-es/get';
 
 import reducers from './reducers';
 import rootSaga from './sagas';
+import rootLogic from './logic';
 import {bugsnagClient} from './util/bugsnag';
 
 const compose = get(
@@ -26,10 +28,16 @@ export default function createApplicationStore() {
       bugsnagClient.notify(error);
     },
   });
+
+  const logicMiddleware = createLogicMiddleware(rootLogic);
+  const enhancer = applyMiddleware(logicMiddleware);
+
   const store = createStore(
     reducers,
     compose(applyMiddleware(sagaMiddleware)),
+    enhancer,
   );
   sagaMiddleware.run(rootSaga);
+
   return store;
 }
