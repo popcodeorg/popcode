@@ -1,7 +1,5 @@
 import unlinkGithubIdentity from './unlinkGithubIdentity';
 
-import {all} from 'redux-saga/effects';
+const logic = [unlinkGithubIdentity];
 
-export default function* rootLogic() {
-  yield all([unlinkGithubIdentity()]);
-}
+export default logic;

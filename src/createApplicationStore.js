@@ -28,14 +28,14 @@ export default function createApplicationStore() {
       bugsnagClient.notify(error);
     },
   });
+  const sagaEnhancer = applyMiddleware(sagaMiddleware);
 
   const logicMiddleware = createLogicMiddleware(rootLogic);
-  const enhancer = applyMiddleware(logicMiddleware);
+  const logicEnhancer = applyMiddleware(logicMiddleware);
 
   const store = createStore(
     reducers,
-    compose(applyMiddleware(sagaMiddleware)),
-    enhancer,
+    compose(sagaEnhancer, logicEnhancer),
   );
   sagaMiddleware.run(rootSaga);
 
