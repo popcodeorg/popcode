@@ -21,9 +21,14 @@ module.exports = (api) => {
   return {
     presets: [
       '@babel/preset-react',
-      ['@babel/preset-env', {targets, modules: false}],
+      ['@babel/preset-env', {targets, modules: 'auto'}],
     ],
     plugins: ['@babel/plugin-syntax-dynamic-import'],
+    env: {
+      test: {
+        plugins: ['dynamic-import-node'],
+      },
+    },
     compact: false,
     overrides: [
       {
