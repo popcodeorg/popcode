@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if ! yarn run --silent yarn-deduplicate --list --fail --strategy fewer;
+then
+  (>&2 echo "Duplicate packages found in yarn.lock. Run \`yarn deduplicate' and commit the changes to yarn.lock")
+  exit 1
+fi
