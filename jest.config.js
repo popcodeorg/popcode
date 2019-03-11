@@ -9,4 +9,5 @@ module.exports = {
     '/node_modules/',
     '/bower_components/',
   ],
+  transformIgnorePatterns: ['node_modules/(?!(lodash-es)/)'],
 };
