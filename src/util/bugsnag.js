@@ -1,5 +1,5 @@
-import bugsnag from 'bugsnag-js';
-import createPlugin from 'bugsnag-react';
+import bugsnag from '@bugsnag/js';
+import bugsnagReact from '@bugsnag/plugin-react';
 import React from 'react';
 
 import config from '../config';
@@ -31,7 +31,8 @@ export const bugsnagClient = bugsnag({
   },
 });
 
-export const ErrorBoundary = bugsnagClient.use(createPlugin(React));
+bugsnagClient.use(bugsnagReact, React);
+export const ErrorBoundary = bugsnagClient.getPlugin('react');
 
 export function includeStoreInBugReports(storeIn) {
   store = storeIn;
