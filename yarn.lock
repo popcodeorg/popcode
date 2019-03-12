@@ -6405,10 +6405,10 @@ hast-to-hyperscript@^6.0.0:
     unist-util-is "^2.0.0"
     web-namespaces "^1.1.2"
 
-hast-util-sanitize@^1.0.0, hast-util-sanitize@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/hast-util-sanitize/-/hast-util-sanitize-1.2.0.tgz#1a46bc8e8554f4747d219dd1d85f9cb245b1b08d"
-  integrity sha512-VwCTqjt6fbMGacxGB1FKV5sBJaVVkyCGVMDwb4nnqvCW2lkqscA2GEpOyBx4ZWRXty1eAZF58MHBrllEoQEoBg==
+hast-util-sanitize@^1.0.0, hast-util-sanitize@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/hast-util-sanitize/-/hast-util-sanitize-1.3.0.tgz#3189dc3b87d75a9c2e8618433167b4ad27b4facc"
+  integrity sha512-rQeetoD08jHmDOUYN6h9vTuE0hQN4wymhtkQZ6whHtcjaLpjw5RYAbcdxx9cMgMWERDsSs79UpqHuBLlUHKeOw==
   dependencies:
     xtend "^4.0.1"
 
@@ -6436,7 +6436,12 @@ highlight-es@^1.0.0:
     is-es2016-keyword "^1.0.0"
     js-tokens "^3.0.0"
 
-highlight.js@^9.12.0, highlight.js@~9.13.0:
+highlight.js@^9.15.6:
+  version "9.15.6"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.15.6.tgz#72d4d8d779ec066af9a17cb14360c3def0aa57c4"
+  integrity sha512-zozTAWM1D6sozHo8kqhfYgsac+B+q0PmsjXeyDrYIHHcBN0zTVT66+s2GW1GZv7DbyaROdLXKdabwS/WqPyIdQ==
+
+highlight.js@~9.13.0:
   version "9.13.1"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.13.1.tgz#054586d53a6863311168488a0f58d6c505ce641e"
   integrity sha512-Sc28JNQNDzaH6PORtRLMvif9RSn1mYuOoX3omVjnb0+HbpPygU2ALBI0R/wsiqCb4/fcp07Gdo8g+fhtFrQl6A==
