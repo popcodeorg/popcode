@@ -1,9 +1,10 @@
-import Bowser from 'bowser';
 import get from 'lodash-es/get';
 import keys from 'lodash-es/keys';
 import isEmpty from 'lodash-es/isEmpty';
 import assign from 'lodash-es/assign';
 import {t} from 'i18next';
+
+import bowser from '../services/bowser';
 
 const normalizers = {
   Chrome: {
@@ -101,7 +102,7 @@ function attachMessage(normalizedError) {
 }
 
 function normalizeError(error) {
-  const normalizer = get(normalizers, [Bowser.name, error.name]);
+  const normalizer = get(normalizers, [bowser.getBrowserName(), error.name]);
   if (normalizer !== undefined) {
     const normalizedError = normalizer(error.message);
     if (normalizedError !== null) {
