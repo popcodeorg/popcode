@@ -3,24 +3,24 @@ import PropTypes from 'prop-types';
 import {t} from 'i18next';
 
 function getBrowserLink(browser) {
-  if (browser.firefox) {
+  if (browser.is('Firefox')) {
     return 'https://www.mozilla.org/en-US/firefox/new/';
   }
-  if (browser.safari) {
+  if (browser.is('Safari')) {
     return 'https://support.apple.com/downloads/safari';
   }
   return 'https://www.google.com/chrome/browser/desktop/';
 }
 
-function BrowserError(props) {
-  const browserName = props.browser.name;
+function BrowserError({browser}) {
+  const browserName = browser.getBrowserName();
 
   return (
     <div className="unsupported-browser">
       <p>{t('bad-browser.message', {name: browserName})}</p>
 
       <p>
-        <a href={getBrowserLink(props.browser)}>
+        <a href={getBrowserLink(browser)}>
           {t('bad-browser.download')}
         </a>
       </p>

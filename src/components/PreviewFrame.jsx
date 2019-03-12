@@ -2,11 +2,11 @@ import Channel from 'jschannel';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import Bowser from 'bowser';
 import bindAll from 'lodash-es/bindAll';
 import constant from 'lodash-es/constant';
 import {t} from 'i18next';
 
+import bowser from '../services/bowser';
 import normalizeError from '../util/normalizeError';
 import retryingFailedImports from '../util/retryingFailedImports';
 import {sourceDelimiter} from '../util/compileProject';
@@ -104,7 +104,7 @@ class PreviewFrame extends React.Component {
       new ErrorConstructor(error.message),
     );
 
-    if (Bowser.safari) {
+    if (bowser.is('Safari')) {
       line = 1;
     }
 

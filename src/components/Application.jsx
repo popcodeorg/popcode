@@ -1,7 +1,8 @@
+import mapValues from 'lodash-es/mapValues';
 import React from 'react';
 import {Provider} from 'react-redux';
-import bowser from 'bowser';
 
+import bowser from '../services/bowser';
 import createApplicationStore from '../createApplicationStore';
 import {ErrorBoundary, includeStoreInBugReports} from '../util/bugsnag';
 import supportedBrowsers from '../../config/browsers.json';
@@ -19,15 +20,15 @@ class Application extends React.Component {
   }
 
   _isIEOrEdge() {
-    return (bowser.msie || bowser.msedge);
+    return bowser.some(['Internet Explorer', 'Microsoft Edge']);
   }
 
   _isUnsupportedBrowser() {
-    return bowser.isUnsupportedBrowser(
+    const supportedBrowsersForBowser = mapValues(
       supportedBrowsers,
-      true,
-      window.navigator.userAgent,
+      version => `>=${version}`,
     );
+    return !bowser.satisfies(supportedBrowsersForBowser);
   }
 
   render() {
