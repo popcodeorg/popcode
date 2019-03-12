@@ -1,4 +1,5 @@
 import {createInstance} from 'i18next';
+import tap from 'lodash-es/tap';
 
 import applyCustomI18nFormatters from '../../src/util/i18nFormatting';
 
@@ -28,5 +29,5 @@ export default function getI18nInstance() {
     },
   };
 
-  return createInstance(options).init();
+  return tap(createInstance(options), instance => instance.init());
 }
