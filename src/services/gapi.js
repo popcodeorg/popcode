@@ -1,5 +1,6 @@
 import loadjs from 'loadjs';
 import once from 'lodash-es/once';
+import promiseRetry from 'promise-retry';
 
 import config from '../config';
 import ExtendableError from '../util/ExtendableError';
@@ -16,17 +17,30 @@ class LoadError extends ExtendableError {}
 
 let isGapiLoadedAndConfigured = false;
 
-const loadGapi = once(async() => new Promise((resolve, reject) => {
-  loadjs('https://apis.google.com/js/client.js', {
-    success() {
-      resolve(window.gapi);
-    },
-    error(failedPaths) {
-      reject(new LoadError(`Failed to load ${failedPaths.join(', ')}`));
-    },
-    numRetries: 16,
-  });
-}));
+const loadGapi = once(() => promiseRetry(
+  async(retry) => {
+    try {
+      return await new Promise((resolve, reject) => {
+        loadjs('https://apis.google.com/js/client.js', {
+          success() {
+            resolve(window.gapi);
+          },
+          error(failedPaths) {
+            reject(new LoadError(`Failed to load ${failedPaths.join(', ')}`));
+          },
+        });
+      });
+    } catch (e) {
+      return retry(e);
+    }
+  },
+  {
+    retries: 16,
+    factor: 2,
+    minTimeout: 200,
+    maxTimeout: 4000,
+  },
+));
 
 export const loadAndConfigureGapi = once(async() => {
   const gapi = await loadGapi();
