@@ -10,6 +10,22 @@
     {
       "env": {
         "browser": false,
+        "node": true
+      },
+      "files": "src/**/*.gen.js",
+      "parser": "espree",
+      "parserOptions": {
+        "ecmaVersion": 2017,
+        "sourceType": "script"
+      },
+      "rules": {
+        "import/no-commonjs": "off",
+        "import/no-nodejs-modules": "off"
+      }
+    },
+    {
+      "env": {
+        "browser": false,
         "es6": true,
         "node": true
       },

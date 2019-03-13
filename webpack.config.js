@@ -165,6 +165,12 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     module: {
       rules: [
         {
+          test: /\.gen\.js$/u,
+          include: path.resolve(__dirname, 'src'),
+          use: ['val-loader'],
+          enforce: 'pre',
+        },
+        {
           test: /\.jsx?$/u,
           include: [
             path.resolve(__dirname, 'src'),
@@ -180,6 +186,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
               },
             },
           ],
+          enforce: 'pre',
         },
         {
           test: /\.js$/u,
