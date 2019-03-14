@@ -44,6 +44,7 @@
       "files": [
         "babel.config.js",
         "gulpfile.js",
+        "jest.config.js",
         "karma.conf.js",
         "script/*.js",
         "webpack.config.js"
@@ -236,6 +237,7 @@
       {
         "allow": [
           "brace/**/*",
+          "codemirror/{addon,mode}/**/*",
           "core-js",
           "es6-set/implement",
           "firebase/*",
@@ -291,7 +293,7 @@
     "new-cap": [
       "warn",
       {
-        "capIsNewExceptions": ["Slowparse.HTML", "Record"]
+        "capIsNewExceptions": ["CodeMirror", "Slowparse.HTML", "Record"]
       }
     ],
     "no-alert": "warn",

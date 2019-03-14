@@ -24,6 +24,7 @@ const srcDir = 'src';
 const distDir = 'dist';
 const stylesheetsDir = path.join(srcDir, 'css');
 const highlightStylesheetsDir = 'node_modules/highlight.js/styles';
+const codemirrorStylesheet = 'node_modules/codemirror/lib/codemirror.css';
 const staticDir = path.join(srcDir, 'static');
 const bowerComponents = 'bower_components';
 
@@ -60,6 +61,7 @@ gulp.task('css', () => {
     .src([
       path.join(bowerComponents, 'normalize-css/normalize.css'),
       path.join(highlightStylesheetsDir, 'github.css'),
+      codemirrorStylesheet,
       path.join(stylesheetsDir, '**/*.css'),
     ])
     .pipe(concat('application.css'))

@@ -36,7 +36,8 @@
         "eslint-plugin-prettier",
         "eslint-plugin-private-props",
         "eslint-plugin-promise",
-        "eslint-plugin-react"
+        "eslint-plugin-react",
+        "eslint-plugin-react-hooks"
       ]
     },
     {
@@ -60,7 +61,6 @@
       "automerge": true,
       "packageNames": ["jest", "jest-extended"]
     },
-
     {
       "groupName": "Karma",
       "automerge": true,
@@ -167,6 +167,7 @@
         "jscodeshift",
         "prettier",
         "sinon",
+        "react-test-renderer",
         "rosie",
         "yarn-deduplicate"
       ],

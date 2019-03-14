@@ -1,6 +1,6 @@
 import {faInfoCircle, faPenSquare} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, {Suspense} from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {DraggableCore} from 'react-draggable';
@@ -253,57 +253,61 @@ export default class Workspace extends React.Component {
     const [_handleEditorsRef, _handleOutputRef] = resizableFlexRefs;
     const ignorePointerEvents = isDraggingColumnDivider || isAnyTopBarMenuOpen;
     return (
-      <div className="environment">
-        {this._shouldRenderLeftColumn() && (
-          <>
+      <Suspense
+        fallback={<PopThrobber message={i18next.t('workspace.loading')} />}
+      >
+        <div className="environment">
+          {this._shouldRenderLeftColumn() && (
+            <>
+              <div
+                className="environment__column"
+                ref={_handleEditorsRef}
+                style={prefix(clone({flexGrow: resizableFlexGrow.get(0)}))}
+              >
+                <div className="environment__column-contents">
+                  <div className="environment__column-contents-inner">
+                    <EditorsColumn />
+                    {!this._shouldRenderRightColumn() &&
+                      this._renderHiddenRightColumnComponents()}
+                    {this._renderHiddenLanguages()}
+                  </div>
+                </div>
+              </div>
+              <DraggableCore
+                onDrag={partial(onResizableFlexDividerDrag, 0)}
+                onStart={onStartDragColumnDivider}
+                onStop={onStopDragColumnDivider}
+              >
+                <div
+                  className={classnames('editors__column-divider', {
+                    'editors__column-divider_draggable': isFlexResizingSupported,
+                  })}
+                />
+              </DraggableCore>
+            </>
+          )}
+          {this._shouldRenderRightColumn() && (
             <div
               className="environment__column"
-              ref={_handleEditorsRef}
-              style={prefix(clone({flexGrow: resizableFlexGrow.get(0)}))}
+              ref={_handleOutputRef}
+              style={prefix({
+                flexGrow: resizableFlexGrow.get(1),
+                pointerEvents: ignorePointerEvents ? 'none' : 'all',
+              })}
             >
               <div className="environment__column-contents">
                 <div className="environment__column-contents-inner">
-                  <EditorsColumn />
-                  {!this._shouldRenderRightColumn() &&
-                    this._renderHiddenRightColumnComponents()}
-                  {this._renderHiddenLanguages()}
+                  {shouldRenderOutput && <Output />}
+                  {this._renderHiddenRightColumnComponents()}
+                  {!this._shouldRenderLeftColumn() &&
+                    this._renderHiddenLanguages()}
                 </div>
               </div>
             </div>
-            <DraggableCore
-              onDrag={partial(onResizableFlexDividerDrag, 0)}
-              onStart={onStartDragColumnDivider}
-              onStop={onStopDragColumnDivider}
-            >
-              <div
-                className={classnames('editors__column-divider', {
-                  'editors__column-divider_draggable': isFlexResizingSupported,
-                })}
-              />
-            </DraggableCore>
-          </>
-        )}
-        {this._shouldRenderRightColumn() && (
-          <div
-            className="environment__column"
-            ref={_handleOutputRef}
-            style={prefix({
-              flexGrow: resizableFlexGrow.get(1),
-              pointerEvents: ignorePointerEvents ? 'none' : 'all',
-            })}
-          >
-            <div className="environment__column-contents">
-              <div className="environment__column-contents-inner">
-                {shouldRenderOutput && <Output />}
-                {this._renderHiddenRightColumnComponents()}
-                {!this._shouldRenderLeftColumn() &&
-                  this._renderHiddenLanguages()}
-              </div>
-            </div>
-          </div>
-        )}
-        {this._isEverythingHidden() && this._renderEverythingHidden()}
-      </div>
+          )}
+          {this._isEverythingHidden() && this._renderEverythingHidden()}
+        </div>
+      </Suspense>
     );
   }
 

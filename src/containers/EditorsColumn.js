@@ -8,6 +8,7 @@ import {
   getHiddenAndVisibleLanguages,
   getRequestedFocusedLine,
   isTextSizeLarge,
+  isExperimental,
 } from '../selectors';
 import {
   beautifyProjectSource,
@@ -22,6 +23,7 @@ function mapStateToProps(state) {
   return {
     currentProject: getCurrentProject(state),
     errors: getErrors(state),
+    isExperimental: isExperimental(state),
     isTextSizeLarge: isTextSizeLarge(state),
     requestedFocusedLine: getRequestedFocusedLine(state),
     visibleLanguages,
