@@ -1,25 +1,14 @@
 import unlinkGithubIdentity from '../unlinkGithubIdentity';
 
-test('should unlink Github Identity', () => {
-  expect(1).toBe(1);
+import {unlinkGithub} from '../../clients/firebase';
+
+jest.mock('../../clients/firebase.js');
+
+test('should unlink Github Identity', async() => {
+  const action = await unlinkGithubIdentity.process();
+  expect(unlinkGithub).toHaveBeenCalledWith();
+  expect(action).not.toBeNull();
+  expect(action.type).toBe('IDENTITY_UNLINKED');
+  expect(action.payload).not.toBeNull();
+  expect(action.payload.providerId).toBe('github.com');
 });
-
-
-//
-// import {unlinkGithub} from '../../clients/firebase';
-//
-// jest.mock('unlinkGithub');
-//
-// test('should unlink Github Identity', () => {
-//   unlinkGithub.mockResolvedValue('test');
-//   unlinkGithubIdentity();
-//   expect(unlinkGithub).toBeCalled();
-// });
-
-// OLD TEST
-// test('unlinkGithubIdentity', (assert) => {
-//   testSaga(unlinkGithubIdentitySaga, unlinkGithubIdentity).
-//     next().call(unlinkGithub).
-//     next().put(identityUnlinked('github.com'));
-//   assert.end();
-// });
