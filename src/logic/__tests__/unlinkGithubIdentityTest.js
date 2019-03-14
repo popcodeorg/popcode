@@ -9,6 +9,7 @@ test('should unlink Github Identity', async() => {
   expect(unlinkGithub).toHaveBeenCalledWith();
   expect(action).not.toBeNull();
   expect(action.type).toBe('IDENTITY_UNLINKED');
-  expect(action.payload).not.toBeNull();
-  expect(action.payload.providerId).toBe('github.com');
+  const {payload} = action;
+  expect(payload).not.toBeNull();
+  expect(payload.providerId).toBe('github.com');
 });
