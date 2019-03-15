@@ -1,4 +1,76 @@
 {
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "globals": {
+    "__dirname": true
+  },
+  "overrides": [
+    {
+      "env": {
+        "browser": false,
+        "es6": true,
+        "node": true
+      },
+      "files": [
+        "babel.config.js",
+        "gulpfile.js",
+        "karma.conf.js",
+        "script/*.js",
+        "webpack.config.js"
+      ],
+      "parser": "espree",
+      "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "script"
+      },
+      "rules": {
+        "import/no-commonjs": "off",
+        "import/no-nodejs-modules": "off"
+      },
+      "settings": {
+        "import/resolver": "node"
+      }
+    },
+    {
+      "files": "src/**/*",
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": false
+          }
+        ]
+      }
+    },
+    {
+      "files": "src/sagas/**/*",
+      "rules": {
+        "import/order": "off"
+      }
+    },
+    {
+      "files": "test/unit/**/*",
+      "globals": {
+        "sinon": true
+      }
+    },
+    {
+      "files": "test/unit/sagas/**/*",
+      "rules": {
+        "import/order": "off",
+        "prefer-reflect": "off"
+      }
+    }
+  ],
+  "parser": "babel-eslint",
+  "plugins": [
+    "import",
+    "react",
+    "promise",
+    "private-props"
+  ],
   "rules": {
     "accessor-pairs": [
       "error"
@@ -911,20 +983,6 @@
       "never"
     ]
   },
-  "env": {
-    "browser": true,
-    "es6": true
-  },
-  "parser": "babel-eslint",
-  "globals": {
-    "__dirname": true
-  },
-  "plugins": [
-    "import",
-    "react",
-    "promise",
-    "private-props"
-  ],
   "settings": {
     "import/resolver": "webpack",
     "react": {

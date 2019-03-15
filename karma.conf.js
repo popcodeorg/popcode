@@ -1,6 +1,3 @@
-/* eslint-env node */
-/* eslint-disable import/no-commonjs */
-
 const isDocker = require('is-docker');
 
 const webpackConfiguration = require('./webpack.config.js');
