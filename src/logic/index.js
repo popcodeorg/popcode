@@ -1,5 +1,5 @@
 import unlinkGithubIdentity from './unlinkGithubIdentity';
 
-const logic = [unlinkGithubIdentity];
-
-export default logic;
+export default [
+  unlinkGithubIdentity,
+];

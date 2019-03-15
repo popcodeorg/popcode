@@ -10,4 +10,5 @@ module.exports = {
     '/bower_components/',
   ],
   transformIgnorePatterns: ['node_modules/(?!(lodash-es)/)'],
+  setupFilesAfterEnv: ['jest-extended'],
 };

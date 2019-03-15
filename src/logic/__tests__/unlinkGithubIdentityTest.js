@@ -5,11 +5,8 @@ import {unlinkGithub} from '../../clients/firebase';
 jest.mock('../../clients/firebase.js');
 
 test('should unlink Github Identity', async() => {
-  const action = await unlinkGithubIdentity.process();
+  const {type, payload: {providerId}} = await unlinkGithubIdentity.process();
   expect(unlinkGithub).toHaveBeenCalledWith();
-  expect(action).not.toBeNull();
-  expect(action.type).toBe('IDENTITY_UNLINKED');
-  const {payload} = action;
-  expect(payload).not.toBeNull();
-  expect(payload.providerId).toBe('github.com');
+  expect(type).toBe('IDENTITY_UNLINKED');
+  expect(providerId).toBe('github.com');
 });
