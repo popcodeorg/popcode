@@ -1,5 +1,3 @@
 import unlinkGithubIdentity from './unlinkGithubIdentity';
 
-export default [
-  unlinkGithubIdentity,
-];
+export default [unlinkGithubIdentity];

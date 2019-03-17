@@ -219,7 +219,10 @@
     "import/no-anonymous-default-export": [
       "warn",
       {
-        "allowArrowFunction": true
+        "allowArray": true,
+        "allowArrowFunction": true,
+        "allowLiteral": true,
+        "allowObject": true
       }
     ],
     "import/no-commonjs": "warn",
