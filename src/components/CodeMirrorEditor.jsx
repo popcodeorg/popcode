@@ -1,6 +1,7 @@
 import constant from 'lodash-es/constant';
 import classnames from 'classnames';
 import CodeMirror from 'codemirror';
+import get from 'lodash-es/get';
 import LRU from 'lru-cache';
 import map from 'lodash-es/map';
 import PropTypes from 'prop-types';
@@ -14,6 +15,7 @@ import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/selection/active-line';
 
 import bowser from '../services/bowser';
+import {EditorLocation} from '../records';
 
 const CODEMIRROR_MODES_MAP = {
   html: 'htmlmixed',
@@ -25,10 +27,12 @@ export default function CodeMirrorEditor({
   errors,
   language,
   projectKey,
+  requestedFocusedLine,
   source,
   textSizeIsLarge,
   onAutoFormat,
   onInput,
+  onRequestedLineFocused,
 }) {
   const containerRef = useRef();
   const editorRef = useRef();
@@ -106,6 +110,22 @@ export default function CodeMirrorEditor({
     editor.setOption('extraKeys', {[keyBinding]: onAutoFormat});
   }, [onAutoFormat]);
 
+  useEffect(() => {
+    if (get(requestedFocusedLine, ['component']) !== `editor.${language}`) {
+      return;
+    }
+
+    const editor = editorRef.current;
+    const position = {
+      line: requestedFocusedLine.line,
+      ch: requestedFocusedLine.column,
+    };
+    editor.getDoc().setCursor(position);
+    editor.scrollIntoView(position);
+    editor.focus();
+    onRequestedLineFocused();
+  }, [language, onRequestedLineFocused, requestedFocusedLine]);
+
   return (
     <div
       className={classnames('editors__codemirror-container', {
@@ -120,12 +140,15 @@ CodeMirrorEditor.propTypes = {
   errors: PropTypes.array.isRequired,
   language: PropTypes.string.isRequired,
   projectKey: PropTypes.string.isRequired,
+  requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   source: PropTypes.string.isRequired,
   textSizeIsLarge: PropTypes.bool,
   onAutoFormat: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
+  onRequestedLineFocused: PropTypes.func.isRequired,
 };
 
 CodeMirrorEditor.defaultProps = {
   textSizeIsLarge: false,
+  requestedFocusedLine: null,
 };

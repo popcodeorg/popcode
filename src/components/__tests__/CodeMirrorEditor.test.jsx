@@ -7,6 +7,7 @@ import ShallowRenderer from 'react-test-renderer/shallow';
 import TestRenderer, {act} from 'react-test-renderer';
 
 import CodeMirrorEditor from '../CodeMirrorEditor';
+import {EditorLocation} from '../../records';
 
 import {errorFactory} from '@factories/records/Error';
 
@@ -172,5 +173,40 @@ describe('codemirror editor', () => {
     expect(getEditorOption('extraKeys')).toEqual({
       'Ctrl-I': DEFAULT_PROPS.onAutoFormat,
     });
+  });
+
+  test('focused line', () => {
+    const line = 2;
+    const ch = 4;
+    const onRequestedLineFocused = jest.fn();
+    updateComponent({
+      requestedFocusedLine: new EditorLocation({
+        component: 'editor.html',
+        line,
+        column: ch,
+      }),
+      onRequestedLineFocused,
+    });
+    const position = {line, ch};
+    expect(editor.getDoc().setCursor).toHaveBeenLastCalledWith(position);
+    expect(editor.scrollIntoView).toHaveBeenLastCalledWith(position);
+    expect(editor.focus).toHaveBeenLastCalledWith();
+    expect(onRequestedLineFocused).toHaveBeenLastCalledWith();
+  });
+
+  test('focused line for different editor', () => {
+    const onRequestedLineFocused = jest.fn();
+    updateComponent({
+      requestedFocusedLine: new EditorLocation({
+        component: 'editor.css',
+        line: 2,
+        column: 4,
+      }),
+      onRequestedLineFocused,
+    });
+    expect(editor.getDoc().setCursor).not.toHaveBeenCalled();
+    expect(editor.scrollIntoView).not.toHaveBeenCalled();
+    expect(editor.focus).not.toHaveBeenCalled();
+    expect(onRequestedLineFocused).not.toHaveBeenCalled();
   });
 });
