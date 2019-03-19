@@ -34,6 +34,39 @@
       }
     },
     {
+      "env": {
+        "browser": false,
+        "es6": true,
+        "node": true,
+        "jest": true
+      },
+      "files": [
+        "**/__tests__/*.js"
+      ],
+      "rules": {
+        "jest/no-alias-methods": "warn",
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "warn",
+        "jest/no-identical-title": "error",
+        "jest/no-jasmine-globals": "error",
+        "jest/no-jest-import": "error",
+        "jest/no-test-return-statement": "error",
+        "jest/prefer-to-contain": "warn",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-describe": "error",
+        "jest/valid-expect-in-promise": "error",
+        "jest/valid-expect": "error",
+        "jest/prefer-called-with": "warn"
+      },
+      "plugins": [
+        "import",
+        "jest",
+        "react",
+        "promise",
+        "private-props"
+      ]
+    },
+    {
       "files": "src/**/*",
       "rules": {
         "import/no-extraneous-dependencies": [
@@ -186,7 +219,10 @@
     "import/no-anonymous-default-export": [
       "warn",
       {
-        "allowArrowFunction": true
+        "allowArray": true,
+        "allowArrowFunction": true,
+        "allowLiteral": true,
+        "allowObject": true
       }
     ],
     "import/no-commonjs": "warn",

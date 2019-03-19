@@ -16,7 +16,6 @@ import {
   identityLinked,
   linkIdentityFailed,
   accountMigrationError,
-  identityUnlinked,
 } from '../actions/user';
 import {getCurrentAccountMigration} from '../selectors';
 import {
@@ -24,7 +23,6 @@ import {
   migrateAccount,
   signOut,
   saveCredentialForCurrentUser,
-  unlinkGithub,
 } from '../clients/firebase';
 import {getProfileForAuthenticatedUser} from '../clients/github';
 
@@ -49,11 +47,6 @@ export function* linkGithubIdentity() {
         yield put(linkIdentityFailed(e));
     }
   }
-}
-
-export function* unlinkGithubIdentity() {
-  yield call(unlinkGithub);
-  yield put(identityUnlinked('github.com'));
 }
 
 export function* startAccountMigration() {
@@ -90,7 +83,6 @@ export function* logOut() {
 export default function* user() {
   yield all([
     takeEvery('LINK_GITHUB_IDENTITY', linkGithubIdentity),
-    takeEvery('UNLINK_GITHUB_IDENTITY', unlinkGithubIdentity),
     takeEvery('LOG_OUT', logOut),
     takeEvery('START_ACCOUNT_MIGRATION', startAccountMigration),
   ]);

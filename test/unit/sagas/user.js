@@ -12,8 +12,6 @@ import {
   linkIdentityFailed,
   logOut,
   startAccountMigration,
-  unlinkGithubIdentity,
-  identityUnlinked,
 } from '../../../src/actions/user';
 import {getCurrentAccountMigration} from '../../../src/selectors';
 import {
@@ -24,13 +22,11 @@ import {
   migrateAccount,
   signOut,
   saveCredentialForCurrentUser,
-  unlinkGithub,
 } from '../../../src/clients/firebase';
 import {getProfileForAuthenticatedUser} from '../../../src/clients/github';
 import {
   logOut as logOutSaga,
   linkGithubIdentity as linkGithubIdentitySaga,
-  unlinkGithubIdentity as unlinkGithubIdentitySaga,
   startAccountMigration as startAccountMigrationSaga,
 } from '../../../src/sagas/user';
 import {bugsnagClient} from '../../../src/util/bugsnag';
@@ -157,13 +153,6 @@ test('startAccountMigration', (t) => {
       }).isDone();
     assert.end();
   });
-});
-
-test('unlinkGithubIdentity', (assert) => {
-  testSaga(unlinkGithubIdentitySaga, unlinkGithubIdentity).
-    next().call(unlinkGithub).
-    next().put(identityUnlinked('github.com'));
-  assert.end();
 });
 
 test('logOut', (assert) => {
