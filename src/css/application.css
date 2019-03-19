@@ -508,6 +508,10 @@ body {
   z-index: 1;
 }
 
+.editors__label_left {
+  text-align: left;
+}
+
 .editors__column-divider {
   background-color: var(--color-light-gray);
   width: 0.5vh;
