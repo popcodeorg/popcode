@@ -7,6 +7,8 @@ import TestRenderer, {act} from 'react-test-renderer';
 
 import CodeMirrorEditor from '../CodeMirrorEditor';
 
+import {errorFactory} from '../../../../../../../home/mat/src/popcode/__factories__/records/Error';
+
 import {change as changeFactory} from '@factories/packages/codemirror';
 
 const DEFAULT_PROPS = {
@@ -130,5 +132,31 @@ describe('codemirror editor', () => {
     DEFAULT_PROPS.onInput.mockClear();
     handleChanges(null, [changeFactory.build({origin: 'setValue'})]);
     expect(DEFAULT_PROPS.onInput).not.toHaveBeenCalled();
+  });
+
+  test('errors', () => {
+    function getAnnotations() {
+      const [, {getAnnotations: getAnnotationsFromEditor}] = findLast(
+        editor.setOption.mock.calls,
+        {
+          0: 'lint',
+        },
+      );
+      return getAnnotationsFromEditor();
+    }
+
+    expect(getAnnotations()).toEqual([]);
+    const error = errorFactory.build();
+    updateComponent({errors: [error]});
+    expect(getAnnotations()).toEqual([
+      {
+        message: error.text,
+        severity: 'error',
+        from: {line: error.row, ch: 0},
+        to: {line: error.row, ch: 0},
+      },
+    ]);
+    updateComponent({errors: []});
+    expect(getAnnotations()).toEqual([]);
   });
 });
