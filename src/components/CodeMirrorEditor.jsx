@@ -1,4 +1,5 @@
 import constant from 'lodash-es/constant';
+import classnames from 'classnames';
 import CodeMirror from 'codemirror';
 import LRU from 'lru-cache';
 import map from 'lodash-es/map';
@@ -25,6 +26,7 @@ export default function CodeMirrorEditor({
   language,
   projectKey,
   source,
+  textSizeIsLarge,
   onAutoFormat,
   onInput,
 }) {
@@ -104,7 +106,14 @@ export default function CodeMirrorEditor({
     editor.setOption('extraKeys', {[keyBinding]: onAutoFormat});
   }, [onAutoFormat]);
 
-  return <div className="editors__codemirror-container" ref={containerRef} />;
+  return (
+    <div
+      className={classnames('editors__codemirror-container', {
+        'editors__codemirror-container_large-text': textSizeIsLarge,
+      })}
+      ref={containerRef}
+    />
+  );
 }
 
 CodeMirrorEditor.propTypes = {
@@ -112,6 +121,11 @@ CodeMirrorEditor.propTypes = {
   language: PropTypes.string.isRequired,
   projectKey: PropTypes.string.isRequired,
   source: PropTypes.string.isRequired,
+  textSizeIsLarge: PropTypes.bool,
   onAutoFormat: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
+};
+
+CodeMirrorEditor.defaultProps = {
+  textSizeIsLarge: false,
 };

@@ -550,6 +550,10 @@ body {
   z-index: 0;
 }
 
+.editors__codemirror-container_large-text {
+  font-size: 20px;
+}
+
 .editors__collapsed-editor {
   border-top: 4px solid var(--color-light-gray);
   flex: none;
