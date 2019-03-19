@@ -1,4 +1,5 @@
 import CodeMirror from 'codemirror';
+import isNil from 'lodash-es/isNil';
 import findLast from 'lodash-es/findLast';
 import last from 'lodash-es/last';
 import React from 'react';
@@ -7,7 +8,7 @@ import TestRenderer, {act} from 'react-test-renderer';
 
 import CodeMirrorEditor from '../CodeMirrorEditor';
 
-import {errorFactory} from '../../../../../../../home/mat/src/popcode/__factories__/records/Error';
+import {errorFactory} from '@factories/records/Error';
 
 import {change as changeFactory} from '@factories/packages/codemirror';
 
@@ -82,6 +83,16 @@ describe('codemirror editor', () => {
     });
   }
 
+  function getEditorOption(option) {
+    const call = findLast(editor.setOption.mock.calls, {
+      0: option,
+    });
+    if (!isNil(call)) {
+      return call[1];
+    }
+    return undefined;
+  }
+
   test('initial editor setup', () => {
     expect(CodeMirror).toHaveBeenLastCalledWith(container, expect.any(Object));
     expect(editor.setSize).toHaveBeenLastCalledWith('100%', '100%');
@@ -136,11 +147,8 @@ describe('codemirror editor', () => {
 
   test('errors', () => {
     function getAnnotations() {
-      const [, {getAnnotations: getAnnotationsFromEditor}] = findLast(
-        editor.setOption.mock.calls,
-        {
-          0: 'lint',
-        },
+      const {getAnnotations: getAnnotationsFromEditor} = getEditorOption(
+        'lint',
       );
       return getAnnotationsFromEditor();
     }
@@ -158,5 +166,11 @@ describe('codemirror editor', () => {
     ]);
     updateComponent({errors: []});
     expect(getAnnotations()).toEqual([]);
+  });
+
+  test('auto-formatting', () => {
+    expect(getEditorOption('extraKeys')).toEqual({
+      'Ctrl-I': DEFAULT_PROPS.onAutoFormat,
+    });
   });
 });

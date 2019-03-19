@@ -12,6 +12,8 @@ import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/selection/active-line';
 
+import bowser from '../services/bowser';
+
 const CODEMIRROR_MODES_MAP = {
   html: 'htmlmixed',
   css: 'css',
@@ -23,6 +25,7 @@ export default function CodeMirrorEditor({
   language,
   projectKey,
   source,
+  onAutoFormat,
   onInput,
 }) {
   const containerRef = useRef();
@@ -95,6 +98,12 @@ export default function CodeMirrorEditor({
     editor.performLint();
   }, [errors]);
 
+  useEffect(() => {
+    const editor = editorRef.current;
+    const keyBinding = bowser.isOS('macOS') ? 'Cmd-I' : 'Ctrl-I';
+    editor.setOption('extraKeys', {[keyBinding]: onAutoFormat});
+  }, [onAutoFormat]);
+
   return <div className="editors__codemirror-container" ref={containerRef} />;
 }
 
@@ -103,5 +112,6 @@ CodeMirrorEditor.propTypes = {
   language: PropTypes.string.isRequired,
   projectKey: PropTypes.string.isRequired,
   source: PropTypes.string.isRequired,
+  onAutoFormat: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
 };
