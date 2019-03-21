@@ -55,6 +55,12 @@
       },
       "rules": {
         "import/no-commonjs": "off",
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true
+          }
+        ],
         "import/no-nodejs-modules": "off",
         "lodash/import-scope": ["warn", "method-package"]
       },
@@ -74,6 +80,12 @@
         "jest-setup.js"
       ],
       "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true
+          }
+        ],
         "jest/no-alias-methods": "warn",
         "jest/no-disabled-tests": "warn",
         "jest/no-focused-tests": "warn",
@@ -109,26 +121,23 @@
       }
     },
     {
-      "files": "src/**/*",
-      "rules": {
-        "import/no-extraneous-dependencies": [
-          "error",
-          {
-            "devDependencies": false
-          }
-        ]
-      }
-    },
-    {
       "files": "src/sagas/**/*",
       "rules": {
         "import/order": "off"
       }
     },
     {
-      "files": "test/unit/**/*",
+      "files": "test/**/*",
       "globals": {
         "sinon": true
+      },
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true
+          }
+        ]
       }
     },
     {
@@ -206,7 +215,12 @@
     ],
     "import/no-commonjs": "warn",
     "import/no-cycle": "error",
-    "import/no-extraneous-dependencies": "error",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": false
+      }
+    ],
     "import/no-mutable-exports": "warn",
     "import/no-named-default": "warn",
     "import/no-namespace": "warn",
