@@ -20,17 +20,14 @@ export default createLogic({
       await saveCredentialForCurrentUser(credential);
       return identityLinked(userData, credential);
     } catch (e) {
-      switch (e.code) {
-        case 'auth/credential-already-in-use': {
-          const {data: githubProfile} = await getProfileForAuthenticatedUser(
-            e.credential.accessToken,
-          );
-          return accountMigrationNeeded(githubProfile, e.credential);
-        }
-
-        default:
-          await bugsnagClient.notify(e);
-          return linkIdentityFailed(e);
+      if (e.code === 'auth/credential-already-in-use') {
+        const {data: githubProfile} = await getProfileForAuthenticatedUser(
+          e.credential.accessToken,
+        );
+        return accountMigrationNeeded(githubProfile, e.credential);
+      } else {
+        await bugsnagClient.notify(e);
+        return linkIdentityFailed(e);
       }
     }
   },

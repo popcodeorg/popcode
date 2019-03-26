@@ -20,9 +20,13 @@ describe('linkGithubIdentity', () => {
       credential: mockCredential,
     });
 
-    const {type, payload: {credential: {
-      providerId,
-    }, user}} = await linkGithubIdentity.process();
+    const {
+      type,
+      payload: {
+        credential: {providerId},
+        user,
+      },
+    } = await linkGithubIdentity.process();
 
     expect(linkGithub).toHaveBeenCalledWith();
     expect(saveCredentialForCurrentUser).toHaveBeenCalledWith(mockCredential);
@@ -41,11 +45,17 @@ describe('linkGithubIdentity', () => {
     linkGithub.mockRejectedValue(error);
     getProfileForAuthenticatedUser.mockResolvedValue(githubProfile);
 
-    const {type, payload: {credential: {
-      providerId, accessToken,
-    }}} = await linkGithubIdentity.process();
+    const {
+      type,
+      payload: {
+        credential: {
+          providerId,
+          accessToken,
+        },
+      },
+    } = await linkGithubIdentity.process();
     expect(linkGithub).toHaveBeenCalledWith();
-    expect(getProfileForAuthenticatedUser).toHaveBeenLastCalledWith(
+    expect(getProfileForAuthenticatedUser).toHaveBeenCalledWith(
       error.credential.accessToken,
     );
     expect(type).toBe('ACCOUNT_MIGRATION_NEEDED');
@@ -58,11 +68,13 @@ describe('linkGithubIdentity', () => {
     const otherError = new Error(errorMessage);
 
     linkGithub.mockRejectedValue(otherError);
-    bugsnagClient.notify.mockResolvedValue(null);
+    bugsnagClient.notify.mockResolvedValue();
 
-    const {type, error, payload: {
-      message,
-    }} = await linkGithubIdentity.process();
+    const {
+      type,
+      error,
+      payload: {message},
+    } = await linkGithubIdentity.process();
     expect(linkGithub).toHaveBeenCalledWith();
     expect(bugsnagClient.notify).toHaveBeenCalledWith(otherError);
     expect(type).toBe('LINK_IDENTITY_FAILED');
