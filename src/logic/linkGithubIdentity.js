@@ -25,10 +25,9 @@ export default createLogic({
           e.credential.accessToken,
         );
         return accountMigrationNeeded(githubProfile, e.credential);
-      } else {
-        await bugsnagClient.notify(e);
-        return linkIdentityFailed(e);
       }
+      await bugsnagClient.notify(e);
+      return linkIdentityFailed(e);
     }
   },
 });

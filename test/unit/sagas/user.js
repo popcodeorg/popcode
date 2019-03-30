@@ -6,8 +6,6 @@ import {
   accountMigrationComplete,
   accountMigrationError,
   accountMigrationUndoPeriodExpired,
-  identityLinked,
-  linkIdentityFailed,
   logOut,
   startAccountMigration,
 } from '../../../src/actions/user';
