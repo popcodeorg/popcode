@@ -95,6 +95,7 @@ export function reduceRoot(stateIn, action) {
   });
 }
 
+/* eslint-disable complexity */
 export default function reduceProjects(stateIn, action) {
   let state;
 
