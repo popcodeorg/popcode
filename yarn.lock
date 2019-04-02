@@ -12036,11 +12036,6 @@ react-copy-to-clipboard@^5.0.0:
     copy-to-clipboard "^3"
     prop-types "^15.5.8"
 
-react-coroutine@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/react-coroutine/-/react-coroutine-2.0.2.tgz#240fb5776f16f4bd47927846d4530d96172b64bf"
-  integrity sha512-kcTuQityicmnwMW/IzhHP+7PWVRK8IoRl7QQSVvAQ19+wfUz1zp1/nnMM2LvDreif/ZtX80EzIfEp3MO2xo9xQ==
-
 react-dom@^0.14.0:
   version "0.14.9"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-0.14.9.tgz#05064a3dcf0fb1880a3b2bfc9d58c55d8d9f6293"
