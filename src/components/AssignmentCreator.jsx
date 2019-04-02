@@ -10,7 +10,7 @@ import Modal from './Modal';
 const AssignmentCreatorForm = lazy(
   () => import(
     /* webpackChunkName: "mainAsync" */
-    '../containers/AssignmentCreatorForm'
+    '../containers/AssignmentCreatorForm' // eslint-disable-line comma-dangle
   ),
 );
 
