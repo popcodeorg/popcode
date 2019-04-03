@@ -23,6 +23,7 @@ import {
   updateProjectInstructions,
   projectSuccessfullySaved,
   archiveProject,
+  saveProject,
 } from './projects';
 
 import {
@@ -141,4 +142,5 @@ export {
   coursesFullyLoaded,
   archiveProject,
   toggleArchivedView,
+  saveProject,
 };

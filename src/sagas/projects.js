@@ -168,5 +168,6 @@ export default function* projects() {
     takeEvery('TOGGLE_LIBRARY', toggleLibrary),
     takeLatest('BEAUTIFY_PROJECT_SOURCE', loadAndBeautifyProjectSource),
     takeEvery('ARCHIVE_PROJECT', archiveProject),
+    takeLatest('SAVE_PROJECT', saveCurrentProject),
   ]);
 }
