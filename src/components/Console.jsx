@@ -39,7 +39,6 @@ export default function Console({
       <CollapsedComponent
         component="console"
         isRightJustified={false}
-        key="console"
         projectKey={currentProjectKey}
         text={t('workspace.components.console')}
         onComponentUnhide={onToggleVisible}

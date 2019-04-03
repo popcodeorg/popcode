@@ -7,26 +7,25 @@ import classnames from 'classnames';
 
 export default function CollapsedComponent({
   component,
-  isRightJustified = true,
+  isRightJustified,
   onComponentUnhide,
   projectKey,
   text,
 }) {
   return (
     <div
-      className="editors__collapsed-editor"
+      className="collapsed-component"
       onClick={partial(
         onComponentUnhide,
         projectKey,
-        `editor.${component}`,
+        component,
       )}
     >
       <div
         className={classnames(
           'label',
-          'editors__label',
-          'editors__label_collapsed',
-          {editors__label_left: !isRightJustified},
+          'collapsed-component__label',
+          {'collapsed-component__label_left': !isRightJustified},
         )}
       >
         {text}
@@ -43,4 +42,8 @@ CollapsedComponent.propTypes = {
   projectKey: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   onComponentUnhide: PropTypes.func.isRequired,
+};
+
+CollapsedComponent.defaultProps = {
+  isRightJustified: true,
 };

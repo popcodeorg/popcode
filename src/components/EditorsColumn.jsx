@@ -100,7 +100,7 @@ export default function EditorsColumn({
   hiddenLanguages.forEach(({language}) => {
     children.push((
       <CollapsedComponent
-        component={language}
+        component={`editor.${language}`}
         key={language}
         projectKey={currentProject.projectKey}
         text={t(`languages.${language}`)}

@@ -490,11 +490,6 @@ body {
   flex: 1;
 }
 
-.editors__collapsed-editor {
-  border-top: 4px solid var(--color-light-gray);
-  flex: none;
-}
-
 .editors__label {
   text-align: right;
 }
@@ -542,6 +537,21 @@ body {
   font-family: Roboto;
   user-select: none;
   pointer-events: none;
+}
+
+/** @define collapsed-component */
+
+.collapsed-component {
+  border-top: 4px solid var(--color-light-gray);
+  flex: none;
+}
+
+.collapsed-component__label {
+  text-align: right;
+}
+
+.collapsed-component__label_left {
+  text-align: left;
 }
 
 /** @define output */
