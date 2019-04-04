@@ -100,6 +100,11 @@
       }
     }
   },
+  "login-prompt":{
+    "header": "Do you want to log in to save?",
+    "login": "Login",
+    "dismiss": "Not now" 
+  },
   "account-migration": {
     "header": {
       "proposed": "Combine these accounts?",

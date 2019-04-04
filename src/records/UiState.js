@@ -6,6 +6,7 @@ export default Record(
     isDraggingColumnDivider: false,
     isEditingInstructions: false,
     isExperimental: false,
+    isLoginPromptOpen: false,
     isTextSizeLarge: false,
     isTyping: false,
     notifications: new Map(),
