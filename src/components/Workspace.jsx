@@ -5,9 +5,11 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {DraggableCore} from 'react-draggable';
 import bindAll from 'lodash-es/bindAll';
+import clone from 'lodash-es/clone';
 import isNull from 'lodash-es/isNull';
 import get from 'lodash-es/get';
 import partial from 'lodash-es/partial';
+import prefixAll from 'inline-style-prefixer/static';
 import {t} from 'i18next';
 import classnames from 'classnames';
 
@@ -22,8 +24,8 @@ import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
 import EditorsColumn from '../containers/EditorsColumn';
-import Output from '../containers/Output';
 
+import Output from './Output';
 import PopThrobber from './PopThrobber';
 
 export default class Workspace extends React.Component {
@@ -136,6 +138,8 @@ export default class Workspace extends React.Component {
   _renderEnvironment() {
     const {
       currentProject,
+      isAnyTopBarMenuOpen,
+      isDraggingColumnDivider,
       isFlexResizingSupported,
       resizableFlexGrow,
       resizableFlexRefs,
@@ -148,13 +152,19 @@ export default class Workspace extends React.Component {
     }
 
     const [_handleEditorsRef, _handleOutputRef] = resizableFlexRefs;
+    const ignorePointerEvents = isDraggingColumnDivider || isAnyTopBarMenuOpen;
 
     return (
       <div className="environment">
-        <EditorsColumn
-          style={{flexGrow: resizableFlexGrow.get(0)}}
-          onRef={_handleEditorsRef}
-        />
+        <div
+          className="environment__column"
+          ref={_handleEditorsRef}
+          style={prefixAll(clone({flexGrow: resizableFlexGrow.get(0)}))}
+        >
+          <div className="environment__column-contents">
+            <EditorsColumn />
+          </div>
+        </div>
         <DraggableCore
           onDrag={partial(onResizableFlexDividerDrag, 0)}
           onStart={onStartDragColumnDivider}
@@ -167,10 +177,18 @@ export default class Workspace extends React.Component {
             )}
           />
         </DraggableCore>
-        <Output
-          style={{flexGrow: resizableFlexGrow.get(1)}}
-          onRef={_handleOutputRef}
-        />
+        <div
+          className="environment__column"
+          ref={_handleOutputRef}
+          style={prefixAll({
+            flexGrow: resizableFlexGrow.get(1),
+            pointerEvents: ignorePointerEvents ? 'none' : 'all',
+          })}
+        >
+          <div className="environment__column-contents">
+            <Output />
+          </div>
+        </div>
       </div>
     );
   }
@@ -196,6 +214,8 @@ export default class Workspace extends React.Component {
 
 Workspace.propTypes = {
   currentProject: PropTypes.object,
+  isAnyTopBarMenuOpen: PropTypes.bool.isRequired,
+  isDraggingColumnDivider: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   isFlexResizingSupported: PropTypes.bool.isRequired,
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,

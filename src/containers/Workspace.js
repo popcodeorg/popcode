@@ -1,7 +1,12 @@
 import {connect} from 'react-redux';
 
 import Workspace from '../components/Workspace';
-import {getCurrentProject, isEditingInstructions} from '../selectors';
+import {
+  getCurrentProject,
+  isDraggingColumnDivider,
+  isEditingInstructions,
+  getOpenTopBarMenu,
+} from '../selectors';
 import {
   toggleComponent,
   applicationLoaded,
@@ -14,6 +19,8 @@ import resizableFlex from '../higherOrderComponents/resizableFlex';
 function mapStateToProps(state) {
   return {
     currentProject: getCurrentProject(state),
+    isAnyTopBarMenuOpen: Boolean(getOpenTopBarMenu(state)),
+    isDraggingColumnDivider: isDraggingColumnDivider(state),
     isEditingInstructions: isEditingInstructions(state),
   };
 }

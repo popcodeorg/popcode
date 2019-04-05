@@ -2,9 +2,8 @@ import {DraggableCore} from 'react-draggable';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import prefixAll from 'inline-style-prefixer/static';
+
 import classnames from 'classnames';
-import clone from 'lodash-es/clone';
 import isEmpty from 'lodash-es/isEmpty';
 import includes from 'lodash-es/includes';
 import map from 'lodash-es/map';
@@ -30,10 +29,8 @@ export default function EditorsColumn({
   onComponentHide,
   onComponentUnhide,
   onEditorInput,
-  onRef,
   onRequestedLineFocused,
   onResizableFlexDividerDrag,
-  style,
 }) {
   const [hiddenLanguages, visibleLanguages] = partition(
     map(
@@ -114,14 +111,8 @@ export default function EditorsColumn({
   }
 
   return (
-    <div
-      className="environment__column"
-      ref={onRef}
-      style={prefixAll(clone(style))}
-    >
-      <div className="environment__column-contents editors">
-        {children}
-      </div>
+    <div className="editors">
+      {children}
     </div>
   );
 }
@@ -134,12 +125,10 @@ EditorsColumn.propTypes = {
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
   resizableFlexRefs: PropTypes.array.isRequired,
-  style: PropTypes.object.isRequired,
   onAutoFormat: PropTypes.func.isRequired,
   onComponentHide: PropTypes.func.isRequired,
   onComponentUnhide: PropTypes.func.isRequired,
   onEditorInput: PropTypes.func.isRequired,
-  onRef: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
   onResizableFlexDividerDrag: PropTypes.func.isRequired,
 };

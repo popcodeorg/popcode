@@ -503,6 +503,7 @@ body {
   flex-direction: column;
   font-family: 'Inconsolata', monospace;
   font-size: 14px;
+  height: 100%;
 }
 
 .editors__editor-container {
@@ -589,6 +590,7 @@ body {
 .output {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .output__item {
