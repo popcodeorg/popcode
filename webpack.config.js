@@ -251,7 +251,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           ],
         },
         {
-          test: /\.[jt]sx?$/u,
+          test: /\.js$/u,
           include: [path.resolve(__dirname, 'node_modules')],
           use: {loader: 'babel-loader', options: babelLoaderConfig},
         },
