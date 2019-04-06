@@ -71,6 +71,7 @@
         "css": "CSS",
         "javascript": "JS"
       },
+      "console": "Console",
       "output": "Output",
       "instructions": {
         "cancel": "Cancel",
