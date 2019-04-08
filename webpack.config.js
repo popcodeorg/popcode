@@ -252,18 +252,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         },
         {
           test: /\.js$/u,
-          include: [
-            matchModule('ansi-styles'),
-            matchModule('ast-types'),
-            matchModule('chalk'),
-            matchModule('lodash-es'),
-            matchModule('parse5'),
-            matchModule('parse5-sax-parser'),
-            matchModule('postcss-html'),
-            matchModule('recast'),
-            matchModule('redux'),
-            matchModule('stylelint'),
-          ],
+          include: [path.resolve(__dirname, 'node_modules')],
           use: {loader: 'babel-loader', options: babelLoaderConfig},
         },
         {
