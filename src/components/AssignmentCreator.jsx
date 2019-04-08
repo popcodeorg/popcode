@@ -29,8 +29,8 @@ export default function AssignmentCreator({
   }
 
   return (
-    <Suspense fallback="Loading...">
-      <Modal>
+    <Modal>
+      <Suspense fallback="Loading...">
         <div className="assignment-creator">
           <h1 className="assignment-creator__title">
             {t('assignment-creator.title')}
@@ -47,11 +47,11 @@ export default function AssignmentCreator({
                 onCloseAssignmentCreator={onCloseAssignmentCreator}
                 onDraftAssignment={onDraftAssignment}
               /> :
-              <FontAwesomeIcon icon={faSpinner} key="icon" />
+              <FontAwesomeIcon icon={faSpinner} />
           }
         </div>
-      </Modal>
-    </Suspense>
+      </Suspense>
+    </Modal>
   );
 }
 

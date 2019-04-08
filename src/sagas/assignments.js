@@ -27,7 +27,6 @@ export function* openAssignmentCreator() {
   do {
     const {courses, nextPageToken} = yield call(getCourses, pageToken);
     yield put(coursesLoaded(courses));
-    // console.log(courses);
     pageToken = nextPageToken;
   } while (pageToken);
   yield put(coursesFullyLoaded());

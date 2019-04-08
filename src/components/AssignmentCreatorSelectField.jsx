@@ -19,7 +19,7 @@ export default function AssignmentCreatorSelectField({
           {children}
         </select>
         <span className="assignment-creator__caret">
-          <FontAwesomeIcon icon={faCaretDown} key="icon" />
+          <FontAwesomeIcon icon={faCaretDown} />
         </span>
       </div>
       {
