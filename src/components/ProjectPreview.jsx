@@ -28,7 +28,8 @@ export default function ProjectPreview({
           (function showArchived() {
             if (isCurrentProject) {
               return null;
-            } else if (project.isArchived) {
+            }
+            if (project.isArchived) {
               return (
                 <div
                   className="project-preview__archived"

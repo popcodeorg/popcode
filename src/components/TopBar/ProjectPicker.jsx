@@ -36,14 +36,14 @@ const ProjectPicker = createMenu({
     const visibleProjects = shouldShowArchivedProjects ?
       projects :
       filter(projects, ({isArchived}) => !isArchived);
-    const items = map(visibleProjects, project => (
+    const items = map(visibleProjects, ({projectKey}) => (
       <MenuItem
-        isActive={project.projectKey === currentProjectKey}
-        key={project.projectKey}
-        onClick={partial(onChangeCurrentProject, project.projectKey)}
+        isActive={projectKey === currentProjectKey}
+        key={projectKey}
+        onClick={partial(onChangeCurrentProject, projectKey)}
       >
         <ProjectPreview
-          projectKey={project.projectKey}
+          projectKey={projectKey}
         />
       </MenuItem>
     ));
