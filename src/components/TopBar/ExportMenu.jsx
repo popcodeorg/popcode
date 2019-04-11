@@ -13,6 +13,7 @@ const ExportMenu = createMenu({
 
   renderItems({
     hasExportedRepo,
+    isExperimental,
     isGistExportInProgress,
     isRepoExportInProgress,
     isClassroomExportInProgress,
@@ -68,7 +69,7 @@ const ExportMenu = createMenu({
           );
         }
       }
-      if (isUserAuthenticatedWithGoogle) {
+      if (isUserAuthenticatedWithGoogle && isExperimental) {
         items.push(
           <MenuItem
             key="assignmentCreatorr"
@@ -86,6 +87,7 @@ const ExportMenu = createMenu({
 ExportMenu.propTypes = {
   hasExportedRepo: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
+  isExperimental: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,

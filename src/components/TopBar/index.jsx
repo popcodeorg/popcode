@@ -36,6 +36,7 @@ export default function TopBar({
   hasInstructions,
   hasExportedRepo,
   isEditingInstructions,
+  isExperimental,
   isGapiReady,
   isGistExportInProgress,
   isRepoExportInProgress,
@@ -90,6 +91,7 @@ export default function TopBar({
       <ExportMenu
         hasExportedRepo={hasExportedRepo}
         isClassroomExportInProgress={isClassroomExportInProgress}
+        isExperimental={isExperimental}
         isGistExportInProgress={isGistExportInProgress}
         isOpen={openMenu === 'export'}
         isRepoExportInProgress={isRepoExportInProgress}
@@ -151,6 +153,7 @@ TopBar.propTypes = {
   hasInstructions: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
+  isExperimental: PropTypes.bool.isRequired,
   isGapiReady: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,
