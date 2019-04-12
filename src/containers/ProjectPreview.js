@@ -3,17 +3,15 @@ import {connect} from 'react-redux';
 import ProjectPreview from '../components/ProjectPreview';
 import {changeCurrentProject} from '../actions';
 import {
-  makeGetProjectPreview,
   getCurrentProjectKey,
+  getCurrentProjectPreview,
   getProject,
 } from '../selectors';
 
 function makeMapStateToProps() {
-  const getProjectPreview = makeGetProjectPreview();
-
   return function mapStateToProps(state, {projectKey}) {
     return {
-      preview: getProjectPreview(state, {projectKey}),
+      preview: getCurrentProjectPreview(state),
       isSelected: projectKey === getCurrentProjectKey(state),
       project: getProject(state, {projectKey}),
     };
