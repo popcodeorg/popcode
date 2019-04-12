@@ -9,6 +9,7 @@ import {
 import {
   getCourses,
   isAssignmentCreatorOpen,
+  isAssignmentExportInProgress,
   getCurrentProjectPreview,
   getParsedDate,
   makeIsRemoteCollectionFullyLoaded,
@@ -23,6 +24,7 @@ function mapStateToProps(state) {
   return {
     courses: getCourses(state),
     areCoursesLoaded: areCoursesLoaded(state),
+    isAssignmentExportInProgress: isAssignmentExportInProgress(state),
     isOpen: isAssignmentCreatorOpen(state),
     projectTitle: getCurrentProjectPreview(state),
     parsedDate: getParsedDate(state),

@@ -17,6 +17,7 @@ const AssignmentCreatorForm = lazy(
 export default function AssignmentCreator({
   areCoursesLoaded,
   courses,
+  isAssignmentExportInProgress,
   isOpen,
   parsedDate,
   projectTitle,
@@ -39,15 +40,15 @@ export default function AssignmentCreator({
             {projectTitle}
           </h3>
           {
-            areCoursesLoaded ?
+            !areCoursesLoaded || isAssignmentExportInProgress ?
+              <FontAwesomeIcon icon={faSpinner} /> :
               <AssignmentCreatorForm
                 courses={courses}
                 parsedDate={parsedDate}
                 onAssignAssignment={onAssignAssignment}
                 onCloseAssignmentCreator={onCloseAssignmentCreator}
                 onDraftAssignment={onDraftAssignment}
-              /> :
-              <FontAwesomeIcon icon={faSpinner} />
+              />
           }
         </div>
       </Suspense>
@@ -58,6 +59,7 @@ export default function AssignmentCreator({
 AssignmentCreator.propTypes = {
   areCoursesLoaded: PropTypes.bool.isRequired,
   courses: ImmutablePropTypes.iterable.isRequired,
+  isAssignmentExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   parsedDate: PropTypes.instanceOf(Date),
   projectTitle: PropTypes.string,

@@ -4,4 +4,5 @@ import RemoteColection from './RemoteCollection';
 
 export default Record({
   courses: new RemoteColection(),
+  exportingAssignment: false,
 }, 'GoogleClassroom');
