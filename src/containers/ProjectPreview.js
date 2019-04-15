@@ -4,14 +4,16 @@ import ProjectPreview from '../components/ProjectPreview';
 import {changeCurrentProject} from '../actions';
 import {
   getCurrentProjectKey,
-  getCurrentProjectPreview,
+  makeGetProjectPreview,
   getProject,
 } from '../selectors';
 
 function makeMapStateToProps() {
+  const getProjectPreview = makeGetProjectPreview();
+
   return function mapStateToProps(state, {projectKey}) {
     return {
-      preview: getCurrentProjectPreview(state),
+      preview: getProjectPreview(state, {projectKey}),
       isSelected: projectKey === getCurrentProjectKey(state),
       project: getProject(state, {projectKey}),
     };
