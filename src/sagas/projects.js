@@ -159,8 +159,7 @@ export function* archiveProject({payload: {projectKey}}) {
 }
 
 export function* unArchiveProject({payload: {projectKey}}) {
-  const state = yield select();
-  yield call(saveProjectWithKey, state, projectKey);
+  yield* saveProjectWithKey(projectKey);
 }
 
 export default function* projects() {

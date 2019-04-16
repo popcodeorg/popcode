@@ -84,15 +84,18 @@ test('updateProjectInstructions', reducerTest(
 ));
 
 test('changeCurrentProject', (t) => {
+  t.test('unArchiveProject', reducerTest(
+    reducer,
+    initProjects({1: false}).setIn(['1', 'isArchived'], true),
+    partial(changeCurrentProject, '1'),
+    initProjects({1: false}).setIn(['1', 'isArchived'], false),
+  ));
+
   t.test('from modified to pristine', reducerTest(
     reducer,
     initProjects({1: true, 2: false}),
     partial(changeCurrentProject, '2'),
-    initProjects({1: true, 2: false}).
-      update(
-        '2',
-        editedProject => editedProject.set('isArchived', false),
-      ),
+    initProjects({1: true, 2: false}),
     'keeps previous project in store',
   ));
 
@@ -108,11 +111,7 @@ test('changeCurrentProject', (t) => {
     reducer,
     initProjects({1: true, 2: true}),
     partial(changeCurrentProject, '2'),
-    initProjects({1: true, 2: true}).
-      update(
-        '2',
-        editedProject => editedProject.set('isArchived', false),
-      ),
+    initProjects({1: true, 2: true}),
     'keeps previous project in store',
   ));
 });

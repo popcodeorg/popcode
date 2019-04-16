@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import isEmpty from 'lodash-es/isEmpty';
+import some from 'lodash-es/some';
 import filter from 'lodash-es/filter';
 import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';
@@ -42,13 +43,11 @@ const ProjectPicker = createMenu({
         key={projectKey}
         onClick={partial(onChangeCurrentProject, projectKey)}
       >
-        <ProjectPreview
-          projectKey={projectKey}
-        />
+        <ProjectPreview projectKey={projectKey} />
       </MenuItem>
     ));
 
-    if (!isEmpty(filter(projects, 'isArchived'))) {
+    if (!some(projects, 'isArchived')) {
       items.push(
         <div
           className={classnames(
