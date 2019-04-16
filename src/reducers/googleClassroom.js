@@ -35,19 +35,6 @@ export default function googleClassroom(stateIn, action) {
         new RemoteCollection(),
       );
 
-    case 'CREATE_ASSIGNMENT':
-      return state.setIn(
-        ['exportingAssignment'],
-        true,
-      );
-
-    case 'ASSIGNMENT_CREATED':
-    case 'ASSIGNMENT_NOT_CREATED':
-      return state.setIn(
-        ['exportingAssignment'],
-        false,
-      );
-
     default:
       return state;
   }

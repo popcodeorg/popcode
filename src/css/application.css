@@ -930,6 +930,11 @@ body {
   margin: 1em;
 }
 
+.assignment-creator__button_disabled {
+  background-color: var(--color-gray);
+  color: var(--color-chrome);
+}
+
 .assignment-creator__button_confirm {
   background-color: var(--color-dark-green);
   color: var(--color-low-contrast-gray);

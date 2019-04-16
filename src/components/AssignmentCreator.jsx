@@ -40,15 +40,16 @@ export default function AssignmentCreator({
             {projectTitle}
           </h3>
           {
-            !areCoursesLoaded || isAssignmentExportInProgress ?
-              <FontAwesomeIcon icon={faSpinner} /> :
+            areCoursesLoaded ?
               <AssignmentCreatorForm
                 courses={courses}
+                isAssignmentExportInProgress={isAssignmentExportInProgress}
                 parsedDate={parsedDate}
                 onAssignAssignment={onAssignAssignment}
                 onCloseAssignmentCreator={onCloseAssignmentCreator}
                 onDraftAssignment={onDraftAssignment}
-              />
+              /> :
+              <FontAwesomeIcon icon={faSpinner} />
           }
         </div>
       </Suspense>
