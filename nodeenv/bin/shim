@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-export NODE_PATH=/Users/peter/Desktop/code/popcode/nodeenv/lib/node_modules
-export NPM_CONFIG_PREFIX=/Users/peter/Desktop/code/popcode/nodeenv
-export npm_config_prefix=/Users/peter/Desktop/code/popcode/nodeenv
-exec /Users/peter/Desktop/code/popcode/nodeenv/bin/node "$@"
