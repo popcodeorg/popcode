@@ -47,7 +47,7 @@ const ProjectPicker = createMenu({
       </MenuItem>
     ));
 
-    if (!some(projects, 'isArchived')) {
+    if (some(projects, 'isArchived')) {
       items.push(
         <div
           className={classnames(

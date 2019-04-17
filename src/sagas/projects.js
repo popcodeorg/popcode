@@ -12,6 +12,8 @@ import isNull from 'lodash-es/isNull';
 import isString from 'lodash-es/isString';
 import get from 'lodash-es/get';
 import reduce from 'lodash-es/reduce';
+import partialRight from 'lodash-es/partialRight';
+
 import {
   gistImported,
   gistImportError,
@@ -145,9 +147,8 @@ export function* saveCurrentProject() {
 }
 
 function* saveProjectWithKey(projectKey) {
-  const state = yield select();
   const userId = yield select(getCurrentUserId);
-  const project = yield call(getProject, state, {projectKey});
+  const project = yield select(partialRight(getProject, {projectKey}));
   if (userId && !isPristineProject(project)) {
     yield call(saveProject, userId, project);
     yield put(projectSuccessfullySaved());
