@@ -25,6 +25,7 @@ import getParsedDate from './getParsedDate';
 import getProject from './getProject';
 import getRequestedFocusedLine from './getRequestedFocusedLine';
 import isAssignmentCreatorOpen from './isAssignmentCreatorOpen';
+import isAssignmentExportInProgress from './isAssignmentExportInProgress';
 import isClassroomExportInProgress from './isClassroomExportInProgress';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid
@@ -75,6 +76,7 @@ export {
   getProject,
   getRequestedFocusedLine,
   isAssignmentCreatorOpen,
+  isAssignmentExportInProgress,
   isClassroomExportInProgress,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,

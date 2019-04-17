@@ -33,6 +33,7 @@ function formatDate(value) {
 export default function AssignmentCreatorForm({
   courses,
   handleSubmit,
+  isAssignmentExportInProgress,
   parsedDate,
   onAssignAssignment,
   onDraftAssignment,
@@ -69,36 +70,53 @@ export default function AssignmentCreatorForm({
           valueLabel={parsedDate}
         />
       </div>
-      <button
-        className={classnames(
-          'assignment-creator__button',
-          'assignment-creator__button_reject',
-        )}
-        type="button"
-        onClick={onCloseAssignmentCreator}
-      >
-        {t('assignment-creator.cancel-button')}
-      </button>
-      <button
-        className={classnames(
-          'assignment-creator__button',
-          'assignment-creator__button_confirm',
-        )}
-        type="button"
-        onClick={handleSubmit(onDraftAssignment)}
-      >
-        {t('assignment-creator.draft-button')}
-      </button>
-      <button
-        className={classnames(
-          'assignment-creator__button',
-          'assignment-creator__button_confirm',
-        )}
-        type="button"
-        onClick={handleSubmit(onAssignAssignment)}
-      >
-        {t('assignment-creator.assign-button')}
-      </button>
+      <div>
+        {
+          isAssignmentExportInProgress ?
+            <button
+              disabled
+              className={classnames(
+                'assignment-creator__button',
+                'assignment-creator__button_disabled',
+              )}
+              type="button"
+            >
+              {t('assignment-creator.creating')}
+            </button> :
+            <>
+              <button
+                className={classnames(
+                  'assignment-creator__button',
+                  'assignment-creator__button_reject',
+                )}
+                type="button"
+                onClick={onCloseAssignmentCreator}
+              >
+                {t('assignment-creator.cancel-button')}
+              </button>
+              <button
+                className={classnames(
+                  'assignment-creator__button',
+                  'assignment-creator__button_confirm',
+                )}
+                type="button"
+                onClick={handleSubmit(onDraftAssignment)}
+              >
+                {t('assignment-creator.draft-button')}
+              </button>
+              <button
+                className={classnames(
+                  'assignment-creator__button',
+                  'assignment-creator__button_confirm',
+                )}
+                type="button"
+                onClick={handleSubmit(onAssignAssignment)}
+              >
+                {t('assignment-creator.assign-button')}
+              </button>
+            </>
+        }
+      </div>
     </form>
   );
 }
@@ -106,6 +124,7 @@ export default function AssignmentCreatorForm({
 AssignmentCreatorForm.propTypes = {
   courses: ImmutablePropTypes.iterable.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  isAssignmentExportInProgress: PropTypes.bool.isRequired,
   parsedDate: PropTypes.instanceOf(Date),
   onAssignAssignment: PropTypes.func.isRequired,
   onCloseAssignmentCreator: PropTypes.func.isRequired,

@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 const defaultState = new Immutable.Map({
   firebase: new Immutable.Map({exportingSnapshot: false}),
   projectExports: new Immutable.Map(),
+  exportingAssignment: false,
   gapi: new Immutable.Map({ready: false}),
 });
 
@@ -42,6 +43,19 @@ export default function clients(stateIn, action) {
 
     case 'GAPI_CLIENT_READY':
       return state.setIn(['gapi', 'ready'], true);
+
+    case 'CREATE_ASSIGNMENT':
+      return state.setIn(
+        ['exportingAssignment'],
+        true,
+      );
+
+    case 'ASSIGNMENT_CREATED':
+    case 'ASSIGNMENT_NOT_CREATED':
+      return state.setIn(
+        ['exportingAssignment'],
+        false,
+      );
   }
 
   return state;
