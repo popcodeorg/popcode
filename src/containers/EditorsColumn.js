@@ -46,7 +46,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(beautifyProjectSource());
     },
 
-    onSavePressed() {
+    onSave() {
       dispatch(saveProject());
     },
   };

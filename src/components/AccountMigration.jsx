@@ -31,8 +31,13 @@ export default function AccountMigration({
   return (
     <Modal>
       <div className="account-migration">
+<<<<<<< HEAD
         <h1 className="account-migration__header">
           {i18next.t(
+=======
+        <h1 className="modal__header">
+          {t(
+>>>>>>> c27b9a50... add hot keys
             `account-migration.header.${migration.state.key
               .toLowerCase()
               .replace(/_/gu, '-')}`,

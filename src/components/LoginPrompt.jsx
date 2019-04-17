@@ -13,22 +13,16 @@ export default function LoginPrompt({isLoginPromptOpen, onLogin, onDismiss}) {
   return (
     <Modal>
       <div className="login-prompt">
-        <h1 className="login-prompt__header">{t('login-prompt.header')}</h1>
-        <div className="login-prompt__buttons">
+        <h1 className="modal__header">{t('login-prompt.header')}</h1>
+        <div className="modal__buttons">
           <button
-            className={classnames(
-              'login-prompt__button',
-              'login-prompt__button_confirm',
-            )}
+            className={classnames('modal__button', 'modal__button_confirm')}
             onClick={onLogin}
           >
             {t('login-prompt.login')}
           </button>
           <button
-            className={classnames(
-              'login-prompt__button',
-              'login-prompt__button_cancel',
-            )}
+            className={classnames('modal__button', 'modal__button_cancel')}
             onClick={onDismiss}
           >
             {t('login-prompt.dismiss')}

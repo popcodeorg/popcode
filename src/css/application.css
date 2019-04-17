@@ -823,10 +823,6 @@ body {
 
 /** @define account-migration */
 
-.account-migration__header {
-  text-align: center;
-}
-
 .account-migration__accounts {
   align-items: center;
   display: flex;
@@ -863,42 +859,18 @@ body {
   text-align: center;
 }
 
-.account-migration__buttons {
-  display: flex;
-  justify-content: space-around;
-}
+/** @define account-migration */
 
-.account-migration__button {
-  background: var(--color-chrome);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 0.5em;
-  padding: 1em;
-  width: 20em;
-}
-
-.account-migration__button_confirm {
-  background-color: var(--color-low-contrast-green);
-  font-weight: bold;
-}
-
-.account-migration__button_cancel {
-  background-color: var(--color-low-contrast-red);
-}
-
-/** @define login-prompt */
-
-.login-prompt__header {
+.modal__header {
   text-align: center;
 }
 
-.login-prompt__buttons {
+.modal__buttons {
   display: flex;
   justify-content: space-around;
 }
 
-.login-prompt__button {
+.modal__button {
   background: var(--color-chrome);
   border: none;
   border-radius: 5px;
@@ -908,12 +880,12 @@ body {
   width: 20em;
 }
 
-.login-prompt__button_confirm {
+.modal__button_confirm {
   background-color: var(--color-low-contrast-green);
   font-weight: bold;
 }
 
-.login-prompt__button_cancel {
+.modal__button_cancel {
   background-color: var(--color-low-contrast-red);
 }
 

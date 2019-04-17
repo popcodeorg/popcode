@@ -13,6 +13,7 @@ import partial from 'lodash-es/partial';
 import some from 'lodash-es/some';
 import i18next from 'i18next';
 import classnames from 'classnames';
+import {HotKeys} from 'react-hotkeys';
 
 import prefix from '../services/inlineStylePrefixer';
 import {getQueryParameters, setQueryParameters} from '../util/queryParams';
@@ -21,6 +22,7 @@ import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {isPristineProject} from '../util/projectUtils';
+import {keyMap} from '../util/keyMap';
 
 import AccountMigration from '../containers/AccountMigration';
 import AssignmentCreator from '../containers/AssignmentCreator';
@@ -297,21 +299,27 @@ export default class Workspace extends React.Component {
   }
 
   render() {
+    const {onSave} = this.props;
+    const handlers = {
+      SAVE: onSave,
+    };
     return (
-      <div className="layout">
-        <AssignmentCreator />
-        <TopBar />
-        <NotificationList />
-        <div className="layout__columns">
-          <Instructions />
-          {this._renderInstructionsBar()}
-          <div className="workspace layout__main">
-            {this._renderEnvironment()}
+      <HotKeys handlers={handlers} keyMap={keyMap}>
+        <div className="layout">
+          <AssignmentCreator />
+          <TopBar />
+          <NotificationList />
+          <div className="layout__columns">
+            <Instructions />
+            {this._renderInstructionsBar()}
+            <div className="workspace layout__main">
+              {this._renderEnvironment()}
+            </div>
           </div>
+          <AccountMigration />
+          <LoginPrompt />
         </div>
-        <AccountMigration />
-        <LoginPrompt />
-      </div>
+      </HotKeys>
     );
   }
 }
@@ -332,6 +340,7 @@ Workspace.propTypes = {
   onClickInstructionsEditButton: PropTypes.func.isRequired,
   onComponentToggle: PropTypes.func.isRequired,
   onResizableFlexDividerDrag: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
   onStartDragColumnDivider: PropTypes.func.isRequired,
   onStopDragColumnDivider: PropTypes.func.isRequired,
 };

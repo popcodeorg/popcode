@@ -13,21 +13,15 @@ export default function ProposedAccountMigration({onDismiss, onMigrate}) {
           <p key={paragraph}>{paragraph}</p>
         ),
       )}
-      <div className="account-migration__buttons">
+      <div className="modal__buttons">
         <button
-          className={classnames(
-            'account-migration__button',
-            'account-migration__button_confirm',
-          )}
+          className={classnames('modal__button', 'modal__button_confirm')}
           onClick={onMigrate}
         >
           {i18next.t('account-migration.buttons.migrate')}
         </button>
         <button
-          className={classnames(
-            'account-migration__button',
-            'account-migration__button_cancel',
-          )}
+          className={classnames('modal__button', 'modal__button_cancel')}
           onClick={onDismiss}
         >
           {i18next.t('account-migration.buttons.cancel')}

@@ -127,7 +127,7 @@ class Editor extends React.Component {
         name: 'save',
         bindKey: {win: 'Ctrl-s', mac: 'Command-s'},
         exec: () => {
-          this.props.onSavePressed();
+          this.props.onSave();
         },
       });
     } else {
@@ -166,7 +166,7 @@ Editor.propTypes = {
   onAutoFormat: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
-  onSavePressed: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
 Editor.defaultProps = {

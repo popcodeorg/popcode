@@ -20,6 +20,7 @@ import {
   startDragColumnDivider,
   stopDragColumnDivider,
   startEditingInstructions,
+  saveProject,
 } from '../actions';
 import resizableFlex from '../higherOrderComponents/resizableFlex';
 import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
@@ -70,6 +71,10 @@ function mapDispatchToProps(dispatch) {
 
     onClickInstructionsEditButton(projectKey) {
       dispatch(startEditingInstructions(projectKey));
+    },
+
+    onSave() {
+      dispatch(saveProject());
     },
   };
 }
