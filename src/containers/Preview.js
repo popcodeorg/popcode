@@ -10,6 +10,7 @@ import {
   consoleValueProduced,
   popOutProject,
   refreshPreview,
+  saveProject,
   toggleComponent,
 } from '../actions';
 import {
@@ -82,6 +83,10 @@ function mapDispatchToProps(dispatch) {
 
     onToggleVisible(projectKey) {
       dispatch(toggleComponent(projectKey, 'preview'));
+    },
+
+    onSave() {
+      dispatch(saveProject());
     },
   };
 }

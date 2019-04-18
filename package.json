@@ -316,6 +316,7 @@
     "lodash-es": "^4.17.11",
     "loop-breaker": "^0.1.1",
     "moment": "^2.22.2",
+    "mousetrap": "^1.6.3",
     "object-inspect": "^1.5.0",
     "offline-plugin": "^5.0.3",
     "p5": "^0.8.0",

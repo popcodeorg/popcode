@@ -174,6 +174,10 @@ class PreviewFrame extends React.Component {
     this.props.onConsoleLog(printedValue, compiledProjectKey);
   }
 
+  _handleSave() {
+    this.props.onSave();
+  }
+
   _attachToFrame(frame) {
     if (!frame) {
       if (this._channel) {
@@ -201,6 +205,11 @@ class PreviewFrame extends React.Component {
         this._handleConsoleLog(params);
       }
     });
+    this._channel.bind('save', () => {
+      if (this.props.isActive) {
+        this._handleSave();
+      }
+    });
   }
 }
 
@@ -212,6 +221,7 @@ PreviewFrame.propTypes = {
   onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
 export default PreviewFrame;

@@ -44,6 +44,7 @@ export default class Workspace extends React.Component {
       '_handleUnload',
       '_handleClickInstructionsBar',
       '_handleClickInstructionsEditButton',
+      '_handleSave',
     );
     this.columnRefs = [null, null];
   }
@@ -298,10 +299,14 @@ export default class Workspace extends React.Component {
     );
   }
 
+  _handleSave() {
+    this.props.onSave();
+    return false;
+  }
+
   render() {
-    const {onSave} = this.props;
     const handlers = {
-      SAVE: onSave,
+      SAVE: this._handleSave,
     };
     return (
       <HotKeys handlers={handlers} keyMap={keyMap}>

@@ -1,3 +1,3 @@
 export const keyMap = {
-  SAVE: 'command+i',
+  SAVE: 'mod+s',
 };
