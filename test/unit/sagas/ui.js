@@ -6,12 +6,7 @@ import {
   popOutProject as popOutProjectSaga,
 } from '../../../src/sagas/ui';
 import {getCurrentProject} from '../../../src/selectors';
-import {
-  userDoneTyping,
-  popOutProject,
-  showSaveIndicator,
-  hideSaveIndicator,
-} from '../../../src/actions/ui';
+import {userDoneTyping, popOutProject} from '../../../src/actions/ui';
 import {
   projectExported,
   projectExportDisplayed,

@@ -39,8 +39,8 @@ import {
 import {
   getCurrentProject,
   getCurrentUserId,
-  isUserAuthenticated,
   getProject,
+  isUserAuthenticated,
 } from '../selectors';
 import beautifySource from '../util/beautifySource';
 
