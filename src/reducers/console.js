@@ -1,6 +1,20 @@
+import constant from 'lodash-es/constant';
 import inRange from 'lodash-es/inRange';
+import {handleActions} from 'redux-actions';
+
 
 import {ConsoleState, ConsoleEntry, ConsoleError} from '../records';
+
+import {
+  consoleValueProduced,
+  consoleErrorProduced,
+  evaluateConsoleEntry,
+  clearConsoleEntries,
+  previousConsoleHistory,
+  nextConsoleHistory,
+  consoleInputChanged,
+  consoleLogBatchProduced,
+} from '../actions/console';
 
 const initialState = new ConsoleState();
 
@@ -32,70 +46,61 @@ function setNextConsoleEntry(state, historyIndex) {
   return state;
 }
 
-export default function console(stateIn, {type, payload, meta}) {
-  let state = stateIn;
-  if (state === undefined) {
-    state = initialState;
-  }
+export default handleActions({
+  [consoleValueProduced]: (
+    state,
+    {payload: {compiledProjectKey, key, value}},
+  ) => state.updateIn(
+    ['history', key],
+    input => input.set('value', value).
+      set('evaluatedByCompiledProjectKey', compiledProjectKey),
+  ),
 
-  switch (type) {
-    case 'CONSOLE_VALUE_PRODUCED':
-      return state.updateIn(
-        ['history', payload.key],
-        input => input.set(
-          'value',
-          payload.value,
-        ).set(
-          'evaluatedByCompiledProjectKey',
-          payload.compiledProjectKey,
-        ),
-      );
-    case 'CONSOLE_ERROR_PRODUCED':
-      return state.updateIn(
-        ['history', payload.key],
-        input => input.set(
-          'error',
-          new ConsoleError({name: payload.name, message: payload.message}),
-        ).set(
-          'evaluatedByCompiledProjectKey',
-          payload.compiledProjectKey,
-        ),
-      );
-    case 'EVALUATE_CONSOLE_ENTRY':
-      return payload.trim(' ') === '' ? state : state.setIn(
-        ['history', meta.key],
-        new ConsoleEntry({expression: payload}),
-      ).
+  [consoleErrorProduced]: (
+    state,
+    {payload: {compiledProjectKey, key, message, name}},
+  ) => state.updateIn(
+    ['history', key],
+    input => input.set('error', new ConsoleError({name, message})).
+      set('evaluatedByCompiledProjectKey', compiledProjectKey),
+  ),
+
+  [evaluateConsoleEntry]: (state, {payload: expression, meta: {key}}) =>
+    expression.trim(' ') === '' ?
+      state :
+      state.setIn(['history', key], new ConsoleEntry({expression})).
         delete('currentInputValue').
         delete('nextConsoleEntry').
-        delete('historyEntryIndex');
-    case 'CLEAR_CONSOLE_ENTRIES':
-      return initialState;
-    case 'CONSOLE_INPUT_CHANGED':
-      return state.set('currentInputValue', payload.value);
-    case 'CONSOLE_LOG_BATCH_PRODUCED':
-      return state.update(
-        'history',
-        history => history.withMutations((map) => {
-          payload.entries.forEach(({value, compiledProjectKey, key}) => {
-            map.set(key, new ConsoleEntry({
-              value,
-              evaluatedByCompiledProjectKey: compiledProjectKey,
-            }));
-          });
-        }),
-      );
-    case 'PREVIOUS_CONSOLE_HISTORY': {
-      const historyIndex = state.historyEntryIndex + 1;
+        delete('historyEntryIndex'),
 
-      return updateConsoleForHistoryIndex(
-        setNextConsoleEntry(state, historyIndex),
-        historyIndex,
-      );
-    }
-    case 'NEXT_CONSOLE_HISTORY':
-      return updateConsoleForHistoryIndex(state, state.historyEntryIndex - 1);
-    default:
-      return state;
-  }
-}
+  [clearConsoleEntries]: constant(initialState),
+
+  [consoleInputChanged]: (state, {payload: value}) =>
+    state.set('currentInputValue', value),
+
+  [consoleLogBatchProduced]: (state, {payload: {entries}}) =>
+    state.update(
+      'history',
+      history => history.withMutations((map) => {
+        entries.forEach(({value, compiledProjectKey, key}) => {
+          map.set(key, new ConsoleEntry({
+            value,
+            evaluatedByCompiledProjectKey: compiledProjectKey,
+          }));
+        });
+      }),
+    ),
+
+  [previousConsoleHistory]: (state) => {
+    const historyIndex = state.historyEntryIndex + 1;
+
+    return updateConsoleForHistoryIndex(
+      setNextConsoleEntry(state, historyIndex),
+      historyIndex,
+    );
+  },
+
+  [nextConsoleHistory]: state =>
+    updateConsoleForHistoryIndex(state, state.historyEntryIndex - 1),
+}, initialState);
+
