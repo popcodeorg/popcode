@@ -1,3 +1,5 @@
+import forEach from 'lodash-es/forEach';
+import map from 'lodash-es/map';
 import reduce from 'lodash-es/reduce';
 
 import reducer from '../console';
@@ -18,7 +20,7 @@ test('evaluateConsoleEntry adds entry to history', () => {
     evaluateConsoleEntry(expression, key),
   );
   expect(state.history.size).toBe(1);
-  expect(state.history.get(key).expression).toBe(expression);
+  expect(state.history.get(key)).toMatchObject({expression});
 });
 
 test('consoleValueProduced adds value to existing entry', () => {
@@ -42,6 +44,31 @@ test('consoleErrorProduced adds error to existing entry', () => {
   );
 
   expect(state.history.get(key).error).toMatchObject({name, message});
+});
+
+test('consoleLogBatchProduced adds entries to history', () => {
+  const entries = [
+    {
+      value: 'Second console message',
+      compiledProjectKey: 987654321,
+      key: '123',
+    },
+    {
+      value: 'A console message',
+      compiledProjectKey: 123456789,
+      key: '456',
+    },
+  ];
+  const {history} = applyActions(consoleLogBatchProduced(entries));
+
+  const keysInCorrectOrder = map(entries, 'key');
+  expect(Array.from(history.keySeq())).toEqual(keysInCorrectOrder);
+  forEach(entries, ({key, value, compiledProjectKey}) => {
+    expect(history.get(key)).toMatchObject({
+      value,
+      evaluatedByCompiledProjectKey: compiledProjectKey,
+    });
+  });
 });
 
 function applyActions(...actions) {
