@@ -16,32 +16,6 @@ import reducer from '../../../src/reducers/console';
 
 const initialState = new ConsoleState();
 
-test('evaluateConsoleEntry', reducerTest(
-  reducer,
-  initialState,
-  partial(evaluateConsoleEntry, '1+1', '123'),
-  initialState.set(
-    'history', new OrderedMap({123: new ConsoleEntry({expression: '1+1'})}),
-  ),
-));
-
-test('consoleValueProduced', reducerTest(
-  reducer,
-  initialState.set(
-    'history', new OrderedMap({123: new ConsoleEntry({expression: '1+1'})}),
-  ),
-  partial(consoleValueProduced, '123', 2, 123456789),
-  initialState.set(
-    'history', new OrderedMap({
-      123: new ConsoleEntry({
-        expression: '1+1',
-        value: 2,
-        evaluatedByCompiledProjectKey: 123456789,
-      }),
-    }),
-  ),
-));
-
 test('consoleErrorProduced', reducerTest(
   reducer,
   initialState.set(
