@@ -1,5 +1,6 @@
 import constant from 'lodash-es/constant';
 import inRange from 'lodash-es/inRange';
+import isNil from 'lodash-es/isNil';
 import {handleActions} from 'redux-actions';
 
 
@@ -31,19 +32,19 @@ function updateConsoleForHistoryIndex(state, index) {
 
   const expression = expressionHistory.get(index);
 
-  return state.
+  const nextState = state.
     set('historyEntryIndex', index).
     set('currentInputValue', expression);
-}
 
-function setNextConsoleEntry(state, historyIndex) {
-  const firstUp = historyIndex === 1;
-
-  if (firstUp && !state.history.isEmpty()) {
-    return state.set('nextConsoleEntry', state.currentInputValue);
+  if (index === 0) {
+    return nextState.delete('nextConsoleEntry');
   }
 
-  return state;
+  if (isNil(state.nextConsoleEntry) && !state.history.isEmpty()) {
+    return nextState.set('nextConsoleEntry', state.currentInputValue);
+  }
+
+  return nextState;
 }
 
 export default handleActions({
@@ -66,7 +67,7 @@ export default handleActions({
   ),
 
   [evaluateConsoleEntry]: (state, {payload: expression, meta: {key}}) =>
-    expression.trim(' ') === '' ?
+    expression.trim() === '' ?
       state :
       state.setIn(['history', key], new ConsoleEntry({expression})).
         delete('currentInputValue').
@@ -75,7 +76,7 @@ export default handleActions({
 
   [clearConsoleEntries]: constant(initialState),
 
-  [consoleInputChanged]: (state, {payload: value}) =>
+  [consoleInputChanged]: (state, {payload: {value}}) =>
     state.set('currentInputValue', value),
 
   [consoleLogBatchProduced]: (state, {payload: {entries}}) =>
@@ -94,13 +95,12 @@ export default handleActions({
   [previousConsoleHistory]: (state) => {
     const historyIndex = state.historyEntryIndex + 1;
 
-    return updateConsoleForHistoryIndex(
-      setNextConsoleEntry(state, historyIndex),
-      historyIndex,
-    );
+    return updateConsoleForHistoryIndex(state, historyIndex);
   },
 
-  [nextConsoleHistory]: state =>
-    updateConsoleForHistoryIndex(state, state.historyEntryIndex - 1),
+  [nextConsoleHistory]: (state) => {
+    const historyIndex = state.historyEntryIndex - 1;
+    return updateConsoleForHistoryIndex(state, historyIndex);
+  },
 }, initialState);
 

@@ -4,7 +4,6 @@ import test from 'tape-catch';
 import {ConsoleEntry, ConsoleState} from '../../../src/records';
 import {
   nextConsoleHistory,
-  previousConsoleHistory,
 } from '../../../src/actions';
 import reducerTest from '../../helpers/reducerTest';
 import reducer from '../../../src/reducers/console';
@@ -18,17 +17,6 @@ const consoleStateWithHistory = initialState.set(
     456: new ConsoleEntry({expression: '2'}),
   }),
 );
-
-test('previousConsoleHistory', reducerTest(
-  reducer,
-  consoleStateWithHistory.
-    set('currentInputValue', '3'),
-  previousConsoleHistory,
-  consoleStateWithHistory.
-    set('currentInputValue', '2').
-    set('historyEntryIndex', 1).
-    set('nextConsoleEntry', '3'),
-));
 
 test('nextConsoleHistory', reducerTest(
   reducer,
