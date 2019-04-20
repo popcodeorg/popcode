@@ -1,4 +1,5 @@
 import omit from 'lodash-es/omit';
+import partialRight from 'lodash-es/partialRight';
 import test from 'tape-catch';
 import {testSaga} from 'redux-saga-test-plan';
 import {
@@ -90,9 +91,10 @@ test('changeCurrentProject()', (assert) => {
 
   testSaga(changeCurrentProjectSaga).
     next().select(getCurrentProject).
-    next(currentProject).select().
     next(scenario.state).select(getCurrentUserId).
-    next(userId).call(getProject, scenario.state, {projectKey}).
+    next(userId).select(
+      partialRight(getProject, scenario.state, {projectKey}),
+    ).
     next(currentProject).call(
       saveProject,
       userId,
@@ -266,9 +268,10 @@ test('updateProjectSource', (assert) => {
     updateProjectSource(scenario.projectKey, 'css', 'p {}'),
   ).
     next().select(getCurrentProject).
-    next(currentProject).select().
     next(scenario.state).select(getCurrentUserId).
-    next(userId).call(getProject, scenario.state, {projectKey}).
+    next(userId).select(
+      partialRight(getProject, scenario.state, {projectKey}),
+    ).
     next(currentProject).call(
       saveProject,
       userId,
@@ -289,9 +292,10 @@ test('updateProjectInstructions', (assert) => {
     updateProjectInstructions(scenario.projectKey, '# Instructions'),
   ).
     next().select(getCurrentProject).
-    next(currentProject).select().
     next(scenario.state).select(getCurrentUserId).
-    next(userId).call(getProject, scenario.state, {projectKey}).
+    next(userId).select(
+      partialRight(getProject, scenario.state, {projectKey}),
+    ).
     next(currentProject).call(
       saveProject,
       userId,
@@ -312,9 +316,10 @@ test('toggleLibrary', (assert) => {
     toggleLibrary(scenario.projectKey, 'jquery'),
   ).
     next().select(getCurrentProject).
-    next(currentProject).select().
     next(scenario.state).select(getCurrentUserId).
-    next(userId).call(getProject, scenario.state, {projectKey}).
+    next(userId).select(
+      partialRight(getProject, scenario.state, {projectKey}),
+    ).
     next(currentProject).call(
       saveProject,
       userId,
@@ -334,9 +339,10 @@ test('archiveProject', (assert) => {
     archiveProjectSaga,
     archiveProject(scenario.projectKey),
   ).
-    next().select().
     next(scenario.state).select(getCurrentUserId).
-    next(userId).call(getProject, scenario.state, {projectKey}).
+    next(userId).select(
+      partialRight(getProject, scenario.state, {projectKey}),
+    ).
     next(selectedProject).call(saveProject, userId, selectedProject).
     next().put(projectSuccessfullySaved()).
     next().isDone();
