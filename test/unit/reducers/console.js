@@ -2,12 +2,9 @@ import {OrderedMap} from 'immutable';
 import partial from 'lodash-es/partial';
 import test from 'tape-catch';
 
-import {ConsoleEntry, ConsoleError, ConsoleState} from '../../../src/records';
+import {ConsoleEntry, ConsoleState} from '../../../src/records';
 import {
-  consoleErrorProduced,
   consoleLogBatchProduced,
-  consoleValueProduced,
-  evaluateConsoleEntry,
   nextConsoleHistory,
   previousConsoleHistory,
 } from '../../../src/actions';
@@ -15,34 +12,6 @@ import reducerTest from '../../helpers/reducerTest';
 import reducer from '../../../src/reducers/console';
 
 const initialState = new ConsoleState();
-
-test('consoleErrorProduced', reducerTest(
-  reducer,
-  initialState.set(
-    'history',
-    new OrderedMap({123: new ConsoleEntry({expression: 'bogus + 1'})}),
-  ),
-  partial(
-    consoleErrorProduced,
-    '123',
-    'NameError',
-    'bogus is not defined',
-    123456789,
-  ),
-  initialState.set(
-    'history',
-    new OrderedMap({
-      123: new ConsoleEntry({
-        expression: 'bogus + 1',
-        error: new ConsoleError({
-          name: 'NameError',
-          message: 'bogus is not defined',
-        }),
-        evaluatedByCompiledProjectKey: 123456789,
-      }),
-    }),
-  ),
-));
 
 test('consoleLogBatchProduced', reducerTest(
   reducer,

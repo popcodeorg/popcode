@@ -15,29 +15,39 @@ test('evaluateConsoleEntry adds entry to history', () => {
   const expression = '1 + 1';
   const key = '123';
   const state = applyActions(
-    undefined,
     evaluateConsoleEntry(expression, key),
   );
   expect(state.history.size).toBe(1);
-  expect(state.history.get('123').expression).toBe(expression);
+  expect(state.history.get(key).expression).toBe(expression);
 });
 
 test('consoleValueProduced adds value to existing entry', () => {
   const value = 2;
   const key = '123';
   const state = applyActions(
-    undefined,
     evaluateConsoleEntry('1 + 1', key),
     consoleValueProduced(key, value),
   );
 
-  expect(state.history.get('123').value).toBe(value);
+  expect(state.history.get(key).value).toBe(value);
 });
 
-function applyActions(initialState, ...actions) {
+test('consoleErrorProduced adds error to existing entry', () => {
+  const key = '123';
+  const name = 'NameError';
+  const message = 'bogus is not defined';
+  const state = applyActions(
+    evaluateConsoleEntry('1 + bogus', key),
+    consoleErrorProduced(key, name, message, 123456789),
+  );
+
+  expect(state.history.get(key).error).toMatchObject({name, message});
+});
+
+function applyActions(...actions) {
   return reduce(
     actions,
     (state, action) => reducer(state, action),
-    initialState,
+    undefined,
   );
 }
