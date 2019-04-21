@@ -156,16 +156,28 @@ async function addPreviewSupportScript(doc) {
   doc.head.appendChild(scriptTag);
 }
 
-async function addJavascript(
+export async function addJavascript(
   doc,
   {sources: {javascript}},
-  {breakLoops = false},
+  opts,
 ) {
   if (trim(javascript).length === 0) {
     return;
   }
 
+  const {breakLoops} = opts || {};
+
   let source = `\n${sourceDelimiter}\n${javascript}`;
+
+  const {babelWithEnv} = await retryingFailedImports(
+    () => import(
+      /* webpackChunkName: "babel" */
+      '../services/babel-browser.gen' // eslint-disable-line comma-dangle
+    ),
+  );
+
+  source = await babelWithEnv(source);
+
   if (breakLoops) {
     const {'default': loopBreaker} = await retryingFailedImports(
       () => import(

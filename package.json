@@ -180,6 +180,8 @@
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
     "@bugsnag/js": "^6.0.0",
     "@bugsnag/plugin-react": "^6.0.0",
     "@firebase/app": "^0.3.11",
@@ -283,10 +285,8 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.4",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/polyfill": "^7.2.5",
-    "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "@redux-saga/testing-utils": "^1.0.1",
     "almost-equal": "^1.1.0",
@@ -356,6 +356,7 @@
     "tape": "^4.6.3",
     "tape-catch": "^1.0.6",
     "transform-loader": "^0.2.3",
+    "val-loader": "^1.1.1",
     "webpack": "^4.16.5",
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-middleware": "^3.0.0",

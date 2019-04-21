@@ -4,10 +4,11 @@ const path = require('path');
 module.exports = (api) => {
   let targets;
 
-  const isJest = api.caller(({name}) => name === 'babel-jest');
+  const isValLoader = api.caller(caller => !caller);
+  const isJest = api.caller(caller => caller && caller.name === 'babel-jest');
   api.cache.using(() => `${isJest}:${process.env.NODE_ENV}`);
 
-  if (isJest) {
+  if (isValLoader || isJest) {
     targets = {node: 'current'};
   } else if (process.env.DEBUG === 'true') {
     targets = {browsers: 'last 1 Chrome version'};
@@ -17,9 +18,9 @@ module.exports = (api) => {
     );
   }
 
-  const plugins = ['@babel/plugin-syntax-dynamic-import'];
+  const plugins = ['syntax-dynamic-import'];
   if (isJest) {
-    plugins.push('babel-plugin-dynamic-import-node');
+    plugins.push('dynamic-import-node');
   }
 
   return {
