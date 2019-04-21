@@ -14,8 +14,6 @@ const downloadingScript = downloadScript();
 
 const parser = new DOMParser();
 
-export const sourceDelimiter = '/*__POPCODESTART__*/';
-
 async function downloadScript() {
   if (config.nodeEnv === 'test') {
     return '';
@@ -167,7 +165,7 @@ export async function addJavascript(
 
   const {breakLoops} = opts || {};
 
-  let source = `\n${sourceDelimiter}\n${javascript}`;
+  let source = javascript;
 
   const {babelWithEnv} = await retryingFailedImports(
     () => import(

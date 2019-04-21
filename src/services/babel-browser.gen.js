@@ -53,6 +53,8 @@ function babelWithEnv(source) {
   return babel.transformAsync(source, {
     sourceType: 'script',
     plugins: [${plugins}],
+    sourceMaps: 'inline',
+    sourceFileName: 'popcodePreview.js',
   }).then(function (result) {
     return result.code;
   }).catch(function (error) {
