@@ -1,8 +1,9 @@
 import {
-  credential as createCredential,
-  credentialInUseError,
-  firebaseError,
-  githubProfile as createGithubProfile,
+  credentialFactory,
+  credentialInUseErrorFactory,
+  firebaseErrorFactory,
+  githubProfileFactory,
+  userFactory,
 // eslint-disable-next-line import/no-unresolved,import/extensions
 } from '@factories/clients/firebase';
 
@@ -20,10 +21,11 @@ jest.mock('../../util/bugsnag.js');
 
 describe('linkGithubIdentity', () => {
   test('success', async() => {
-    const mockCredential = createCredential.build();
+    const mockCredential = credentialFactory.build();
+    const mockUser = userFactory.build();
 
     linkGithub.mockResolvedValue({
-      user: {},
+      user: mockUser,
       credential: mockCredential,
     });
 
@@ -39,12 +41,12 @@ describe('linkGithubIdentity', () => {
     expect(saveCredentialForCurrentUser).toHaveBeenCalledWith(mockCredential);
     expect(type).toBe('IDENTITY_LINKED');
     expect(providerId).toBe(mockCredential.providerId);
-    expect(user).toEqual({});
+    expect(user).toEqual(mockUser);
   });
 
   test('credential already in use in experimental mode', async() => {
-    const error = credentialInUseError.build();
-    const githubProfile = createGithubProfile.build();
+    const error = credentialInUseErrorFactory.build();
+    const githubProfile = githubProfileFactory.build();
 
     linkGithub.mockRejectedValue(error);
     getProfileForAuthenticatedUser.mockResolvedValue(githubProfile);
@@ -68,7 +70,7 @@ describe('linkGithubIdentity', () => {
   });
 
   test('other error', async() => {
-    const otherError = firebaseError.build();
+    const otherError = firebaseErrorFactory.build();
 
     linkGithub.mockRejectedValue(otherError);
     bugsnagClient.notify.mockResolvedValue();

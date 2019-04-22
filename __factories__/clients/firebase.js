@@ -9,23 +9,47 @@ class FirebaseError extends Error {
   }
 }
 
-export const credential = new Factory().attrs({
+export const credentialFactory = new Factory().attrs({
   providerId: 'github.com',
   accessToken: 'abc123',
 });
 
-export const githubProfile = new Factory().attrs({
+export const githubProfileFactory = new Factory().attrs({
   login: 'popcoder',
 });
 
-export const firebaseError = Factory.define(
+export const firebaseErrorFactory = Factory.define(
   'firebaseError',
   FirebaseError,
 ).attrs({
   name: 'some other error',
 });
 
-export const credentialInUseError = new Factory().extend(firebaseError).attrs({
+export const credentialInUseErrorFactory = new Factory().extend(
+  firebaseErrorFactory,
+).attrs({
   name: 'auth/credential-already-in-use',
-  credential: credential.build(),
+  credential: () => credentialFactory.build(),
+});
+
+export const userProviderDataFactory = new Factory().attrs({
+  displayName: 'popcoder',
+  email: null,
+  phoneNumber: null,
+  photoUrl: null,
+  providerId: 'github.com',
+  uid: '1234567',
+});
+
+export const userFactory = new Factory().extend(
+  userProviderDataFactory,
+).attrs({
+  emailVerified: false,
+  isAnonymous: false,
+  metadata: {
+    creationTime: Date.now(),
+    lastSignInTime: Date.now(),
+  },
+  providerData: () => [userProviderDataFactory.build()],
+  refreshToken: 'token123',
 });
