@@ -7,13 +7,13 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {t} from 'i18next';
 
+import {createSnapshotUrl} from '../../util/exportUrls';
+
 export default function SnapshotNotification({
   metadata,
   onUpdateMetadata,
 }) {
-  const uri = document.createElement('a');
-  uri.setAttribute('href', '/');
-  uri.search = `snapshot=${metadata.get('snapshotKey')}`;
+  const uri = createSnapshotUrl(metadata.get('snapshotKey'));
 
   let checkmark;
   if (metadata.get('isCopied')) {

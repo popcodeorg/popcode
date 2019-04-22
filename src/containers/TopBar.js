@@ -21,9 +21,11 @@ import {
   isTextSizeLarge,
   isUserAnonymous,
   isUserAuthenticatedWithGithub,
+  isUserAuthenticatedWithGoogle,
   isUserAuthenticated,
   isUserTyping,
 } from '../selectors';
+
 import {
   changeCurrentProject,
   closeTopBarMenu,
@@ -32,6 +34,7 @@ import {
   exportProject,
   linkGithubIdentity,
   unlinkGithubIdentity,
+  openAssignmentCreator,
   startEditingInstructions,
   toggleEditorTextSize,
   toggleLibrary,
@@ -59,6 +62,7 @@ function mapStateToProps(state) {
     isUserAnonymous: isUserAnonymous(state),
     isUserAuthenticated: isUserAuthenticated(state),
     isUserAuthenticatedWithGithub: isUserAuthenticatedWithGithub(state),
+    isUserAuthenticatedWithGoogle: isUserAuthenticatedWithGoogle(state),
     isUserTyping: isUserTyping(state),
     openMenu: getOpenTopBarMenu(state),
     projectKeys: getAllProjectKeys(state),
@@ -118,6 +122,10 @@ function mapDispatchToProps(dispatch) {
 
     onLogOut() {
       dispatch(logOut());
+    },
+
+    onOpenAssignmentCreator() {
+      dispatch(openAssignmentCreator());
     },
 
     onStartEditingInstructions(projectKey) {
