@@ -14,6 +14,8 @@ const downloadingScript = downloadScript();
 
 const parser = new DOMParser();
 
+export const sourceDelimiter = '/*__POPCODESTART__*/';
+
 async function downloadScript() {
   if (config.nodeEnv === 'test') {
     return '';
@@ -160,12 +162,25 @@ export async function addJavascript(
   opts,
 ) {
   if (trim(javascript).length === 0) {
-    return;
+    return {};
   }
 
   const {breakLoops} = opts || {};
 
-  let source = javascript;
+  let code = javascript;
+  let sourceMap;
+
+  if (breakLoops) {
+    const {'default': loopBreaker} = await retryingFailedImports(
+      () => import(
+        /* webpackChunkName: "babel" */
+        'loop-breaker' // eslint-disable-line
+      ),
+    );
+    const result = loopBreaker(code, {sourceFileName: 'popcodePreview.js'});
+    ({code} = result);
+    sourceMap = result.map;
+  }
 
   const {babelWithEnv} = await retryingFailedImports(
     () => import(
@@ -174,20 +189,15 @@ export async function addJavascript(
     ),
   );
 
-  source = await babelWithEnv(source);
+  ({code, sourceMap} = await babelWithEnv(code, sourceMap));
 
-  if (breakLoops) {
-    const {'default': loopBreaker} = await retryingFailedImports(
-      () => import(
-        /* webpackChunkName: "mainAsync" */
-        'loop-breaker' // eslint-disable-line comma-dangle
-      ),
-    );
-    source = loopBreaker(source);
-  }
+  code = `\n${sourceDelimiter}\n${code}`;
+
   const scriptTag = doc.createElement('script');
-  scriptTag.innerHTML = source;
+  scriptTag.innerHTML = code;
   doc.body.appendChild(scriptTag);
+
+  return ({code, sourceMap});
 }
 
 export function generateTextPreview(project) {
@@ -210,10 +220,13 @@ export default async function compileProject(
   if (isInlinePreview) {
     await addPreviewSupportScript(doc);
   }
-  await addJavascript(doc, project, {breakLoops: isInlinePreview});
+  const {sourceMap} = await addJavascript(doc, project, {
+    breakLoops: isInlinePreview,
+  });
 
   return {
     title: (doc.title || '').trim(),
     source: `<!DOCTYPE html> ${doc.documentElement.outerHTML}`,
+    sourceMap,
   };
 }

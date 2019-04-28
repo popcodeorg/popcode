@@ -34,12 +34,16 @@ module.exports = () => {
     key => key.indexOf('/') !== 0,
   );
 
-  const plugins = keys.map(key => `require("@babel/plugin-${key}")`).
+  const pluginImports = keys.map((key, index) =>
+    `import plugin${index} from\n'@babel/plugin-${key}';`).join('\n');
+
+  const pluginNames = keys.map((key, index) => `plugin${index}`).
     join(',\n');
 
   return {
     code: `
-var babel = require('@babel/core');
+import { transformAsync } from '@babel/core';
+${pluginImports}
 
 /**
  * Transforms source code using settings from brower.json
@@ -49,20 +53,26 @@ var babel = require('@babel/core');
  * @parameter {string} source
  * @returns Promise<string>
  */
-function babelWithEnv(source) {
-  return babel.transformAsync(source, {
+function babelWithEnv(source, inputSourceMap) {
+  return transformAsync(source, {
     sourceType: 'script',
-    plugins: [${plugins}],
-    sourceMaps: 'inline',
+    plugins: [
+${pluginNames}
+],
+    sourceMaps: 'both',
     sourceFileName: 'popcodePreview.js',
+    inputSourceMap,
   }).then(function (result) {
-    return result.code;
-  }).catch(function (error) {
+    return {
+      code: result.code,
+      sourceMap: result.map
+    };
+  }, function (error) {
     throw new Error(error);
   });
 }
 
-module.exports = { babelWithEnv: babelWithEnv };
+export { babelWithEnv };
     `,
   };
 };

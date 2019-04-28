@@ -85,17 +85,15 @@ class PreviewFrame extends React.Component {
   }
 
   _runtimeErrorLineOffset() {
-    const firstSourceLine = this.props.compiledProject.source.
-      split('\n').indexOf(sourceDelimiter) + 2;
-
-    return firstSourceLine - 1;
+    return this.props.compiledProject.source.
+      split('\n').findIndex(l => l.indexOf(sourceDelimiter) !== -1) + 1;
   }
 
-  _handleErrorMessage(error) {
-    let line = error.line - this._runtimeErrorLineOffset();
+  async _handleErrorMessage(error) {
+    let oneIndexedSourceLine = error.line - this._runtimeErrorLineOffset();
 
     if (error.message === 'Loop Broken!') {
-      this._handleInfiniteLoop(line);
+      this._handleInfiniteLoop(oneIndexedSourceLine);
       return;
     }
 
@@ -105,15 +103,38 @@ class PreviewFrame extends React.Component {
     );
 
     if (bowser.is('Safari')) {
-      line = 1;
+      oneIndexedSourceLine = 1;
+    }
+
+    let oneIndexedOriginalLine = oneIndexedSourceLine;
+    let {column} = error;
+    if (this.props.compiledProject.sourceMap) {
+      const {SourceMapConsumer} = await retryingFailedImports(
+        () => import(
+          /* webpackChunkName: "mainAsync" */
+          'source-map' // eslint-disable-line comma-dangle
+        ),
+      );
+
+      const smc = new SourceMapConsumer(this.props.compiledProject.sourceMap);
+      const result = smc.originalPositionFor({
+        line: oneIndexedSourceLine,
+        column: error.column,
+      });
+
+      if (result.line !== null && result.column !== null) {
+        oneIndexedOriginalLine = result.line;
+        ({column} = result);
+      }
     }
 
     this.props.onRuntimeError({
       reason: normalizedError.type,
       text: normalizedError.message,
       raw: normalizedError.message,
-      row: line - 1,
-      column: error.column,
+      // Convert back to zero indexed
+      row: oneIndexedOriginalLine - 1,
+      column,
       type: 'error',
     });
   }
