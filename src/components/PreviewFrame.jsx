@@ -7,7 +7,7 @@ import constant from 'lodash-es/constant';
 import {t} from 'i18next';
 
 import bowser from '../services/bowser';
-import normalizeError from '../util/normalizeError';
+import { createError } from '../util/errorUtils';
 import retryingFailedImports from '../util/retryingFailedImports';
 import {sourceDelimiter} from '../util/compileProject';
 import {CompiledProject as CompiledProjectRecord} from '../records';
@@ -74,11 +74,18 @@ class PreviewFrame extends React.Component {
         );
       },
       error: (name, message) => {
+        const normalizedError = createError({name, message});
+
         this.props.onConsoleError(
           key,
-          name,
-          message,
           this.props.compiledProject.compiledProjectKey,
+          {
+            name,
+            reason: normalizedError.type,
+            text: normalizedError.message,
+            raw: normalizedError.message,
+            type: 'error',
+          },
         );
       },
     });
@@ -99,10 +106,7 @@ class PreviewFrame extends React.Component {
       return;
     }
 
-    const ErrorConstructor = window[error.name] || Error;
-    const normalizedError = normalizeError(
-      new ErrorConstructor(error.message),
-    );
+    const normalizedError = createError(error);
 
     if (bowser.is('Safari')) {
       line = 1;
