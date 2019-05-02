@@ -1,6 +1,6 @@
 import inRange from 'lodash-es/inRange';
 
-import {ConsoleState, ConsoleEntry, ConsoleError} from '../records';
+import {ConsoleState, ConsoleEntry, Error} from '../records';
 
 const initialState = new ConsoleState();
 
@@ -55,7 +55,7 @@ export default function console(stateIn, {type, payload, meta}) {
         ['history', payload.key],
         input => input.set(
           'error',
-          new ConsoleError({name: payload.name, message: payload.message}),
+          Error.fromJS(payload.error),
         ).set(
           'evaluatedByCompiledProjectKey',
           payload.compiledProjectKey,
