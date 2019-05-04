@@ -1,5 +1,4 @@
 import omit from 'lodash-es/omit';
-import partialRight from 'lodash-es/partialRight';
 import test from 'tape-catch';
 import {testSaga} from 'redux-saga-test-plan';
 import {
@@ -91,9 +90,10 @@ test('changeCurrentProject()', (assert) => {
 
   testSaga(changeCurrentProjectSaga).
     next().select(getCurrentProject).
-    next(scenario.state).select(getCurrentUserId).
-    next(userId).select(
-      partialRight(getProject, scenario.state, {projectKey}),
+    next(currentProject).select().
+    next(scenario.state).call(getCurrentUserId, scenario.state).
+    next(userId).call(
+      getProject, scenario.state, {projectKey},
     ).
     next(currentProject).call(
       saveProject,
@@ -268,9 +268,10 @@ test('updateProjectSource', (assert) => {
     updateProjectSource(scenario.projectKey, 'css', 'p {}'),
   ).
     next().select(getCurrentProject).
-    next(scenario.state).select(getCurrentUserId).
-    next(userId).select(
-      partialRight(getProject, scenario.state, {projectKey}),
+    next(currentProject).select().
+    next(scenario.state).call(getCurrentUserId, scenario.state).
+    next(userId).call(
+      getProject, scenario.state, {projectKey},
     ).
     next(currentProject).call(
       saveProject,
@@ -292,9 +293,10 @@ test('updateProjectInstructions', (assert) => {
     updateProjectInstructions(scenario.projectKey, '# Instructions'),
   ).
     next().select(getCurrentProject).
-    next(scenario.state).select(getCurrentUserId).
-    next(userId).select(
-      partialRight(getProject, scenario.state, {projectKey}),
+    next(currentProject).select().
+    next(scenario.state).call(getCurrentUserId, scenario.state).
+    next(userId).call(
+      getProject, scenario.state, {projectKey},
     ).
     next(currentProject).call(
       saveProject,
@@ -316,9 +318,10 @@ test('toggleLibrary', (assert) => {
     toggleLibrary(scenario.projectKey, 'jquery'),
   ).
     next().select(getCurrentProject).
-    next(scenario.state).select(getCurrentUserId).
-    next(userId).select(
-      partialRight(getProject, scenario.state, {projectKey}),
+    next(currentProject).select().
+    next(scenario.state).call(getCurrentUserId, scenario.state).
+    next(userId).call(
+      getProject, scenario.state, {projectKey},
     ).
     next(currentProject).call(
       saveProject,
@@ -333,17 +336,22 @@ test('toggleLibrary', (assert) => {
 test('archiveProject', (assert) => {
   const scenario = new Scenario();
   const userId = 'abc123';
-  const projectKey = '123456';
-  const selectedProject = project();
+  const currentProject = project();
+  const {projectKey} = currentProject;
   testSaga(
     archiveProjectSaga,
-    archiveProject(scenario.projectKey),
+    archiveProject(projectKey),
   ).
-    next(scenario.state).select(getCurrentUserId).
-    next(userId).select(
-      partialRight(getProject, scenario.state, {projectKey}),
+    next().select().
+    next(scenario.state).call(getCurrentUserId, scenario.state).
+    next(userId).call(
+      getProject, scenario.state, {projectKey},
     ).
-    next(selectedProject).call(saveProject, userId, selectedProject).
+    next(currentProject).call(
+      saveProject,
+      userId,
+      currentProject,
+    ).
     next().put(projectSuccessfullySaved()).
     next().isDone();
   assert.end();
