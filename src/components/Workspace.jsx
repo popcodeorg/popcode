@@ -14,6 +14,7 @@ import {t} from 'i18next';
 import classnames from 'classnames';
 
 import {getQueryParameters, setQueryParameters} from '../util/queryParams';
+import {LANGUAGES} from '../util/editor';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {isPristineProject} from '../util/projectUtils';
@@ -25,6 +26,7 @@ import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
 import EditorsColumn from '../containers/EditorsColumn';
 
+import CollapsedComponent from './CollapsedComponent';
 import Output from './Output';
 import PopThrobber from './PopThrobber';
 
@@ -135,6 +137,57 @@ export default class Workspace extends React.Component {
     );
   }
 
+  _renderHiddenLanguages() {
+    const {
+      currentProject,
+      hiddenLanguages,
+      onComponentToggle,
+    } = this.props;
+    return (
+      <React.Fragment>
+        {hiddenLanguages.map(({language}) =>
+          (
+            <CollapsedComponent
+              component={`editor.${language}`}
+              key={language}
+              projectKey={currentProject.projectKey}
+              text={t(`languages.${language}`)}
+              onComponentUnhide={onComponentToggle}
+            />
+          ))}
+      </React.Fragment>
+    );
+  }
+
+  _renderHiddenLeftColumnComponents() {
+    const {
+      hiddenLanguages,
+    } = this.props;
+
+    if (
+      hiddenLanguages.length === 0 ||
+      hiddenLanguages.length === LANGUAGES.length
+    ) {
+      return null;
+    }
+
+    return this._renderHiddenLanguages();
+  }
+
+  _renderHiddenRightColumnComponents() {
+    return null;
+  }
+
+  _renderFullyMinimizedColumns() {
+    const {
+      hiddenLanguages,
+    } = this.props;
+    if (hiddenLanguages.length === LANGUAGES.length) {
+      return this._renderHiddenLanguages();
+    }
+    return null;
+  }
+
   _renderEnvironment() {
     const {
       currentProject,
@@ -162,7 +215,9 @@ export default class Workspace extends React.Component {
           style={prefixAll(clone({flexGrow: resizableFlexGrow.get(0)}))}
         >
           <div className="environment__column-contents">
-            <EditorsColumn />
+            <EditorsColumn>
+              {this._renderHiddenLeftColumnComponents()}
+            </EditorsColumn>
           </div>
         </div>
         <DraggableCore
@@ -187,6 +242,7 @@ export default class Workspace extends React.Component {
         >
           <div className="environment__column-contents">
             <Output />
+            {this._renderHiddenRightColumnComponents()}
           </div>
         </div>
       </div>
@@ -206,6 +262,7 @@ export default class Workspace extends React.Component {
             {this._renderEnvironment()}
           </div>
         </div>
+        {this._renderFullyMinimizedColumns()}
         <AccountMigration />
       </div>
     );
@@ -214,6 +271,7 @@ export default class Workspace extends React.Component {
 
 Workspace.propTypes = {
   currentProject: PropTypes.object,
+  hiddenLanguages: PropTypes.array.isRequired,
   isAnyTopBarMenuOpen: PropTypes.bool.isRequired,
   isDraggingColumnDivider: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
