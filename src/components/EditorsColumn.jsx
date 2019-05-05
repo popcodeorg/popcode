@@ -1,11 +1,8 @@
-import {faChevronUp} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {DraggableCore} from 'react-draggable';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import prefixAll from 'inline-style-prefixer/static';
-import {t} from 'i18next';
 import classnames from 'classnames';
 import clone from 'lodash-es/clone';
 import isEmpty from 'lodash-es/isEmpty';
@@ -13,9 +10,11 @@ import includes from 'lodash-es/includes';
 import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';
 import partition from 'lodash-es/partition';
+import {t} from 'i18next';
 
 import {EditorLocation} from '../records';
 
+import CollapsedComponent from './CollapsedComponent';
 import EditorContainer from './EditorContainer';
 import Editor from './Editor';
 
@@ -100,21 +99,13 @@ export default function EditorsColumn({
 
   hiddenLanguages.forEach(({language}) => {
     children.push((
-      <div
-        className="editors__collapsed-editor"
+      <CollapsedComponent
+        component={`editor.${language}`}
         key={language}
-        onClick={partial(
-          onComponentUnhide,
-          currentProject.projectKey,
-          `editor.${language}`,
-        )}
-      >
-        <div className="label editors__label editors__label_collapsed">
-          {t(`languages.${language}`)}
-          {' '}
-          <FontAwesomeIcon icon={faChevronUp} />
-        </div>
-      </div>
+        projectKey={currentProject.projectKey}
+        text={t(`languages.${language}`)}
+        onComponentUnhide={onComponentUnhide}
+      />
     ));
   });
 

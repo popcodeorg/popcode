@@ -17,6 +17,7 @@ import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 import {isPristineProject} from '../util/projectUtils';
 
 import AccountMigration from '../containers/AccountMigration';
+import AssignmentCreator from '../containers/AssignmentCreator';
 import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
@@ -177,6 +178,7 @@ export default class Workspace extends React.Component {
   render() {
     return (
       <div className="layout">
+        <AssignmentCreator />
         <TopBar />
         <NotificationList />
         <div className="layout__columns">

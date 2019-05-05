@@ -7,6 +7,7 @@ import watchUi from './ui';
 import watchUser from './user';
 import watchClients from './clients';
 import watchCompiledProjects from './compiledProjects';
+import watchAssignments from './assignments';
 
 export default function* rootSaga() {
   yield all([
@@ -17,5 +18,6 @@ export default function* rootSaga() {
     watchUser(),
     watchClients(),
     watchCompiledProjects(),
+    watchAssignments(),
   ]);
 }

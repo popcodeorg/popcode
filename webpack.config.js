@@ -29,7 +29,6 @@ const babelLoaderConfig = Object.assign(
     }),
   },
 );
-
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
     escapeRegExp(path.join('/node_modules', modulePath)),
@@ -60,6 +59,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       WARN_ON_DROPPED_ERRORS: 'false',
       GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2',
     }),
+
     new CircularDependencyPlugin({
       exclude: /node_modules/u,
       failOnError: true,
@@ -252,18 +252,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         },
         {
           test: /\.js$/u,
-          include: [
-            matchModule('ansi-styles'),
-            matchModule('ast-types'),
-            matchModule('chalk'),
-            matchModule('lodash-es'),
-            matchModule('parse5'),
-            matchModule('parse5-sax-parser'),
-            matchModule('postcss-html'),
-            matchModule('recast'),
-            matchModule('redux'),
-            matchModule('stylelint'),
-          ],
+          include: [path.resolve(__dirname, 'node_modules')],
           use: {loader: 'babel-loader', options: babelLoaderConfig},
         },
         {

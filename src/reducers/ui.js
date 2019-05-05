@@ -221,8 +221,41 @@ export default function ui(stateIn, action) {
     case 'LINK_IDENTITY_FAILED':
       return addNotification(state, 'link-identity-failed', 'error');
 
+    case 'OPEN_ASSIGNMENT_CREATOR':
+      return state.setIn(
+        ['isAssignmentCreatorOpen'],
+        true,
+      );
+
+    case 'CLOSE_ASSIGNMENT_CREATOR':
+      return state.setIn(
+        ['isAssignmentCreatorOpen'],
+        false,
+      );
+
+    case 'ASSIGNMENT_CREATED':
+      return addNotification(
+        state,
+        'project-export-complete',
+        'notice',
+        action.payload.assignment,
+      ).setIn(
+        ['isAssignmentCreatorOpen'],
+        false,
+      );
+
     case 'GAPI_CLIENT_UNAVAILABLE':
       return addNotification(state, 'gapi-client-unavailable', 'error');
+
+    case 'ASSIGNMENT_NOT_CREATED':
+      return addNotification(
+        state,
+        'assignment-not-created',
+        'error',
+      ).setIn(
+        ['isAssignmentCreatorOpen'],
+        false,
+      );
 
     default:
       return state;

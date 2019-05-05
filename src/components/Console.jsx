@@ -2,18 +2,19 @@ import classnames from 'classnames';
 import {
   faBan,
   faChevronDown,
-  faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import partial from 'lodash-es/partial';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import {t} from 'i18next';
 
 import {EditorLocation} from '../records';
 
 import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
+import CollapsedComponent from './CollapsedComponent';
 
 export default function Console({
   currentCompiledProjectKey,
@@ -33,6 +34,18 @@ export default function Console({
   onToggleVisible,
   requestedFocusedLine,
 }) {
+  if (!isOpen) {
+    return (
+      <CollapsedComponent
+        component="console"
+        isRightJustified={false}
+        projectKey={currentProjectKey}
+        text={t('workspace.components.console')}
+        onComponentUnhide={onToggleVisible}
+      />
+    );
+  }
+
   const console = (
     <div
       className="console__scroll-container output__item"
@@ -65,8 +78,6 @@ export default function Console({
     </div>
   );
 
-  const chevron = isOpen ? faChevronDown : faChevronUp;
-
   return (
     <div
       className={classnames(
@@ -79,9 +90,9 @@ export default function Console({
         onClick={partial(onToggleVisible, currentProjectKey)}
       >
         <div>
-          Console
+          {t('workspace.components.console')}
           {' '}
-          <FontAwesomeIcon icon={chevron} />
+          <FontAwesomeIcon icon={faChevronDown} />
         </div>
         <div
           onClick={(e) => {
@@ -92,7 +103,7 @@ export default function Console({
           <FontAwesomeIcon icon={faBan} />
         </div>
       </div>
-      {isOpen ? console : null}
+      {console}
     </div>
   );
 }
