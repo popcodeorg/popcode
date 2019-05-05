@@ -6,6 +6,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import {DraggableCore} from 'react-draggable';
 import bindAll from 'lodash-es/bindAll';
 import clone from 'lodash-es/clone';
+import includes from 'lodash-es/includes';
 import isNull from 'lodash-es/isNull';
 import get from 'lodash-es/get';
 import partial from 'lodash-es/partial';
@@ -175,17 +176,43 @@ export default class Workspace extends React.Component {
   }
 
   _renderHiddenRightColumnComponents() {
-    return null;
+    const {
+      currentProject,
+      onComponentToggle,
+    } = this.props;
+    const rightColumnComponents = ['console'];
+    return rightColumnComponents.
+      filter(component => (
+        includes(currentProject.hiddenUIComponents, component)
+      )).
+      map((component) => {
+        switch (component) {
+          case 'console':
+            return (
+              <CollapsedComponent
+                component="console"
+                isRightJustified={false}
+                key="console"
+                projectKey={currentProject.projectKey}
+                text={t('workspace.components.console')}
+                onComponentUnhide={onComponentToggle}
+              />
+            );
+          default:
+            return null;
+        }
+      });
   }
 
   _renderFullyMinimizedColumns() {
-    const {
-      hiddenLanguages,
-    } = this.props;
-    if (hiddenLanguages.length === LANGUAGES.length) {
+    if (!this._shouldRenderLeftColumn()) {
       return this._renderHiddenLanguages();
     }
     return null;
+  }
+
+  _shouldRenderLeftColumn() {
+    return !(this.props.hiddenLanguages.length === LANGUAGES.length);
   }
 
   _renderEnvironment() {
@@ -206,32 +233,38 @@ export default class Workspace extends React.Component {
 
     const [_handleEditorsRef, _handleOutputRef] = resizableFlexRefs;
     const ignorePointerEvents = isDraggingColumnDivider || isAnyTopBarMenuOpen;
-
     return (
       <div className="environment">
-        <div
-          className="environment__column"
-          ref={_handleEditorsRef}
-          style={prefixAll(clone({flexGrow: resizableFlexGrow.get(0)}))}
-        >
-          <div className="environment__column-contents">
-            <EditorsColumn>
-              {this._renderHiddenLeftColumnComponents()}
-            </EditorsColumn>
-          </div>
-        </div>
-        <DraggableCore
-          onDrag={partial(onResizableFlexDividerDrag, 0)}
-          onStart={onStartDragColumnDivider}
-          onStop={onStopDragColumnDivider}
-        >
-          <div
-            className={classnames(
-              'editors__column-divider',
-              {'editors__column-divider_draggable': isFlexResizingSupported},
-            )}
-          />
-        </DraggableCore>
+        {this._shouldRenderLeftColumn() &&
+          <React.Fragment>
+            <div
+              className="environment__column"
+              ref={_handleEditorsRef}
+              style={prefixAll(clone({flexGrow: resizableFlexGrow.get(0)}))}
+            >
+              <div className="environment__column-contents">
+                <EditorsColumn>
+                  {this._renderHiddenLeftColumnComponents()}
+                </EditorsColumn>
+              </div>
+            </div>
+            <DraggableCore
+              onDrag={partial(onResizableFlexDividerDrag, 0)}
+              onStart={onStartDragColumnDivider}
+              onStop={onStopDragColumnDivider}
+            >
+              <div
+                className={classnames(
+                  'editors__column-divider',
+                  {
+                    'editors__column-divider_draggable':
+                      isFlexResizingSupported,
+                  },
+                )}
+              />
+            </DraggableCore>
+          </React.Fragment>
+        }
         <div
           className="environment__column"
           ref={_handleOutputRef}
@@ -241,8 +274,9 @@ export default class Workspace extends React.Component {
           })}
         >
           <div className="environment__column-contents">
-            <Output />
-            {this._renderHiddenRightColumnComponents()}
+            <Output>
+              {this._renderHiddenRightColumnComponents()}
+            </Output>
           </div>
         </div>
       </div>
