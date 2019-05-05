@@ -82,7 +82,9 @@
         "import/no-extraneous-dependencies": [
           "error",
           {
-            "devDependencies": ["@factories/clients"]
+            "devDependencies": ["__tests__/**"],
+            "optionalDependencies": false,
+            "peerDependencies": false
           }
         ]
       }
