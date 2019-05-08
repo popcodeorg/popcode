@@ -7,6 +7,7 @@ import reducerTest from '../../helpers/reducerTest';
 import reducer from '../../../src/reducers/ui';
 import {EditorLocation, Notification, UiState} from '../../../src/records';
 import {
+  changeCurrentProject,
   gistNotFound,
   gistImportError,
   updateProjectSource,
@@ -25,6 +26,7 @@ import {
   hideSaveIndicator,
   openAssignmentCreator,
   closeAssignmentCreator,
+  toggleArchivedView,
 } from '../../../src/actions/ui';
 import {
   snapshotCreated,
@@ -96,6 +98,15 @@ test('gistImportError', reducerTest(
   initialState,
   partial(gistImportError, gistId),
   withNotification('gist-import-error', 'error', {gistId}),
+));
+
+test('change current project with project picker open', reducerTest(
+  reducer,
+  initialState.set('openTopBarMenu', 'projectPicker').
+    set('archivedViewOpen', true).
+    set('isEditingInstructions', false),
+  changeCurrentProject,
+  initialState,
 ));
 
 test('updateProjectSource', reducerTest(
@@ -406,3 +417,18 @@ test('assignmentCreated', reducerTest(
   withNotification('assignment-not-created', 'error').
     set('isAssignmentCreatorOpen', false),
 ));
+test('toggleArchiveView', (t) => {
+  t.test('open archive view', reducerTest(
+    reducer,
+    initialState,
+    toggleArchivedView,
+    initialState.set('archivedViewOpen', true),
+  ));
+
+  t.test('close archive view', reducerTest(
+    reducer,
+    initialState.set('archivedViewOpen', true),
+    toggleArchivedView,
+    initialState,
+  ));
+});
