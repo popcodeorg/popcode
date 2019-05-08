@@ -82,9 +82,7 @@
         "import/no-extraneous-dependencies": [
           "error",
           {
-            "devDependencies": ["__tests__/**"],
-            "optionalDependencies": false,
-            "peerDependencies": false
+            "devDependencies": false
           }
         ]
       }
