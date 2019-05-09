@@ -1,12 +1,3 @@
-import {
-  credentialFactory,
-  credentialInUseErrorFactory,
-  firebaseErrorFactory,
-  githubProfileFactory,
-  userFactory,
-// eslint-disable-next-line import/no-unresolved,import/extensions
-} from '@factories/clients/firebase';
-
 import linkGithubIdentity from '../linkGithubIdentity';
 import {
   linkGithub,
@@ -14,6 +5,14 @@ import {
 } from '../../clients/firebase';
 import {getProfileForAuthenticatedUser} from '../../clients/github';
 import {bugsnagClient} from '../../util/bugsnag';
+
+import {
+  credentialFactory,
+  credentialInUseErrorFactory,
+  firebaseErrorFactory,
+  githubProfileFactory,
+  userFactory,
+} from '@factories/clients/firebase';
 
 jest.mock('../../clients/firebase.js');
 jest.mock('../../clients/github.js');
