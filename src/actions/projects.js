@@ -77,3 +77,8 @@ export const projectsLoaded = createAction('PROJECTS_LOADED');
 
 export const projectSuccessfullySaved =
   createAction('PROJECT_SUCCESSFULLY_SAVED');
+
+export const archiveProject = createAction(
+  'ARCHIVE_PROJECT',
+  projectKey => ({projectKey}),
+);

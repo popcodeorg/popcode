@@ -12,6 +12,7 @@ import isNull from 'lodash-es/isNull';
 import isString from 'lodash-es/isString';
 import get from 'lodash-es/get';
 import reduce from 'lodash-es/reduce';
+
 import {
   gistImported,
   gistImportError,
@@ -34,8 +35,12 @@ import {
   loadProjectSnapshot,
   saveProject,
 } from '../clients/firebase';
-import {getCurrentProject, getCurrentUserId} from '../selectors';
 import beautifySource from '../util/beautifySource';
+import {
+  getCurrentProject,
+  getProject,
+  getCurrentUserId,
+} from '../selectors';
 
 export function* applicationLoaded(action) {
   if (isString(action.payload.gistId)) {
@@ -134,13 +139,28 @@ export function* projectExported({payload: {exportType}}) {
 }
 
 export function* saveCurrentProject() {
-  const userId = yield select(getCurrentUserId);
   const currentProject = yield select(getCurrentProject);
+  if (currentProject) {
+    yield* saveProjectWithKey(currentProject.projectKey);
+  }
+}
 
-  if (userId && currentProject && !isPristineProject(currentProject)) {
-    yield call(saveProject, userId, currentProject);
+function* saveProjectWithKey(projectKey) {
+  const state = yield select();
+  const userId = yield call(getCurrentUserId, state);
+  const project = yield call(getProject, state, {projectKey});
+  if (userId && !isPristineProject(project)) {
+    yield call(saveProject, userId, project);
     yield put(projectSuccessfullySaved());
   }
+}
+
+export function* archiveProject({payload: {projectKey}}) {
+  yield* saveProjectWithKey(projectKey);
+}
+
+export function* unArchiveProject({payload: {projectKey}}) {
+  yield* saveProjectWithKey(projectKey);
 }
 
 export default function* projects() {
@@ -156,5 +176,6 @@ export default function* projects() {
     takeEvery('USER_AUTHENTICATED', userAuthenticated),
     takeEvery('TOGGLE_LIBRARY', toggleLibrary),
     takeLatest('BEAUTIFY_PROJECT_SOURCE', loadAndBeautifyProjectSource),
+    takeEvery('ARCHIVE_PROJECT', archiveProject),
   ]);
 }

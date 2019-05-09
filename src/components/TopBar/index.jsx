@@ -51,6 +51,8 @@ export default function TopBar({
   openMenu,
   projectKeys,
   shouldShowSavedIndicator,
+  projects,
+  shouldShowArchivedProjects,
   validationState,
   onChangeCurrentProject,
   onClickMenu,
@@ -68,6 +70,7 @@ export default function TopBar({
   onStartEditingInstructions,
   onToggleLibrary,
   onToggleTextSize,
+  onToggleViewArchived,
   onUnlinkGitHub,
   onUpdateRepo,
 }) {
@@ -114,8 +117,11 @@ export default function TopBar({
         currentProjectKey={currentProjectKey}
         isUserAuthenticated={isUserAuthenticated}
         projectKeys={projectKeys}
+        projects={projects}
+        shouldShowArchivedProjects={shouldShowArchivedProjects}
         shouldShowSavedIndicator={shouldShowSavedIndicator}
         onChangeCurrentProject={onChangeCurrentProject}
+        onToggleViewArchived={onToggleViewArchived}
       />
       <CurrentUser
         isLoginAvailable={isGapiReady}
@@ -166,6 +172,8 @@ TopBar.propTypes = {
   isUserTyping: PropTypes.bool.isRequired,
   openMenu: PropTypes.string,
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+  projects: PropTypes.array.isRequired,
+  shouldShowArchivedProjects: PropTypes.bool.isRequired,
   shouldShowSavedIndicator: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
   onChangeCurrentProject: PropTypes.func.isRequired,
@@ -184,6 +192,7 @@ TopBar.propTypes = {
   onStartGoogleLogIn: PropTypes.func.isRequired,
   onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,
+  onToggleViewArchived: PropTypes.func.isRequired,
   onUnlinkGitHub: PropTypes.func.isRequired,
   onUpdateRepo: PropTypes.func.isRequired,
 };
