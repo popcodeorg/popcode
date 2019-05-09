@@ -350,6 +350,7 @@
     "remark-react": "^5.0.1",
     "remark-react-lowlight": "^0.7.0",
     "reselect": "^4.0.0",
+    "rosie": "^2.0.1",
     "shallowequal": "^1.1.0",
     "slowparse": "^1.1.4",
 >>>>>>> 78ccfe2b... add hot keys

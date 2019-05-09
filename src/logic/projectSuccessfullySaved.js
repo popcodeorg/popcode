@@ -7,8 +7,9 @@ export default createLogic({
   debounce: 1000,
   async process(data, dispatch, done) {
     dispatch(showSaveIndicator());
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    dispatch(hideSaveIndicator());
-    done();
+    setTimeout(() => {
+      dispatch(hideSaveIndicator());
+      done();
+    }, 1000);
   },
 });

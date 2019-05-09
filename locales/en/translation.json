@@ -100,10 +100,10 @@
       }
     }
   },
-  "login-prompt":{
+  "login-prompt": {
     "header": "Do you want to log in to save?",
     "login": "Login",
-    "dismiss": "Not now" 
+    "dismiss": "Not now"
   },
   "account-migration": {
     "header": {

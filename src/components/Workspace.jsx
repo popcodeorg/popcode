@@ -22,7 +22,7 @@ import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {isPristineProject} from '../util/projectUtils';
-import {keyMap} from '../util/keyMap';
+import keyMap from '../util/keyMap';
 
 import AccountMigration from '../containers/AccountMigration';
 import AssignmentCreator from '../containers/AssignmentCreator';

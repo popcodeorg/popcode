@@ -1,6 +1,6 @@
 import {bind} from 'mousetrap';
 
-import {keyMap} from '../util/keyMap';
+import keyMap from '../util/keyMap';
 
 import channel from './channel';
 

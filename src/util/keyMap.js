@@ -1,3 +1,3 @@
-export const keyMap = {
+export default {
   SAVE: 'mod+s',
 };
