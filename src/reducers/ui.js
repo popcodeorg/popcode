@@ -34,8 +34,12 @@ export default function ui(stateIn, action) {
 
   switch (action.type) {
     case 'CHANGE_CURRENT_PROJECT':
-      return closeTopBarMenu(state, 'projectPicker').
-        set('isEditingInstructions', false);
+      return state.
+        set('isEditingInstructions', false).
+        update(
+          'openTopBarMenu',
+          menu => menu === 'projectPicker' ? null : menu,
+        ).set('archivedViewOpen', false);
 
     case 'PROJECT_CREATED':
       return state.set('isEditingInstructions', false);
@@ -208,15 +212,19 @@ export default function ui(stateIn, action) {
 
     case 'HIDE_SAVE_INDICATOR':
       return state.set('saveIndicatorShown', false);
+    case 'TOGGLE_ARCHIVED_VIEW':
+      return state.update(
+        'archivedViewOpen',
+        archivedViewOpen => !archivedViewOpen,
+      );
 
-    case 'IDENTITY_LINKED': {
+    case 'IDENTITY_LINKED':
       return addNotification(
         state,
         'identity-linked',
         'notice',
         {provider: action.payload.credential.providerId},
       );
-    }
 
     case 'LINK_IDENTITY_FAILED':
       return addNotification(state, 'link-identity-failed', 'error');
