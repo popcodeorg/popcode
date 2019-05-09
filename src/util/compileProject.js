@@ -173,7 +173,7 @@ export async function addJavascript(
   if (breakLoops) {
     const {'default': loopBreaker} = await retryingFailedImports(
       () => import(
-        /* webpackChunkName: "babel" */
+        /* webpackChunkName: "jsCompilation" */
         'loop-breaker' // eslint-disable-line
       ),
     );
@@ -184,7 +184,7 @@ export async function addJavascript(
 
   const {babelWithEnv} = await retryingFailedImports(
     () => import(
-      /* webpackChunkName: "babel" */
+      /* webpackChunkName: "jsCompilation" */
       '../services/babel-browser.gen' // eslint-disable-line comma-dangle
     ),
   );

@@ -132,7 +132,6 @@ class PreviewFrame extends React.Component {
       reason: normalizedError.type,
       text: normalizedError.message,
       raw: normalizedError.message,
-      // Convert back to zero indexed
       row: oneIndexedOriginalLine - 1,
       column,
       type: 'error',

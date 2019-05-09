@@ -3,7 +3,9 @@ const presetEnv = require('@babel/preset-env');
 
 const browserList = require('../../config/browsers.json');
 
-module.exports = () => {
+const EXCLUDED_MODULES = ['transform-regenerator'];
+
+function getPluginNamesFromPresetEnv() {
   const browserListForBabel = {};
 
   for (const browser in browserList) {
@@ -12,8 +14,6 @@ module.exports = () => {
     }
   }
 
-  // preset-env doesn't give an introspection API, so we have to get it from
-  // the metadata on transformed code
   const result = babel.transformSync('', {
     sourceType: 'script',
     presets: [
@@ -21,18 +21,21 @@ module.exports = () => {
         presetEnv,
         {
           targets: browserListForBabel,
-          // The module for regenerator causes an import error, so we ignore it
-          exclude: ['transform-regenerator'],
+          exclude: EXCLUDED_MODULES,
         },
       ],
     ],
   });
 
-  const keys = result.options.plugins.map(
+  return result.options.plugins.map(
     plugin => plugin.key,
   ).filter(
     key => key.indexOf('/') !== 0,
   );
+}
+
+module.exports = () => {
+  const keys = getPluginNamesFromPresetEnv();
 
   const pluginImports = keys.map((key, index) =>
     `import plugin${index} from\n'@babel/plugin-${key}';`).join('\n');
@@ -53,26 +56,26 @@ ${pluginImports}
  * @parameter {string} source
  * @returns Promise<string>
  */
-function babelWithEnv(source, inputSourceMap) {
-  return transformAsync(source, {
-    sourceType: 'script',
-    plugins: [
-${pluginNames}
-],
-    sourceMaps: 'both',
-    sourceFileName: 'popcodePreview.js',
-    inputSourceMap,
-  }).then(function (result) {
+export async function babelWithEnv(source, inputSourceMap) {
+  try {
+    const result = await transformAsync(source, {
+      sourceType: 'script',
+      plugins: [
+  ${pluginNames}
+  ],
+      sourceMaps: 'both',
+      sourceFileName: 'popcodePreview.js',
+      inputSourceMap,
+    });
+
     return {
       code: result.code,
       sourceMap: result.map
     };
-  }, function (error) {
-    throw new Error(error);
-  });
+  } catch (e) {
+    throw new Error(e);
+  }
 }
-
-export { babelWithEnv };
     `,
   };
 };
