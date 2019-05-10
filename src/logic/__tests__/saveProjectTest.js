@@ -9,7 +9,7 @@ const defaultState = reduce(undefined, {type: 'NONE'});
 
 jest.mock('../../clients/firebase.js');
 
-test('should save project', async () => {
+test('not pristine project should save', async () => {
   const mockCredential = credentialFactory.build();
   const mockUser = userFactory.build();
   let state = reduce(defaultState, projectCreated('123456'));
@@ -21,7 +21,18 @@ test('should save project', async () => {
   expect(type).toBe('PROJECT_SUCCESSFULLY_SAVED');
 });
 
-test('should open login prompt', async () => {
+test('pristine project should not save', async () => {
+  const mockCredential = credentialFactory.build();
+  const mockUser = userFactory.build();
+  let state = reduce(defaultState, projectCreated('123456'));
+  state = reduce(state, userAuthenticated(mockUser, [mockCredential]));
+  const getState = jest.fn(() => state);
+  const result = await saveProject.process({getState});
+  expect(getState).toHaveBeenCalledWith();
+  expect(result).toBe(null);
+});
+
+test('not logged in should open login prompt', async () => {
   const getState = jest.fn(() => defaultState);
   const {type} = await saveProject.process({getState});
   expect(getState).toHaveBeenCalledWith();

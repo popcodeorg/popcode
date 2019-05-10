@@ -7,12 +7,10 @@ import channel from './channel';
 const {SAVE} = keyMap;
 
 export default function handleKeyEvents() {
-  bind(SAVE, handleSave);
-}
-
-function handleSave() {
-  channel.notify({
-    method: 'save',
+  bind(SAVE, () => {
+    channel.notify({
+      method: 'save',
+    });
+    return false;
   });
-  return false;
 }
