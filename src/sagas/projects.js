@@ -28,7 +28,6 @@ import {
   snapshotNotFound,
   projectRestoredFromLastSession,
 } from '../actions/clients';
-import {openLoginPrompt} from '../actions/ui';
 import {isPristineProject} from '../util/projectUtils';
 import {loadGistFromId} from '../clients/github';
 import {
@@ -36,13 +35,8 @@ import {
   loadProjectSnapshot,
   saveProject,
 } from '../clients/firebase';
-import {
-  getCurrentProject,
-  getCurrentUserId,
-  getProject,
-  isUserAuthenticated,
-} from '../selectors';
 import beautifySource from '../util/beautifySource';
+import {getCurrentProject, getProject, getCurrentUserId} from '../selectors';
 
 export function* applicationLoaded(action) {
   if (isString(action.payload.gistId)) {
@@ -159,15 +153,6 @@ export function* unArchiveProject({payload: {projectKey}}) {
   yield* saveProjectWithKey(projectKey);
 }
 
-export function* saveProjectSaga() {
-  const isLoggedIn = yield select(isUserAuthenticated);
-  if (isLoggedIn) {
-    yield* saveCurrentProject();
-  } else {
-    yield put(openLoginPrompt());
-  }
-}
-
 export default function* projects() {
   yield all([
     takeEvery('APPLICATION_LOADED', applicationLoaded),
@@ -183,6 +168,5 @@ export default function* projects() {
     takeEvery('TOGGLE_LIBRARY', toggleLibrary),
     takeLatest('BEAUTIFY_PROJECT_SOURCE', loadAndBeautifyProjectSource),
     takeEvery('ARCHIVE_PROJECT', archiveProject),
-    takeLatest('SAVE_PROJECT', saveProjectSaga),
   ]);
 }
