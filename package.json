@@ -220,7 +220,7 @@
     "keymirror": "^0.1.1",
     "loadjs": "^3.5.4",
     "lodash-es": "^4.17.11",
-    "loop-breaker": "^0.1.0",
+    "loop-breaker": "^0.1.1",
     "moment": "^2.22.2",
     "object-inspect": "^1.5.0",
     "offline-plugin": "^5.0.3",

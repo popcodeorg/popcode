@@ -9196,10 +9196,10 @@ longest-streak@^2.0.1:
   resolved "https://registry.yarnpkg.com/longest-streak/-/longest-streak-2.0.2.tgz#2421b6ba939a443bb9ffebf596585a50b4c38e2e"
   integrity sha512-TmYTeEYxiAmSVdpbnQDXGtvYOIRsCMg89CVZzwzc2o7GFL1CjoiRPjH5ec0NFAVlAx3fVof9dX/t6KKRAo2OWA==
 
-loop-breaker@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/loop-breaker/-/loop-breaker-0.1.0.tgz#7706c40abe20cb498d1c30b0672a203b9bcc6547"
-  integrity sha512-b0+bFoMHKYjbpvRAkbj24zxYagKcyW9EmqG2xL6wic0i8bWJaTURzNJscimKd3pMmHXNnAqAlxLdlREpoH6zKw==
+loop-breaker@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/loop-breaker/-/loop-breaker-0.1.1.tgz#7d64196707b78a94ba2554052dab57a248421e7f"
+  integrity sha512-3evG0K2cPLGbWMXtN+/r0Qigx4Ft7lDXh7AiIeBPLbLQ/fbOwINWbu8b0hkw8kJQR88AuJrD0duL7O2rkrRudQ==
   dependencies:
     recast "^0.14.4"
 
