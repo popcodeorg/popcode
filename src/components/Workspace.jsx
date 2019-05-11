@@ -243,9 +243,10 @@ export default class Workspace extends React.Component {
               style={prefixAll(clone({flexGrow: resizableFlexGrow.get(0)}))}
             >
               <div className="environment__column-contents">
-                <EditorsColumn>
+                <div className="environment__column-contents-inner">
+                  <EditorsColumn />
                   {this._renderHiddenLeftColumnComponents()}
-                </EditorsColumn>
+                </div>
               </div>
             </div>
             <DraggableCore
@@ -274,9 +275,10 @@ export default class Workspace extends React.Component {
           })}
         >
           <div className="environment__column-contents">
-            <Output>
+            <div className="environment__column-contents-inner">
+              <Output />
               {this._renderHiddenRightColumnComponents()}
-            </Output>
+            </div>
           </div>
         </div>
       </div>

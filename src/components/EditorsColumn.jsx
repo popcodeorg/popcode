@@ -14,7 +14,6 @@ import Editor from './Editor';
 
 
 export default function EditorsColumn({
-  children: hiddenEditors,
   currentProject,
   errors,
   resizableFlexGrow,
@@ -80,20 +79,18 @@ export default function EditorsColumn({
     }
   });
 
-  if (isEmpty(editors) && isEmpty(hiddenEditors)) {
+  if (isEmpty(editors)) {
     return null;
   }
 
   return (
     <div className="editors">
       {editors}
-      {hiddenEditors}
     </div>
   );
 }
 
 EditorsColumn.propTypes = {
-  children: PropTypes.node,
   currentProject: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   isFlexResizingSupported: PropTypes.bool.isRequired,
@@ -110,6 +107,5 @@ EditorsColumn.propTypes = {
 };
 
 EditorsColumn.defaultProps = {
-  children: [],
   requestedFocusedLine: null,
 };

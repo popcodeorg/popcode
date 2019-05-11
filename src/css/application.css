@@ -496,14 +496,20 @@ body {
   overflow-y: scroll;
 }
 
+.environment__column-contents-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 /** @define editors */
 
 .editors {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   font-family: 'Inconsolata', monospace;
   font-size: 14px;
-  height: 100%;
 }
 
 .editors__editor-container {
