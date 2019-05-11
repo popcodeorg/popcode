@@ -56,25 +56,21 @@ ${pluginImports}
  * @parameter {string} source
  * @returns Promise<string>
  */
-export async function babelWithEnv(source, inputSourceMap) {
-  try {
-    const result = await transformAsync(source, {
-      sourceType: 'script',
-      plugins: [
-  ${pluginNames}
-  ],
-      sourceMaps: 'both',
-      sourceFileName: 'popcodePreview.js',
-      inputSourceMap,
-    });
-
+export function babelWithEnv(source, inputSourceMap) {
+  return transformAsync(source, {
+    sourceType: 'script',
+    plugins: [${pluginNames}],
+    sourceMaps: 'both',
+    sourceFileName: 'popcodePreview.js',
+    inputSourceMap,
+  }).then(function (result) {
     return {
       code: result.code,
       sourceMap: result.map
     };
-  } catch (e) {
-    throw new Error(e);
-  }
+  }, function (error) {
+    throw new Error(error);
+  });
 }
     `,
   };
