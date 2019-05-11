@@ -4,11 +4,10 @@ const path = require('path');
 module.exports = (api) => {
   let targets;
 
-  const isValLoader = api.caller(caller => !caller);
   const isJest = api.caller(caller => caller && caller.name === 'babel-jest');
   api.cache.using(() => `${isJest}:${process.env.NODE_ENV}`);
 
-  if (isValLoader || isJest) {
+  if (isJest) {
     targets = {node: 'current'};
   } else if (process.env.DEBUG === 'true') {
     targets = {browsers: 'last 1 Chrome version'};
