@@ -10,9 +10,10 @@ import {
   credentialFactory,
   credentialInUseErrorFactory,
   firebaseErrorFactory,
-  githubProfileFactory,
   userFactory,
 } from '@factories/clients/firebase';
+
+import {githubProfileFactory} from '@factories/clients/github';
 
 jest.mock('../../clients/firebase.js');
 jest.mock('../../clients/github.js');
