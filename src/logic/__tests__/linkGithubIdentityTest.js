@@ -44,7 +44,7 @@ describe('linkGithubIdentity', () => {
     expect(user).toEqual(mockUser);
   });
 
-  test('credential already in use in experimental mode', async() => {
+  test('credential already in use', async() => {
     const error = credentialInUseErrorFactory.build();
     const githubProfile = githubProfileFactory.build();
 
