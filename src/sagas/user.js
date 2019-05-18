@@ -11,43 +11,14 @@ import {
 } from 'redux-saga/effects';
 import {
   accountMigrationComplete,
-  accountMigrationNeeded,
   accountMigrationUndoPeriodExpired,
-  identityLinked,
-  linkIdentityFailed,
   accountMigrationError,
 } from '../actions/user';
 import {getCurrentAccountMigration} from '../selectors';
 import {
-  linkGithub,
   migrateAccount,
   signOut,
-  saveCredentialForCurrentUser,
 } from '../clients/firebase';
-import {getProfileForAuthenticatedUser} from '../clients/github';
-
-export function* linkGithubIdentity() {
-  try {
-    const {user: userData, credential} = yield call(linkGithub);
-    yield call(saveCredentialForCurrentUser, credential);
-    yield put(identityLinked(userData, credential));
-  } catch (e) {
-    switch (e.code) {
-      case 'auth/credential-already-in-use': {
-        const {data: githubProfile} = yield call(
-          getProfileForAuthenticatedUser,
-          e.credential.accessToken,
-        );
-        yield put(accountMigrationNeeded(githubProfile, e.credential));
-        break;
-      }
-
-      default:
-        yield call([bugsnagClient, 'notify'], e);
-        yield put(linkIdentityFailed(e));
-    }
-  }
-}
 
 export function* startAccountMigration() {
   const {shouldContinue} = yield race({
@@ -82,7 +53,6 @@ export function* logOut() {
 
 export default function* user() {
   yield all([
-    takeEvery('LINK_GITHUB_IDENTITY', linkGithubIdentity),
     takeEvery('LOG_OUT', logOut),
     takeEvery('START_ACCOUNT_MIGRATION', startAccountMigration),
   ]);

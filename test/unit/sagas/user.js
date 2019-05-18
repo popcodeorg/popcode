@@ -2,14 +2,10 @@ import test from 'tape-catch';
 import {testSaga} from 'redux-saga-test-plan';
 import {delay, take, race} from 'redux-saga/effects';
 
-import {linkGithubIdentity} from '../../../src/actions';
 import {
   accountMigrationComplete,
   accountMigrationError,
-  accountMigrationNeeded,
   accountMigrationUndoPeriodExpired,
-  identityLinked,
-  linkIdentityFailed,
   logOut,
   startAccountMigration,
 } from '../../../src/actions/user';
@@ -18,64 +14,14 @@ import {
   AccountMigration,
 } from '../../../src/records';
 import {
-  linkGithub,
   migrateAccount,
   signOut,
-  saveCredentialForCurrentUser,
 } from '../../../src/clients/firebase';
-import {getProfileForAuthenticatedUser} from '../../../src/clients/github';
 import {
   logOut as logOutSaga,
-  linkGithubIdentity as linkGithubIdentitySaga,
   startAccountMigration as startAccountMigrationSaga,
 } from '../../../src/sagas/user';
 import {bugsnagClient} from '../../../src/util/bugsnag';
-
-test('linkGithubIdentity', (t) => {
-  t.test('success', (assert) => {
-    const user = {};
-    const credential = {providerId: 'github.com'};
-
-    testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
-      next().call(linkGithub).
-      next({user, credential}).call(saveCredentialForCurrentUser, credential).
-      next().put(identityLinked(user, credential));
-
-    assert.end();
-  });
-
-  t.test('credential already in use in experimental mode', (assert) => {
-    const error = new Error('credential already in use');
-    error.code = 'auth/credential-already-in-use';
-    error.credential = {providerId: 'github.com', accessToken: 'abc123'};
-
-    const githubProfile = {login: 'popcoder'};
-
-    testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
-      next().call(linkGithub).
-      throw(error).call(
-        getProfileForAuthenticatedUser,
-        error.credential.accessToken,
-      ).
-      next({status: 200, data: githubProfile}).put(
-        accountMigrationNeeded(githubProfile, error.credential),
-      ).next().isDone();
-
-    assert.end();
-  });
-
-  t.test('other error', (assert) => {
-    const error = new Error('authentication problem!');
-
-    testSaga(linkGithubIdentitySaga, linkGithubIdentity()).
-      next().call(linkGithub).
-      throw(error).call([bugsnagClient, 'notify'], error).
-      next().put(linkIdentityFailed(error)).
-      next().isDone();
-
-    assert.end();
-  });
-});
 
 test('startAccountMigration', (t) => {
   const user = {};

@@ -41,7 +41,7 @@
         "jest": true
       },
       "files": [
-        "**/__tests__/*.js"
+        "**/{__factories__,__mocks__,__tests__}/*.js{,x}"
       ],
       "rules": {
         "jest/no-alias-methods": "warn",
@@ -64,7 +64,17 @@
         "react",
         "promise",
         "private-props"
-      ]
+      ],
+      "settings": {
+        "import/resolver": {
+          "@popcodeorg/eslint-import-resolver-jest": {
+            "jestConfigFile": "./jest.config.js"
+          },
+          "node": {
+            "extensions": [".js", ".jsx"]
+          }
+        }
+      }
     },
     {
       "files": "src/**/*",
