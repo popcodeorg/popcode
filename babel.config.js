@@ -29,5 +29,10 @@ module.exports = (api) => {
     ],
     plugins,
     compact: false,
+    overrides: [
+      {
+        include: './node_modules/parse5-sax-parser/lib/index.js',
+      },
+    ],
   };
 };
