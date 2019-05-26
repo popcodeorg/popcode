@@ -1,0 +1,16 @@
+.expression {
+  composes: row from './Console.module.css';
+}
+
+.inactive {
+  composes: inactive from './Console.module.css';
+}
+
+.chevron {
+  color: var(--color-light-gray);
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: scale(0.6);
+  transform-origin: left center;
+}

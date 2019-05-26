@@ -27,3 +27,12 @@
   cursor: pointer;
   background-color: var(--color-low-contrast-gray);
 }
+
+.row {
+  padding-left: 1em;
+  position: relative;
+}
+
+.inactive {
+  color: var(--color-light-gray);
+}

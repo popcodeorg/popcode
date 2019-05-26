@@ -7,6 +7,8 @@ import isNil from 'lodash-es/isNil';
 
 import {ConsoleEntry as ConsoleEntryRecord} from '../records';
 
+import styles from './ConsoleExpression.module.css';
+
 export default function ConsoleExpression({entry: {expression}, isActive}) {
   if (isNil(expression)) {
     return null;
@@ -16,13 +18,12 @@ export default function ConsoleExpression({entry: {expression}, isActive}) {
     <div
       className={
         classnames(
-          'console__row',
-          'console__expression',
-          {console__expression_inactive: !isActive},
+          styles.expression,
+          {[styles.inactive]: !isActive},
         )
       }
     >
-      <div className="console__chevron">
+      <div className={styles.chevron}>
         <FontAwesomeIcon icon={faChevronRight} />
       </div>
       {expression}
