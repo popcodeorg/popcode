@@ -620,35 +620,6 @@ body {
 
 /** @define console */
 
-.console {
-  flex: none;
-}
-
-.console__label {
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  background-color: var(--color-low-contrast-gray);
-}
-
-.console__scroll-container {
-  height: 40vh;
-  padding: 0.5em;
-}
-
-.console__repl {
-  display: flex;
-  flex-direction: column-reverse;
-  font-family: 'Inconsolata', monospace;
-  font-size: 14px;
-  max-height: 100%;
-  overflow: auto;
-}
-
-.console__repl_zoomed {
-  font-size: 20px;
-}
-
 .console__row {
   padding-left: 1em;
   position: relative;
