@@ -11,7 +11,7 @@ export const consoleValueProduced = createAction(
 export const consoleErrorProduced = createAction(
   'CONSOLE_ERROR_PRODUCED',
   (key, compiledProjectKey, error) =>
-    ({ key, compiledProjectKey, error}),
+    ({key, compiledProjectKey, error}),
 );
 
 export const evaluateConsoleEntry = createAction(

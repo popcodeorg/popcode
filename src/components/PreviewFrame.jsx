@@ -7,7 +7,7 @@ import constant from 'lodash-es/constant';
 import {t} from 'i18next';
 
 import bowser from '../services/bowser';
-import { createError } from '../util/errorUtils';
+import {createError} from '../util/errorUtils';
 import retryingFailedImports from '../util/retryingFailedImports';
 import {sourceDelimiter} from '../util/compileProject';
 import {CompiledProject as CompiledProjectRecord} from '../records';
