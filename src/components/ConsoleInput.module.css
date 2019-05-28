@@ -1,0 +1,20 @@
+.input {
+  composes: row from './Console.module.css';
+  /* TODO: This is mostly duplicated with console entry */
+  flex: none;
+  margin-top: 0.5em;
+  padding-bottom: 0.5em;
+  height: 1em;
+}
+
+.chevron {
+  composes: chevron from './Console.module.css';
+}
+
+.chevron.blue {
+  color: var(--color-blue);
+}
+
+.console__editor {
+  margin-left: -4px;
+}

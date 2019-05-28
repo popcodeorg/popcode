@@ -1,5 +1,6 @@
 .expression {
   composes: row from './Console.module.css';
+  composes: entry from './Console.module.css';
 }
 
 .inactive {
@@ -7,10 +8,5 @@
 }
 
 .chevron {
-  color: var(--color-light-gray);
-  left: 0;
-  position: absolute;
-  top: 0;
-  transform: scale(0.6);
-  transform-origin: left center;
+  composes: chevron from './Console.module.css';
 }

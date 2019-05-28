@@ -36,3 +36,12 @@
 .inactive {
   color: var(--color-light-gray);
 }
+
+.chevron {
+  color: var(--color-light-gray);
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: scale(0.6);
+  transform-origin: left center;
+}

@@ -634,31 +634,15 @@ body {
   transform-origin: left center;
 }
 
-.console__chevron_blue {
-  color: var(--color-blue);
-}
-
 .console__chevron_outdent {
   text-indent: -0.1em;
 }
 
-.console__entry,
-.console__input {
+.console__entry {
   flex: none;
   margin-top: 0.5em;
   padding-bottom: 0.5em;
-}
-
-.console__input {
-  height: 1em;
-}
-
-.console__entry {
   border-bottom: 1px solid var(--color-low-contrast-gray);
-}
-
-.console__editor {
-  margin-left: -4px;
 }
 
 .console__value {
