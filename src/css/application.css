@@ -618,15 +618,6 @@ body {
   animation: 0.2s ease-in 0.1s both fadeIn;
 }
 
-/** @define console */
-
-.console__entry {
-  flex: none;
-  margin-top: 0.5em;
-  padding-bottom: 0.5em;
-  border-bottom: 1px solid var(--color-low-contrast-gray);
-}
-
 /** @define preview */
 
 .preview {
