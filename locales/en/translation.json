@@ -32,7 +32,10 @@
       "log-in-prompt": "Log in to save",
       "log-out-prompt": "Log out",
       "log-in-github": "Log in with GitHub"
-    }
+    },
+    "hide-projects": "Hide Archived Projects",
+    "show-projects": "Show Archived Projects",
+    "project-archived": "Archived"
   },
   "editors": {
     "help-text": "Type in your $t(languages.{{language}}) code here."

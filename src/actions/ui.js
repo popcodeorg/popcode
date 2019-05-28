@@ -85,3 +85,7 @@ export const coursesLoaded = createAction(
 export const coursesFullyLoaded = createAction(
   'COURSES_FULLY_LOADED',
 );
+
+export const toggleArchivedView = createAction(
+  'TOGGLE_ARCHIVED_VIEW',
+);
