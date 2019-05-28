@@ -1,0 +1,17 @@
+.value {
+  composes: row from './Console.module.css';
+  white-space: pre-wrap;
+}
+
+.error {
+  color: var(--color-red);
+}
+
+.inactive {
+  composes: inactive from './Console.module.css';
+}
+
+.chevron {
+  composes: chevron from './Console.module.css';
+  text-indent: -0.1em;
+}

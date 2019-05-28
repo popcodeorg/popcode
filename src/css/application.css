@@ -620,43 +620,11 @@ body {
 
 /** @define console */
 
-.console__row {
-  padding-left: 1em;
-  position: relative;
-}
-
-.console__chevron {
-  color: var(--color-light-gray);
-  left: 0;
-  position: absolute;
-  top: 0;
-  transform: scale(0.6);
-  transform-origin: left center;
-}
-
-.console__chevron_outdent {
-  text-indent: -0.1em;
-}
-
 .console__entry {
   flex: none;
   margin-top: 0.5em;
   padding-bottom: 0.5em;
   border-bottom: 1px solid var(--color-low-contrast-gray);
-}
-
-.console__value {
-  white-space: pre-wrap;
-}
-
-.console__error {
-  color: var(--color-red);
-}
-
-.console__expression_inactive,
-.console__value_inactive,
-.console__error_inactive {
-  color: var(--color-light-gray);
 }
 
 /** @define preview */
