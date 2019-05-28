@@ -1,10 +1,6 @@
 .input {
   composes: row from './Console.module.css';
-  /* TODO: This is mostly duplicated with console entry */
-  flex: none;
-  margin-top: 0.5em;
-  padding-bottom: 0.5em;
-  height: 1em;
+  composes: entry from './ConsoleEntry.module.css';
 }
 
 .chevron {
