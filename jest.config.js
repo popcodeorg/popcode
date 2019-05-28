@@ -8,6 +8,7 @@ module.exports = {
   clearMocks: true,
   moduleNameMapper: {
     '@factories/(.*)$': '<rootDir>/__factories__/$1',
+    '\\.(html|svg)': '<rootDir>/__mocks__/fileMock.js',
   },
   testPathIgnorePatterns: [
     '/node_modules/',
