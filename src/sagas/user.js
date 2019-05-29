@@ -15,10 +15,7 @@ import {
   accountMigrationError,
 } from '../actions/user';
 import {getCurrentAccountMigration} from '../selectors';
-import {
-  migrateAccount,
-  signOut,
-} from '../clients/firebase';
+import {migrateAccount} from '../clients/firebase';
 
 export function* startAccountMigration() {
   const {shouldContinue} = yield race({
@@ -47,13 +44,11 @@ export function* startAccountMigration() {
   }
 }
 
-export function* logOut() {
-  yield call(signOut);
-}
-
 export default function* user() {
   yield all([
-    takeEvery('LOG_OUT', logOut),
-    takeEvery('START_ACCOUNT_MIGRATION', startAccountMigration),
+    takeEvery(
+      'START_ACCOUNT_MIGRATION',
+      startAccountMigration,
+    ),
   ]);
 }

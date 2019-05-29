@@ -6,19 +6,14 @@ import {
   accountMigrationComplete,
   accountMigrationError,
   accountMigrationUndoPeriodExpired,
-  logOut,
   startAccountMigration,
 } from '../../../src/actions/user';
 import {getCurrentAccountMigration} from '../../../src/selectors';
 import {
   AccountMigration,
 } from '../../../src/records';
+import {migrateAccount} from '../../../src/clients/firebase';
 import {
-  migrateAccount,
-  signOut,
-} from '../../../src/clients/firebase';
-import {
-  logOut as logOutSaga,
   startAccountMigration as startAccountMigrationSaga,
 } from '../../../src/sagas/user';
 import {bugsnagClient} from '../../../src/util/bugsnag';
@@ -99,11 +94,4 @@ test('startAccountMigration', (t) => {
       }).isDone();
     assert.end();
   });
-});
-
-test('logOut', (assert) => {
-  testSaga(logOutSaga, logOut()).
-    next().call(signOut);
-
-  assert.end();
 });
