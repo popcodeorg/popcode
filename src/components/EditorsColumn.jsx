@@ -2,7 +2,6 @@ import {DraggableCore} from 'react-draggable';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-
 import classnames from 'classnames';
 import isEmpty from 'lodash-es/isEmpty';
 import partial from 'lodash-es/partial';
@@ -11,7 +10,6 @@ import {EditorLocation} from '../records';
 
 import EditorContainer from './EditorContainer';
 import Editor from './Editor';
-
 
 export default function EditorsColumn({
   currentProject,

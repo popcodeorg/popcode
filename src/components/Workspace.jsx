@@ -145,7 +145,7 @@ export default class Workspace extends React.Component {
       onComponentToggle,
     } = this.props;
     return (
-      <React.Fragment>
+      <>
         {hiddenLanguages.map(({language}) =>
           (
             <CollapsedComponent
@@ -156,19 +156,20 @@ export default class Workspace extends React.Component {
               onComponentUnhide={onComponentToggle}
             />
           ))}
-      </React.Fragment>
+      </>
     );
   }
 
-  _renderHiddenLeftColumnComponents() {
+  _shouldRenderHiddenLeftColumnComponents() {
     const {
       hiddenLanguages,
     } = this.props;
+    return hiddenLanguages.length !== 0 &&
+      hiddenLanguages.length !== LANGUAGES.length;
+  }
 
-    if (
-      hiddenLanguages.length === 0 ||
-      hiddenLanguages.length === LANGUAGES.length
-    ) {
+  _renderHiddenLeftColumnComponents() {
+    if (!this._shouldRenderHiddenLeftColumnComponents()) {
       return null;
     }
 
@@ -212,7 +213,7 @@ export default class Workspace extends React.Component {
   }
 
   _shouldRenderLeftColumn() {
-    return !(this.props.hiddenLanguages.length === LANGUAGES.length);
+    return this.props.hiddenLanguages.length !== LANGUAGES.length;
   }
 
   _renderEnvironment() {
