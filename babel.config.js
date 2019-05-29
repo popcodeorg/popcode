@@ -25,7 +25,13 @@ module.exports = (api) => {
   return {
     presets: [
       '@babel/preset-react',
-      ['@babel/preset-env', {targets, modules: isJest ? 'auto' : false}],
+      [
+        '@babel/preset-env', {
+          targets,
+          modules: isJest ? 'auto' : false,
+          exclude: ['@babel/plugin-transform-typeof-symbol'],
+        },
+      ],
     ],
     plugins,
     compact: false,
