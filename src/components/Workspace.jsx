@@ -160,26 +160,11 @@ export default class Workspace extends React.Component {
     );
   }
 
-  _shouldRenderHiddenLeftColumnComponents() {
-    const {
-      hiddenLanguages,
-    } = this.props;
-    return hiddenLanguages.length !== 0 &&
-      hiddenLanguages.length !== LANGUAGES.length;
-  }
-
-  _renderHiddenLeftColumnComponents() {
-    if (!this._shouldRenderHiddenLeftColumnComponents()) {
-      return null;
-    }
-
-    return this._renderHiddenLanguages();
-  }
-
   _renderHiddenRightColumnComponents() {
     const {
       currentProject,
       onComponentToggle,
+      shouldShowCollapsedConsole,
     } = this.props;
     const rightColumnComponents = ['console'];
     return rightColumnComponents.
@@ -189,27 +174,23 @@ export default class Workspace extends React.Component {
       map((component) => {
         switch (component) {
           case 'console':
-            return (
-              <CollapsedComponent
-                component="console"
-                isRightJustified={false}
-                key="console"
-                projectKey={currentProject.projectKey}
-                text={t('workspace.components.console')}
-                onComponentUnhide={onComponentToggle}
-              />
-            );
+            if (shouldShowCollapsedConsole) {
+              return (
+                <CollapsedComponent
+                  component="console"
+                  isRightJustified={false}
+                  key="console"
+                  projectKey={currentProject.projectKey}
+                  text={t('workspace.components.console')}
+                  onComponentUnhide={onComponentToggle}
+                />
+              );
+            }
+            return null;
           default:
             return null;
         }
       });
-  }
-
-  _renderFullyMinimizedColumns() {
-    if (!this._shouldRenderLeftColumn()) {
-      return this._renderHiddenLanguages();
-    }
-    return null;
   }
 
   _shouldRenderLeftColumn() {
@@ -246,7 +227,7 @@ export default class Workspace extends React.Component {
               <div className="environment__column-contents">
                 <div className="environment__column-contents-inner">
                   <EditorsColumn />
-                  {this._renderHiddenLeftColumnComponents()}
+                  {this._renderHiddenLanguages()}
                 </div>
               </div>
             </div>
@@ -279,6 +260,8 @@ export default class Workspace extends React.Component {
             <div className="environment__column-contents-inner">
               <Output />
               {this._renderHiddenRightColumnComponents()}
+              {!this._shouldRenderLeftColumn() &&
+                this._renderHiddenLanguages()}
             </div>
           </div>
         </div>
@@ -299,7 +282,6 @@ export default class Workspace extends React.Component {
             {this._renderEnvironment()}
           </div>
         </div>
-        {this._renderFullyMinimizedColumns()}
         <AccountMigration />
       </div>
     );
@@ -315,6 +297,7 @@ Workspace.propTypes = {
   isFlexResizingSupported: PropTypes.bool.isRequired,
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
   resizableFlexRefs: PropTypes.array.isRequired,
+  shouldShowCollapsedConsole: PropTypes.bool.isRequired,
   onApplicationLoaded: PropTypes.func.isRequired,
   onClickInstructionsEditButton: PropTypes.func.isRequired,
   onComponentToggle: PropTypes.func.isRequired,

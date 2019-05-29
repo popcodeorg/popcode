@@ -7,6 +7,7 @@ import {
   isEditingInstructions,
   getHiddenAndVisibleLanguages,
   getOpenTopBarMenu,
+  isCurrentProjectSyntacticallyValid,
 } from '../selectors';
 import {
   toggleComponent,
@@ -25,6 +26,7 @@ function mapStateToProps(state) {
     isDraggingColumnDivider: isDraggingColumnDivider(state),
     isEditingInstructions: isEditingInstructions(state),
     hiddenLanguages,
+    shouldShowCollapsedConsole: isCurrentProjectSyntacticallyValid(state),
   };
 }
 
