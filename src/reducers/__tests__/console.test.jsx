@@ -3,6 +3,7 @@ import map from 'lodash-es/map';
 import reduce from 'lodash-es/reduce';
 
 import reducer from '../console';
+import {Error} from '../../records';
 
 import {
   consoleErrorProduced,
@@ -37,14 +38,19 @@ test('consoleValueProduced adds value to existing entry', () => {
 
 test('consoleErrorProduced adds error to existing entry', () => {
   const key = '123';
-  const name = 'NameError';
-  const message = 'bogus is not defined';
+  const error = {
+    name: 'TypeError',
+    raw: 'You tried to call `i()` as a function, but `i` is not a function.',
+    reason: 'not-a-function',
+    text: 'You tried to call `i()` as a function, but `i` is not a function.',
+    type: 'error',
+  };
   const {history} = applyActions(
     evaluateConsoleEntry('1 + bogus', key),
-    consoleErrorProduced(key, name, message, 123456789),
+    consoleErrorProduced(key, 123456789, error),
   );
 
-  expect(history.get(key).error).toMatchObject({name, message});
+  expect(history.get(key).error).toMatchObject(Error.fromJS(error));
 });
 
 test('consoleInputChanged updates currentInputValue', () => {
