@@ -15,6 +15,8 @@ import {
   consoleInputChanged,
 } from '../../actions';
 
+import {consoleErrorFactory} from '@factories/validations/errors';
+
 test('evaluateConsoleEntry adds entry to history', () => {
   const expression = '1 + 1';
   const key = '123';
@@ -38,13 +40,7 @@ test('consoleValueProduced adds value to existing entry', () => {
 
 test('consoleErrorProduced adds error to existing entry', () => {
   const key = '123';
-  const error = {
-    name: 'TypeError',
-    raw: 'You tried to call `i()` as a function, but `i` is not a function.',
-    reason: 'not-a-function',
-    text: 'You tried to call `i()` as a function, but `i` is not a function.',
-    type: 'error',
-  };
+  const error = consoleErrorFactory.build();
   const {history} = applyActions(
     evaluateConsoleEntry('1 + bogus', key),
     consoleErrorProduced(key, 123456789, error),
