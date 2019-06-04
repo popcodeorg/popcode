@@ -46,9 +46,9 @@ export function* startAccountMigration() {
 
 export default function* user() {
   yield all([
-    takeEvery(
-      'START_ACCOUNT_MIGRATION',
-      startAccountMigration,
-    ),
+    // takeEvery(
+    //   'START_ACCOUNT_MIGRATION',
+    //   startAccountMigration,
+    // ),
   ]);
 }
