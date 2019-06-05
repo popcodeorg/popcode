@@ -51,8 +51,8 @@ function generateConsoleLogDispatcher(dispatch, timeout) {
 function mapDispatchToProps(dispatch) {
   const dispatchConsoleLog = generateConsoleLogDispatcher(dispatch, 1000);
   return {
-    onConsoleError(key, name, message, compiledProjectKey) {
-      dispatch(consoleErrorProduced(key, name, message, compiledProjectKey));
+    onConsoleError(key, compiledProjectKey, error) {
+      dispatch(consoleErrorProduced(key, compiledProjectKey, error));
     },
 
     onConsoleValue(key, value, compiledProjectKey) {
