@@ -2,19 +2,12 @@ import {DraggableCore} from 'react-draggable';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import prefixAll from 'inline-style-prefixer/static';
 import classnames from 'classnames';
-import clone from 'lodash-es/clone';
 import isEmpty from 'lodash-es/isEmpty';
-import includes from 'lodash-es/includes';
-import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';
-import partition from 'lodash-es/partition';
-import {t} from 'i18next';
 
 import {EditorLocation} from '../records';
 
-import CollapsedComponent from './CollapsedComponent';
 import EditorContainer from './EditorContainer';
 import Editor from './Editor';
 
@@ -28,28 +21,15 @@ export default function EditorsColumn({
   requestedFocusedLine,
   onAutoFormat,
   onComponentHide,
-  onComponentUnhide,
   onEditorInput,
-  onRef,
   onRequestedLineFocused,
   onResizableFlexDividerDrag,
-  style,
+  visibleLanguages,
 }) {
-  const [hiddenLanguages, visibleLanguages] = partition(
-    map(
-      ['html', 'css', 'javascript'],
-      (language, index) => ({language, index}),
-    ),
-    ({language}) => includes(
-      currentProject.hiddenUIComponents,
-      `editor.${language}`,
-    ),
-  );
-
-  const children = [];
+  const editors = [];
 
   visibleLanguages.forEach(({language, index}) => {
-    children.push(
+    editors.push(
       <EditorContainer
         key={language}
         language={language}
@@ -81,7 +61,7 @@ export default function EditorsColumn({
       </EditorContainer>,
     );
     if (index < visibleLanguages.length - 1) {
-      children.push(
+      editors.push(
         <DraggableCore
           key={`divider:${language}`}
           onDrag={partial(onResizableFlexDividerDrag, index)}
@@ -97,31 +77,13 @@ export default function EditorsColumn({
     }
   });
 
-  hiddenLanguages.forEach(({language}) => {
-    children.push((
-      <CollapsedComponent
-        component={`editor.${language}`}
-        key={language}
-        projectKey={currentProject.projectKey}
-        text={t(`languages.${language}`)}
-        onComponentUnhide={onComponentUnhide}
-      />
-    ));
-  });
-
-  if (isEmpty(children)) {
+  if (isEmpty(editors)) {
     return null;
   }
 
   return (
-    <div
-      className="environment__column"
-      ref={onRef}
-      style={prefixAll(clone(style))}
-    >
-      <div className="environment__column-contents editors">
-        {children}
-      </div>
+    <div className="editors">
+      {editors}
     </div>
   );
 }
@@ -134,12 +96,10 @@ EditorsColumn.propTypes = {
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
   resizableFlexRefs: PropTypes.array.isRequired,
-  style: PropTypes.object.isRequired,
+  visibleLanguages: PropTypes.array.isRequired,
   onAutoFormat: PropTypes.func.isRequired,
   onComponentHide: PropTypes.func.isRequired,
-  onComponentUnhide: PropTypes.func.isRequired,
   onEditorInput: PropTypes.func.isRequired,
-  onRef: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
   onResizableFlexDividerDrag: PropTypes.func.isRequired,
 };

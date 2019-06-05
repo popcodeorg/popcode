@@ -14,7 +14,6 @@ import {EditorLocation} from '../records';
 
 import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
-import CollapsedComponent from './CollapsedComponent';
 
 export default function Console({
   currentCompiledProjectKey,
@@ -35,15 +34,7 @@ export default function Console({
   requestedFocusedLine,
 }) {
   if (!isOpen) {
-    return (
-      <CollapsedComponent
-        component="console"
-        isRightJustified={false}
-        projectKey={currentProjectKey}
-        text={t('workspace.components.console')}
-        onComponentUnhide={onToggleVisible}
-      />
-    );
+    return null;
   }
 
   const console = (

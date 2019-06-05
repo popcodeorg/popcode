@@ -1,7 +1,14 @@
 import {connect} from 'react-redux';
 
 import Workspace from '../components/Workspace';
-import {getCurrentProject, isEditingInstructions} from '../selectors';
+import {
+  getCurrentProject,
+  isDraggingColumnDivider,
+  isEditingInstructions,
+  getHiddenAndVisibleLanguages,
+  getOpenTopBarMenu,
+  isCurrentProjectSyntacticallyValid,
+} from '../selectors';
 import {
   toggleComponent,
   applicationLoaded,
@@ -12,9 +19,14 @@ import {
 import resizableFlex from '../higherOrderComponents/resizableFlex';
 
 function mapStateToProps(state) {
+  const {hiddenLanguages} = getHiddenAndVisibleLanguages(state);
   return {
     currentProject: getCurrentProject(state),
+    isAnyTopBarMenuOpen: Boolean(getOpenTopBarMenu(state)),
+    isDraggingColumnDivider: isDraggingColumnDivider(state),
     isEditingInstructions: isEditingInstructions(state),
+    hiddenLanguages,
+    shouldShowCollapsedConsole: isCurrentProjectSyntacticallyValid(state),
   };
 }
 

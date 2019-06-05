@@ -19,6 +19,7 @@ import getCurrentValidationState from './getCurrentValidationState';
 import getEnabledLibraries from './getEnabledLibraries';
 import getErrors from './getErrors';
 import getHiddenUIComponents from './getHiddenUIComponents';
+import getHiddenAndVisibleLanguages from './getHiddenAndVisibleLanguages';
 import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
 import getParsedDate from './getParsedDate';
@@ -71,6 +72,7 @@ export {
   getEnabledLibraries,
   getErrors,
   getHiddenUIComponents,
+  getHiddenAndVisibleLanguages,
   getNotifications,
   getOpenTopBarMenu,
   getParsedDate,
