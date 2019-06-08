@@ -42,7 +42,7 @@ export default function ConsoleOutput({entry, isActive}) {
           )
         }
       >
-        {error.name}: {error.message}
+        {error.text}
       </div>
     );
   }

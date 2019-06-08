@@ -5,6 +5,7 @@ import resizableFlex from '../higherOrderComponents/resizableFlex';
 import {
   getCurrentProject,
   getErrors,
+  getHiddenAndVisibleLanguages,
   getRequestedFocusedLine,
   isTextSizeLarge,
 } from '../selectors';
@@ -13,15 +14,16 @@ import {
   editorFocusedRequestedLine,
   hideComponent,
   updateProjectSource,
-  unhideComponent,
 } from '../actions';
 
 function mapStateToProps(state) {
+  const {visibleLanguages} = getHiddenAndVisibleLanguages(state);
   return {
     currentProject: getCurrentProject(state),
     errors: getErrors(state),
     isTextSizeLarge: isTextSizeLarge(state),
     requestedFocusedLine: getRequestedFocusedLine(state),
+    visibleLanguages,
   };
 }
 
@@ -29,10 +31,6 @@ function mapDispatchToProps(dispatch) {
   return {
     onComponentHide(projectKey, componentName) {
       dispatch(hideComponent(projectKey, componentName));
-    },
-
-    onComponentUnhide(projectKey, componentName) {
-      dispatch(unhideComponent(projectKey, componentName));
     },
 
     onEditorInput(projectKey, language, source) {

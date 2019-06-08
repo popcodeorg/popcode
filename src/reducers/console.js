@@ -4,7 +4,7 @@ import isNil from 'lodash-es/isNil';
 import {handleActions} from 'redux-actions';
 
 
-import {ConsoleState, ConsoleEntry, ConsoleError} from '../records';
+import {ConsoleState, ConsoleEntry, Error} from '../records';
 
 import {
   consoleValueProduced,
@@ -59,11 +59,13 @@ export default handleActions({
 
   [consoleErrorProduced]: (
     state,
-    {payload: {compiledProjectKey, key, message, name}},
+    {payload: {compiledProjectKey, key, error}},
   ) => state.updateIn(
     ['history', key],
-    input => input.set('error', new ConsoleError({name, message})).
-      set('evaluatedByCompiledProjectKey', compiledProjectKey),
+    input => input.set(
+      'error',
+      Error.fromJS(error),
+    ).set('evaluatedByCompiledProjectKey', compiledProjectKey),
   ),
 
   [evaluateConsoleEntry]: (state, {payload: expression, meta: {key}}) =>

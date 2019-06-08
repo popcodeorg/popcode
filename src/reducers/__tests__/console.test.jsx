@@ -3,6 +3,7 @@ import map from 'lodash-es/map';
 import reduce from 'lodash-es/reduce';
 
 import reducer from '../console';
+import {Error} from '../../records';
 
 import {
   consoleErrorProduced,
@@ -13,6 +14,8 @@ import {
   previousConsoleHistory,
   consoleInputChanged,
 } from '../../actions';
+
+import {consoleErrorFactory} from '@factories/validations/errors';
 
 test('evaluateConsoleEntry adds entry to history', () => {
   const expression = '1 + 1';
@@ -37,14 +40,13 @@ test('consoleValueProduced adds value to existing entry', () => {
 
 test('consoleErrorProduced adds error to existing entry', () => {
   const key = '123';
-  const name = 'NameError';
-  const message = 'bogus is not defined';
+  const error = consoleErrorFactory.build();
   const {history} = applyActions(
     evaluateConsoleEntry('1 + bogus', key),
-    consoleErrorProduced(key, name, message, 123456789),
+    consoleErrorProduced(key, 123456789, error),
   );
 
-  expect(history.get(key).error).toMatchObject({name, message});
+  expect(history.get(key).error).toMatchObject(Error.fromJS(error));
 });
 
 test('consoleInputChanged updates currentInputValue', () => {

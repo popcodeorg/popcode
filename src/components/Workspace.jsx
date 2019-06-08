@@ -5,13 +5,17 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {DraggableCore} from 'react-draggable';
 import bindAll from 'lodash-es/bindAll';
+import clone from 'lodash-es/clone';
+import includes from 'lodash-es/includes';
 import isNull from 'lodash-es/isNull';
 import get from 'lodash-es/get';
 import partial from 'lodash-es/partial';
+import prefixAll from 'inline-style-prefixer/static';
 import {t} from 'i18next';
 import classnames from 'classnames';
 
 import {getQueryParameters, setQueryParameters} from '../util/queryParams';
+import {LANGUAGES} from '../util/editor';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {isPristineProject} from '../util/projectUtils';
@@ -22,8 +26,9 @@ import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
 import EditorsColumn from '../containers/EditorsColumn';
-import Output from '../containers/Output';
 
+import CollapsedComponent from './CollapsedComponent';
+import Output from './Output';
 import PopThrobber from './PopThrobber';
 
 export default class Workspace extends React.Component {
@@ -133,9 +138,70 @@ export default class Workspace extends React.Component {
     );
   }
 
+  _renderHiddenLanguages() {
+    const {
+      currentProject,
+      hiddenLanguages,
+      onComponentToggle,
+    } = this.props;
+    return (
+      <>
+        {hiddenLanguages.map(({language}) =>
+          (
+            <CollapsedComponent
+              component={`editor.${language}`}
+              key={language}
+              projectKey={currentProject.projectKey}
+              text={t(`languages.${language}`)}
+              onComponentUnhide={onComponentToggle}
+            />
+          ))}
+      </>
+    );
+  }
+
+  _renderHiddenRightColumnComponents() {
+    const {
+      currentProject,
+      onComponentToggle,
+      shouldShowCollapsedConsole,
+    } = this.props;
+    const rightColumnComponents = ['console'];
+    return rightColumnComponents.
+      filter(component => (
+        includes(currentProject.hiddenUIComponents, component)
+      )).
+      map((component) => {
+        switch (component) {
+          case 'console':
+            if (shouldShowCollapsedConsole) {
+              return (
+                <CollapsedComponent
+                  component="console"
+                  isRightJustified={false}
+                  key="console"
+                  projectKey={currentProject.projectKey}
+                  text={t('workspace.components.console')}
+                  onComponentUnhide={onComponentToggle}
+                />
+              );
+            }
+            return null;
+          default:
+            return null;
+        }
+      });
+  }
+
+  _shouldRenderLeftColumn() {
+    return this.props.hiddenLanguages.length !== LANGUAGES.length;
+  }
+
   _renderEnvironment() {
     const {
       currentProject,
+      isAnyTopBarMenuOpen,
+      isDraggingColumnDivider,
       isFlexResizingSupported,
       resizableFlexGrow,
       resizableFlexRefs,
@@ -148,29 +214,57 @@ export default class Workspace extends React.Component {
     }
 
     const [_handleEditorsRef, _handleOutputRef] = resizableFlexRefs;
-
+    const ignorePointerEvents = isDraggingColumnDivider || isAnyTopBarMenuOpen;
     return (
       <div className="environment">
-        <EditorsColumn
-          style={{flexGrow: resizableFlexGrow.get(0)}}
-          onRef={_handleEditorsRef}
-        />
-        <DraggableCore
-          onDrag={partial(onResizableFlexDividerDrag, 0)}
-          onStart={onStartDragColumnDivider}
-          onStop={onStopDragColumnDivider}
+        {this._shouldRenderLeftColumn() &&
+          <React.Fragment>
+            <div
+              className="environment__column"
+              ref={_handleEditorsRef}
+              style={prefixAll(clone({flexGrow: resizableFlexGrow.get(0)}))}
+            >
+              <div className="environment__column-contents">
+                <div className="environment__column-contents-inner">
+                  <EditorsColumn />
+                  {this._renderHiddenLanguages()}
+                </div>
+              </div>
+            </div>
+            <DraggableCore
+              onDrag={partial(onResizableFlexDividerDrag, 0)}
+              onStart={onStartDragColumnDivider}
+              onStop={onStopDragColumnDivider}
+            >
+              <div
+                className={classnames(
+                  'editors__column-divider',
+                  {
+                    'editors__column-divider_draggable':
+                      isFlexResizingSupported,
+                  },
+                )}
+              />
+            </DraggableCore>
+          </React.Fragment>
+        }
+        <div
+          className="environment__column"
+          ref={_handleOutputRef}
+          style={prefixAll({
+            flexGrow: resizableFlexGrow.get(1),
+            pointerEvents: ignorePointerEvents ? 'none' : 'all',
+          })}
         >
-          <div
-            className={classnames(
-              'editors__column-divider',
-              {'editors__column-divider_draggable': isFlexResizingSupported},
-            )}
-          />
-        </DraggableCore>
-        <Output
-          style={{flexGrow: resizableFlexGrow.get(1)}}
-          onRef={_handleOutputRef}
-        />
+          <div className="environment__column-contents">
+            <div className="environment__column-contents-inner">
+              <Output />
+              {this._renderHiddenRightColumnComponents()}
+              {!this._shouldRenderLeftColumn() &&
+                this._renderHiddenLanguages()}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -196,10 +290,14 @@ export default class Workspace extends React.Component {
 
 Workspace.propTypes = {
   currentProject: PropTypes.object,
+  hiddenLanguages: PropTypes.array.isRequired,
+  isAnyTopBarMenuOpen: PropTypes.bool.isRequired,
+  isDraggingColumnDivider: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   isFlexResizingSupported: PropTypes.bool.isRequired,
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
   resizableFlexRefs: PropTypes.array.isRequired,
+  shouldShowCollapsedConsole: PropTypes.bool.isRequired,
   onApplicationLoaded: PropTypes.func.isRequired,
   onClickInstructionsEditButton: PropTypes.func.isRequired,
   onComponentToggle: PropTypes.func.isRequired,
