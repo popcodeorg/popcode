@@ -1,5 +1,15 @@
 import {Observable} from 'rxjs';
 
+import startAccountMigration from '../startAccountMigration';
+import {
+  accountMigrationComplete,
+  accountMigrationError,
+  accountMigrationUndoPeriodExpired,
+} from '../../actions/user';
+import {migrateAccount} from '../../clients/firebase';
+import {getCurrentAccountMigration} from '../../selectors';
+import {bugsnagClient} from '../../util/bugsnag';
+
 import {
   credentialFactory,
   firebaseErrorFactory,
@@ -10,15 +20,6 @@ import {
   githubRepositoryFactory,
 } from '@factories/clients/github';
 
-import startAccountMigration from '../startAccountMigration';
-import {
-  accountMigrationComplete,
-  accountMigrationError,
-  accountMigrationUndoPeriodExpired,
-} from '../../actions/user';
-import {migrateAccount} from '../../clients/firebase';
-import {getCurrentAccountMigration} from '../../selectors';
-import {bugsnagClient} from '../../util/bugsnag';
 
 jest.mock('../../actions/user.js');
 jest.mock('../../clients/firebase.js');
