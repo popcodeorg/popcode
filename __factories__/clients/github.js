@@ -45,3 +45,17 @@ export const githubProfileFactory = new Factory().attrs({
     private_repos: 10000,
   },
 });
+
+export const githubRepositoryFactory = new Factory().attrs({
+  hiddenUIComponents: ['console'],
+  instructions: '',
+  isArchived: false,
+  projectKey: '123456789',
+  sources: {
+    css: '',
+    html: '<\!DOCTYPE html>' +
+      '<html><head><title>Sample Project</title></head><body></body></html>',
+    javascript: '',
+  },
+  updatedAt: 1560012978057,
+});

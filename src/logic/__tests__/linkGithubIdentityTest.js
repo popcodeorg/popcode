@@ -1,11 +1,3 @@
-import linkGithubIdentity from '../linkGithubIdentity';
-import {
-  linkGithub,
-  saveCredentialForCurrentUser,
-} from '../../clients/firebase';
-import {getProfileForAuthenticatedUser} from '../../clients/github';
-import {bugsnagClient} from '../../util/bugsnag';
-
 import {
   credentialFactory,
   credentialInUseErrorFactory,
@@ -14,6 +6,14 @@ import {
 } from '@factories/clients/firebase';
 
 import {githubProfileFactory} from '@factories/clients/github';
+
+import linkGithubIdentity from '../linkGithubIdentity';
+import {
+  linkGithub,
+  saveCredentialForCurrentUser,
+} from '../../clients/firebase';
+import {getProfileForAuthenticatedUser} from '../../clients/github';
+import {bugsnagClient} from '../../util/bugsnag';
 
 jest.mock('../../clients/firebase.js');
 jest.mock('../../clients/github.js');

@@ -1,18 +1,19 @@
 import {createLogic} from 'redux-logic';
 
+import {first} from 'rxjs/operators';
+
 import {migrateAccount} from '../clients/firebase';
 import {
   accountMigrationComplete,
   accountMigrationError,
   accountMigrationUndoPeriodExpired,
-} from "../actions/user";
-import {getCurrentAccountMigration} from "../selectors";
-import {bugsnagClient} from "../util/bugsnag";
-import { first } from 'rxjs/operators';
+} from '../actions/user';
+import {getCurrentAccountMigration} from '../selectors';
+import {bugsnagClient} from '../util/bugsnag';
 
 export default createLogic({
   type: 'START_ACCOUNT_MIGRATION',
-  async process({action$}) {
+  async process({getState, action$}, dispatch, done) {
     const continuePromise = new Promise((resolve) => {
       setTimeout(resolve, 5000, false);
     });
@@ -28,26 +29,26 @@ export default createLogic({
     ]);
 
     if (shouldCancel) {
-      console.log('aborting');
       return;
     }
 
-    console.log('continuing');
+    await dispatch(accountMigrationUndoPeriodExpired());
+    const {firebaseCredential} = await getCurrentAccountMigration(getState());
+    try {
+      const {user: userData, migratedProjects} =
+        await migrateAccount(firebaseCredential);
 
-    // await put(accountMigrationUndoPeriodExpired());
-    // const {firebaseCredential} = await select(getCurrentAccountMigration);
-    // try {
-    //   const {user: userData, migratedProjects} =
-    //     await call(migrateAccount, firebaseCredential);
-    //
-    //   await put(accountMigrationComplete(
-    //     userData,
-    //     firebaseCredential,
-    //     migratedProjects,
-    //   ));
-    // } catch (e) {
-    //   await call([bugsnagClient, 'notify'], e);
-    //   await put(accountMigrationError(e));
-    // }
+      await dispatch(
+        accountMigrationComplete(
+          userData,
+          firebaseCredential,
+          migratedProjects,
+        ),
+      );
+    } catch (e) {
+      await bugsnagClient.notify(e);
+      await dispatch(accountMigrationError(e));
+    }
+    done();
   },
 });
