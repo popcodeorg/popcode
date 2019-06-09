@@ -10,10 +10,10 @@ import includes from 'lodash-es/includes';
 import isNull from 'lodash-es/isNull';
 import get from 'lodash-es/get';
 import partial from 'lodash-es/partial';
-import prefixAll from 'inline-style-prefixer/static';
 import {t} from 'i18next';
 import classnames from 'classnames';
 
+import prefix from '../services/inlineStylePrefixer';
 import {getQueryParameters, setQueryParameters} from '../util/queryParams';
 import {LANGUAGES} from '../util/editor';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
@@ -222,7 +222,7 @@ export default class Workspace extends React.Component {
             <div
               className="environment__column"
               ref={_handleEditorsRef}
-              style={prefixAll(clone({flexGrow: resizableFlexGrow.get(0)}))}
+              style={prefix(clone({flexGrow: resizableFlexGrow.get(0)}))}
             >
               <div className="environment__column-contents">
                 <div className="environment__column-contents-inner">
@@ -251,7 +251,7 @@ export default class Workspace extends React.Component {
         <div
           className="environment__column"
           ref={_handleOutputRef}
-          style={prefixAll({
+          style={prefix({
             flexGrow: resizableFlexGrow.get(1),
             pointerEvents: ignorePointerEvents ? 'none' : 'all',
           })}
