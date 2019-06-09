@@ -1,11 +1,14 @@
 import {connect} from 'react-redux';
+import every from 'lodash-es/every';
 
 import Workspace from '../components/Workspace';
 import {
   getCurrentProject,
   isDraggingColumnDivider,
   isEditingInstructions,
+  getCurrentProjectPreviewTitle,
   getHiddenAndVisibleLanguages,
+  getHiddenUIComponents,
   getOpenTopBarMenu,
   isCurrentProjectSyntacticallyValid,
 } from '../selectors';
@@ -20,13 +23,20 @@ import resizableFlex from '../higherOrderComponents/resizableFlex';
 
 function mapStateToProps(state) {
   const {hiddenLanguages} = getHiddenAndVisibleLanguages(state);
+  const isCurrentProjectValid = isCurrentProjectSyntacticallyValid(state);
+  const hiddenUIComponents = getHiddenUIComponents(state);
+  const areAllRightColumnComponentsCollapsed = every(
+    ['console', 'preview'], component => hiddenUIComponents.includes(component),
+  );
   return {
     currentProject: getCurrentProject(state),
     isAnyTopBarMenuOpen: Boolean(getOpenTopBarMenu(state)),
     isDraggingColumnDivider: isDraggingColumnDivider(state),
     isEditingInstructions: isEditingInstructions(state),
     hiddenLanguages,
-    shouldShowCollapsedConsole: isCurrentProjectSyntacticallyValid(state),
+    shouldShowCollapsedConsole: isCurrentProjectValid,
+    shouldRenderOutput: !isCurrentProjectValid || !areAllRightColumnComponentsCollapsed,
+    title: getCurrentProjectPreviewTitle(state),
   };
 }
 

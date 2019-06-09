@@ -1,9 +1,10 @@
 import {
+  faChevronDown,
   faExternalLinkAlt,
   faSyncAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import get from 'lodash-es/get';
+import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import React from 'react';
@@ -13,13 +14,16 @@ import PreviewFrame from './PreviewFrame';
 export default function Preview({
   compiledProjects,
   consoleEntries,
+  currentProjectKey,
   showingErrors,
+  title,
   onConsoleError,
   onConsoleLog,
   onConsoleValue,
   onPopOutProject,
   onRefreshClick,
   onRuntimeError,
+  onToggleVisible,
 }) {
   if (showingErrors) {
     return null;
@@ -38,9 +42,6 @@ export default function Preview({
     />
   ));
 
-  const mostRecentCompiledProject = compiledProjects.last();
-  const title = get(mostRecentCompiledProject, 'title', '');
-
   return (
     <div className="preview output__item">
       <div className="preview__title-bar">
@@ -51,6 +52,12 @@ export default function Preview({
           />
         </span>
         {title}
+        <span className="preview__button preview__button_toggle-visibility">
+          <FontAwesomeIcon
+            icon={faChevronDown}
+            onClick={partial(onToggleVisible, currentProjectKey)}
+          />
+        </span>
         <span className="preview__button preview__button_reset">
           <FontAwesomeIcon icon={faSyncAlt} onClick={onRefreshClick} />
         </span>
@@ -63,11 +70,14 @@ export default function Preview({
 Preview.propTypes = {
   compiledProjects: ImmutablePropTypes.iterable.isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
+  currentProjectKey: PropTypes.string.isRequired,
   showingErrors: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
   onConsoleError: PropTypes.func.isRequired,
   onConsoleLog: PropTypes.func.isRequired,
   onConsoleValue: PropTypes.func.isRequired,
   onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
+  onToggleVisible: PropTypes.func.isRequired,
 };

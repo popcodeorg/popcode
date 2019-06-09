@@ -12,6 +12,7 @@ import getCurrentProjectInstructions from './getCurrentProjectInstructions';
 import getCurrentProjectExportedRepoName
   from './getCurrentProjectExportedRepoName';
 import getCurrentProjectPreview from './getCurrentProjectPreview';
+import getCurrentProjectPreviewTitle from './getCurrentProjectPreviewTitle';
 import getCurrentProjectKey from './getCurrentProjectKey';
 import getCurrentUser from './getCurrentUser';
 import getCurrentUserId from './getCurrentUserId';
@@ -66,6 +67,7 @@ export {
   getCurrentProjectInstructions,
   getCurrentProjectKey,
   getCurrentProjectPreview,
+  getCurrentProjectPreviewTitle,
   getCurrentUser,
   getCurrentUserId,
   getCurrentValidationState,
