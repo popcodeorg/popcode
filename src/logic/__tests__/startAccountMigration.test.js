@@ -17,20 +17,21 @@ import {
 } from '@factories/clients/firebase';
 
 import {
-  githubRepositoryFactory,
-} from '@factories/clients/github';
+  firebaseRepositoryFactory,
+} from '@factories/data/firebase';
 
 
 jest.mock('../../actions/user.js');
 jest.mock('../../clients/firebase.js');
 jest.mock('../../selectors');
 jest.mock('../../util/bugsnag.js');
-
-const getState = jest.fn();
-const dispatch = jest.fn();
-const done = jest.fn();
+jest.useFakeTimers();
 
 describe('startAccountMigration', () => {
+  const getState = jest.fn();
+  const dispatch = jest.fn();
+  const done = jest.fn();
+
   test('not dismissed during undo period, successful migration', async() => {
     const mockCredential = credentialFactory.build();
     getCurrentAccountMigration.mockResolvedValue({
@@ -39,19 +40,20 @@ describe('startAccountMigration', () => {
 
     const mockUser = userFactory.build();
     const mockProjects = [
-      githubRepositoryFactory.build(),
-      githubRepositoryFactory.build(),
+      firebaseRepositoryFactory.build(),
+      firebaseRepositoryFactory.build(),
     ];
     migrateAccount.mockResolvedValue({
       user: mockUser,
       migratedProjects: mockProjects,
     });
 
-    const emptyDispatch = new Observable((subscriber) => {
-      subscriber.complete();
-    });
+    const emptyAction = new Observable();
+
+    // eslint-disable-next-line promise/prefer-await-to-then
+    Promise.resolve().then(() => jest.advanceTimersByTime(5000));
     await startAccountMigration.process(
-      {action$: emptyDispatch, getState},
+      {action$: emptyAction, getState},
       dispatch,
       done,
     );
@@ -76,11 +78,12 @@ describe('startAccountMigration', () => {
 
     bugsnagClient.notify.mockResolvedValue();
 
-    const emptyDispatch = new Observable((subscriber) => {
-      subscriber.complete();
-    });
+    const emptyAction = new Observable();
+
+    // eslint-disable-next-line promise/prefer-await-to-then
+    Promise.resolve().then(() => jest.advanceTimersByTime(5000));
     await startAccountMigration.process(
-      {action$: emptyDispatch, getState},
+      {action$: emptyAction, getState},
       dispatch,
       done,
     );
@@ -93,12 +96,12 @@ describe('startAccountMigration', () => {
   });
 
   test('dismissed during undo period', async() => {
-    const cancelDispatch = new Observable((subscriber) => {
+    const cancelAction = new Observable((subscriber) => {
       subscriber.next({type: 'DISMISS_ACCOUNT_MIGRATION'});
       subscriber.complete();
     });
     await startAccountMigration.process(
-      {action$: cancelDispatch, getState},
+      {action$: cancelAction, getState},
       dispatch,
       done,
     );

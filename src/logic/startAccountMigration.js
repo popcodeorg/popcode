@@ -20,7 +20,6 @@ export default createLogic({
 
     const cancelPromise = action$.pipe(first(
       ({type}) => type === 'DISMISS_ACCOUNT_MIGRATION',
-      false,
     )).toPromise();
 
     const shouldCancel = await Promise.race([
