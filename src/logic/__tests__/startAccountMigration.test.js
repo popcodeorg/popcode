@@ -49,14 +49,13 @@ describe('startAccountMigration', () => {
     });
 
     const emptyAction = new Observable();
-
-    // eslint-disable-next-line promise/prefer-await-to-then
-    Promise.resolve().then(() => jest.advanceTimersByTime(5000));
-    await startAccountMigration.process(
+    const migrationDone = startAccountMigration.process(
       {action$: emptyAction, getState},
       dispatch,
       done,
     );
+    jest.advanceTimersByTime(5000);
+    await migrationDone;
 
     expect(accountMigrationUndoPeriodExpired).toHaveBeenCalledWith();
     expect(migrateAccount).toHaveBeenCalledWith(mockCredential);
@@ -79,14 +78,13 @@ describe('startAccountMigration', () => {
     bugsnagClient.notify.mockResolvedValue();
 
     const emptyAction = new Observable();
-
-    // eslint-disable-next-line promise/prefer-await-to-then
-    Promise.resolve().then(() => jest.advanceTimersByTime(5000));
-    await startAccountMigration.process(
+    const migrationDone = startAccountMigration.process(
       {action$: emptyAction, getState},
       dispatch,
       done,
     );
+    jest.advanceTimersByTime(5000);
+    await migrationDone;
 
     expect(accountMigrationUndoPeriodExpired).toHaveBeenCalledWith();
     expect(migrateAccount).toHaveBeenCalledWith(mockCredential);
