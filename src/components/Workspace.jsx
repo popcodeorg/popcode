@@ -17,6 +17,7 @@ import classnames from 'classnames';
 import prefix from '../services/inlineStylePrefixer';
 import {getQueryParameters, setQueryParameters} from '../util/queryParams';
 import {LANGUAGES} from '../util/editor';
+import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {isPristineProject} from '../util/projectUtils';
@@ -32,7 +33,6 @@ import CollapsedComponent from './CollapsedComponent';
 import Output from './Output';
 import PopThrobber from './PopThrobber';
 
-const RIGHT_COLUMN_COMPONENTS = ['preview', 'console'];
 export default class Workspace extends React.Component {
   constructor() {
     super();

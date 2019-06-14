@@ -20,13 +20,14 @@ import {
   startEditingInstructions,
 } from '../actions';
 import resizableFlex from '../higherOrderComponents/resizableFlex';
+import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
 
 function mapStateToProps(state) {
   const {hiddenLanguages} = getHiddenAndVisibleLanguages(state);
   const isCurrentProjectValid = isCurrentProjectSyntacticallyValid(state);
   const hiddenUIComponents = getHiddenUIComponents(state);
   const areAllRightColumnComponentsCollapsed = every(
-    ['console', 'preview'],
+    RIGHT_COLUMN_COMPONENTS,
     component => hiddenUIComponents.includes(component),
   );
   return {
