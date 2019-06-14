@@ -9,7 +9,6 @@ install:
 - docker build --pull --cache-from popcodeorg/popcode:latest --tag popcode .
 script:
 - docker run --env NODE_ENV=test popcode yarn test
-- docker run --env NODE_ENV=test popcode yarn run test-deprecated
 - >-
   docker run
   --env NODE_ENV=production

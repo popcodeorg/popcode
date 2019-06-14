@@ -27,6 +27,11 @@ module.exports = function configure(config) {
 
     webpack: webpackConfiguration('test'),
 
+    webpackMiddleware: {
+      logLevel: 'warn',
+      stats: 'errors-only',
+    },
+
     reporters: ['dots'],
 
     port: 9876,

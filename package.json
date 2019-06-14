@@ -266,11 +266,11 @@
   "scripts": {
     "postinstall": "bower install",
     "pretest": "yarn run check-configs && yarn run lint",
-    "test": "jest",
+    "test": "yarn run test-jest && yarn run test-karma",
     "start": "gulp dev",
-
-    "autotest": "jest --watchAll",
-    "autotest-deprecated": "karma start --no-single-run --auto-watch",
+    "autotest": "splitvt -t autotest -upper 'yarn run autotest-jest' -lower 'yarn run autotest-karma'",
+    "autotest-jest": "jest --watchAll",
+    "autotest-karma": "karma start --no-single-run --auto-watch",
     "check-configs": "script/check-configs",
     "check-duplicate-dependencies": "script/check-duplicate-dependencies",
     "deduplicate": "yarn-deduplicate --strategy fewer",
@@ -280,7 +280,8 @@
     "lint-css": "stylelint src/**/*.css",
     "lint-js": "eslint --max-warnings=0 --report-unused-disable-directives --ext .js,.jsx -- src test *.js",
     "preview": "rm -rvf dist/* && NODE_ENV=production gulp build && static -a 0.0.0.0 -p 3000 dist",
-    "test-deprecated": "karma start --single-run --no-auto-watch",
+    "test-jest": "jest",
+    "test-karma": "karma start --single-run --no-auto-watch",
     "update-validation-acceptance": "script/update-validation-acceptance",
     "toc": "doctoc README.md --github --title '## Table of Contents'"
   },
