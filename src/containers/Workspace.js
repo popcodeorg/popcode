@@ -26,7 +26,8 @@ function mapStateToProps(state) {
   const isCurrentProjectValid = isCurrentProjectSyntacticallyValid(state);
   const hiddenUIComponents = getHiddenUIComponents(state);
   const areAllRightColumnComponentsCollapsed = every(
-    ['console', 'preview'], component => hiddenUIComponents.includes(component),
+    ['console', 'preview'],
+    component => hiddenUIComponents.includes(component),
   );
   return {
     currentProject: getCurrentProject(state),
@@ -35,7 +36,8 @@ function mapStateToProps(state) {
     isEditingInstructions: isEditingInstructions(state),
     hiddenLanguages,
     shouldShowCollapsedConsole: isCurrentProjectValid,
-    shouldRenderOutput: !isCurrentProjectValid || !areAllRightColumnComponentsCollapsed,
+    shouldRenderOutput: !isCurrentProjectValid ||
+      !areAllRightColumnComponentsCollapsed,
     title: getCurrentProjectPreviewTitle(state),
   };
 }

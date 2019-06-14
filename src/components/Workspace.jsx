@@ -32,6 +32,7 @@ import CollapsedComponent from './CollapsedComponent';
 import Output from './Output';
 import PopThrobber from './PopThrobber';
 
+const RIGHT_COLUMN_COMPONENTS = ['preview', 'console'];
 export default class Workspace extends React.Component {
   constructor() {
     super();
@@ -168,8 +169,7 @@ export default class Workspace extends React.Component {
       shouldShowCollapsedConsole,
       title,
     } = this.props;
-    const rightColumnComponents = ['preview', 'console']; // TODO: dedupe
-    return rightColumnComponents.
+    return RIGHT_COLUMN_COMPONENTS.
       filter(component => (
         includes(currentProject.hiddenUIComponents, component)
       )).
@@ -214,8 +214,7 @@ export default class Workspace extends React.Component {
     const {
       currentProject,
     } = this.props;
-    const rightColumnComponents = ['preview', 'console']; // TODO: dedupe
-    return some(rightColumnComponents,
+    return some(RIGHT_COLUMN_COMPONENTS,
       component => (
         !includes(currentProject.hiddenUIComponents, component)
       ));
@@ -231,7 +230,7 @@ export default class Workspace extends React.Component {
         {this._renderHiddenRightColumnComponents()}
         {this._renderHiddenLanguages()}
       </div>
-    )
+    );
   }
   _renderEnvironment() {
     const {

@@ -15,6 +15,7 @@ export default function Preview({
   compiledProjects,
   consoleEntries,
   currentProjectKey,
+  isOpen,
   showingErrors,
   title,
   onConsoleError,
@@ -25,7 +26,7 @@ export default function Preview({
   onRuntimeError,
   onToggleVisible,
 }) {
-  if (showingErrors) {
+  if (showingErrors || !isOpen) {
     return null;
   }
 
@@ -71,6 +72,7 @@ Preview.propTypes = {
   compiledProjects: ImmutablePropTypes.iterable.isRequired,
   consoleEntries: ImmutablePropTypes.iterable.isRequired,
   currentProjectKey: PropTypes.string.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   showingErrors: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   onConsoleError: PropTypes.func.isRequired,
