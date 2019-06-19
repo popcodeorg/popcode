@@ -265,7 +265,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "pretest": "yarn run check-configs && yarn run lint",
+    "pretest": "yarn run check-configs && yarn run check-duplicate-dependencies && yarn run lint",
     "test": "yarn run test-jest && yarn run test-karma",
     "start": "gulp dev",
     "autotest": "splitvt -t autotest -upper 'yarn run autotest-jest' -lower 'yarn run autotest-karma'",

@@ -25,7 +25,6 @@ script:
   --volume=$TRAVIS_BUILD_DIR/dist:/app/dist
   popcode
   yarn run eslint --no-eslintrc --env es5 dist
-- docker run popcode yarn run check-duplicate-dependencies
 before_deploy:
 - >-
   docker run
