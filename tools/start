@@ -1,0 +1,7 @@
+#!/bin/sh
+set -ex
+
+# Start the development server
+
+docker-compose run --rm app yarn install
+docker-compose up
