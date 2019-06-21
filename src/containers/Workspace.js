@@ -39,6 +39,7 @@ function mapStateToProps(state) {
     !isUserTyping(state));
   return {
     currentProject: getCurrentProject(state),
+    hasErrors: !isCurrentProjectValid,
     isAnyTopBarMenuOpen: Boolean(getOpenTopBarMenu(state)),
     isDraggingColumnDivider: isDraggingColumnDivider(state),
     isEditingInstructions: isEditingInstructions(state),

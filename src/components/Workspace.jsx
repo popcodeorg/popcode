@@ -165,9 +165,14 @@ export default class Workspace extends React.Component {
   _renderHiddenRightColumnComponents() {
     const {
       currentProject,
+      hasErrors,
       onComponentToggle,
       title,
     } = this.props;
+    // Errors take over the whole right side of the screen
+    if (hasErrors) {
+      return null;
+    }
     return RIGHT_COLUMN_COMPONENTS.
       filter(component => (
         includes(currentProject.hiddenUIComponents, component)
@@ -330,6 +335,7 @@ export default class Workspace extends React.Component {
 
 Workspace.propTypes = {
   currentProject: PropTypes.object,
+  hasErrors: PropTypes.bool.isRequired,
   hiddenLanguages: PropTypes.array.isRequired,
   isAnyTopBarMenuOpen: PropTypes.bool.isRequired,
   isDraggingColumnDivider: PropTypes.bool.isRequired,
