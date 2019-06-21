@@ -4,6 +4,7 @@ import every from 'lodash-es/every';
 import Workspace from '../components/Workspace';
 import {
   getCurrentProject,
+  isCurrentlyValidating,
   isDraggingColumnDivider,
   isEditingInstructions,
   getCurrentProjectPreviewTitle,
@@ -11,6 +12,7 @@ import {
   getHiddenUIComponents,
   getOpenTopBarMenu,
   isCurrentProjectSyntacticallyValid,
+  isUserTyping,
 } from '../selectors';
 import {
   toggleComponent,
@@ -25,20 +27,23 @@ import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
 function mapStateToProps(state) {
   const {hiddenLanguages} = getHiddenAndVisibleLanguages(state);
   const isCurrentProjectValid = isCurrentProjectSyntacticallyValid(state);
+  const isCurrentProjectValidating = isCurrentlyValidating(state);
   const hiddenUIComponents = getHiddenUIComponents(state);
   const areAllRightColumnComponentsCollapsed = every(
     RIGHT_COLUMN_COMPONENTS,
     component => hiddenUIComponents.includes(component),
   );
+  const shouldRenderOutput = !areAllRightColumnComponentsCollapsed ||
+    (!isCurrentProjectValid &&
+    !isCurrentProjectValidating &&
+    !isUserTyping(state));
   return {
     currentProject: getCurrentProject(state),
     isAnyTopBarMenuOpen: Boolean(getOpenTopBarMenu(state)),
     isDraggingColumnDivider: isDraggingColumnDivider(state),
     isEditingInstructions: isEditingInstructions(state),
     hiddenLanguages,
-    shouldShowCollapsedConsole: isCurrentProjectValid,
-    shouldRenderOutput: !isCurrentProjectValid ||
-      !areAllRightColumnComponentsCollapsed,
+    shouldRenderOutput,
     title: getCurrentProjectPreviewTitle(state),
   };
 }

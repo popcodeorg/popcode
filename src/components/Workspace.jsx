@@ -166,7 +166,6 @@ export default class Workspace extends React.Component {
     const {
       currentProject,
       onComponentToggle,
-      shouldShowCollapsedConsole,
       title,
     } = this.props;
     return RIGHT_COLUMN_COMPONENTS.
@@ -176,19 +175,16 @@ export default class Workspace extends React.Component {
       map((component) => {
         switch (component) {
           case 'console':
-            if (shouldShowCollapsedConsole) {
-              return (
-                <CollapsedComponent
-                  component="console"
-                  isRightJustified={false}
-                  key="console"
-                  projectKey={currentProject.projectKey}
-                  text={t('workspace.components.console')}
-                  onComponentUnhide={onComponentToggle}
-                />
-              );
-            }
-            return null;
+            return (
+              <CollapsedComponent
+                component="console"
+                isRightJustified={false}
+                key="console"
+                projectKey={currentProject.projectKey}
+                text={t('workspace.components.console')}
+                onComponentUnhide={onComponentToggle}
+              />
+            );
           case 'preview':
             return (
               <CollapsedComponent
@@ -213,8 +209,9 @@ export default class Workspace extends React.Component {
   _shouldRenderRightColumn() {
     const {
       currentProject,
+      shouldRenderOutput,
     } = this.props;
-    return some(RIGHT_COLUMN_COMPONENTS,
+    return shouldRenderOutput || some(RIGHT_COLUMN_COMPONENTS,
       component => (
         !includes(currentProject.hiddenUIComponents, component)
       ));
@@ -341,7 +338,6 @@ Workspace.propTypes = {
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
   resizableFlexRefs: PropTypes.array.isRequired,
   shouldRenderOutput: PropTypes.bool.isRequired,
-  shouldShowCollapsedConsole: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   onApplicationLoaded: PropTypes.func.isRequired,
   onClickInstructionsEditButton: PropTypes.func.isRequired,
