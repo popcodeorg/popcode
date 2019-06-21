@@ -21,6 +21,9 @@ ARG install_dependencies=true
 COPY package.json yarn.lock bower.json /app/
 RUN if [ $install_dependencies = true ]; then yarn install --frozen-lockfile; fi
 
+ARG install_dev_packages=false
+RUN if [ $install_dev_packages = true ]; then apt-get install splitvt; fi
+
 COPY . /app/
 
 EXPOSE 3000

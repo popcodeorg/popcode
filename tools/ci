@@ -1,0 +1,6 @@
+#!/bin/sh
+set -ex
+
+# Run all tests and checks that are run as part of continuous integration
+
+docker-compose run --rm app yarn test

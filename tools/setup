@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# Build your development environment. Running this on an already-built
+# environment will update to the latest dependencies.
+
+export OSX=$(expr $(uname | tr '[:upper:]' '[:lower:]') == "darwin*")
+
+if ! docker-compose -v &> /dev/null
+then
+    echo "Before running this script, install Docker and Docker Compose."
+    if [ -z $OSX ]
+    then
+        echo "Download the latest community edition here:"
+        echo "https://docs.docker.com/docker-for-mac/release-notes/"
+    else
+        echo "Find installation instructions for your distro here:"
+        echo "https://docs.docker.com/install/linux/docker-ce/ubuntu/"
+    fi
+    exit 1
+fi
+
+if [ -z $OSX ]
+then
+    set -ex
+    ln -si docker-compose.sync.yml docker-compose.override.yml
+else
+    set -ex
+    ln -si docker-compose.bind.yml docker-compose.override.yml
+fi
+
+docker pull popcodeorg/popcode:latest
+docker-compose up --build --no-start
+
+docker-compose run --rm app yarn install --frozen-lockfile
+
+set +x
+
+echo ""
+echo "================================================================================"
+echo ""
+echo "Your development environment is ready! To run your development server, type:"
+echo ""
+echo "  ./tools/start"
+echo ""
+echo "To run tests, type:"
+echo ""
+echo "  ./tools/test"

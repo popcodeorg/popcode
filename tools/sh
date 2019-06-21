@@ -1,0 +1,6 @@
+#!/bin/sh
+set -ex
+
+# Start a shell in the main Docker container
+
+docker-compose run --rm app bash

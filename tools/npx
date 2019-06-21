@@ -1,0 +1,6 @@
+#!/bin/bash
+set -ex
+
+# Run an arbitrary npx command in the Docker container.
+
+docker-compose run --rm app npx $@
