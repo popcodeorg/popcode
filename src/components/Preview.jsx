@@ -4,6 +4,7 @@ import {
   faSyncAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import classnames from 'classnames';
 import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -26,7 +27,7 @@ export default function Preview({
   onRuntimeError,
   onToggleVisible,
 }) {
-  if (showingErrors || !isOpen) {
+  if (showingErrors) {
     return null;
   }
 
@@ -44,7 +45,13 @@ export default function Preview({
   ));
 
   return (
-    <div className="preview output__item">
+    <div
+      className={classnames(
+        'preview',
+        'output__item',
+        {u__hidden: !isOpen},
+      )}
+    >
       <div className="preview__title-bar">
         <span className="preview__button preview__button_pop-out">
           <FontAwesomeIcon
