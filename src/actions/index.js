@@ -66,6 +66,10 @@ import {
   toggleTopBarMenu,
   updateNotificationMetadata,
   userDismissedNotification,
+  openLoginPrompt,
+  closeLoginPrompt,
+  openProjectPickerModal,
+  closeProjectPickerModal,
 } from './ui';
 
 import {
@@ -143,4 +147,6 @@ export {
   saveProject,
   openLoginPrompt,
   closeLoginPrompt,
+  openProjectPickerModal,
+  closeProjectPickerModal,
 };

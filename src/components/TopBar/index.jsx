@@ -12,7 +12,7 @@ import ExportMenu from './ExportMenu';
 import HamburgerMenu from './HamburgerMenu';
 import LibraryPicker from './LibraryPicker';
 import NewProjectButton from './NewProjectButton';
-import ProjectPicker from './ProjectPicker';
+import ProjectPickerButton from './ProjectPickerButton';
 import SnapshotButton from './SnapshotButton';
 import TextSize from './TextSize';
 
@@ -51,10 +51,7 @@ export default function TopBar({
   openMenu,
   projectKeys,
   shouldShowSavedIndicator,
-  projects,
-  shouldShowArchivedProjects,
   validationState,
-  onChangeCurrentProject,
   onClickMenu,
   onCloseMenu,
   onCreateNewProject,
@@ -65,12 +62,12 @@ export default function TopBar({
   onLinkGitHub,
   onLogOut,
   onOpenAssignmentCreator,
+  onOpenProjectPickerModal,
   onStartGithubLogIn,
   onStartGoogleLogIn,
   onStartEditingInstructions,
   onToggleLibrary,
   onToggleTextSize,
-  onToggleViewArchived,
   onUnlinkGitHub,
   onUpdateRepo,
 }) {
@@ -113,15 +110,12 @@ export default function TopBar({
         isUserAuthenticated={isUserAuthenticated}
         onClick={onCreateNewProject}
       />
-      <ProjectPicker
+      <ProjectPickerButton
         currentProjectKey={currentProjectKey}
         isUserAuthenticated={isUserAuthenticated}
         projectKeys={projectKeys}
-        projects={projects}
-        shouldShowArchivedProjects={shouldShowArchivedProjects}
         shouldShowSavedIndicator={shouldShowSavedIndicator}
-        onChangeCurrentProject={onChangeCurrentProject}
-        onToggleViewArchived={onToggleViewArchived}
+        onClick={onOpenProjectPickerModal}
       />
       <CurrentUser
         isLoginAvailable={isGapiReady}
@@ -174,11 +168,8 @@ TopBar.propTypes = {
   isUserTyping: PropTypes.bool.isRequired,
   openMenu: PropTypes.string,
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
-  projects: PropTypes.array.isRequired,
-  shouldShowArchivedProjects: PropTypes.bool.isRequired,
   shouldShowSavedIndicator: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
-  onChangeCurrentProject: PropTypes.func.isRequired,
   onClickMenu: PropTypes.func.isRequired,
   onCloseMenu: PropTypes.func.isRequired,
   onCreateNewProject: PropTypes.func.isRequired,
@@ -189,12 +180,12 @@ TopBar.propTypes = {
   onLinkGitHub: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onOpenAssignmentCreator: PropTypes.func.isRequired,
+  onOpenProjectPickerModal: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
   onStartGithubLogIn: PropTypes.func.isRequired,
   onStartGoogleLogIn: PropTypes.func.isRequired,
   onToggleLibrary: PropTypes.func.isRequired,
   onToggleTextSize: PropTypes.func.isRequired,
-  onToggleViewArchived: PropTypes.func.isRequired,
   onUnlinkGitHub: PropTypes.func.isRequired,
   onUpdateRepo: PropTypes.func.isRequired,
 };

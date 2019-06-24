@@ -37,6 +37,7 @@ import isExperimental from './isExperimental';
 import isGapiReady from './isGapiReady';
 import isGistExportInProgress from './isGistExportInProgress';
 import isLoginPromptOpen from './isLoginPromptOpen';
+import isProjectPickerModalOpen from './isProjectPickerModalOpen';
 import isRepoExportInProgress from './isRepoExportInProgress';
 import isSaveIndicatorVisible from './isSaveIndicatorVisible';
 import isSnapshotInProgress from './isSnapshotInProgress';
@@ -90,6 +91,7 @@ export {
   isGapiReady,
   isGistExportInProgress,
   isLoginPromptOpen,
+  isProjectPickerModalOpen,
   isRepoExportInProgress,
   isSaveIndicatorVisible,
   isSnapshotInProgress,

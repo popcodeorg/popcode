@@ -1,13 +1,28 @@
-import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
+import React from 'react';
 import i18next from 'i18next';
 import PropTypes from 'prop-types';
-import React from 'react';
+import {isEmpty} from 'lodash-es';
 
-export default function ProjectPickerButton({shouldShowSavedIndicator}) {
+export default function ProjectPickerButton({
+  currentProjectKey,
+  isUserAuthenticated,
+  projectKeys,
+  shouldShowSavedIndicator,
+  onClick,
+}) {
+  if (
+    !(
+      isUserAuthenticated &&
+      !isEmpty(projectKeys) &&
+      Boolean(currentProjectKey)
+    )
+  ) {
+    return null;
+  }
+
   return (
-    <div>
+    <div className="top-bar__menu-button" onClick={onClick}>
       <span className={classnames({u__invisible: shouldShowSavedIndicator})}>
         {i18next.t('top-bar.load-project')}
         <FontAwesomeIcon
@@ -27,5 +42,13 @@ export default function ProjectPickerButton({shouldShowSavedIndicator}) {
 }
 
 ProjectPickerButton.propTypes = {
+  currentProjectKey: PropTypes.string,
+  isUserAuthenticated: PropTypes.bool.isRequired,
+  projectKeys: PropTypes.array.isRequired,
   shouldShowSavedIndicator: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
+ProjectPickerButton.defaultProps = {
+  currentProjectKey: null,
 };

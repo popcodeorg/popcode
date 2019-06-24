@@ -45,6 +45,25 @@ import {
   isUserTyping,
 } from '../selectors';
 
+import {
+  changeCurrentProject,
+  closeTopBarMenu,
+  createProject,
+  createSnapshot,
+  exportProject,
+  linkGithubIdentity,
+  unlinkGithubIdentity,
+  openAssignmentCreator,
+  openProjectPickerModal,
+  startEditingInstructions,
+  toggleEditorTextSize,
+  toggleLibrary,
+  toggleTopBarMenu,
+  toggleArchivedView,
+  logIn,
+  logOut,
+} from '../actions';
+
 function mapStateToProps(state) {
   return {
     currentProjectKey: getCurrentProjectKey(state),
@@ -130,6 +149,10 @@ function mapDispatchToProps(dispatch) {
 
     onOpenAssignmentCreator() {
       dispatch(openAssignmentCreator());
+    },
+
+    onOpenProjectPickerModal() {
+      dispatch(openProjectPickerModal());
     },
 
     onStartEditingInstructions(projectKey) {

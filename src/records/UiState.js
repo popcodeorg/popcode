@@ -9,6 +9,7 @@ export default Record(
     isExperimental: false,
     isLoginPromptOpen: false,
     isSaveIndicatorVisible: false,
+    isProjectPickerModalOpen: false,
     isTextSizeLarge: false,
     isTyping: false,
     notifications: new Map(),

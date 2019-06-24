@@ -35,6 +35,7 @@ import {
 import {
   cancelEditingInstructions,
   closeAssignmentCreator,
+  closeProjecPickerModal,
   closeLoginPrompt,
   editorFocusedRequestedLine,
   focusLine,
@@ -42,6 +43,7 @@ import {
   notificationTriggered,
   openAssignmentCreator,
   openLoginPrompt,
+  openProjecPickerModal,
   showSaveIndicator,
   startDragColumnDivider,
   startEditingInstructions,
@@ -77,6 +79,7 @@ export default combineReducers(
       {
         [changeCurrentProject]: constant(false),
         [toggleArchivedView]: isArchivedViewOpen => !isArchivedViewOpen,
+        [closeProjecPickerModal]: constant(false)
       },
       false,
     ),
@@ -290,6 +293,14 @@ export default combineReducers(
       },
       false,
     ),
+
+    isProjectPickerModalOpen: handleActions(
+      {
+        [openProjecPickerModal]: constant(true),
+        [closeProjecPickerModal]: constant(false)
+      }
+    )
+
   },
   UiState,
 );

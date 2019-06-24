@@ -28,6 +28,9 @@ import prefix from '../services/inlineStylePrefixer';
 import {LANGUAGES} from '../util/editor';
 import {isPristineProject} from '../util/projectUtils';
 import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
+import LoginPrompt from '../containers/LoginPrompt';
+import KeyboardHandler from '../containers/KeyboardHandler';
+import ProjectPickerModal from '../containers/ProjectPickerModal';
 
 import CollapsedComponent from './CollapsedComponent';
 import Output from './Output';
@@ -301,6 +304,7 @@ export default class Workspace extends React.Component {
           <AssignmentCreator />
           <TopBar />
           <NotificationList />
+          <ProjectPickerModal />
           <div className="layout__columns">
             <Instructions />
             {this._renderInstructionsBar()}

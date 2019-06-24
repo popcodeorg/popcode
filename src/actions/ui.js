@@ -68,3 +68,8 @@ export const toggleArchivedView = createAction('TOGGLE_ARCHIVED_VIEW');
 export const openLoginPrompt = createAction('OPEN_LOGIN_PROMPT');
 
 export const closeLoginPrompt = createAction('CLOSE_LOGIN_PROMPT');
+export const openProjectPickerModal = createAction('OPEN_PROJECT_PICKER_MODAL');
+
+export const closeProjectPickerModal = createAction(
+  'CLOSE_PROJECT_PICKER_MODAL',
+);
