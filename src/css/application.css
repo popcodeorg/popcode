@@ -761,7 +761,8 @@ body {
   float: left;
 }
 
-.preview__button_reset {
+.preview__button_reset,
+.preview__button_toggle-visibility {
   float: right;
 }
 

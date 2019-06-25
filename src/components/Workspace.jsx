@@ -10,12 +10,14 @@ import includes from 'lodash-es/includes';
 import isNull from 'lodash-es/isNull';
 import get from 'lodash-es/get';
 import partial from 'lodash-es/partial';
+import some from 'lodash-es/some';
 import {t} from 'i18next';
 import classnames from 'classnames';
 
 import prefix from '../services/inlineStylePrefixer';
 import {getQueryParameters, setQueryParameters} from '../util/queryParams';
 import {LANGUAGES} from '../util/editor';
+import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {isPristineProject} from '../util/projectUtils';
@@ -163,30 +165,42 @@ export default class Workspace extends React.Component {
   _renderHiddenRightColumnComponents() {
     const {
       currentProject,
+      hasErrors,
       onComponentToggle,
-      shouldShowCollapsedConsole,
+      title,
     } = this.props;
-    const rightColumnComponents = ['console'];
-    return rightColumnComponents.
+    // Errors take over the whole right side of the screen
+    if (hasErrors) {
+      return null;
+    }
+    return RIGHT_COLUMN_COMPONENTS.
       filter(component => (
         includes(currentProject.hiddenUIComponents, component)
       )).
       map((component) => {
         switch (component) {
           case 'console':
-            if (shouldShowCollapsedConsole) {
-              return (
-                <CollapsedComponent
-                  component="console"
-                  isRightJustified={false}
-                  key="console"
-                  projectKey={currentProject.projectKey}
-                  text={t('workspace.components.console')}
-                  onComponentUnhide={onComponentToggle}
-                />
-              );
-            }
-            return null;
+            return (
+              <CollapsedComponent
+                component="console"
+                isRightJustified={false}
+                key="console"
+                projectKey={currentProject.projectKey}
+                text={t('workspace.components.console')}
+                onComponentUnhide={onComponentToggle}
+              />
+            );
+          case 'preview':
+            return (
+              <CollapsedComponent
+                component="preview"
+                isRightJustified={false}
+                key="preview"
+                projectKey={currentProject.projectKey}
+                text={title}
+                onComponentUnhide={onComponentToggle}
+              />
+            );
           default:
             return null;
         }
@@ -197,6 +211,29 @@ export default class Workspace extends React.Component {
     return this.props.hiddenLanguages.length !== LANGUAGES.length;
   }
 
+  _shouldRenderRightColumn() {
+    const {
+      currentProject,
+      shouldRenderOutput,
+    } = this.props;
+    return shouldRenderOutput || some(RIGHT_COLUMN_COMPONENTS,
+      component => (
+        !includes(currentProject.hiddenUIComponents, component)
+      ));
+  }
+
+  _isEverythingHidden() {
+    return !this._shouldRenderLeftColumn() && !this._shouldRenderRightColumn();
+  }
+
+  _renderEverythingHidden() {
+    return (
+      <div className="environment__column">
+        {this._renderHiddenRightColumnComponents()}
+        {this._renderHiddenLanguages()}
+      </div>
+    );
+  }
   _renderEnvironment() {
     const {
       currentProject,
@@ -208,6 +245,7 @@ export default class Workspace extends React.Component {
       onResizableFlexDividerDrag,
       onStartDragColumnDivider,
       onStopDragColumnDivider,
+      shouldRenderOutput,
     } = this.props;
     if (isNull(currentProject)) {
       return <PopThrobber message={t('workspace.loading')} />;
@@ -218,7 +256,7 @@ export default class Workspace extends React.Component {
     return (
       <div className="environment">
         {this._shouldRenderLeftColumn() &&
-          <React.Fragment>
+          <>
             <div
               className="environment__column"
               ref={_handleEditorsRef}
@@ -227,6 +265,8 @@ export default class Workspace extends React.Component {
               <div className="environment__column-contents">
                 <div className="environment__column-contents-inner">
                   <EditorsColumn />
+                  {!this._shouldRenderRightColumn() &&
+                    this._renderHiddenRightColumnComponents()}
                   {this._renderHiddenLanguages()}
                 </div>
               </div>
@@ -246,25 +286,30 @@ export default class Workspace extends React.Component {
                 )}
               />
             </DraggableCore>
-          </React.Fragment>
+          </>
         }
-        <div
-          className="environment__column"
-          ref={_handleOutputRef}
-          style={prefix({
-            flexGrow: resizableFlexGrow.get(1),
-            pointerEvents: ignorePointerEvents ? 'none' : 'all',
-          })}
-        >
-          <div className="environment__column-contents">
-            <div className="environment__column-contents-inner">
-              <Output />
-              {this._renderHiddenRightColumnComponents()}
-              {!this._shouldRenderLeftColumn() &&
-                this._renderHiddenLanguages()}
+        {this._shouldRenderRightColumn() &&
+          <>
+            <div
+              className="environment__column"
+              ref={_handleOutputRef}
+              style={prefix({
+                flexGrow: resizableFlexGrow.get(1),
+                pointerEvents: ignorePointerEvents ? 'none' : 'all',
+              })}
+            >
+              <div className="environment__column-contents">
+                <div className="environment__column-contents-inner">
+                  {shouldRenderOutput && <Output />}
+                  {this._renderHiddenRightColumnComponents()}
+                  {!this._shouldRenderLeftColumn() &&
+                    this._renderHiddenLanguages()}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        }
+        {this._isEverythingHidden() && this._renderEverythingHidden()}
       </div>
     );
   }
@@ -290,6 +335,7 @@ export default class Workspace extends React.Component {
 
 Workspace.propTypes = {
   currentProject: PropTypes.object,
+  hasErrors: PropTypes.bool.isRequired,
   hiddenLanguages: PropTypes.array.isRequired,
   isAnyTopBarMenuOpen: PropTypes.bool.isRequired,
   isDraggingColumnDivider: PropTypes.bool.isRequired,
@@ -297,7 +343,8 @@ Workspace.propTypes = {
   isFlexResizingSupported: PropTypes.bool.isRequired,
   resizableFlexGrow: ImmutablePropTypes.list.isRequired,
   resizableFlexRefs: PropTypes.array.isRequired,
-  shouldShowCollapsedConsole: PropTypes.bool.isRequired,
+  shouldRenderOutput: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
   onApplicationLoaded: PropTypes.func.isRequired,
   onClickInstructionsEditButton: PropTypes.func.isRequired,
   onComponentToggle: PropTypes.func.isRequired,
