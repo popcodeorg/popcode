@@ -10594,6 +10594,11 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.0.0.tgz#85080bb87c64688fa47996fe8f7dfbe8211760b1"
   integrity sha512-hMp0onDKIajHfIkdRk3P4CdCmErkYAxxDtP3Wx/4nZ3aGlau2VKh3mZpcuFkH27WQkL/3WBCPOktzA9ZOAnMQQ==
 
+p5@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/p5/-/p5-0.8.0.tgz#af4cd2f25b2e77023dff24d845cbdbdaa47d4fd2"
+  integrity sha512-X415HATmOwcbWpgXTCHyDNdcGTNuzuZFaW9GoOsZd3PFrTmugdf+xLr9AO+rGHxBOFgdqfaj766vJeH1wPkCrQ==
+
 pac-proxy-agent@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/pac-proxy-agent/-/pac-proxy-agent-3.0.0.tgz#11d578b72a164ad74bf9d5bac9ff462a38282432"
