@@ -13,49 +13,56 @@ export const SCOPES = [
 
 const DISCOVERY_DOCS = ['https://classroom.googleapis.com/$discovery/rest?version=v1'];
 
+const RETRY_OPTIONS = {
+  retries: 16,
+  factor: 2,
+  minTimeout: 200,
+  maxTimeout: 4000,
+};
+
 class LoadError extends ExtendableError {}
 
 let isGapiLoadedAndConfigured = false;
 
-const loadGapi = once(() => promiseRetry(
-  async(retry) => {
-    try {
-      return await new Promise((resolve, reject) => {
-        loadjs('https://apis.google.com/js/client.js', {
-          success() {
-            resolve(window.gapi);
-          },
-          error(failedPaths) {
-            reject(new LoadError(`Failed to load ${failedPaths.join(', ')}`));
-          },
+async function loadGapi() {
+  return promiseRetry(
+    async(retry) => {
+      try {
+        const gapi = await new Promise((resolve, reject) => {
+          loadjs('https://apis.google.com/js/client.js', {
+            success() {
+              resolve(window.gapi);
+            },
+            error(failedPaths) {
+              reject(new LoadError(`Failed to load ${failedPaths.join(', ')}`));
+            },
+          });
         });
-      });
-    } catch (e) {
-      return retry(e);
-    }
-  },
-  {
-    retries: 16,
-    factor: 2,
-    minTimeout: 200,
-    maxTimeout: 4000,
-  },
-));
+
+        return await new Promise((resolve, reject) => {
+          gapi.load('client:auth2', {
+            callback: () => {
+              resolve(gapi);
+            },
+            onerror: reject,
+            timeout: 1000,
+            ontimeout: () => {
+              reject(new Error('Timed out'));
+            },
+          });
+        });
+      } catch (e) {
+        Reflect.deleteProperty(window, 'gapi');
+        return retry(e);
+      }
+    },
+    RETRY_OPTIONS,
+  );
+}
 
 export const loadAndConfigureGapi = once(async() => {
   const gapi = await loadGapi();
-  await new Promise((resolve, reject) => {
-    gapi.load('client:auth2', {
-      callback: () => {
-        resolve(gapi);
-      },
-      onerror: reject,
-      timeout: 5000,
-      ontimeout: () => {
-        reject(new Error('Timed out'));
-      },
-    });
-  });
+
   await gapi.client.init({
     apiKey: config.firebaseApiKey,
     clientId: config.firebaseClientId,
