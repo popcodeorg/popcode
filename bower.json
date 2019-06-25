@@ -22,16 +22,10 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.5.5",
     "bootstrap": "^3.3.6",
-    "ember": "^2.5.1",
-    "foundation": "^5.5.3",
-    "handlebars": "^4.0.5",
     "lodash": "^4.11.2",
     "mustache.js": "mustache#^2.2.1",
     "normalize-css": "normalize.css#^4.1.1",
-    "p5js": "^0.5.13",
-    "react": "^15.0.1",
-    "underscore": "^1.8.3"
+    "p5js": "^0.5.13"
   }
 }
