@@ -21,7 +21,7 @@ test('validatedSource', (t) => {
 
   t.test('with no errors', (assert) => {
     const clock = sinon.useFakeTimers();
-    const preview = {source: '<html></html>'};
+    const preview = {source: '<html></html>', sourceMap: {mappings: []}};
     startCompilation(assert).
       next(preview).put(projectCompiled(preview, Date.now()));
 

@@ -36,6 +36,7 @@ export default function compiledProjects(stateIn, action) {
           source,
           title,
           compiledProjectKey: action.payload.timestamp,
+          sourceMap: action.payload.sourceMap,
         })),
       );
     }
@@ -46,6 +47,7 @@ export default function compiledProjects(stateIn, action) {
           source: action.payload.source,
           title: action.payload.title,
           compiledProjectKey: action.meta.timestamp,
+          sourceMap: action.payload.sourceMap,
         })),
         2,
       );

@@ -14,11 +14,8 @@ const babel = require('@babel/core');
 const babelLoaderVersion =
   require('./node_modules/babel-loader/package.json').version;
 
-const babelrc = require('./babel.config.js');
-
 const babelLoaderConfig = Object.assign(
   {},
-  babelrc,
   {
     cacheDirectory: true,
     cacheIdentifier: JSON.stringify({
@@ -169,6 +166,10 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           include: path.resolve(__dirname, 'src'),
           use: ['val-loader'],
           enforce: 'pre',
+        },
+        {
+          test: /\.gen\.js$/u,
+          use: [{loader: 'babel-loader', options: babelLoaderConfig}],
         },
         {
           test: /\.jsx?$/u,

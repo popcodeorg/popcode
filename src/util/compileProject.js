@@ -156,28 +156,48 @@ async function addPreviewSupportScript(doc) {
   doc.head.appendChild(scriptTag);
 }
 
-async function addJavascript(
+export async function addJavascript(
   doc,
   {sources: {javascript}},
-  {breakLoops = false},
+  opts,
 ) {
   if (trim(javascript).length === 0) {
-    return;
+    return {};
   }
 
-  let source = `\n${sourceDelimiter}\n${javascript}`;
+  const {breakLoops} = opts || {};
+
+  let code = javascript;
+  let sourceMap;
+
   if (breakLoops) {
     const {'default': loopBreaker} = await retryingFailedImports(
       () => import(
-        /* webpackChunkName: "mainAsync" */
-        'loop-breaker' // eslint-disable-line comma-dangle
+        /* webpackChunkName: "jsCompilation" */
+        'loop-breaker' // eslint-disable-line
       ),
     );
-    source = loopBreaker(source);
+    const result = loopBreaker(code, {sourceFileName: 'popcodePreview.js'});
+    ({code} = result);
+    sourceMap = result.map;
   }
+
+  const {babelWithEnv} = await retryingFailedImports(
+    () => import(
+      /* webpackChunkName: "jsCompilation" */
+      '../services/babel-browser.gen' // eslint-disable-line comma-dangle
+    ),
+  );
+
+  ({code, sourceMap} = await babelWithEnv(code, sourceMap));
+
+  code = `\n${sourceDelimiter}\n${code}`;
+
   const scriptTag = doc.createElement('script');
-  scriptTag.innerHTML = source;
+  scriptTag.innerHTML = code;
   doc.body.appendChild(scriptTag);
+
+  return ({code, sourceMap});
 }
 
 export function generateTextPreview(project) {
@@ -200,10 +220,13 @@ export default async function compileProject(
   if (isInlinePreview) {
     await addPreviewSupportScript(doc);
   }
-  await addJavascript(doc, project, {breakLoops: isInlinePreview});
+  const {sourceMap} = await addJavascript(doc, project, {
+    breakLoops: isInlinePreview,
+  });
 
   return {
     title: (doc.title || '').trim(),
     source: `<!DOCTYPE html> ${doc.documentElement.outerHTML}`,
+    sourceMap,
   };
 }

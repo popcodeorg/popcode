@@ -3,6 +3,7 @@ import channel from './channel';
 export default function handleErrors() {
   window.onerror = (fullMessage, _file, line, column, error) => {
     let name, message;
+
     if (error) {
       ({name, message} = error);
     } else {
