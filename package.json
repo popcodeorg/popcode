@@ -222,6 +222,7 @@
     "moment": "^2.22.2",
     "object-inspect": "^1.5.0",
     "offline-plugin": "^5.0.3",
+    "p5": "^0.8.0",
     "parse5-sax-parser": "^5.1.0",
     "pify": "^4.0.0",
     "postcss": "^6.0.22",
