@@ -190,8 +190,7 @@
       "only-one-head-and-body": "You may only have one `<head>` and one `<body>` tag in your document.",
       "misplaced-close-tag": "This closing `</{{-open}}>` tag should go to before the `</{{-close}}>` tag on line {{-mismatch}}.",
       "duplicated-class": "You shouldn’t have the class `{{-classes}}` more than once on the same element.",
-      "self-closing-tag": "You don’t need to end self-closing tags with `/>`. Just use `<{{-tag}}>`.",
-      "unclosed-title-tag": "You need to close your `<{{-tag}}>` tag."
+      "self-closing-tag": "You don’t need to end self-closing tags with `/>`. Just use `<{{-tag}}>`."
     },
     "css": {
       "missing-opening-curly": "You should have a `{` at the end of this line.",
