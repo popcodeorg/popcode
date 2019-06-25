@@ -7,7 +7,7 @@ import BOOTSTRAP_CSS from
   '../../bower_components/bootstrap/dist/css/bootstrap.min.css';
 import BOOTSTRAP_JS from
   '../../bower_components/bootstrap/dist/js/bootstrap.min.js';
-import P5 from '../../bower_components/p5js/lib/p5.min.js';
+import P5 from '../../node_modules/p5/lib/p5.min.js';
 
 export const jquery = {javascript: JQUERY};
 
