@@ -5,17 +5,11 @@ import flatMap from 'lodash-es/flatMap';
 import sortBy from 'lodash-es/sortBy';
 import omit from 'lodash-es/omit';
 import uniqWith from 'lodash-es/uniqWith';
-import isEqual from 'lodash-es/isEqual'
-
 
 
 function filterErrors(errors) {
-
-debugger;
-  const dedupedErrors = uniqWith(errors, function(e){
-    return e.reason && e.row ;
-  });
-    const groupedErrors = groupBy(dedupedErrors, 'reason');
+  const dedupedErrors = uniqWith(errors, e => e.reason && e.row);
+  const groupedErrors = groupBy(dedupedErrors, 'reason');
 
   const suppressedTypes = flatMap(flatten(values(groupedErrors)), 'suppresses');
 
