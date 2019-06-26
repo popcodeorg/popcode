@@ -3,7 +3,10 @@ import reduce from '../../reducers';
 import {userAuthenticated} from '../../actions/user';
 import {projectCreated, updateProjectSource} from '../../actions/projects';
 
-import {credentialFactory, userFactory} from '@factories/clients/firebase';
+import {
+  credentialFactory,
+  userFactory,
+} from '@factories/clients/firebase';
 
 const defaultState = reduce(undefined, {type: 'NONE'});
 
