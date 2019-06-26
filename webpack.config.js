@@ -261,6 +261,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         {
           test: /\.js$/u,
           include: [path.resolve(__dirname, 'node_modules')],
+          exclude: [matchModule('brace')],
           use: {loader: 'babel-loader', options: babelLoaderConfig},
         },
         {
