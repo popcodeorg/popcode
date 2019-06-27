@@ -3,7 +3,9 @@
 # Build your development environment. Running this on an already-built
 # environment will update to the latest dependencies.
 
-export OSX=$(expr $(uname | tr '[:upper:]' '[:lower:]') == "darwin*")
+set -e
+
+export OSX=$(uname | grep -i '^darwin')
 
 if ! docker-compose -v &> /dev/null
 then
@@ -19,9 +21,15 @@ then
     exit 1
 fi
 
+if ! docker info &> /dev/null
+then
+    echo "Before running this script, start the Docker application"
+    exit 1
+fi
+
 if [ -z $OSX ]
 then
-    set -ex
+    set -x
     ln -si docker-compose.sync.yml docker-compose.override.yml
 else
     set -ex
