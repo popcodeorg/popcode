@@ -10,13 +10,13 @@ export OSX=$(uname | grep -i '^darwin')
 if ! docker-compose -v &> /dev/null
 then
     echo "Before running this script, install Docker and Docker Compose."
-    if [ -z $OSX ]
+    if [ -z "$OSX" ]
     then
-        echo "Download the latest community edition here:"
-        echo "https://docs.docker.com/docker-for-mac/release-notes/"
-    else
         echo "Find installation instructions for your distro here:"
         echo "https://docs.docker.com/install/linux/docker-ce/ubuntu/"
+    else
+        echo "Download the latest community edition here:"
+        echo "https://docs.docker.com/docker-for-mac/release-notes/"
     fi
     exit 1
 fi
@@ -27,13 +27,13 @@ then
     exit 1
 fi
 
-if [ -z $OSX ]
+if [ -z "$OSX" ]
 then
-    set -x
-    ln -si docker-compose.sync.yml docker-compose.override.yml
-else
-    set -ex
+    set -e
     ln -si docker-compose.bind.yml docker-compose.override.yml
+else
+    set -e
+    ln -si docker-compose.sync.yml docker-compose.override.yml
 fi
 
 docker pull popcodeorg/popcode:latest
