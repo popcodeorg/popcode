@@ -1,8 +1,6 @@
 import applicationLoaded from './applicationLoaded';
 
-import {
-  createAssignment,
-} from './assignments';
+import {createAssignment} from './assignments';
 
 import {
   createSnapshot,
@@ -50,9 +48,7 @@ import {
   toggleArchivedView,
 } from './ui';
 
-import {
-  addRuntimeError,
-} from './errors';
+import {addRuntimeError} from './errors';
 
 import {
   dismissAccountMigration,
@@ -82,9 +78,7 @@ import {
   previousConsoleHistory,
 } from './console';
 
-import {
-  updateResizableFlex,
-} from './resizableFlex';
+import {updateResizableFlex} from './resizableFlex';
 
 export {
   beautifyProjectSource,

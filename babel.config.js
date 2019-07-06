@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-module.exports = (api) => {
+module.exports = api => {
   let targets;
 
   const isJest = api.caller(({name}) => name === 'babel-jest');

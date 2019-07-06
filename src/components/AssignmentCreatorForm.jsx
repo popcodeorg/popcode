@@ -42,21 +42,15 @@ export default function AssignmentCreatorForm({
   return (
     <form>
       <div>
-        <Field
-          component={AssignmentCreatorSelectField}
-          name="course"
-        >
+        <Field component={AssignmentCreatorSelectField} name="course">
           <option value="">{t('assignment-creator.select-class')}</option>
-          {
-            courses.map(course => (
-              <option
-                key={course.id}
-                value={course.id}
-              >
+          {courses
+            .map(course => (
+              <option key={course.id} value={course.id}>
                 {course.name}
               </option>
-            )).valueSeq()
-          }
+            ))
+            .valueSeq()}
         </Field>
       </div>
       <div>
@@ -71,51 +65,51 @@ export default function AssignmentCreatorForm({
         />
       </div>
       <div>
-        {
-          isAssignmentExportInProgress ?
+        {isAssignmentExportInProgress ? (
+          <button
+            disabled
+            className={classnames(
+              'assignment-creator__button',
+              'assignment-creator__button_disabled',
+            )}
+            type="button"
+          >
+            {t('assignment-creator.creating')}
+          </button>
+        ) : (
+          <>
             <button
-              disabled
               className={classnames(
                 'assignment-creator__button',
-                'assignment-creator__button_disabled',
+                'assignment-creator__button_reject',
               )}
               type="button"
+              onClick={onCloseAssignmentCreator}
             >
-              {t('assignment-creator.creating')}
-            </button> :
-            <>
-              <button
-                className={classnames(
-                  'assignment-creator__button',
-                  'assignment-creator__button_reject',
-                )}
-                type="button"
-                onClick={onCloseAssignmentCreator}
-              >
-                {t('assignment-creator.cancel-button')}
-              </button>
-              <button
-                className={classnames(
-                  'assignment-creator__button',
-                  'assignment-creator__button_confirm',
-                )}
-                type="button"
-                onClick={handleSubmit(onDraftAssignment)}
-              >
-                {t('assignment-creator.draft-button')}
-              </button>
-              <button
-                className={classnames(
-                  'assignment-creator__button',
-                  'assignment-creator__button_confirm',
-                )}
-                type="button"
-                onClick={handleSubmit(onAssignAssignment)}
-              >
-                {t('assignment-creator.assign-button')}
-              </button>
-            </>
-        }
+              {t('assignment-creator.cancel-button')}
+            </button>
+            <button
+              className={classnames(
+                'assignment-creator__button',
+                'assignment-creator__button_confirm',
+              )}
+              type="button"
+              onClick={handleSubmit(onDraftAssignment)}
+            >
+              {t('assignment-creator.draft-button')}
+            </button>
+            <button
+              className={classnames(
+                'assignment-creator__button',
+                'assignment-creator__button_confirm',
+              )}
+              type="button"
+              onClick={handleSubmit(onAssignAssignment)}
+            >
+              {t('assignment-creator.assign-button')}
+            </button>
+          </>
+        )}
       </div>
     </form>
   );

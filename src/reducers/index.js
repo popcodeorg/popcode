@@ -27,7 +27,4 @@ const reduceRoot = combineReducers({
   form: formReducer,
 });
 
-export default reduceReducers(
-  reduceRoot,
-  reduceRootForProjects,
-);
+export default reduceReducers(reduceRoot, reduceRootForProjects);

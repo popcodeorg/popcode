@@ -21,25 +21,21 @@ const CurrentUserMenu = createMenu({
     user,
     /* eslint-enable react/prop-types */
   }) {
-    const githubIdentityProvider =
-      user.identityProviders.get('github.com');
+    const githubIdentityProvider = user.identityProviders.get('github.com');
 
     return (
       <Fragment>
-        {
-          isUndefined(githubIdentityProvider) ? (
-            <MenuItem onClick={onLinkGitHub}>
-              {t('top-bar.session.link-github')}
-            </MenuItem>
-          ) : (
-            <MenuItem onClick={onUnlinkGitHub}>
-              {t(
-                'top-bar.session.unlink-github',
-                {displayName: githubIdentityProvider.displayName},
-              )}
-            </MenuItem>
-          )
-        }
+        {isUndefined(githubIdentityProvider) ? (
+          <MenuItem onClick={onLinkGitHub}>
+            {t('top-bar.session.link-github')}
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={onUnlinkGitHub}>
+            {t('top-bar.session.unlink-github', {
+              displayName: githubIdentityProvider.displayName,
+            })}
+          </MenuItem>
+        )}
         <MenuItem onClick={onLogOut}>
           {t('top-bar.session.log-out-prompt')}
         </MenuItem>

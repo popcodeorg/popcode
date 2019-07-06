@@ -46,18 +46,11 @@ export default function Preview({
 
   return (
     <div
-      className={classnames(
-        'preview',
-        'output__item',
-        {u__hidden: !isOpen},
-      )}
+      className={classnames('preview', 'output__item', {u__hidden: !isOpen})}
     >
       <div className="preview__title-bar">
         <span className="preview__button preview__button_pop-out">
-          <FontAwesomeIcon
-            icon={faExternalLinkAlt}
-            onClick={onPopOutProject}
-          />
+          <FontAwesomeIcon icon={faExternalLinkAlt} onClick={onPopOutProject} />
         </span>
         {title}
         <span className="preview__button preview__button_toggle-visibility">

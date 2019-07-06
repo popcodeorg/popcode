@@ -38,10 +38,11 @@ function* projectExport(
   notDisplayedAction,
   displayedAction,
 ) {
-  const exportWindow =
-    yield call(openWindowWithContent, spinnerPageHtml);
-  const {type, payload: {url, exportType}} =
-    yield take([successAction, failureAction]);
+  const exportWindow = yield call(openWindowWithContent, spinnerPageHtml);
+  const {
+    type,
+    payload: {url, exportType},
+  } = yield take([successAction, failureAction]);
   if (type === successAction) {
     if (exportWindow.closed) {
       yield put(notDisplayedAction(url, exportType));

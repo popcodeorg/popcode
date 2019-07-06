@@ -1,5 +1,3 @@
 import {createAction} from 'redux-actions';
 
-export default createAction(
-  'APPLICATION_LOADED',
-);
+export default createAction('APPLICATION_LOADED');

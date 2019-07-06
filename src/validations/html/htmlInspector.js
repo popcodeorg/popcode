@@ -18,7 +18,7 @@ const specialCases = {
 };
 
 const errorMap = {
-  'validate-element-location': (error) => {
+  'validate-element-location': error => {
     const tag = error.context.tagName.toLowerCase();
     const parent = error.context.parentNode.tagName.toLowerCase();
     if (specialCases[tag]) {
@@ -40,7 +40,7 @@ const errorMap = {
       },
     };
   },
-  'text-elements-as-list-children': (error) => {
+  'text-elements-as-list-children': error => {
     const tag = error.context.tagName.toLowerCase();
     let requiredChild = 'li';
 
@@ -67,10 +67,7 @@ function noListsWithTextChildrenValidator(listener, reporter) {
     ) {
       for (const node of domElement.childNodes) {
         const textContent = trim(node.textContent);
-        if (
-          node.nodeType === Node.TEXT_NODE &&
-          textContent.length > 0
-        ) {
+        if (node.nodeType === Node.TEXT_NODE && textContent.length > 0) {
           reporter.warn(
             'text-elements-as-list-children',
             textContent,
@@ -99,7 +96,7 @@ class HtmlInspectorValidator extends Validator {
       return Promise.resolve([]);
     }
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       HTMLInspector.inspect({
         domRoot: this._doc.documentElement,
         useRules: ['validate-element-location', 'validate-list-children'],

@@ -8,13 +8,7 @@ import PropTypes from 'prop-types';
 export default function ProjectPickerButton({shouldShowSavedIndicator}) {
   return (
     <div>
-      <span
-        className={
-          classnames(
-            {u__invisible: shouldShowSavedIndicator},
-          )
-        }
-      >
+      <span className={classnames({u__invisible: shouldShowSavedIndicator})}>
         {t('top-bar.load-project')}
         <FontAwesomeIcon
           className="top-bar__drop-down-button"
@@ -22,12 +16,9 @@ export default function ProjectPickerButton({shouldShowSavedIndicator}) {
         />
       </span>
       <span
-        className={
-          classnames(
-            'top-bar__project-saved',
-            {u__invisible: !shouldShowSavedIndicator},
-          )
-        }
+        className={classnames('top-bar__project-saved', {
+          u__invisible: !shouldShowSavedIndicator,
+        })}
       >
         {t('top-bar.project-saved')}
       </span>

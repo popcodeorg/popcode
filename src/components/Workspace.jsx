@@ -47,11 +47,9 @@ export default class Workspace extends React.Component {
 
   componentDidMount() {
     const {onApplicationLoaded} = this.props;
-    const {
-      gistId,
-      snapshotKey,
-      isExperimental,
-    } = getQueryParameters(location.search);
+    const {gistId, snapshotKey, isExperimental} = getQueryParameters(
+      location.search,
+    );
     const rehydratedProject = rehydrateProject();
 
     setQueryParameters({isExperimental});
@@ -97,24 +95,23 @@ export default class Workspace extends React.Component {
   }
 
   _renderInstructionsBar() {
-    const currentInstructions = get(
-      this.props,
-      ['currentProject', 'instructions'],
-    );
+    const currentInstructions = get(this.props, [
+      'currentProject',
+      'instructions',
+    ]);
     if (!this.props.isEditingInstructions && !currentInstructions) {
       return null;
     }
 
-    const isInstructionsHidden = get(
-      this.props,
-      ['currentProject', 'hiddenUIComponents'],
-    ).includes('instructions');
+    const isInstructionsHidden = get(this.props, [
+      'currentProject',
+      'hiddenUIComponents',
+    ]).includes('instructions');
 
     return (
       <div
         className={classnames('layout__instructions-bar', {
-          'layout__instructions-bar_disabled':
-            this.props.isEditingInstructions,
+          'layout__instructions-bar_disabled': this.props.isEditingInstructions,
         })}
         onClick={this._handleClickInstructionsBar}
       >
@@ -125,86 +122,74 @@ export default class Workspace extends React.Component {
           })}
           icon={faInfoCircle}
         />
-        {!isInstructionsHidden && !this.props.isEditingInstructions &&
+        {!isInstructionsHidden && !this.props.isEditingInstructions && (
           <FontAwesomeIcon
             fixedWidth
             className="layout__instructions-bar-edit-button"
             icon={faPenSquare}
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation();
               this._handleClickInstructionsEditButton();
             }}
           />
-        }
+        )}
       </div>
     );
   }
 
   _renderHiddenLanguages() {
-    const {
-      currentProject,
-      hiddenLanguages,
-      onComponentToggle,
-    } = this.props;
+    const {currentProject, hiddenLanguages, onComponentToggle} = this.props;
     return (
       <>
-        {hiddenLanguages.map(({language}) =>
-          (
-            <CollapsedComponent
-              component={`editor.${language}`}
-              key={language}
-              projectKey={currentProject.projectKey}
-              text={t(`languages.${language}`)}
-              onComponentUnhide={onComponentToggle}
-            />
-          ))}
+        {hiddenLanguages.map(({language}) => (
+          <CollapsedComponent
+            component={`editor.${language}`}
+            key={language}
+            projectKey={currentProject.projectKey}
+            text={t(`languages.${language}`)}
+            onComponentUnhide={onComponentToggle}
+          />
+        ))}
       </>
     );
   }
 
   _renderHiddenRightColumnComponents() {
-    const {
-      currentProject,
-      hasErrors,
-      onComponentToggle,
-      title,
-    } = this.props;
+    const {currentProject, hasErrors, onComponentToggle, title} = this.props;
     // Errors take over the whole right side of the screen
     if (hasErrors) {
       return null;
     }
-    return RIGHT_COLUMN_COMPONENTS.
-      filter(component => (
-        includes(currentProject.hiddenUIComponents, component)
-      )).
-      map((component) => {
-        switch (component) {
-          case 'console':
-            return (
-              <CollapsedComponent
-                component="console"
-                isRightJustified={false}
-                key="console"
-                projectKey={currentProject.projectKey}
-                text={t('workspace.components.console')}
-                onComponentUnhide={onComponentToggle}
-              />
-            );
-          case 'preview':
-            return (
-              <CollapsedComponent
-                component="preview"
-                isRightJustified={false}
-                key="preview"
-                projectKey={currentProject.projectKey}
-                text={title}
-                onComponentUnhide={onComponentToggle}
-              />
-            );
-          default:
-            return null;
-        }
-      });
+    return RIGHT_COLUMN_COMPONENTS.filter(component =>
+      includes(currentProject.hiddenUIComponents, component),
+    ).map(component => {
+      switch (component) {
+        case 'console':
+          return (
+            <CollapsedComponent
+              component="console"
+              isRightJustified={false}
+              key="console"
+              projectKey={currentProject.projectKey}
+              text={t('workspace.components.console')}
+              onComponentUnhide={onComponentToggle}
+            />
+          );
+        case 'preview':
+          return (
+            <CollapsedComponent
+              component="preview"
+              isRightJustified={false}
+              key="preview"
+              projectKey={currentProject.projectKey}
+              text={title}
+              onComponentUnhide={onComponentToggle}
+            />
+          );
+        default:
+          return null;
+      }
+    });
   }
 
   _shouldRenderLeftColumn() {
@@ -212,14 +197,14 @@ export default class Workspace extends React.Component {
   }
 
   _shouldRenderRightColumn() {
-    const {
-      currentProject,
-      shouldRenderOutput,
-    } = this.props;
-    return shouldRenderOutput || some(RIGHT_COLUMN_COMPONENTS,
-      component => (
-        !includes(currentProject.hiddenUIComponents, component)
-      ));
+    const {currentProject, shouldRenderOutput} = this.props;
+    return (
+      shouldRenderOutput ||
+      some(
+        RIGHT_COLUMN_COMPONENTS,
+        component => !includes(currentProject.hiddenUIComponents, component),
+      )
+    );
   }
 
   _isEverythingHidden() {
@@ -255,7 +240,7 @@ export default class Workspace extends React.Component {
     const ignorePointerEvents = isDraggingColumnDivider || isAnyTopBarMenuOpen;
     return (
       <div className="environment">
-        {this._shouldRenderLeftColumn() &&
+        {this._shouldRenderLeftColumn() && (
           <>
             <div
               className="environment__column"
@@ -277,18 +262,14 @@ export default class Workspace extends React.Component {
               onStop={onStopDragColumnDivider}
             >
               <div
-                className={classnames(
-                  'editors__column-divider',
-                  {
-                    'editors__column-divider_draggable':
-                      isFlexResizingSupported,
-                  },
-                )}
+                className={classnames('editors__column-divider', {
+                  'editors__column-divider_draggable': isFlexResizingSupported,
+                })}
               />
             </DraggableCore>
           </>
-        }
-        {this._shouldRenderRightColumn() &&
+        )}
+        {this._shouldRenderRightColumn() && (
           <>
             <div
               className="environment__column"
@@ -308,7 +289,7 @@ export default class Workspace extends React.Component {
               </div>
             </div>
           </>
-        }
+        )}
         {this._isEverythingHidden() && this._renderEverythingHidden()}
       </div>
     );

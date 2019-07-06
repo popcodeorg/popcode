@@ -15,10 +15,7 @@ import {
   accountMigrationError,
 } from '../actions/user';
 import {getCurrentAccountMigration} from '../selectors';
-import {
-  migrateAccount,
-  signOut,
-} from '../clients/firebase';
+import {migrateAccount, signOut} from '../clients/firebase';
 
 export function* startAccountMigration() {
   const {shouldContinue} = yield race({
@@ -33,14 +30,14 @@ export function* startAccountMigration() {
   yield put(accountMigrationUndoPeriodExpired());
   const {firebaseCredential} = yield select(getCurrentAccountMigration);
   try {
-    const {user: userData, migratedProjects} =
-      yield call(migrateAccount, firebaseCredential);
-
-    yield put(accountMigrationComplete(
-      userData,
+    const {user: userData, migratedProjects} = yield call(
+      migrateAccount,
       firebaseCredential,
-      migratedProjects,
-    ));
+    );
+
+    yield put(
+      accountMigrationComplete(userData, firebaseCredential, migratedProjects),
+    );
   } catch (e) {
     yield call([bugsnagClient, 'notify'], e);
     yield put(accountMigrationError(e));

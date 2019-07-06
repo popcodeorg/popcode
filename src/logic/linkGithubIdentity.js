@@ -1,9 +1,6 @@
 import {createLogic} from 'redux-logic';
 
-import {
-  linkGithub,
-  saveCredentialForCurrentUser,
-} from '../clients/firebase';
+import {linkGithub, saveCredentialForCurrentUser} from '../clients/firebase';
 import {
   accountMigrationNeeded,
   identityLinked,

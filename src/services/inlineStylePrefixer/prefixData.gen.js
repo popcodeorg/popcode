@@ -1,5 +1,5 @@
 const {
-  'default': generateData,
+  default: generateData,
   generateFile,
 } = require('inline-style-prefixer/lib/generator');
 
@@ -10,13 +10,11 @@ module.exports = () => {
 
   for (const browser in browserList) {
     if (browser !== 'chromium') {
-      browserListForInlineStylePrefixer[browser] =
-        Number(browserList[browser]);
+      browserListForInlineStylePrefixer[browser] = Number(browserList[browser]);
     }
   }
 
-  const {prefixMap, plugins} =
-    generateData(browserListForInlineStylePrefixer);
+  const {prefixMap, plugins} = generateData(browserListForInlineStylePrefixer);
 
   return {code: generateFile(prefixMap, plugins, false)};
 };

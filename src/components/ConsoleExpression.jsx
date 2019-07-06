@@ -14,13 +14,9 @@ export default function ConsoleExpression({entry: {expression}, isActive}) {
 
   return (
     <div
-      className={
-        classnames(
-          'console__row',
-          'console__expression',
-          {console__expression_inactive: !isActive},
-        )
-      }
+      className={classnames('console__row', 'console__expression', {
+        console__expression_inactive: !isActive,
+      })}
     >
       <div className="console__chevron">
         <FontAwesomeIcon icon={faChevronRight} />

@@ -1,9 +1,8 @@
 import {createAction} from 'redux-actions';
 
-export const projectCreated = createAction(
-  'PROJECT_CREATED',
-  projectKey => ({projectKey}),
-);
+export const projectCreated = createAction('PROJECT_CREATED', projectKey => ({
+  projectKey,
+}));
 
 export const createProject = createAction('CREATE_PROJECT');
 
@@ -18,9 +17,7 @@ export const updateProjectSource = createAction(
   (_projectKey, _language, _newValue, timestamp = Date.now()) => ({timestamp}),
 );
 
-export const beautifyProjectSource = createAction(
-  'BEAUTIFY_PROJECT_SOURCE',
-);
+export const beautifyProjectSource = createAction('BEAUTIFY_PROJECT_SOURCE');
 
 export const projectBeautified = createAction(
   'PROJECT_BEAUTIFIED',
@@ -63,22 +60,20 @@ export const gistImported = createAction(
   (projectKey, gistData) => ({projectKey, gistData}),
 );
 
-export const gistNotFound = createAction(
-  'GIST_NOT_FOUND',
-  gistId => ({gistId}),
-);
+export const gistNotFound = createAction('GIST_NOT_FOUND', gistId => ({
+  gistId,
+}));
 
-export const gistImportError = createAction(
-  'GIST_IMPORT_ERROR',
-  gistId => ({gistId}),
-);
+export const gistImportError = createAction('GIST_IMPORT_ERROR', gistId => ({
+  gistId,
+}));
 
 export const projectsLoaded = createAction('PROJECTS_LOADED');
 
-export const projectSuccessfullySaved =
-  createAction('PROJECT_SUCCESSFULLY_SAVED');
-
-export const archiveProject = createAction(
-  'ARCHIVE_PROJECT',
-  projectKey => ({projectKey}),
+export const projectSuccessfullySaved = createAction(
+  'PROJECT_SUCCESSFULLY_SAVED',
 );
+
+export const archiveProject = createAction('ARCHIVE_PROJECT', projectKey => ({
+  projectKey,
+}));

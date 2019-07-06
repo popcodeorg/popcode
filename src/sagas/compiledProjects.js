@@ -1,11 +1,4 @@
-import {
-  all,
-  call,
-  put,
-  select,
-  throttle,
-  takeEvery,
-} from 'redux-saga/effects';
+import {all, call, put, select, throttle, takeEvery} from 'redux-saga/effects';
 
 import every from 'lodash-es/every';
 
@@ -20,11 +13,9 @@ export function* validatedSource() {
     const currentProject = yield select(getCurrentProject);
     const timestamp = Date.now();
     try {
-      const preview = yield call(
-        compileProject,
-        currentProject,
-        {isInlinePreview: true},
-      );
+      const preview = yield call(compileProject, currentProject, {
+        isInlinePreview: true,
+      });
       yield put(projectCompiled(preview, timestamp));
     } catch (e) {
       yield call([bugsnagClient, 'notify'], e);

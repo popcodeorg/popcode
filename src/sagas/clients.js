@@ -3,9 +3,7 @@ import {
   createGistFromProject,
   createOrUpdateRepoFromProject,
 } from '../clients/github';
-import {
-  createShareToClassroomUrl,
-} from '../clients/googleClassroom';
+import {createShareToClassroomUrl} from '../clients/googleClassroom';
 import {createProjectSnapshot} from '../clients/firebase';
 import {
   snapshotCreated,
@@ -19,7 +17,6 @@ import {getCurrentProject} from '../selectors';
 import {generateTextPreview} from '../util/compileProject';
 import {bugsnagClient} from '../util/bugsnag';
 import {loadAndConfigureGapi} from '../services/gapi';
-
 
 export function* createSnapshot() {
   const project = yield select(getCurrentProject);
@@ -42,13 +39,19 @@ export function* exportProject({payload: {exportType}}) {
     if (exportType === 'gist') {
       const {accessToken} = user.account.identityProviders.get('github.com');
 
-      ({html_url: url} =
-        yield call(createGistFromProject, project, accessToken));
+      ({html_url: url} = yield call(
+        createGistFromProject,
+        project,
+        accessToken,
+      ));
     } else if (exportType === 'repo') {
       const {accessToken} = user.account.identityProviders.get('github.com');
 
-      ({url, name} =
-        yield call(createOrUpdateRepoFromProject, project, accessToken));
+      ({url, name} = yield call(
+        createOrUpdateRepoFromProject,
+        project,
+        accessToken,
+      ));
       if (name) {
         exportData = {name};
       }
@@ -57,12 +60,7 @@ export function* exportProject({payload: {exportType}}) {
       const projectTitle = yield call(generateTextPreview, project);
       url = yield call(createShareToClassroomUrl, snapshotKey, projectTitle);
     }
-    yield put(projectExported(
-      url,
-      exportType,
-      project.projectKey,
-      exportData,
-    ));
+    yield put(projectExported(url, exportType, project.projectKey, exportData));
   } catch (e) {
     yield put(projectExportError(exportType));
   }

@@ -36,11 +36,7 @@ import {
   saveProject,
 } from '../clients/firebase';
 import beautifySource from '../util/beautifySource';
-import {
-  getCurrentProject,
-  getProject,
-  getCurrentUserId,
-} from '../selectors';
+import {getCurrentProject, getProject, getCurrentUserId} from '../selectors';
 
 export function* applicationLoaded(action) {
   if (isString(action.payload.gistId)) {
@@ -48,9 +44,7 @@ export function* applicationLoaded(action) {
   } else if (isString(action.payload.snapshotKey)) {
     yield call(importSnapshot, action);
   } else if (action.payload.rehydratedProject) {
-    yield put(
-      projectRestoredFromLastSession(action.payload.rehydratedProject),
-    );
+    yield put(projectRestoredFromLastSession(action.payload.rehydratedProject));
   } else {
     yield call(createProject);
   }
@@ -80,8 +74,7 @@ export function* importSnapshot({payload: {snapshotKey}}) {
 
 export function* importGist({payload: {gistId}}) {
   try {
-    const gistData =
-      yield call(loadGistFromId, gistId);
+    const gistData = yield call(loadGistFromId, gistId);
     yield put(gistImported(generateProjectKey(), gistData));
   } catch (error) {
     if (get(error, 'response.status') === 404) {
@@ -101,13 +94,10 @@ export function* loadAndBeautifyProjectSource() {
   const sourcesMap = yield all(
     reduce(
       currentProject.sources,
-      (calls, source, language) => Object.assign(calls, {
-        [language]: call(
-          beautifySource,
-          source,
-          language,
-        ),
-      }),
+      (calls, source, language) =>
+        Object.assign(calls, {
+          [language]: call(beautifySource, source, language),
+        }),
       {},
     ),
   );
@@ -169,10 +159,11 @@ export default function* projects() {
     takeEvery('CREATE_PROJECT', createProject),
     takeEvery('CHANGE_CURRENT_PROJECT', changeCurrentProject),
     takeEvery('PROJECT_EXPORTED', projectExported),
-    throttle(500, [
-      'UPDATE_PROJECT_SOURCE',
-      'UPDATE_PROJECT_INSTRUCTIONS',
-    ], updateProjectSource),
+    throttle(
+      500,
+      ['UPDATE_PROJECT_SOURCE', 'UPDATE_PROJECT_INSTRUCTIONS'],
+      updateProjectSource,
+    ),
     takeEvery('USER_AUTHENTICATED', userAuthenticated),
     takeEvery('TOGGLE_LIBRARY', toggleLibrary),
     takeLatest('BEAUTIFY_PROJECT_SOURCE', loadAndBeautifyProjectSource),

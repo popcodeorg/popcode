@@ -18,18 +18,14 @@ export default function AssignmentCreatorTextField({
         />
       </div>
       <div className="assignment-creator__input_warning">
-        <span>
-          {t('assignment-creator.value-label', {valueLabel})}
-        </span>
+        <span>{t('assignment-creator.value-label', {valueLabel})}</span>
       </div>
       <div>
-        {
-          (touched && error) && (
-            <span className="assignment-creator__assignment-notification">
-              {error}
-            </span>
-          )
-        }
+        {touched && error && (
+          <span className="assignment-creator__assignment-notification">
+            {error}
+          </span>
+        )}
       </div>
     </div>
   );

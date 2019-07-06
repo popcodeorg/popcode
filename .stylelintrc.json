@@ -6,40 +6,40 @@
     "block-no-empty": true,
     "color-hex-length": "short",
     "color-no-invalid-hex": true,
-    "comment-empty-line-before": ["always", {
-      "except": ["first-nested"],
-      "ignore": ["stylelint-commands"]
-    }],
+    "comment-empty-line-before": [
+      "always",
+      {
+        "except": ["first-nested"],
+        "ignore": ["stylelint-commands"]
+      }
+    ],
     "comment-no-empty": true,
     "comment-whitespace-inside": "always",
-    "custom-property-empty-line-before": ["always", {
-      "except": [
-        "after-custom-property",
-        "first-nested"
-      ],
-      "ignore": [
-        "after-comment",
-        "inside-single-line-block"
-      ]
-    }],
+    "custom-property-empty-line-before": [
+      "always",
+      {
+        "except": ["after-custom-property", "first-nested"],
+        "ignore": ["after-comment", "inside-single-line-block"]
+      }
+    ],
     "declaration-bang-space-after": "never",
     "declaration-bang-space-before": "always",
-    "declaration-block-no-duplicate-properties": [true, {
-      "ignore": ["consecutive-duplicates-with-different-values"]
-    }],
+    "declaration-block-no-duplicate-properties": [
+      true,
+      {
+        "ignore": ["consecutive-duplicates-with-different-values"]
+      }
+    ],
     "declaration-block-no-redundant-longhand-properties": true,
     "declaration-block-no-shorthand-property-overrides": true,
     "declaration-block-single-line-max-declarations": 1,
-    "declaration-empty-line-before": ["always", {
-      "except": [
-        "after-declaration",
-        "first-nested"
-      ],
-      "ignore": [
-        "after-comment",
-        "inside-single-line-block"
-      ]
-    }],
+    "declaration-empty-line-before": [
+      "always",
+      {
+        "except": ["after-declaration", "first-nested"],
+        "ignore": ["after-comment", "inside-single-line-block"]
+      }
+    ],
     "font-family-no-duplicate-names": true,
     "function-calc-no-unspaced-operator": true,
     "function-linear-gradient-no-nonstandard-direction": true,

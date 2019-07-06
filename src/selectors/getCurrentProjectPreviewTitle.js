@@ -5,7 +5,7 @@ import getCompiledProjects from './getCompiledProjects';
 
 export default createSelector(
   [getCompiledProjects],
-  (compiledProjects) => {
+  compiledProjects => {
     const mostRecentCompiledProject = compiledProjects.last();
     const title = get(mostRecentCompiledProject, 'title', '');
     return title;

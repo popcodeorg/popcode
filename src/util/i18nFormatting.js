@@ -17,6 +17,7 @@ function getVariationOfAOrAn(value) {
 }
 
 export default function applyCustomI18nFormatters(value, format) {
-  return format.split('|').reduce((acc, val) =>
-    get(formatters, val, identity)(acc), value);
+  return format
+    .split('|')
+    .reduce((acc, val) => get(formatters, val, identity)(acc), value);
 }

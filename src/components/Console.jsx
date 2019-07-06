@@ -1,8 +1,5 @@
 import classnames from 'classnames';
-import {
-  faBan,
-  faChevronDown,
-} from '@fortawesome/free-solid-svg-icons';
+import {faBan, faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import partial from 'lodash-es/partial';
 import React from 'react';
@@ -43,9 +40,9 @@ export default function Console({
       onClick={onConsoleClicked}
     >
       <div
-        className={
-          classnames('console__repl', {console__repl_zoomed: isTextSizeLarge})
-        }
+        className={classnames('console__repl', {
+          console__repl_zoomed: isTextSizeLarge,
+        })}
       >
         <ConsoleInput
           currentInputValue={currentInputValue}
@@ -57,36 +54,30 @@ export default function Console({
           onPreviousConsoleHistory={onPreviousConsoleHistory}
           onRequestedLineFocused={onRequestedLineFocused}
         />
-        {history.map((entry, key) => {
-          const isActive =
-            currentCompiledProjectKey === entry.evaluatedByCompiledProjectKey;
-          return (
-            // eslint-disable-next-line react/no-array-index-key
-            <ConsoleEntry entry={entry} isActive={isActive} key={key} />
-          );
-        }).valueSeq().reverse()}
+        {history
+          .map((entry, key) => {
+            const isActive =
+              currentCompiledProjectKey === entry.evaluatedByCompiledProjectKey;
+            return <ConsoleEntry entry={entry} isActive={isActive} key={key} />;
+          })
+          .valueSeq()
+          .reverse()}
       </div>
     </div>
   );
 
   return (
-    <div
-      className={classnames(
-        'console',
-        {u__hidden: isHidden},
-      )}
-    >
+    <div className={classnames('console', {u__hidden: isHidden})}>
       <div
         className="label console__label"
         onClick={partial(onToggleVisible, currentProjectKey)}
       >
         <div>
-          {t('workspace.components.console')}
-          {' '}
+          {t('workspace.components.console')}{' '}
           <FontAwesomeIcon icon={faChevronDown} />
         </div>
         <div
-          onClick={(e) => {
+          onClick={e => {
             e.stopPropagation();
             onClearConsoleEntries();
           }}

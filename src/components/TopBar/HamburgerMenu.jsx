@@ -32,20 +32,16 @@ const HamburgerMenu = createMenu({
           isDisabled={isEditingInstructions}
           onClick={onStartEditingInstructions}
         >
-          {
-            hasInstructions ?
-              t('top-bar.edit-instructions') :
-              t('top-bar.add-instructions')
-          }
+          {hasInstructions
+            ? t('top-bar.edit-instructions')
+            : t('top-bar.add-instructions')}
         </MenuItem>
 
-        {
-          !isUserAuthenticated && (
-            <MenuItem onClick={onStartGithubLogIn}>
-              {t('top-bar.session.log-in-github')}
-            </MenuItem>
-          )
-        }
+        {!isUserAuthenticated && (
+          <MenuItem onClick={onStartGithubLogIn}>
+            {t('top-bar.session.log-in-github')}
+          </MenuItem>
+        )}
 
         <a
           className="top-bar__menu-item"
@@ -86,7 +82,6 @@ const HamburgerMenu = createMenu({
     );
   },
 })(HamburgerMenuButton);
-
 
 HamburgerMenu.propTypes = {
   hasInstructions: PropTypes.bool.isRequired,

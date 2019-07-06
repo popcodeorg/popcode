@@ -6,10 +6,7 @@ import React from 'react';
 export default function CurrentUserButton({user: {avatarUrl, displayName}}) {
   return (
     <div className="top-bar__current-user">
-      <img
-        className="top-bar__avatar"
-        src={avatarUrl}
-      />
+      <img className="top-bar__avatar" src={avatarUrl} />
       <span className="top-bar__username">{displayName}</span>
       <FontAwesomeIcon
         className="top-bar__drop-down-button"

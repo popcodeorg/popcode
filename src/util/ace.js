@@ -5,8 +5,9 @@ function disableAutoClosing(editor) {
 }
 
 export function inheritFontStylesFromParentElement(editor) {
-  const computedStyle =
-    getComputedStyle(editor.renderer.getContainerElement().parentElement);
+  const computedStyle = getComputedStyle(
+    editor.renderer.getContainerElement().parentElement,
+  );
   editor.setOptions({
     fontFamily: computedStyle.getPropertyValue('font-family'),
     fontSize: computedStyle.getPropertyValue('font-size'),

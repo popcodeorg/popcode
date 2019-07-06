@@ -5,13 +5,10 @@ class AuthProvider {
 }
 
 export const firebase = {
-  auth: Object.assign(
-    () => ({}),
-    {
-      GithubAuthProvider: AuthProvider,
-      GoogleAuthProvider: AuthProvider,
-    },
-  ),
+  auth: Object.assign(() => ({}), {
+    GithubAuthProvider: AuthProvider,
+    GoogleAuthProvider: AuthProvider,
+  }),
 
   initializeApp: constant({}),
 };

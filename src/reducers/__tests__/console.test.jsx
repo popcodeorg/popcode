@@ -20,9 +20,7 @@ import {consoleErrorFactory} from '@factories/validations/errors';
 test('evaluateConsoleEntry adds entry to history', () => {
   const expression = '1 + 1';
   const key = '123';
-  const {history} = applyActions(
-    evaluateConsoleEntry(expression, key),
-  );
+  const {history} = applyActions(evaluateConsoleEntry(expression, key));
   expect(history.size).toBe(1);
   expect(history.get(key)).toMatchObject({expression});
 });
@@ -157,9 +155,5 @@ describe('nextConsoleHistory', () => {
 });
 
 function applyActions(...actions) {
-  return reduce(
-    actions,
-    (state, action) => reducer(state, action),
-    undefined,
-  );
+  return reduce(actions, (state, action) => reducer(state, action), undefined);
 }

@@ -1,16 +1,9 @@
-import {
-  Course,
-  GoogleClassroom,
-  RemoteCollection,
-} from '../records';
+import {Course, GoogleClassroom, RemoteCollection} from '../records';
 
 const defaultState = new GoogleClassroom();
 
 function addCourse(state, course) {
-  return state.setIn(
-    ['courses', 'items', course.id],
-    new Course(course),
-  );
+  return state.setIn(['courses', 'items', course.id], new Course(course));
 }
 
 export default function googleClassroom(stateIn, action) {
@@ -24,16 +17,10 @@ export default function googleClassroom(stateIn, action) {
       return action.payload.courses.reduce(addCourse, state);
 
     case 'COURSES_FULLY_LOADED':
-      return state.setIn(
-        ['courses', 'isFullyLoaded'],
-        true,
-      );
+      return state.setIn(['courses', 'isFullyLoaded'], true);
 
     case 'LOG_OUT':
-      return state.setIn(
-        ['courses'],
-        new RemoteCollection(),
-      );
+      return state.setIn(['courses'], new RemoteCollection());
 
     default:
       return state;

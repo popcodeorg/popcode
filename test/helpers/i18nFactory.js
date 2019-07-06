@@ -8,7 +8,7 @@ const enTestResourceData = {
   'key-with-an-format': 'string with {{tag, en-handle-an}} {{tag}}',
   'key-with-capitalize-format': '{{tag, capitalize}}',
   'key-with-multiple-formats':
-  'string with {{tag, en-handle-an|capitalize}} {{tag}}',
+    'string with {{tag, en-handle-an|capitalize}} {{tag}}',
   'key-invalid-formatter': '{{tag, invalid}}',
   'key-invalid-and-valid-formatter': '{{tag, invalid|capitalize}}',
 };

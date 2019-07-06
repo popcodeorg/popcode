@@ -51,7 +51,7 @@ module.exports = function configure(config) {
 
   if (browserStackAvailable) {
     const customLaunchers = {};
-    allBrowsers.forEach((browser) => {
+    allBrowsers.forEach(browser => {
       customLaunchers[`browserStack${browser[0]}${browser[2]}`] = {
         base: 'BrowserStack',
         browser: browser[0],
