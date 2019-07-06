@@ -12,6 +12,7 @@ import {t} from 'i18next';
 
 import {EditorLocation} from '../records';
 
+import styles from './Console.module.css';
 import ConsoleEntry from './ConsoleEntry';
 import ConsoleInput from './ConsoleInput';
 
@@ -39,12 +40,13 @@ export default function Console({
 
   const console = (
     <div
-      className="console__scroll-container output__item"
+      className={styles.scrollContainer}
       onClick={onConsoleClicked}
     >
       <div
         className={
-          classnames('console__repl', {console__repl_zoomed: isTextSizeLarge})
+          classnames(styles.repl, {[styles.zoomed]: isTextSizeLarge})
+
         }
       >
         <ConsoleInput
@@ -72,12 +74,12 @@ export default function Console({
   return (
     <div
       className={classnames(
-        'console',
+        styles.console,
         {u__hidden: isHidden},
       )}
     >
       <div
-        className="label console__label"
+        className={styles.label}
         onClick={partial(onToggleVisible, currentProjectKey)}
       >
         <div>

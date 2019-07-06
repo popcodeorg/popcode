@@ -1,0 +1,16 @@
+.input {
+  composes: row from './Console.module.css';
+  composes: entry from './ConsoleEntry.module.css';
+}
+
+.chevron {
+  composes: chevron from './Console.module.css';
+}
+
+.chevron.blue {
+  color: var(--color-blue);
+}
+
+.console__editor {
+  margin-left: -4px;
+}

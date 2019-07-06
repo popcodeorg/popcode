@@ -1,6 +1,7 @@
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import bindAll from 'lodash-es/bindAll';
+import classnames from 'classnames';
 import get from 'lodash-es/get';
 import isNil from 'lodash-es/isNil';
 import React, {Component} from 'react';
@@ -13,6 +14,8 @@ import {
   createAceSessionWithoutWorker,
   inheritFontStylesFromParentElement,
 } from '../util/ace';
+
+import styles from './ConsoleInput.module.css';
 
 export default class ConsoleInput extends Component {
   constructor() {
@@ -119,13 +122,13 @@ export default class ConsoleInput extends Component {
   render() {
     return (
       <div
-        className="console__row console__input"
+        className={styles.input}
         onClick={preventClickthrough}
       >
-        <div className="console__chevron console__chevron_blue">
+        <div className={classnames(styles.chevron, styles.blue)}>
           <FontAwesomeIcon icon={faChevronRight} />
         </div>
-        <div className="console__editor" ref={this._ref} />
+        <div className={styles.editor} ref={this._ref} />
       </div>
     );
   }

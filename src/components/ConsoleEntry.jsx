@@ -5,10 +5,11 @@ import {ConsoleEntry as ConsoleEntryRecord} from '../records';
 
 import ConsoleExpression from './ConsoleExpression';
 import ConsoleOutput from './ConsoleOutput';
+import styles from './ConsoleEntry.module.css';
 
 export default function ConsoleEntry({entry, isActive}) {
   return (
-    <div className="console__entry">
+    <div className={styles.entry}>
       <ConsoleExpression entry={entry} isActive={isActive} />
       <ConsoleOutput entry={entry} isActive={isActive} />
     </div>

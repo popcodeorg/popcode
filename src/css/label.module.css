@@ -1,0 +1,9 @@
+.label {
+  background-color: var(--color-chrome);
+  color: var(--color-dark-gray);
+  cursor: pointer;
+  font-family: 'Roboto';
+  font-size: var(--font-size-menu);
+  padding: 0.5em 1em;
+  user-select: none;
+}

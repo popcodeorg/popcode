@@ -7,10 +7,12 @@ import classnames from 'classnames';
 
 import {ConsoleEntry} from '../records';
 
+import styles from './ConsoleOutput.module.css';
+
 export default function ConsoleOutput({entry, isActive}) {
   const {expression, value, error} = entry;
   const chevron = expression ?
-    (<div className="console__chevron console__chevron_outdent">
+    (<div className={styles.chevron}>
       <FontAwesomeIcon icon={faChevronLeft} />
     </div>) :
     null;
@@ -20,9 +22,8 @@ export default function ConsoleOutput({entry, isActive}) {
       <div
         className={
           classnames(
-            'console__row',
-            'console__value',
-            {console__value_inactive: !isActive},
+            styles.value,
+            {[styles.inactive]: !isActive},
           )
         }
       >
@@ -37,8 +38,8 @@ export default function ConsoleOutput({entry, isActive}) {
       <div
         className={
           classnames(
-            'console__error',
-            {console__error_inactive: !isActive},
+            styles.error,
+            {[styles.inactive]: !isActive},
           )
         }
       >

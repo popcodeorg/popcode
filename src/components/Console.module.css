@@ -1,0 +1,47 @@
+.console {
+  flex: none;
+}
+
+.repl {
+  display: flex;
+  flex-direction: column-reverse;
+  font-family: 'Inconsolata', monospace;
+  font-size: 14px;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.repl.zoomed {
+  font-size: 20px;
+}
+
+.scrollContainer {
+  height: 40vh;
+  padding: 0.5em;
+}
+
+.label {
+  composes: label from '../css/label.module.css';
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  background-color: var(--color-low-contrast-gray);
+}
+
+.row {
+  padding-left: 1em;
+  position: relative;
+}
+
+.inactive {
+  color: var(--color-light-gray);
+}
+
+.chevron {
+  color: var(--color-light-gray);
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: scale(0.6);
+  transform-origin: left center;
+}

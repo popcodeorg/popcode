@@ -1,0 +1,12 @@
+.expression {
+  composes: row from './Console.module.css';
+  composes: entry from './Console.module.css';
+}
+
+.inactive {
+  composes: inactive from './Console.module.css';
+}
+
+.chevron {
+  composes: chevron from './Console.module.css';
+}

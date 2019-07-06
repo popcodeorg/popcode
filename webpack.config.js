@@ -194,6 +194,13 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           enforce: 'pre',
         },
         {
+          test: /\.module\.css$/u,
+          use: [
+            'style-loader',
+            {loader: 'css-loader', query: {modules: true}},
+          ],
+        },
+        {
           include: [
             path.resolve(__dirname, 'bower_components'),
             path.resolve(__dirname, 'templates'),
