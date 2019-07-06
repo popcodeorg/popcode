@@ -1,9 +1,7 @@
 import qs from 'qs';
 
 import {AssignmentState} from '../enums';
-import {
-  loadAndConfigureGapi,
-} from '../services/gapi';
+import {loadAndConfigureGapi} from '../services/gapi';
 
 const BASE_URL = 'https://classroom.google.com/u/0/share?';
 

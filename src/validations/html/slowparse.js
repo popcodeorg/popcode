@@ -112,9 +112,9 @@ function emptyTitleElementDetector(_, root) {
   const html = findChildNode(root, 'HTML');
   const head = html ? findChildNode(html, 'HEAD') : null;
   const title = head ? findChildNode(head, 'TITLE') : null;
-  return (title && !title.childNodes.length) ?
-    {type: 'EMPTY_TITLE_ELEMENT', cursor: title.parseInfo.openTag.end} :
-    null;
+  return title && !title.childNodes.length
+    ? {type: 'EMPTY_TITLE_ELEMENT', cursor: title.parseInfo.openTag.end}
+    : null;
 }
 
 const errorDetectors = [emptyTitleElementDetector];

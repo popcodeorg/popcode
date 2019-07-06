@@ -30,10 +30,12 @@ const BEAUTIFY_SETTINGS = {
 const importingBeautify = importBeautify();
 
 async function importBeautify() {
-  return retryingFailedImports(() => import(
-    /* webpackChunkName: "mainAsync" */
-    'js-beautify' // eslint-disable-line comma-dangle
-  ));
+  return retryingFailedImports(() =>
+    import(
+      /* webpackChunkName: "mainAsync" */
+      'js-beautify'
+    ),
+  );
 }
 
 export default async function beautifySource(code, mode) {
@@ -51,4 +53,3 @@ function formatCode(Beautify, code, mode) {
   }
   throw new Error(`could not format code of type ${mode}`);
 }
-

@@ -51,11 +51,7 @@ export default function EditorsColumn({
           source={currentProject.sources[language]}
           textSizeIsLarge={isTextSizeLarge}
           onAutoFormat={onAutoFormat}
-          onInput={partial(
-            onEditorInput,
-            currentProject.projectKey,
-            language,
-          )}
+          onInput={partial(onEditorInput, currentProject.projectKey, language)}
           onRequestedLineFocused={onRequestedLineFocused}
         />
       </EditorContainer>,
@@ -67,10 +63,9 @@ export default function EditorsColumn({
           onDrag={partial(onResizableFlexDividerDrag, index)}
         >
           <div
-            className={classnames(
-              'editors__row-divider',
-              {'editors__row-divider_draggable': isFlexResizingSupported},
-            )}
+            className={classnames('editors__row-divider', {
+              'editors__row-divider_draggable': isFlexResizingSupported,
+            })}
           />
         </DraggableCore>,
       );
@@ -81,11 +76,7 @@ export default function EditorsColumn({
     return null;
   }
 
-  return (
-    <div className="editors">
-      {editors}
-    </div>
-  );
+  return <div className="editors">{editors}</div>;
 }
 
 EditorsColumn.propTypes = {

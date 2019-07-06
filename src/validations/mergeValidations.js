@@ -8,10 +8,7 @@ import omit from 'lodash-es/omit';
 function filterErrors(errors) {
   const groupedErrors = groupBy(errors, 'reason');
 
-  const suppressedTypes = flatMap(
-    flatten(values(groupedErrors)),
-    'suppresses',
-  );
+  const suppressedTypes = flatMap(flatten(values(groupedErrors)), 'suppresses');
 
   return flatten(values(omit(groupedErrors, suppressedTypes)));
 }

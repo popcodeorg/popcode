@@ -4,8 +4,7 @@ import isEmpty from 'lodash-es/isEmpty';
 import isNil from 'lodash-es/isNil';
 import get from 'lodash-es/get';
 
-import AssignmentCreatorFormComponent
-  from '../components/AssignmentCreatorForm';
+import AssignmentCreatorFormComponent from '../components/AssignmentCreatorForm';
 
 function validate(values) {
   const errors = {};

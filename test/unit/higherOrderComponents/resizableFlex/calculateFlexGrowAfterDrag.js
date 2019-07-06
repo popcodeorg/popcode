@@ -3,20 +3,19 @@ import almostEqual from 'almost-equal';
 import every from 'lodash-es/every';
 import zip from 'lodash-es/zip';
 
-import calculateFlexGrowAfterDrag from
-  // eslint-disable-next-line max-len
-  '../../../../src/higherOrderComponents/resizableFlex/calculateFlexGrowAfterDrag';
+import calculateFlexGrowAfterDrag from '../../../../src/higherOrderComponents/resizableFlex/calculateFlexGrowAfterDrag';
 
 function arraysAlmostEqual(array1, array2) {
-  return array1.length === array2.length &&
-    every(
-      zip(array1, array2),
-      ([value1, value2]) => almostEqual(value1, value2),
-    );
+  return (
+    array1.length === array2.length &&
+    every(zip(array1, array2), ([value1, value2]) =>
+      almostEqual(value1, value2),
+    )
+  );
 }
 
 function testFlexGrowAfterDrag(description, before, after, expected) {
-  test(description, (assert) => {
+  test(description, assert => {
     const actual = calculateFlexGrowAfterDrag(before, after);
     assert.ok(
       arraysAlmostEqual(actual, expected),

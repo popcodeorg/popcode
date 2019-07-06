@@ -32,21 +32,25 @@ export default function compiledProjects(stateIn, action) {
 
       const {source, title} = state.last();
       return trimRight(
-        state.push(new CompiledProject({
-          source,
-          title,
-          compiledProjectKey: action.payload.timestamp,
-        })),
+        state.push(
+          new CompiledProject({
+            source,
+            title,
+            compiledProjectKey: action.payload.timestamp,
+          }),
+        ),
       );
     }
 
     case 'PROJECT_COMPILED':
       return trimRight(
-        state.push(new CompiledProject({
-          source: action.payload.source,
-          title: action.payload.title,
-          compiledProjectKey: action.meta.timestamp,
-        })),
+        state.push(
+          new CompiledProject({
+            source: action.payload.source,
+            title: action.payload.title,
+            compiledProjectKey: action.meta.timestamp,
+          }),
+        ),
         2,
       );
 

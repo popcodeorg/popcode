@@ -2,10 +2,13 @@ const PROJECT_STORAGE_KEY = 'last-closed-session-project-state';
 const GRACE_PERIOD = 5 * 60 * 1000;
 
 export function dehydrateProject(project) {
-  localStorage.setItem(PROJECT_STORAGE_KEY, JSON.stringify({
-    dehydratedAt: Date.now(),
-    project,
-  }));
+  localStorage.setItem(
+    PROJECT_STORAGE_KEY,
+    JSON.stringify({
+      dehydratedAt: Date.now(),
+      project,
+    }),
+  );
 }
 
 export function rehydrateProject() {

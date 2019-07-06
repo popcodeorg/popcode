@@ -25,22 +25,13 @@ function ErrorReport({errors, isValidating, onErrorClick}) {
 
   return (
     <div
-      className={classnames(
-        'error-list',
-        'output__item',
-        {'error-list_docked': isDocked, output__item_shrink: isDocked},
-      )}
+      className={classnames('error-list', 'output__item', {
+        'error-list_docked': isDocked,
+        output__item_shrink: isDocked,
+      })}
     >
-      <ErrorList
-        errors={html}
-        language="html"
-        onErrorClick={onErrorClick}
-      />
-      <ErrorList
-        errors={css}
-        language="css"
-        onErrorClick={onErrorClick}
-      />
+      <ErrorList errors={html} language="html" onErrorClick={onErrorClick} />
+      <ErrorList errors={css} language="css" onErrorClick={onErrorClick} />
       <ErrorList
         errors={javascript}
         language="javascript"

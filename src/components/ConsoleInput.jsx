@@ -20,9 +20,7 @@ export default class ConsoleInput extends Component {
     bindAll(this, '_ref');
   }
 
-  componentDidUpdate({
-    isTextSizeLarge: prevIsTextSizeLarge,
-  }) {
+  componentDidUpdate({isTextSizeLarge: prevIsTextSizeLarge}) {
     const {
       isTextSizeLarge,
       requestedFocusedLine,
@@ -61,7 +59,7 @@ export default class ConsoleInput extends Component {
     } = this.props;
 
     if (containerElement) {
-      const editor = this._editor = createAceEditor(containerElement);
+      const editor = (this._editor = createAceEditor(containerElement));
       const session = createAceSessionWithoutWorker('javascript');
       editor.setSession(session);
       editor.renderer.setShowGutter(false);

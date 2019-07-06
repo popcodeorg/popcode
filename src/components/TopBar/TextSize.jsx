@@ -7,10 +7,7 @@ export default function TextSize({isLarge, onToggle}) {
   const icon = isLarge ? faSearchMinus : faSearchPlus;
 
   return (
-    <div
-      className="top-bar__menu-button top-bar__text-size"
-      onClick={onToggle}
-    >
+    <div className="top-bar__menu-button top-bar__text-size" onClick={onToggle}>
       <FontAwesomeIcon icon={icon} />
     </div>
   );

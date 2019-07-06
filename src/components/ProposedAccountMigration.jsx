@@ -4,20 +4,15 @@ import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 import {t} from 'i18next';
 
-export default function ProposedAccountMigration({
-  onDismiss,
-  onMigrate,
-}) {
+export default function ProposedAccountMigration({onDismiss, onMigrate}) {
   return (
     <Fragment>
-      {
-        map(
-          t('account-migration.proposal', {returnObjects: true}),
-          paragraph => (
-            <p key={paragraph}>{paragraph}</p>
-          ),
-        )
-      }
+      {map(
+        t('account-migration.proposal', {returnObjects: true}),
+        paragraph => (
+          <p key={paragraph}>{paragraph}</p>
+        ),
+      )}
       <div className="account-migration__buttons">
         <button
           className={classnames(

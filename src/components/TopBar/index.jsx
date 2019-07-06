@@ -143,8 +143,10 @@ export default function TopBar({
         isOpen={openMenu === 'hamburger'}
         isUserAuthenticated={isUserAuthenticated}
         onClick={partial(onClickMenu, 'hamburger')}
-        onStartEditingInstructions={
-          partial(onStartEditingInstructions, currentProjectKey)}
+        onStartEditingInstructions={partial(
+          onStartEditingInstructions,
+          currentProjectKey,
+        )}
         onStartGithubLogIn={onStartGithubLogIn}
       />
     </header>

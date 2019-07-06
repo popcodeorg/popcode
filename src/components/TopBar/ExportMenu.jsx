@@ -25,7 +25,7 @@ const ExportMenu = createMenu({
     onExportToClassroom,
     onOpenAssignmentCreator,
   }) {
-    return tap([], (items) => {
+    return tap([], items => {
       items.push(
         <MenuItem
           isDisabled={isClassroomExportInProgress}
@@ -71,10 +71,7 @@ const ExportMenu = createMenu({
       }
       if (isUserAuthenticatedWithGoogle && isExperimental) {
         items.push(
-          <MenuItem
-            key="assignmentCreatorr"
-            onClick={onOpenAssignmentCreator}
-          >
+          <MenuItem key="assignmentCreatorr" onClick={onOpenAssignmentCreator}>
             {t('top-bar.create-assignment')}
           </MenuItem>,
         );
@@ -82,7 +79,6 @@ const ExportMenu = createMenu({
     });
   },
 })(ExportMenuButton);
-
 
 ExportMenu.propTypes = {
   hasExportedRepo: PropTypes.bool.isRequired,

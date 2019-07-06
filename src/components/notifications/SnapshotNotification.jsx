@@ -9,18 +9,12 @@ import {t} from 'i18next';
 
 import {createSnapshotUrl} from '../../util/exportUrls';
 
-export default function SnapshotNotification({
-  metadata,
-  onUpdateMetadata,
-}) {
+export default function SnapshotNotification({metadata, onUpdateMetadata}) {
   const uri = createSnapshotUrl(metadata.get('snapshotKey'));
 
   let checkmark;
   if (metadata.get('isCopied')) {
-    checkmark = [
-      ' ',
-      <FontAwesomeIcon icon={faCheckCircle} key="icon" />,
-    ];
+    checkmark = [' ', <FontAwesomeIcon icon={faCheckCircle} key="icon" />];
   }
 
   return (
@@ -28,13 +22,9 @@ export default function SnapshotNotification({
       {t('notifications.snapshot-created')}{' '}
       <CopyToClipboard
         text={uri}
-        onCopy={
-          partial(onUpdateMetadata, {isCopied: true})
-        }
+        onCopy={partial(onUpdateMetadata, {isCopied: true})}
       >
-        <span className="u__link">
-          {t('notifications.click-to-copy')}
-        </span>
+        <span className="u__link">{t('notifications.click-to-copy')}</span>
       </CopyToClipboard>
       {checkmark}
     </span>

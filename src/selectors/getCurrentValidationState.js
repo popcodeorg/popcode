@@ -2,7 +2,7 @@ import {createSelector} from 'reselect';
 
 export default createSelector(
   state => state.get('errors'),
-  (errors) => {
+  errors => {
     const errorStates = [
       errors.html.state,
       errors.css.state,

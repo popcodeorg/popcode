@@ -9,12 +9,12 @@ export const snapshotImported = createAction(
   (projectKey, project) => ({projectKey, project}),
 );
 export const snapshotImportError = createAction('SNAPSHOT_IMPORT_ERROR');
-export const projectRestoredFromLastSession =
-  createAction('PROJECT_RESTORED_FROM_LAST_SESSION');
-export const exportProject = createAction(
-  'EXPORT_PROJECT',
-  exportType => ({exportType}),
+export const projectRestoredFromLastSession = createAction(
+  'PROJECT_RESTORED_FROM_LAST_SESSION',
 );
+export const exportProject = createAction('EXPORT_PROJECT', exportType => ({
+  exportType,
+}));
 export const projectExported = createAction(
   'PROJECT_EXPORTED',
   (url, exportType, projectKey, exportData) => ({
@@ -23,8 +23,9 @@ export const projectExported = createAction(
     projectKey,
     exportData,
   }),
-  (_url, _exportType, _projectKey, _exportData, timestamp = Date.now()) =>
-    ({timestamp}),
+  (_url, _exportType, _projectKey, _exportData, timestamp = Date.now()) => ({
+    timestamp,
+  }),
 );
 export const projectExportError = createAction(
   'PROJECT_EXPORT_ERROR',

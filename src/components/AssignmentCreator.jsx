@@ -7,10 +7,10 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import Modal from './Modal';
 
-const AssignmentCreatorForm = lazy(
-  () => import(
+const AssignmentCreatorForm = lazy(() =>
+  import(
     /* webpackChunkName: "mainAsync" */
-    '../containers/AssignmentCreatorForm' // eslint-disable-line comma-dangle
+    '../containers/AssignmentCreatorForm'
   ),
 );
 
@@ -36,21 +36,19 @@ export default function AssignmentCreator({
           <h1 className="assignment-creator__title">
             {t('assignment-creator.title')}
           </h1>
-          <h3 className="assignment-creator__project-name">
-            {projectTitle}
-          </h3>
-          {
-            areCoursesLoaded ?
-              <AssignmentCreatorForm
-                courses={courses}
-                isAssignmentExportInProgress={isAssignmentExportInProgress}
-                parsedDate={parsedDate}
-                onAssignAssignment={onAssignAssignment}
-                onCloseAssignmentCreator={onCloseAssignmentCreator}
-                onDraftAssignment={onDraftAssignment}
-              /> :
-              <FontAwesomeIcon icon={faSpinner} />
-          }
+          <h3 className="assignment-creator__project-name">{projectTitle}</h3>
+          {areCoursesLoaded ? (
+            <AssignmentCreatorForm
+              courses={courses}
+              isAssignmentExportInProgress={isAssignmentExportInProgress}
+              parsedDate={parsedDate}
+              onAssignAssignment={onAssignAssignment}
+              onCloseAssignmentCreator={onCloseAssignmentCreator}
+              onDraftAssignment={onDraftAssignment}
+            />
+          ) : (
+            <FontAwesomeIcon icon={faSpinner} />
+          )}
         </div>
       </Suspense>
     </Modal>

@@ -3,9 +3,9 @@ import css from 'css';
 import Validator from '../Validator';
 
 const errorMap = {
-  'missing \'{\'': () => ({reason: 'missing-opening-curly'}),
+  "missing '{'": () => ({reason: 'missing-opening-curly'}),
 
-  'property missing \':\'': () => ({
+  "property missing ':'": () => ({
     reason: 'property-missing-colon',
     suppresses: ['invalid-token', 'missing-closing-curly'],
   }),

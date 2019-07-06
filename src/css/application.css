@@ -201,7 +201,10 @@ body {
   border-radius: var(--size-rounded-corners);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
   position: absolute;
-  top: calc(var(--size-top-bar-menu-button) + (var(--size-top-bar) - var(--size-top-bar-menu-button)) / 2);
+  top: calc(
+    var(--size-top-bar-menu-button) +
+      (var(--size-top-bar) - var(--size-top-bar-menu-button)) / 2
+  );
   min-width: 100%;
   max-height: 50vh;
   max-width: 30em;

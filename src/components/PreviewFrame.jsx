@@ -26,7 +26,9 @@ class PreviewFrame extends React.Component {
   constructor(props) {
     super(props);
 
-    const {compiledProject: {source}} = props;
+    const {
+      compiledProject: {source},
+    } = props;
 
     bindAll(this, '_attachToFrame', '_handleInfiniteLoop');
 
@@ -56,17 +58,17 @@ class PreviewFrame extends React.Component {
   }
 
   async _evaluateConsoleExpression(key, expression) {
-    const {hasExpressionStatement} = await retryingFailedImports(
-      () => import(
+    const {hasExpressionStatement} = await retryingFailedImports(() =>
+      import(
         /* webpackChunkName: "mainAsync" */
-        '../util/javascript' // eslint-disable-line comma-dangle
+        '../util/javascript'
       ),
     );
     // eslint-disable-next-line prefer-reflect
     this._channel.call({
       method: 'evaluateExpression',
       params: expression,
-      success: (printedResult) => {
+      success: printedResult => {
         this.props.onConsoleValue(
           key,
           hasExpressionStatement(expression) ? printedResult : null,
@@ -92,8 +94,9 @@ class PreviewFrame extends React.Component {
   }
 
   _runtimeErrorLineOffset() {
-    const firstSourceLine = this.props.compiledProject.source.
-      split('\n').indexOf(sourceDelimiter) + 2;
+    const firstSourceLine =
+      this.props.compiledProject.source.split('\n').indexOf(sourceDelimiter) +
+      2;
 
     return firstSourceLine - 1;
   }

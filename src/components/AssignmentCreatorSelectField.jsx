@@ -12,23 +12,18 @@ export default function AssignmentCreatorSelectField({
   return (
     <div>
       <div className="assignment-creator__select-field">
-        <select
-          className="assignment-creator__select"
-          {...input}
-        >
+        <select className="assignment-creator__select" {...input}>
           {children}
         </select>
         <span className="assignment-creator__caret">
           <FontAwesomeIcon icon={faCaretDown} />
         </span>
       </div>
-      {
-        (touched && error) && (
-          <span className="assignment-creator__assignment-notification">
-            {error}
-          </span>
-        )
-      }
+      {touched && error && (
+        <span className="assignment-creator__assignment-notification">
+          {error}
+        </span>
+      )}
     </div>
   );
 }

@@ -11,6 +11,8 @@ function tryParse(javascript) {
 
 export function hasExpressionStatement(javascript) {
   const maybeParsed = tryParse(javascript);
-  return Boolean(maybeParsed && find(maybeParsed.body,
-    ({type}) => type === 'ExpressionStatement'));
+  return Boolean(
+    maybeParsed &&
+      find(maybeParsed.body, ({type}) => type === 'ExpressionStatement'),
+  );
 }

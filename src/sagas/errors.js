@@ -14,10 +14,10 @@ import {validatedSource} from '../actions/errors';
 import retryingFailedImports from '../util/retryingFailedImports';
 
 export async function importValidations() {
-  return retryingFailedImports(
-    () => import(
+  return retryingFailedImports(() =>
+    import(
       /* webpackChunkName: "mainAsync" */
-      '../validations' // eslint-disable-line comma-dangle
+      '../validations'
     ),
   );
 }
@@ -29,11 +29,9 @@ export function* toggleLibrary(tasks) {
 export function* updateProjectSource(tasks, {payload: {language, newValue}}) {
   const state = yield select();
   const analyzer = new Analyzer(getCurrentProject(state));
-  yield call(
-    validateSource,
-    tasks,
-    {payload: {language, source: newValue, projectAttributes: analyzer}},
-  );
+  yield call(validateSource, tasks, {
+    payload: {language, source: newValue, projectAttributes: analyzer},
+  });
 }
 
 export function* validateCurrentProject(tasks) {
@@ -43,11 +41,9 @@ export function* validateCurrentProject(tasks) {
 
   for (const language of Reflect.ownKeys(currentProject.sources)) {
     const source = currentProject.sources[language];
-    yield fork(
-      validateSource,
-      tasks,
-      {payload: {language, source, projectAttributes: analyzer}},
-    );
+    yield fork(validateSource, tasks, {
+      payload: {language, source, projectAttributes: analyzer},
+    });
   }
 }
 

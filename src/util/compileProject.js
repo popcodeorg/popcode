@@ -24,8 +24,7 @@ async function downloadScript() {
   const responses = await Promise.all(
     map(document.querySelectorAll('.preview-bundle'), el => fetch(el.src)),
   );
-  const scripts =
-    await Promise.all(responses.map(response => response.text()));
+  const scripts = await Promise.all(responses.map(response => response.text()));
   return scripts.join('\n');
 }
 
@@ -54,8 +53,9 @@ function ensureDocumentElement(doc) {
 }
 
 async function attachLibraries(doc, project) {
-  const enabledLibrariesWithDependencies =
-    await librariesWithDependencies(project.enabledLibraries);
+  const enabledLibrariesWithDependencies = await librariesWithDependencies(
+    project.enabledLibraries,
+  );
 
   if (isEmpty(enabledLibrariesWithDependencies)) {
     return;
@@ -97,7 +97,6 @@ function attachJavascriptLibrary(doc, javascript) {
   const scriptTag = doc.createElement('script');
   const javascriptText = String(javascript);
   scriptTag.innerHTML = javascriptText.replace(/<\/script>/gu, '<\\/script>');
-  // eslint-disable-next-line prefer-destructuring
   const firstScriptTag = doc.scripts[0];
   if (firstScriptTag) {
     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag);
@@ -113,8 +112,9 @@ async function librariesWithDependencies(libraryKeys) {
 
   const libraries = await importLibraries();
 
-  const requestedLibraries =
-    libraryKeys.map(libraryKey => libraries[libraryKey]);
+  const requestedLibraries = libraryKeys.map(
+    libraryKey => libraries[libraryKey],
+  );
 
   const dependencies = compact(flatMap(requestedLibraries, 'dependsOn'));
 
@@ -124,17 +124,18 @@ async function librariesWithDependencies(libraryKeys) {
 }
 
 async function importLibraries() {
-  return retryingFailedImports(() => import(
-    /* webpackChunkName: "previewLibraries" */
-    '../config/libraryAssets' // eslint-disable-line comma-dangle
-  ));
+  return retryingFailedImports(() =>
+    import(
+      /* webpackChunkName: "previewLibraries" */
+      '../config/libraryAssets'
+    ),
+  );
 }
 
 function addBase(doc) {
   const {head} = doc;
   const baseTag = doc.createElement('base');
   baseTag.target = '_top';
-  // eslint-disable-next-line prefer-destructuring
   const firstChild = head.childNodes[0];
   if (firstChild) {
     head.insertBefore(baseTag, firstChild);
@@ -167,10 +168,10 @@ async function addJavascript(
 
   let source = `\n${sourceDelimiter}\n${javascript}`;
   if (breakLoops) {
-    const {'default': loopBreaker} = await retryingFailedImports(
-      () => import(
+    const {default: loopBreaker} = await retryingFailedImports(() =>
+      import(
         /* webpackChunkName: "mainAsync" */
-        'loop-breaker' // eslint-disable-line comma-dangle
+        'loop-breaker'
       ),
     );
     source = loopBreaker(source);
@@ -185,10 +186,7 @@ export function generateTextPreview(project) {
   return (title || '').trim();
 }
 
-export default async function compileProject(
-  project,
-  {isInlinePreview} = {},
-) {
+export default async function compileProject(project, {isInlinePreview} = {}) {
   const doc = constructDocument(project);
 
   await attachLibraries(doc, project);

@@ -15,9 +15,9 @@ const NETWORK_ERROR = 'Network Error';
 export class EmptyGistError extends ExtendableError {}
 
 function normalizeTitle(title) {
-  const titleWithoutPunctuationAndWhitespace = title.
-    replace(/[^\w\s]|_/gu, '').
-    replace(/\W/gu, '-');
+  const titleWithoutPunctuationAndWhitespace = title
+    .replace(/[^\w\s]|_/gu, '')
+    .replace(/\W/gu, '-');
 
   return titleWithoutPunctuationAndWhitespace;
 }
@@ -43,36 +43,32 @@ async function createRepoFromProject(project, accessToken) {
   const repoName = `${title}`;
   let duplicateNameFailureCount = 0;
   let fullRepoName = '';
-  const {data} =
-    await performWithRetries(
-      () => {
-        const suffix = duplicateNameFailureCount === 0 ?
-          '' :
-          `-${duplicateNameFailureCount}`;
-        fullRepoName = `${repoName}${suffix}`;
-        return github.getUser().createRepo({
-          name: fullRepoName,
-          auto_init: true,
-        });
-      },
-      (errorMessage) => {
-        const shouldRetry = errorMessage.includes('Unprocessable Entity') ||
-          errorMessage === NETWORK_ERROR;
-        if (errorMessage.includes('Unprocessable Entity')) {
-          duplicateNameFailureCount += 1;
-        }
-        return shouldRetry;
-      },
-      {},
-    );
+  const {data} = await performWithRetries(
+    () => {
+      const suffix =
+        duplicateNameFailureCount === 0 ? '' : `-${duplicateNameFailureCount}`;
+      fullRepoName = `${repoName}${suffix}`;
+      return github.getUser().createRepo({
+        name: fullRepoName,
+        auto_init: true,
+      });
+    },
+    errorMessage => {
+      const shouldRetry =
+        errorMessage.includes('Unprocessable Entity') ||
+        errorMessage === NETWORK_ERROR;
+      if (errorMessage.includes('Unprocessable Entity')) {
+        duplicateNameFailureCount += 1;
+      }
+      return shouldRetry;
+    },
+    {},
+  );
 
   const userName = data.owner.login;
 
-  await performWithRetryNetworkErrors(
-    () => github.getRepo(
-      userName,
-      fullRepoName,
-    ).deleteFile(MASTER, 'README.md'),
+  await performWithRetryNetworkErrors(() =>
+    github.getRepo(userName, fullRepoName).deleteFile(MASTER, 'README.md'),
   );
 
   await createBranch(github, userName, fullRepoName, MASTER, GH_PAGES);
@@ -91,16 +87,16 @@ async function updateRepoFromProject(project, accessToken) {
   const github = await createClient(accessToken);
   const repoName = project.externalLocations.githubRepoName;
 
-  const {data: userData} = await performWithRetryNetworkErrors(
-    () => github.getUser().getProfile(),
+  const {data: userData} = await performWithRetryNetworkErrors(() =>
+    github.getUser().getProfile(),
   );
 
   const userName = userData.login;
 
   await createRepoFiles(github, project, userName, repoName);
 
-  const {data} = await performWithRetryNetworkErrors(
-    () => github.getRepo(userName, repoName).getDetails(),
+  const {data} = await performWithRetryNetworkErrors(() =>
+    github.getRepo(userName, repoName).getDetails(),
   );
 
   return {
@@ -127,8 +123,9 @@ export async function createGistFromProject(project, accessToken) {
     return Promise.reject(new EmptyGistError());
   }
 
-  const response =
-    await performWithRetryNetworkErrors(() => github.getGist().create(gist));
+  const response = await performWithRetryNetworkErrors(() =>
+    github.getGist().create(gist),
+  );
 
   return updateGistWithImportUrl(github, response.data);
 }
@@ -136,8 +133,9 @@ export async function createGistFromProject(project, accessToken) {
 export async function loadGistFromId(gistId) {
   const github = await createClient();
   const gist = github.getGist(gistId);
-  const response =
-    await performWithRetryNetworkErrors(() => gist.read(), {retries: 3});
+  const response = await performWithRetryNetworkErrors(() => gist.read(), {
+    retries: 3,
+  });
   return response.data;
 }
 
@@ -176,7 +174,7 @@ function buildGistFromProject(project) {
 
   return {
     description: 'Exported from Popcode.',
-    'public': true,
+    public: true,
     files,
   };
 }
@@ -188,8 +186,9 @@ async function updateGistWithImportUrl(github, gistData) {
   uri.search = `gist=${gistData.id}`;
 
   const description = `${gistData.description} Click to import: ${uri.href}`;
-  const response =
-    await performWithRetryNetworkErrors(() => gist.update({description}));
+  const response = await performWithRetryNetworkErrors(() =>
+    gist.update({description}),
+  );
   return response.data;
 }
 
@@ -220,15 +219,10 @@ async function createSourceFileInRepo(
   fileName,
   source,
 ) {
-  await performWithRetryNetworkErrors(
-    () => github.getRepo(userName, repoName).
-      writeFile(
-        branchName,
-        fileName,
-        source,
-        COMMIT_MESSAGE,
-        {},
-      ),
+  await performWithRetryNetworkErrors(() =>
+    github
+      .getRepo(userName, repoName)
+      .writeFile(branchName, fileName, source, COMMIT_MESSAGE, {}),
   );
 }
 
@@ -283,36 +277,28 @@ async function createPreviewFile(github, project, userName, repoName) {
   );
 }
 
-async function createBranch(
-  github,
-  userName,
-  repoName,
-  oldBranch,
-  newBranch,
-) {
-  await performWithRetryNetworkErrors(
-    () => github.getRepo(userName, repoName).
-      createBranch(oldBranch, newBranch),
+async function createBranch(github, userName, repoName, oldBranch, newBranch) {
+  await performWithRetryNetworkErrors(() =>
+    github.getRepo(userName, repoName).createBranch(oldBranch, newBranch),
   );
 }
 
 async function updateRepoDescription(github, userName, repoName) {
   const url = `https://${userName}.github.io/${repoName}`;
-  await performWithRetryNetworkErrors(
-    () => github.getRepo(userName, repoName).
-      updateRepository({
-        name: repoName,
-        description: url,
-        homepage: url,
-      }),
+  await performWithRetryNetworkErrors(() =>
+    github.getRepo(userName, repoName).updateRepository({
+      name: repoName,
+      description: url,
+      homepage: url,
+    }),
   );
 }
 
 async function createClient(token = null) {
-  const {'default': GitHub} = await retryingFailedImports(
-    () => import(
+  const {default: GitHub} = await retryingFailedImports(() =>
+    import(
       /* webpackChunkName: "mainAsync" */
-      'github-api' // eslint-disable-line comma-dangle
+      'github-api'
     ),
   );
 

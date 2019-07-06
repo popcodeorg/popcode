@@ -12,11 +12,7 @@ export default function ProjectExportNotification({metadata}) {
   const text = t(`notifications.${exportType}-export-complete`);
 
   return (
-    <GenericNotificationWithURL
-      linkText={linkText}
-      text={text}
-      url={url}
-    />
+    <GenericNotificationWithURL linkText={linkText} text={text} url={url} />
   );
 }
 
