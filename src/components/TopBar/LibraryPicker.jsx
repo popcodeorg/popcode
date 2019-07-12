@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import {faCheck} from '@fortawesome/free-solid-svg-icons';
+import faCheck from '@fortawesome/free-solid-svg-icons/faCheck';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';

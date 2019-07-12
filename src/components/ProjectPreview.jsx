@@ -1,4 +1,4 @@
-import {faArchive} from '@fortawesome/free-solid-svg-icons';
+import faArchive from '@fortawesome/free-solid-svg-icons/faArchive';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
 import React from 'react';

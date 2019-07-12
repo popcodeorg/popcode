@@ -1,4 +1,4 @@
-import {faChevronUp} from '@fortawesome/free-solid-svg-icons';
+import faChevronUp from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
 import PropTypes from 'prop-types';

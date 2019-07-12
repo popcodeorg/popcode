@@ -1,8 +1,6 @@
-import {
-  faChevronDown,
-  faExternalLinkAlt,
-  faSyncAlt,
-} from '@fortawesome/free-solid-svg-icons';
+import faChevronDown from '@fortawesome/free-solid-svg-icons/faChevronDown';
+import faExternalLinkAlt from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
+import faSyncAlt from '@fortawesome/free-solid-svg-icons/faSyncAlt';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
 import partial from 'lodash-es/partial';

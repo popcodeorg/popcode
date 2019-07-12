@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import {faBan, faChevronDown} from '@fortawesome/free-solid-svg-icons';
+import faBan from '@fortawesome/free-solid-svg-icons/faBan';
+import faChevronDown from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import partial from 'lodash-es/partial';
 import React from 'react';

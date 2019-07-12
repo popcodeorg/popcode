@@ -1,4 +1,5 @@
-import {faSearchMinus, faSearchPlus} from '@fortawesome/free-solid-svg-icons';
+import faSearchMinus from '@fortawesome/free-solid-svg-icons/faSearchMinus';
+import faSearchPlus from '@fortawesome/free-solid-svg-icons/faSearchPlus';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
 import PropTypes from 'prop-types';

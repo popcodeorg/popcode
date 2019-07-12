@@ -1,4 +1,4 @@
-import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
+import faCheckCircle from '@fortawesome/free-solid-svg-icons/faCheckCircle';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';

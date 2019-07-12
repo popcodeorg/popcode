@@ -1,4 +1,5 @@
-import {faInfoCircle, faPenSquare} from '@fortawesome/free-solid-svg-icons';
+import faInfoCircle from '@fortawesome/free-solid-svg-icons/faInfoCircle';
+import faPenSquare from '@fortawesome/free-solid-svg-icons/faPenSquare';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
 import PropTypes from 'prop-types';

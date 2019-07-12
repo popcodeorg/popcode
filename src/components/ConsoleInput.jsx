@@ -1,4 +1,4 @@
-import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import faChevronRight from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import bindAll from 'lodash-es/bindAll';
 import get from 'lodash-es/get';

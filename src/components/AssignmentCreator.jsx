@@ -2,7 +2,7 @@ import {t} from 'i18next';
 import React, {lazy, Suspense} from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import {faSpinner} from '@fortawesome/free-solid-svg-icons';
+import faSpinner from '@fortawesome/free-solid-svg-icons/faSpinner';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import Modal from './Modal';

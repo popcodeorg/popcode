@@ -1,4 +1,4 @@
-import {faExchangeAlt} from '@fortawesome/free-solid-svg-icons';
+import faExchangeAlt from '@fortawesome/free-solid-svg-icons/faExchangeAlt';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import isNull from 'lodash-es/isNull';
 import PropTypes from 'prop-types';
