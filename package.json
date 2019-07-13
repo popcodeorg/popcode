@@ -174,9 +174,14 @@
     {
       "name": "Shen",
       "url": "https://github.com/dshen6"
+    },
+    {
+      "name": "Maggie Walker",
+      "url": "https://maggiewalker.github.io",
+      "email": "mags21walker@gmail.com"
     }
   ],
-  "keywords": "code editor education learning",
+  "keywords": ["code editor", "education", "learning"],
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
   "license": "MIT",
   "dependencies": {
