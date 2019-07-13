@@ -276,11 +276,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           ],
           use: ['null-loader'],
         },
-        {
-          test: /\.js$/u,
-          include: matchModule('moment/locale'),
-          use: ['null-loader'],
-        },
       ],
     },
 

@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import {distanceInWordsToNow} from 'date-fns';
 import {t} from 'i18next';
 
 const MAX_LENGTH = 50;
@@ -50,7 +50,7 @@ export default function ProjectPreview({
       </div>
       {project.updatedAt && (
         <div className="project-preview__timestamp">
-          {moment(project.updatedAt).fromNow()}
+          {distanceInWordsToNow(project.updatedAt)}
         </div>
       )}
     </div>
