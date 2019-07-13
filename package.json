@@ -181,7 +181,7 @@
       "email": "mags21walker@gmail.com"
     }
   ],
-  "keywords": "code editor education learning",
+  "keywords": ["code editor", "education", "learning"],
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
   "license": "MIT",
   "dependencies": {
