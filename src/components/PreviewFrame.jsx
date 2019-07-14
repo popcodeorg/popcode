@@ -118,10 +118,10 @@ class PreviewFrame extends React.Component {
     let oneIndexedOriginalLine = oneIndexedSourceLine;
     let {column} = error;
     if (this.props.compiledProject.sourceMap) {
-      const {SourceMapConsumer} = await retryingFailedImports(
-        () => import(
+      const {SourceMapConsumer} = await retryingFailedImports(() =>
+        import(
           /* webpackChunkName: "mainAsync" */
-          'source-map' // eslint-disable-line comma-dangle
+          'source-map'
         ),
       );
 

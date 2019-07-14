@@ -1,11 +1,9 @@
-import compileProject, {
-  addJavascript,
-} from '../compileProject';
+import compileProject, {addJavascript} from '../compileProject';
 
 jest.mock('../../services/babel-browser.gen');
 
 describe('compileProject', () => {
-  it('fills out a default template', async() => {
+  it('fills out a default template', async () => {
     const result = await compileProject({
       sources: {
         html: '     ',
@@ -16,20 +14,22 @@ describe('compileProject', () => {
 
     expect(result).toEqual({
       title: '',
-      source: '<!DOCTYPE html> <html><head><style>     ' +
+      source:
+        '<!DOCTYPE html> <html><head><style>     ' +
         '</style></head><body></body></html>',
     });
   });
 });
 
 describe('addJavascript', () => {
-  it('always calls the generated babel transpiler', async() => {
+  it('always calls the generated babel transpiler', async () => {
     const doc = new DOMParser().parseFromString('', 'text/html');
     await addJavascript(doc, {
       sources: {
-        javascript: 'const { a, b, ...c } = {' +
-        '  a: "he", b: "llo", c: false, d: true' +
-        '};',
+        javascript:
+          'const { a, b, ...c } = {' +
+          '  a: "he", b: "llo", c: false, d: true' +
+          '};',
       },
     });
 

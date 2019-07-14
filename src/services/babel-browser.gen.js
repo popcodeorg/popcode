@@ -27,21 +27,19 @@ function getPluginNamesFromPresetEnv() {
     ],
   });
 
-  return result.options.plugins.map(
-    plugin => plugin.key,
-  ).filter(
-    key => key.indexOf('/') !== 0,
-  );
+  return result.options.plugins
+    .map(plugin => plugin.key)
+    .filter(key => key.indexOf('/') !== 0);
 }
 
 module.exports = () => {
   const keys = getPluginNamesFromPresetEnv();
 
-  const pluginImports = keys.map((key, index) =>
-    `import plugin${index} from\n'@babel/plugin-${key}';`).join('\n');
+  const pluginImports = keys
+    .map((key, index) => `import plugin${index} from\n'@babel/plugin-${key}';`)
+    .join('\n');
 
-  const pluginNames = keys.map((key, index) => `plugin${index}`).
-    join(',\n');
+  const pluginNames = keys.map((key, index) => `plugin${index}`).join(',\n');
 
   return {
     code: `
