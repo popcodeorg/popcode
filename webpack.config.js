@@ -11,8 +11,8 @@ const webpack = require('webpack');
 const escapeRegExp = require('lodash.escaperegexp');
 const babel = require('@babel/core');
 
-const babelLoaderVersion =
-  require('./node_modules/babel-loader/package.json').version;
+const babelLoaderVersion = require('./node_modules/babel-loader/package.json')
+  .version;
 
 const babelLoaderConfig = Object.assign(
   {},
@@ -50,7 +50,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       FIREBASE_APP: 'popcode-development',
       FIREBASE_API_KEY: 'AIzaSyCHlo2RhOkRFFh48g779YSZrLwKjoyCcws',
       FIREBASE_CLIENT_ID:
-      /* eslint-disable-next-line max-len */
         '488497217137-c0mdq8uca6ot5o9u9avo3j5mfsi1q9v5.apps.googleusercontent.com',
       NODE_ENV: env,
       WARN_ON_DROPPED_ERRORS: 'false',
@@ -102,11 +101,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         },
         publicPath: '/',
         responseStrategy: 'network-first',
-        externals: [
-          '/',
-          'application.css',
-          'images/pop/thinking.svg',
-        ],
+        externals: ['/', 'application.css', 'images/pop/thinking.svg'],
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'src/html/index.html'),
@@ -136,20 +131,19 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
 
   return {
     mode: isProduction ? 'production' : 'development',
-    entry: isTest ? undefined : {
-      main: [
-        '@babel/polyfill',
-        'es6-set/implement',
-        'whatwg-fetch',
-        'raf/polyfill',
-        './src/init/DOMParserShim',
-        './src/application.js',
-      ],
-      preview: [
-        '@babel/polyfill',
-        './src/preview.js',
-      ],
-    },
+    entry: isTest
+      ? undefined
+      : {
+          main: [
+            '@babel/polyfill',
+            'es6-set/implement',
+            'whatwg-fetch',
+            'raf/polyfill',
+            './src/init/DOMParserShim',
+            './src/application.js',
+          ],
+          preview: ['@babel/polyfill', './src/preview.js'],
+        },
     optimization: {
       splitChunks: isTest ? false : {chunks: 'all'},
     },
@@ -262,6 +256,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         {
           test: /\.js$/u,
           include: [path.resolve(__dirname, 'node_modules')],
+          exclude: [matchModule('brace')],
           use: {loader: 'babel-loader', options: babelLoaderConfig},
         },
         {

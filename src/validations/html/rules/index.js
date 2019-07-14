@@ -43,10 +43,9 @@ class RuleValidator extends Validator {
   }
 
   async getRawErrors() {
-    return Array.from(await runRules([
-      new MismatchedTag(),
-      new NodeOutsideBody(),
-    ], this.source));
+    return Array.from(
+      await runRules([new MismatchedTag(), new NodeOutsideBody()], this.source),
+    );
   }
 
   locationForError(error) {

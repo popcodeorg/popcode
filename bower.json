@@ -2,25 +2,12 @@
   "name": "popcode",
   "description": "Web-based HTML/CSS/JS editor for educational use",
   "main": "src/application.js",
-  "authors": [
-    "Mat Brown"
-  ],
+  "authors": ["Mat Brown"],
   "license": "MIT",
-  "keywords": [
-    "code",
-    "editor",
-    "education",
-    "learning"
-  ],
+  "keywords": ["code", "editor", "education", "learning"],
   "homepage": "https://github.com/popcodeorg/popcode",
   "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
+  "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"],
   "dependencies": {
     "bootstrap": "^3.3.6",
     "lodash": "^4.11.2",

@@ -21,12 +21,12 @@ export const firebaseErrorFactory = Factory.define(
   name: 'some other error',
 });
 
-export const credentialInUseErrorFactory = new Factory().extend(
-  firebaseErrorFactory,
-).attrs({
-  name: 'auth/credential-already-in-use',
-  credential: () => credentialFactory.build(),
-});
+export const credentialInUseErrorFactory = new Factory()
+  .extend(firebaseErrorFactory)
+  .attrs({
+    name: 'auth/credential-already-in-use',
+    credential: () => credentialFactory.build(),
+  });
 
 export const userProviderDataFactory = new Factory().attrs({
   displayName: 'popcoder',
@@ -37,9 +37,7 @@ export const userProviderDataFactory = new Factory().attrs({
   uid: '1234567',
 });
 
-export const userFactory = new Factory().extend(
-  userProviderDataFactory,
-).attrs({
+export const userFactory = new Factory().extend(userProviderDataFactory).attrs({
   emailVerified: false,
   isAnonymous: false,
   metadata: {

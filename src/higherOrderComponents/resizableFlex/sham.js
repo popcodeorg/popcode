@@ -11,12 +11,12 @@ export default function resizableFlex(size) {
     onResizableFlexDividerDrag: noop,
   };
 
-  return (Component) => {
+  return Component => {
     function WrappedComponent(ownProps) {
       return <Component {...props} {...ownProps} />;
     }
-    WrappedComponent.displayName =
-      `ResizableFlex.sham(${Component.displayName || Component.name}`;
+    WrappedComponent.displayName = `ResizableFlex.sham(${Component.displayName ||
+      Component.name}`;
     return WrappedComponent;
   };
 }

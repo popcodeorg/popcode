@@ -6,14 +6,10 @@ import {t} from 'i18next';
 export default function AccountMigrationUndoGracePeriod({onDismiss}) {
   return (
     <Fragment>
-      <p>
-        {t('account-migration.preparing')}
-      </p>
+      <p>{t('account-migration.preparing')}</p>
       <div className="account-migration__buttons">
         <button
-          className={classnames(
-            'account-migration__button',
-          )}
+          className={classnames('account-migration__button')}
           onClick={onDismiss}
         >
           {t('account-migration.buttons.stop')}

@@ -59,10 +59,9 @@ export function* handleAuthChange(user, {newCredential} = {}) {
   if (isNil(newCredential)) {
     credentials = storedCredentials;
   } else {
-    credentials = reject(
-      storedCredentials,
-      {providerId: newCredential.providerId},
-    );
+    credentials = reject(storedCredentials, {
+      providerId: newCredential.providerId,
+    });
     credentials.push(newCredential);
   }
 
@@ -90,9 +89,7 @@ export function* handleAuthError(e) {
 
     case 'auth/web-storage-unsupported':
     case 'auth/operation-not-supported-in-this-environment':
-      yield put(
-        notificationTriggered('auth-third-party-cookies-disabled'),
-      );
+      yield put(notificationTriggered('auth-third-party-cookies-disabled'));
       break;
 
     case 'access_denied':
@@ -127,11 +124,10 @@ function* reportUserCredentialMismatch(user, credentials) {
       `User ${user.uid} has credentials for ` +
         `${missingUserProviders.join(',')} + but no linked account`,
     );
-    yield call(
-      [bugsnagClient, 'notify'],
-      e,
-      {metaData: {user, credentials}, severity: 'warning'},
-    );
+    yield call([bugsnagClient, 'notify'], e, {
+      metaData: {user, credentials},
+      severity: 'warning',
+    });
   }
 
   if (!isEmpty(missingCredentialProviders)) {
@@ -139,11 +135,10 @@ function* reportUserCredentialMismatch(user, credentials) {
       `User ${user.uid} has linked accounts for ` +
         `${missingCredentialProviders.join(',')} + but no credentials`,
     );
-    yield call(
-      [bugsnagClient, 'notify'],
-      e,
-      {metaData: {user, credentials}, severity: 'warning'},
-    );
+    yield call([bugsnagClient, 'notify'], e, {
+      metaData: {user, credentials},
+      severity: 'warning',
+    });
   }
 }
 

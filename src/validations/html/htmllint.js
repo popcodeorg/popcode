@@ -6,7 +6,7 @@ import reduce from 'lodash-es/reduce';
 import Validator from '../Validator';
 
 const errorMap = {
-  E001: (error) => {
+  E001: error => {
     switch (error.data.attribute.toLowerCase()) {
       case 'align':
         return {reason: 'banned-attributes.align'};
@@ -61,8 +61,7 @@ const errorMap = {
   E018: (error, source) => {
     const lines = source.split('\n');
     const tagNameExpr = /(.*?)\s*\/>/u;
-    const [, tag] =
-      tagNameExpr.exec(lines[error.line - 1].slice(error.column));
+    const [, tag] = tagNameExpr.exec(lines[error.line - 1].slice(error.column));
 
     return {
       reason: 'self-closing-tag',
@@ -123,15 +122,7 @@ const htmlLintOptions = {
   'html-valid-content-model': true,
   'id-no-dup': true,
   'img-req-src': true,
-  'tag-bans': [
-    'b',
-    'big',
-    'center',
-    'font',
-    'i',
-    'tt',
-    'strike',
-  ],
+  'tag-bans': ['b', 'big', 'center', 'font', 'i', 'tt', 'strike'],
   'tag-name-match': true,
   'tag-name-lowercase': true,
   'tag-self-close': 'never',

@@ -13,14 +13,10 @@ import voidElements from 'void-elements';
 //   to take in close tags
 export default (rules, source) => {
   const parser = new SAXParser({sourceCodeLocationInfo: true});
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     parser.on(
       'startTag',
-      ({
-        tagName,
-        selfClosing,
-        sourceCodeLocation: {startLine, startCol},
-      }) => {
+      ({tagName, selfClosing, sourceCodeLocation: {startLine, startCol}}) => {
         for (const rule of rules) {
           if (rule.openTag && !selfClosing && !(tagName in voidElements)) {
             rule.openTag(
@@ -41,23 +37,22 @@ export default (rules, source) => {
         }
       },
     );
-    parser.on(
-      'text',
-      ({text, sourceCodeLocation: {startLine, startCol}}) => {
-        for (const rule of rules) {
-          if (rule.text) {
-            rule.text({row: startLine - 1, column: startCol - 1}, text);
-          }
+    parser.on('text', ({text, sourceCodeLocation: {startLine, startCol}}) => {
+      for (const rule of rules) {
+        if (rule.text) {
+          rule.text({row: startLine - 1, column: startCol - 1}, text);
         }
-      },
-    );
+      }
+    });
     parser.write(source);
     parser.end(() => {
-      resolve(function* getRules() {
-        for (const rule of rules) {
-          yield* rule.done();
-        }
-      }());
+      resolve(
+        (function* getRules() {
+          for (const rule of rules) {
+            yield* rule.done();
+          }
+        })(),
+      );
     });
   });
 };

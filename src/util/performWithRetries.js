@@ -7,17 +7,21 @@ export default function performWithRetries(
   options = {},
 ) {
   return promiseRetry(
-    retry => perform().catch((error) => {
-      if (shouldRetryFn(error.message)) {
-        return retry(error);
-      }
-      return Promise.reject(error);
-    }),
-    assign({
-      retries: 5,
-      factor: 2,
-      minTimeout: 1000,
-      maxTimeout: 10000,
-    }, options),
+    retry =>
+      perform().catch(error => {
+        if (shouldRetryFn(error.message)) {
+          return retry(error);
+        }
+        return Promise.reject(error);
+      }),
+    assign(
+      {
+        retries: 5,
+        factor: 2,
+        minTimeout: 1000,
+        maxTimeout: 10000,
+      },
+      options,
+    ),
   );
 }

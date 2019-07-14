@@ -12,17 +12,11 @@ export const editorFocusedRequestedLine = createAction(
   'EDITOR_FOCUSED_REQUESTED_LINE',
 );
 
-export const startDragColumnDivider = createAction(
-  'START_DRAG_COLUMN_DIVIDER',
-);
+export const startDragColumnDivider = createAction('START_DRAG_COLUMN_DIVIDER');
 
-export const stopDragColumnDivider = createAction(
-  'STOP_DRAG_COLUMN_DIVIDER',
-);
+export const stopDragColumnDivider = createAction('STOP_DRAG_COLUMN_DIVIDER');
 
-export const popOutProject = createAction(
-  'POP_OUT_PROJECT',
-);
+export const popOutProject = createAction('POP_OUT_PROJECT');
 
 export const notificationTriggered = createAction(
   'NOTIFICATION_TRIGGERED',
@@ -39,17 +33,11 @@ export const updateNotificationMetadata = createAction(
   (type, metadata) => ({type, metadata}),
 );
 
-export const toggleEditorTextSize = createAction(
-  'TOGGLE_EDITOR_TEXT_SIZE',
-);
+export const toggleEditorTextSize = createAction('TOGGLE_EDITOR_TEXT_SIZE');
 
-export const toggleTopBarMenu = createAction(
-  'TOGGLE_TOP_BAR_MENU',
-);
+export const toggleTopBarMenu = createAction('TOGGLE_TOP_BAR_MENU');
 
-export const closeTopBarMenu = createAction(
-  'CLOSE_TOP_BAR_MENU',
-);
+export const closeTopBarMenu = createAction('CLOSE_TOP_BAR_MENU');
 
 export const startEditingInstructions = createAction(
   'START_EDITING_INSTRUCTIONS',
@@ -61,31 +49,18 @@ export const cancelEditingInstructions = createAction(
   'CANCEL_EDITING_INSTRUCTIONS',
 );
 
-export const showSaveIndicator = createAction(
-  'SHOW_SAVE_INDICATOR',
-);
+export const showSaveIndicator = createAction('SHOW_SAVE_INDICATOR');
 
-export const hideSaveIndicator = createAction(
-  'HIDE_SAVE_INDICATOR',
-);
+export const hideSaveIndicator = createAction('HIDE_SAVE_INDICATOR');
 
-export const openAssignmentCreator = createAction(
-  'OPEN_ASSIGNMENT_CREATOR',
-);
+export const openAssignmentCreator = createAction('OPEN_ASSIGNMENT_CREATOR');
 
-export const closeAssignmentCreator = createAction(
-  'CLOSE_ASSIGNMENT_CREATOR',
-);
+export const closeAssignmentCreator = createAction('CLOSE_ASSIGNMENT_CREATOR');
 
-export const coursesLoaded = createAction(
-  'COURSES_LOADED',
-  courses => ({courses}),
-);
+export const coursesLoaded = createAction('COURSES_LOADED', courses => ({
+  courses,
+}));
 
-export const coursesFullyLoaded = createAction(
-  'COURSES_FULLY_LOADED',
-);
+export const coursesFullyLoaded = createAction('COURSES_FULLY_LOADED');
 
-export const toggleArchivedView = createAction(
-  'TOGGLE_ARCHIVED_VIEW',
-);
+export const toggleArchivedView = createAction('TOGGLE_ARCHIVED_VIEW');

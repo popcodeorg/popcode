@@ -8,7 +8,7 @@ import bowser from '../services/bowser';
 
 const normalizers = {
   Chrome: {
-    TypeError: (message) => {
+    TypeError: message => {
       let match;
 
       match = /^(\w+) is not a function$/u.exec(message);
@@ -16,8 +16,9 @@ const normalizers = {
         return {type: 'not-a-function', params: {name: match[1]}};
       }
 
-      match = /^Cannot (read|set) property '(.+)' of (null|undefined)$/u.
-        exec(message);
+      match = /^Cannot (read|set) property '(.+)' of (null|undefined)$/u.exec(
+        message,
+      );
       if (match) {
         return {
           type: `${match[1]}-property-of-${match[3]}`,
@@ -30,10 +31,12 @@ const normalizers = {
   },
 
   Safari: {
-    TypeError: (message) => {
+    TypeError: message => {
       let match;
 
-      match = /^(\w+) is not a function. \(In '\w+\(\)', '\w+' is (\w+|an instance of (\w+))\)$/u.exec(message); // eslint-disable-line max-len
+      match = /^(\w+) is not a function. \(In '\w+\(\)', '\w+' is (\w+|an instance of (\w+))\)$/u.exec(
+        message,
+      );
 
       if (match) {
         if (match[3]) {
@@ -66,7 +69,7 @@ const normalizers = {
   },
 
   Firefox: {
-    TypeError: (message) => {
+    TypeError: message => {
       let match;
 
       match = /^(\w+) is not a function$/u.exec(message);
@@ -90,7 +93,9 @@ const normalizers = {
 function attachMessage(normalizedError) {
   let context;
   if (!isEmpty(normalizedError.params)) {
-    context = `with-${keys(normalizedError.params).sort().join('-')}`;
+    context = `with-${keys(normalizedError.params)
+      .sort()
+      .join('-')}`;
   }
 
   return assign(normalizedError, {

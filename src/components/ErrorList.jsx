@@ -15,26 +15,19 @@ function ErrorList({errors, onErrorClick, language}) {
     <ErrorItem
       {...error}
       key={[error.reason, error.row]}
-      onClick={partial(
-        onErrorClick,
-        language,
-      )}
+      onClick={partial(onErrorClick, language)}
     />
   ));
 
-  const errorMessage = t(
-    'errors.notice',
-    {count: errors.items.length, language},
-  );
+  const errorMessage = t('errors.notice', {
+    count: errors.items.length,
+    language,
+  });
 
   return (
     <div>
-      <h2 className="error-list__header">
-        {errorMessage}
-      </h2>
-      <ul className="error-list__errors">
-        {errorItems}
-      </ul>
+      <h2 className="error-list__header">{errorMessage}</h2>
+      <ul className="error-list__errors">{errorItems}</ul>
     </div>
   );
 }

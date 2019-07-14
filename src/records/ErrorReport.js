@@ -4,8 +4,11 @@ import ErrorList from './ErrorList';
 
 const defaultErrorList = new ErrorList();
 
-export default Record({
-  html: defaultErrorList,
-  css: defaultErrorList,
-  javascript: defaultErrorList,
-}, 'ErrorReport');
+export default Record(
+  {
+    html: defaultErrorList,
+    css: defaultErrorList,
+    javascript: defaultErrorList,
+  },
+  'ErrorReport',
+);

@@ -44,11 +44,12 @@ export default class NodeOutsideBody {
 
   text(location, text) {
     const trimmedText = text.trim();
-    if (trimmedText && (
-      this._isTopLevel() ||
-      this._isInsideHtmlTag() ||
-      this._isDirectChildOfHead()
-    )) {
+    if (
+      trimmedText &&
+      (this._isTopLevel() ||
+        this._isInsideHtmlTag() ||
+        this._isDirectChildOfHead())
+    ) {
       const matchingWhitespaces = text.match(/^(\s+)/gu);
 
       if (matchingWhitespaces) {
@@ -72,17 +73,20 @@ export default class NodeOutsideBody {
   }
 
   _isInsideHtmlTag() {
-    return this._openTagStack.length === 1 &&
-      this._openTagStack[0].name === 'html';
+    return (
+      this._openTagStack.length === 1 && this._openTagStack[0].name === 'html'
+    );
   }
 
   _isDirectChildOfHead() {
-    return this._openTagStack.length === 2 &&
+    return (
+      this._openTagStack.length === 2 &&
       this._openTagStack[0].name === 'html' &&
-      this._openTagStack[1].name === 'head';
+      this._openTagStack[1].name === 'head'
+    );
   }
 
-  * done() {
+  *done() {
     for (const {location} of this._invalidTextLocations) {
       yield {
         code: Code.INVALID_TEXT_OUTSIDE_BODY,

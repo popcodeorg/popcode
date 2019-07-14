@@ -69,7 +69,7 @@ export default class MismatchedTag {
     }
   }
 
-  * done() {
+  *done() {
     for (const mismatches of this._mismatchStacksByOpenName.values()) {
       for (const {openTag, closeTag} of mismatches) {
         yield {code: Code.UNCLOSED_TAG, openTag, closeTag};

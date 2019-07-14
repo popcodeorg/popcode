@@ -28,10 +28,8 @@ function mapStateToProps(state) {
     consoleEntries: getConsoleHistory(state),
     currentProjectKey: getCurrentProjectKey(state),
     isOpen: !getHiddenUIComponents(state).includes('preview'),
-    showingErrors: (
-      !isUserTyping(state) &&
-        !isCurrentProjectSyntacticallyValid(state)
-    ),
+    showingErrors:
+      !isUserTyping(state) && !isCurrentProjectSyntacticallyValid(state),
     title: getCurrentProjectPreviewTitle(state),
   };
 }

@@ -33,10 +33,11 @@ function mapStateToProps(state) {
     RIGHT_COLUMN_COMPONENTS,
     component => hiddenUIComponents.includes(component),
   );
-  const shouldRenderOutput = !areAllRightColumnComponentsCollapsed ||
+  const shouldRenderOutput =
+    !areAllRightColumnComponentsCollapsed ||
     (!isCurrentProjectValid &&
-    !isCurrentProjectValidating &&
-    !isUserTyping(state));
+      !isCurrentProjectValidating &&
+      !isUserTyping(state));
   return {
     currentProject: getCurrentProject(state),
     hasErrors: !isCurrentProjectValid,

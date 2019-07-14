@@ -6,11 +6,9 @@ import Pop from './Pop';
 function PopThrobber(props) {
   return (
     <div className="pop-throbber">
-      {
-        props.message ?
-          <div className="pop-throbber__message">{props.message}</div> :
-          null
-      }
+      {props.message ? (
+        <div className="pop-throbber__message">{props.message}</div>
+      ) : null}
       <Pop variant="thinking" />
     </div>
   );

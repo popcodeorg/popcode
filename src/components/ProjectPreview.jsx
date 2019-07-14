@@ -24,33 +24,29 @@ export default function ProjectPreview({
         >
           {preview.slice(0, MAX_LENGTH)}
         </div>
-        {
-          (function showArchived() {
-            if (isCurrentProject) {
-              return null;
-            }
-            if (project.isArchived) {
-              return (
-                <div
-                  className="project-preview__archived"
-                >
-                  {t('top-bar.project-archived')}
-                </div>
-              );
-            }
+        {(function showArchived() {
+          if (isCurrentProject) {
+            return null;
+          }
+          if (project.isArchived) {
             return (
-              <div
-                className="project-preview__archive"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onProjectArchived();
-                }}
-              >
-                <FontAwesomeIcon icon={faArchive} />
+              <div className="project-preview__archived">
+                {t('top-bar.project-archived')}
               </div>
             );
-          }())
-        }
+          }
+          return (
+            <div
+              className="project-preview__archive"
+              onClick={e => {
+                e.stopPropagation();
+                onProjectArchived();
+              }}
+            >
+              <FontAwesomeIcon icon={faArchive} />
+            </div>
+          );
+        })()}
       </div>
       {project.updatedAt && (
         <div className="project-preview__timestamp">

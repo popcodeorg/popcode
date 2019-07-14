@@ -12,7 +12,8 @@ import {
 function mapStateToProps(state) {
   return {
     errors: getErrors(state),
-    isValidating: isCurrentlyValidating(state) ||
+    isValidating:
+      isCurrentlyValidating(state) ||
       (isUserTyping(state) && !isCurrentProjectSyntacticallyValid(state)),
   };
 }

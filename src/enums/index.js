@@ -1,10 +1,9 @@
 import Enum from 'enum';
 
-export const LoginState = new Enum([
-  'UNKNOWN',
-  'ANONYMOUS',
-  'AUTHENTICATED',
-], 'LoginState');
+export const LoginState = new Enum(
+  ['UNKNOWN', 'ANONYMOUS', 'AUTHENTICATED'],
+  'LoginState',
+);
 
 export const AccountMigrationState = new Enum([
   'PROPOSED',
@@ -14,8 +13,4 @@ export const AccountMigrationState = new Enum([
   'ERROR',
 ]);
 
-export const AssignmentState = new Enum([
-  'PUBLISHED',
-  'DRAFT',
-  'ASSIGNMENT',
-]);
+export const AssignmentState = new Enum(['PUBLISHED', 'DRAFT', 'ASSIGNMENT']);

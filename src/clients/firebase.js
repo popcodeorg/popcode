@@ -36,25 +36,28 @@ for (const scope of GOOGLE_SCOPES) {
 const {auth, loadDatabase} = buildFirebase();
 
 async function loadDatabaseSdk() {
-  return retryingFailedImports(
-    () => import(
+  return retryingFailedImports(() =>
+    import(
       /* webpackChunkName: "mainAsync" */
-      '@firebase/database' // eslint-disable-line comma-dangle
+      '@firebase/database'
     ),
   );
 }
 
 function buildFirebase(appName = undefined) {
-  const app = firebase.initializeApp({
-    apiKey: config.firebaseApiKey,
-    authDomain: `${config.firebaseApp}.firebaseapp.com`,
-    databaseURL: `https://${config.firebaseApp}.firebaseio.com`,
-  }, appName);
+  const app = firebase.initializeApp(
+    {
+      apiKey: config.firebaseApiKey,
+      authDomain: `${config.firebaseApp}.firebaseapp.com`,
+      databaseURL: `https://${config.firebaseApp}.firebaseio.com`,
+    },
+    appName,
+  );
 
   return {
     auth: firebase.auth(app),
 
-    loadDatabase: once(async() => {
+    loadDatabase: once(async () => {
       await loadDatabaseSdk();
       return firebase.database(app);
     }),
@@ -62,7 +65,7 @@ function buildFirebase(appName = undefined) {
 }
 
 export function onAuthStateChanged(listener) {
-  return auth.onAuthStateChanged((user) => {
+  return auth.onAuthStateChanged(user => {
     listener({user});
   });
 }
@@ -87,27 +90,33 @@ export async function createProjectSnapshot(project) {
   const snapshotKey = uuid().toString();
   const database = await loadDatabase();
   const projectForSnapshot = getProjectforSnapshot(project);
-  await database.ref('snapshots').child(snapshotKey).set(projectForSnapshot);
+  await database
+    .ref('snapshots')
+    .child(snapshotKey)
+    .set(projectForSnapshot);
   return snapshotKey;
 }
 
 export async function loadProjectSnapshot(snapshotKey) {
   const database = await loadDatabase();
-  const event =
-    await database.ref('snapshots').child(snapshotKey).once('value');
+  const event = await database
+    .ref('snapshots')
+    .child(snapshotKey)
+    .once('value');
   return event.val();
 }
 
 export async function saveProject(uid, project) {
   const userWorkspace = await workspace(uid);
-  await userWorkspace.child('projects').child(project.projectKey).
-    setWithPriority(project, -Date.now());
+  await userWorkspace
+    .child('projects')
+    .child(project.projectKey)
+    .setWithPriority(project, -Date.now());
 }
 
 export async function loadCredentialsForUser(uid) {
   const database = await loadDatabase();
-  const credentialEvent =
-    await database.ref(`authTokens/${uid}`).once('value');
+  const credentialEvent = await database.ref(`authTokens/${uid}`).once('value');
   return values(credentialEvent.val());
 }
 
@@ -130,8 +139,7 @@ export async function signIn(provider) {
 }
 
 export async function linkGithub() {
-  const {credential} =
-    await auth.currentUser.linkWithPopup(githubAuthProvider);
+  const {credential} = await auth.currentUser.linkWithPopup(githubAuthProvider);
   return {user: auth.currentUser, credential};
 }
 
@@ -146,8 +154,9 @@ export async function migrateAccount(inboundAccountCredential) {
   const inboundAccountFirebase = buildFirebase('migration');
   const {auth: inboundAccountAuth} = inboundAccountFirebase;
   try {
-    await inboundAccountAuth.
-      signInAndRetrieveDataWithCredential(inboundAccountCredential);
+    await inboundAccountAuth.signInAndRetrieveDataWithCredential(
+      inboundAccountCredential,
+    );
     const inboundUid = inboundAccountAuth.currentUser.uid;
     await logMigration(inboundUid, 'attempt');
 
@@ -175,9 +184,9 @@ async function migrateProjects({
   const currentAccountDatabase = await loadDatabase();
   const inboundAccountDatabase = await loadinboundAccountDatabase();
 
-  const allProjectsValue = await inboundAccountDatabase.
-    ref(`workspaces/${inboundAccountAuth.currentUser.uid}/projects`).
-    once('value');
+  const allProjectsValue = await inboundAccountDatabase
+    .ref(`workspaces/${inboundAccountAuth.currentUser.uid}/projects`)
+    .once('value');
 
   if (isNull(allProjectsValue)) {
     return [];
@@ -188,21 +197,18 @@ async function migrateProjects({
     return [];
   }
 
-  await currentAccountDatabase.
-    ref(`workspaces/${auth.currentUser.uid}/projects`).
-    update(allProjects);
+  await currentAccountDatabase
+    .ref(`workspaces/${auth.currentUser.uid}/projects`)
+    .update(allProjects);
 
   return values(allProjects);
 }
 
 async function logMigration(inboundUid, eventName) {
-  bugsnagClient.notify(
-    new Error(`Account migration ${eventName}`),
-    {
-      metaData: {migration: {inboundUid}},
-      severity: 'info',
-    },
-  );
+  bugsnagClient.notify(new Error(`Account migration ${eventName}`), {
+    metaData: {migration: {inboundUid}},
+    severity: 'info',
+  });
 }
 
 async function signInWithGithub() {
@@ -211,10 +217,12 @@ async function signInWithGithub() {
 
 async function signInWithGoogle() {
   const gapi = getGapiSync();
-  const googleUser =
-    await gapi.auth2.getAuthInstance().signIn({prompt: 'select_account'});
-  const googleCredential =
-    googleAuthProvider.credential(googleUser.getAuthResponse().id_token);
+  const googleUser = await gapi.auth2
+    .getAuthInstance()
+    .signIn({prompt: 'select_account'});
+  const googleCredential = googleAuthProvider.credential(
+    googleUser.getAuthResponse().id_token,
+  );
   return auth.signInAndRetrieveDataWithCredential(googleCredential);
 }
 
@@ -226,10 +234,7 @@ export async function signOut() {
   return auth.signOut();
 }
 
-export async function saveUserCredential({
-  user: {uid},
-  credential,
-}) {
+export async function saveUserCredential({user: {uid}, credential}) {
   await saveCredentialForUser(uid, credential);
 }
 
@@ -239,9 +244,9 @@ export async function saveCredentialForCurrentUser(credential) {
 
 async function saveCredentialForUser(uid, credential) {
   const database = await loadDatabase();
-  await database.
-    ref(`authTokens/${providerPath(uid, credential.providerId)}`).
-    set(credential);
+  await database
+    .ref(`authTokens/${providerPath(uid, credential.providerId)}`)
+    .set(credential);
 }
 
 async function deleteCredentialForUser(uid, providerId) {
@@ -264,10 +269,8 @@ export function getSessionUid() {
 export function setSessionUid() {
   const uid = get(auth, 'currentUser.uid');
   if (!isNil(uid)) {
-    Cookies.set(
-      VALID_SESSION_UID_COOKIE,
-      uid,
-      {expires: new Date(Date.now() + SESSION_TTL_MS)},
-    );
+    Cookies.set(VALID_SESSION_UID_COOKIE, uid, {
+      expires: new Date(Date.now() + SESSION_TTL_MS),
+    });
   }
 }

@@ -9,8 +9,7 @@ import getCurrentCompiledProjectKey from './getCurrentCompiledProjectKey';
 import getCurrentConsoleInputValue from './getCurrentConsoleInputValue';
 import getCurrentProject from './getCurrentProject';
 import getCurrentProjectInstructions from './getCurrentProjectInstructions';
-import getCurrentProjectExportedRepoName
-  from './getCurrentProjectExportedRepoName';
+import getCurrentProjectExportedRepoName from './getCurrentProjectExportedRepoName';
 import getCurrentProjectPreview from './getCurrentProjectPreview';
 import getCurrentProjectPreviewTitle from './getCurrentProjectPreviewTitle';
 import getCurrentProjectKey from './getCurrentProjectKey';
@@ -31,8 +30,7 @@ import isAssignmentExportInProgress from './isAssignmentExportInProgress';
 import isClassroomExportInProgress from './isClassroomExportInProgress';
 import isArchivedViewOpen from './isArchivedViewOpen';
 import isCurrentlyValidating from './isCurrentlyValidating';
-import isCurrentProjectSyntacticallyValid
-  from './isCurrentProjectSyntacticallyValid';
+import isCurrentProjectSyntacticallyValid from './isCurrentProjectSyntacticallyValid';
 import isDraggingColumnDivider from './isDraggingColumnDivider';
 import isEditingInstructions from './isEditingInstructions';
 import isExperimental from './isExperimental';
@@ -49,8 +47,7 @@ import isUserAuthenticatedWithGithub from './isUserAuthenticatedWithGithub';
 import isUserAuthenticatedWithGoogle from './isUserAuthenticatedWithGoogle';
 import makeGetProjectPreview from './makeGetProjectPreview';
 import makeGetResizableFlexGrow from './makeGetResizableFlexGrow';
-import makeIsRemoteCollectionFullyLoaded
-  from './makeIsRemoteCollectionFullyLoaded';
+import makeIsRemoteCollectionFullyLoaded from './makeIsRemoteCollectionFullyLoaded';
 
 export {
   getAllProjectKeys,

@@ -52,13 +52,14 @@ function errors(stateIn, action) {
       return state.set(action.payload.language, validatingLanguageErrors);
 
     case 'ADD_RUNTIME_ERROR':
-      return state.update(
-        action.payload.language,
-        list => list.update(
-          'items',
-          items => items.push(Error.fromJS(action.payload.error)).
-            sortBy(error => error.get('row')),
-        ).set('state', 'runtime-error'),
+      return state.update(action.payload.language, list =>
+        list
+          .update('items', items =>
+            items
+              .push(Error.fromJS(action.payload.error))
+              .sortBy(error => error.get('row')),
+          )
+          .set('state', 'runtime-error'),
       );
 
     case 'VALIDATED_SOURCE':
@@ -71,15 +72,12 @@ function errors(stateIn, action) {
       return state.set(action.payload.language, passedLanguageErrors);
 
     case 'REFRESH_PREVIEW':
-      return state.update(
-        'javascript',
-        (errorList) => {
-          if (errorList.state === 'runtime-error') {
-            return passedLanguageErrors;
-          }
-          return errorList;
-        },
-      );
+      return state.update('javascript', errorList => {
+        if (errorList.state === 'runtime-error') {
+          return passedLanguageErrors;
+        }
+        return errorList;
+      });
 
     default:
       return state;

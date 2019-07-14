@@ -1,4 +1,4 @@
-# Popcode #
+# Popcode
 
 [Popcode](https://popcode.org) is a simple HTML/CSS/JavaScript editing
 environment for use in the classroom. It's a lot like [JSBin](http://jsbin.com),
@@ -7,20 +7,21 @@ giving specific, immediate, human-friendly feedback when the code contains error
 
 [![](https://user-images.githubusercontent.com/11786205/47052459-6673a080-d176-11e8-9c1b-b433a2af7c72.jpg)](https://popcode.org)
 
-### Project status ###
+### Project status
 
 [![Build Status](https://travis-ci.org/popcodeorg/popcode.svg?branch=master)](https://travis-ci.org/popcodeorg/popcode) [![Dependency Status](https://david-dm.org/popcodeorg/popcode.svg)](https://david-dm.org/popcodeorg/popcode) ![License](https://img.shields.io/github/license/popcodeorg/popcode.svg)
 
 Popcode is the official first semester editing environment for the [ScriptEd
 program](https://scripted.org) in the 2018–2019 school year.
 
-### Try it out ###
+### Try it out
 
 You can try out Popcode at
 [`https://popcode.org`](https://popcode.org).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of Contents
 
 - [Features](#features)
@@ -39,23 +40,23 @@ You can try out Popcode at
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Features ##
+## Features
 
-* Edit HTML, CSS, and JavaScript in the browser; in-browser preview updates as
+- Edit HTML, CSS, and JavaScript in the browser; in-browser preview updates as
   you type.
-* Get immediate, comprehensive, easy-to-understand feedback about problems in
+- Get immediate, comprehensive, easy-to-understand feedback about problems in
   your code.
-* Errors can't be ignored. If there are any errors in the code, the live
+- Errors can't be ignored. If there are any errors in the code, the live
   preview is replaced by an error list.
-* JavaScript runtime errors are also reported in human-friendly language, with
+- JavaScript runtime errors are also reported in human-friendly language, with
   annotations in the source code pointing out the source of the problem.
-* One-click login using GitHub account; all work is saved remotely to
+- One-click login using GitHub account; all work is saved remotely to
   [Firebase](https://firebase.google.com/) when logged in.
-* Pop out preview of web page in its own window.
-* Export to GitHub gist.
-* Import starter code from a GitHub gist.
+- Pop out preview of web page in its own window.
+- Export to GitHub gist.
+- Import starter code from a GitHub gist.
 
-### About validation ###
+### About validation
 
 The validation system is the main point of this project. Most syntax checkers,
 linters, and style enforcers tend to provide feedback using language that is
@@ -68,11 +69,11 @@ enforced style decisions are arbitrary, under the philosophy that giving
 students one right way to do it eliminates ambiguity and aids the learning
 process.
 
-### Feature roadmap ###
+### Feature roadmap
 
 Check out the [Project Board](https://github.com/popcodeorg/popcode/projects/3).
 
-## Technical details ##
+## Technical details
 
 Popcode uses [**React**](https://facebook.github.io/react/) to render views,
 [**Redux**](http://redux.js.org/) to manage application state,
@@ -89,29 +90,29 @@ Popcode detects code errors using
 [stylelint](https://github.com/stylelint/stylelint),
 [jshint](https://github.com/jshint/jshint), and [esprima](http://esprima.org/).
 
-### Architecture Overview ###
+### Architecture Overview
 
 The architecture of Popcode’s code base is best understood through the
 lifecycle of a user interaction:
 
-* User interactions are first captured by handlers in React
+- User interactions are first captured by handlers in React
   [components](https://github.com/popcodeorg/popcode/tree/master/src/components).
-* These components propagate the event to the view controller, the [`Workspace`
+- These components propagate the event to the view controller, the [`Workspace`
   component](https://github.com/popcodeorg/popcode/blob/master/src/components/Workspace.jsx).
-* The `Workspace` dispatches one or more Redux
+- The `Workspace` dispatches one or more Redux
   [actions](https://github.com/popcodeorg/popcode/tree/master/src/actions).
-* Dispatched actions are consumed by the
+- Dispatched actions are consumed by the
   [reducers](https://github.com/popcodeorg/popcode/tree/master/src/reducers),
   which update the
   [store](https://github.com/popcodeorg/popcode/blob/master/src/store.js).
-* Action creators also perform other business logic, such as initiating
+- Action creators also perform other business logic, such as initiating
   [validation](https://github.com/popcodeorg/popcode/tree/master/src/validations)
   of project code and persisting changes to
   [persistent storage](https://github.com/popcodeorg/popcode/blob/master/src/persistors).
-* When the action lifecycle is complete, the `Workspace` receives updated
+- When the action lifecycle is complete, the `Workspace` receives updated
   props from the store and propagates them to its descendants.
 
-## Contributing ##
+## Contributing
 
 Yes please! There are a [ton of
 ways](https://github.com/popcodeorg/popcode/issues)
@@ -130,7 +131,7 @@ which lists the features and enhancements that the ScriptEd PMs have identified
 as most beneficial based on observation of hundreds of student users and
 feedback from dozens of instructors.
 
-### Running locally ###
+### Running locally
 
 Make sure you have a local installation of [Node.js](https://nodejs.org/en/download/) and [yarn](https://yarnpkg.com/lang/en/docs/install/).
 
@@ -156,9 +157,9 @@ When you're done, lint and make sure tests pass before opening a pull request:
 $ yarn test
 ```
 
-### Debug Mode ###
+### Debug Mode
 
-By default, Popcode’s JavaScript code  is compiled to ES5 to support a wide
+By default, Popcode’s JavaScript code is compiled to ES5 to support a wide
 array of older browsers. This can make it difficult to debug errors, however,
 as the compiled code in the debugger can look quite different from the original
 source code.
@@ -183,75 +184,77 @@ $ docker pull popcodeorg/popcode:latest # Not required, but will speed up instal
 $ docker-compose up
 ```
 
-### Developer Reference ###
+### Developer Reference
 
 Popcode endeavors to use up-to-date technologies and code conventions to make
 development as pleasant as possible. Below are links to reference documentation
 on the major tools:
 
-* [React](https://facebook.github.io/react/docs/react-component.html) for
+- [React](https://facebook.github.io/react/docs/react-component.html) for
   constructing the user interface
-* [Redux](http://redux.js.org/) for managing application state
-* [postcss-preset-env](https://github.com/csstools/postcss-preset-env) gives us cutting-edge CSS features
-* [Block Element Modifier](https://en.bem.info/methodology/naming-convention/)
+- [Redux](http://redux.js.org/) for managing application state
+- [postcss-preset-env](https://github.com/csstools/postcss-preset-env) gives us cutting-edge CSS features
+- [Block Element Modifier](https://en.bem.info/methodology/naming-convention/)
   provides a convention for organizing DOM classes
-* [Webpack](https://webpack.github.io/docs/configuration.html) builds the
+- [Webpack](https://webpack.github.io/docs/configuration.html) builds the
   JavaScript
-* [Tape](https://github.com/substack/tape) provides the test harness
+- [Tape](https://github.com/substack/tape) provides the test harness
 
-## License ##
+## License
 
 Popcode is distributed under the MIT license. See the attached LICENSE file
 for all the sordid details.
 
-## Contributors ##
+## Contributors
 
-* [Mat Brown](https://github.com/outoftime) (maintainer)
-* [Alejandro AR](https://github.com/kinduff)
-* [Vaibhav Verma](https://github.com/v)
-* [Alex Pelan](https://github.com/alexpelan)
-* [Carol Chau](https://github.com/carolchau)
-* [Jesse Wang](https://github.com/jwang1919)
-* [Eric Lewis](http://www.ericandrewlewis.com/)
-* [Razzi Abuissa](https://razzi.abuissa.net/)
-* [Jeremy Schrader](http://www.pattern-factory.com/)
-* [Leo McLay](https://github.com/leo-alexander)
-* [Frederic Brodbeck](http://www.freder.io/)
-* [Ben Yelsey](https://github.com/inlinestyle)
-* [Aaron Greenberg](https://github.com/ajgreenb)
-* [Peter Jablonski](https://github.com/pwjablonski)
-* [Ten-Young Guh](https://github.com/tenyoung795)
-* [Ilona Brand](https://github.com/ibrand)
-* [Kaylee Knowles](https://github.com/kaylee42)
-* [Felicia Wong](https://github.com/quixotically)
-* [Tim Miller](https://github.com/gangstertim)
-* [Bruno Garcia](http://twitter.com/b_garcia)
-* [Cory Etzkorn](http://www.coryetzkorn.com/)
-* [Nick Volpe](https://github.com/iamnickvolpe)
-* [Craig Iturbe](https://github.com/citurbe)
-* [Wylie Conlon](http://wylie.su/)
-* [Gary Pang](http://www.codewritingcow.com/)
-* [Alessia Bellisario](http://aless.co/)
-* [Roan Kattouw](https://github.com/catrope)
-* [Harpreet Singh](https://github.com/harry1064)
-* [Limon Monte](https://limonte.github.io/)
-* [Matthew Armstrong](https://github.com/raingerber)
-* [Matt Garbis](http://www.mattgarbis.com/)
-* [Ilya Gribov](https://github.com/igrib)
-* [Chase Starr](http://www.twitter.com/captivechains)
-* [Alec Merdler](https://github.com/alecmerdler)
-* [Eric Snell](http://ericsnell.github.io/portfolio)
-* [Omar De Leo](https://github.com/omardeleo)
-* [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
-* Logo design, "Pop" concept, and branding elements by the team at
+- [Mat Brown](https://github.com/outoftime) (maintainer)
+- [Alejandro AR](https://github.com/kinduff)
+- [Vaibhav Verma](https://github.com/v)
+- [Alex Pelan](https://github.com/alexpelan)
+- [Carol Chau](https://github.com/carolchau)
+- [Jesse Wang](https://github.com/jwang1919)
+- [Eric Lewis](http://www.ericandrewlewis.com/)
+- [Razzi Abuissa](https://razzi.abuissa.net/)
+- [Jeremy Schrader](http://www.pattern-factory.com/)
+- [Leo McLay](https://github.com/leo-alexander)
+- [Frederic Brodbeck](http://www.freder.io/)
+- [Ben Yelsey](https://github.com/inlinestyle)
+- [Aaron Greenberg](https://github.com/ajgreenb)
+- [Peter Jablonski](https://github.com/pwjablonski)
+- [Ten-Young Guh](https://github.com/tenyoung795)
+- [Ilona Brand](https://github.com/ibrand)
+- [Kaylee Knowles](https://github.com/kaylee42)
+- [Felicia Wong](https://github.com/quixotically)
+- [Tim Miller](https://github.com/gangstertim)
+- [Bruno Garcia](http://twitter.com/b_garcia)
+- [Cory Etzkorn](http://www.coryetzkorn.com/)
+- [Nick Volpe](https://github.com/iamnickvolpe)
+- [Craig Iturbe](https://github.com/citurbe)
+- [Wylie Conlon](http://wylie.su/)
+- [Gary Pang](http://www.codewritingcow.com/)
+- [Alessia Bellisario](http://aless.co/)
+- [Roan Kattouw](https://github.com/catrope)
+- [Harpreet Singh](https://github.com/harry1064)
+- [Limon Monte](https://limonte.github.io/)
+- [Matthew Armstrong](https://github.com/raingerber)
+- [Matt Garbis](http://www.mattgarbis.com/)
+- [Ilya Gribov](https://github.com/igrib)
+- [Chase Starr](http://www.twitter.com/captivechains)
+- [Alec Merdler](https://github.com/alecmerdler)
+- [Eric Snell](http://ericsnell.github.io/portfolio)
+- [Omar De Leo](https://github.com/omardeleo)
+- [David Shen](https://github.com/dshen6)
+- [Maggie Walker](https://maggiewalker.github.io)
+- [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
+- Logo design, "Pop" concept, and branding elements by the team at
   [Red Peak](http://redpeakgroup.com): Andrew Haug, Aya Kawabata, Jieun Lee,
   Achu Fones, Iwona Waluk, Stewart Devlin, and Katie Conneally
-* User interface designed by [Ariel Liu](https://github.com/charstarstars),
+- User interface designed by [Ariel Liu](https://github.com/charstarstars),
   [Ian Jones](https://github.com/ianmclaury), [Meghan
   Knoll](https://github.com/megknoll), and [Simon
   Lesser](https://twitter.com/simonlesser).
 
-## Thanks to ##
+## Thanks to
 
 These companies generously offer Popcode access to paid tiers of their
 excellent services, free of charge:
@@ -273,7 +276,7 @@ src="https://cloud.githubusercontent.com/assets/14214/19059115/428a80f4-89ab-11e
 </tbody>
 </table>
 
-## Contact ##
+## Contact
 
 Feel free to email me at [mat.a.brown@gmail.com](mailto:mat.a.brown@gmail.com) if you have any questions.
 

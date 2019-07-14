@@ -4,21 +4,10 @@ import {
   getCourses,
   createClassroomAssignment,
 } from '../clients/googleClassroom';
-import {
-  createProjectSnapshot,
-} from '../clients/firebase';
-import {
-  assignmentCreated,
-  assignmentNotCreated,
-} from '../actions/assignments';
-import {
-  coursesLoaded,
-  coursesFullyLoaded,
-} from '../actions/ui';
-import {
-  getCourse,
-  getCurrentProject,
-} from '../selectors';
+import {createProjectSnapshot} from '../clients/firebase';
+import {assignmentCreated, assignmentNotCreated} from '../actions/assignments';
+import {coursesLoaded, coursesFullyLoaded} from '../actions/ui';
+import {getCourse, getCurrentProject} from '../selectors';
 import {generateTextPreview} from '../util/compileProject';
 import {createSnapshotUrl} from '../util/exportUrls';
 
@@ -32,9 +21,9 @@ export function* openAssignmentCreator() {
   yield put(coursesFullyLoaded());
 }
 
-export function* createAssignment(
-  {payload: {selectedCourseId, dueDate, assignmentState}},
-) {
+export function* createAssignment({
+  payload: {selectedCourseId, dueDate, assignmentState},
+}) {
   const project = yield select(getCurrentProject);
   const snapshotKey = yield call(createProjectSnapshot, project);
   const [url, title] = yield all([
@@ -51,16 +40,20 @@ export function* createAssignment(
   try {
     const assignment = yield call(createClassroomAssignment, assignmentData);
     if (assignment.alternateLink) {
-      yield put(assignmentCreated({
-        url: assignment.alternateLink,
-        exportType: 'assignment',
-      }));
+      yield put(
+        assignmentCreated({
+          url: assignment.alternateLink,
+          exportType: 'assignment',
+        }),
+      );
     } else {
       const course = yield select(getCourse, selectedCourseId);
-      yield put(assignmentCreated({
-        url: course.alternateLink,
-        exportType: 'assignment-draft',
-      }));
+      yield put(
+        assignmentCreated({
+          url: course.alternateLink,
+          exportType: 'assignment-draft',
+        }),
+      );
     }
   } catch (e) {
     yield put(assignmentNotCreated());

@@ -11,7 +11,6 @@ export const projectCompilationFailed = createAction(
   'PROJECT_COMPILATION_FAILED',
 );
 
-export const refreshPreview = createAction(
-  'REFRESH_PREVIEW',
-  timestamp => ({timestamp}),
-);
+export const refreshPreview = createAction('REFRESH_PREVIEW', timestamp => ({
+  timestamp,
+}));

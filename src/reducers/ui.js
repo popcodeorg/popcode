@@ -12,20 +12,17 @@ function addNotification(state, type, severity, metadata = {}) {
 }
 
 function dismissNotification(state, type) {
-  return state.update(
-    'notifications',
-    notifications => notifications.delete(type),
+  return state.update('notifications', notifications =>
+    notifications.delete(type),
   );
 }
 
 function closeTopBarMenu(state, menuToClose) {
-  return state.update(
-    'openTopBarMenu',
-    menu => menu === menuToClose ? null : menu,
+  return state.update('openTopBarMenu', menu =>
+    menu === menuToClose ? null : menu,
   );
 }
 
-/* eslint-disable complexity */
 export default function ui(stateIn, action) {
   let state = stateIn;
   if (state === undefined) {
@@ -34,20 +31,20 @@ export default function ui(stateIn, action) {
 
   switch (action.type) {
     case 'CHANGE_CURRENT_PROJECT':
-      return state.
-        set('isEditingInstructions', false).
-        update(
-          'openTopBarMenu',
-          menu => menu === 'projectPicker' ? null : menu,
-        ).set('archivedViewOpen', false);
+      return state
+        .set('isEditingInstructions', false)
+        .update('openTopBarMenu', menu =>
+          menu === 'projectPicker' ? null : menu,
+        )
+        .set('archivedViewOpen', false);
 
     case 'PROJECT_CREATED':
       return state.set('isEditingInstructions', false);
 
     case 'UPDATE_PROJECT_SOURCE':
-      return state.
-        set('isTyping', true).
-        deleteIn(['notifications', 'snapshot-created']);
+      return state
+        .set('isTyping', true)
+        .deleteIn(['notifications', 'snapshot-created']);
 
     case 'USER_DONE_TYPING':
       return state.set('isTyping', false);
@@ -82,20 +79,14 @@ export default function ui(stateIn, action) {
       return state.set('isDraggingColumnDivider', false);
 
     case 'GIST_NOT_FOUND':
-      return addNotification(
-        state,
-        'gist-import-not-found',
-        'error',
-        {gistId: action.payload.gistId},
-      );
+      return addNotification(state, 'gist-import-not-found', 'error', {
+        gistId: action.payload.gistId,
+      });
 
     case 'GIST_IMPORT_ERROR':
-      return addNotification(
-        state,
-        'gist-import-error',
-        'error',
-        {gistId: action.payload.gistId},
-      );
+      return addNotification(state, 'gist-import-error', 'error', {
+        gistId: action.payload.gistId,
+      });
 
     case 'NOTIFICATION_TRIGGERED':
       return addNotification(
@@ -120,19 +111,12 @@ export default function ui(stateIn, action) {
       return closeTopBarMenu(state, 'currentUser');
 
     case 'IDENTITY_UNLINKED':
-      return addNotification(
-        state,
-        'identity-unlinked',
-        'notice',
-      );
+      return addNotification(state, 'identity-unlinked', 'notice');
 
     case 'SNAPSHOT_CREATED':
-      return addNotification(
-        state,
-        'snapshot-created',
-        'notice',
-        {snapshotKey: action.payload},
-      );
+      return addNotification(state, 'snapshot-created', 'notice', {
+        snapshotKey: action.payload,
+      });
 
     case 'APPLICATION_LOADED':
       if (action.payload.isExperimental) {
@@ -156,15 +140,13 @@ export default function ui(stateIn, action) {
       );
 
     case 'TOGGLE_TOP_BAR_MENU':
-      return state.update(
-        'openTopBarMenu',
-        menu => menu === action.payload ? null : action.payload,
+      return state.update('openTopBarMenu', menu =>
+        menu === action.payload ? null : action.payload,
       );
 
     case 'CLOSE_TOP_BAR_MENU':
-      return state.update(
-        'openTopBarMenu',
-        menu => menu === action.payload ? null : menu,
+      return state.update('openTopBarMenu', menu =>
+        menu === action.payload ? null : menu,
       );
 
     case 'PROJECT_EXPORT_NOT_DISPLAYED':
@@ -177,11 +159,7 @@ export default function ui(stateIn, action) {
 
     case 'PROJECT_EXPORT_ERROR':
       if (action.payload.name === 'EmptyGistError') {
-        return addNotification(
-          state,
-          'empty-gist',
-          'error',
-        );
+        return addNotification(state, 'empty-gist', 'error');
       }
       return addNotification(
         state,
@@ -191,11 +169,7 @@ export default function ui(stateIn, action) {
       );
 
     case 'PROJECT_COMPILATION_FAILED':
-      return addNotification(
-        state,
-        'project-compilation-failed',
-        'error',
-      );
+      return addNotification(state, 'project-compilation-failed', 'error');
 
     case 'PROJECT_COMPILED':
       return dismissNotification(state, 'project-compilation-failed');
@@ -219,27 +193,18 @@ export default function ui(stateIn, action) {
       );
 
     case 'IDENTITY_LINKED':
-      return addNotification(
-        state,
-        'identity-linked',
-        'notice',
-        {provider: action.payload.credential.providerId},
-      );
+      return addNotification(state, 'identity-linked', 'notice', {
+        provider: action.payload.credential.providerId,
+      });
 
     case 'LINK_IDENTITY_FAILED':
       return addNotification(state, 'link-identity-failed', 'error');
 
     case 'OPEN_ASSIGNMENT_CREATOR':
-      return state.setIn(
-        ['isAssignmentCreatorOpen'],
-        true,
-      );
+      return state.setIn(['isAssignmentCreatorOpen'], true);
 
     case 'CLOSE_ASSIGNMENT_CREATOR':
-      return state.setIn(
-        ['isAssignmentCreatorOpen'],
-        false,
-      );
+      return state.setIn(['isAssignmentCreatorOpen'], false);
 
     case 'ASSIGNMENT_CREATED':
       return addNotification(
@@ -247,20 +212,13 @@ export default function ui(stateIn, action) {
         'project-export-complete',
         'notice',
         action.payload.assignment,
-      ).setIn(
-        ['isAssignmentCreatorOpen'],
-        false,
-      );
+      ).setIn(['isAssignmentCreatorOpen'], false);
 
     case 'GAPI_CLIENT_UNAVAILABLE':
       return addNotification(state, 'gapi-client-unavailable', 'error');
 
     case 'ASSIGNMENT_NOT_CREATED':
-      return addNotification(
-        state,
-        'assignment-not-created',
-        'error',
-      ).setIn(
+      return addNotification(state, 'assignment-not-created', 'error').setIn(
         ['isAssignmentCreatorOpen'],
         false,
       );

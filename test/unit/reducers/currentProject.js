@@ -18,43 +18,54 @@ import {gistData} from '../../helpers/factory';
 const projectKey = '12345';
 const initialState = reducer(undefined, {type: null});
 
-test('projectCreated', reducerTest(
-  reducer,
-  initialState,
-  partial(projectCreated, projectKey),
-  new Immutable.Map().set('projectKey', projectKey),
-  'sets projectKey to key from payload',
-));
-
-test('changeCurrentProject', reducerTest(
-  reducer,
-  initialState,
-  partial(changeCurrentProject, projectKey),
-  new Immutable.Map().set('projectKey', projectKey),
-  'sets projectKey to current project key',
-));
-
-test('snapshotImported', reducerTest(
-  reducer,
-  initialState,
-  partial(snapshotImported, projectKey, {}),
-  Immutable.fromJS({projectKey}),
-));
-
-test('projectRestoredFromLastSession', reducerTest(
-  reducer,
-  initialState,
-  partial(projectRestoredFromLastSession, {projectKey}),
-  Immutable.fromJS({projectKey}),
-));
-
-test('gistImported', reducerTest(
-  reducer,
-  initialState,
-  partial(
-    gistImported,
-    projectKey,
-    gistData({html: '<!doctype html>'}),
+test(
+  'projectCreated',
+  reducerTest(
+    reducer,
+    initialState,
+    partial(projectCreated, projectKey),
+    new Immutable.Map().set('projectKey', projectKey),
+    'sets projectKey to key from payload',
   ),
-  Immutable.fromJS({projectKey}),
-));
+);
+
+test(
+  'changeCurrentProject',
+  reducerTest(
+    reducer,
+    initialState,
+    partial(changeCurrentProject, projectKey),
+    new Immutable.Map().set('projectKey', projectKey),
+    'sets projectKey to current project key',
+  ),
+);
+
+test(
+  'snapshotImported',
+  reducerTest(
+    reducer,
+    initialState,
+    partial(snapshotImported, projectKey, {}),
+    Immutable.fromJS({projectKey}),
+  ),
+);
+
+test(
+  'projectRestoredFromLastSession',
+  reducerTest(
+    reducer,
+    initialState,
+    partial(projectRestoredFromLastSession, {projectKey}),
+    Immutable.fromJS({projectKey}),
+  ),
+);
+
+test(
+  'gistImported',
+  reducerTest(
+    reducer,
+    initialState,
+    partial(gistImported, projectKey, gistData({html: '<!doctype html>'})),
+    Immutable.fromJS({projectKey}),
+  ),
+);

@@ -14,26 +14,22 @@ export default function Instructions({
   onCancelEditing,
   onSaveChanges,
 }) {
-  if (isNull(projectKey) || !isEditing && !instructions || !isOpen) {
+  if (isNull(projectKey) || (!isEditing && !instructions) || !isOpen) {
     return null;
   }
 
   return (
-    <div
-      className="layout__instructions"
-    >
-      {
-        isEditing ?
-          <InstructionsEditor
-            instructions={instructions}
-            projectKey={projectKey}
-            onCancelEditing={onCancelEditing}
-            onSaveChanges={onSaveChanges}
-          /> :
-          <div className="instructions">
-            {markdownToReact(instructions)}
-          </div>
-      }
+    <div className="layout__instructions">
+      {isEditing ? (
+        <InstructionsEditor
+          instructions={instructions}
+          projectKey={projectKey}
+          onCancelEditing={onCancelEditing}
+          onSaveChanges={onSaveChanges}
+        />
+      ) : (
+        <div className="instructions">{markdownToReact(instructions)}</div>
+      )}
     </div>
   );
 }

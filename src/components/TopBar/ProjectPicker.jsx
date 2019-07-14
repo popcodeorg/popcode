@@ -17,14 +17,10 @@ const ProjectPicker = createMenu({
   menuClass: 'top-bar__menu_right top-bar__menu_project-picker',
   name: 'projectPicker',
 
-  isVisible({
-    currentProjectKey,
-    isUserAuthenticated,
-    projectKeys,
-  }) {
-    return Boolean(currentProjectKey) &&
-      !isEmpty(projectKeys) &&
-      isUserAuthenticated;
+  isVisible({currentProjectKey, isUserAuthenticated, projectKeys}) {
+    return (
+      Boolean(currentProjectKey) && !isEmpty(projectKeys) && isUserAuthenticated
+    );
   },
 
   renderItems({
@@ -34,9 +30,9 @@ const ProjectPicker = createMenu({
     onChangeCurrentProject,
     onToggleViewArchived,
   }) {
-    const visibleProjects = shouldShowArchivedProjects ?
-      projects :
-      filter(projects, ({isArchived}) => !isArchived);
+    const visibleProjects = shouldShowArchivedProjects
+      ? projects
+      : filter(projects, ({isArchived}) => !isArchived);
     const items = map(visibleProjects, ({projectKey}) => (
       <MenuItem
         isActive={projectKey === currentProjectKey}
@@ -58,11 +54,9 @@ const ProjectPicker = createMenu({
           onClick={onToggleViewArchived}
         >
           <div>
-            {
-              shouldShowArchivedProjects ?
-                t('top-bar.hide-projects') :
-                t('top-bar.show-projects')
-            }
+            {shouldShowArchivedProjects
+              ? t('top-bar.hide-projects')
+              : t('top-bar.show-projects')}
           </div>
         </div>,
       );

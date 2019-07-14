@@ -13,7 +13,7 @@ function notifyChannel(args) {
 }
 
 export default function handleConsoleLogs() {
-  consoleFunctions.forEach((functionName) => {
+  consoleFunctions.forEach(functionName => {
     let browserFunction;
     // eslint-disable-next-line no-console
     if (console[functionName]) {

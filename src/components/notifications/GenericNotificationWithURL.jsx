@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default function GenericNotificationWithURL({text, url, linkText}) {
   return (
     <span>
-      {text} {' '}
+      {text}{' '}
       <a href={url} rel="noopener noreferrer" target="_blank">
         {linkText}
       </a>
