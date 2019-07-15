@@ -236,16 +236,6 @@ body {
   white-space: nowrap;
 }
 
-.top-bar__menu-item_container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.top-bar__menu-item_avatar {
-  margin-right: 5px;
-}
-
 .top-bar__menu-item_icons {
   text-align: center;
 }
