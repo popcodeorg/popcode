@@ -28,7 +28,7 @@
     "send-feedback": "Send Feedback",
     "session": {
       "link-github": "Link GitHub",
-      "unlink-github": "Unlink GitHub account for {{displayName}}",
+      "unlink-github": "Unlink {{displayName}}'s Github",
       "log-in-prompt": "Log in to save",
       "log-out-prompt": "Log out",
       "log-in-github": "Log in with GitHub"
