@@ -1,11 +1,11 @@
 import {connect} from 'react-redux';
 
-import {closeProjectPickerModal, toggleArchivedView} from '../actions';
+import {closeProjectPickerModal, filterProjects} from '../actions';
 
 import {
   getAllProjects,
   isProjectPickerModalOpen,
-  isArchivedViewOpen,
+  getProjectsFilter,
 } from '../selectors';
 
 import ProjectPickerModal from '../components/ProjectPickerModal';
@@ -14,7 +14,7 @@ function mapStateToProps(state) {
   return {
     isOpen: isProjectPickerModalOpen(state),
     projects: getAllProjects(state),
-    shouldShowArchivedProjects: isArchivedViewOpen(state),
+    projectsFilter: getProjectsFilter(state),
   };
 }
 
@@ -24,8 +24,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(closeProjectPickerModal());
     },
 
-    onToggleViewArchived() {
-      dispatch(toggleArchivedView());
+    onFilterProjects(filterType) {
+      dispatch(filterProjects(filterType));
     },
   };
 }

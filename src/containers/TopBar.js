@@ -28,8 +28,9 @@ import {
   getCurrentValidationState,
   getEnabledLibraries,
   getOpenTopBarMenu,
-  isArchivedViewOpen,
   isClassroomExportInProgress,
+  getAllProjectKeys,
+  getAllProjects,
   isEditingInstructions,
   isExperimental,
   isGapiReady,
@@ -59,7 +60,6 @@ import {
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
-  toggleArchivedView,
   logIn,
   logOut,
 } from '../actions';
@@ -71,7 +71,6 @@ function mapStateToProps(state) {
     enabledLibraries: getEnabledLibraries(state),
     hasInstructions: Boolean(getCurrentProjectInstructions(state)),
     hasExportedRepo: Boolean(getCurrentProjectExportedRepoName(state)),
-    shouldShowArchivedProjects: isArchivedViewOpen(state),
     isEditingInstructions: isEditingInstructions(state),
     isExperimental: isExperimental(state),
     isGapiReady: isGapiReady(state),
@@ -173,10 +172,6 @@ function mapDispatchToProps(dispatch) {
 
     onToggleTextSize() {
       dispatch(toggleEditorTextSize());
-    },
-
-    onToggleViewArchived() {
-      dispatch(toggleArchivedView());
     },
   };
 }

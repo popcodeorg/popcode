@@ -459,30 +459,6 @@ body {
   background-color: var(--color-chrome);
 }
 
-/** @define project-picker */
-
-.project-picker__nav {
-  display: flex;
-  border-bottom: 1px solid var(--color-chrome);
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 0;
-}
-
-.project-picker__nav-tab {
-  padding: 0.75rem 2rem;
-  border: 1px solid transparent;
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
-  margin-bottom: -1px;
-  cursor: pointer;
-}
-
-.project-picker__nav-tab:hover,
-.project-picker__nav-tab-active {
-  border-color: var(--color-chrome) var(--color-chrome) #fafafa;
-}
-
 .project-preview__label {
   white-space: normal;
   margin-left: 1em;
@@ -509,6 +485,30 @@ body {
 .project-preview__timestamp {
   font-size: 0.8em;
   white-space: normal;
+}
+
+/** @define project-picker */
+
+.project-picker__nav {
+  display: flex;
+  border-bottom: 1px solid var(--color-chrome);
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.project-picker__nav-tab {
+  padding: 0.75rem 2rem;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  margin-bottom: -1px;
+  cursor: pointer;
+}
+
+.project-picker__nav-tab:hover,
+.project-picker__nav-tab-active {
+  border-color: var(--color-chrome) var(--color-chrome) #fafafa;
 }
 
 /** @define workspace */

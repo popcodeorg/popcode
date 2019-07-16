@@ -63,7 +63,9 @@ export const coursesLoaded = createAction('COURSES_LOADED', courses => ({
 
 export const coursesFullyLoaded = createAction('COURSES_FULLY_LOADED');
 
-export const toggleArchivedView = createAction('TOGGLE_ARCHIVED_VIEW');
+export const filterProjects = createAction('FILTER_PROJECTS', filterType => ({
+  filterType,
+}));
 
 export const openLoginPrompt = createAction('OPEN_LOGIN_PROMPT');
 

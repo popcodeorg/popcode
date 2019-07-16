@@ -61,6 +61,11 @@ import {
   startDragColumnDivider,
   startEditingInstructions,
   stopDragColumnDivider,
+  hideSaveIndicator,
+  openAssignmentCreator,
+  closeAssignmentCreator,
+  coursesLoaded,
+  coursesFullyLoaded,
   toggleArchivedView,
   toggleEditorTextSize,
   toggleTopBarMenu,
@@ -68,6 +73,7 @@ import {
   userDismissedNotification,
   openLoginPrompt,
   closeLoginPrompt,
+  filterProjects,
   openProjectPickerModal,
   closeProjectPickerModal,
 } from './ui';
@@ -147,6 +153,7 @@ export {
   saveProject,
   openLoginPrompt,
   closeLoginPrompt,
+  filterProjects,
   openProjectPickerModal,
   closeProjectPickerModal,
 };

@@ -24,6 +24,7 @@ import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
 import getParsedDate from './getParsedDate';
 import getProject from './getProject';
+import getProjectsFilter from './getProjectsFilter';
 import getRequestedFocusedLine from './getRequestedFocusedLine';
 import isArchivedViewOpen from './isArchivedViewOpen';
 import isAssignmentCreatorOpen from './isAssignmentCreatorOpen';
@@ -78,11 +79,11 @@ export {
   getOpenTopBarMenu,
   getParsedDate,
   getProject,
+  getProjectsFilter,
   getRequestedFocusedLine,
   isAssignmentCreatorOpen,
   isAssignmentExportInProgress,
   isClassroomExportInProgress,
-  isArchivedViewOpen,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isDraggingColumnDivider,
