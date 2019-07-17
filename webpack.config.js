@@ -14,18 +14,15 @@ const babel = require('@babel/core');
 const babelLoaderVersion = require('./node_modules/babel-loader/package.json')
   .version;
 
-const babelLoaderConfig = Object.assign(
-  {},
-  {
-    cacheDirectory: true,
-    cacheIdentifier: JSON.stringify({
-      babel: babel.version,
-      'babel-loader': babelLoaderVersion,
-      debug: process.env.DEBUG,
-      env: process.env.NODE_ENV || 'development',
-    }),
-  },
-);
+const babelLoaderConfig = {
+  cacheDirectory: true,
+  cacheIdentifier: JSON.stringify({
+    babel: babel.version,
+    'babel-loader': babelLoaderVersion,
+    debug: process.env.DEBUG,
+    env: process.env.NODE_ENV || 'development',
+  }),
+};
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
     escapeRegExp(path.join('/node_modules', modulePath)),
@@ -85,7 +82,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
   } else if (isTest) {
     devtool = 'inline-source-map';
   } else {
-    devtool = 'eval';
+    devtool = 'cheap-module-eval-source-map';
   }
 
   if (!isTest) {
@@ -104,7 +101,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         externals: ['/', 'application.css', 'images/pop/thinking.svg'],
       }),
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, 'src/html/index.html'),
+        template: './html/index.html',
         chunksSortMode: 'dependency',
       }),
       new ScriptExtHtmlWebpackPlugin({
@@ -139,11 +136,12 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
             'es6-set/implement',
             'whatwg-fetch',
             'raf/polyfill',
-            './src/init/DOMParserShim',
-            './src/application.js',
+            './init/DOMParserShim',
+            './application.js',
           ],
-          preview: ['@babel/polyfill', './src/preview.js'],
+          preview: ['@babel/polyfill', './preview.js'],
         },
+    context: path.resolve(__dirname, 'src'),
     optimization: {
       splitChunks: isTest ? false : {chunks: 'all'},
     },
