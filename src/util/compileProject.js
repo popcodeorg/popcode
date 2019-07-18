@@ -182,7 +182,7 @@ export async function addJavascript(doc, {sources: {javascript}}, opts) {
   const {babelWithEnv} = await retryingFailedImports(() =>
     import(
       /* webpackChunkName: "jsCompilation" */
-      '../services/babel-browser.gen' // eslint-disable-line comma-dangle
+      '../services/babel-browser.gen'
     ),
   );
 
