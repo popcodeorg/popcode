@@ -1,4 +1,5 @@
 import isUndefined from 'lodash-es/isUndefined';
+import isNull from 'lodash-es/isNull';
 
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
@@ -25,7 +26,6 @@ const CurrentUserMenu = createMenu({
     /* eslint-enable react/prop-types */
   }) {
     const githubIdentityProvider = user.identityProviders.get('github.com');
-
     return (
       <Fragment>
         {isUndefined(githubIdentityProvider) ? (
@@ -44,9 +44,13 @@ const CurrentUserMenu = createMenu({
                 className="top-bar__avatar top-bar__menu-item_avatar"
                 src={githubIdentityProvider.avatarUrl}
               />
-              {t('top-bar.session.unlink-github', {
-                displayName: githubIdentityProvider.displayName.split(' ')[0],
-              })}
+              {isNull(githubIdentityProvider.displayName)
+                ? t('top-bar.session.unlink-github-default')
+                : t('top-bar.session.unlink-github', {
+                    displayName: githubIdentityProvider.displayName.split(
+                      ' ',
+                    )[0],
+                  })}
               <div className="top-bar__menu-item-icon">
                 <FontAwesomeIcon icon={faUnlink} />
               </div>
