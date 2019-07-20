@@ -102,20 +102,30 @@ class PreviewFrame extends React.Component {
   }
 
   async _handleErrorMessage(error) {
-    let oneIndexedSourceLine = error.line - this._runtimeErrorLineOffset();
+    const normalizedError = createError(error);
+    const lineOffset = this._runtimeErrorLineOffset();
+
+    if (error.line < lineOffset) {
+      this.props.onRuntimeError({
+        reason: normalizedError.type,
+        text: normalizedError.message,
+        raw: normalizedError.message,
+        row: 0,
+        column: 0,
+        type: 'error',
+      });
+      return;
+    }
+
+    const oneIndexedSourceLine = error.line - lineOffset;
 
     if (error.message === 'Loop Broken!') {
       this._handleInfiniteLoop(oneIndexedSourceLine);
       return;
     }
 
-    const normalizedError = createError(error);
+    let oneIndexedOriginalLine = bowser.is('Safari') ? 1 : oneIndexedSourceLine;
 
-    if (bowser.is('Safari')) {
-      oneIndexedSourceLine = 1;
-    }
-
-    let oneIndexedOriginalLine = oneIndexedSourceLine;
     let {column} = error;
     if (this.props.compiledProject.sourceMap) {
       const {SourceMapConsumer} = await retryingFailedImports(() =>
