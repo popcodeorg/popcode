@@ -1,6 +1,6 @@
 linters:
   eslint:
-    config: 'eslint.config.stickler.js'
+    config: 'eslint.config.stickler'
     fixer: true
 fixers:
   enable: true
