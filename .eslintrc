@@ -64,9 +64,7 @@
         "node": true,
         "jest": true
       },
-      "files": [
-        "**/{__factories__,__mocks__,__tests__}/*.js{,x}"
-      ],
+      "files": ["**/{__factories__,__mocks__,__tests__}/*.js{,x}"],
       "rules": {
         "jest/no-alias-methods": "warn",
         "jest/no-disabled-tests": "warn",
@@ -82,13 +80,7 @@
         "jest/valid-expect": "error",
         "jest/prefer-called-with": "warn"
       },
-      "plugins": [
-        "import",
-        "jest",
-        "react",
-        "promise",
-        "private-props"
-      ],
+      "plugins": ["import", "jest", "react", "promise"],
       "settings": {
         "import/resolver": {
           "@popcodeorg/eslint-import-resolver-jest": {
@@ -149,13 +141,7 @@
     }
   ],
   "parser": "babel-eslint",
-  "plugins": [
-    "import",
-    "react",
-    "prettier",
-    "promise",
-    "private-props"
-  ],
+  "plugins": ["import", "react", "prettier", "promise"],
   "rules": {
     "accessor-pairs": "error",
     "camelcase": [
@@ -168,14 +154,8 @@
     "consistent-this": "warn",
     "dot-notation": "warn",
     "eqeqeq": "warn",
-    "func-names": [
-      "warn",
-      "as-needed"
-    ],
-    "func-style": [
-      "warn",
-      "declaration"
-    ],
+    "func-names": ["warn", "as-needed"],
+    "func-style": ["warn", "declaration"],
     "guard-for-in": "warn",
     "import/dynamic-import-chunkname": "warn",
     "import/extensions": [
@@ -209,20 +189,14 @@
     "import/no-nodejs-modules": [
       "error",
       {
-        "allow": [
-          "fs",
-          "path"
-        ]
+        "allow": ["fs", "path"]
       }
     ],
     "import/no-self-import": "error",
     "import/no-unassigned-import": [
       "warn",
       {
-        "allow": [
-          "brace/**/*",
-          "@firebase/*"
-        ]
+        "allow": ["brace/**/*", "@firebase/*"]
       }
     ],
     "import/no-useless-path-segments": "warn",
@@ -237,10 +211,7 @@
     "new-cap": [
       "warn",
       {
-        "capIsNewExceptions": [
-          "Slowparse.HTML",
-          "Record"
-        ]
+        "capIsNewExceptions": ["Slowparse.HTML", "Record"]
       }
     ],
     "no-alert": "warn",
@@ -286,10 +257,7 @@
     "no-param-reassign": "warn",
     "no-path-concat": "warn",
     "no-proto": "warn",
-    "no-restricted-imports": [
-      "error",
-      "jquery"
-    ],
+    "no-restricted-imports": ["error", "jquery"],
     "no-return-assign": "warn",
     "no-return-await": "warn",
     "no-script-url": "warn",
@@ -303,10 +271,7 @@
     "no-unreachable": "warn",
     "no-unused-expressions": "warn",
     "no-unused-vars": "warn",
-    "no-use-before-define": [
-      "warn",
-      "nofunc"
-    ],
+    "no-use-before-define": ["warn", "nofunc"],
     "no-useless-call": "warn",
     "no-useless-concat": "warn",
     "no-useless-constructor": "warn",
@@ -315,14 +280,8 @@
     "no-void": "warn",
     "no-warning-comments": "warn",
     "no-with": "error",
-    "object-shorthand": [
-      "warn",
-      "always"
-    ],
-    "operator-assignment": [
-      "warn",
-      "always"
-    ],
+    "object-shorthand": ["warn", "always"],
+    "operator-assignment": ["warn", "always"],
     "prefer-const": "warn",
     "prefer-promise-reject-errors": "warn",
     "prefer-reflect": "warn",
@@ -330,22 +289,14 @@
     "prefer-spread": "warn",
     "prefer-template": "warn",
     "prettier/prettier": "warn",
-    "private-props/no-unused-or-undeclared": "warn",
-    "private-props/no-use-outside": "warn",
     "promise/param-names": "warn",
     "promise/prefer-await-to-callbacks": "warn",
     "promise/prefer-await-to-then": "warn",
     "radix": "warn",
     "react/display-name": "warn",
     "react/forbid-foreign-prop-types": "warn",
-    "react/jsx-boolean-value": [
-      "warn",
-      "never"
-    ],
-    "react/jsx-curly-brace-presence": [
-      "warn",
-      "never"
-    ],
+    "react/jsx-boolean-value": ["warn", "never"],
+    "react/jsx-curly-brace-presence": ["warn", "never"],
     "react/jsx-key": "warn",
     "react/jsx-no-target-blank": "warn",
     "react/jsx-sort-props": [
@@ -364,13 +315,8 @@
     "react/no-string-refs": "warn",
     "react/no-unknown-property": "warn",
     "react/no-unused-prop-types": "warn",
-    "react/prefer-es6-class": [
-      "warn",
-      "always"
-    ],
-    "react/prefer-stateless-function": [
-      "warn"
-    ],
+    "react/prefer-es6-class": ["warn", "always"],
+    "react/prefer-stateless-function": ["warn"],
     "react/prop-types": "warn",
     "react/require-default-props": "warn",
     "react/self-closing-comp": "warn",
@@ -384,20 +330,11 @@
     "require-atomic-updates": "warn",
     "require-unicode-regexp": "warn",
     "require-yield": "error",
-    "spaced-comment": [
-      "warn",
-      "always"
-    ],
-    "strict": [
-      "warn",
-      "never"
-    ],
+    "spaced-comment": ["warn", "always"],
+    "strict": ["warn", "never"],
     "use-isnan": "warn",
     "valid-jsdoc": "warn",
-    "yoda": [
-      "warn",
-      "never"
-    ]
+    "yoda": ["warn", "never"]
   },
   "settings": {
     "import/resolver": "webpack",
