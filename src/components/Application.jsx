@@ -24,10 +24,8 @@ class Application extends React.Component {
   }
 
   _isUnsupportedBrowser() {
-    const supportedBrowsersForBowser = mapValues(
-      supportedBrowsers,
-      version => `>=${version}`,
-    );
+    let i = 1;
+    const supportedBrowsersForBowser = mapValues(supportedBrowsers, version => `>=${version}`);
     return !bowser.satisfies(supportedBrowsersForBowser);
   }
 
