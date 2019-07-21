@@ -1,6 +1,6 @@
 linters:
   eslint:
-    config: './.eslintrc'
+    config: './.eslintrc.js'
     fixer: true
 fixers:
   enable: true
