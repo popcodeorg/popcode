@@ -3,5 +3,5 @@ set -ex
 
 # Start the development server
 
-docker-compose run --rm app yarn install
+docker-compose run --rm app yarn install --frozen-lockfile
 docker-compose up

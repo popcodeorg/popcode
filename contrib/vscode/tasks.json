@@ -1,0 +1,73 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "tools: start",
+      "type": "shell",
+      "command": "./tools/start",
+      "presentation": {
+        "focus": false,
+        "panel": "dedicated"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "tools: test",
+      "dependsOn": ["tools: test jest", "tools: test karma"],
+      "type": "shell",
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "tools: test karma",
+      "type": "shell",
+      "command": "./tools/test karma",
+      "presentation": {
+        "group": "test",
+        "panel": "dedicated"
+      },
+      "group": "test"
+    },
+    {
+      "label": "tools: test jest",
+      "type": "shell",
+      "command": "./tools/test jest",
+      "presentation": {
+        "group": "test",
+        "focus": true,
+        "panel": "dedicated"
+      },
+      "group": "test"
+    },
+    {
+      "label": "tools: run all checks",
+      "type": "shell",
+      "command": "tools/ci",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "tools: reset development environment",
+      "type": "shell",
+      "command": "tools/setup",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "tools: run static server with production build settings",
+      "type": "shell",
+      "command": "tools/static",
+      "problemMatcher": [],
+      "group": "build"
+    }
+  ]
+}
