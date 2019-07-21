@@ -1,6 +1,16 @@
 #!/bin/sh
-set -ex
 
 # Runs both test suites in watch mode
 
-docker-compose run --rm --publish=9876:9876 app yarn run autotest
+set -ex
+case "$1" in
+    "jest")
+        docker-compose run --rm app yarn run autotest.jest
+        ;;
+    "karma")
+        docker-compose run --rm --publish=9876:9876 --publish=9333:9333 app yarn run autotest.karma
+        ;;
+    *)
+        docker-compose run --rm --publish=9876:9876 --publish=9333:9333 app yarn run $task
+        ;;
+esac

@@ -8,11 +8,8 @@
       "type": "shell",
       "command": "./tools/start",
       "presentation": {
-        "echo": true,
-        "reveal": "always",
         "focus": false,
-        "panel": "dedicated",
-        "clear": true
+        "panel": "dedicated"
       },
       "problemMatcher": [],
       "group": {
@@ -22,20 +19,55 @@
     },
     {
       "label": "tools: test",
+      "dependsOn": ["tools: test jest", "tools: test karma"],
       "type": "shell",
-      "command": "./tools/test",
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "dedicated",
-        "showReuseMessage": false,
-        "clear": true
-      },
+      "problemMatcher": [],
       "group": {
         "kind": "test",
         "isDefault": true
       }
+    },
+    {
+      "label": "tools: test karma",
+      "type": "shell",
+      "command": "./tools/test karma",
+      "presentation": {
+        "group": "test",
+        "panel": "dedicated"
+      },
+      "group": "test"
+    },
+    {
+      "label": "tools: test jest",
+      "type": "shell",
+      "command": "./tools/test jest",
+      "presentation": {
+        "group": "test",
+        "focus": true,
+        "panel": "dedicated"
+      },
+      "group": "test"
+    },
+    {
+      "label": "tools: run all checks",
+      "type": "shell",
+      "command": "tools/ci",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "tools: reset development environment",
+      "type": "shell",
+      "command": "tools/setup",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "tools: run static server with production build settings",
+      "type": "shell",
+      "command": "tools/static",
+      "problemMatcher": [],
+      "group": "build"
     }
   ]
 }
