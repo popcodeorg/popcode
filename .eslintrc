@@ -5,8 +5,6 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
     "plugin:react/recommended",
     "plugin:promise/recommended",
     "plugin:prettier/recommended"
@@ -26,10 +24,7 @@
         "ecmaVersion": 2017,
         "sourceType": "script"
       },
-      "rules": {
-        "import/no-commonjs": "off",
-        "import/no-nodejs-modules": "off"
-      }
+      "rules": {}
     },
     {
       "env": {
@@ -49,13 +44,8 @@
         "ecmaVersion": 2018,
         "sourceType": "script"
       },
-      "rules": {
-        "import/no-commonjs": "off",
-        "import/no-nodejs-modules": "off"
-      },
-      "settings": {
-        "import/resolver": "node"
-      }
+      "rules": {},
+      "settings": {}
     },
     {
       "env": {
@@ -65,49 +55,16 @@
         "jest": true
       },
       "files": ["**/{__factories__,__mocks__,__tests__}/*.js{,x}"],
-      "rules": {
-        "jest/no-alias-methods": "warn",
-        "jest/no-disabled-tests": "warn",
-        "jest/no-focused-tests": "warn",
-        "jest/no-identical-title": "error",
-        "jest/no-jasmine-globals": "error",
-        "jest/no-jest-import": "error",
-        "jest/no-test-return-statement": "error",
-        "jest/prefer-to-contain": "warn",
-        "jest/prefer-to-have-length": "warn",
-        "jest/valid-describe": "error",
-        "jest/valid-expect-in-promise": "error",
-        "jest/valid-expect": "error",
-        "jest/prefer-called-with": "warn"
-      },
-      "plugins": ["import", "jest", "react", "promise"],
-      "settings": {
-        "import/resolver": {
-          "@popcodeorg/eslint-import-resolver-jest": {
-            "jestConfigFile": "./jest.config.js"
-          },
-          "node": {
-            "extensions": [".js", ".jsx"]
-          }
-        }
-      }
+      "rules": {},
+      "plugins": ["react", "promise"]
     },
     {
       "files": "src/**/*",
-      "rules": {
-        "import/no-extraneous-dependencies": [
-          "error",
-          {
-            "devDependencies": false
-          }
-        ]
-      }
+      "rules": {}
     },
     {
       "files": "src/sagas/**/*",
-      "rules": {
-        "import/order": "off"
-      }
+      "rules": {}
     },
     {
       "files": "test/unit/**/*",
@@ -118,7 +75,6 @@
     {
       "files": "test/unit/sagas/**/*",
       "rules": {
-        "import/order": "off",
         "prefer-reflect": "off"
       }
     },
@@ -134,14 +90,11 @@
         "ecmaVersion": 2017,
         "sourceType": "script"
       },
-      "rules": {
-        "import/no-commonjs": "off",
-        "import/no-nodejs-modules": "off"
-      }
+      "rules": {}
     }
   ],
   "parser": "babel-eslint",
-  "plugins": ["import", "react", "prettier", "promise"],
+  "plugins": ["react", "prettier", "promise"],
   "rules": {
     "accessor-pairs": "error",
     "camelcase": [
@@ -157,57 +110,6 @@
     "func-names": ["warn", "as-needed"],
     "func-style": ["warn", "declaration"],
     "guard-for-in": "warn",
-    "import/dynamic-import-chunkname": "warn",
-    "import/extensions": [
-      "warn",
-      "always",
-      {
-        "js": "never",
-        "jsx": "never",
-        "mjs": "never"
-      }
-    ],
-    "import/first": "warn",
-    "import/newline-after-import": "warn",
-    "import/no-absolute-path": "warn",
-    "import/no-amd": "warn",
-    "import/no-anonymous-default-export": [
-      "warn",
-      {
-        "allowArray": true,
-        "allowArrowFunction": true,
-        "allowLiteral": true,
-        "allowObject": true
-      }
-    ],
-    "import/no-commonjs": "warn",
-    "import/no-cycle": "error",
-    "import/no-extraneous-dependencies": "error",
-    "import/no-mutable-exports": "warn",
-    "import/no-named-default": "warn",
-    "import/no-namespace": "warn",
-    "import/no-nodejs-modules": [
-      "error",
-      {
-        "allow": ["fs", "path"]
-      }
-    ],
-    "import/no-self-import": "error",
-    "import/no-unassigned-import": [
-      "warn",
-      {
-        "allow": ["brace/**/*", "@firebase/*"]
-      }
-    ],
-    "import/no-useless-path-segments": "warn",
-    "import/no-webpack-loader-syntax": "warn",
-    "import/order": [
-      "warn",
-      {
-        "newlines-between": "always-and-inside-groups"
-      }
-    ],
-    "import/unambiguous": "warn",
     "new-cap": [
       "warn",
       {
@@ -337,7 +239,6 @@
     "yoda": ["warn", "never"]
   },
   "settings": {
-    "import/resolver": "webpack",
     "react": {
       "version": "16.8.2"
     }
