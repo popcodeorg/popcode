@@ -39,6 +39,7 @@
       },
       "files": [
         "babel.config.js",
+        "eslint.config.stickler.js",
         "gulpfile.js",
         "karma.conf.js",
         "script/*.js",

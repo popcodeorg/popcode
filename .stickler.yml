@@ -1,0 +1,10 @@
+linters:
+  eslint:
+    config: 'eslint.config.stickler.js'
+    fixer: true
+fixers:
+  enable: true
+files:
+  ignore:
+    - 'node_modules'
+    - 'bower_components'
