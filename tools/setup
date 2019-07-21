@@ -27,19 +27,32 @@ then
     exit 1
 fi
 
-if [ -z "$OSX" ]
+if [ ! -f docker-compose.override.yml ]
 then
-    set -e
-    ln -si docker-compose.bind.yml docker-compose.override.yml
-else
-    set -e
-    ln -si docker-compose.sync.yml docker-compose.override.yml
+    if [ -z "$OSX" ]
+    then
+        set -e
+        ln -sv --no-target-directory docker-compose.bind.yml docker-compose.override.yml
+    else
+        set -e
+        ln -sv --no-target-directory docker-compose.sync.yml docker-compose.override.yml
+    fi
 fi
 
 docker pull popcodeorg/popcode:latest
 docker-compose up --build --no-start
 
 docker-compose run --rm app yarn install --frozen-lockfile
+
+if [ ! -e .vscode ]
+then
+    ln -sv --no-target-directory contrib/vscode .vscode
+    if ! grep --quiet --no-messages .vscode .git/info/exclude
+    then
+        mkdir --parents .git/info
+        echo .vscode >> .git/info/exclude
+    fi
+fi
 
 set +x
 
