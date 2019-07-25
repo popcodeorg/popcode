@@ -13,6 +13,7 @@ services:
       - '3001:3001'
     volumes:
       - .:/app:cached
+      - build_cache:/app/.cache
       - node_modules:/app/node_modules
       - bower_components:/app/bower_components
       - npm_cache:/root/.npm
@@ -23,7 +24,8 @@ services:
       - DEBUG
       - PROFILE_BUILD
 volumes:
-  npm_cache:
-  node_modules:
   bower_components:
+  build_cache:
+  node_modules:
+  npm_cache:
   yarn_cache:
