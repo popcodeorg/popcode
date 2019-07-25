@@ -1,7 +1,8 @@
+.cache
+bower_components
 dist
-static/compiled
+docker-compose.override.yml
 node_modules
 npm-debug.log
-bower_components
+static/compiled
 yarn-error.log
-docker-compose.override.yml

@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 
 const OfflinePlugin = require('offline-plugin');
@@ -11,18 +12,46 @@ const webpack = require('webpack');
 const escapeRegExp = require('lodash.escaperegexp');
 const babel = require('@babel/core');
 
-const babelLoaderVersion = require('./node_modules/babel-loader/package.json')
-  .version;
+function getCacheKeyForBabelConfigItem(configItem) {
+  const cacheKey = {
+    options: configItem.options,
+    name: configItem.name,
+  };
+  const pathSegments = configItem.file.resolved.split('/');
+  while (!('version' in cacheKey)) {
+    pathSegments.pop();
+    const packagePath = [...pathSegments, 'package.json'].join('/');
+    if (fs.existsSync(packagePath)) {
+      const package = require(packagePath);
+      cacheKey.name = package.name;
+      cacheKey.version = package.version;
+    }
+  }
+  return cacheKey;
+}
 
-const babelLoaderConfig = {
-  cacheDirectory: true,
-  cacheIdentifier: JSON.stringify({
-    babel: babel.version,
-    'babel-loader': babelLoaderVersion,
-    debug: process.env.DEBUG,
-    env: process.env.NODE_ENV || 'development',
-  }),
-};
+function makeBabelLoaderConfig() {
+  const babelrc = babel.loadPartialConfig().options;
+  const babelLoaderVersion = require('./node_modules/babel-loader/package.json')
+    .version;
+
+  const babelrcCacheKey = {
+    ...babelrc,
+    plugins: babelrc.plugins.map(getCacheKeyForBabelConfigItem),
+    presets: babelrc.presets.map(getCacheKeyForBabelConfigItem),
+  };
+
+  return {
+    cacheCompression: false,
+    cacheDirectory: './.cache/babel-loader',
+    cacheIdentifier: JSON.stringify({
+      babel: babel.version,
+      'babel-loader': babelLoaderVersion,
+      options: babelrcCacheKey,
+    }),
+  };
+}
+const babelLoaderConfig = makeBabelLoaderConfig();
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
     escapeRegExp(path.join('/node_modules', modulePath)),
