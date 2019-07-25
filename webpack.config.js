@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
 const VisualizerPlugin = require('webpack-visualizer-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash.escaperegexp');
@@ -101,6 +102,18 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       }),
       new VisualizerPlugin({
         filename: 'profile/webpack-visualizer.html',
+      }),
+    );
+  }
+
+  if (!isProduction) {
+    plugins.push(
+      new HardSourceWebpackPlugin({
+        cacheDirectory: path.resolve(
+          __dirname,
+          '.cache/hard-source/[confighash]',
+        ),
+        info: {level: 'warn'},
       }),
     );
   }
