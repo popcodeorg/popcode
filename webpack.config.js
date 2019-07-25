@@ -31,7 +31,11 @@ function getCacheKeyForBabelConfigItem(configItem) {
   return cacheKey;
 }
 
-function makeBabelLoaderConfig() {
+function makeBabelLoaderConfig({shouldCache = false} = {}) {
+  if (!shouldCache) {
+    return {};
+  }
+
   const babelrc = babel.loadPartialConfig().options;
   const babelLoaderVersion = require('./node_modules/babel-loader/package.json')
     .version;
@@ -52,7 +56,6 @@ function makeBabelLoaderConfig() {
     }),
   };
 }
-const babelLoaderConfig = makeBabelLoaderConfig();
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
     escapeRegExp(path.join('/node_modules', modulePath)),
@@ -167,6 +170,8 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       }),
     );
   }
+
+  const babelLoaderConfig = makeBabelLoaderConfig({shouldCache: !isProduction});
 
   return {
     mode: isProduction ? 'production' : 'development',
