@@ -114,24 +114,21 @@ lifecycle of a user interaction:
 
 ## Contributing
 
-Yes please! There are a [ton of
-ways](https://github.com/popcodeorg/popcode/issues)
-Popcode could be made better. Pull requests, bug reports, feature suggestions
+Yes please! Pull requests, [bug
+reports](https://github.com/popcodeorg/popcode/issues/new?template=bug_report.md),
+and [feature
+suggestions](https://github.com/popcodeorg/popcode/issues/new?template=feature_request.md)
 are all very very welcome.
-
 When you’re first getting started, I recommend picking a [good first issue
 ](https://github.com/popcodeorg/popcode/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) so you can get your feet wet and make sure you can run a development environment smoothly.
 
-Everyone is welcome to submit pull requests that implement a new feature or fix
-a bug that you’re particularly passionate about. But if you just want to help
-out and you’re looking for ideas, I recommend checking out the [help wanted
-label](https://github.com/popcodeorg/popcode/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
-and the [ScriptEd Program Managers’ Roadmap](https://github.com/popcodeorg/popcode/projects/3),
-which lists the features and enhancements that the ScriptEd PMs have identified
-as most beneficial based on observation of hundreds of student users and
-feedback from dozens of instructors.
+Everyone is welcome to submit a pull request that implements a new feature or
+fixes a bug that you’re particularly passionate about. But if you just want
+to help out and you’re looking for ideas, your best bet is to browse issues
+with the [help wanted
+label](https://github.com/popcodeorg/popcode/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
 
-### Running locally
+### Local development environment
 
 Make sure you have a local installation of [Node.js](https://nodejs.org/en/download/) and [yarn](https://yarnpkg.com/lang/en/docs/install/).
 
