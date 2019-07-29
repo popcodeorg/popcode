@@ -1,6 +1,11 @@
-#!/bin/sh
-set -ex
+#!/bin/bash
 
-# Start a shell in the main Docker container
+# Start a shell with the nodeenv loaded
 
-docker-compose run --rm app bash
+if [ -d nodeenv ]
+then
+    bash --rcfile <(echo '. ~/.bashrc; . nodeenv/bin/activate') -i "$@"
+else
+    echo "You don’t seem to have a nodeenv installed, so falling back to normal shell. Run tools/setup to create a nodeenv."
+    bash "$@"
+fi

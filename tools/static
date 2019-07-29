@@ -1,7 +1,0 @@
-#!/bin/sh
-set -ex
-
-# Builds the application in production mode, and then starts a static server.
-# Access it at http://localhost:3000 just like the normal development server.
-
-docker-compose run --service-ports --rm app bash -c 'yarn install --frozen-lockfile && yarn run preview'

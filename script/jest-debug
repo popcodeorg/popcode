@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -ex
-
-docker-compose run --rm -p 9229:9229 app --runTestsByPath $1

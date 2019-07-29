@@ -17,26 +17,22 @@
       "type": "node",
       "request": "launch",
       "name": "Debug current Jest test",
-      "runtimeExecutable": "docker-compose",
-      "runtimeArgs": [
-        "run",
-        "--rm",
-        "-p",
-        "9229:9229",
-        "app",
-        "yarn",
-        "debug.jest",
-        "--runTestsByPath",
-        "${currentFile}"
-      ],
+      //"runtimeExecutable": "yarn",
+      //"runtimeArgs": ["debug.jest", "--runTestsByPath", "${relativeFile}"],
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "address": "127.0.0.1",
+      // "internalConsoleOptions": "neverOpen",
+      "runtimeExecutable": "${workspaceRoot}/tools/node",
+      "program": "${workspaceRoot}/node_modules/.bin/jest",
+      "args": [
+        "--no-cache",
+        "--runInBand",
+        "--runTestsByPath",
+        "${relativeFile}"
+      ],
+      "disableOptimisticBPs": true,
       "sourceMaps": true,
-      "restart": true,
-      "port": 9229,
-      "remoteRoot": "/app/",
-      "timeout": 30000
+      "timeout": 30000,
+      "env": {"NODE_ENV": "test"}
     }
   ]
 }

@@ -3,46 +3,58 @@
 # Build your development environment. Running this on an already-built
 # environment will update to the latest dependencies.
 
-set -e
+
+NODE_VERSION=10.16.0
+YARN_VERSION=1.17.3
+NODEENV_VERSION=1.3.3
 
 export OSX=$(uname | grep -i '^darwin')
 
-if ! docker-compose -v &> /dev/null
+if [ -z "$(which python)" ] || [ -z "$(python --version | grep 'Python \(2\.7\|3\)')" ]
 then
-    echo "Before running this script, install Docker and Docker Compose."
-    if [ -z "$OSX" ]
+    echo "You need Python 2.7+ installed in order to run this script."
+    if [  -z "$OSX" ]
     then
-        echo "Find installation instructions for your distro here:"
-        echo "https://docs.docker.com/install/linux/docker-ce/ubuntu/"
-    else
-        echo "Download the latest community edition here:"
-        echo "https://docs.docker.com/docker-for-mac/release-notes/"
+        if [ -z "$(which brew)" ]
+        then
+            cat <<MESSAGE
+
+First, install Homebrew from
+https://www.python.org/downloads/mac-osx/
+MESSAGE
+        fi
+        cat <<MESSAGE
+
+To install Python, run:
+
+    $ brew install python
+MESSAGE
     fi
-    exit 1
+    exit
 fi
 
-if ! docker info &> /dev/null
+set -ex
+
+NODEENV_TMPDIR=$(mktemp -d)
+NODEENV_PACKAGE_DIR=$NODEENV_TMPDIR/nodeenv-$NODEENV_VERSION
+curl --silent --location https://github.com/ekalinin/nodeenv/archive/$NODEENV_VERSION.tar.gz | tar --directory=$NODEENV_TMPDIR -xzf -
+
+NODEENV_DIR=nodeenv
+if [ -d $NODEENV_DIR ] && [ "$($NODEENV_DIR/bin/node --version)" != "v$NODE_VERSION" ]
 then
-    echo "Before running this script, start the Docker application"
-    exit 1
+    rm -r $NODEENV_DIR
 fi
 
-if [ ! -f docker-compose.override.yml ]
+if [ ! -d $NODEENV_DIR ];
 then
-    if [ -z "$OSX" ]
-    then
-        set -e
-        ln -sv --no-target-directory docker-compose.bind.yml docker-compose.override.yml
-    else
-        set -e
-        ln -sv --no-target-directory docker-compose.sync.yml docker-compose.override.yml
-    fi
+    python $NODEENV_PACKAGE_DIR/nodeenv.py --node=$NODE_VERSION nodeenv
 fi
 
-docker pull popcodeorg/popcode:latest
-docker-compose up --build --no-start
+. $NODEENV_DIR/bin/activate
 
-docker-compose run --rm app yarn install --frozen-lockfile
+npm install --quiet --global yarn@$YARN_VERSION
+
+yarn install --frozen-lockfile --non-interactive --no-progress --silent
 
 if [ ! -e .vscode ]
 then
@@ -56,13 +68,19 @@ fi
 
 set +x
 
-echo ""
-echo "================================================================================"
-echo ""
-echo "Your development environment is ready! To run your development server, type:"
-echo ""
-echo "  ./tools/start"
-echo ""
-echo "To run tests, type:"
-echo ""
-echo "  ./tools/test"
+cat <<MESSAGE
+
+================================================================================
+
+Your development environment is ready! To run your development server, type:
+
+  tools/yarn start
+
+To run tests in watch mode type:
+
+  tools/yarn run autotest.jest
+
+or
+
+  tools/yarn run autotest.karma
+MESSAGE

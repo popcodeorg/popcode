@@ -4,9 +4,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "tools: start",
+      "label": "start development server",
       "type": "shell",
-      "command": "./tools/start",
+      "command": "yarn start",
       "presentation": {
         "focus": false,
         "panel": "dedicated"
@@ -18,8 +18,11 @@
       }
     },
     {
-      "label": "tools: test",
-      "dependsOn": ["tools: test jest", "tools: test karma"],
+      "label": "run tests in watch mode",
+      "dependsOn": [
+        "run jest tests in watch mode",
+        "run karma tests in watch mode"
+      ],
       "type": "shell",
       "problemMatcher": [],
       "group": {
@@ -28,9 +31,9 @@
       }
     },
     {
-      "label": "tools: test karma",
+      "label": "run karma tests in watch mode",
       "type": "shell",
-      "command": "./tools/test karma",
+      "command": "yarn autotest.karma",
       "presentation": {
         "group": "test",
         "panel": "dedicated"
@@ -38,9 +41,9 @@
       "group": "test"
     },
     {
-      "label": "tools: test jest",
+      "label": "run jest tests in watch mode",
       "type": "shell",
-      "command": "./tools/test jest",
+      "command": "yarn autotest.jest",
       "presentation": {
         "group": "test",
         "focus": true,
@@ -49,23 +52,23 @@
       "group": "test"
     },
     {
-      "label": "tools: run all checks",
+      "label": "run all tests and checks",
       "type": "shell",
-      "command": "tools/ci",
+      "command": "yarn test",
       "problemMatcher": [],
       "group": "test"
     },
     {
-      "label": "tools: reset development environment",
+      "label": "reset development environment",
       "type": "shell",
-      "command": "tools/setup",
+      "command": "tools/reset",
       "problemMatcher": [],
       "group": "build"
     },
     {
-      "label": "tools: run static server with production build settings",
+      "label": "run static server with production build settings",
       "type": "shell",
-      "command": "tools/static",
+      "command": "yarn run static",
       "problemMatcher": [],
       "group": "build"
     }
