@@ -104,31 +104,37 @@ label](https://github.com/popcodeorg/popcode/issues?q=is%3Aissue+is%3Aopen+label
 
 ## Local development environment
 
-Popcode comes with a batteries-included Docker-based development environment. Once you have checked out the project, run:
+Popcode comes with a batteries-included development environment built on [`nodeenv`](https://github.com/ekalinin/nodeenv). Once you have checked out the project, run:
 
 ```sh
 $ tools/setup
 ```
 
-If you do not already have Docker installed, this will prompt you with a
-direct download link for your operating system. Once Docker is installed, the
-script will fully set up your development environment.
+This will install `node` and `yarn` in an isolated environment in the
+`nodeenv` directory of the project root. It won’t interfere with any
+system-wide installation of those tools.
 
-Once this is complete, to run a development server, run:
+Once setup is complete, to run a development server, run:
 
 ```sh
-$ tools/start
+$ tools/yarn start
 ```
 
 This will start a server on http://localhost:3000
 
-To start tests in watch mode, run:
+To start Jest tests in watch mode, run:
 
 ```sh
-$ tools/test
+$ tools/yarn autotest.jest
 ```
 
-Check the contents of the `tools` directory for other useful scripts.
+To start Karma tests in watch mode, run:
+
+```sh
+$ tools/yarn autotest.karma
+```
+
+Check the `"scripts"` section of [`package.json`](https://github.com/popcodeorg/popcode/blob/master/package.json) for other useful tools.
 
 ### Developing in VS Code
 
@@ -146,8 +152,9 @@ Popcode uses tools like [Prettier](https://prettier.io/docs/en/editors.html),
 [ESLint](https://eslint.org/docs/user-guide/integrations#editors), and
 [Stylelint](https://github.com/stylelint/stylelint/blob/master/docs/user-guide/complementary-tools.md#editor-plugins)
 to automatically format code. The recommended approach is to set up editor
-plugins to auto-format on save; alternatively, you can run `tools/yarn lintfix` to format and autofix lint. Popcode’s official VS Code integration
-(with recommended extensions installed) does this out of the box.
+plugins to auto-format on save; alternatively, you can run `tools/yarn lintfix` before committing to format and autofix lint. Popcode’s official VS
+Code integration (with recommended extensions installed) does this out of the
+box.
 
 ### Alternative development environments (advanced)
 
