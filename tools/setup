@@ -46,7 +46,7 @@ fi
 
 if [ ! -d $NODEENV_DIR ];
 then
-    python $NODEENV_PACKAGE_DIR/nodeenv.py --node=$NODE_VERSION nodeenv
+    python $NODEENV_PACKAGE_DIR/nodeenv.py --node=$NODE_VERSION $NODEENV_DIR
 fi
 
 . $NODEENV_DIR/bin/activate
