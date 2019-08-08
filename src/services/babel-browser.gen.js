@@ -1,3 +1,5 @@
+const path = require('path');
+
 const babel = require('@babel/core');
 const presetEnv = require('@babel/preset-env');
 
@@ -29,7 +31,7 @@ function getPluginNamesFromPresetEnv() {
 
   return result.options.plugins
     .map(plugin => plugin.key)
-    .filter(key => key.indexOf('/') !== 0);
+    .filter(key => path.parse(key).root === '');
 }
 
 module.exports = () => {
