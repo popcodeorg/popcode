@@ -18,7 +18,7 @@ function getCacheKeyForBabelConfigItem(configItem) {
     options: configItem.options,
     name: configItem.name,
   };
-  const pathSegments = configItem.file.resolved.split('/');
+  const pathSegments = configItem.file.resolved.split(path.sep);
   while (!('version' in cacheKey)) {
     pathSegments.pop();
     const packagePath = [...pathSegments, 'package.json'].join('/');
@@ -58,11 +58,13 @@ function makeBabelLoaderConfig({shouldCache = false} = {}) {
 }
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
-    escapeRegExp(path.join('/node_modules', modulePath)),
+    escapeRegExp(path.join(path.sep, 'node_modules', modulePath)),
     'u',
   );
   const moduleDependencyPattern = new RegExp(
-    escapeRegExp(path.join('/node_modules', modulePath, 'node_modules')),
+    escapeRegExp(
+      path.join(path.sep, 'node_modules', modulePath, 'node_modules'),
+    ),
     'u',
   );
 
@@ -91,7 +93,12 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       failOnError: true,
     }),
     new webpack.NormalModuleReplacementPlugin(
-      /node_modules\/stylelint\/lib\/requireRule.js$/u,
+      new RegExp(
+        `${escapeRegExp(
+          path.join('node_modules', 'stylelint', 'lib', 'requireRule.js'),
+        )}$`,
+        'u',
+      ),
       path.resolve(__dirname, 'src/patches/stylelint/lib/requireRule.js'),
     ),
   ];
