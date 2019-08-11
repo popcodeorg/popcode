@@ -1,7 +1,0 @@
-
-#!/usr/bin/env bash
-set -ex
-
-# Tear down your development environment.
-
-rm -r nodeenv node_modules bower_components

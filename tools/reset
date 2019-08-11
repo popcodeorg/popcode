@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-set -ex
-
-# Tear down your development environment and rebuild it from scratch.
-# Useful if your environment is broken and a fix is not apparent.
-
-tools/teardown
-tools/setup

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# Run an arbitrary npx command in the nodeenv
-
-if [ -f nodeenv/bin/activate ]
-then
-    source nodeenv/bin/activate
-fi
-npx "$@"
