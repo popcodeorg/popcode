@@ -85,21 +85,22 @@ def _symlink_vscode_config():
                 gitignore_a.writelines([".vscode"])
 
 def _print_success_message():
+    yarn_path = os.path.join('tools', 'yarn.py')
     print("""
 ================================================================================
 
 Your development environment is ready! To run your development server, type:
 
-  tools/yarn.py start
+  {yarn_path} start
 
 To run tests in watch mode type:
 
-  tools/yarn.py run autotest.jest
+  {yarn_path} run autotest.jest
 
 or
 
-  tools/yarn.py run autotest.karma
-""")
+  {yarn_path} run autotest.karma
+""".format(yarn_path=yarn_path))
 
 def setup():
     if _is_nodeenv_installed() and not _is_nodeenv_node_version_correct():
