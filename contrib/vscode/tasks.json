@@ -6,7 +6,11 @@
     {
       "label": "start development server",
       "type": "shell",
-      "command": "yarn start",
+      "command": "tools/yarn.py",
+      "args": ["start"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
       "presentation": {
         "focus": false,
         "panel": "dedicated"
@@ -33,7 +37,11 @@
     {
       "label": "run karma tests in watch mode",
       "type": "shell",
-      "command": "yarn autotest.karma",
+      "command": "tools/yarn.py",
+      "args": ["run", "autotest.karma"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
       "presentation": {
         "group": "test",
         "panel": "dedicated"
@@ -43,7 +51,11 @@
     {
       "label": "run jest tests in watch mode",
       "type": "shell",
-      "command": "yarn autotest.jest",
+      "command": "tools/yarn.py",
+      "args": ["run", "autotest.jest"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
       "presentation": {
         "group": "test",
         "focus": true,
@@ -54,21 +66,32 @@
     {
       "label": "run all tests and checks",
       "type": "shell",
-      "command": "yarn test",
+      "command": "tools/yarn.py",
+      "args": ["test"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
       "problemMatcher": [],
       "group": "test"
     },
     {
       "label": "reset development environment",
       "type": "shell",
-      "command": "tools/reset",
+      "command": "tools/reset.py",
+      "windows": {
+        "command": "tools\\reset.py"
+      },
       "problemMatcher": [],
       "group": "build"
     },
     {
       "label": "run static server with production build settings",
       "type": "shell",
-      "command": "yarn run static",
+      "command": "tools/yarn.py",
+      "args": ["run", "static"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
       "problemMatcher": [],
       "group": "build"
     }

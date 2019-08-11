@@ -9,20 +9,23 @@
       "request": "launch",
       "name": "Debug in Chrome",
       "url": "http://localhost:3000",
-      "runtimeExecutable": "/usr/bin/chromium",
       "userDataDir": true,
-      "webRoot": "${workspaceFolder}/src"
+      "webRoot": "${workspaceFolder}/src",
+      "windows": {
+        "webRoot": "${workspaceFolder}\\src"
+      }
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Debug current Jest test",
-      //"runtimeExecutable": "yarn",
-      //"runtimeArgs": ["debug.jest", "--runTestsByPath", "${relativeFile}"],
       "console": "integratedTerminal",
-      // "internalConsoleOptions": "neverOpen",
-      "runtimeExecutable": "${workspaceRoot}/tools/node",
-      "program": "${workspaceRoot}/node_modules/.bin/jest",
+      "runtimeExecutable": "${workspaceFolder}/tools/node.py",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}\\tools\\node.py",
+        "program": "${workspaceFolder}\\node_modules\\.bin\\jest"
+      },
       "args": [
         "--no-cache",
         "--runInBand",
