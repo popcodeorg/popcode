@@ -5,6 +5,7 @@ docker-compose.override.yml
 npm-debug.log
 node_modules
 nodeenv
+*.pyc
 __pycache__
 static/compiled
 yarn-error.log
