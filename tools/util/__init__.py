@@ -14,7 +14,11 @@ NODEENV_BASH_ACTIVATE = path.join(NODEENV_DIR, 'bin', 'activate')
 NODEENV_POWERSHELL_ACTIVATE = path.join(NODEENV_DIR, 'Scripts', 'Activate.ps1')
 
 def nodeenv_delegate(executable):
-    sys.exit(run_in_nodeenv([executable] + sys.argv[1:]))
+    command = [executable] + sys.argv[1:]
+    if path.exists(NODEENV_DIR):
+        sys.exit(run_in_nodeenv(command))
+    else:
+        sys.exit(subprocess.call(command))
 
 def run_in_nodeenv(command):
     if _has_bash_nodeenv():
