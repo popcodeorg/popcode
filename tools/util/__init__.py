@@ -27,7 +27,7 @@ def _run_in_nodeenv_with_powershell(command):
     try:
         return subprocess.check_call(
             _generate_powershell_script_args(command, 'pwsh'))
-    except subprocess.CalledProcessError:
+    except FileNotFoundError:
         return subprocess.check_call(
             _generate_powershell_script_args(command, 'powershell'))
 
@@ -46,7 +46,7 @@ def _run_and_capture_in_nodeenv_with_powershell(command):
     try:
         return _run_and_capture_output(
             _generate_powershell_script_args(command, 'pwsh'))
-    except OSError:
+    except FileNotFoundError:
         return _run_and_capture_output(
             _generate_powershell_script_args(command, 'powershell'))
 
