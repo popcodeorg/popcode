@@ -11,8 +11,8 @@ giving specific, immediate, human-friendly feedback when the code contains error
 
 [![Build Status](https://travis-ci.org/popcodeorg/popcode.svg?branch=master)](https://travis-ci.org/popcodeorg/popcode) [![Dependency Status](https://david-dm.org/popcodeorg/popcode.svg)](https://david-dm.org/popcodeorg/popcode) ![License](https://img.shields.io/github/license/popcodeorg/popcode.svg)
 
-Popcode is the official first semester editing environment for the [ScriptEd
-program](https://scripted.org) in the 2018–2019 school year.
+Popcode is the official editing environment for the [Code Nation
+Intro to Web Development program](https://codenation.org) in the 2019–2020 school year.
 
 ### Try it out
 
@@ -69,19 +69,15 @@ enforced style decisions are arbitrary, under the philosophy that giving
 students one right way to do it eliminates ambiguity and aids the learning
 process.
 
-### Feature roadmap
-
-Check out the [Project Board](https://github.com/popcodeorg/popcode/projects/3).
-
 ## Technical details
 
 Popcode uses [**React**](https://facebook.github.io/react/) to render views,
 [**Redux**](http://redux.js.org/) to manage application state,
 [**Ace**](https://ace.c9.io/) as the code editor,
 [**Webpack**](https://webpack.github.io/) to package the client-side
-application, and [**Babel**](https://babeljs.io/) to compile ES2016+JSX into ES5.
+application, and [**Babel**](https://babeljs.io/) to compile modern JavaScript for compatibility with legacy browser versions.
 
-Popcode detects code errors using
+Popcode detects mistakes in student code using
 [slowparse](https://github.com/mozilla/slowparse),
 [htmllint](https://github.com/htmllint/htmllint),
 [HTML Inspector](https://github.com/philipwalton/html-inspector),
@@ -90,99 +86,85 @@ Popcode detects code errors using
 [stylelint](https://github.com/stylelint/stylelint),
 [jshint](https://github.com/jshint/jshint), and [esprima](http://esprima.org/).
 
-### Architecture Overview
-
-The architecture of Popcode’s code base is best understood through the
-lifecycle of a user interaction:
-
-- User interactions are first captured by handlers in React
-  [components](https://github.com/popcodeorg/popcode/tree/master/src/components).
-- These components propagate the event to the view controller, the [`Workspace`
-  component](https://github.com/popcodeorg/popcode/blob/master/src/components/Workspace.jsx).
-- The `Workspace` dispatches one or more Redux
-  [actions](https://github.com/popcodeorg/popcode/tree/master/src/actions).
-- Dispatched actions are consumed by the
-  [reducers](https://github.com/popcodeorg/popcode/tree/master/src/reducers),
-  which update the
-  [store](https://github.com/popcodeorg/popcode/blob/master/src/store.js).
-- Action creators also perform other business logic, such as initiating
-  [validation](https://github.com/popcodeorg/popcode/tree/master/src/validations)
-  of project code and persisting changes to
-  [persistent storage](https://github.com/popcodeorg/popcode/blob/master/src/persistors).
-- When the action lifecycle is complete, the `Workspace` receives updated
-  props from the store and propagates them to its descendants.
-
 ## Contributing
 
-Yes please! There are a [ton of
-ways](https://github.com/popcodeorg/popcode/issues)
-Popcode could be made better. Pull requests, bug reports, feature suggestions
+Yes please! Pull requests, [bug
+reports](https://github.com/popcodeorg/popcode/issues/new?template=bug_report.md),
+and [feature
+suggestions](https://github.com/popcodeorg/popcode/issues/new?template=feature_request.md)
 are all very very welcome.
-
 When you’re first getting started, I recommend picking a [good first issue
 ](https://github.com/popcodeorg/popcode/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) so you can get your feet wet and make sure you can run a development environment smoothly.
 
-Everyone is welcome to submit pull requests that implement a new feature or fix
-a bug that you’re particularly passionate about. But if you just want to help
-out and you’re looking for ideas, I recommend checking out the [help wanted
-label](https://github.com/popcodeorg/popcode/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
-and the [ScriptEd Program Managers’ Roadmap](https://github.com/popcodeorg/popcode/projects/3),
-which lists the features and enhancements that the ScriptEd PMs have identified
-as most beneficial based on observation of hundreds of student users and
-feedback from dozens of instructors.
+Everyone is welcome to submit a pull request that implements a new feature or
+fixes a bug that you’re particularly passionate about. But if you just want
+to help out and you’re looking for ideas, your best bet is to browse issues
+with the [help wanted
+label](https://github.com/popcodeorg/popcode/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
 
-### Running locally
+## Local development environment
 
-Make sure you have a local installation of [Node.js](https://nodejs.org/en/download/) and [yarn](https://yarnpkg.com/lang/en/docs/install/).
+Popcode comes with a batteries-included development environment built on
+[`nodeenv`](https://github.com/ekalinin/nodeenv). You will need to have
+[Python](https://www.python.org/downloads/) installed; any version 2.7+ will
+work. To set up the environment, run:
 
-Once you’ve got it run:
-
-```bash
-$ yarn install
+```sh
+$ tools/setup.py
 ```
 
-That'll pull down the dependencies. Then run:
+This will install `node` and `yarn` in an isolated environment in the
+`nodeenv` directory of the project root. It won’t interfere with any
+system-wide installation of those tools.
 
-```bash
-$ yarn start
+Once setup is complete, to run a development server, run:
+
+```sh
+$ tools/yarn.py start
 ```
 
-This will start a local static server, and open it in your browser. The first
-pageload will be rather slow as it compiles the bundle; after you change files,
-assets are recompiled incrementally and your browser automatically reloads.
+This will start a server on http://localhost:3000
 
-When you're done, lint and make sure tests pass before opening a pull request:
+To start Jest tests in watch mode, run:
 
-```bash
-$ yarn test
+```sh
+$ tools/yarn.py autotest.jest
 ```
 
-### Debug Mode
+To start Karma tests in watch mode, run:
 
-By default, Popcode’s JavaScript code is compiled to ES5 to support a wide
-array of older browsers. This can make it difficult to debug errors, however,
-as the compiled code in the debugger can look quite different from the original
-source code.
-
-To improve the situation, you can use **debug mode**, which configures Babel to
-compile the JavaScript to target only the latest version of Chrome, which
-supports most modern ES features. To run in debug mode, start your development
-server with:
-
-```bash
-$ DEBUG=true yarn start
+```sh
+$ tools/yarn.py autotest.karma
 ```
 
-### Running with Docker
+Check the `"scripts"` section of [`package.json`](https://github.com/popcodeorg/popcode/blob/master/package.json) for other useful tools.
 
-Popcode also comes with a `docker-compose` file to support running inside Docker
-with no local Node installation needed. If you’re a Docker user, you can install
-and run Popcode locally with:
+### Developing in VS Code
 
-```bash
-$ docker pull popcodeorg/popcode:latest # Not required, but will speed up installation
-$ docker-compose up
-```
+Popcode comes with a robust custom VS Code configuration, which is
+automatically enabled by `tools/setup.py`. If you use VS Code, you can:
+
+- Run the `Show Recommended Extensions` command to easily install extensions
+  that improve the Popcode developer experience
+- Start a server, run tests, and more by typing `task` into the Quick Open bar to autocomplete the task to run
+- Debug either your development environment or a Jest test by typing `debug` into the Quick Open bar
+
+### Using other editors
+
+Popcode uses tools like [Prettier](https://prettier.io/docs/en/editors.html),
+[ESLint](https://eslint.org/docs/user-guide/integrations#editors), and
+[Stylelint](https://github.com/stylelint/stylelint/blob/master/docs/user-guide/complementary-tools.md#editor-plugins)
+to automatically format code. We recomment setting up editor plugins to
+auto-format on save; alternatively, you can run `tools/yarn.py lintfix` before
+committing to format and autofix lint. Popcode’s official VS Code integration
+(with recommended extensions installed) does this out of the box.
+
+### Alternative development environments (advanced)
+
+There is no requirement that you use the official development environment to
+work on Popcode; you’ll mostly just need the right versions of Node and Yarn
+installed on your machine (check the `"engines"` section of `package.json`
+for the current versions).
 
 ### Developer Reference
 
@@ -190,15 +172,16 @@ Popcode endeavors to use up-to-date technologies and code conventions to make
 development as pleasant as possible. Below are links to reference documentation
 on the major tools:
 
-- [React](https://facebook.github.io/react/docs/react-component.html) for
+- [React](https://reactjs.org/docs/introducing-jsx.html) for
   constructing the user interface
-- [Redux](http://redux.js.org/) for managing application state
+- [Redux](https://redux.js.org/introduction/core-concepts) for managing application state
 - [postcss-preset-env](https://github.com/csstools/postcss-preset-env) gives us cutting-edge CSS features
 - [Block Element Modifier](https://en.bem.info/methodology/naming-convention/)
   provides a convention for organizing DOM classes
 - [Webpack](https://webpack.github.io/docs/configuration.html) builds the
   JavaScript
-- [Tape](https://github.com/substack/tape) provides the test harness
+- [Jest](https://jestjs.io/) is the test framework
+  - We are currently migrating legacy tests from [Tape](https://github.com/substack/tape) with [Karma](https://karma-runner.github.io/latest/index.html)
 
 ## License
 

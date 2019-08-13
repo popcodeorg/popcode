@@ -75,6 +75,16 @@
       "group": "test"
     },
     {
+      "label": "set up development environment",
+      "type": "shell",
+      "command": "tools/setup.py",
+      "windows": {
+        "command": "tools\\setup.py"
+      },
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
       "label": "reset development environment",
       "type": "shell",
       "command": "tools/reset.py",
