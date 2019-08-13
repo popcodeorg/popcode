@@ -8,7 +8,11 @@ import uniqWith from 'lodash-es/uniqWith';
 
 
 function filterErrors(errors) {
-  const dedupedErrors = uniqWith(errors, e => e.reason && e.row);
+  debugger;
+    function dedupeErrors(errs) {
+        return _.uniqWith(errs, (e,i) => e.reason == i.reason && i.row == e.row);
+    }
+  const dedupedErrors = dedupeErrors(errors);
   const groupedErrors = groupBy(dedupedErrors, 'reason');
 
   const suppressedTypes = flatMap(flatten(values(groupedErrors)), 'suppresses');
