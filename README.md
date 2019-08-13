@@ -104,10 +104,13 @@ label](https://github.com/popcodeorg/popcode/issues?q=is%3Aissue+is%3Aopen+label
 
 ## Local development environment
 
-Popcode comes with a batteries-included development environment built on [`nodeenv`](https://github.com/ekalinin/nodeenv). Once you have checked out the project, run:
+Popcode comes with a batteries-included development environment built on
+[`nodeenv`](https://github.com/ekalinin/nodeenv). You will need to have
+[Python](https://www.python.org/downloads/) installed; any version 2.7+ will
+work. To set up the environment, run:
 
 ```sh
-$ tools/setup
+$ tools/setup.py
 ```
 
 This will install `node` and `yarn` in an isolated environment in the
@@ -117,7 +120,7 @@ system-wide installation of those tools.
 Once setup is complete, to run a development server, run:
 
 ```sh
-$ tools/yarn start
+$ tools/yarn.py start
 ```
 
 This will start a server on http://localhost:3000
@@ -125,13 +128,13 @@ This will start a server on http://localhost:3000
 To start Jest tests in watch mode, run:
 
 ```sh
-$ tools/yarn autotest.jest
+$ tools/yarn.py autotest.jest
 ```
 
 To start Karma tests in watch mode, run:
 
 ```sh
-$ tools/yarn autotest.karma
+$ tools/yarn.py autotest.karma
 ```
 
 Check the `"scripts"` section of [`package.json`](https://github.com/popcodeorg/popcode/blob/master/package.json) for other useful tools.
@@ -139,11 +142,11 @@ Check the `"scripts"` section of [`package.json`](https://github.com/popcodeorg/
 ### Developing in VS Code
 
 Popcode comes with a robust custom VS Code configuration, which is
-automatically enabled by `tools/setup`. If you use VS Code, you can:
+automatically enabled by `tools/setup.py`. If you use VS Code, you can:
 
 - Run the `Show Recommended Extensions` command to easily install extensions
   that improve the Popcode developer experience
-- Start a server, run tests, and more by typing `tasks` into the Quick Open bar to autocomplete the task to run
+- Start a server, run tests, and more by typing `task` into the Quick Open bar to autocomplete the task to run
 - Debug either your development environment or a Jest test by typing `debug` into the Quick Open bar
 
 ### Using other editors
@@ -151,10 +154,10 @@ automatically enabled by `tools/setup`. If you use VS Code, you can:
 Popcode uses tools like [Prettier](https://prettier.io/docs/en/editors.html),
 [ESLint](https://eslint.org/docs/user-guide/integrations#editors), and
 [Stylelint](https://github.com/stylelint/stylelint/blob/master/docs/user-guide/complementary-tools.md#editor-plugins)
-to automatically format code. The recommended approach is to set up editor
-plugins to auto-format on save; alternatively, you can run `tools/yarn lintfix` before committing to format and autofix lint. Popcode’s official VS
-Code integration (with recommended extensions installed) does this out of the
-box.
+to automatically format code. We recomment setting up editor plugins to
+auto-format on save; alternatively, you can run `tools/yarn.py lintfix` before
+committing to format and autofix lint. Popcode’s official VS Code integration
+(with recommended extensions installed) does this out of the box.
 
 ### Alternative development environments (advanced)
 
