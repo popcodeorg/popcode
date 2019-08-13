@@ -16,10 +16,7 @@ import {
   userFactory,
 } from '@factories/clients/firebase';
 
-import {
-  firebaseRepositoryFactory,
-} from '@factories/data/firebase';
-
+import {firebaseRepositoryFactory} from '@factories/data/firebase';
 
 jest.mock('../../actions/user.js');
 jest.mock('../../clients/firebase.js');
@@ -32,7 +29,7 @@ describe('startAccountMigration', () => {
   const dispatch = jest.fn();
   const done = jest.fn();
 
-  test('not dismissed during undo period, successful migration', async() => {
+  test('not dismissed during undo period, successful migration', async () => {
     const mockCredential = credentialFactory.build();
     getCurrentAccountMigration.mockResolvedValue({
       firebaseCredential: mockCredential,
@@ -66,7 +63,7 @@ describe('startAccountMigration', () => {
     );
   });
 
-  test('not dismissed during undo period, error in migration', async() => {
+  test('not dismissed during undo period, error in migration', async () => {
     const mockCredential = credentialFactory.build();
     getCurrentAccountMigration.mockResolvedValue({
       firebaseCredential: mockCredential,
@@ -93,8 +90,8 @@ describe('startAccountMigration', () => {
     expect(accountMigrationError).toHaveBeenCalledWith(migrationError);
   });
 
-  test('dismissed during undo period', async() => {
-    const cancelAction = new Observable((subscriber) => {
+  test('dismissed during undo period', async () => {
+    const cancelAction = new Observable(subscriber => {
       subscriber.next({type: 'DISMISS_ACCOUNT_MIGRATION'});
       subscriber.complete();
     });

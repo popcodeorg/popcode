@@ -14,18 +14,15 @@ import {bugsnagClient} from '../util/bugsnag';
 export default createLogic({
   type: 'START_ACCOUNT_MIGRATION',
   async process({getState, action$}, dispatch, done) {
-    const continuePromise = new Promise((resolve) => {
+    const continuePromise = new Promise(resolve => {
       setTimeout(resolve, 5000, false);
     });
 
-    const cancelPromise = action$.pipe(first(
-      ({type}) => type === 'DISMISS_ACCOUNT_MIGRATION',
-    )).toPromise();
+    const cancelPromise = action$
+      .pipe(first(({type}) => type === 'DISMISS_ACCOUNT_MIGRATION'))
+      .toPromise();
 
-    const shouldCancel = await Promise.race([
-      continuePromise,
-      cancelPromise,
-    ]);
+    const shouldCancel = await Promise.race([continuePromise, cancelPromise]);
 
     if (shouldCancel) {
       return;
@@ -34,8 +31,9 @@ export default createLogic({
     await dispatch(accountMigrationUndoPeriodExpired());
     const {firebaseCredential} = await getCurrentAccountMigration(getState());
     try {
-      const {user: userData, migratedProjects} =
-        await migrateAccount(firebaseCredential);
+      const {user: userData, migratedProjects} = await migrateAccount(
+        firebaseCredential,
+      );
 
       await dispatch(
         accountMigrationComplete(

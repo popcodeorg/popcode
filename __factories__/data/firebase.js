@@ -10,7 +10,8 @@ export const firebaseRepositoryFactory = new Factory().attrs({
   },
   sources: {
     css: '',
-    html: '<\!DOCTYPE html>' +
+    html:
+      '<!DOCTYPE html>' +
       '<html><head><title>Sample Project</title></head><body></body></html>',
     javascript: '',
   },
