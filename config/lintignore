@@ -1,0 +1,6 @@
+/.cache
+/bower_components
+/node_modules
+/nodeenv
+/test/data
+/templates

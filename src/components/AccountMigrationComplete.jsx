@@ -6,14 +6,10 @@ import PropTypes from 'prop-types';
 export default function AccountMigrationComplete({onDismiss}) {
   return (
     <Fragment>
-      <p>
-        {t('account-migration.complete')}
-      </p>
+      <p>{t('account-migration.complete')}</p>
       <div className="account-migration__buttons">
         <button
-          className={classnames(
-            'account-migration__button',
-          )}
+          className={classnames('account-migration__button')}
           onClick={onDismiss}
         >
           {t('account-migration.buttons.dismiss')}

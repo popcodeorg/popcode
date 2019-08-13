@@ -13,8 +13,7 @@ import {AccountMigrationState} from '../enums';
 
 import AccountMigrationComplete from './AccountMigrationComplete';
 import AccountMigrationInProgress from './AccountMigrationInProgress';
-import AccountMigrationUndoGracePeriod
-  from './AccountMigrationUndoGracePeriod';
+import AccountMigrationUndoGracePeriod from './AccountMigrationUndoGracePeriod';
 import Modal from './Modal';
 import ProposedAccountMigration from './ProposedAccountMigration';
 import AccountMigrationError from './AccountMigrationError';
@@ -33,9 +32,11 @@ export default function AccountMigration({
     <Modal>
       <div className="account-migration">
         <h1 className="account-migration__header">
-          {t(`account-migration.header.${
-            migration.state.key.toLowerCase().replace(/_/gu, '-')
-          }`)}
+          {t(
+            `account-migration.header.${migration.state.key
+              .toLowerCase()
+              .replace(/_/gu, '-')}`,
+          )}
         </h1>
         <div className="account-migration__accounts">
           <div className="account-migration__account">

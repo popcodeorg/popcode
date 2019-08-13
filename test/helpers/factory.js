@@ -2,7 +2,11 @@ import defaultsDeep from 'lodash-es/defaultsDeep';
 import isNil from 'lodash-es/isNil';
 
 export function gistData({
-  html, css, javascript, enabledLibraries, hiddenUIComponents,
+  html,
+  css,
+  javascript,
+  enabledLibraries,
+  hiddenUIComponents,
 } = {}) {
   const files = [];
   if (!isNil(html)) {
@@ -28,10 +32,7 @@ export function gistData({
   return {files};
 }
 
-export function userCredential({
-  user: userIn,
-  credential: credentialIn,
-} = {}) {
+export function userCredential({user: userIn, credential: credentialIn} = {}) {
   return {
     user: user(userIn),
     credential: credential(credentialIn),

@@ -36,29 +36,28 @@ export default function NotificationList({
   }
 
   return (
-    <div className="notification-list">{
-      notifications.map((notification) => {
+    <div className="notification-list">
+      {notifications.map(notification => {
         const Notification = chooseNotificationComponent(notification);
 
         return (
           <NotificationContainer
             key={notification.type}
             severity={notification.severity}
-            onDismissed={
-              partial(onNotificationDismissed, notification)
-            }
+            onDismissed={partial(onNotificationDismissed, notification)}
           >
             <Notification
               metadata={notification.metadata}
               type={notification.type}
-              onUpdateMetadata={
-                partial(onUpdateNotificationMetadata, notification)
-              }
+              onUpdateMetadata={partial(
+                onUpdateNotificationMetadata,
+                notification,
+              )}
             />
           </NotificationContainer>
         );
-      })
-    }</div>
+      })}
+    </div>
   );
 }
 

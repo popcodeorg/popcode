@@ -156,7 +156,6 @@ function mapDispatchToProps(dispatch) {
     onToggleViewArchived() {
       dispatch(toggleArchivedView());
     },
-
   };
 }
 

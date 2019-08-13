@@ -73,22 +73,19 @@ export default function createMenu({
       }
 
       const {isOpen, onToggle} = props;
-      const menu = isOpen ?
-        (
-          <div
-            className={classnames('top-bar__menu', menuClass)}
-            onClick={preventClickthrough}
-          >
-            {renderItems(props)}
-          </div>
-        ) : null;
+      const menu = isOpen ? (
+        <div
+          className={classnames('top-bar__menu', menuClass)}
+          onClick={preventClickthrough}
+        >
+          {renderItems(props)}
+        </div>
+      ) : null;
       return (
         <div
-          className={classnames(
-            'top-bar__menu-button',
-            buttonClass,
-            {'top-bar__menu-button_active': isOpen},
-          )}
+          className={classnames('top-bar__menu-button', buttonClass, {
+            'top-bar__menu-button_active': isOpen,
+          })}
           onClick={onToggle}
         >
           <MenuLaunchButton {...props} />
@@ -104,11 +101,9 @@ export default function createMenu({
       onToggle: PropTypes.func.isRequired,
     };
 
-    return connect(mapStateToProps, mapDispatchToProps)(
-      onClickOutside(
-        Menu,
-        {handleClickOutside: property('props.onClose')},
-      ),
-    );
+    return connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    )(onClickOutside(Menu, {handleClickOutside: property('props.onClose')}));
   };
 }

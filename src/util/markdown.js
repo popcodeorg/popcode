@@ -11,16 +11,13 @@ import githubSchema from 'hast-util-sanitize/lib/github.json';
 const remarkWithHighlighting = memoize(() => {
   const schema = Object.assign({}, githubSchema, {
     attributes: Object.assign({}, githubSchema.attributes, {
-      code: [
-        ...(githubSchema.attributes.code || []),
-        'className',
-      ],
+      code: [...(githubSchema.attributes.code || []), 'className'],
     }),
   });
 
-  return remark().
-    use(externalLinks).
-    use(remarkReact, {
+  return remark()
+    .use(externalLinks)
+    .use(remarkReact, {
       sanitize: schema,
       remarkReactComponents: {
         code: remarkLowlight({css, js, xml}),

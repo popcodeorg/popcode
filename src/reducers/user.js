@@ -21,10 +21,9 @@ function getToken(credential) {
 }
 
 function addIdentityProvider(state, userData, credential) {
-  const providerData = find(
-    userData.providerData,
-    {providerId: credential.providerId},
-  );
+  const providerData = find(userData.providerData, {
+    providerId: credential.providerId,
+  });
   if (isUndefined(providerData)) {
     return state;
   }

@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    "andrewleedham.vscode-css-modules",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "dbaeumer.vscode-eslint",
+    "dsznajder.es7-react-js-snippets",
+    "esbenp.prettier-vscode",
+    "github.vscode-pull-request-github",
+    "msjsdiag.debugger-for-chrome",
+    "shinnn.stylelint",
+    "wix.glean",
+    "wix.vscode-import-cost"
+  ],
+  "unwantedRecommendations": [
+    "davidanson.vscode-markdownlint",
+    "dbaeumer.jshint",
+    "hookyqr.beautify",
+    "ms-vscode.vscode-typescript-tslint-plugin"
+  ]
+}

@@ -29,6 +29,6 @@ services:
     environment: []
 
 volumes:
-  ? app-sync
-  ? node_modules-sync
-  ? bower_components-sync
+  app-sync:
+  node_modules-sync:
+  bower_components-sync:

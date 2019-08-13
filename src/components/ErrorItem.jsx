@@ -7,19 +7,13 @@ import remarkReact from 'remark-react';
 const parser = remark().use(remarkReact);
 
 function ErrorItem(props) {
-  const lineLabel = props.row >= 0 ?
-    <div>On line {props.row + 1}:</div> :
-    null;
+  const lineLabel = props.row >= 0 ? <div>On line {props.row + 1}:</div> : null;
 
   return (
     <li
       className="error-list__error"
       data-error-reason={props.reason}
-      onClick={partial(
-        props.onClick,
-        props.row,
-        props.column,
-      )}
+      onClick={partial(props.onClick, props.row, props.column)}
     >
       {lineLabel}
       <div className="error-list__message">

@@ -49,75 +49,81 @@ const loggedInState = new User({
   }),
 });
 
-test('userAuthenticated', reducerTest(
-  reducer,
-  states.initial,
-  partial(
-    userAuthenticated,
-    userCredentialIn.user,
-    [userCredentialIn.credential],
+test(
+  'userAuthenticated',
+  reducerTest(
+    reducer,
+    states.initial,
+    partial(userAuthenticated, userCredentialIn.user, [
+      userCredentialIn.credential,
+    ]),
+    loggedInState,
   ),
-  loggedInState,
-));
+);
 
-test('identityLinked', reducerTest(
-  reducer,
-  loggedInState,
-  partial(
-    identityLinked,
-    {
-      displayName: 'Popcode User',
-      photoURL: null,
-      providerData: [
-        {
-          displayName: 'Popcode User',
-          photoURL: null,
-          providerId: 'github.com',
-        },
-      ],
-    },
-    {providerId: 'github.com', accessToken: 'abc'},
+test(
+  'identityLinked',
+  reducerTest(
+    reducer,
+    loggedInState,
+    partial(
+      identityLinked,
+      {
+        displayName: 'Popcode User',
+        photoURL: null,
+        providerData: [
+          {
+            displayName: 'Popcode User',
+            photoURL: null,
+            providerId: 'github.com',
+          },
+        ],
+      },
+      {providerId: 'github.com', accessToken: 'abc'},
+    ),
+    loggedInState.setIn(
+      ['account', 'identityProviders', 'github.com'],
+      new UserIdentityProvider({
+        displayName: 'Popcode User',
+        accessToken: 'abc',
+      }),
+    ),
   ),
-  loggedInState.setIn(
-    ['account', 'identityProviders', 'github.com'],
-    new UserIdentityProvider({
-      displayName: 'Popcode User',
-      accessToken: 'abc',
-    }),
-  ),
-));
+);
 
-test('identityUnlinked', reducerTest(
-  reducer,
-  loggedInState.setIn(
-    ['account', 'identityProviders', 'github.com'],
-    new UserIdentityProvider({
-      displayName: 'Popcode User',
-      accessToken: 'abc',
-    }),
+test(
+  'identityUnlinked',
+  reducerTest(
+    reducer,
+    loggedInState.setIn(
+      ['account', 'identityProviders', 'github.com'],
+      new UserIdentityProvider({
+        displayName: 'Popcode User',
+        accessToken: 'abc',
+      }),
+    ),
+    partial(identityUnlinked, 'github.com'),
+    loggedInState,
   ),
-  partial(
-    identityUnlinked,
-    'github.com',
-  ),
-  loggedInState,
-));
+);
 
 tap(
   [
     {name: 'Popcode User', avatar_url: 'https://github.com/popcodeuser.jpg'},
-    {providerData: [
-      {
-        photoURL: 'https://google.com/face.jpg',
-        displayName: 'Google User',
-        providerId: 'google.com',
-      },
-      {
-        photoURL: 'https://github.com/face.jpg',
-        displayName: 'GitHub User',
-        providerId: 'github.com',
-      },
-    ]},
+    {
+      providerData: [
+        {
+          photoURL: 'https://google.com/face.jpg',
+          displayName: 'Google User',
+          providerId: 'google.com',
+        },
+        {
+          photoURL: 'https://github.com/face.jpg',
+          displayName: 'GitHub User',
+          providerId: 'github.com',
+        },
+      ],
+    },
     {providerId: 'github.com', accessToken: 'abc123'},
   ],
 
@@ -150,74 +156,85 @@ tap(
       AccountMigrationState.IN_PROGRESS,
     );
 
-    const completeState = undoGracePeriodState.setIn(
-      ['currentMigration', 'state'],
-      AccountMigrationState.COMPLETE,
-    ).setIn(
-      ['account', 'identityProviders', 'github.com'],
-      new UserIdentityProvider({
-        accessToken: credential.accessToken,
-        avatarUrl: 'https://github.com/face.jpg',
-        displayName: 'GitHub User',
-      }),
-    );
+    const completeState = undoGracePeriodState
+      .setIn(['currentMigration', 'state'], AccountMigrationState.COMPLETE)
+      .setIn(
+        ['account', 'identityProviders', 'github.com'],
+        new UserIdentityProvider({
+          accessToken: credential.accessToken,
+          avatarUrl: 'https://github.com/face.jpg',
+          displayName: 'GitHub User',
+        }),
+      );
 
     const errorState = undoGracePeriodState.setIn(
       ['currentMigration', 'state'],
       AccountMigrationState.ERROR,
     );
 
-    test('accountMigrationNeeded', reducerTest(
-      reducer,
-      loggedInState,
-      partial(
-        accountMigrationNeeded,
-        githubProfile,
-        credential,
+    test(
+      'accountMigrationNeeded',
+      reducerTest(
+        reducer,
+        loggedInState,
+        partial(accountMigrationNeeded, githubProfile, credential),
+        proposedState,
       ),
-      proposedState,
-    ));
+    );
 
-    test('startAccountMigration', reducerTest(
-      reducer,
-      proposedState,
-      startAccountMigration,
-      undoGracePeriodState,
-    ));
+    test(
+      'startAccountMigration',
+      reducerTest(
+        reducer,
+        proposedState,
+        startAccountMigration,
+        undoGracePeriodState,
+      ),
+    );
 
-    test('dismissAccountMigration', reducerTest(
-      reducer,
-      proposedState,
-      dismissAccountMigration,
-      loggedInState,
-    ));
+    test(
+      'dismissAccountMigration',
+      reducerTest(
+        reducer,
+        proposedState,
+        dismissAccountMigration,
+        loggedInState,
+      ),
+    );
 
-    test('accountMigrationUndoPeriodExpired', reducerTest(
-      reducer,
-      undoGracePeriodState,
-      accountMigrationUndoPeriodExpired,
-      inProgressState,
-    ));
+    test(
+      'accountMigrationUndoPeriodExpired',
+      reducerTest(
+        reducer,
+        undoGracePeriodState,
+        accountMigrationUndoPeriodExpired,
+        inProgressState,
+      ),
+    );
 
-    test('accountMigrationComplete', reducerTest(
-      reducer,
-      inProgressState,
-      partial(accountMigrationComplete, firebaseUser, credential, []),
-      completeState,
-    ));
+    test(
+      'accountMigrationComplete',
+      reducerTest(
+        reducer,
+        inProgressState,
+        partial(accountMigrationComplete, firebaseUser, credential, []),
+        completeState,
+      ),
+    );
 
-    test('accountMigrationError', reducerTest(
-      reducer,
-      inProgressState,
-      partial(accountMigrationError, new Error('Error')),
-      errorState,
-    ));
+    test(
+      'accountMigrationError',
+      reducerTest(
+        reducer,
+        inProgressState,
+        partial(accountMigrationError, new Error('Error')),
+        errorState,
+      ),
+    );
   },
 );
 
-test('userLoggedOut', reducerTest(
-  reducer,
-  loggedInState,
-  userLoggedOut,
-  loggedOutState,
-));
+test(
+  'userLoggedOut',
+  reducerTest(reducer, loggedInState, userLoggedOut, loggedOutState),
+);

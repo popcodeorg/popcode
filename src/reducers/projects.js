@@ -17,24 +17,25 @@ const emptyMap = new Immutable.Map();
 function addProject(state, project) {
   return state.set(
     project.projectKey,
-    Project.fromJS(project).update(
-      'hiddenUIComponents',
-      components => components.add('console'),
+    Project.fromJS(project).update('hiddenUIComponents', components =>
+      components.add('console'),
     ),
   );
 }
 
 function removePristineExcept(state, keepProjectKey) {
-  return state.filter((project, projectKey) => (
-    projectKey === keepProjectKey || !isPristineProject(project)
-  ));
+  return state.filter(
+    (project, projectKey) =>
+      projectKey === keepProjectKey || !isPristineProject(project),
+  );
 }
 
 function unhideComponent(state, projectKey, component, timestamp) {
-  return state.updateIn(
-    [projectKey, 'hiddenUIComponents'],
-    hiddenUIComponents => hiddenUIComponents.delete(component),
-  ).setIn([projectKey, 'updatedAt'], timestamp);
+  return state
+    .updateIn([projectKey, 'hiddenUIComponents'], hiddenUIComponents =>
+      hiddenUIComponents.delete(component),
+    )
+    .setIn([projectKey, 'updatedAt'], timestamp);
 }
 
 function contentForLanguage(files, language) {
@@ -50,29 +51,28 @@ function importGist(state, projectKey, gistData) {
   const popcodeJsonFile = find(files, {filename: 'popcode.json'});
   const popcodeJson = JSON.parse(get(popcodeJsonFile, 'content', '{}'));
 
-  return addProject(
-    state,
-    {
-      projectKey,
-      sources: {
-        html: get(find(files, {language: 'HTML'}), 'content', ''),
-        css: contentForLanguage(files, 'CSS'),
-        javascript: contentForLanguage(files, 'JavaScript'),
-      },
-      enabledLibraries: popcodeJson.enabledLibraries || [],
-      hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
-      instructions: contentForLanguage(files, 'Markdown'),
-      isArchived: false,
+  return addProject(state, {
+    projectKey,
+    sources: {
+      html: get(find(files, {language: 'HTML'}), 'content', ''),
+      css: contentForLanguage(files, 'CSS'),
+      javascript: contentForLanguage(files, 'JavaScript'),
     },
-  );
+    enabledLibraries: popcodeJson.enabledLibraries || [],
+    hiddenUIComponents: popcodeJson.hiddenUIComponents || [],
+    instructions: contentForLanguage(files, 'Markdown'),
+    isArchived: false,
+  });
 }
 
 export function reduceRoot(stateIn, action) {
-  return stateIn.update('projects', (projects) => {
+  return stateIn.update('projects', projects => {
     switch (action.type) {
       case 'USER_LOGGED_OUT': {
-        const currentProjectKey =
-          stateIn.getIn(['currentProject', 'projectKey']);
+        const currentProjectKey = stateIn.getIn([
+          'currentProject',
+          'projectKey',
+        ]);
 
         if (isNil(currentProjectKey)) {
           return new Immutable.Map();
@@ -95,7 +95,6 @@ export function reduceRoot(stateIn, action) {
   });
 }
 
-/* eslint-disable complexity */
 export default function reduceProjects(stateIn, action) {
   let state;
 
@@ -113,31 +112,28 @@ export default function reduceProjects(stateIn, action) {
       return action.payload.projects.reduce(addProject, state);
 
     case 'UPDATE_PROJECT_SOURCE':
-      return state.setIn(
-        [action.payload.projectKey, 'sources', action.payload.language],
-        action.payload.newValue,
-      ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
-      );
+      return state
+        .setIn(
+          [action.payload.projectKey, 'sources', action.payload.language],
+          action.payload.newValue,
+        )
+        .setIn([action.payload.projectKey, 'updatedAt'], action.meta.timestamp);
 
     case 'PROJECT_BEAUTIFIED':
-      return state.setIn(
-        [action.payload.projectKey, 'sources'],
-        new ProjectSources(action.payload.projectSources),
-      ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
-      );
+      return state
+        .setIn(
+          [action.payload.projectKey, 'sources'],
+          new ProjectSources(action.payload.projectSources),
+        )
+        .setIn([action.payload.projectKey, 'updatedAt'], action.meta.timestamp);
 
     case 'UPDATE_PROJECT_INSTRUCTIONS':
-      return state.setIn(
-        [action.payload.projectKey, 'instructions'],
-        action.payload.newValue,
-      ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
-      );
+      return state
+        .setIn(
+          [action.payload.projectKey, 'instructions'],
+          action.payload.newValue,
+        )
+        .setIn([action.payload.projectKey, 'updatedAt'], action.meta.timestamp);
 
     case 'PROJECT_CREATED':
       return removePristineExcept(state, action.payload.projectKey).set(
@@ -154,11 +150,10 @@ export default function reduceProjects(stateIn, action) {
     case 'SNAPSHOT_IMPORTED':
       return addProject(
         state,
-        assign(
-          {},
-          action.payload.project,
-          {projectKey: action.payload.projectKey, updatedAt: null},
-        ),
+        assign({}, action.payload.project, {
+          projectKey: action.payload.projectKey,
+          updatedAt: null,
+        }),
       );
 
     case 'GIST_IMPORTED':
@@ -172,29 +167,27 @@ export default function reduceProjects(stateIn, action) {
       return addProject(state, action.payload);
 
     case 'TOGGLE_LIBRARY':
-      return state.updateIn(
-        [action.payload.projectKey, 'enabledLibraries'],
-        (enabledLibraries) => {
-          const {libraryKey} = action.payload;
-          if (enabledLibraries.has(libraryKey)) {
-            return enabledLibraries.delete(libraryKey);
-          }
-          return enabledLibraries.add(libraryKey);
-        },
-      ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
-      );
+      return state
+        .updateIn(
+          [action.payload.projectKey, 'enabledLibraries'],
+          enabledLibraries => {
+            const {libraryKey} = action.payload;
+            if (enabledLibraries.has(libraryKey)) {
+              return enabledLibraries.delete(libraryKey);
+            }
+            return enabledLibraries.add(libraryKey);
+          },
+        )
+        .setIn([action.payload.projectKey, 'updatedAt'], action.meta.timestamp);
 
     case 'HIDE_COMPONENT':
-      return state.updateIn(
-        [action.payload.projectKey, 'hiddenUIComponents'],
-        hiddenUIComponents =>
-          hiddenUIComponents.add(action.payload.componentName),
-      ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
-      );
+      return state
+        .updateIn(
+          [action.payload.projectKey, 'hiddenUIComponents'],
+          hiddenUIComponents =>
+            hiddenUIComponents.add(action.payload.componentName),
+        )
+        .setIn([action.payload.projectKey, 'updatedAt'], action.meta.timestamp);
 
     case 'UNHIDE_COMPONENT':
       return unhideComponent(
@@ -205,19 +198,18 @@ export default function reduceProjects(stateIn, action) {
       );
 
     case 'TOGGLE_COMPONENT':
-      return state.updateIn(
-        [action.payload.projectKey, 'hiddenUIComponents'],
-        (hiddenUIComponents) => {
-          const {componentName} = action.payload;
-          if (hiddenUIComponents.includes(componentName)) {
-            return hiddenUIComponents.remove(action.payload.componentName);
-          }
-          return hiddenUIComponents.add(action.payload.componentName);
-        },
-      ).setIn(
-        [action.payload.projectKey, 'updatedAt'],
-        action.meta.timestamp,
-      );
+      return state
+        .updateIn(
+          [action.payload.projectKey, 'hiddenUIComponents'],
+          hiddenUIComponents => {
+            const {componentName} = action.payload;
+            if (hiddenUIComponents.includes(componentName)) {
+              return hiddenUIComponents.remove(action.payload.componentName);
+            }
+            return hiddenUIComponents.add(action.payload.componentName);
+          },
+        )
+        .setIn([action.payload.projectKey, 'updatedAt'], action.meta.timestamp);
 
     case 'START_EDITING_INSTRUCTIONS':
       return unhideComponent(
@@ -228,23 +220,24 @@ export default function reduceProjects(stateIn, action) {
       );
 
     case 'PROJECT_EXPORTED':
-      if (action.payload.exportType === 'repo' &&
-        action.payload.exportData.name) {
-        return state.setIn(
-          [action.payload.projectKey, 'externalLocations', 'githubRepoName'],
-          action.payload.exportData.name,
-        ).setIn(
-          [action.payload.projectKey, 'updatedAt'],
-          action.meta.timestamp,
-        );
+      if (
+        action.payload.exportType === 'repo' &&
+        action.payload.exportData.name
+      ) {
+        return state
+          .setIn(
+            [action.payload.projectKey, 'externalLocations', 'githubRepoName'],
+            action.payload.exportData.name,
+          )
+          .setIn(
+            [action.payload.projectKey, 'updatedAt'],
+            action.meta.timestamp,
+          );
       }
       return state;
 
     case 'ARCHIVE_PROJECT':
-      return state.setIn(
-        [action.payload.projectKey, 'isArchived'],
-        true,
-      );
+      return state.setIn([action.payload.projectKey, 'isArchived'], true);
 
     default:
       return state;

@@ -20,9 +20,7 @@ function BrowserError({browser}) {
       <p>{t('bad-browser.message', {name: browserName})}</p>
 
       <p>
-        <a href={getBrowserLink(browser)}>
-          {t('bad-browser.download')}
-        </a>
+        <a href={getBrowserLink(browser)}>{t('bad-browser.download')}</a>
       </p>
     </div>
   );

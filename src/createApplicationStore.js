@@ -35,7 +35,10 @@ export default function createApplicationStore() {
 
   const store = createStore(
     reducers,
-    compose(sagaEnhancer, logicEnhancer),
+    compose(
+      sagaEnhancer,
+      logicEnhancer,
+    ),
   );
   sagaMiddleware.run(rootSaga);
 

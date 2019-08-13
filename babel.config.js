@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 
-module.exports = (api) => {
+module.exports = api => {
   let targets;
 
-  const isJest = api.caller(({name}) => name === 'babel-jest');
+  const isJest = api.caller(caller => caller && caller.name === 'babel-jest');
   api.cache.using(() => `${isJest}:${process.env.NODE_ENV}`);
 
   if (isJest) {
@@ -17,9 +17,9 @@ module.exports = (api) => {
     );
   }
 
-  const plugins = ['@babel/plugin-syntax-dynamic-import'];
+  const plugins = ['syntax-dynamic-import'];
   if (isJest) {
-    plugins.push('babel-plugin-dynamic-import-node');
+    plugins.push('dynamic-import-node');
   }
 
   return {
@@ -29,10 +29,5 @@ module.exports = (api) => {
     ],
     plugins,
     compact: false,
-    overrides: [
-      {
-        include: './node_modules/parse5-sax-parser/lib/index.js',
-      },
-    ],
   };
 };

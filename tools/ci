@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ -z "$(which docker)" ]
+then
+    echo "Please install Docker before running this script."
+fi
+
+export TRAVIS_BUILD_DIR=$(pwd)/dist
+export TRAVIS_COMMIT=$(git rev-parse HEAD)
+
+set -ex
+
+./build/install.sh
+./build/test.sh
+./build/build.sh

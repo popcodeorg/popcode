@@ -4,8 +4,5 @@ import values from 'lodash-es/values';
 
 export default createSelector(
   state => state.get('projects'),
-  projects => sortBy(
-    values(projects.toJS()),
-    project => -project.updatedAt,
-  ),
+  projects => sortBy(values(projects.toJS()), project => -project.updatedAt),
 );

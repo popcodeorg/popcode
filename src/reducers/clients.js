@@ -45,17 +45,11 @@ export default function clients(stateIn, action) {
       return state.setIn(['gapi', 'ready'], true);
 
     case 'CREATE_ASSIGNMENT':
-      return state.setIn(
-        ['exportingAssignment'],
-        true,
-      );
+      return state.setIn(['exportingAssignment'], true);
 
     case 'ASSIGNMENT_CREATED':
     case 'ASSIGNMENT_NOT_CREATED':
-      return state.setIn(
-        ['exportingAssignment'],
-        false,
-      );
+      return state.setIn(['exportingAssignment'], false);
   }
 
   return state;

@@ -4,8 +4,7 @@ import endsWith from 'lodash-es/endsWith';
 
 import Validator from '../Validator';
 
-const RADIAL_GRADIENT_EXPR =
-  /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/u;
+const RADIAL_GRADIENT_EXPR = /^(?:(?:-(?:ms|moz|o|webkit)-)?radial-gradient|-webkit-gradient)/u;
 
 const FILTER_VALUE_EXPR =
   // eslint-disable-next-line require-unicode-regexp
@@ -26,8 +25,10 @@ const FILTER_VALUE_EXPR =
   );
 
 function isIncorrectlyRejectedValue(value) {
-  return isIncorrectlyRejectedRadialGradientValue(value) ||
-    isIncorrectlyRejectedFilterValue(value);
+  return (
+    isIncorrectlyRejectedRadialGradientValue(value) ||
+    isIncorrectlyRejectedFilterValue(value)
+  );
 }
 
 function isIncorrectlyRejectedRadialGradientValue(value) {
@@ -38,7 +39,7 @@ function isIncorrectlyRejectedFilterValue(value) {
 }
 
 const errorMap = {
-  'block-expected': (error) => {
+  'block-expected': error => {
     const tokenType = error.token.type;
     const token = error.token.content;
 
@@ -77,10 +78,10 @@ const errorMap = {
       }
     }
 
-    return ({
+    return {
       reason: 'extra-tokens-after-value',
       payload: {token: errorToken.content},
-    });
+    };
   },
 
   'illegal-token-after-combinator': () => ({
@@ -97,7 +98,7 @@ const errorMap = {
     ],
   }),
 
-  'invalid-value': (error) => {
+  'invalid-value': error => {
     if (isIncorrectlyRejectedValue(error.token.content)) {
       return null;
     }

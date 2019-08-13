@@ -15,22 +15,14 @@ export default function CollapsedComponent({
   return (
     <div
       className="collapsed-component"
-      onClick={partial(
-        onComponentUnhide,
-        projectKey,
-        component,
-      )}
+      onClick={partial(onComponentUnhide, projectKey, component)}
     >
       <div
-        className={classnames(
-          'label',
-          'collapsed-component__label',
-          {'collapsed-component__label_left': !isRightJustified},
-        )}
+        className={classnames('label', 'collapsed-component__label', {
+          'collapsed-component__label_left': !isRightJustified,
+        })}
       >
-        {text}
-        {' '}
-        <FontAwesomeIcon icon={faChevronUp} />
+        {text} <FontAwesomeIcon icon={faChevronUp} />
       </div>
     </div>
   );

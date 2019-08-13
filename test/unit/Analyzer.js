@@ -3,7 +3,7 @@ import test from 'tape-catch';
 import Analyzer from '../../src/analyzers';
 import {Project} from '../../src/records';
 
-test('no script tag', (assert) => {
+test('no script tag', assert => {
   const html = '<h1>Some harmless html</h1>';
   const currentProject = Project.fromJS({sources: {html}}).toJS();
   const analyzer = new Analyzer(currentProject);
@@ -11,7 +11,7 @@ test('no script tag', (assert) => {
   assert.end();
 });
 
-test('<script> tag', (assert) => {
+test('<script> tag', assert => {
   const currentProject = Project.fromJS({
     sources: {html: '<script src="https://script.com/script.js">'},
   }).toJS();
@@ -20,7 +20,7 @@ test('<script> tag', (assert) => {
   assert.end();
 });
 
-test('libraries', (assert) => {
+test('libraries', assert => {
   const currentProject = Project.fromJS({
     sources: {html: ''},
     enabledLibraries: ['jquery'],

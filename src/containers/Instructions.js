@@ -7,10 +7,7 @@ import {
   getHiddenUIComponents,
   isEditingInstructions,
 } from '../selectors';
-import {
-  cancelEditingInstructions,
-  updateProjectInstructions,
-} from '../actions';
+import {cancelEditingInstructions, updateProjectInstructions} from '../actions';
 
 function mapStateToProps(state) {
   return {

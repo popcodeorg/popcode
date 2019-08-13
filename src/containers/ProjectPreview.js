@@ -1,10 +1,7 @@
 import {connect} from 'react-redux';
 
 import ProjectPreview from '../components/ProjectPreview';
-import {
-  archiveProject,
-  changeCurrentProject,
-} from '../actions';
+import {archiveProject, changeCurrentProject} from '../actions';
 import {
   makeGetProjectPreview,
   getCurrentProjectKey,

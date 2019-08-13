@@ -15,14 +15,14 @@ export default function calculateFlexGrowAfterDrag(
     return [currentBeforeFlexGrow, currentAfterFlexGrow];
   }
 
-  const desiredAfterSize = currentBeforeSize + currentAfterSize -
-    desiredBeforeSize;
+  const desiredAfterSize =
+    currentBeforeSize + currentAfterSize - desiredBeforeSize;
   if (desiredAfterSize < afterInitialMainSize) {
     return [currentBeforeFlexGrow, currentAfterFlexGrow];
   }
 
-  const desiredRatio = desiredBeforeSize /
-    (currentBeforeSize + currentAfterSize);
+  const desiredRatio =
+    desiredBeforeSize / (currentBeforeSize + currentAfterSize);
   const totalFlexGrow = currentBeforeFlexGrow + currentAfterFlexGrow;
 
   const desiredBeforeFlexGrow = totalFlexGrow * desiredRatio;

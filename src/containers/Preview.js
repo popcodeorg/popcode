@@ -10,10 +10,14 @@ import {
   consoleValueProduced,
   popOutProject,
   refreshPreview,
+  toggleComponent,
 } from '../actions';
 import {
   getCompiledProjects,
   getConsoleHistory,
+  getCurrentProjectKey,
+  getCurrentProjectPreviewTitle,
+  getHiddenUIComponents,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
 } from '../selectors';
@@ -22,10 +26,11 @@ function mapStateToProps(state) {
   return {
     compiledProjects: getCompiledProjects(state),
     consoleEntries: getConsoleHistory(state),
-    showingErrors: (
-      !isUserTyping(state) &&
-        !isCurrentProjectSyntacticallyValid(state)
-    ),
+    currentProjectKey: getCurrentProjectKey(state),
+    isOpen: !getHiddenUIComponents(state).includes('preview'),
+    showingErrors:
+      !isUserTyping(state) && !isCurrentProjectSyntacticallyValid(state),
+    title: getCurrentProjectPreviewTitle(state),
   };
 }
 
@@ -73,6 +78,10 @@ function mapDispatchToProps(dispatch) {
 
     onRuntimeError(error) {
       dispatch(addRuntimeError('javascript', error));
+    },
+
+    onToggleVisible(projectKey) {
+      dispatch(toggleComponent(projectKey, 'preview'));
     },
   };
 }

@@ -7,18 +7,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 export default function NotificationContainer(props) {
   return (
     <div
-      className={
-        classnames(
-          'notification-list__notification',
-          `notification-list__notification_${props.severity}`,
-        )
-      }
+      className={classnames(
+        'notification-list__notification',
+        `notification-list__notification_${props.severity}`,
+      )}
     >
       {props.children}
-      <span
-        className="notification-list__dismiss"
-        onClick={props.onDismissed}
-      >
+      <span className="notification-list__dismiss" onClick={props.onDismissed}>
         <FontAwesomeIcon icon={faTimes} />
       </span>
     </div>

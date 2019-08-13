@@ -2,14 +2,18 @@ version: '3.7'
 services:
   app:
     build:
+      args:
+        - install_dev_packages=true
       context: .
       cache_from:
         - popcodeorg/popcode:latest
     command: npm start
     ports:
-      - "3000:3000"
+      - '3000:3000'
+      - '3001:3001'
     volumes:
       - .:/app:cached
+      - build_cache:/app/.cache
       - node_modules:/app/node_modules
       - bower_components:/app/bower_components
       - npm_cache:/root/.npm
@@ -20,7 +24,8 @@ services:
       - DEBUG
       - PROFILE_BUILD
 volumes:
-  npm_cache:
-  node_modules:
   bower_components:
+  build_cache:
+  node_modules:
+  npm_cache:
   yarn_cache:

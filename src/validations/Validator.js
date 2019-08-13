@@ -16,10 +16,7 @@ class Validator {
 
   async getAnnotations() {
     const errors = await this.getRawErrors();
-    return compact(map(
-      errors,
-      this._convertErrorToAnnotation.bind(this),
-    ));
+    return compact(map(errors, this._convertErrorToAnnotation.bind(this)));
   }
 
   mapError(rawError) {
@@ -49,7 +46,10 @@ class Validator {
     const location = this.locationForError(rawError);
 
     return assign({}, location, error, {
-      text: remark().use(stripMarkdown).processSync(message).toString(),
+      text: remark()
+        .use(stripMarkdown)
+        .processSync(message)
+        .toString(),
       raw: message,
       type: 'error',
     });

@@ -8,13 +8,9 @@ export default function Modal({children, isOpen}) {
   }
 
   return createPortal(
-    (
-      <div className="modal">
-        <div className="modal__contents">
-          {children}
-        </div>
-      </div>
-    ),
+    <div className="modal">
+      <div className="modal__contents">{children}</div>
+    </div>,
     document.getElementById('modals'),
   );
 }

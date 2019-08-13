@@ -49,7 +49,7 @@ const errorMap = {
         break;
     }
 
-    return ({
+    return {
       reason: `${message}`,
       payload: {value: token.value},
       suppresses: [
@@ -59,7 +59,7 @@ const errorMap = {
         'closing-match',
         'strict-operators.custom-case',
       ],
-    });
+    };
   },
 
   'Unexpected end of input': () => ({reason: 'end-of-input'}),
@@ -68,7 +68,7 @@ const errorMap = {
 };
 
 function findTokenForError(error, tokens) {
-  return find(tokens, (token) => {
+  return find(tokens, token => {
     const [startLocation, endLocation] = token.range;
     return inRange(error.index, startLocation, endLocation + 1);
   });
@@ -84,10 +84,7 @@ class EsprimaValidator extends Validator {
       parse(this.source);
     } catch (error) {
       try {
-        const tokens = tokenize(
-          this.source,
-          {range: true, comment: true},
-        );
+        const tokens = tokenize(this.source, {range: true, comment: true});
         const token = findTokenForError(error, tokens);
         return [{error, token}];
       } catch (tokenizeError) {

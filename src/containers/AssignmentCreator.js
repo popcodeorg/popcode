@@ -2,10 +2,7 @@ import {connect} from 'react-redux';
 
 import {AssignmentState} from '../enums';
 
-import {
-  closeAssignmentCreator,
-  createAssignment,
-} from '../actions';
+import {closeAssignmentCreator, createAssignment} from '../actions';
 import {
   getCourses,
   isAssignmentCreatorOpen,
@@ -17,8 +14,10 @@ import {
 
 import AssignmentCreator from '../components/AssignmentCreator';
 
-const areCoursesLoaded =
-  makeIsRemoteCollectionFullyLoaded(['googleClassroom', 'courses']);
+const areCoursesLoaded = makeIsRemoteCollectionFullyLoaded([
+  'googleClassroom',
+  'courses',
+]);
 
 function mapStateToProps(state) {
   return {
@@ -36,21 +35,17 @@ function mapDispatchToProps(dispatch) {
     onAssignAssignment(data) {
       const selectedCourseId = data.get('course');
       const dueDate = data.get('date').parsedDate;
-      dispatch(createAssignment(
-        selectedCourseId,
-        dueDate,
-        AssignmentState.PUBLISHED,
-      ));
+      dispatch(
+        createAssignment(selectedCourseId, dueDate, AssignmentState.PUBLISHED),
+      );
     },
 
     onDraftAssignment(data) {
       const selectedCourseId = data.get('course');
       const dueDate = data.get('date').parsedDate;
-      dispatch(createAssignment(
-        selectedCourseId,
-        dueDate,
-        AssignmentState.DRAFT,
-      ));
+      dispatch(
+        createAssignment(selectedCourseId, dueDate, AssignmentState.DRAFT),
+      );
     },
 
     onCloseAssignmentCreator() {

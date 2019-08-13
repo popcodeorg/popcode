@@ -26,7 +26,7 @@ const match = {
   '{': '}',
   '[': ']',
   '(': ')',
-  '\'': '\'',
+  "'": "'",
   '"': '"',
 };
 
@@ -88,7 +88,7 @@ const errorMap = {
     suppresses: ['expected-identifier', 'tokenize-error', 'missing-semicolon'],
   }),
 
-  W116: (error) => {
+  W116: error => {
     if (error.a === '===' && error.b === '==') {
       return {reason: 'strict-operators.equal'};
     }
@@ -111,13 +111,12 @@ const errorMap = {
     };
   },
 
-  W117: (error) => {
+  W117: error => {
     const identifier = error.a;
 
     const providingLibrary = find(
       libraries,
-      library =>
-        library.predefined && includes(library.predefined, identifier),
+      library => library.predefined && includes(library.predefined, identifier),
     );
 
     if (providingLibrary) {
@@ -155,7 +154,7 @@ class JsHintValidator extends Validator {
       options.undef = false;
     }
 
-    enabledLibraries.forEach((libraryKey) => {
+    enabledLibraries.forEach(libraryKey => {
       if (!(libraryKey in libraries)) {
         return;
       }
@@ -163,8 +162,7 @@ class JsHintValidator extends Validator {
       const library = libraries[libraryKey];
 
       if (library.predefined) {
-        options.predef =
-          concat(options.predef, library.predefined);
+        options.predef = concat(options.predef, library.predefined);
       }
     });
 

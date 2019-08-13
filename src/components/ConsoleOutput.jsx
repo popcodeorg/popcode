@@ -9,22 +9,18 @@ import {ConsoleEntry} from '../records';
 
 export default function ConsoleOutput({entry, isActive}) {
   const {expression, value, error} = entry;
-  const chevron = expression ?
-    (<div className="console__chevron console__chevron_outdent">
+  const chevron = expression ? (
+    <div className="console__chevron console__chevron_outdent">
       <FontAwesomeIcon icon={faChevronLeft} />
-    </div>) :
-    null;
+    </div>
+  ) : null;
 
   if (!isNil(value)) {
     return (
       <div
-        className={
-          classnames(
-            'console__row',
-            'console__value',
-            {console__value_inactive: !isActive},
-          )
-        }
+        className={classnames('console__row', 'console__value', {
+          console__value_inactive: !isActive,
+        })}
       >
         {chevron}
         {value}
@@ -35,12 +31,9 @@ export default function ConsoleOutput({entry, isActive}) {
   if (!isNil(error)) {
     return (
       <div
-        className={
-          classnames(
-            'console__error',
-            {console__error_inactive: !isActive},
-          )
-        }
+        className={classnames('console__error', {
+          console__error_inactive: !isActive,
+        })}
       >
         {error.text}
       </div>

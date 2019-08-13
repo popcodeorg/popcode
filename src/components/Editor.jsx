@@ -30,18 +30,10 @@ class Editor extends React.Component {
       }
     }, RESIZE_THROTTLE);
 
-    bindAll(
-      this,
-      '_handleWindowResize',
-      '_resizeEditor',
-      '_setupEditor',
-    );
+    bindAll(this, '_handleWindowResize', '_resizeEditor', '_setupEditor');
 
     this.render = constant(
-      <div
-        className="editors__editor"
-        ref={this._setupEditor}
-      />,
+      <div className="editors__editor" ref={this._setupEditor} />,
     );
   }
 
@@ -87,8 +79,9 @@ class Editor extends React.Component {
   }
 
   _focusRequestedLine(requestedFocusedLine) {
-    if (get(requestedFocusedLine, 'component') !==
-      `editor.${this.props.language}`) {
+    if (
+      get(requestedFocusedLine, 'component') !== `editor.${this.props.language}`
+    ) {
       return;
     }
 

@@ -1,8 +1,5 @@
 import linkGithubIdentity from '../linkGithubIdentity';
-import {
-  linkGithub,
-  saveCredentialForCurrentUser,
-} from '../../clients/firebase';
+import {linkGithub, saveCredentialForCurrentUser} from '../../clients/firebase';
 import {getProfileForAuthenticatedUser} from '../../clients/github';
 import {bugsnagClient} from '../../util/bugsnag';
 
@@ -20,7 +17,7 @@ jest.mock('../../clients/github.js');
 jest.mock('../../util/bugsnag.js');
 
 describe('linkGithubIdentity', () => {
-  test('success', async() => {
+  test('success', async () => {
     const mockCredential = credentialFactory.build();
     const mockUser = userFactory.build();
 
@@ -44,7 +41,7 @@ describe('linkGithubIdentity', () => {
     expect(user).toEqual(mockUser);
   });
 
-  test('credential already in use', async() => {
+  test('credential already in use', async () => {
     const error = credentialInUseErrorFactory.build();
     const githubProfile = githubProfileFactory.build();
 
@@ -54,10 +51,7 @@ describe('linkGithubIdentity', () => {
     const {
       type,
       payload: {
-        credential: {
-          providerId,
-          accessToken,
-        },
+        credential: {providerId, accessToken},
       },
     } = await linkGithubIdentity.process();
     expect(linkGithub).toHaveBeenCalledWith();
@@ -69,7 +63,7 @@ describe('linkGithubIdentity', () => {
     expect(accessToken).toBe(error.credential.accessToken);
   });
 
-  test('other error', async() => {
+  test('other error', async () => {
     const otherError = firebaseErrorFactory.build();
 
     linkGithub.mockRejectedValue(otherError);

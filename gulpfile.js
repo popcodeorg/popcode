@@ -28,8 +28,7 @@ const staticDir = path.join(srcDir, 'static');
 const bowerComponents = 'bower_components';
 
 const postcssBrowsers = [];
-const supportedBrowsers =
-  JSON.parse(fs.readFileSync('./config/browsers.json'));
+const supportedBrowsers = JSON.parse(fs.readFileSync('./config/browsers.json'));
 forOwn(supportedBrowsers, (version, browser) => {
   let browserForPostcss = browser;
   if (browser === 'msie') {
@@ -40,11 +39,8 @@ forOwn(supportedBrowsers, (version, browser) => {
   postcssBrowsers.push(`${browserForPostcss} >= ${version}`);
 });
 
-gulp.task(
-  'static',
-  () => gulp.
-    src(path.join(staticDir, '**/*')).
-    pipe(gulp.dest(distDir)),
+gulp.task('static', () =>
+  gulp.src(path.join(staticDir, '**/*')).pipe(gulp.dest(distDir)),
 );
 
 gulp.task('css', () => {
@@ -60,47 +56,48 @@ gulp.task('css', () => {
     processors.push(cssnano());
   }
 
-  return gulp.
-    src([
+  return gulp
+    .src([
       path.join(bowerComponents, 'normalize-css/normalize.css'),
       path.join(highlightStylesheetsDir, 'github.css'),
       path.join(stylesheetsDir, '**/*.css'),
-    ]).
-    pipe(concat('application.css')).
-    pipe(sourcemaps.init({loadMaps: true})).
-    pipe(postcss(processors)).
-    pipe(sourcemaps.write('./')).
-    pipe(gulp.dest(distDir)).
-    pipe(browserSync.stream());
+    ])
+    .pipe(concat('application.css'))
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(postcss(processors))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(distDir))
+    .pipe(browserSync.stream());
 });
 
-gulp.task('js', () => new Promise((resolve, reject) => {
-  webpack(
-    webpackConfiguration(process.env.NODE_ENV),
-    (error, stats) => {
-      if (error) {
-        reject(error);
-        return;
-      }
+gulp.task(
+  'js',
+  () =>
+    new Promise((resolve, reject) => {
+      webpack(webpackConfiguration(process.env.NODE_ENV), (error, stats) => {
+        if (error) {
+          reject(error);
+          return;
+        }
 
-      if (stats.hasErrors()) {
-        reject(new Error(stats.toJson().errors.join('\n\n')));
-        return;
-      }
+        if (stats.hasErrors()) {
+          reject(new Error(stats.toJson().errors.join('\n\n')));
+          return;
+        }
 
-      if (stats.hasWarnings()) {
-        // eslint-disable-next-line no-console
-        console.warn(stats.toJson().warnings);
-      }
+        if (stats.hasWarnings()) {
+          // eslint-disable-next-line no-console
+          console.warn(stats.toJson().warnings);
+        }
 
-      resolve(stats);
-    },
-  );
-}));
+        resolve(stats);
+      });
+    }),
+);
 
 gulp.task('build', ['static', 'css', 'js']);
 
-gulp.task('syncFirebase', async() => {
+gulp.task('syncFirebase', async () => {
   const data = await pify(fs).readFile(
     path.resolve(__dirname, 'config/firebase-auth.json'),
   );
@@ -110,17 +107,20 @@ gulp.task('syncFirebase', async() => {
   }
 
   return new Promise((resolve, reject) => {
-    const req = https.request({
-      hostname: `${config.firebaseApp}.firebaseio.com`,
-      path: `/.settings/rules.json?auth=${firebaseSecret}`,
-      method: 'PUT',
-    }, (res) => {
-      if (res.statusCode === 200) {
-        resolve();
-      } else {
-        res.on('data', reject);
-      }
-    });
+    const req = https.request(
+      {
+        hostname: `${config.firebaseApp}.firebaseio.com`,
+        path: `/.settings/rules.json?auth=${firebaseSecret}`,
+        method: 'PUT',
+      },
+      res => {
+        if (res.statusCode === 200) {
+          resolve();
+        } else {
+          res.on('data', reject);
+        }
+      },
+    );
 
     req.write(data);
     req.end();
@@ -144,30 +144,22 @@ gulp.task('browserSync', ['static'], () => {
     server: {
       baseDir: distDir,
       middleware: [
-        webpackDevMiddleware(
-          compiler,
-          {
-            lazy: false,
-          },
-        ),
+        webpackDevMiddleware(compiler, {
+          lazy: false,
+        }),
       ],
     },
   });
 });
 
-gulp.task(
-  'purgeCache',
-  () =>
-    cloudflare({
-      email: process.env.CLOUDFLARE_EMAIL,
-      key: process.env.CLOUDFLARE_KEY,
-    }).zones.purgeCache(
-      process.env.CLOUDFLARE_ZONE,
-      {
-        files: [
-          `https://${process.env.HOSTNAME}/index.html`,
-          `https://${process.env.HOSTNAME}/application.css`,
-        ],
-      },
-    ),
+gulp.task('purgeCache', () =>
+  cloudflare({
+    email: process.env.CLOUDFLARE_EMAIL,
+    key: process.env.CLOUDFLARE_KEY,
+  }).zones.purgeCache(process.env.CLOUDFLARE_ZONE, {
+    files: [
+      `https://${process.env.HOSTNAME}/index.html`,
+      `https://${process.env.HOSTNAME}/application.css`,
+    ],
+  }),
 );
