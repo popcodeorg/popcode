@@ -4,27 +4,10 @@ branches:
 language: minimal
 services:
   - docker
-install:
-  - docker pull popcodeorg/popcode:latest
-  - docker build --pull --cache-from popcodeorg/popcode:latest --tag popcode .
+install: ./build/install.sh
 script:
-  - docker run --env NODE_ENV=test popcode yarn test
-  - >-
-    docker run
-    --env NODE_ENV=production
-    --env FIREBASE_APP
-    --env FIREBASE_API_KEY
-    --env FIREBASE_CLIENT_ID
-    --env GIT_REVISION="$TRAVIS_COMMIT"
-    --env GOOGLE_ANALYTICS_TRACKING_ID
-    --volume="$TRAVIS_BUILD_DIR/dist:/app/dist"
-    popcode
-    yarn run gulp build
-  - >-
-    docker run
-    --volume=$TRAVIS_BUILD_DIR/dist:/app/dist
-    popcode
-    yarn run eslint --no-eslintrc --env es5 dist
+  - ./build/test.sh
+  - ./build/build.sh
 before_deploy:
   - >-
     docker run

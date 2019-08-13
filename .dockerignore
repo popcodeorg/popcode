@@ -1,4 +1,6 @@
+.cache
 .git
-node_modules
 bower_components
 dist
+node_modules
+nodeenv

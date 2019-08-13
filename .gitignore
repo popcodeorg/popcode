@@ -1,8 +1,11 @@
-.cache
 bower_components
+.cache
 dist
 docker-compose.override.yml
-node_modules
 npm-debug.log
+node_modules
+nodeenv
+*.pyc
+__pycache__
 static/compiled
 yarn-error.log

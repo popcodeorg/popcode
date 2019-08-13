@@ -4,9 +4,13 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "tools: start",
+      "label": "start development server",
       "type": "shell",
-      "command": "./tools/start",
+      "command": "tools/yarn.py",
+      "args": ["start"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
       "presentation": {
         "focus": false,
         "panel": "dedicated"
@@ -18,8 +22,11 @@
       }
     },
     {
-      "label": "tools: test",
-      "dependsOn": ["tools: test jest", "tools: test karma"],
+      "label": "run tests in watch mode",
+      "dependsOn": [
+        "run jest tests in watch mode",
+        "run karma tests in watch mode"
+      ],
       "type": "shell",
       "problemMatcher": [],
       "group": {
@@ -28,9 +35,13 @@
       }
     },
     {
-      "label": "tools: test karma",
+      "label": "run karma tests in watch mode",
       "type": "shell",
-      "command": "./tools/test karma",
+      "command": "tools/yarn.py",
+      "args": ["run", "autotest.karma"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
       "presentation": {
         "group": "test",
         "panel": "dedicated"
@@ -38,9 +49,13 @@
       "group": "test"
     },
     {
-      "label": "tools: test jest",
+      "label": "run jest tests in watch mode",
       "type": "shell",
-      "command": "./tools/test jest",
+      "command": "tools/yarn.py",
+      "args": ["run", "autotest.jest"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
       "presentation": {
         "group": "test",
         "focus": true,
@@ -49,23 +64,34 @@
       "group": "test"
     },
     {
-      "label": "tools: run all checks",
+      "label": "run all tests and checks",
       "type": "shell",
-      "command": "tools/ci",
+      "command": "tools/yarn.py",
+      "args": ["test"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
       "problemMatcher": [],
       "group": "test"
     },
     {
-      "label": "tools: reset development environment",
+      "label": "reset development environment",
       "type": "shell",
-      "command": "tools/setup",
+      "command": "tools/reset.py",
+      "windows": {
+        "command": "tools\\reset.py"
+      },
       "problemMatcher": [],
       "group": "build"
     },
     {
-      "label": "tools: run static server with production build settings",
+      "label": "run static server with production build settings",
       "type": "shell",
-      "command": "tools/static",
+      "command": "tools/yarn.py",
+      "args": ["run", "static"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
       "problemMatcher": [],
       "group": "build"
     }

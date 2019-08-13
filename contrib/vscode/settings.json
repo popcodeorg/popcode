@@ -13,6 +13,7 @@
   "javascript.referencesCodeLens.enabled": true,
   "files.insertFinalNewline": true,
   "npm.autoDetect": "off",
+  "npm.packageManager": "yarn",
   "travis.username": "popcodeorg",
   "travis.repository": "popcode",
   "travis.pro": true,

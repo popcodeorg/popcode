@@ -9,34 +9,33 @@
       "request": "launch",
       "name": "Debug in Chrome",
       "url": "http://localhost:3000",
-      "runtimeExecutable": "/usr/bin/chromium",
       "userDataDir": true,
-      "webRoot": "${workspaceFolder}/src"
+      "webRoot": "${workspaceFolder}/src",
+      "windows": {
+        "webRoot": "${workspaceFolder}\\src"
+      }
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Debug current Jest test",
-      "runtimeExecutable": "docker-compose",
-      "runtimeArgs": [
-        "run",
-        "--rm",
-        "-p",
-        "9229:9229",
-        "app",
-        "yarn",
-        "debug.jest",
-        "--runTestsByPath",
-        "${currentFile}"
-      ],
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "address": "127.0.0.1",
+      "runtimeExecutable": "${workspaceFolder}/tools/node.py",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}\\tools\\node.py",
+        "program": "${workspaceFolder}\\node_modules\\.bin\\jest"
+      },
+      "args": [
+        "--no-cache",
+        "--runInBand",
+        "--runTestsByPath",
+        "${relativeFile}"
+      ],
+      "disableOptimisticBPs": true,
       "sourceMaps": true,
-      "restart": true,
-      "port": 9229,
-      "remoteRoot": "/app/",
-      "timeout": 30000
+      "timeout": 30000,
+      "env": {"NODE_ENV": "test"}
     }
   ]
 }
