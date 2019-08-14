@@ -13,7 +13,6 @@ import partial from 'lodash-es/partial';
 import some from 'lodash-es/some';
 import i18next from 'i18next';
 import classnames from 'classnames';
-import {HotKeys} from 'react-hotkeys';
 
 import prefix from '../services/inlineStylePrefixer';
 import {getQueryParameters, setQueryParameters} from '../util/queryParams';
@@ -22,7 +21,6 @@ import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
 import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
 
 import {isPristineProject} from '../util/projectUtils';
-import keyMap from '../util/keyMap';
 
 import AccountMigration from '../containers/AccountMigration';
 import AssignmentCreator from '../containers/AssignmentCreator';
@@ -31,6 +29,7 @@ import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
 import EditorsColumn from '../containers/EditorsColumn';
 import LoginPrompt from '../containers/LoginPrompt';
+import KeyboardHandler from '../containers/KeyboardHandler';
 
 import CollapsedComponent from './CollapsedComponent';
 import Output from './Output';
@@ -44,7 +43,6 @@ export default class Workspace extends React.Component {
       '_handleUnload',
       '_handleClickInstructionsBar',
       '_handleClickInstructionsEditButton',
-      '_handleSave',
     );
     this.columnRefs = [null, null];
   }
@@ -299,17 +297,9 @@ export default class Workspace extends React.Component {
     );
   }
 
-  _handleSave() {
-    this.props.onSave();
-    return false;
-  }
-
   render() {
-    const handlers = {
-      SAVE: this._handleSave,
-    };
     return (
-      <HotKeys handlers={handlers} keyMap={keyMap}>
+      <KeyboardHandler>
         <div className="layout">
           <AssignmentCreator />
           <TopBar />
@@ -324,7 +314,7 @@ export default class Workspace extends React.Component {
           <AccountMigration />
           <LoginPrompt />
         </div>
-      </HotKeys>
+      </KeyboardHandler>
     );
   }
 }
@@ -345,7 +335,6 @@ Workspace.propTypes = {
   onClickInstructionsEditButton: PropTypes.func.isRequired,
   onComponentToggle: PropTypes.func.isRequired,
   onResizableFlexDividerDrag: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
   onStartDragColumnDivider: PropTypes.func.isRequired,
   onStopDragColumnDivider: PropTypes.func.isRequired,
 };

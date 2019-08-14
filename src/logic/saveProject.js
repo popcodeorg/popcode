@@ -4,7 +4,7 @@ import {openLoginPrompt} from '../actions/ui';
 import {saveProject} from '../actions/projects';
 import {isUserAuthenticated} from '../selectors';
 
-import {saveCurrentProject} from './shared/saveCurrentProject';
+import saveCurrentProject from './shared/saveCurrentProject';
 
 export default createLogic({
   type: saveProject.toString(),

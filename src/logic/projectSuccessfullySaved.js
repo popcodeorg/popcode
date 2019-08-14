@@ -1,4 +1,5 @@
 import {createLogic} from 'redux-logic';
+import delay from 'delay';
 
 import {showSaveIndicator, hideSaveIndicator} from '../actions/ui';
 
@@ -7,9 +8,8 @@ export default createLogic({
   debounce: 1000,
   async process(data, dispatch, done) {
     dispatch(showSaveIndicator());
-    setTimeout(() => {
-      dispatch(hideSaveIndicator());
-      done();
-    }, 1000);
+    await delay(1000);
+    dispatch(hideSaveIndicator());
+    done();
   },
 });
