@@ -29,7 +29,7 @@ export default createLogic({
     }
 
     await dispatch(accountMigrationUndoPeriodExpired());
-    const {firebaseCredential} = await getCurrentAccountMigration(getState());
+    const {firebaseCredential} = getCurrentAccountMigration(getState());
     try {
       const {user: userData, migratedProjects} = await migrateAccount(
         firebaseCredential,

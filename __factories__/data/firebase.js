@@ -1,6 +1,6 @@
 import {Factory} from 'rosie';
 
-export const firebaseRepositoryFactory = new Factory().attrs({
+export const firebaseProjectFactory = new Factory().attrs({
   hiddenUIComponents: ['console'],
   instructions: '',
   isArchived: false,

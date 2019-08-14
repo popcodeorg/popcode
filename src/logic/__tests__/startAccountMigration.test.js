@@ -16,7 +16,7 @@ import {
   userFactory,
 } from '@factories/clients/firebase';
 
-import {firebaseRepositoryFactory} from '@factories/data/firebase';
+import {firebaseProjectFactory} from '@factories/data/firebase';
 
 jest.mock('../../actions/user.js');
 jest.mock('../../clients/firebase.js');
@@ -31,14 +31,14 @@ describe('startAccountMigration', () => {
 
   test('not dismissed during undo period, successful migration', async () => {
     const mockCredential = credentialFactory.build();
-    getCurrentAccountMigration.mockResolvedValue({
+    getCurrentAccountMigration.mockReturnValue({
       firebaseCredential: mockCredential,
     });
 
     const mockUser = userFactory.build();
     const mockProjects = [
-      firebaseRepositoryFactory.build(),
-      firebaseRepositoryFactory.build(),
+      firebaseProjectFactory.build(),
+      firebaseProjectFactory.build(),
     ];
     migrateAccount.mockResolvedValue({
       user: mockUser,
@@ -65,7 +65,7 @@ describe('startAccountMigration', () => {
 
   test('not dismissed during undo period, error in migration', async () => {
     const mockCredential = credentialFactory.build();
-    getCurrentAccountMigration.mockResolvedValue({
+    getCurrentAccountMigration.mockReturnValue({
       firebaseCredential: mockCredential,
     });
 
