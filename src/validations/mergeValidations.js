@@ -6,12 +6,10 @@ import sortBy from 'lodash-es/sortBy';
 import omit from 'lodash-es/omit';
 import uniqWith from 'lodash-es/uniqWith';
 
-
 function filterErrors(errors) {
-  debugger;
-    function dedupeErrors(errs) {
-        return _.uniqWith(errs, (e,i) => e.reason == i.reason && i.row == e.row);
-    }
+  function dedupeErrors(errs) {
+    return uniqWith(errs, (e, i) => e.reason === i.reason && i.row === e.row);
+  }
   const dedupedErrors = dedupeErrors(errors);
   const groupedErrors = groupBy(dedupedErrors, 'reason');
 
