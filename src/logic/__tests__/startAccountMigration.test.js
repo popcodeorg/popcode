@@ -1,10 +1,14 @@
 import {Observable} from 'rxjs';
+import reduce from 'lodash-es/reduce';
+import reduceRoot from '../../reducers/index';
 
 import startAccountMigration from '../startAccountMigration';
 import {
   accountMigrationComplete,
   accountMigrationError,
+  accountMigrationNeeded,
   accountMigrationUndoPeriodExpired,
+  startAccountMigration as startAccountMigrationAction,
 } from '../../actions/user';
 import {migrateAccount} from '../../clients/firebase';
 import {getCurrentAccountMigration} from '../../selectors';
@@ -15,10 +19,11 @@ import {
   firebaseErrorFactory,
   userFactory,
 } from '@factories/clients/firebase';
+import {githubProfileFactory} from '@factories/clients/github';
 
 import {firebaseProjectFactory} from '@factories/data/firebase';
 
-jest.mock('../../actions/user.js');
+// jest.mock('../../actions/user.js');
 jest.mock('../../clients/firebase.js');
 jest.mock('../../selectors');
 jest.mock('../../util/bugsnag.js');
@@ -31,9 +36,17 @@ describe('startAccountMigration', () => {
 
   test('not dismissed during undo period, successful migration', async () => {
     const mockCredential = credentialFactory.build();
-    getCurrentAccountMigration.mockReturnValue({
-      firebaseCredential: mockCredential,
-    });
+    const mockProfile = githubProfileFactory.build();
+
+    // getCurrentAccountMigration.mockReturnValue({
+    //   firebaseCredential: mockCredential,
+    // });
+
+    const state = applyActions(
+        // startAccountMigrationAction(),
+        // accountMigrationUndoPeriodExpired(),
+        accountMigrationNeeded(mockProfile, mockCredential),
+    );
 
     const mockUser = userFactory.build();
     const mockProjects = [
@@ -103,3 +116,11 @@ describe('startAccountMigration', () => {
     expect(accountMigrationUndoPeriodExpired).not.toHaveBeenCalled();
   });
 });
+
+function applyActions(...actions) {
+  return reduce(
+      actions,
+      (state, action) => reduceRoot(state, action),
+      undefined,
+  );
+}
