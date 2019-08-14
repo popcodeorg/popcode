@@ -13,6 +13,7 @@ const errorMap = {
       close: closeTag.name,
       mismatch: closeTag.location.row + 1,
     },
+    suppresses: ['unclosed-tag'],
   }),
   [Code.UNCLOSED_TAG]: ({openTag: {name}}) => ({
     reason: 'unclosed-tag',
@@ -21,6 +22,7 @@ const errorMap = {
   [Code.UNOPENED_TAG]: ({closeTag: {name}}) => ({
     reason: 'unexpected-close-tag',
     payload: {tag: name},
+    suppresses: ['unclosed-tag'],
   }),
   [Code.INVALID_TEXT_OUTSIDE_BODY]: () => ({
     reason: 'invalid-text-outside-body',
