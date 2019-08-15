@@ -449,8 +449,8 @@ body {
 .project-preview {
   display: flex;
   justify-content: space-between;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  align-items: center;
+  padding: 1em;
   border-bottom: 1px solid var(--color-chrome);
   cursor: pointer;
 }
@@ -459,26 +459,41 @@ body {
   background-color: var(--color-chrome);
 }
 
-.project-preview__label {
-  white-space: normal;
-  margin-left: 1em;
+.project-preview_current {
+  background-color: var(--color-chrome);
 }
 
-.project-preview__label_archived {
-  font-style: italic;
+.project-preview__label {
+  white-space: normal;
 }
 
 .project-preview__archive {
   color: var(--color-light-gray);
-  margin-right: 1em;
   font-size: 1.5em;
+  display: flex;
+  align-items: center;
+}
+
+.project-preview__archive-tooltip {
+  visibility: hidden;
+  text-align: center;
+  font-size: .75em;
+  margin-right: 1em;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
 .project-preview__archive:hover {
   color: black;
 }
 
-.project-preview__archived {
+.project-preview__archive:hover .project-preview__archive-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+.project-preview__status {
   font-style: italic;
 }
 
@@ -509,6 +524,11 @@ body {
 .project-picker__nav-tab:hover,
 .project-picker__nav-tab-active {
   border-color: var(--color-chrome) var(--color-chrome) #fafafa;
+}
+
+.project-picker__list {
+  max-height: 40vh;
+  overflow: scroll;
 }
 
 /** @define workspace */
@@ -1184,13 +1204,6 @@ body {
 
 .assignment-creator__input_warning {
   margin-bottom: 1em;
-}
-
-/** @define assignment-creator */
-
-.project-picker__list {
-  max-height: 40vh;
-  overflow: scroll;
 }
 
 /** @define modal */

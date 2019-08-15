@@ -30,7 +30,6 @@ import {
   getOpenTopBarMenu,
   isClassroomExportInProgress,
   getAllProjectKeys,
-  getAllProjects,
   isEditingInstructions,
   isExperimental,
   isGapiReady,
@@ -47,7 +46,6 @@ import {
 } from '../selectors';
 
 import {
-  changeCurrentProject,
   closeTopBarMenu,
   createProject,
   createSnapshot,
@@ -87,7 +85,6 @@ function mapStateToProps(state) {
     isUserTyping: isUserTyping(state),
     openMenu: getOpenTopBarMenu(state),
     projectKeys: getAllProjectKeys(state),
-    projects: getAllProjects(state),
     validationState: getCurrentValidationState(state),
   };
 }
@@ -98,10 +95,6 @@ function exportRepo(dispatch) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onChangeCurrentProject(projectKey) {
-      dispatch(changeCurrentProject(projectKey));
-    },
-
     onClickMenu(menuKey) {
       dispatch(toggleTopBarMenu(menuKey));
     },

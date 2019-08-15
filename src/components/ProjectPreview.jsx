@@ -17,11 +17,7 @@ export default function ProjectPreview({
 }) {
   return (
     <div className="project-preview" onClick={onProjectSelected}>
-      <div
-        className={classnames('project-preview__label', {
-          'project-preview__label_archived': project.isArchived,
-        })}
-      >
+      <div className="project-preview__label">
         {preview.slice(0, MAX_LENGTH)}
         {project.updatedAt && (
           <div className="project-preview__timestamp">
@@ -32,13 +28,15 @@ export default function ProjectPreview({
       {(function showArchived() {
         if (isCurrentProject) {
           return (
-            <div className="project-preview__archived">Current Project</div>
+            <div className="project-preview__status">
+              {t('project-preview.current-project')}
+            </div>
           );
         }
         if (project.isArchived) {
           return (
-            <div className="project-preview__archived">
-              {t('top-bar.project-archived')}
+            <div className="project-preview__status">
+              {t('project-preview.project-archived')}
             </div>
           );
         }
@@ -50,6 +48,7 @@ export default function ProjectPreview({
               onProjectArchived();
             }}
           >
+            <span className="project-preview__archive-tooltip">Archive</span>
             <FontAwesomeIcon icon={faArchive} />
           </div>
         );

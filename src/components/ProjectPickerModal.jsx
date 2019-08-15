@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import filter from 'lodash-es/filter';
 import partial from 'lodash-es/partial';
+import {t} from 'i18next';
 
 import ProjectPreview from '../containers/ProjectPreview';
 
@@ -29,7 +30,9 @@ export default function ProjectPickerModal({
   return (
     <Modal>
       <div className="project-picker">
-        <h1 className="assignment-creator__title">My Projects</h1>
+        <h1 className="assignment-creator__title">
+          {t('project-picker.title')}
+        </h1>
         <ul className="project-picker__nav">
           <li
             className={classnames('project-picker__nav-tab', {
@@ -37,7 +40,7 @@ export default function ProjectPickerModal({
             })}
             onClick={partial(onFilterProjects, 'active')}
           >
-            Active
+            {t('project-picker.tabs.active')}
           </li>
           <li
             className={classnames('project-picker__nav-tab', {
@@ -45,7 +48,7 @@ export default function ProjectPickerModal({
             })}
             onClick={partial(onFilterProjects, 'archived')}
           >
-            Archived
+            {t('project-picker.tabs.archived')}
           </li>
         </ul>
         <div className="project-picker__list">
@@ -66,7 +69,7 @@ export default function ProjectPickerModal({
             )}
             onClick={onCloseProjectPickerModal}
           >
-            Close
+            {t('project-picker.buttons.close')}
           </button>
         </div>
       </div>
