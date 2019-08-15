@@ -78,11 +78,13 @@ def _symlink_vscode_config():
         gitignore_path = os.path.join(POPCODE_ROOT, '.git', 'info', 'exclude')
         if not os.path.exists(os.path.dirname(gitignore_path)):
             os.mkdir(os.path.dirname(gitignore_path))
-        with open(gitignore_path, 'r') as gitignore_r:
-            needs_vscode_in_gitignore = not '.vscode' in gitignore_r
+        needs_vscode_in_gitignore = True
+        if os.path.exists(gitignore_path):
+            with open(gitignore_path, 'r') as gitignore_r:
+                needs_vscode_in_gitignore = not '.vscode' in gitignore_r
         if needs_vscode_in_gitignore:
             with open(gitignore_path, 'a') as gitignore_a:
-                gitignore_a.writelines([".vscode"])
+                gitignore_a.writelines(['/.vscode\n'])
 
 def _print_success_message():
     yarn_path = os.path.join('tools', 'yarn.py')
