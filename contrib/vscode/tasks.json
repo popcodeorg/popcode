@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "start development server",
+      "label": "Popcode: Start Development Server",
       "type": "shell",
       "command": "tools/yarn.py",
       "args": ["start"],
@@ -22,10 +22,10 @@
       }
     },
     {
-      "label": "run tests in watch mode",
+      "label": "Popcode: Run Tests in Watch Mode",
       "dependsOn": [
-        "run jest tests in watch mode",
-        "run karma tests in watch mode"
+        "Popcode: Run Jest Tests in Watch Mode",
+        "Popcode: Run Karma Tests in Watch Mode"
       ],
       "type": "shell",
       "problemMatcher": [],
@@ -35,7 +35,7 @@
       }
     },
     {
-      "label": "run karma tests in watch mode",
+      "label": "Popcode: Run Karma Tests in Watch Mode",
       "type": "shell",
       "command": "tools/yarn.py",
       "args": ["run", "autotest.karma"],
@@ -49,7 +49,7 @@
       "group": "test"
     },
     {
-      "label": "run jest tests in watch mode",
+      "label": "Popcode: Run Jest Tests in Watch Mode",
       "type": "shell",
       "command": "tools/yarn.py",
       "args": ["run", "autotest.jest"],
@@ -64,7 +64,7 @@
       "group": "test"
     },
     {
-      "label": "run all tests and checks",
+      "label": "Popcode: Run All Tests and Checks",
       "type": "shell",
       "command": "tools/yarn.py",
       "args": ["test"],
@@ -75,7 +75,7 @@
       "group": "test"
     },
     {
-      "label": "set up development environment",
+      "label": "Popcode: Set Up Development Environment",
       "type": "shell",
       "command": "tools/setup.py",
       "windows": {
@@ -85,7 +85,7 @@
       "group": "build"
     },
     {
-      "label": "reset development environment",
+      "label": "Popcode: Reset Development Environment",
       "type": "shell",
       "command": "tools/reset.py",
       "windows": {
@@ -95,7 +95,7 @@
       "group": "build"
     },
     {
-      "label": "run static server with production build settings",
+      "label": "Popcode: Run Static Server with Production Build Settings",
       "type": "shell",
       "command": "tools/yarn.py",
       "args": ["run", "static"],
