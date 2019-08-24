@@ -7,8 +7,8 @@ import omit from 'lodash-es/omit';
 import values from 'lodash-es/values';
 import uuid from 'uuid/v4';
 import once from 'lodash-es/once';
-import {firebase} from '@firebase/app';
-import '@firebase/auth';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
 import {bugsnagClient} from '../util/bugsnag';
 import config from '../config';
@@ -39,7 +39,7 @@ async function loadDatabaseSdk() {
   return retryingFailedImports(() =>
     import(
       /* webpackChunkName: "mainAsync" */
-      '@firebase/database'
+      'firebase/database'
     ),
   );
 }

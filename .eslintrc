@@ -224,7 +224,7 @@
       {
         "allow": [
           "brace/**/*",
-          "@firebase/*"
+          "firebase/*"
         ]
       }
     ],
