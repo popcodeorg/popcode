@@ -1,0 +1,23 @@
+{
+  "css.validate": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.rulers": [80],
+  "editor.tabSize": 2,
+  "eslint.autoFixOnSave": true,
+  "files.trimTrailingWhitespace": true,
+  "gulp.autoDetect": "off",
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+  "javascript.preferences.quoteStyle": "single",
+  "javascript.referencesCodeLens.enabled": true,
+  "files.insertFinalNewline": true,
+  "npm.autoDetect": "off",
+  "npm.packageManager": "yarn",
+  "travis.username": "popcodeorg",
+  "travis.repository": "popcode",
+  "travis.pro": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  }
+}

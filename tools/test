@@ -1,6 +1,0 @@
-#!/bin/sh
-set -ex
-
-# Runs both test suites in watch mode
-
-docker-compose run --rm --publish=9876:9876 app yarn run autotest

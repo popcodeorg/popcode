@@ -1,4 +1,7 @@
-/node_modules
+/.cache
 /bower_components
+/dist
+/node_modules
+/nodeenv
 /test/data
 /templates

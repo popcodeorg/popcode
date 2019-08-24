@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-set -ex
-
-# Tear down your development environment and rebuild it from scratch.
-# Useful if your environment is broken and a fix is not apparent.
-
-docker-compose down --volumes --remove-orphans
-rm -r node_modules bower_components
-exec $(dirname $BASH_SOURCE)/setup

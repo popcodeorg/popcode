@@ -1,0 +1,109 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Popcode: Start Development Server",
+      "type": "shell",
+      "command": "tools/yarn.py",
+      "args": ["start"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
+      "presentation": {
+        "focus": false,
+        "panel": "dedicated"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Popcode: Run Tests in Watch Mode",
+      "dependsOn": [
+        "Popcode: Run Jest Tests in Watch Mode",
+        "Popcode: Run Karma Tests in Watch Mode"
+      ],
+      "type": "shell",
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Popcode: Run Karma Tests in Watch Mode",
+      "type": "shell",
+      "command": "tools/yarn.py",
+      "args": ["run", "autotest.karma"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
+      "presentation": {
+        "group": "test",
+        "panel": "dedicated"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Popcode: Run Jest Tests in Watch Mode",
+      "type": "shell",
+      "command": "tools/yarn.py",
+      "args": ["run", "autotest.jest"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
+      "presentation": {
+        "group": "test",
+        "focus": true,
+        "panel": "dedicated"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Popcode: Run All Tests and Checks",
+      "type": "shell",
+      "command": "tools/yarn.py",
+      "args": ["test"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "Popcode: Set Up Development Environment",
+      "type": "shell",
+      "command": "tools/setup.py",
+      "windows": {
+        "command": "tools\\setup.py"
+      },
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Popcode: Reset Development Environment",
+      "type": "shell",
+      "command": "tools/reset.py",
+      "windows": {
+        "command": "tools\\reset.py"
+      },
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Popcode: Run Static Server with Production Build Settings",
+      "type": "shell",
+      "command": "tools/yarn.py",
+      "args": ["run", "static"],
+      "windows": {
+        "command": "tools\\yarn.py"
+      },
+      "problemMatcher": [],
+      "group": "build"
+    }
+  ]
+}

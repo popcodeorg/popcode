@@ -101,26 +101,58 @@ class PreviewFrame extends React.Component {
     return firstSourceLine - 1;
   }
 
-  _handleErrorMessage(error) {
-    let line = error.line - this._runtimeErrorLineOffset();
+  async _handleErrorMessage(error) {
+    const normalizedError = createError(error);
+    const lineOffset = this._runtimeErrorLineOffset();
 
-    if (error.message === 'Loop Broken!') {
-      this._handleInfiniteLoop(line);
+    if (error.line < lineOffset) {
+      this.props.onRuntimeError({
+        reason: normalizedError.type,
+        text: normalizedError.message,
+        raw: normalizedError.message,
+        row: 0,
+        column: 0,
+        type: 'error',
+      });
       return;
     }
 
-    const normalizedError = createError(error);
+    const oneIndexedSourceLine = error.line - lineOffset;
 
-    if (bowser.is('Safari')) {
-      line = 1;
+    if (error.message === 'Loop Broken!') {
+      this._handleInfiniteLoop(oneIndexedSourceLine);
+      return;
+    }
+
+    let oneIndexedOriginalLine = bowser.is('Safari') ? 1 : oneIndexedSourceLine;
+
+    let {column} = error;
+    if (this.props.compiledProject.sourceMap) {
+      const {SourceMapConsumer} = await retryingFailedImports(() =>
+        import(
+          /* webpackChunkName: "mainAsync" */
+          'source-map'
+        ),
+      );
+
+      const smc = new SourceMapConsumer(this.props.compiledProject.sourceMap);
+      const result = smc.originalPositionFor({
+        line: oneIndexedSourceLine,
+        column: error.column,
+      });
+
+      if (result.line !== null && result.column !== null) {
+        oneIndexedOriginalLine = result.line;
+        ({column} = result);
+      }
     }
 
     this.props.onRuntimeError({
       reason: normalizedError.type,
       text: normalizedError.message,
       raw: normalizedError.message,
-      row: line - 1,
-      column: error.column,
+      row: oneIndexedOriginalLine - 1,
+      column,
       type: 'error',
     });
   }

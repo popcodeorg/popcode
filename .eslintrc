@@ -29,6 +29,9 @@
       "rules": {
         "import/no-commonjs": "off",
         "import/no-nodejs-modules": "off"
+      },
+      "settings": {
+        "import/resolver": "node"
       }
     },
     {
@@ -59,7 +62,7 @@
     },
     {
       "env": {
-        "browser": false,
+        "browser": true,
         "es6": true,
         "node": true,
         "jest": true
@@ -128,6 +131,23 @@
       "rules": {
         "import/order": "off",
         "prefer-reflect": "off"
+      }
+    },
+    {
+      "env": {
+        "browser": false,
+        "node": true
+      },
+      "files": "src/**/*.gen.js",
+      "excludedFiles": "src/**/__mocks__/*.gen.js",
+      "parser": "espree",
+      "parserOptions": {
+        "ecmaVersion": 2017,
+        "sourceType": "script"
+      },
+      "rules": {
+        "import/no-commonjs": "off",
+        "import/no-nodejs-modules": "off"
       }
     }
   ],
@@ -385,7 +405,7 @@
   "settings": {
     "import/resolver": "webpack",
     "react": {
-      "version": "16.8.2"
+      "version": "16.9.0"
     }
   }
 }

@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 
 const OfflinePlugin = require('offline-plugin');
@@ -6,32 +7,64 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
 const VisualizerPlugin = require('webpack-visualizer-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
 const escapeRegExp = require('lodash.escaperegexp');
 const babel = require('@babel/core');
 
-const babelLoaderVersion = require('./node_modules/babel-loader/package.json')
-  .version;
+function getCacheKeyForBabelConfigItem(configItem) {
+  const cacheKey = {
+    options: configItem.options,
+    name: configItem.name,
+  };
+  const pathSegments = configItem.file.resolved.split(path.sep);
+  while (!('version' in cacheKey)) {
+    pathSegments.pop();
+    const packagePath = [...pathSegments, 'package.json'].join('/');
+    if (fs.existsSync(packagePath)) {
+      const package = require(packagePath);
+      cacheKey.name = package.name;
+      cacheKey.version = package.version;
+    }
+  }
+  return cacheKey;
+}
 
-const babelrc = require('./babel.config.js');
+function makeBabelLoaderConfig({shouldCache = false} = {}) {
+  if (!shouldCache) {
+    return {};
+  }
 
-const babelLoaderConfig = Object.assign({}, babelrc, {
-  cacheDirectory: true,
-  cacheIdentifier: JSON.stringify({
-    babel: babel.version,
-    'babel-loader': babelLoaderVersion,
-    debug: process.env.DEBUG,
-    env: process.env.NODE_ENV || 'development',
-  }),
-});
+  const babelrc = babel.loadPartialConfig().options;
+  const babelLoaderVersion = require('./node_modules/babel-loader/package.json')
+    .version;
+
+  const babelrcCacheKey = {
+    ...babelrc,
+    plugins: babelrc.plugins.map(getCacheKeyForBabelConfigItem),
+    presets: babelrc.presets.map(getCacheKeyForBabelConfigItem),
+  };
+
+  return {
+    cacheCompression: false,
+    cacheDirectory: './.cache/babel-loader',
+    cacheIdentifier: JSON.stringify({
+      babel: babel.version,
+      'babel-loader': babelLoaderVersion,
+      options: babelrcCacheKey,
+    }),
+  };
+}
 function matchModule(modulePath) {
   const modulePattern = new RegExp(
-    escapeRegExp(path.join('/node_modules', modulePath)),
+    escapeRegExp(path.join(path.sep, 'node_modules', modulePath)),
     'u',
   );
   const moduleDependencyPattern = new RegExp(
-    escapeRegExp(path.join('/node_modules', modulePath, 'node_modules')),
+    escapeRegExp(
+      path.join(path.sep, 'node_modules', modulePath, 'node_modules'),
+    ),
     'u',
   );
 
@@ -60,7 +93,12 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       failOnError: true,
     }),
     new webpack.NormalModuleReplacementPlugin(
-      /node_modules\/stylelint\/lib\/requireRule.js$/u,
+      new RegExp(
+        `${escapeRegExp(
+          path.join('node_modules', 'stylelint', 'lib', 'requireRule.js'),
+        )}$`,
+        'u',
+      ),
       path.resolve(__dirname, 'src/patches/stylelint/lib/requireRule.js'),
     ),
   ];
@@ -78,13 +116,25 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     );
   }
 
+  if (!isProduction) {
+    plugins.push(
+      new HardSourceWebpackPlugin({
+        cacheDirectory: path.resolve(
+          __dirname,
+          '.cache/hard-source/[confighash]',
+        ),
+        info: {level: 'warn'},
+      }),
+    );
+  }
+
   let devtool;
   if (isProduction) {
     devtool = 'source-map';
   } else if (isTest) {
     devtool = 'inline-source-map';
   } else {
-    devtool = 'eval';
+    devtool = 'cheap-module-eval-source-map';
   }
 
   if (!isTest) {
@@ -103,7 +153,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         externals: ['/', 'application.css', 'images/pop/thinking.svg'],
       }),
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, 'src/html/index.html'),
+        template: './html/index.html',
         chunksSortMode: 'dependency',
       }),
       new ScriptExtHtmlWebpackPlugin({
@@ -128,6 +178,8 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     );
   }
 
+  const babelLoaderConfig = makeBabelLoaderConfig({shouldCache: !isProduction});
+
   return {
     mode: isProduction ? 'production' : 'development',
     entry: isTest
@@ -138,11 +190,12 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
             'es6-set/implement',
             'whatwg-fetch',
             'raf/polyfill',
-            './src/init/DOMParserShim',
-            './src/application.js',
+            './init/DOMParserShim',
+            './application.js',
           ],
-          preview: ['@babel/polyfill', './src/preview.js'],
+          preview: ['@babel/polyfill', './preview.js'],
         },
+    context: path.resolve(__dirname, 'src'),
     optimization: {
       splitChunks: isTest ? false : {chunks: 'all'},
     },
@@ -159,6 +212,10 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           include: path.resolve(__dirname, 'src'),
           use: ['val-loader'],
           enforce: 'pre',
+        },
+        {
+          test: /\.gen\.js$/u,
+          use: [{loader: 'babel-loader', options: babelLoaderConfig}],
         },
         {
           test: /\.jsx?$/u,
