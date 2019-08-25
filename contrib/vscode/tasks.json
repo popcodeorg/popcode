@@ -98,12 +98,17 @@
       "label": "Popcode: Run Static Server with Production Build Settings",
       "type": "shell",
       "command": "tools/yarn.py",
-      "args": ["run", "static"],
+      "args": ["run", "preview"],
       "windows": {
         "command": "tools\\yarn.py"
       },
       "problemMatcher": [],
-      "group": "build"
+      "group": "build",
+      "options": {
+        "env": {
+          "PROFILE_BUILD": "true"
+        }
+      }
     }
   ]
 }
