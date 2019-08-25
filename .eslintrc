@@ -224,7 +224,13 @@
       {
         "allow": [
           "brace/**/*",
-          "@firebase/*"
+          "core-js",
+          "es6-set/implement",
+          "@firebase/*",
+          "raf/polyfill",
+          "regenerator-runtime/runtime",
+          "src/init/*",
+          "whatwg-fetch"
         ]
       }
     ],

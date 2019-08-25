@@ -10,10 +10,8 @@ const EXCLUDED_MODULES = ['transform-regenerator'];
 function getPluginNamesFromPresetEnv() {
   const browserListForBabel = {};
 
-  for (const browser in browserList) {
-    if (browser !== 'chromium') {
-      browserListForBabel[browser] = browserList[browser];
-    }
+  for (const browser of Reflect.ownKeys(browserList)) {
+    browserListForBabel[browser] = browserList[browser];
   }
 
   const result = babel.transformSync('', {

@@ -185,15 +185,8 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     entry: isTest
       ? undefined
       : {
-          main: [
-            '@babel/polyfill',
-            'es6-set/implement',
-            'whatwg-fetch',
-            'raf/polyfill',
-            './init/DOMParserShim',
-            './application.js',
-          ],
-          preview: ['@babel/polyfill', './preview.js'],
+          main: './application.js',
+          preview: './preview.js',
         },
     context: path.resolve(__dirname, 'src'),
     optimization: {

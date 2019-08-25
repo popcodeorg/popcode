@@ -1,3 +1,9 @@
+import 'core-js';
+import 'regenerator-runtime/runtime';
+import 'whatwg-fetch';
+import 'raf/polyfill';
+import './init/DOMParserShim';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
