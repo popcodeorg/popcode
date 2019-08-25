@@ -13,7 +13,9 @@ module.exports = api => {
     targets = {browsers: 'last 1 Chrome version'};
   } else {
     targets = JSON.parse(
-      fs.readFileSync(path.resolve(__dirname, 'config/browsers.json')),
+      fs
+        .readFileSync(path.resolve(__dirname, 'config/browsers.json'))
+        .toString(),
     );
   }
 
@@ -25,7 +27,15 @@ module.exports = api => {
   return {
     presets: [
       '@babel/preset-react',
-      ['@babel/preset-env', {targets, modules: isJest ? 'auto' : false}],
+      [
+        '@babel/preset-env',
+        {
+          targets,
+          modules: isJest ? 'auto' : false,
+          useBuiltIns: 'entry',
+          corejs: 3,
+        },
+      ],
     ],
     plugins,
     compact: false,

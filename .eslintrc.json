@@ -199,7 +199,16 @@
     "import/no-unassigned-import": [
       "warn",
       {
-        "allow": ["brace/**/*", "@firebase/*"]
+        "allow": [
+          "brace/**/*",
+          "core-js",
+          "es6-set/implement",
+          "@firebase/*",
+          "raf/polyfill",
+          "regenerator-runtime/runtime",
+          "src/init/*",
+          "whatwg-fetch"
+        ]
       }
     ],
     "import/no-useless-path-segments": "warn",

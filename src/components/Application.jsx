@@ -28,6 +28,7 @@ class Application extends React.Component {
       supportedBrowsers,
       version => `>=${version}`,
     );
+    supportedBrowsersForBowser.chromium = supportedBrowsersForBowser.chrome;
     return !bowser.satisfies(supportedBrowsersForBowser);
   }
 
