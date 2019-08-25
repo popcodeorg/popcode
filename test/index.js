@@ -1,8 +1,8 @@
 /* eslint-env commonjs */
 /* eslint-disable import/no-unassigned-import */
 
-import '@babel/polyfill';
-import 'es6-set/implement';
+import 'core-js';
+import 'regenerator-runtime/runtime';
 import 'whatwg-fetch';
 import '../src/init/DOMParserShim';
 import initI18n from '../src/util/initI18n';

@@ -28,13 +28,13 @@ const staticDir = path.join(srcDir, 'static');
 const bowerComponents = 'bower_components';
 
 const postcssBrowsers = [];
-const supportedBrowsers = JSON.parse(fs.readFileSync('./config/browsers.json'));
+const supportedBrowsers = JSON.parse(
+  fs.readFileSync('./config/browsers.json').toString(),
+);
 forOwn(supportedBrowsers, (version, browser) => {
   let browserForPostcss = browser;
   if (browser === 'msie') {
     browserForPostcss = 'ie';
-  } else if (browser === 'chromium') {
-    return;
   }
   postcssBrowsers.push(`${browserForPostcss} >= ${version}`);
 });
