@@ -2,7 +2,7 @@ import unlinkGithubIdentity from '../unlinkGithubIdentity';
 
 import {unlinkGithub} from '../../clients/firebase';
 
-jest.mock('../../clients/firebase.js');
+jest.mock('../../clients/firebase');
 
 test('should unlink Github Identity', async () => {
   const {

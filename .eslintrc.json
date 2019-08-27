@@ -203,7 +203,7 @@
           "brace/**/*",
           "core-js",
           "es6-set/implement",
-          "@firebase/*",
+          "firebase/*",
           "raf/polyfill",
           "regenerator-runtime/runtime",
           "src/init/*",
