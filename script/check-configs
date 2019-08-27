@@ -5,20 +5,22 @@
 /* eslint-disable import/no-nodejs-modules */
 /* eslint-disable no-console */
 
-const process = require('process');
 const fs = require('fs');
+const process = require('process');
 
 const pify = require('pify');
 
 async function checkEslintReactVersion() {
   const eslintrc = JSON.parse(
-    await pify(fs.readFile)(`${__dirname}/../.eslintrc`),
+    await pify(fs.readFile)(`${__dirname}/../.eslintrc.json`),
   );
   const reactPackage = JSON.parse(
     await pify(fs.readFile)(require.resolve('react/package.json')),
   );
   if (eslintrc.settings.react.version !== reactPackage.version) {
-    console.error('.eslintrc settings.react.version is not the version of react that is installed');
+    console.error(
+      '.eslintrc settings.react.version is not the version of react that is installed',
+    );
     process.exit(1);
   }
 }
