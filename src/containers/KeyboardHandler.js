@@ -4,10 +4,6 @@ import KeyboardHandler from '../components/KeyboardHandler';
 
 import {saveProject} from '../actions';
 
-function mapStateToProps() {
-  return {};
-}
-
 function mapDispatchToProps(dispatch) {
   return {
     onSave() {
@@ -17,6 +13,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(KeyboardHandler);

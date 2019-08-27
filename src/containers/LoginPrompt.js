@@ -17,7 +17,7 @@ function mapDispatchToProps(dispatch) {
     },
 
     onLogin() {
-      dispatch(logIn('google'));
+      dispatch(logIn());
     },
   };
 }
