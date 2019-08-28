@@ -48,7 +48,6 @@ export default function ProjectPreview({
               onProjectArchived();
             }}
           >
-            <span className="project-preview__archive-tooltip">Archive</span>
             <FontAwesomeIcon icon={faArchive} />
           </div>
         );

@@ -1,9 +1,12 @@
 import classnames from 'classnames';
+import {faTimesCircle} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
 import PropTypes from 'prop-types';
 import filter from 'lodash-es/filter';
 import partial from 'lodash-es/partial';
 import {t} from 'i18next';
+import isEmpty from 'lodash-es/isEmpty';
 
 import ProjectPreview from '../containers/ProjectPreview';
 
@@ -21,14 +24,16 @@ export default function ProjectPickerModal({
   }
 
   let visibleProjects;
+  const activeProjects = filter(projects, ({isArchived}) => !isArchived);
+  const archivedProjects = filter(projects, ({isArchived}) => isArchived);
   if (projectsFilter === 'active') {
-    visibleProjects = filter(projects, ({isArchived}) => !isArchived);
+    visibleProjects = activeProjects;
   } else if (projectsFilter === 'archived') {
-    visibleProjects = filter(projects, ({isArchived}) => isArchived);
+    visibleProjects = archivedProjects;
   }
 
   return (
-    <Modal>
+    <Modal onClose={onCloseProjectPickerModal}>
       <div className="project-picker">
         <h1 className="assignment-creator__title">
           {t('project-picker.title')}
@@ -42,14 +47,16 @@ export default function ProjectPickerModal({
           >
             {t('project-picker.tabs.active')}
           </li>
-          <li
-            className={classnames('project-picker__nav-tab', {
-              'project-picker__nav-tab-active': projectsFilter === 'archived',
-            })}
-            onClick={partial(onFilterProjects, 'archived')}
-          >
-            {t('project-picker.tabs.archived')}
-          </li>
+          {isEmpty(archivedProjects) ? null : (
+            <li
+              className={classnames('project-picker__nav-tab', {
+                'project-picker__nav-tab-active': projectsFilter === 'archived',
+              })}
+              onClick={partial(onFilterProjects, 'archived')}
+            >
+              {t('project-picker.tabs.archived')}
+            </li>
+          )}
         </ul>
         <div className="project-picker__list">
           {visibleProjects.map(item => {
@@ -61,16 +68,11 @@ export default function ProjectPickerModal({
             );
           })}
         </div>
-        <div className="account-migration__buttons">
-          <button
-            className={classnames(
-              'account-migration__button',
-              'account-migration__button_cancel',
-            )}
-            onClick={onCloseProjectPickerModal}
-          >
-            {t('project-picker.buttons.close')}
-          </button>
+        <div
+          className="project-picker__close"
+          onClick={onCloseProjectPickerModal}
+        >
+          <FontAwesomeIcon icon={faTimesCircle} />
         </div>
       </div>
     </Modal>

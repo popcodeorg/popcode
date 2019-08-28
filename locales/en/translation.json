@@ -130,7 +130,7 @@
     }
   },
   "project-picker": {
-    "title": "My Projects",
+    "title": "Your Projects",
     "tabs": {
       "active": "Active",
       "archived": "Archived"

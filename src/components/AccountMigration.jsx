@@ -29,7 +29,7 @@ export default function AccountMigration({
   }
 
   return (
-    <Modal>
+    <Modal onClose={onDismiss}>
       <div className="account-migration">
         <h1 className="modal__header">
           {i18next.t(

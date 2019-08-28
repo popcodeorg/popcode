@@ -456,7 +456,7 @@ body {
 }
 
 .project-preview:hover {
-  background-color: var(--color-chrome);
+  background-color: var(--color-low-contrast-gray);
 }
 
 .project-preview_current {
@@ -474,24 +474,9 @@ body {
   align-items: center;
 }
 
-.project-preview__archive-tooltip {
-  visibility: hidden;
-  text-align: center;
-  font-size: .75em;
-  margin-right: 1em;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
 .project-preview__archive:hover {
   color: black;
 }
-
-.project-preview__archive:hover .project-preview__archive-tooltip {
-  visibility: visible;
-  opacity: 1;
-}
-
 
 .project-preview__status {
   font-style: italic;
@@ -521,14 +506,29 @@ body {
   cursor: pointer;
 }
 
-.project-picker__nav-tab:hover,
 .project-picker__nav-tab-active {
   border-color: var(--color-chrome) var(--color-chrome) #fafafa;
 }
 
+.project-picker__nav-tab:hover:not(.project-picker__nav-tab-active) {
+  background-color: var(--color-low-contrast-gray);
+}
+
 .project-picker__list {
   max-height: 40vh;
-  overflow: scroll;
+  overflow-y: scroll;
+  border-left: 1px solid var(--color-chrome);
+  border-bottom: 1px solid var(--color-chrome);
+}
+
+.project-picker__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.project-picker {
+  position: relative;
 }
 
 /** @define workspace */

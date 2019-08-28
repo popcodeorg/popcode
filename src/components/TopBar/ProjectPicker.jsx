@@ -7,6 +7,7 @@ import partial from 'lodash-es/partial';
 import some from 'lodash-es/some';
 import PropTypes from 'prop-types';
 import React from 'react';
+import i18next from 'i18next';
 
 import ProjectPreview from '../../containers/ProjectPreview';
 
