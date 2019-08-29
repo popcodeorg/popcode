@@ -11,6 +11,7 @@ module.exports = {
     '\\.(html|svg)': '<rootDir>/__mocks__/fileMock.js',
     'html-inspector': '<rootDir>/node_modules/html-inspector/html-inspector.js',
   },
+  testMatch: ['**/__tests__/**/*.test.js?(x)'],
   testPathIgnorePatterns: ['/node_modules/', '/bower_components/', '/nodeenv/'],
   transformIgnorePatterns: ['node_modules/(?!(lodash-es)/)'],
   setupFilesAfterEnv: ['jest-extended'],
