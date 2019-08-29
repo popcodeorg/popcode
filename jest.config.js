@@ -9,6 +9,7 @@ module.exports = {
   moduleNameMapper: {
     '@factories/(.*)$': '<rootDir>/__factories__/$1',
     '\\.(html|svg)': '<rootDir>/__mocks__/fileMock.js',
+    'html-inspector': '<rootDir>/node_modules/html-inspector/html-inspector.js',
   },
   testPathIgnorePatterns: ['/node_modules/', '/bower_components/', '/nodeenv/'],
   transformIgnorePatterns: ['node_modules/(?!(lodash-es)/)'],

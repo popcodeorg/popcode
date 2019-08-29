@@ -1,0 +1,37 @@
+body{
+    background-image:url('http://www.walldevil.com/wallpapers/w07/artwork-concept-art-fantasy-art-anime-planets-skies-stars-night.jpg');
+    background-size:cover;
+    color:silver;
+}
+#banner{
+    position:relative;
+    top:20px;
+    left:250px;
+}
+#tagline{
+    position:relative;
+    top:600px;
+    left:250px;
+}
+img{
+    position:relative;
+    top:10px;
+    left:10px;
+    height:100px;
+    width:500px;
+}
+#mission{
+    position:relative;
+    top:300px;
+    left:100px;
+}
+#about{
+    position:relative;
+    top:100px;
+    left:300px;
+}
+#topics{
+    position:relative;
+    top:300px;
+    left:400px;
+}

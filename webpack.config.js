@@ -305,16 +305,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
           use: {loader: 'babel-loader', options: babelLoaderConfig},
         },
         {
-          include: matchModule('html-inspector'),
-          use: [
-            {loader: 'imports-loader', options: 'window=>{}'},
-            {
-              loader: 'exports-loader',
-              options: {'window.HTMLInspector': true},
-            },
-          ],
-        },
-        {
           test: /\.js$/u,
           include: [
             path.resolve(__dirname, 'node_modules/brace/worker'),
