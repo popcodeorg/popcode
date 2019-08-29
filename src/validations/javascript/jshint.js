@@ -42,6 +42,22 @@ const errorMap = {
     payload: {openingSymbol: error.b, closingSymbol: error.a},
   }),
 
+  E021: error => {
+    if (error.b === '') {
+      return {
+        reason: 'missing-token',
+        payload: {token: error.a},
+        suppresses: ['end-of-input'],
+      };
+    }
+
+    return {
+      reason: 'strict-operators.custom-case',
+      payload: {goodOperator: error.a, badOperator: error.b},
+      suppresses: ['expected-identifier', 'unexpected-token'],
+    };
+  },
+
   E024: error => ({
     reason: 'unexpected',
     payload: {character: error.evidence},
@@ -94,14 +110,6 @@ const errorMap = {
     }
     if (error.a === '!==' && error.b === '!=') {
       return {reason: 'strict-operators.different'};
-    }
-
-    if (error.b === '') {
-      return {
-        reason: 'missing-token',
-        payload: {token: error.a},
-        suppresses: ['end-of-input'],
-      };
     }
 
     return {
