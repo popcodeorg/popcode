@@ -7,8 +7,8 @@ import omit from 'lodash-es/omit';
 import values from 'lodash-es/values';
 import uuid from 'uuid/v4';
 import once from 'lodash-es/once';
-import {firebase} from '@firebase/app';
-import '@firebase/auth';
+import * as firebase from 'firebase/app'; // eslint-disable-line import/no-namespace
+import 'firebase/auth';
 
 import {bugsnagClient} from '../util/bugsnag';
 import config from '../config';
@@ -39,7 +39,7 @@ async function loadDatabaseSdk() {
   return retryingFailedImports(() =>
     import(
       /* webpackChunkName: "mainAsync" */
-      '@firebase/database'
+      'firebase/database'
     ),
   );
 }
@@ -154,9 +154,7 @@ export async function migrateAccount(inboundAccountCredential) {
   const inboundAccountFirebase = buildFirebase('migration');
   const {auth: inboundAccountAuth} = inboundAccountFirebase;
   try {
-    await inboundAccountAuth.signInAndRetrieveDataWithCredential(
-      inboundAccountCredential,
-    );
+    await inboundAccountAuth.signInWithCredential(inboundAccountCredential);
     const inboundUid = inboundAccountAuth.currentUser.uid;
     await logMigration(inboundUid, 'attempt');
 
@@ -173,7 +171,7 @@ export async function migrateAccount(inboundAccountCredential) {
 
 async function migrateCredential(credential, {auth: inboundAccountAuth}) {
   await inboundAccountAuth.currentUser.unlink(credential.providerId);
-  await auth.currentUser.linkAndRetrieveDataWithCredential(credential);
+  await auth.currentUser.linkWithCredential(credential);
   await saveCredentialForCurrentUser(credential);
 }
 
