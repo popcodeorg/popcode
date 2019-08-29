@@ -67,7 +67,7 @@
         "node": true,
         "jest": true
       },
-      "files": ["**/{__factories__,__mocks__,__tests__}/*.js{,x}"],
+      "files": ["**/{__factories__,__mocks__,__tests__}/**/*.js{,x}"],
       "rules": {
         "jest/no-alias-methods": "warn",
         "jest/no-disabled-tests": "warn",

@@ -39,5 +39,18 @@ module.exports = api => {
     ],
     plugins,
     compact: false,
+    overrides: isJest
+      ? [
+          {
+            test: './node_modules/html-inspector/html-inspector.js',
+            plugins: [
+              [
+                'transform-globals',
+                {import: {'html-inspector/window': {window: 'default'}}},
+              ],
+            ],
+          },
+        ]
+      : [],
   };
 };
