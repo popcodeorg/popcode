@@ -25,37 +25,30 @@ function htmlWithHead(head) {
 htmlWithHead.offset = 3;
 
 describe('html validation', () => {
-  test('empty body', () => {
-    validationTest(htmlWithBody(''), html);
-  });
+  test('empty body', () => validationTest(htmlWithBody(''), html));
 
-  test('banned attribute', () => {
+  test('banned attribute', () =>
     validationTest(htmlWithBody('<p align="center"></p>'), html, {
       reason: 'banned-attributes.align',
       row: htmlWithBody.offset,
-    });
-  });
+    }));
 
-  test('void tags without explicit close', () => {
-    validationTest(htmlWithBody('<img src="test.jpg">'), html);
-  });
+  test('void tags without explicit close', () =>
+    validationTest(htmlWithBody('<img src="test.jpg">'), html));
 
-  test('<a> tag with relative href property', () => {
+  test('<a> tag with relative href property', () =>
     validationTest(htmlWithBody('<a href="./foo.bar">Bad link</a>'), html, {
       reason: 'href-style',
       row: htmlWithBody.offset,
-    });
-  });
+    }));
 
-  test('<a> tag with fragment-only URL href', () => {
-    validationTest(htmlWithBody('<a href="#fragment">Fragment</a>'), html);
-  });
+  test('<a> tag with fragment-only URL href', () =>
+    validationTest(htmlWithBody('<a href="#fragment">Fragment</a>'), html));
 
-  test('missing doctype', () => {
-    validationTest('<html></html>', html, {reason: 'doctype', row: 0});
-  });
+  test('missing doctype', () =>
+    validationTest('<html></html>', html, {reason: 'doctype', row: 0}));
 
-  test('unclosed <html> tag', () => {
+  test('unclosed <html> tag', () =>
     validationTest(
       `<!DOCTYPE html>
     <html>
@@ -63,10 +56,9 @@ describe('html validation', () => {
       <body></body>`,
       html,
       {reason: 'unclosed-tag', row: 1, payload: {tag: 'html'}},
-    );
-  });
+    ));
 
-  test('tag outside <html> tag', () => {
+  test('tag outside <html> tag', () =>
     validationTest(
       `<!DOCTYPE html>
     <html>
@@ -80,10 +72,9 @@ describe('html validation', () => {
         row: 5,
         payload: {tagName: 'p'},
       },
-    );
-  });
+    ));
 
-  test('text outside <body> tag', () => {
+  test('text outside <body> tag', () =>
     validationTest(
       `<!DOCTYPE html>
     <html>
@@ -96,10 +87,9 @@ describe('html validation', () => {
         reason: 'invalid-text-outside-body',
         row: 2,
       },
-    );
-  });
+    ));
 
-  test('text directly inside <head> tag', () => {
+  test('text directly inside <head> tag', () =>
     validationTest(
       `<!DOCTYPE html>
     <html>
@@ -114,42 +104,37 @@ describe('html validation', () => {
         reason: 'invalid-text-outside-body',
         row: 4,
       },
-    );
-  });
+    ));
 
-  test('missing internal closing tag div', () => {
+  test('missing internal closing tag div', () =>
     validationTest(htmlWithBody('<div>'), html, {
       reason: 'unclosed-tag',
       row: htmlWithBody.offset + 1,
       payload: {tag: 'div'},
-    });
-  });
+    }));
 
-  test('missing internal closing tag p', () => {
+  test('missing internal closing tag p', () =>
     validationTest(htmlWithBody('<p>'), html, {
       reason: 'unclosed-tag',
       row: htmlWithBody.offset + 1,
       payload: {tag: 'p'},
-    });
-  });
+    }));
 
-  test('unfinished closing tag', () => {
+  test('unfinished closing tag', () =>
     validationTest(htmlWithBody('<div></div'), html, {
       reason: 'unterminated-close-tag',
       row: htmlWithBody.offset,
       payload: {tag: 'div'},
-    });
-  });
+    }));
 
-  test('mismatched closing tag', () => {
+  test('mismatched closing tag', () =>
     validationTest(htmlWithBody('<div></div></span>'), html, {
       reason: 'unexpected-close-tag',
       row: htmlWithBody.offset,
       payload: {tag: 'span'},
-    });
-  });
+    }));
 
-  test('misplaced closing tag', () => {
+  test('misplaced closing tag', () =>
     validationTest(
       htmlWithBody(`<div><span></div>
     </span>`),
@@ -164,40 +149,34 @@ describe('html validation', () => {
           mismatch: htmlWithBody.offset + 1,
         },
       },
-    );
-  });
+    ));
 
-  test('space inside HTML angle bracket', () => {
+  test('space inside HTML angle bracket', () =>
     validationTest(htmlWithBody('< p>Content</p>'), html, {
       reason: 'space-before-tag-name',
       row: htmlWithBody.offset,
       payload: {tag: 'p'},
-    });
-  });
+    }));
 
-  test('lowercase attributes', () => {
-    validationTest(htmlWithBody('<div id="first">Content</div>'), html);
-  });
+  test('lowercase attributes', () =>
+    validationTest(htmlWithBody('<div id="first">Content</div>'), html));
 
-  test('lowercase data attributes', () => {
-    validationTest(htmlWithBody('<div data-id="1">Content</div>'), html);
-  });
+  test('lowercase data attributes', () =>
+    validationTest(htmlWithBody('<div data-id="1">Content</div>'), html));
 
-  test('uppercase attributes', () => {
+  test('uppercase attributes', () =>
     validationTest(htmlWithBody('<div ID="first">Content</div>'), html, {
       reason: 'lower-case-attribute-name',
       row: htmlWithBody.offset,
-    });
-  });
+    }));
 
-  test('mixed uppercase attributes', () => {
+  test('mixed uppercase attributes', () =>
     validationTest(htmlWithBody('<div data-ID="first">Content</div>'), html, {
       reason: 'lower-case-attribute-name',
       row: htmlWithBody.offset,
-    });
-  });
+    }));
 
-  test('ul with child text outside <li>', () => {
+  test('ul with child text outside <li>', () =>
     validationTest(
       htmlWithBody('<ul>Invalid to have non-empty text nodes</ul>'),
       html,
@@ -210,10 +189,9 @@ describe('html validation', () => {
           textContent: 'Invalid to have non-empty text nodes',
         },
       },
-    );
-  });
+    ));
 
-  test('ol with child text outside <li>', () => {
+  test('ol with child text outside <li>', () =>
     validationTest(
       htmlWithBody('<ol>Invalid to have non-empty text nodes</ol>'),
       html,
@@ -226,34 +204,30 @@ describe('html validation', () => {
           textContent: 'Invalid to have non-empty text nodes',
         },
       },
-    );
-  });
+    ));
 
-  test('li not inside ul', () => {
+  test('li not inside ul', () =>
     validationTest(htmlWithBody('<li>Orphaned List Item</li>'), html, {
       reason: 'invalid-tag-parent',
       row: htmlWithBody.offset,
       payload: {tag: 'li', parent: '<ul>, <ol> or <menu> tags'},
-    });
-  });
+    }));
 
-  test('li inside div', () => {
+  test('li inside div', () =>
     validationTest(htmlWithBody('<div><li>List within span</li></div>'), html, {
       reason: 'invalid-tag-parent',
       row: htmlWithBody.offset,
       payload: {tag: 'li', parent: '<ul>, <ol> or <menu> tags'},
-    });
-  });
+    }));
 
   test('li within ul', () => {
     validationTest(htmlWithBody('<ul><li>List item</li></ul>'), html);
   });
 
-  test('li within ol', () => {
-    validationTest(htmlWithBody('<ol><li>List item</li></ol>'), html);
-  });
+  test('li within ol', () =>
+    validationTest(htmlWithBody('<ol><li>List item</li></ol>'), html));
 
-  test('div inside span', () => {
+  test('div inside span', () =>
     validationTest(
       htmlWithBody('<span><div>Block inside inline</div></span>'),
       html,
@@ -262,10 +236,9 @@ describe('html validation', () => {
         row: htmlWithBody.offset,
         payload: {tag: 'div', parent: 'span'},
       },
-    );
-  });
+    ));
 
-  test('extra tag at end of doc', () => {
+  test('extra tag at end of doc', () =>
     validationTest(
       `<!DOCTYPE html>
     <html>
@@ -275,30 +248,25 @@ describe('html validation', () => {
     </div>`,
       html,
       {reason: 'unexpected-close-tag', row: 5, payload: {tag: 'div'}},
-    );
-  });
+    ));
 
-  test('malformed DOCTYPE that doesn’t parse', () => {
-    validationTest('<!DOCT\n', html, {reason: 'doctype', row: 0});
-  });
+  test('malformed DOCTYPE that doesn’t parse', () =>
+    validationTest('<!DOCT\n', html, {reason: 'doctype', row: 0}));
 
-  test('missing title', () => {
+  test('missing title', () =>
     validationTest(htmlWithHead(''), html, {
       reason: 'missing-title',
       row: htmlWithHead.offset - 1,
-    });
-  });
+    }));
 
-  test('generates specific error when missing', () => {
+  test('generates specific error when missing', () =>
     validationTest(htmlWithHead('<title></title>'), html, {
       reason: 'empty-title-element',
       row: htmlWithHead.offset,
-    });
-  });
+    }));
 
-  test('title with text', () => {
-    validationTest(htmlWithHead('<title>test</title>'), html);
-  });
+  test('title with text', () =>
+    validationTest(htmlWithHead('<title>test</title>'), html));
 
   testValidatorAcceptance(html, 'html');
 });
