@@ -3,5 +3,6 @@
 /dist
 /node_modules
 /nodeenv
-/src/validations/__test__/acceptance
+/src/validations/__tests__/acceptance.json
+/src/validations/__tests__/acceptance
 /templates

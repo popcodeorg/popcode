@@ -1,5 +1,5 @@
-import Code from '../../html/rules/Code';
-import MismatchedTag from '../../html/rules/MismatchedTag';
+import Code from '../html/rules/Code';
+import MismatchedTag from '../html/rules/MismatchedTag';
 
 describe('html rules', () => {
   test('misplaced close tag', () => {

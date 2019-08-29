@@ -117,7 +117,7 @@ describe('html validation', () => {
     );
   });
 
-  test('missing internal closing tag', () => {
+  test('missing internal closing tag div', () => {
     validationTest(htmlWithBody('<div>'), html, {
       reason: 'unclosed-tag',
       row: htmlWithBody.offset + 1,
@@ -125,7 +125,7 @@ describe('html validation', () => {
     });
   });
 
-  test('missing internal closing tag', () => {
+  test('missing internal closing tag p', () => {
     validationTest(htmlWithBody('<p>'), html, {
       reason: 'unclosed-tag',
       row: htmlWithBody.offset + 1,
@@ -190,7 +190,7 @@ describe('html validation', () => {
     });
   });
 
-  test('uppercase attributes', () => {
+  test('mixed uppercase attributes', () => {
     validationTest(htmlWithBody('<div data-ID="first">Content</div>'), html, {
       reason: 'lower-case-attribute-name',
       row: htmlWithBody.offset,

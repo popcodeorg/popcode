@@ -9,7 +9,7 @@ const path = require('path');
 const output = {};
 
 ['html', 'css', 'javascript'].forEach(language => {
-  const dir = `./src/validations/__test__/acceptance/${language}`;
+  const dir = `./src/validations/__tests__/acceptance/${language}`;
 
   output[language] = [];
 
@@ -21,6 +21,6 @@ const output = {};
 });
 
 fs.writeFile(
-  './src/validations/acceptance.json',
+  './src/validations/__tests__/acceptance.json',
   JSON.stringify(output, null, 2),
 );

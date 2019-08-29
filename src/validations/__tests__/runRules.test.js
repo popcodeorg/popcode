@@ -1,6 +1,4 @@
-// import test from 'tape-catch';
-
-import runRules from '../../html/runRules';
+import runRules from '../html/runRules';
 
 describe('structural html validation', () => {
   test('openTag row', async () => {

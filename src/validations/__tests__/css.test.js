@@ -173,7 +173,5 @@ describe('css validation', () => {
     });
   });
 
-  // test('acceptance', () => {
   testValidatorAcceptance(css, 'css');
-  // });
 });
