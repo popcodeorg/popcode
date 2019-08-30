@@ -57,13 +57,23 @@ def _create_nodeenv(nodeenv_package_dir):
         os.path.join(nodeenv_package_dir, 'nodeenv.py'),
         '--node=' + NODE_VERSION, NODEENV_DIR])
 
-def _install_dependencies():
+def _is_yarn_version_correct():
+    try:
+        version = _normalize_version_string(
+            run_and_capture_in_nodeenv(['yarn', '--version']))
+        return version == YARN_VERSION
+    except subprocess.CalledProcessError:
+        return False
+
+def _install_yarn():
     run_in_nodeenv(['npm', 'config', 'set', 'update-notifier', 'false'])
     run_in_nodeenv(['npm',
                     'install',
                     '--quiet',
                     '--global',
                     'yarn@{yarn_version}'.format(yarn_version=YARN_VERSION)])
+
+def _install_dependencies():
     run_in_nodeenv(['yarn',
                     'install',
                     '--frozen-lockfile',
@@ -110,6 +120,8 @@ def setup():
     if not _is_nodeenv_installed():
         nodeenv_package_dir = _install_nodeenv()
         _create_nodeenv(nodeenv_package_dir)
+    if not _is_yarn_version_correct():
+        _install_yarn()
     _install_dependencies()
     _symlink_vscode_config()
 
