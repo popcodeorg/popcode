@@ -77,6 +77,7 @@ def _install_dependencies():
     run_in_nodeenv(['yarn',
                     'install',
                     '--frozen-lockfile',
+                    '--check-files',
                     '--non-interactive',
                     '--no-progress',
                     '--silent'])
