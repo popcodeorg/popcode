@@ -77,10 +77,8 @@ def _install_dependencies():
     run_in_nodeenv(['yarn',
                     'install',
                     '--frozen-lockfile',
-                    '--check-files',
                     '--non-interactive',
-                    '--no-progress',
-                    '--silent'])
+                    '--no-progress'])
 
 def _symlink_vscode_config():
     vscode_dir = os.path.join(POPCODE_ROOT, '.vscode')
@@ -115,7 +113,7 @@ or
   {yarn_path} run autotest.karma
 """.format(yarn_path=yarn_path))
 
-def setup():
+def setup(skip_dependencies=False):
     if _is_nodeenv_installed() and not _is_nodeenv_node_version_correct():
         shutil.rmtree(NODEENV_DIR)
     if not _is_nodeenv_installed():
@@ -123,7 +121,8 @@ def setup():
         _create_nodeenv(nodeenv_package_dir)
     if not _is_yarn_version_correct():
         _install_yarn()
-    _install_dependencies()
+    if not skip_dependencies:
+        _install_dependencies()
     _symlink_vscode_config()
 
 if __name__ == "__main__":
