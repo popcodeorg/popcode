@@ -83,8 +83,12 @@ def _has_powershell_nodeenv():
     return path.exists(NODEENV_POWERSHELL_ACTIVATE)
 
 def _run_and_capture_output(args):
-    (out, _) = subprocess.Popen(args, stdout=subprocess.PIPE).communicate()
-    return out.decode('utf-8')
+    process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (out, err) = process.communicate()
+    if process.returncode == 0:
+        return out.decode('utf-8')
+    else:
+        raise subprocess.CalledProcessError(returncode=process.returncode, cmd=args, output=err.decode('utf-8'))
 
 def shell_join(command):
     return ' '.join([shell_quote(arg) for arg in command])
