@@ -167,6 +167,7 @@
       ]
     }
   ],
+  "postUpdateOptions": ["yarnDedupeFewer"],
   "prConcurrentLimit": 3,
   "reviewers": ["outoftime"]
 }
