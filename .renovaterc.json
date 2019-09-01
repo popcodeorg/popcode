@@ -169,5 +169,6 @@
   ],
   "postUpdateOptions": ["yarnDedupeFewer"],
   "prConcurrentLimit": 3,
+  "rebaseStalePrs": true,
   "reviewers": ["outoftime"]
 }
