@@ -1,9 +1,0 @@
-version: '3.7'
-services:
-  app:
-    build:
-      args:
-        install_dependencies: 'false'
-    volumes:
-      - './node_modules:/app/node_modules'
-      - './bower_components:/app/bower_components'
