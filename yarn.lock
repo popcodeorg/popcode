@@ -3973,10 +3973,10 @@ cloneable-readable@^1.0.0:
     process-nextick-args "^2.0.0"
     readable-stream "^2.3.5"
 
-cloudflare@2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/cloudflare/-/cloudflare-2.4.1.tgz#11f5ba2a62bf5afef093a7517ce8f35716cfd81b"
-  integrity sha512-L1KMiguQ4J1GlHwPD1iSNU+Yw6R7cuYasdXWb1d1Vkx7LftdbfLVqekoe9RaN0gnPURSckC34+fuc8cyTbDkOg==
+cloudflare@2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/cloudflare/-/cloudflare-2.5.1.tgz#cb3fd70d6e403316e81c04ed4eaa18f8c609e11c"
+  integrity sha512-+VS8ATI2E8MghVgnZSqbTEInwQAQhFZ0LSsA2eNvL4X/EBq2fXHswZ2kWYh5AnbzFLLjlMc9ZVx4nZG8r/jakQ==
   dependencies:
     autocreate "^1.1.0"
     es-class "^2.1.1"

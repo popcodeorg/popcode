@@ -318,7 +318,7 @@
     "caniuse-lite": "1.0.30000989",
     "check-dependencies": "1.1.0",
     "circular-dependency-plugin": "5.0.2",
-    "cloudflare": "2.4.1",
+    "cloudflare": "2.5.1",
     "command-exists": "1.2.8",
     "cssnano": "3.10.0",
     "doctoc": "1.3.1",
