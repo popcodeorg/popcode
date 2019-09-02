@@ -311,7 +311,7 @@
     "babel-loader": "8.0.6",
     "babel-plugin-dynamic-import-node": "2.3.0",
     "bower": "1.8.8",
-    "brfs": "2.0.0",
+    "brfs": "2.0.2",
     "browser-sync": "2.24.4",
     "bulkify": "1.4.2",
     "caniuse-api": "3.0.0",
