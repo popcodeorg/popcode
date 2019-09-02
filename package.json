@@ -307,7 +307,7 @@
     "@popcodeorg/eslint-import-resolver-jest": "2.1.1-popcode.1",
     "@redux-saga/testing-utils": "1.0.5",
     "almost-equal": "1.1.0",
-    "babel-eslint": "10.0.2",
+    "babel-eslint": "10.0.3",
     "babel-loader": "8.0.6",
     "babel-plugin-dynamic-import-node": "2.3.0",
     "bower": "1.8.4",
