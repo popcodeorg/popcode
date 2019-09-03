@@ -331,7 +331,7 @@
     "eslint-plugin-prettier": "3.1.0",
     "eslint-plugin-private-props": "0.3.0",
     "eslint-plugin-promise": "4.0.1",
-    "eslint-plugin-react": "7.12.4",
+    "eslint-plugin-react": "7.14.3",
     "eslint_d": "7.1.1",
     "exports-loader": "0.7.0",
     "gulp": "3.9.1",
