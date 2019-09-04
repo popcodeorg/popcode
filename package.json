@@ -265,7 +265,7 @@
     "source-map": "0.6.1",
     "strip-markdown": "3.0.4",
     "stylelint": "10.1.0",
-    "sweetalert2": "7.28.2",
+    "sweetalert2": "7.28.13",
     "uuid": "3.3.2",
     "void-elements": "3.1.0",
     "whatwg-fetch": "3.0.0"
