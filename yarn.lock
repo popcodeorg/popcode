@@ -14679,10 +14679,10 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
-sweetalert2@7.28.2:
-  version "7.28.2"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-7.28.2.tgz#9de74d15c147bbd8c34a51bba0849de5d2358732"
-  integrity sha512-9YO8hQr1iLwKU4qdItm00qiDeMjv79qwh6duc1GCIbXf/yPv0ooTvyNxEuRCLljPCCzw8h0eWUmrrX+fBzBYyw==
+sweetalert2@7.28.13:
+  version "7.28.13"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-7.28.13.tgz#3b5997dd69d6de38bcbc53170acd8860c5e144e5"
+  integrity sha512-qrNsctQAJApU2oDNzhy3Hlbj7XvcHyI1JLySPplh81HESt5Fg5GcgCIMb5Rd0XqLvkkEQK5itA1i71BO8Mavog==
 
 symbol-observable@1.0.1:
   version "1.0.1"
