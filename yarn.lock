@@ -7514,10 +7514,10 @@ i18next-resource-store-loader@0.1.2:
     loader-utils "^0.2.11"
     lodash "^4.6.1"
 
-i18next@15.0.6:
-  version "15.0.6"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-15.0.6.tgz#2bad22b180043dce4ebc89763b07b752a5379675"
-  integrity sha512-pFka7P9InL0UvvQeKKxXR9khyblG6wB4QSQliIRJII2BiWv8OXXYUPeXIa+4rSnZJFhq86aMl4d0hRF0Lgs6Jw==
+i18next@15.0.10:
+  version "15.0.10"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-15.0.10.tgz#c261ccd3a17c2c474992a1b291e60fd1db4796ce"
+  integrity sha512-x5c117Xg1is8z/b+zeqONh2yIojrk6Ptk6v1zgaYkzS7HhbDQ0/7b7RKqOX3WGLHP33sXxzKCU4Mh9tdwDTHVA==
   dependencies:
     "@babel/runtime" "^7.3.1"
 
