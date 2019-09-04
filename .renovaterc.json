@@ -85,6 +85,11 @@
       ]
     },
     {
+      "groupName": "Node.js",
+      "packageNames": ["node"],
+      "automerge": false
+    },
+    {
       "groupName": "Project libraries",
       "packageNames": ["jquery", "p5"]
     },
@@ -167,8 +172,12 @@
       ]
     }
   ],
+  "patch": {
+    "automerge": true
+  },
   "postUpdateOptions": ["yarnDedupeFewer"],
   "prConcurrentLimit": 3,
   "rebaseStalePrs": true,
-  "reviewers": ["outoftime"]
+  "reviewers": ["outoftime"],
+  "separateMinorPatch": true
 }
