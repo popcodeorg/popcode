@@ -158,6 +158,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       }),
       new ScriptExtHtmlWebpackPlugin({
         defaultAttribute: 'defer',
+        inline: /(^|~)inline[.~-]/u,
         prefetch: {
           chunks: 'async',
           test: /\.js$/u,
@@ -167,6 +168,11 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
             test: /^(?!(|.*~)main[.~-])/u,
             attribute: 'type',
             value: 'ref',
+          },
+          {
+            test: /^$/u,
+            attribute: 'type',
+            value: 'text/javascript',
           },
           {
             test: /(^|~)preview[.~-]/u,
@@ -185,6 +191,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     entry: isTest
       ? undefined
       : {
+          inline: 'first-input-delay',
           main: './application.js',
           preview: './preview.js',
         },
