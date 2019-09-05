@@ -9,6 +9,7 @@ import uuid from 'uuid/v4';
 import once from 'lodash-es/once';
 import * as firebase from 'firebase/app'; // eslint-disable-line import/no-namespace
 import 'firebase/auth';
+import 'firebase/performance';
 
 import {bugsnagClient} from '../util/bugsnag';
 import config from '../config';
@@ -54,6 +55,10 @@ function buildFirebase(appName = undefined) {
     appName,
   );
 
+  app.automaticDataCollectionEnabled = true;
+
+  const perf = appName === undefined ? firebase.performance(app) : null;
+
   return {
     auth: firebase.auth(app),
 
@@ -61,6 +66,8 @@ function buildFirebase(appName = undefined) {
       await loadDatabaseSdk();
       return firebase.database(app);
     }),
+
+    perf,
   };
 }
 
