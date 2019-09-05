@@ -11198,8 +11198,12 @@ react-hotkeys@^2.0.0:
   dependencies:
     prop-types "^15.6.1"
 
+<<<<<<< HEAD
 react-immutable-proptypes@^2.1.0:
 >>>>>>> c27b9a50... add hot keys
+=======
+react-immutable-proptypes@2.1.0:
+>>>>>>> 2245cd5e... fix yarn.lock
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-immutable-proptypes/-/react-immutable-proptypes-2.1.0.tgz#023d6f39bb15c97c071e9e60d00d136eac5fa0b4"
   integrity sha1-Aj1vObsVyXwHHp5g0A0TbqxfoLQ=
