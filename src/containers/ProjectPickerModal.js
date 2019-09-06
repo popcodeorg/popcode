@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {closeProjectPickerModal, filterProjects} from '../actions';
 
 import {
-  getAllProjects,
+  getPartitionedProjects,
   isProjectPickerModalOpen,
   getProjectsFilter,
 } from '../selectors';
@@ -11,10 +11,12 @@ import {
 import ProjectPickerModal from '../components/ProjectPickerModal';
 
 function mapStateToProps(state) {
+  const [activeProjects, archivedProjects] = getPartitionedProjects(state);
   return {
     isOpen: isProjectPickerModalOpen(state),
-    projects: getAllProjects(state),
     projectsFilter: getProjectsFilter(state),
+    activeProjects,
+    archivedProjects,
   };
 }
 

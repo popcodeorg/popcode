@@ -14,7 +14,8 @@ import Modal from './Modal';
 
 export default function ProjectPickerModal({
   isOpen,
-  projects,
+  activeProjects,
+  archivedProjects,
   projectsFilter,
   onCloseProjectPickerModal,
   onFilterProjects,
@@ -22,16 +23,8 @@ export default function ProjectPickerModal({
   if (!isOpen) {
     return null;
   }
-
-  let visibleProjects;
-  const activeProjects = filter(projects, ({isArchived}) => !isArchived);
-  const archivedProjects = filter(projects, ({isArchived}) => isArchived);
-  if (projectsFilter === 'active') {
-    visibleProjects = activeProjects;
-  } else if (projectsFilter === 'archived') {
-    visibleProjects = archivedProjects;
-  }
-
+  const visibleProjects =
+    projectsFilter === 'archived' ? archivedProjects : activeProjects;
   return (
     <Modal onClose={onCloseProjectPickerModal}>
       <div className="project-picker">
@@ -80,8 +73,9 @@ export default function ProjectPickerModal({
 }
 
 ProjectPickerModal.propTypes = {
+  activeProjects: PropTypes.array.isRequired,
+  archivedProjects: PropTypes.array.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  projects: PropTypes.array.isRequired,
   projectsFilter: PropTypes.string.isRequired,
   onCloseProjectPickerModal: PropTypes.func.isRequired,
   onFilterProjects: PropTypes.func.isRequired,

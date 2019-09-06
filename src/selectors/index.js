@@ -23,6 +23,7 @@ import getHiddenUIComponents from './getHiddenUIComponents';
 import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
 import getParsedDate from './getParsedDate';
+import getPartitionedProjects from './getPartitionedProjects';
 import getProject from './getProject';
 import getProjectsFilter from './getProjectsFilter';
 import getRequestedFocusedLine from './getRequestedFocusedLine';
@@ -78,6 +79,7 @@ export {
   getNotifications,
   getOpenTopBarMenu,
   getParsedDate,
+  getPartitionedProjects,
   getProject,
   getProjectsFilter,
   getRequestedFocusedLine,
