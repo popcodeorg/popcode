@@ -195,6 +195,7 @@
   "dependencies": {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@babel/core": "7.6.4",
     "@babel/preset-env": "7.6.3",
     "@bugsnag/js": "6.4.3",
@@ -205,6 +206,8 @@
 =======
 >>>>>>> b155a3fd... fix yarn.lock
 >>>>>>> 2245cd5e... fix yarn.lock
+=======
+>>>>>>> e7e8ada8... fix package.json
     "@babel/core": "7.5.5",
     "@babel/preset-env": "7.5.5",
     "@bugsnag/js": "6.4.0",
@@ -222,7 +225,7 @@
     "classnames": "2.2.6",
     "core-js": "3.3.6",
     "css": "2.2.4",
-<<<<<<< HEAD
+    "delay": "^4.3.0",
     "enum": "2.5.0",
     "enumify": "1.0.4",
     "esprima": "4.0.1",
@@ -246,6 +249,7 @@
     "loadjs": "4.0.1",
     "lodash-es": "4.17.15",
     "loop-breaker": "0.1.1",
+<<<<<<< HEAD
     "moment": "2.24.0",
     "object-inspect": "1.6.0",
     "offline-plugin": "5.0.7",
@@ -326,6 +330,8 @@
     "loadjs": "3.5.5",
     "lodash-es": "4.17.15",
     "loop-breaker": "0.1.1",
+=======
+>>>>>>> e7e8ada8... fix package.json
     "moment": "2.22.2",
     "mousetrap": "^1.6.3",
     "object-inspect": "1.5.0",
@@ -343,32 +349,6 @@
     "react-dom": "16.9.0",
     "react-draggable": "3.0.5",
     "react-ga": "2.5.3",
-<<<<<<< HEAD
-    "react-hotkeys": "^2.0.0",
-<<<<<<< HEAD
-    "react-immutable-proptypes": "^2.1.0",
-    "react-onclickoutside": "^6.5.0",
-    "react-prevent-clickthrough": "^0.0.3",
-    "react-redux": "^7.1.0",
-    "reduce-reducers": "^1.0.4",
-    "redux": "^4.0.4",
-    "redux-actions": "^2.6.5",
-    "redux-form": "^8.2.6",
-    "redux-immutable": "^4.0.0",
-    "redux-logic": "^2.1.1",
-    "redux-saga": "^1.0.5",
-    "regenerator-runtime": "^0.13.3",
-    "remark": "^10.0.1",
-    "remark-external-links": "^4.0.0",
-    "remark-react": "^5.0.1",
-    "remark-react-lowlight": "^0.7.0",
-    "reselect": "^4.0.0",
-    "shallowequal": "^1.1.0",
-    "slowparse": "^1.1.4",
->>>>>>> 78ccfe2b... add hot keys
-=======
-=======
->>>>>>> 2f8d46c9... removes react hotkeys
     "react-immutable-proptypes": "2.1.0",
     "react-onclickoutside": "6.7.1",
     "react-prevent-clickthrough": "0.0.3",
@@ -388,7 +368,6 @@
     "reselect": "4.0.0",
     "shallowequal": "1.1.0",
     "slowparse": "1.3.0",
->>>>>>> b155a3fd... fix yarn.lock
     "source-map": "0.6.1",
     "strip-markdown": "3.1.1",
     "stylelint": "11.1.1",
