@@ -24,6 +24,7 @@ export default function EditorsColumn({
   onEditorInput,
   onRequestedLineFocused,
   onResizableFlexDividerDrag,
+  onSave,
   visibleLanguages,
 }) {
   const editors = [];
@@ -53,6 +54,7 @@ export default function EditorsColumn({
           onAutoFormat={onAutoFormat}
           onInput={partial(onEditorInput, currentProject.projectKey, language)}
           onRequestedLineFocused={onRequestedLineFocused}
+          onSave={onSave}
         />
       </EditorContainer>,
     );
@@ -93,6 +95,7 @@ EditorsColumn.propTypes = {
   onEditorInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
   onResizableFlexDividerDrag: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
 EditorsColumn.defaultProps = {

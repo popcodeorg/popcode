@@ -11191,6 +11191,7 @@ react-ga@2.5.3:
     prop-types "^15.6.0"
     react "^15.6.2 || ^16.0"
 
+<<<<<<< HEAD
 react-hotkeys@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-hotkeys/-/react-hotkeys-2.0.0.tgz#a7719c7340cbba888b0e9184f806a9ec0ac2c53f"
@@ -11202,6 +11203,8 @@ react-hotkeys@^2.0.0:
 react-immutable-proptypes@^2.1.0:
 >>>>>>> c27b9a50... add hot keys
 =======
+=======
+>>>>>>> d44de03a... removes react hotkeys
 react-immutable-proptypes@2.1.0:
 >>>>>>> 2245cd5e... fix yarn.lock
   version "2.1.0"

@@ -14,6 +14,7 @@ import {
   editorFocusedRequestedLine,
   hideComponent,
   updateProjectSource,
+  saveProject,
 } from '../actions';
 
 function mapStateToProps(state) {
@@ -43,6 +44,10 @@ function mapDispatchToProps(dispatch) {
 
     onAutoFormat() {
       dispatch(beautifyProjectSource());
+    },
+
+    onSave() {
+      dispatch(saveProject());
     },
   };
 }

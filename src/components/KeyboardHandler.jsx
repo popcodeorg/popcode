@@ -1,22 +1,20 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-import {HotKeys} from 'react-hotkeys';
-
-import keyMap from '../util/keyMap';
+import React, {useEffect} from 'react';
+import mousetrap from 'mousetrap';
 
 export default function KeyboardHandler({children, onSave}) {
-  const handlers = {
-    SAVE: () => {
+  useEffect(() => {
+    mousetrap.bind('mod+s', () => {
       onSave();
       return false;
-    },
-  };
+    });
 
-  return (
-    <HotKeys handlers={handlers} keyMap={keyMap}>
-      {children}
-    </HotKeys>
-  );
+    return () => {
+      mousetrap.unbind('mod+s');
+    };
+  }, [onSave]);
+
+  return <>{children}</>;
 }
 
 KeyboardHandler.propTypes = {
