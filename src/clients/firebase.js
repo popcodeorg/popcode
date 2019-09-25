@@ -49,8 +49,10 @@ function buildFirebase(appName = undefined) {
   const app = firebase.initializeApp(
     {
       apiKey: config.firebaseApiKey,
+      appId: config.firebaseAppId,
       authDomain: `${config.firebaseApp}.firebaseapp.com`,
       databaseURL: `https://${config.firebaseApp}.firebaseio.com`,
+      projectId: config.firebaseProjectId,
     },
     appName,
   );
