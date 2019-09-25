@@ -12779,10 +12779,10 @@ redux-logic@2.1.1:
     loose-envify "^1.4.0"
     rxjs "^6.3.1"
 
-redux-saga-test-plan@4.0.0-beta.4:
-  version "4.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/redux-saga-test-plan/-/redux-saga-test-plan-4.0.0-beta.4.tgz#1fc0a038d8a45e868d0761ace62d639049c45988"
-  integrity sha512-4tA+Njy4eSWpONbAplsxbQfwSxijPtmBoPcW7ArQLENfYu900l/6a0T83EXqW6tU+IrZ6B1GBgJ7hB17tO66AA==
+redux-saga-test-plan@4.0.0-rc.1:
+  version "4.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/redux-saga-test-plan/-/redux-saga-test-plan-4.0.0-rc.1.tgz#f3c4a17b95d080ac640e212312e119dee8020d67"
+  integrity sha512-pCdbQaR1V9ek0Q7Tu4FSWNnVns3tuNqUieyRXIJ95BRmpTqGEAKRUCj5Qkc936y7FT4Cuu7JVN51j972jIh8Fg==
   dependencies:
     core-js "^2.4.1"
     fsm-iterator "^1.1.0"
