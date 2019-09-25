@@ -1,3 +1,4 @@
+/* eslint react/prop-types: "off" */
 import isUndefined from 'lodash-es/isUndefined';
 import isNull from 'lodash-es/isNull';
 
@@ -17,14 +18,7 @@ const CurrentUserMenu = createMenu({
   menuClass: 'top-bar__menu_right',
   name: 'currentUser',
 
-  renderItems({
-    /* eslint-disable react/prop-types */
-    onLinkGitHub,
-    onLogOut,
-    onUnlinkGitHub,
-    user,
-    /* eslint-enable react/prop-types */
-  }) {
+  renderItems({onLinkGitHub, onLogOut, onUnlinkGitHub, user}) {
     const githubIdentityProvider = user.identityProviders.get('github.com');
     return (
       <Fragment>

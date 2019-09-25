@@ -1,0 +1,183 @@
+{
+  "extends": ["config:base"],
+  "masterIssue": true,
+  "masterIssueAutoclose": true,
+  "packageRules": [
+    {
+      "groupName": "Babel",
+      "packageNames": [
+        "babel-eslint",
+        "babel-loader",
+        "babel-plugin-dynamic-import-node",
+        "caniuse-api",
+        "caniuse-lite",
+        "core-js",
+        "regenerator-runtime"
+      ],
+      "packagePatterns": ["^@babel/"]
+    },
+    {
+      "groupName": "Bugsnag",
+      "packagePatterns": ["^@bugsnag/"]
+    },
+    {
+      "groupName": "Font Awesome",
+      "packagePatterns": ["^@fortawesome/"]
+    },
+    {
+      "groupName": "gulp",
+      "packageNames": ["gulp", "gulp-concat", "gulp-postcss", "gulp-sourcemaps"]
+    },
+    {
+      "groupName": "i18next",
+      "packageNames": ["i18next", "i18next-resource-store-loader"]
+    },
+    {
+      "groupName": "Immutable.js",
+      "packageNames": [
+        "immutable",
+        "immutable-devtools",
+        "react-immutable-proptypes"
+      ]
+    },
+    {
+      "groupName": "Jest",
+      "packageNames": [
+        "@popcodeorg/eslint-import-resolver-jest",
+        "eslint-plugin-jest",
+        "jest",
+        "jest-extended",
+        "rosie"
+      ]
+    },
+
+    {
+      "groupName": "Karma & Tape",
+      "packageNames": [
+        "karma",
+        "karma-browserstack-launcher",
+        "karma-chrome-launcher",
+        "karma-firefox-launcher",
+        "karma-safari-launcher",
+        "karma-sinon",
+        "karma-sourcemap-loader",
+        "karma-tap",
+        "karma-webpack",
+        "sinon",
+        "tape",
+        "tape-catch"
+      ]
+    },
+    {
+      "groupName": "linters",
+      "packageNames": [
+        "eslint",
+        "eslint-config-prettier",
+        "eslint_d",
+        "eslint-plugin-import",
+        "eslint-plugin-prettier",
+        "eslint-plugin-private-props",
+        "eslint-plugin-promise",
+        "prettier",
+        "stylelint-config-prettier",
+        "stylelint-prettier",
+        "stylelint-selector-bem-pattern"
+      ]
+    },
+    {
+      "groupName": "Node.js",
+      "packageNames": ["node"],
+      "automerge": false
+    },
+    {
+      "groupName": "Project libraries",
+      "packageNames": ["jquery", "p5"]
+    },
+    {
+      "groupName": "React",
+      "packageNames": [
+        "classnames",
+        "eslint-plugin-react",
+        "prop-types",
+        "react",
+        "react-dom"
+      ]
+    },
+    {
+      "groupName": "Redux",
+      "packageNames": [
+        "react-redux",
+        "reduce-reducers",
+        "redux",
+        "redux-actions",
+        "redux-form",
+        "redux-immutable",
+        "redux-logic",
+        "redux-saga",
+        "@redux-saga/testing-utils",
+        "redux-saga-test-plan",
+        "reselect"
+      ]
+    },
+    {
+      "groupName": "Remark",
+      "packageNames": [
+        "remark",
+        "remark-external-links",
+        "remark-react",
+        "remark-react-lowlight"
+      ]
+    },
+    {
+      "groupName": "validation linters",
+      "packageNames": [
+        "PrettyCSS",
+        "css",
+        "esprima",
+        "html-inspector",
+        "htmllint",
+        "jshint",
+        "postcss",
+        "slowparse",
+        "stylelint"
+      ]
+    },
+    {
+      "groupName": "Webpack",
+      "packageNames": [
+        "circular-dependency-plugin",
+        "eslint-import-resolver-webpack",
+        "eslint-loader",
+        "exports-loader",
+        "hard-source-webpack-plugin",
+        "html-webpack-plugin",
+        "imports-loader",
+        "json-loader",
+        "null-loader",
+        "offline-plugin",
+        "raw-loader",
+        "script-ext-html-webpack-plugin",
+        "source-map-loader",
+        "stats-webpack-plugin",
+        "string-replace-loader",
+        "substitute-loader",
+        "svg-react-loader",
+        "svgo-loader",
+        "transform-loader",
+        "val-loader",
+        "webpack",
+        "webpack-bundle-analyzer",
+        "webpack-dev-middleware",
+        "webpack-visualizer-plugin"
+      ]
+    }
+  ],
+  "patch": {
+    "automerge": true
+  },
+  "postUpdateOptions": ["yarnDedupeFewer"],
+  "prConcurrentLimit": 3,
+  "rebaseStalePrs": true,
+  "reviewers": ["outoftime"],
+  "separateMinorPatch": true
+}

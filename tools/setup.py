@@ -57,19 +57,28 @@ def _create_nodeenv(nodeenv_package_dir):
         os.path.join(nodeenv_package_dir, 'nodeenv.py'),
         '--node=' + NODE_VERSION, NODEENV_DIR])
 
-def _install_dependencies():
+def _is_yarn_version_correct():
+    try:
+        version = _normalize_version_string(
+            run_and_capture_in_nodeenv(['yarn', '--version']))
+        return version == YARN_VERSION
+    except subprocess.CalledProcessError:
+        return False
+
+def _install_yarn():
     run_in_nodeenv(['npm', 'config', 'set', 'update-notifier', 'false'])
     run_in_nodeenv(['npm',
                     'install',
                     '--quiet',
                     '--global',
                     'yarn@{yarn_version}'.format(yarn_version=YARN_VERSION)])
+
+def _install_dependencies():
     run_in_nodeenv(['yarn',
                     'install',
                     '--frozen-lockfile',
                     '--non-interactive',
-                    '--no-progress',
-                    '--silent'])
+                    '--no-progress'])
 
 def _symlink_vscode_config():
     vscode_dir = os.path.join(POPCODE_ROOT, '.vscode')
@@ -78,11 +87,13 @@ def _symlink_vscode_config():
         gitignore_path = os.path.join(POPCODE_ROOT, '.git', 'info', 'exclude')
         if not os.path.exists(os.path.dirname(gitignore_path)):
             os.mkdir(os.path.dirname(gitignore_path))
-        with open(gitignore_path, 'r') as gitignore_r:
-            needs_vscode_in_gitignore = not '.vscode' in gitignore_r
+        needs_vscode_in_gitignore = True
+        if os.path.exists(gitignore_path):
+            with open(gitignore_path, 'r') as gitignore_r:
+                needs_vscode_in_gitignore = not '.vscode' in gitignore_r
         if needs_vscode_in_gitignore:
             with open(gitignore_path, 'a') as gitignore_a:
-                gitignore_a.writelines([".vscode"])
+                gitignore_a.writelines(['/.vscode\n'])
 
 def _print_success_message():
     yarn_path = os.path.join('tools', 'yarn.py')
@@ -102,13 +113,16 @@ or
   {yarn_path} run autotest.karma
 """.format(yarn_path=yarn_path))
 
-def setup():
+def setup(skip_dependencies=False):
     if _is_nodeenv_installed() and not _is_nodeenv_node_version_correct():
         shutil.rmtree(NODEENV_DIR)
     if not _is_nodeenv_installed():
         nodeenv_package_dir = _install_nodeenv()
         _create_nodeenv(nodeenv_package_dir)
-    _install_dependencies()
+    if not _is_yarn_version_correct():
+        _install_yarn()
+    if not skip_dependencies:
+        _install_dependencies()
     _symlink_vscode_config()
 
 if __name__ == "__main__":

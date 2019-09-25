@@ -1,4 +1,5 @@
 const isDocker = require('is-docker');
+const commandExists = require('command-exists').sync;
 
 const webpackConfiguration = require('./webpack.config.js');
 
@@ -40,7 +41,9 @@ module.exports = function configure(config) {
 
     logLevel: config.LOG_WARN,
 
-    browsers: ['Chrome'],
+    browsers: [
+      commandExists('chromium') ? 'ChromiumHeadless' : 'ChromeHeadless',
+    ],
 
     concurrency: Infinity,
 
