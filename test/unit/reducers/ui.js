@@ -118,7 +118,6 @@ test(
     reducer,
     initialState
       .set('openTopBarMenu', 'projectPicker')
-      .set('archivedViewOpen', true)
       .set('isEditingInstructions', false),
     changeCurrentProject,
     initialState,
