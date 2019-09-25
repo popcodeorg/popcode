@@ -57,8 +57,6 @@ function buildFirebase(appName = undefined) {
     appName,
   );
 
-  app.automaticDataCollectionEnabled = true;
-
   const perf = appName === undefined ? firebase.performance(app) : null;
 
   return {
