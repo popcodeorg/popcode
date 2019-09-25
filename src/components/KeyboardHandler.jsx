@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 import mousetrap from 'mousetrap';
 
-export default function KeyboardHandler({children, onSave}) {
+export default function KeyboardHandler({onSave}) {
   useEffect(() => {
     mousetrap.bind('mod+s', () => {
       onSave();
@@ -14,7 +14,7 @@ export default function KeyboardHandler({children, onSave}) {
     };
   }, [onSave]);
 
-  return <>{children}</>;
+  return null;
 }
 
 KeyboardHandler.propTypes = {

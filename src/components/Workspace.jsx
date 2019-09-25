@@ -299,7 +299,7 @@ export default class Workspace extends React.Component {
 
   render() {
     return (
-      <KeyboardHandler>
+      <>
         <div className="layout">
           <AssignmentCreator />
           <TopBar />
@@ -314,7 +314,8 @@ export default class Workspace extends React.Component {
           <AccountMigration />
           <LoginPrompt />
         </div>
-      </KeyboardHandler>
+        <KeyboardHandler />
+      </>
     );
   }
 }
