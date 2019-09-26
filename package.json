@@ -327,7 +327,7 @@
     "eslint-import-resolver-webpack": "0.11.1",
     "eslint-loader": "2.2.1",
     "eslint-plugin-import": "2.17.3",
-    "eslint-plugin-jest": "22.16.0",
+    "eslint-plugin-jest": "22.17.0",
     "eslint-plugin-prettier": "3.1.1",
     "eslint-plugin-private-props": "0.3.0",
     "eslint-plugin-promise": "4.0.1",
