@@ -383,8 +383,8 @@
     "tape-catch": "1.0.6",
     "transform-loader": "0.2.4",
     "val-loader": "1.1.1",
-    "webpack": "4.39.3",
-    "webpack-bundle-analyzer": "3.4.1",
+    "webpack": "4.41.0",
+    "webpack-bundle-analyzer": "3.5.2",
     "webpack-dev-middleware": "3.7.1",
     "webpack-visualizer-plugin": "0.1.11",
     "yarn-deduplicate": "1.1.1"
