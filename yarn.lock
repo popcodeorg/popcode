@@ -3976,10 +3976,10 @@ cloneable-readable@^1.0.0:
     process-nextick-args "^2.0.0"
     readable-stream "^2.3.5"
 
-cloudflare@2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/cloudflare/-/cloudflare-2.5.1.tgz#cb3fd70d6e403316e81c04ed4eaa18f8c609e11c"
-  integrity sha512-+VS8ATI2E8MghVgnZSqbTEInwQAQhFZ0LSsA2eNvL4X/EBq2fXHswZ2kWYh5AnbzFLLjlMc9ZVx4nZG8r/jakQ==
+cloudflare@2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/cloudflare/-/cloudflare-2.7.0.tgz#ff9249a63ff9b662bd863da21e965c8f82f76012"
+  integrity sha512-yhroBpn2VBczFwiRLpyUc431XiWE+xNs8YvtjAsj1vEA1pVwhpje6BzgLW5iZbulmCuPX48lvX8HizeMWk713g==
   dependencies:
     autocreate "^1.1.0"
     es-class "^2.1.1"
