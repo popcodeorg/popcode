@@ -80,9 +80,11 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
   const plugins = [
     new webpack.EnvironmentPlugin({
       FIREBASE_APP: 'popcode-development',
+      FIREBASE_APP_ID: '1:488497217137:web:8a7ee07a38d0590a',
       FIREBASE_API_KEY: 'AIzaSyCHlo2RhOkRFFh48g779YSZrLwKjoyCcws',
       FIREBASE_CLIENT_ID:
         '488497217137-c0mdq8uca6ot5o9u9avo3j5mfsi1q9v5.apps.googleusercontent.com',
+      FIREBASE_PROJECT_ID: 'popcode-development',
       NODE_ENV: env,
       WARN_ON_DROPPED_ERRORS: 'false',
       GOOGLE_ANALYTICS_TRACKING_ID: 'UA-90316486-2',
@@ -158,6 +160,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       }),
       new ScriptExtHtmlWebpackPlugin({
         defaultAttribute: 'defer',
+        inline: /(^|~)inline[.~-]/u,
         prefetch: {
           chunks: 'async',
           test: /\.js$/u,
@@ -167,6 +170,11 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
             test: /^(?!(|.*~)main[.~-])/u,
             attribute: 'type',
             value: 'ref',
+          },
+          {
+            test: /^$/u,
+            attribute: 'type',
+            value: 'text/javascript',
           },
           {
             test: /(^|~)preview[.~-]/u,
@@ -185,6 +193,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     entry: isTest
       ? undefined
       : {
+          inline: 'first-input-delay',
           main: './application.js',
           preview: './preview.js',
         },
