@@ -4,7 +4,6 @@
 
 module.exports = {
   nodeEnv: process.env.NODE_ENV || 'development',
-  logReduxActions: () => process.env.LOG_REDUX_ACTIONS === 'true',
   warnOnDroppedErrors: process.env.WARN_ON_DROPPED_ERRORS === 'true',
 
   firebaseApp: process.env.FIREBASE_APP,
