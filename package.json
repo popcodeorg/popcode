@@ -237,7 +237,7 @@
     "postcss": "7.0.18",
     "promise-retry": "1.1.1",
     "prop-types": "15.7.2",
-    "qs": "6.5.2",
+    "qs": "6.9.0",
     "raf": "3.4.1",
     "react": "16.9.0",
     "react-copy-to-clipboard": "5.0.1",
