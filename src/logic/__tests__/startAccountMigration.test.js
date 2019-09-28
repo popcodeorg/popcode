@@ -24,9 +24,9 @@ import {
 import {githubProfileFactory} from '@factories/clients/github';
 import {firebaseProjectFactory} from '@factories/data/firebase';
 
-jest.mock('../../clients/firebase.js');
+jest.mock('../../clients/firebase');
 jest.mock('../../selectors');
-jest.mock('../../util/bugsnag.js');
+jest.mock('../../util/bugsnag');
 jest.useFakeTimers();
 
 describe('startAccountMigration', () => {
@@ -37,10 +37,7 @@ describe('startAccountMigration', () => {
     const mockUser = userFactory.build();
     const mockCredential = credentialFactory.build();
     const mockProfile = githubProfileFactory.build();
-    const mockProjects = [
-      firebaseProjectFactory.build(),
-      firebaseProjectFactory.build(),
-    ];
+    const mockProjects = firebaseProjectFactory.buildList(2);
 
     getCurrentAccountMigration.mockReturnValue({
       firebaseCredential: mockCredential,
