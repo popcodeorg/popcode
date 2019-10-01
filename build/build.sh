@@ -9,6 +9,7 @@ docker run \
     --env FIREBASE_APP_ID \
     --env FIREBASE_API_KEY \
     --env FIREBASE_CLIENT_ID \
+    --env FIREBASE_MEASUREMENT_ID \
     --env FIREBASE_PROJECT_ID \
     --env GIT_REVISION="$TRAVIS_COMMIT" \
     --env GOOGLE_ANALYTICS_TRACKING_ID \
