@@ -4,12 +4,13 @@
 
 module.exports = {
   nodeEnv: process.env.NODE_ENV || 'development',
-  logReduxActions: () => process.env.LOG_REDUX_ACTIONS === 'true',
   warnOnDroppedErrors: process.env.WARN_ON_DROPPED_ERRORS === 'true',
 
   firebaseApp: process.env.FIREBASE_APP,
+  firebaseAppId: process.env.FIREBASE_APP_ID,
   firebaseApiKey: process.env.FIREBASE_API_KEY,
   firebaseClientId: process.env.FIREBASE_CLIENT_ID,
+  firebaseProjectId: process.env.FIREBASE_PROJECT_ID,
 
   feedbackUrl: 'https://gitreports.com/issue/popcodeorg/popcode',
 
