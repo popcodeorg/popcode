@@ -120,5 +120,9 @@ describe('startAccountMigration', () => {
 });
 
 function applyActions(...actions) {
-  return reduce(actions, (state, action) => rootReducer(state, action), undefined);
+  return reduce(
+    actions,
+    (state, action) => rootReducer(state, action),
+    undefined,
+  );
 }
