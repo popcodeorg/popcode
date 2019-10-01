@@ -1,7 +1,7 @@
 import {Observable} from 'rxjs';
 import reduce from 'lodash-es/reduce';
 
-import reducer from '../../reducers/user';
+import rootReducer from '../../reducers';
 import startAccountMigration from '../startAccountMigration';
 import {
   accountMigrationComplete,
@@ -13,7 +13,6 @@ import {
   dismissAccountMigration,
 } from '../../actions/user';
 import {migrateAccount} from '../../clients/firebase';
-import {getCurrentAccountMigration} from '../../selectors';
 import {bugsnagClient} from '../../util/bugsnag';
 
 import {
@@ -25,7 +24,6 @@ import {githubProfileFactory} from '@factories/clients/github';
 import {firebaseProjectFactory} from '@factories/data/firebase';
 
 jest.mock('../../clients/firebase');
-jest.mock('../../selectors');
 jest.mock('../../util/bugsnag');
 jest.useFakeTimers();
 
@@ -38,10 +36,6 @@ describe('startAccountMigration', () => {
     const mockCredential = credentialFactory.build();
     const mockProfile = githubProfileFactory.build();
     const mockProjects = firebaseProjectFactory.buildList(2);
-
-    getCurrentAccountMigration.mockReturnValue({
-      firebaseCredential: mockCredential,
-    });
 
     const state = applyActions(
       userAuthenticated(mockUser, mockCredential),
@@ -72,10 +66,6 @@ describe('startAccountMigration', () => {
     const mockUser = userFactory.build();
     const mockCredential = credentialFactory.build();
     const mockProfile = githubProfileFactory.build();
-
-    getCurrentAccountMigration.mockReturnValue({
-      firebaseCredential: mockCredential,
-    });
 
     const migrationError = firebaseErrorFactory.build();
     const state = applyActions(
@@ -130,5 +120,5 @@ describe('startAccountMigration', () => {
 });
 
 function applyActions(...actions) {
-  return reduce(actions, (state, action) => reducer(state, action), undefined);
+  return reduce(actions, (state, action) => rootReducer(state, action), undefined);
 }
