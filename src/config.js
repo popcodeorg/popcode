@@ -18,6 +18,4 @@ module.exports = {
   bugsnagApiKey: '3cc590a735bc2e50d2a21e467cf62fee',
 
   gitRevision: process.env.GIT_REVISION,
-
-  googleAnalyticsTrackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID,
 };
