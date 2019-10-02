@@ -1,6 +1,6 @@
 import constant from 'lodash-es/constant';
 
-export {default as performance} from 'lodash/noop';
+export {default as performance, default as analytics} from 'lodash/noop';
 
 class AuthProvider {
   addScope() {}
