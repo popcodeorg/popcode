@@ -10,6 +10,7 @@ module.exports = {
   firebaseAppId: process.env.FIREBASE_APP_ID,
   firebaseApiKey: process.env.FIREBASE_API_KEY,
   firebaseClientId: process.env.FIREBASE_CLIENT_ID,
+  firebaseMeasurementId: process.env.FIREBASE_MEASUREMENT_ID,
   firebaseProjectId: process.env.FIREBASE_PROJECT_ID,
 
   feedbackUrl: 'https://gitreports.com/issue/popcodeorg/popcode',
@@ -17,6 +18,4 @@ module.exports = {
   bugsnagApiKey: '3cc590a735bc2e50d2a21e467cf62fee',
 
   gitRevision: process.env.GIT_REVISION,
-
-  googleAnalyticsTrackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID,
 };
