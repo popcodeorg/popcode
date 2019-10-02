@@ -1,6 +1,6 @@
 import channel from './channel';
 import createScopedEvaluationChain from './createScopedEvaluationChain';
-import prettyPrint from './prettyPrint';
+import jsonParser from './jsonParser';
 
 let evalNext = createScopedEvaluationChain(next => {
   evalNext = next;
@@ -8,6 +8,6 @@ let evalNext = createScopedEvaluationChain(next => {
 
 export default function handleConsoleExpressions() {
   channel.bind('evaluateExpression', (_trans, expression) =>
-    prettyPrint(evalNext(expression)),
+    jsonParser(evalNext(expression)),
   );
 }
