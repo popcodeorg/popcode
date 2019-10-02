@@ -48,12 +48,13 @@ describe('css validation', () => {
       css,
     ));
 
-  test('bogus flex value', () =>
-    validationTest('.flex-item { flex: bogus; }', css, {
+  test('bogus flex value', async () => {
+    await validationTest('.flex-item { flex: bogus; }', css, {
       reason: 'invalid-value',
       row: 0,
       payload: {error: 'bogus'},
-    }));
+    });
+  });
 
   test('fails with bogus filter value', () =>
     validationTest('img { filter: whitescale(100%); }', css, {

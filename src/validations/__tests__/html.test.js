@@ -52,7 +52,8 @@ describe('html validation', () => {
     validationTest(
       `<!DOCTYPE html>
     <html>
-      <head><title>Titlte</title></head>
+      <head><title>
+        Titlte</title></head>
       <body></body>`,
       html,
       {reason: 'unclosed-tag', row: 1, payload: {tag: 'html'}},
