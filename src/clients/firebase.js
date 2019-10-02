@@ -8,6 +8,7 @@ import values from 'lodash-es/values';
 import uuid from 'uuid/v4';
 import once from 'lodash-es/once';
 import * as firebase from 'firebase/app'; // eslint-disable-line import/no-namespace
+import 'firebase/analytics';
 import 'firebase/auth';
 import 'firebase/performance';
 
@@ -52,12 +53,16 @@ function buildFirebase(appName = undefined) {
       appId: config.firebaseAppId,
       authDomain: `${config.firebaseApp}.firebaseapp.com`,
       databaseURL: `https://${config.firebaseApp}.firebaseio.com`,
+      measurementId: config.firebaseMeasurementId,
       projectId: config.firebaseProjectId,
     },
     appName,
   );
 
-  const perf = appName === undefined ? firebase.performance(app) : null;
+  const rest =
+    appName === undefined
+      ? {perf: firebase.performance(app), analytics: firebase.analytics()}
+      : {perf: null, analytics: null};
 
   return {
     auth: firebase.auth(app),
@@ -67,7 +72,7 @@ function buildFirebase(appName = undefined) {
       return firebase.database(app);
     }),
 
-    perf,
+    ...rest,
   };
 }
 
