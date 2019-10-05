@@ -346,7 +346,7 @@
     "is-docker": "1.1.0",
     "jest": "24.9.0",
     "jest-extended": "0.11.2",
-    "jscodeshift": "0.5.1",
+    "jscodeshift": "0.6.4",
     "json-loader": "0.5.7",
     "karma": "2.0.5",
     "karma-browserstack-launcher": "1.5.1",
