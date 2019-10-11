@@ -46,7 +46,17 @@ const errorMap = {
 
   E008: () => ({reason: 'doctype'}),
 
-  E009: () => ({reason: 'href-style'}),
+  E009: (error, source) => {
+    const lines = source.split('\n');
+    const hrefValExpr = /href="([^"]*)/u;
+    const hrefVal = hrefValExpr.exec(
+      lines[error.line - 1].slice(error.column),
+    )[1];
+    if (hrefVal.indexOf('mailto:') > -1 || hrefVal.indexOf('tel:') > -1) {
+      return null;
+    }
+    return {reason: 'href-style'};
+  },
 
   E012: error => ({reason: 'duplicated-id', payload: {id: error.data.id}}),
 
