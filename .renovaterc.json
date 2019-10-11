@@ -1,7 +1,13 @@
 {
   "extends": ["config:base"],
+  "major": {
+    "prConcurrentLimit": 3
+  },
   "masterIssue": true,
   "masterIssueAutoclose": true,
+  "minor": {
+    "prConcurrentLimit": 3
+  },
   "packageRules": [
     {
       "groupName": "Babel",
@@ -129,6 +135,11 @@
       ]
     },
     {
+      "groupName": "source-map",
+      "packageNames": ["source-map"],
+      "enabled": false
+    },
+    {
       "groupName": "validation linters",
       "packageNames": [
         "PrettyCSS",
@@ -176,7 +187,6 @@
     "automerge": true
   },
   "postUpdateOptions": ["yarnDedupeFewer"],
-  "prConcurrentLimit": 3,
   "rebaseStalePrs": true,
   "reviewers": ["outoftime"],
   "separateMinorPatch": true
