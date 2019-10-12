@@ -19,9 +19,9 @@ module.exports = api => {
     );
   }
 
-  const plugins = ['syntax-dynamic-import'];
+  const plugins = ['@babel/syntax-dynamic-import'];
   if (isJest) {
-    plugins.push('dynamic-import-node');
+    plugins.push('babel-plugin-dynamic-import-node');
   }
 
   return {
