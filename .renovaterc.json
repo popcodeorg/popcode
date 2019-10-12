@@ -1,13 +1,7 @@
 {
   "extends": ["config:base"],
-  "major": {
-    "prConcurrentLimit": 3
-  },
   "masterIssue": true,
   "masterIssueAutoclose": true,
-  "minor": {
-    "prConcurrentLimit": 3
-  },
   "packageRules": [
     {
       "groupName": "Babel",
@@ -184,9 +178,11 @@
     }
   ],
   "patch": {
-    "automerge": true
+    "automerge": true,
+    "prConcurrentLimit": 0
   },
   "postUpdateOptions": ["yarnDedupeFewer"],
+  "prConcurrentLimit": 3,
   "rebaseStalePrs": true,
   "reviewers": ["outoftime"],
   "separateMinorPatch": true
