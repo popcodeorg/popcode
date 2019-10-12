@@ -151,7 +151,8 @@
     }
   ],
   "patch": {
-    "automerge": true
+    "automerge": true,
+    "prConcurrentLimit": 0
   },
   "postUpdateOptions": ["yarnDedupeFewer"],
   "rebaseStalePrs": true,
