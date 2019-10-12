@@ -48,13 +48,12 @@ describe('css validation', () => {
       css,
     ));
 
-  test('bogus flex value', async () => {
-    await validationTest('.flex-item { flex: bogus; }', css, {
+  test('bogus flex value', () =>
+    validationTest('.flex-item { flex: bogus; }', css, {
       reason: 'invalid-value',
       row: 0,
       payload: {error: 'bogus'},
-    });
-  });
+    }));
 
   test('fails with bogus filter value', () =>
     validationTest('img { filter: whitescale(100%); }', css, {
@@ -140,7 +139,7 @@ describe('css validation', () => {
       {reason: 'extra-tokens-after-value', row: 0, payload: {token: 'b'}},
     ));
 
-  test('extra token that is prefix of the beginning of the line', () => {
+  test('extra token that is prefix of the beginning of the line', () =>
     validationTest(
       `
       p {
@@ -149,8 +148,7 @@ describe('css validation', () => {
     `,
       css,
       {reason: 'extra-tokens-after-value', row: 2, payload: {token: 'b'}},
-    );
-  });
+    ));
 
   test('thoroughly unparseable CSS', () =>
     validationTest('<a href="http;.facebook.com>', css, {

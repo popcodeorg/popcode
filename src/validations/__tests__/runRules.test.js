@@ -45,44 +45,42 @@ describe('structural html validation', () => {
     );
   });
 
-  test('openTag skips void tag', () => {
-    expect(async () => {
-      await runRules(
-        [
-          {
-            openTag(location, tag) {
-              throw new Error(
-                `location: ${JSON.stringify(location)} tag: ${JSON.stringify(
-                  tag,
-                )}`,
-              );
-            },
-            *done() {},
+  test('openTag skips void tag', async () => {
+    expect.assertions(0);
+    await runRules(
+      [
+        {
+          openTag(location, tag) {
+            throw new Error(
+              `location: ${JSON.stringify(location)} tag: ${JSON.stringify(
+                tag,
+              )}`,
+            );
           },
-        ],
-        '<img>',
-      );
-    }).not.toThrow();
+          *done() {},
+        },
+      ],
+      '<img>',
+    );
   });
 
   test('openTag skips self-closing non-void tag', async () => {
-    expect(async () => {
-      await runRules(
-        [
-          {
-            openTag(location, tag) {
-              throw new Error(
-                `location: ${JSON.stringify(location)} tag: ${JSON.stringify(
-                  tag,
-                )}`,
-              );
-            },
-            *done() {},
+    expect.assertions(0);
+    await runRules(
+      [
+        {
+          openTag(location, tag) {
+            throw new Error(
+              `location: ${JSON.stringify(location)} tag: ${JSON.stringify(
+                tag,
+              )}`,
+            );
           },
-        ],
-        '<div/>',
-      );
-    }).not.toThrow();
+          *done() {},
+        },
+      ],
+      '<div/>',
+    );
   });
 
   test('closeTag row', async () => {
@@ -99,6 +97,7 @@ describe('structural html validation', () => {
       '\n\n</div>',
     );
   });
+
   test('closeTag column', async () => {
     expect.assertions(1);
     await runRules(

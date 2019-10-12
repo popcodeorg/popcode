@@ -7,14 +7,10 @@ export default async function validationTest(
   validate,
   ...expectedErrors
 ) {
-  try {
-    const errors = await validate(input);
-    expect(
-      map(orderBy(errors, ['reason', 'row']), error =>
-        pick(error, ['reason', 'row', 'payload']),
-      ),
-    ).toEqual(orderBy(expectedErrors, ['reason', 'row']));
-  } catch (e) {
-    throw e;
-  }
+  const errors = await validate(input);
+  expect(
+    map(orderBy(errors, ['reason', 'row']), error =>
+      pick(error, ['reason', 'row', 'payload']),
+    ),
+  ).toEqual(orderBy(expectedErrors, ['reason', 'row']));
 }
