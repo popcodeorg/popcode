@@ -154,7 +154,16 @@
       ]
     },
     {
-      "packagePatterns": ["yarn-deduplicate"],
+      "packagePatterns": [
+        "browser-sync",
+        "doctoc",
+        "is-docker",
+        "jscodeshift",
+        "prettier",
+        "sinon",
+        "rosie",
+        "yarn-deduplicate"
+      ],
       "automerge": true
     }
   ],
