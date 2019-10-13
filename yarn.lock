@@ -13752,10 +13752,10 @@ stylelint-prettier@1.1.1:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-stylelint-selector-bem-pattern@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/stylelint-selector-bem-pattern/-/stylelint-selector-bem-pattern-2.0.0.tgz#9a6130c9c90963b30e925c917079d6c8fed73f45"
-  integrity sha512-J5NQeNcweS56US29oHHb7GAX8taG44lYn5cY9YEE3xA5ibeWmPBiCGLg6HskPlmVBO0hcJ4JUQ9A4Ngyu8avxQ==
+stylelint-selector-bem-pattern@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/stylelint-selector-bem-pattern/-/stylelint-selector-bem-pattern-2.1.0.tgz#3a78370ab67b777e571ef0fa2059428816f2d5e3"
+  integrity sha512-cVgHxD6itWzrZeOINYlLpKc5hzn6taaEIdakZ+Heo2dq17toDjk7tOybeoyGvBmmepOOzTIYCCSOctOUWDbb8g==
   dependencies:
     lodash ">=3.10.0"
     postcss ">=5.0.19"
