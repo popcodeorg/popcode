@@ -20,6 +20,7 @@
     },
     {
       "groupName": "eslint",
+      "automerge": true,
       "packageNames": [
         "eslint",
         "eslint-config-prettier",
@@ -52,11 +53,13 @@
     },
     {
       "groupName": "Jest",
+      "automerge": true,
       "packageNames": ["jest", "jest-extended"]
     },
 
     {
       "groupName": "Karma",
+      "automerge": true,
       "packageNames": [
         "karma",
         "karma-browserstack-launcher",
@@ -68,6 +71,11 @@
         "karma-tap",
         "karma-webpack"
       ]
+    },
+    {
+      "groupName": "lodash",
+      "packageNames": ["lodash-es"],
+      "packagePatterns": ["^lodash\\."]
     },
     {
       "groupName": "Node.js",
@@ -105,6 +113,7 @@
     },
     {
       "groupName": "stylelint",
+      "automerge": true,
       "packageNames": [
         "stylelint",
         "stylelint-config-prettier",
@@ -114,6 +123,7 @@
     },
     {
       "groupName": "Tape",
+      "automerge": true,
       "packageNames": ["tape", "tape-catch"]
     },
     {
@@ -142,6 +152,19 @@
         "webpack-dev-middleware",
         "webpack-visualizer-plugin"
       ]
+    },
+    {
+      "packagePatterns": [
+        "browser-sync",
+        "doctoc",
+        "is-docker",
+        "jscodeshift",
+        "prettier",
+        "sinon",
+        "rosie",
+        "yarn-deduplicate"
+      ],
+      "automerge": true
     }
   ],
   "patch": {
