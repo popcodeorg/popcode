@@ -74,7 +74,7 @@
     },
     {
       "groupName": "lodash",
-      "packageNames": ["lodash"],
+      "packageNames": ["lodash-es"],
       "packagePatterns": ["^lodash\\."]
     },
     {
