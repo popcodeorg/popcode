@@ -152,6 +152,10 @@
         "webpack-dev-middleware",
         "webpack-visualizer-plugin"
       ]
+    },
+    {
+      "packagePatterns": ["yarn-deduplicate"],
+      "automerge": true
     }
   ],
   "patch": {
