@@ -20,6 +20,7 @@
     },
     {
       "groupName": "eslint",
+      "automerge": true,
       "packageNames": [
         "eslint",
         "eslint-config-prettier",
@@ -52,11 +53,13 @@
     },
     {
       "groupName": "Jest",
+      "automerge": true,
       "packageNames": ["jest", "jest-extended"]
     },
 
     {
       "groupName": "Karma",
+      "automerge": true,
       "packageNames": [
         "karma",
         "karma-browserstack-launcher",
@@ -105,6 +108,7 @@
     },
     {
       "groupName": "stylelint",
+      "automerge": true,
       "packageNames": [
         "stylelint",
         "stylelint-config-prettier",
@@ -114,6 +118,7 @@
     },
     {
       "groupName": "Tape",
+      "automerge": true,
       "packageNames": ["tape", "tape-catch"]
     },
     {
