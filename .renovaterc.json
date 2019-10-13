@@ -73,6 +73,11 @@
       ]
     },
     {
+      "groupName": "lodash",
+      "packageNames": ["lodash"],
+      "packagePatterns": ["^lodash\\."]
+    },
+    {
       "groupName": "Node.js",
       "packageNames": ["node"],
       "automerge": false
