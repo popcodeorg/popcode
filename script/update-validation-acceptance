@@ -3,16 +3,17 @@
 /* eslint-env node */
 
 const fs = require('fs');
+
 const path = require('path');
 
 const output = {};
 
-['html', 'css', 'javascript'].forEach((language) => {
-  const dir = `./test/data/acceptance/${language}`;
+['html', 'css', 'javascript'].forEach(language => {
+  const dir = `./src/validations/__tests__/acceptance/${language}`;
 
   output[language] = [];
 
-  fs.readdirSync(dir).forEach((file) => {
+  fs.readdirSync(dir).forEach(file => {
     output[language].push(
       fs.readFileSync(path.join(dir, file), {encoding: 'utf8'}),
     );
@@ -20,6 +21,6 @@ const output = {};
 });
 
 fs.writeFile(
-  './test/data/acceptance.json',
+  './src/validations/__tests__/acceptance.json',
   JSON.stringify(output, null, 2),
 );

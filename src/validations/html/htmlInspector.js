@@ -88,6 +88,7 @@ HTMLInspector.rules.add(
 class HtmlInspectorValidator extends Validator {
   constructor(source) {
     super(source, 'html', errorMap);
+
     this._doc = new DOMParser().parseFromString(this.source, 'text/html');
   }
 
