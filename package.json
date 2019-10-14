@@ -362,7 +362,7 @@
     "node-static": "0.7.11",
     "npm-check": "5.9.0",
     "null-loader": "0.1.1",
-    "postcss-preset-env": "5.3.0",
+    "postcss-preset-env": "6.7.0",
     "prettier": "1.18.2",
     "raw-loader": "2.0.0",
     "redux-saga-test-plan": "4.0.0-rc.3",
