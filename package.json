@@ -244,7 +244,7 @@
     "react-dom": "16.10.2",
     "react-draggable": "3.3.2",
     "react-immutable-proptypes": "2.1.0",
-    "react-onclickoutside": "6.7.1",
+    "react-onclickoutside": "6.9.0",
     "react-prevent-clickthrough": "0.0.3",
     "react-redux": "7.1.1",
     "reduce-reducers": "1.0.4",
