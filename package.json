@@ -244,7 +244,6 @@
     "react-dom": "16.10.2",
     "react-draggable": "3.3.2",
     "react-immutable-proptypes": "2.1.0",
-    "react-onclickoutside": "6.7.1",
     "react-prevent-clickthrough": "0.0.3",
     "react-redux": "7.1.1",
     "reduce-reducers": "1.0.4",
@@ -267,6 +266,7 @@
     "strip-markdown": "3.1.1",
     "stylelint": "11.1.1",
     "sweetalert2": "7.28.13",
+    "use-onclickoutside": "^0.3.1",
     "uuid": "3.3.3",
     "void-elements": "3.1.0",
     "whatwg-fetch": "3.0.0"
