@@ -4,11 +4,10 @@ import classnames from 'classnames';
 import {connect} from 'react-redux';
 import constant from 'lodash-es/constant';
 import noop from 'lodash-es/noop';
-import onClickOutside from 'react-onclickoutside';
+import useOnClickOutside from 'use-onclickoutside';
 import preventClickthrough from 'react-prevent-clickthrough';
-import property from 'lodash-es/property';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useRef} from 'react';
 
 import {closeTopBarMenu, toggleTopBarMenu} from '../../actions';
 import {getOpenTopBarMenu} from '../../selectors';
@@ -37,6 +36,7 @@ MenuItem.propTypes = {
 MenuItem.defaultProps = {
   isActive: false,
   isDisabled: false,
+  isOpen: false,
 };
 
 export default function createMenu({
@@ -50,7 +50,6 @@ export default function createMenu({
     const isOpen = getOpenTopBarMenu(state) === name;
     return {
       isOpen,
-      disableOnClickOutside: !isOpen,
     };
   }
 
@@ -72,7 +71,10 @@ export default function createMenu({
         return null;
       }
 
-      const {isOpen, onToggle} = props;
+      const {isOpen, onClose, onToggle} = props;
+      const ref = useRef(null);
+      useOnClickOutside(ref, isOpen ? onClose : noop);
+
       const menu = isOpen ? (
         <div
           className={classnames('top-bar__menu', menuClass)}
@@ -86,6 +88,7 @@ export default function createMenu({
           className={classnames('top-bar__menu-button', buttonClass, {
             'top-bar__menu-button_active': isOpen,
           })}
+          ref={ref}
           onClick={onToggle}
         >
           <MenuLaunchButton {...props} />
@@ -98,12 +101,13 @@ export default function createMenu({
 
     Menu.propTypes = {
       isOpen: PropTypes.bool.isRequired,
+      onClose: PropTypes.func.isRequired,
       onToggle: PropTypes.func.isRequired,
     };
 
     return connect(
       mapStateToProps,
       mapDispatchToProps,
-    )(onClickOutside(Menu, {handleClickOutside: property('props.onClose')}));
+    )(Menu);
   };
 }
