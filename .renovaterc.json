@@ -101,6 +101,7 @@
     {
       "groupName": "Remark",
       "packageNames": [
+        "hast-util-sanitize",
         "remark",
         "remark-external-links",
         "remark-react",
