@@ -17,6 +17,7 @@
   "travis.username": "popcodeorg",
   "travis.repository": "popcode",
   "travis.pro": true,
+  "yarn.bin": "./tools/yarn.py",
   "[javascript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   }
