@@ -6,7 +6,7 @@ import {
   faTwitter,
 } from '@fortawesome/free-brands-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {t} from 'i18next';
+import i18next from 'i18next';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 
@@ -33,13 +33,13 @@ const HamburgerMenu = createMenu({
           onClick={onStartEditingInstructions}
         >
           {hasInstructions
-            ? t('top-bar.edit-instructions')
-            : t('top-bar.add-instructions')}
+            ? i18next.t('top-bar.edit-instructions')
+            : i18next.t('top-bar.add-instructions')}
         </MenuItem>
 
         {!isUserAuthenticated && (
           <MenuItem onClick={onStartGithubLogIn}>
-            {t('top-bar.session.log-in-github')}
+            {i18next.t('top-bar.session.log-in-github')}
           </MenuItem>
         )}
 
@@ -49,7 +49,7 @@ const HamburgerMenu = createMenu({
           rel="noopener noreferrer"
           target="blank"
         >
-          {t('top-bar.send-feedback')}
+          {i18next.t('top-bar.send-feedback')}
         </a>
 
         <div className="top-bar__menu-item top-bar__menu-item_icons">

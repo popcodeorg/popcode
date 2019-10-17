@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 import {UserAccount} from '../../records';
 
@@ -38,7 +38,7 @@ export default function CurrentUser({
         )}
         onClick={onStartLogIn}
       >
-        {t('top-bar.session.log-in-prompt')}
+        {i18next.t('top-bar.session.log-in-prompt')}
       </div>
     );
   }

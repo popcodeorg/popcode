@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 const MAX_LENGTH = 50;
 
@@ -31,7 +31,7 @@ export default function ProjectPreview({
           if (project.isArchived) {
             return (
               <div className="project-preview__archived">
-                {t('top-bar.project-archived')}
+                {i18next.t('top-bar.project-archived')}
               </div>
             );
           }

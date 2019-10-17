@@ -2,14 +2,14 @@ import classnames from 'classnames';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
-import {t} from 'i18next';
+import i18next from 'i18next';
 import PropTypes from 'prop-types';
 
 export default function ProjectPickerButton({shouldShowSavedIndicator}) {
   return (
     <div>
       <span className={classnames({u__invisible: shouldShowSavedIndicator})}>
-        {t('top-bar.load-project')}
+        {i18next.t('top-bar.load-project')}
         <FontAwesomeIcon
           className="top-bar__drop-down-button"
           icon={faCaretDown}
@@ -20,7 +20,7 @@ export default function ProjectPickerButton({shouldShowSavedIndicator}) {
           u__invisible: !shouldShowSavedIndicator,
         })}
       >
-        {t('top-bar.project-saved')}
+        {i18next.t('top-bar.project-saved')}
       </span>
     </div>
   );

@@ -1,15 +1,15 @@
 import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 import GenericNotificationWithURL from './GenericNotificationWithURL';
 
 export default function ProjectExportNotification({metadata}) {
   const url = metadata.get('url');
   const exportType = metadata.get('exportType');
-  const linkText = t('notifications.project-export-link');
-  const text = t(`notifications.${exportType}-export-complete`);
+  const linkText = i18next.t('notifications.project-export-link');
+  const text = i18next.t(`notifications.${exportType}-export-complete`);
 
   return (
     <GenericNotificationWithURL linkText={linkText} text={text} url={url} />

@@ -1,6 +1,6 @@
 import React from 'react';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 export default function AccountMigrationInProgress() {
-  return <p>{t('account-migration.in-progress')}</p>;
+  return <p>{i18next.t('account-migration.in-progress')}</p>;
 }

@@ -1,4 +1,4 @@
-import {t} from 'i18next';
+import i18next from 'i18next';
 import React, {lazy, Suspense} from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -34,7 +34,7 @@ export default function AssignmentCreator({
       <Suspense fallback="Loading...">
         <div className="assignment-creator">
           <h1 className="assignment-creator__title">
-            {t('assignment-creator.title')}
+            {i18next.t('assignment-creator.title')}
           </h1>
           <h3 className="assignment-creator__project-name">{projectTitle}</h3>
           {areCoursesLoaded ? (

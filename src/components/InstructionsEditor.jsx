@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {t} from 'i18next';
+import i18next from 'i18next';
 import bindAll from 'lodash-es/bindAll';
 
 export default class InstructionsEditor extends React.Component {
@@ -40,13 +40,13 @@ export default class InstructionsEditor extends React.Component {
             )}
             onClick={this._handleCancelEditing}
           >
-            {t('workspace.components.instructions.cancel')}
+            {i18next.t('workspace.components.instructions.cancel')}
           </button>
           <button
             className="instructions-editor__menu-button"
             onClick={this._handleSaveChanges}
           >
-            {t('workspace.components.instructions.save')}
+            {i18next.t('workspace.components.instructions.save')}
           </button>
         </div>
         <div className="instructions-editor__input-container">

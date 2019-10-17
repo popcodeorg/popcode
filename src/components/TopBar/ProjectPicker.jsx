@@ -6,7 +6,7 @@ import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 import ProjectPreview from '../../containers/ProjectPreview';
 
@@ -55,8 +55,8 @@ const ProjectPicker = createMenu({
         >
           <div>
             {shouldShowArchivedProjects
-              ? t('top-bar.hide-projects')
-              : t('top-bar.show-projects')}
+              ? i18next.t('top-bar.hide-projects')
+              : i18next.t('top-bar.show-projects')}
           </div>
         </div>,
       );
