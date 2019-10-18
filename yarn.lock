@@ -8244,10 +8244,10 @@ loader-utils@^1.0.0, loader-utils@^1.0.2, loader-utils@^1.0.3, loader-utils@^1.1
     emojis-list "^2.0.0"
     json5 "^1.0.1"
 
-loadjs@3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/loadjs/-/loadjs-3.6.1.tgz#1e756ccd4f4c5ed4988085b330e1b4ad9b6a8340"
-  integrity sha512-AZEBw2GWdJk2IzBgQ+Wohoao5j+t0rajqK8dJu8jQqgYxDTxhmCt0ayMo/vCa0ZAMvZxnJcam6uLICfnVd8KAw==
+loadjs@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/loadjs/-/loadjs-4.0.1.tgz#e1f53432bd8cdc7397cc6c81b568996805646fda"
+  integrity sha512-ArFeJEd5TFXjcO1YqT5uSgSMBq+NHWdoew7o6sLqb1KZBg06UIyk/PMT8ftN9T5vT20q3QbzsKdp2N8XhdYysQ==
 
 localtunnel@1.9.2:
   version "1.9.2"
