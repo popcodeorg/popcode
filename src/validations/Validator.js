@@ -1,4 +1,4 @@
-import {t} from 'i18next';
+import i18next from 'i18next';
 import assign from 'lodash-es/assign';
 import map from 'lodash-es/map';
 import compact from 'lodash-es/compact';
@@ -38,7 +38,7 @@ class Validator {
       return null;
     }
 
-    const message = t(
+    const message = i18next.t(
       `errors.${this._language}.${error.reason}`,
       error.payload,
     );

@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 export default function SnapshotButton({isInProgress, onClick}) {
   return (
@@ -14,7 +14,7 @@ export default function SnapshotButton({isInProgress, onClick}) {
       )}
       onClick={onClick}
     >
-      {t('top-bar.create-snapshot')}
+      {i18next.t('top-bar.create-snapshot')}
     </div>
   );
 }

@@ -1,11 +1,11 @@
-import {init} from 'i18next';
+import i18next from 'i18next';
 
 import resources from '../../locales';
 
 import applyCustomI18nFormatters from './i18nFormatting';
 
 export default function initI18n() {
-  init({
+  i18next.init({
     fallbackLng: 'en',
     resources,
     interpolation: {

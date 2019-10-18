@@ -2,13 +2,13 @@ import classnames from 'classnames';
 import map from 'lodash-es/map';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 export default function ProposedAccountMigration({onDismiss, onMigrate}) {
   return (
     <Fragment>
       {map(
-        t('account-migration.proposal', {returnObjects: true}),
+        i18next.t('account-migration.proposal', {returnObjects: true}),
         paragraph => (
           <p key={paragraph}>{paragraph}</p>
         ),
@@ -21,7 +21,7 @@ export default function ProposedAccountMigration({onDismiss, onMigrate}) {
           )}
           onClick={onMigrate}
         >
-          {t('account-migration.buttons.migrate')}
+          {i18next.t('account-migration.buttons.migrate')}
         </button>
         <button
           className={classnames(
@@ -30,7 +30,7 @@ export default function ProposedAccountMigration({onDismiss, onMigrate}) {
           )}
           onClick={onDismiss}
         >
-          {t('account-migration.buttons.cancel')}
+          {i18next.t('account-migration.buttons.cancel')}
         </button>
       </div>
     </Fragment>

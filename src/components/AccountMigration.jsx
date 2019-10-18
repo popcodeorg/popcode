@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import isNull from 'lodash-es/isNull';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 import {
   AccountMigration as AccountMigrationRecord,
@@ -32,7 +32,7 @@ export default function AccountMigration({
     <Modal>
       <div className="account-migration">
         <h1 className="account-migration__header">
-          {t(
+          {i18next.t(
             `account-migration.header.${migration.state.key
               .toLowerCase()
               .replace(/_/gu, '-')}`,
@@ -41,7 +41,7 @@ export default function AccountMigration({
         <div className="account-migration__accounts">
           <div className="account-migration__account">
             <p className="account-migration__account-label">
-              {t('account-migration.your-account')}
+              {i18next.t('account-migration.your-account')}
             </p>
             <img
               className="account-migration__avatar"
@@ -56,7 +56,7 @@ export default function AccountMigration({
           </div>
           <div className="account-migration__account">
             <p className="account-migration__account-label">
-              {t('account-migration.account-to-merge')}
+              {i18next.t('account-migration.account-to-merge')}
             </p>
             <img
               className="account-migration__avatar"

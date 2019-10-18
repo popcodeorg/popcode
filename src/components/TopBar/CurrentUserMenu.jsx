@@ -4,7 +4,7 @@ import isNull from 'lodash-es/isNull';
 
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import {t} from 'i18next';
+import i18next from 'i18next';
 import {faGithub} from '@fortawesome/free-brands-svg-icons';
 import {faUnlink, faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -25,7 +25,7 @@ const CurrentUserMenu = createMenu({
         {isUndefined(githubIdentityProvider) ? (
           <MenuItem onClick={onLinkGitHub}>
             <div className="top-bar__menu-item_container">
-              {t('top-bar.session.link-github')}
+              {i18next.t('top-bar.session.link-github')}
               <div className="top-bar__menu-item-icon">
                 <FontAwesomeIcon icon={faGithub} />
               </div>
@@ -39,8 +39,8 @@ const CurrentUserMenu = createMenu({
                 src={githubIdentityProvider.avatarUrl}
               />
               {isNull(githubIdentityProvider.displayName)
-                ? t('top-bar.session.unlink-github-default')
-                : t('top-bar.session.unlink-github', {
+                ? i18next.t('top-bar.session.unlink-github-default')
+                : i18next.t('top-bar.session.unlink-github', {
                     displayName: githubIdentityProvider.displayName.split(
                       ' ',
                     )[0],
@@ -53,7 +53,7 @@ const CurrentUserMenu = createMenu({
         )}
         <MenuItem onClick={onLogOut}>
           <div className="top-bar__menu-item_container">
-            {t('top-bar.session.log-out-prompt')}
+            {i18next.t('top-bar.session.log-out-prompt')}
             <div className="top-bar__menu-item-icon">
               <FontAwesomeIcon icon={faSignOutAlt} />
             </div>

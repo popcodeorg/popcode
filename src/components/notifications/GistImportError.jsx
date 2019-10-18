@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 function gistUrlFromId(gistId) {
   return `https://gist.github.com/${gistId}`;
@@ -10,13 +10,13 @@ function gistUrlFromId(gistId) {
 export default function GistImportError({metadata}) {
   return (
     <span>
-      {t('notifications.gist-import-error')}{' '}
+      {i18next.t('notifications.gist-import-error')}{' '}
       <a
         href={gistUrlFromId(metadata.get('gistId'))}
         rel="noopener noreferrer"
         target="_blank"
       >
-        {t('notifications.gist-import-link')}
+        {i18next.t('notifications.gist-import-link')}
       </a>
     </span>
   );

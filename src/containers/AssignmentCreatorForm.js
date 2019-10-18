@@ -1,5 +1,5 @@
 import {reduxForm} from 'redux-form/immutable';
-import {t} from 'i18next';
+import i18next from 'i18next';
 import isEmpty from 'lodash-es/isEmpty';
 import isNil from 'lodash-es/isNil';
 import get from 'lodash-es/get';
@@ -12,12 +12,12 @@ function validate(values) {
   const date = values.get('date');
 
   if (isEmpty(course)) {
-    errors.course = t('assignment-creator.no-class-selected');
+    errors.course = i18next.t('assignment-creator.no-class-selected');
   }
   if (isNil(get(date, 'parsedDate'))) {
-    errors.date = t('assignment-creator.date-not-valid');
+    errors.date = i18next.t('assignment-creator.date-not-valid');
   } else if (date.parsedDate < Date.now()) {
-    errors.date = t('assignment-creator.past-date-not-valid');
+    errors.date = i18next.t('assignment-creator.past-date-not-valid');
   }
   return errors;
 }
