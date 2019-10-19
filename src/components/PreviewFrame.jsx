@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import bindAll from 'lodash-es/bindAll';
 import constant from 'lodash-es/constant';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 import bowser from '../services/bowser';
 import {createError} from '../util/errorUtils';
@@ -158,7 +158,7 @@ class PreviewFrame extends React.Component {
   }
 
   _handleInfiniteLoop(line) {
-    const message = t('errors.javascriptRuntime.infinite-loop');
+    const message = i18next.t('errors.javascriptRuntime.infinite-loop');
     this.props.onRuntimeError({
       reason: 'infinite-loop',
       text: message,

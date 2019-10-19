@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 import ErrorItem from './ErrorItem';
 
@@ -19,7 +19,7 @@ function ErrorList({errors, onErrorClick, language}) {
     />
   ));
 
-  const errorMessage = t('errors.notice', {
+  const errorMessage = i18next.t('errors.notice', {
     count: errors.items.length,
     language,
   });

@@ -12,7 +12,7 @@ export default function performWithRetries(
         if (shouldRetryFn(error.message)) {
           return retry(error);
         }
-        return Promise.reject(error);
+        throw error;
       }),
     assign(
       {

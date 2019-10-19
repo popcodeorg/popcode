@@ -1,4 +1,4 @@
-import {t} from 'i18next';
+import i18next from 'i18next';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -18,7 +18,7 @@ export default function AssignmentCreatorTextField({
         />
       </div>
       <div className="assignment-creator__input_warning">
-        <span>{t('assignment-creator.value-label', {valueLabel})}</span>
+        <span>{i18next.t('assignment-creator.value-label', {valueLabel})}</span>
       </div>
       <div>
         {touched && error && (

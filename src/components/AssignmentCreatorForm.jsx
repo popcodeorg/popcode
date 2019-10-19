@@ -1,5 +1,5 @@
 import React from 'react';
-import {t} from 'i18next';
+import i18next from 'i18next';
 import classnames from 'classnames';
 import chrono from 'chrono-node';
 import PropTypes from 'prop-types';
@@ -43,7 +43,9 @@ export default function AssignmentCreatorForm({
     <form>
       <div>
         <Field component={AssignmentCreatorSelectField} name="course">
-          <option value="">{t('assignment-creator.select-class')}</option>
+          <option value="">
+            {i18next.t('assignment-creator.select-class')}
+          </option>
           {courses
             .map(course => (
               <option key={course.id} value={course.id}>
@@ -59,7 +61,7 @@ export default function AssignmentCreatorForm({
           format={formatDate}
           name="date"
           parse={parseDate}
-          placeholder={t('assignment-creator.input-placeholder')}
+          placeholder={i18next.t('assignment-creator.input-placeholder')}
           type="text"
           valueLabel={parsedDate}
         />
@@ -74,7 +76,7 @@ export default function AssignmentCreatorForm({
             )}
             type="button"
           >
-            {t('assignment-creator.creating')}
+            {i18next.t('assignment-creator.creating')}
           </button>
         ) : (
           <>
@@ -86,7 +88,7 @@ export default function AssignmentCreatorForm({
               type="button"
               onClick={onCloseAssignmentCreator}
             >
-              {t('assignment-creator.cancel-button')}
+              {i18next.t('assignment-creator.cancel-button')}
             </button>
             <button
               className={classnames(
@@ -96,7 +98,7 @@ export default function AssignmentCreatorForm({
               type="button"
               onClick={handleSubmit(onDraftAssignment)}
             >
-              {t('assignment-creator.draft-button')}
+              {i18next.t('assignment-creator.draft-button')}
             </button>
             <button
               className={classnames(
@@ -106,7 +108,7 @@ export default function AssignmentCreatorForm({
               type="button"
               onClick={handleSubmit(onAssignAssignment)}
             >
-              {t('assignment-creator.assign-button')}
+              {i18next.t('assignment-creator.assign-button')}
             </button>
           </>
         )}

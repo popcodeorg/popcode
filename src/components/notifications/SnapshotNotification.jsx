@@ -5,7 +5,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 import {createSnapshotUrl} from '../../util/exportUrls';
 
@@ -19,12 +19,14 @@ export default function SnapshotNotification({metadata, onUpdateMetadata}) {
 
   return (
     <span>
-      {t('notifications.snapshot-created')}{' '}
+      {i18next.t('notifications.snapshot-created')}{' '}
       <CopyToClipboard
         text={uri}
         onCopy={partial(onUpdateMetadata, {isCopied: true})}
       >
-        <span className="u__link">{t('notifications.click-to-copy')}</span>
+        <span className="u__link">
+          {i18next.t('notifications.click-to-copy')}
+        </span>
       </CopyToClipboard>
       {checkmark}
     </span>

@@ -11,7 +11,7 @@ import isNull from 'lodash-es/isNull';
 import get from 'lodash-es/get';
 import partial from 'lodash-es/partial';
 import some from 'lodash-es/some';
-import {t} from 'i18next';
+import i18next from 'i18next';
 import classnames from 'classnames';
 
 import prefix from '../services/inlineStylePrefixer';
@@ -146,7 +146,7 @@ export default class Workspace extends React.Component {
             component={`editor.${language}`}
             key={language}
             projectKey={currentProject.projectKey}
-            text={t(`languages.${language}`)}
+            text={i18next.t(`languages.${language}`)}
             onComponentUnhide={onComponentToggle}
           />
         ))}
@@ -171,7 +171,7 @@ export default class Workspace extends React.Component {
               isRightJustified={false}
               key="console"
               projectKey={currentProject.projectKey}
-              text={t('workspace.components.console')}
+              text={i18next.t('workspace.components.console')}
               onComponentUnhide={onComponentToggle}
             />
           );
@@ -233,7 +233,7 @@ export default class Workspace extends React.Component {
       shouldRenderOutput,
     } = this.props;
     if (isNull(currentProject)) {
-      return <PopThrobber message={t('workspace.loading')} />;
+      return <PopThrobber message={i18next.t('workspace.loading')} />;
     }
 
     const [_handleEditorsRef, _handleOutputRef] = resizableFlexRefs;

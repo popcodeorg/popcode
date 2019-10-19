@@ -2,7 +2,7 @@ import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import React, {forwardRef} from 'react';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 import prefix from '../services/inlineStylePrefixer';
 
@@ -13,7 +13,7 @@ const EditorContainer = forwardRef(
     if (source === '') {
       helpText = (
         <div className="editors__help-text">
-          {t('editors.help-text', {language})}
+          {i18next.t('editors.help-text', {language})}
         </div>
       );
     }
@@ -28,7 +28,8 @@ const EditorContainer = forwardRef(
           className="label editors__label editors__label_expanded"
           onClick={onHide}
         >
-          {t(`languages.${language}`)} <FontAwesomeIcon icon={faChevronDown} />
+          {i18next.t(`languages.${language}`)}{' '}
+          <FontAwesomeIcon icon={faChevronDown} />
         </div>
         {helpText}
         {children}

@@ -9,8 +9,6 @@
         "babel-eslint",
         "babel-loader",
         "babel-plugin-dynamic-import-node",
-        "caniuse-api",
-        "caniuse-lite",
         "core-js",
         "regenerator-runtime"
       ],
@@ -19,6 +17,23 @@
     {
       "groupName": "Bugsnag",
       "packagePatterns": ["^@bugsnag/"]
+    },
+    {
+      "groupName": "eslint",
+      "automerge": true,
+      "packageNames": [
+        "eslint",
+        "eslint-config-prettier",
+        "eslint_d",
+        "@popcodeorg/eslint-import-resolver-jest",
+        "eslint-import-resolver-webpack",
+        "eslint-plugin-import",
+        "eslint-plugin-jest",
+        "eslint-plugin-prettier",
+        "eslint-plugin-private-props",
+        "eslint-plugin-promise",
+        "eslint-plugin-react"
+      ]
     },
     {
       "groupName": "Font Awesome",
@@ -34,25 +49,17 @@
     },
     {
       "groupName": "Immutable.js",
-      "packageNames": [
-        "immutable",
-        "immutable-devtools",
-        "react-immutable-proptypes"
-      ]
+      "packageNames": ["immutable", "immutable-devtools"]
     },
     {
       "groupName": "Jest",
-      "packageNames": [
-        "@popcodeorg/eslint-import-resolver-jest",
-        "eslint-plugin-jest",
-        "jest",
-        "jest-extended",
-        "rosie"
-      ]
+      "automerge": true,
+      "packageNames": ["jest", "jest-extended"]
     },
 
     {
-      "groupName": "Karma & Tape",
+      "groupName": "Karma",
+      "automerge": true,
       "packageNames": [
         "karma",
         "karma-browserstack-launcher",
@@ -62,27 +69,13 @@
         "karma-sinon",
         "karma-sourcemap-loader",
         "karma-tap",
-        "karma-webpack",
-        "sinon",
-        "tape",
-        "tape-catch"
+        "karma-webpack"
       ]
     },
     {
-      "groupName": "linters",
-      "packageNames": [
-        "eslint",
-        "eslint-config-prettier",
-        "eslint_d",
-        "eslint-plugin-import",
-        "eslint-plugin-prettier",
-        "eslint-plugin-private-props",
-        "eslint-plugin-promise",
-        "prettier",
-        "stylelint-config-prettier",
-        "stylelint-prettier",
-        "stylelint-selector-bem-pattern"
-      ]
+      "groupName": "lodash",
+      "packageNames": ["lodash-es"],
+      "packagePatterns": ["^lodash\\."]
     },
     {
       "groupName": "Node.js",
@@ -90,38 +83,25 @@
       "automerge": false
     },
     {
-      "groupName": "Project libraries",
-      "packageNames": ["jquery", "p5"]
-    },
-    {
       "groupName": "React",
-      "packageNames": [
-        "classnames",
-        "eslint-plugin-react",
-        "prop-types",
-        "react",
-        "react-dom"
-      ]
+      "packageNames": ["prop-types", "react", "react-dom"]
     },
     {
       "groupName": "Redux",
+      "packageNames": ["react-redux", "redux"]
+    },
+    {
+      "groupName": "Redux Saga",
       "packageNames": [
-        "react-redux",
-        "reduce-reducers",
-        "redux",
-        "redux-actions",
-        "redux-form",
-        "redux-immutable",
-        "redux-logic",
         "redux-saga",
         "@redux-saga/testing-utils",
-        "redux-saga-test-plan",
-        "reselect"
+        "redux-saga-test-plan"
       ]
     },
     {
       "groupName": "Remark",
       "packageNames": [
+        "hast-util-sanitize",
         "remark",
         "remark-external-links",
         "remark-react",
@@ -129,24 +109,28 @@
       ]
     },
     {
-      "groupName": "validation linters",
+      "packageNames": ["source-map"],
+      "allowedVersions": "< 0.7.0"
+    },
+    {
+      "groupName": "stylelint",
+      "automerge": true,
       "packageNames": [
-        "PrettyCSS",
-        "css",
-        "esprima",
-        "html-inspector",
-        "htmllint",
-        "jshint",
-        "postcss",
-        "slowparse",
-        "stylelint"
+        "stylelint",
+        "stylelint-config-prettier",
+        "stylelint-prettier",
+        "stylelint-selector-bem-pattern"
       ]
+    },
+    {
+      "groupName": "Tape",
+      "automerge": true,
+      "packageNames": ["tape", "tape-catch"]
     },
     {
       "groupName": "Webpack",
       "packageNames": [
         "circular-dependency-plugin",
-        "eslint-import-resolver-webpack",
         "eslint-loader",
         "exports-loader",
         "hard-source-webpack-plugin",
@@ -166,14 +150,27 @@
         "transform-loader",
         "val-loader",
         "webpack",
-        "webpack-bundle-analyzer",
         "webpack-dev-middleware",
         "webpack-visualizer-plugin"
       ]
+    },
+    {
+      "packagePatterns": [
+        "browser-sync",
+        "doctoc",
+        "is-docker",
+        "jscodeshift",
+        "prettier",
+        "sinon",
+        "rosie",
+        "yarn-deduplicate"
+      ],
+      "automerge": true
     }
   ],
   "patch": {
-    "automerge": true
+    "automerge": true,
+    "prConcurrentLimit": 0
   },
   "postUpdateOptions": ["yarnDedupeFewer"],
   "prConcurrentLimit": 3,

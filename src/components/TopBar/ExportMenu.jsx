@@ -1,4 +1,4 @@
-import {t} from 'i18next';
+import i18next from 'i18next';
 import tap from 'lodash-es/tap';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -32,7 +32,7 @@ const ExportMenu = createMenu({
           key="exportToClassroom"
           onClick={onExportToClassroom}
         >
-          {t('top-bar.share-to-classroom')}
+          {i18next.t('top-bar.share-to-classroom')}
         </MenuItem>,
       );
 
@@ -43,7 +43,7 @@ const ExportMenu = createMenu({
             key="exportGist"
             onClick={onExportGist}
           >
-            {t('top-bar.export-gist')}
+            {i18next.t('top-bar.export-gist')}
           </MenuItem>,
         );
 
@@ -54,7 +54,7 @@ const ExportMenu = createMenu({
               key="updateRepo"
               onClick={onUpdateRepo}
             >
-              {t('top-bar.update-repo')}
+              {i18next.t('top-bar.update-repo')}
             </MenuItem>,
           );
         } else {
@@ -64,7 +64,7 @@ const ExportMenu = createMenu({
               key="exportRepo"
               onClick={onExportRepo}
             >
-              {t('top-bar.export-repo')}
+              {i18next.t('top-bar.export-repo')}
             </MenuItem>,
           );
         }
@@ -72,7 +72,7 @@ const ExportMenu = createMenu({
       if (isUserAuthenticatedWithGoogle && isExperimental) {
         items.push(
           <MenuItem key="assignmentCreatorr" onClick={onOpenAssignmentCreator}>
-            {t('top-bar.create-assignment')}
+            {i18next.t('top-bar.create-assignment')}
           </MenuItem>,
         );
       }

@@ -5,7 +5,7 @@ import partial from 'lodash-es/partial';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 import {EditorLocation} from '../records';
 
@@ -73,7 +73,7 @@ export default function Console({
         onClick={partial(onToggleVisible, currentProjectKey)}
       >
         <div>
-          {t('workspace.components.console')}{' '}
+          {i18next.t('workspace.components.console')}{' '}
           <FontAwesomeIcon icon={faChevronDown} />
         </div>
         <div

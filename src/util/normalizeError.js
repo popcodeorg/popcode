@@ -2,7 +2,7 @@ import get from 'lodash-es/get';
 import keys from 'lodash-es/keys';
 import isEmpty from 'lodash-es/isEmpty';
 import assign from 'lodash-es/assign';
-import {t} from 'i18next';
+import i18next from 'i18next';
 
 import bowser from '../services/bowser';
 
@@ -99,7 +99,7 @@ function attachMessage(normalizedError) {
   }
 
   return assign(normalizedError, {
-    message: t(
+    message: i18next.t(
       `errors.javascriptRuntime.${normalizedError.type}`,
       assign({context}, normalizedError.params),
     ),

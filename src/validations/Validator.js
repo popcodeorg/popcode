@@ -1,5 +1,6 @@
-import {t} from 'i18next';
+import i18next from 'i18next';
 import assign from 'lodash-es/assign';
+import has from 'lodash-es/has';
 import map from 'lodash-es/map';
 import compact from 'lodash-es/compact';
 import remark from 'remark';
@@ -21,7 +22,7 @@ class Validator {
 
   mapError(rawError) {
     const key = this.keyForError(rawError);
-    if (this._errorMap.hasOwnProperty(key)) {
+    if (has(this._errorMap, key)) {
       return this._errorMap[key](rawError, this.source);
     }
     return null;
@@ -38,7 +39,7 @@ class Validator {
       return null;
     }
 
-    const message = t(
+    const message = i18next.t(
       `errors.${this._language}.${error.reason}`,
       error.payload,
     );

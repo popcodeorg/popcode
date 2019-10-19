@@ -1,4 +1,4 @@
-import {t} from 'i18next';
+import i18next from 'i18next';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -12,7 +12,7 @@ export default function NewProjectButton({onClick, isUserAuthenticated}) {
       className="top-bar__menu-button top-bar__menu-button_secondary"
       onClick={onClick}
     >
-      {t('top-bar.new-project')}
+      {i18next.t('top-bar.new-project')}
     </div>
   );
 }
