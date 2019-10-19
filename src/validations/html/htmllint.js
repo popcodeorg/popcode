@@ -5,6 +5,8 @@ import reduce from 'lodash-es/reduce';
 
 import Validator from '../Validator';
 
+const domParser = new DOMParser();
+
 const errorMap = {
   E001: error => {
     switch (error.data.attribute.toLowerCase()) {
@@ -48,11 +50,11 @@ const errorMap = {
 
   E009: (error, source) => {
     const lines = source.split('\n');
-    const hrefValExpr = /href="([^"]*)/u;
-    const hrefVal = hrefValExpr.exec(
-      lines[error.line - 1].slice(error.column),
-    )[1];
-    if (hrefVal.indexOf('mailto:') > -1 || hrefVal.indexOf('tel:') > -1) {
+    const anchorString = lines[error.line - 1].slice(error.column - 1);
+    const doc = domParser.parseFromString(anchorString, 'text/html');
+    const hrefVal = doc.querySelector('a').attributes.href.value;
+
+    if (hrefVal.startsWith('mailto:') || hrefVal.startsWith('tel:')) {
       return null;
     }
     return {reason: 'href-style'};
