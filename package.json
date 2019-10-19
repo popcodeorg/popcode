@@ -242,7 +242,7 @@
     "react": "16.10.2",
     "react-copy-to-clipboard": "5.0.1",
     "react-dom": "16.10.2",
-    "react-draggable": "3.3.2",
+    "react-draggable": "4.0.3",
     "react-immutable-proptypes": "2.1.0",
     "react-prevent-clickthrough": "0.0.3",
     "react-redux": "7.1.1",
