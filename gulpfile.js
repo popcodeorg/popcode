@@ -95,7 +95,7 @@ gulp.task(
     }),
 );
 
-gulp.task('build', ['static', 'css', 'js']);
+gulp.task('build', gulp.parallel('static', 'css', 'js'));
 
 gulp.task('syncFirebase', async () => {
   const data = await pify(fs).readFile(
@@ -127,30 +127,36 @@ gulp.task('syncFirebase', async () => {
   });
 });
 
-gulp.task('dev', ['browserSync', 'static', 'css'], () => {
-  gulp.watch(path.join(staticDir, '/**/*'), ['static']);
-  gulp.watch(path.join(stylesheetsDir, '**/*.css'), ['css']);
-  gulp.watch(path.join(distDir, '*')).on('change', browserSync.reload);
-});
+gulp.task(
+  'browserSync',
+  gulp.series('static', () => {
+    const compiler = webpack(webpackConfiguration(process.env.NODE_ENV));
+    compiler.plugin('invalid', browserSync.reload);
+    browserSync.init({
+      ghostMode: false,
+      notify: false,
+      open: !isDocker(),
+      reloadOnRestart: true,
+      server: {
+        baseDir: distDir,
+        middleware: [
+          webpackDevMiddleware(compiler, {
+            lazy: false,
+          }),
+        ],
+      },
+    });
+  }),
+);
 
-gulp.task('browserSync', ['static'], () => {
-  const compiler = webpack(webpackConfiguration(process.env.NODE_ENV));
-  compiler.plugin('invalid', browserSync.reload);
-  browserSync.init({
-    ghostMode: false,
-    notify: false,
-    open: !isDocker(),
-    reloadOnRestart: true,
-    server: {
-      baseDir: distDir,
-      middleware: [
-        webpackDevMiddleware(compiler, {
-          lazy: false,
-        }),
-      ],
-    },
-  });
-});
+gulp.task(
+  'dev',
+  gulp.series(gulp.parallel('browserSync', 'static', 'css'), () => {
+    gulp.watch(path.join(staticDir, '/**/*'), ['static']);
+    gulp.watch(path.join(stylesheetsDir, '**/*.css'), ['css']);
+    gulp.watch(path.join(distDir, '*')).on('change', browserSync.reload);
+  }),
+);
 
 gulp.task('purgeCache', () =>
   cloudflare({
