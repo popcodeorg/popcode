@@ -154,7 +154,7 @@
       "doctype": "The first line of your HTML should always be:\n`<!DOCTYPE html>`",
       "duplicated-id": "You can't use the id \"{{-id}}\" more than once in your HTML",
       "img-src": "`<img>` tags need a `src` attribute, with the URL of the image you want to display.",
-      "href-style": "The `<a>` tag should have an `href` attribute that starts with 'http' or 'https'",
+      "href-style": "The `<a>` tag should have an `href` attribute with a value that starts with `http://`, `https://`, `mailto:`, or `tel:`",
       "deprecated-tag": {
         "b": "You shouldn't use the `<b>` tag. Use the `<strong>` tag or the CSS `font-weight` property instead",
         "big": "You shouldn't use the `<big>` tag. Use the CSS `font-size` property instead",
@@ -247,29 +247,17 @@
     },
     "javascriptRuntime": {
       "not-a-function_with-name": "You tried to call `{{-name}}()` as a function, but `{{-name}}` is not a function.",
-
       "not-a-function_with-name-type": "You tried to call `{{-name}}()` as a function, but `{{-name}}` is a `{{-type}}`, not a function.",
-
       "not-a-function_with-name-value": "You tried to call `{{-name}}()` as a function, but `{{-name}}` is `{{-value}}`, which is not a function.",
-
       "undefined-not-a-function_with-name": "You tried to call `{{-name}}()` as a function, but `{{-name}}` does not have a value.",
-
       "null-not-a-function_with-name": "You tried to call `{{-name}}()` as a function, but `{{-name}}` is null.",
-
       "access-property-of-undefined": "You are trying to access a property of something that doesn't have a value.",
-
       "access-property-of-null": "You are trying to access a property of a null value.",
-
       "access-property-of-undefined_with-name": "You are trying to access a property of `{{-name}}`, but `{{-name}}` doesn't have a value.",
-
       "access-property-of-null_with-name": "You are trying to access a property of a `{{-name}}`, but `{{-name}}` is null.",
-
       "read-property-of-undefined_with-property": "You are trying to access the property `{{-property}}` on something that doesn't have a value.",
-
       "read-property-of-null_with-property": "You are trying to access the property `{{-property}}` on a null value.",
-
       "set-property-of-undefined_with-property": "You are trying to set the property `{{-property}}` on something that doesn't have a value.",
-
       "set-property-of-null_with-property": "You are trying to set the property `{{-property}}` on a null value.",
       "infinite-loop": "There is a loop in your code that looks like it might run forever. Check the loop to make sure it has the right stopping condition."
     }
