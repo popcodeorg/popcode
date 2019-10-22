@@ -365,7 +365,7 @@
   "settings": {
     "import/resolver": "webpack",
     "react": {
-      "version": "16.10.2"
+      "version": "16.11.0"
     }
   }
 }
