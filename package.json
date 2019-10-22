@@ -276,8 +276,8 @@
     "whatwg-fetch": "3.0.0"
   },
   "engines": {
-    "node": "10.16.3",
-    "yarn": "~1.19.0"
+    "node": "12.13.0",
+    "yarn": "~1.19.1"
   },
   "scripts": {
     "postinstall": "bower install",
