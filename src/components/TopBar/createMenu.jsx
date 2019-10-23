@@ -67,13 +67,13 @@ export default function createMenu({
 
   return function createMenuWithMappedProps(MenuLaunchButton) {
     function Menu(props) {
+      const ref = useRef(null);
+      const {isOpen, onClose, onToggle} = props;
+      useOnClickOutside(ref, isOpen ? onClose : noop);
+
       if (!isVisible(props)) {
         return null;
       }
-
-      const {isOpen, onClose, onToggle} = props;
-      const ref = useRef(null);
-      useOnClickOutside(ref, isOpen ? onClose : noop);
 
       const menu = isOpen ? (
         <div

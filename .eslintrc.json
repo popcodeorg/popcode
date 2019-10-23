@@ -147,7 +147,14 @@
     }
   ],
   "parser": "babel-eslint",
-  "plugins": ["import", "react", "prettier", "promise", "private-props"],
+  "plugins": [
+    "import",
+    "prettier",
+    "private-props",
+    "promise",
+    "react",
+    "react-hooks"
+  ],
   "rules": {
     "accessor-pairs": "error",
     "camelcase": [
@@ -344,6 +351,8 @@
         "callbacksLast": true
       }
     ],
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
     "require-atomic-updates": "warn",
     "require-unicode-regexp": "warn",
     "require-yield": "error",
@@ -356,7 +365,7 @@
   "settings": {
     "import/resolver": "webpack",
     "react": {
-      "version": "16.10.2"
+      "version": "16.11.0"
     }
   }
 }

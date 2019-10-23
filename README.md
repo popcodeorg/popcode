@@ -228,6 +228,7 @@ for all the sordid details.
 - [Omar De Leo](https://github.com/omardeleo)
 - [David Shen](https://github.com/dshen6)
 - [Maggie Walker](https://maggiewalker.github.io)
+- [Joshua Ling](https://github.com/joshling1919)
 - [Katie Conneally](http://www.katieconneally.com/) created the name Popcode
 - Logo design, "Pop" concept, and branding elements by the team at
   [Red Peak](http://redpeakgroup.com): Andrew Haug, Aya Kawabata, Jieun Lee,
