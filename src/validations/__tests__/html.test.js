@@ -67,6 +67,30 @@ describe('html validation', () => {
       html,
     ));
 
+  test('incomplete anchor tag with href', () =>
+    validationTest(
+      htmlWithBody('<a href'),
+      html,
+      {
+        reason: 'href-style',
+        row: htmlWithBody.offset,
+      },
+      {
+        payload: {
+          tag: 'body',
+        },
+        reason: 'unclosed-tag',
+        row: 5,
+      },
+      {
+        payload: {
+          tag: 'a',
+        },
+        reason: 'unterminated-open-tag',
+        row: htmlWithBody.offset,
+      },
+    ));
+
   test('missing doctype', () =>
     validationTest('<html></html>', html, {reason: 'doctype', row: 0}));
 
