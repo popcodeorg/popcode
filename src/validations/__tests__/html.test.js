@@ -67,6 +67,12 @@ describe('html validation', () => {
       html,
     ));
 
+  test('<a> tag without href attribute', () =>
+    validationTest(
+      htmlWithBody('<a class="important">Important Link</a>'),
+      html,
+    ));
+
   test('incomplete anchor tag with href', () =>
     validationTest(
       htmlWithBody('<a href'),
