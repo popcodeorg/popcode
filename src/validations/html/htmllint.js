@@ -52,10 +52,13 @@ const errorMap = {
     const lines = source.split('\n');
     const anchorString = lines[error.line - 1].slice(error.column - 1);
     const doc = domParser.parseFromString(anchorString, 'text/html');
-    const hrefVal = doc.querySelector('a').attributes.href.value;
+    const anchorEl = doc.querySelector('a');
+    if (anchorEl) {
+      const hrefVal = anchorEl.attributes.href.value;
 
-    if (hrefVal.startsWith('mailto:') || hrefVal.startsWith('tel:')) {
-      return null;
+      if (hrefVal.startsWith('mailto:') || hrefVal.startsWith('tel:')) {
+        return null;
+      }
     }
     return {reason: 'href-style'};
   },
