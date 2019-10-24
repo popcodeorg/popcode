@@ -45,6 +45,58 @@ describe('html validation', () => {
   test('<a> tag with fragment-only URL href', () =>
     validationTest(htmlWithBody('<a href="#fragment">Fragment</a>'), html));
 
+  test('<a> tag with improper href property', () =>
+    validationTest(
+      htmlWithBody('<a href="random-string">Invalid href</a>'),
+      html,
+      {
+        reason: 'href-style',
+        row: htmlWithBody.offset,
+      },
+    ));
+
+  test('<a> tag with mailto: href property', () =>
+    validationTest(
+      htmlWithBody('<a href="mailto:popcode@example.com">Email Popcode</a>'),
+      html,
+    ));
+
+  test('<a> tag with tel: href property', () =>
+    validationTest(
+      htmlWithBody('<a href="tel:1231231234">Call Someone</a>'),
+      html,
+    ));
+
+  test('<a> tag without href attribute', () =>
+    validationTest(
+      htmlWithBody('<a class="important">Important Link</a>'),
+      html,
+    ));
+
+  test('incomplete anchor tag with href', () =>
+    validationTest(
+      htmlWithBody('<a href'),
+      html,
+      {
+        reason: 'href-style',
+        row: htmlWithBody.offset,
+      },
+      {
+        payload: {
+          tag: 'body',
+        },
+        reason: 'unclosed-tag',
+        row: 5,
+      },
+      {
+        payload: {
+          tag: 'a',
+        },
+        reason: 'unterminated-open-tag',
+        row: htmlWithBody.offset,
+      },
+    ));
+
   test('missing doctype', () =>
     validationTest('<html></html>', html, {reason: 'doctype', row: 0}));
 
