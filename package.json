@@ -327,7 +327,7 @@
     "command-exists": "1.2.8",
     "cssnano": "4.1.10",
     "doctoc": "1.4.0",
-    "eslint": "6.5.1",
+    "eslint": "6.6.0",
     "eslint-config-prettier": "6.4.0",
     "eslint-import-resolver-webpack": "0.11.1",
     "eslint-loader": "3.0.2",
