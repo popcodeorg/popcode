@@ -31,6 +31,11 @@ const match = {
 };
 
 const errorMap = {
+  E011: error => ({
+    reason: 'duplicated-declaration',
+    payload: {variable: error.a},
+  }),
+
   E019: error => ({
     reason: 'unmatched',
     payload: {openingSymbol: error.a, closingSymbol: match[error.a]},
