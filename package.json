@@ -320,7 +320,7 @@
     "browser-sync": "2.26.7",
     "bulkify": "1.4.2",
     "caniuse-api": "3.0.0",
-    "caniuse-lite": "1.0.30001005",
+    "caniuse-lite": "1.0.30001006",
     "check-dependencies": "1.1.0",
     "circular-dependency-plugin": "5.2.0",
     "cloudflare": "2.7.0",
