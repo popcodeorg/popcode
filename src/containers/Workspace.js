@@ -13,6 +13,8 @@ import {
   getOpenTopBarMenu,
   isCurrentProjectSyntacticallyValid,
   isUserTyping,
+  isEditingInstructions,
+  isUserAuthenticated,
 } from '../selectors';
 import {
   toggleComponent,
@@ -20,6 +22,9 @@ import {
   startDragColumnDivider,
   stopDragColumnDivider,
   startEditingInstructions,
+  setLoginReminder,
+  disableLoginReminder,
+  triggerLoginReminder,
 } from '../actions';
 import resizableFlex from '../higherOrderComponents/resizableFlex';
 import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
@@ -47,6 +52,7 @@ function mapStateToProps(state) {
     hiddenLanguages,
     shouldRenderOutput,
     title: getCurrentProjectPreviewTitle(state),
+    isUserAuthenticated: isUserAuthenticated(state),
   };
 }
 
@@ -70,6 +76,18 @@ function mapDispatchToProps(dispatch) {
 
     onClickInstructionsEditButton(projectKey) {
       dispatch(startEditingInstructions(projectKey));
+    },
+
+    onSetLoginReminder() {
+      dispatch(setLoginReminder());
+    },
+
+    onDisableLoginReminder() {
+      dispacth(disableLoginReminder());
+    },
+
+    onTriggerLoginReminder(userIsAuthenticated) {
+      dispatch(triggerLoginReminder(userIsAuthenticated));
     },
   };
 }

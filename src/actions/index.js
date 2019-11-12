@@ -46,6 +46,9 @@ import {
   coursesLoaded,
   coursesFullyLoaded,
   toggleArchivedView,
+  setLoginReminder,
+  disableLoginReminder,
+  triggerLoginReminder,
 } from './ui';
 
 import {addRuntimeError} from './errors';
@@ -141,4 +144,7 @@ export {
   coursesFullyLoaded,
   archiveProject,
   toggleArchivedView,
+  setLoginReminder,
+  disableLoginReminder,
+  triggerLoginReminder,
 };

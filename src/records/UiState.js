@@ -8,6 +8,7 @@ export default Record(
     isExperimental: false,
     isTextSizeLarge: false,
     isTyping: false,
+    loginReminder: 'IDLE',
     notifications: new Map(),
     openTopBarMenu: null,
     requestedFocusedLine: null,

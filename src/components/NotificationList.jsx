@@ -11,12 +11,14 @@ import {
   GistImportError,
   SnapshotNotification,
   ProjectExportNotification,
+  LoginReminderNotification,
 } from './notifications';
 
 const NOTIFICATION_COMPONENTS = {
   'gist-import-error': GistImportError,
   'snapshot-created': SnapshotNotification,
   'project-export-complete': ProjectExportNotification,
+  'login-reminder': LoginReminderNotification,
 };
 
 function chooseNotificationComponent(notification) {
