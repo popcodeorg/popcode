@@ -105,9 +105,6 @@ export default function createMenu({
       onToggle: PropTypes.func.isRequired,
     };
 
-    return connect(
-      mapStateToProps,
-      mapDispatchToProps,
-    )(Menu);
+    return connect(mapStateToProps, mapDispatchToProps)(Menu);
   };
 }

@@ -31,7 +31,4 @@ function mapDispatchToProps(dispatch, {projectKey}) {
   };
 }
 
-export default connect(
-  makeMapStateToProps,
-  mapDispatchToProps,
-)(ProjectPreview);
+export default connect(makeMapStateToProps, mapDispatchToProps)(ProjectPreview);

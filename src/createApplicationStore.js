@@ -33,13 +33,7 @@ export default function createApplicationStore() {
   const logicMiddleware = createLogicMiddleware(rootLogic);
   const logicEnhancer = applyMiddleware(logicMiddleware);
 
-  const store = createStore(
-    reducers,
-    compose(
-      sagaEnhancer,
-      logicEnhancer,
-    ),
-  );
+  const store = createStore(reducers, compose(sagaEnhancer, logicEnhancer));
   sagaMiddleware.run(rootSaga);
 
   return store;

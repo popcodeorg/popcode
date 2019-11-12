@@ -86,7 +86,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Preview);
+export default connect(mapStateToProps, mapDispatchToProps)(Preview);

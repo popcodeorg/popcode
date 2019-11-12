@@ -7,13 +7,10 @@ import {LANGUAGES} from '../util/editor';
 
 import getHiddenUIComponents from './getHiddenUIComponents';
 
-export default createSelector(
-  [getHiddenUIComponents],
-  hiddenUIComponents => {
-    const [hiddenLanguages, visibleLanguages] = partition(
-      map(LANGUAGES, (language, index) => ({language, index})),
-      ({language}) => includes(hiddenUIComponents, `editor.${language}`),
-    );
-    return {hiddenLanguages, visibleLanguages};
-  },
-);
+export default createSelector([getHiddenUIComponents], hiddenUIComponents => {
+  const [hiddenLanguages, visibleLanguages] = partition(
+    map(LANGUAGES, (language, index) => ({language, index})),
+    ({language}) => includes(hiddenUIComponents, `editor.${language}`),
+  );
+  return {hiddenLanguages, visibleLanguages};
+});
