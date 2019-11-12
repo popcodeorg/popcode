@@ -23,7 +23,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(AccountMigration);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountMigration);

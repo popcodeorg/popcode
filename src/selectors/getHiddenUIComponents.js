@@ -3,7 +3,6 @@ import {createSelector} from 'reselect';
 
 import getCurrentProject from './getCurrentProject';
 
-export default createSelector(
-  [getCurrentProject],
-  currentProject => get(currentProject, 'hiddenUIComponents', []),
+export default createSelector([getCurrentProject], currentProject =>
+  get(currentProject, 'hiddenUIComponents', []),
 );
