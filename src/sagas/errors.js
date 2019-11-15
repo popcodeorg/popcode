@@ -56,7 +56,6 @@ export function* validateSource(
   }
   const validations = yield call(importValidations);
   const task = yield fork(validations[language], source, projectAttributes);
-  console.log('SAGA task', task);
   tasks.set(language, task);
   const validationErrors = yield join(task);
   tasks.delete(language);
