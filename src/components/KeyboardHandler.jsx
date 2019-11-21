@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import mousetrap from 'mousetrap';
 
 export default function KeyboardHandler({onSave}) {
@@ -18,6 +18,5 @@ export default function KeyboardHandler({onSave}) {
 }
 
 KeyboardHandler.propTypes = {
-  children: PropTypes.object.isRequired,
   onSave: PropTypes.func.isRequired,
 };
