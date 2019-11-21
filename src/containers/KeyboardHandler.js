@@ -12,7 +12,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(KeyboardHandler);
+export default connect(null, mapDispatchToProps)(KeyboardHandler);

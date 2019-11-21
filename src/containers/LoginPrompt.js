@@ -22,7 +22,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LoginPrompt);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPrompt);
