@@ -4,7 +4,6 @@ import partition from 'lodash-es/partition';
 
 import getAllProjects from './getAllProjects';
 
-export default createSelector(
-  [getAllProjects],
-  projects => partition(projects, {isArchived: false}),
+export default createSelector([getAllProjects], projects =>
+  partition(projects, {isArchived: false}),
 );

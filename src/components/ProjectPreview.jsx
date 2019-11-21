@@ -16,7 +16,12 @@ export default function ProjectPreview({
   onProjectSelected,
 }) {
   return (
-    <div className="project-preview" onClick={onProjectSelected}>
+    <div
+      className={classnames('project-preview', {
+        'project-preview_current': isCurrentProject,
+      })}
+      onClick={onProjectSelected}
+    >
       <div className="project-preview__label">
         {preview.slice(0, MAX_LENGTH)}
         {project.updatedAt && (
@@ -29,14 +34,14 @@ export default function ProjectPreview({
         if (isCurrentProject) {
           return (
             <div className="project-preview__status">
-              {t('project-preview.current-project')}
+              {i18next.t('project-preview.current-project')}
             </div>
           );
         }
         if (project.isArchived) {
           return (
             <div className="project-preview__status">
-              {t('project-preview.project-archived')}
+              {i18next.t('project-preview.project-archived')}
             </div>
           );
         }

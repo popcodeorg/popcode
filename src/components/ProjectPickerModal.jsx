@@ -3,9 +3,8 @@ import {faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
 import PropTypes from 'prop-types';
-import filter from 'lodash-es/filter';
 import partial from 'lodash-es/partial';
-import {t} from 'i18next';
+import i18next from 'i18next';
 import isEmpty from 'lodash-es/isEmpty';
 
 import ProjectPreview from '../containers/ProjectPreview';
@@ -29,7 +28,7 @@ export default function ProjectPickerModal({
     <Modal onClose={onCloseProjectPickerModal}>
       <div className="project-picker">
         <h1 className="assignment-creator__title">
-          {t('project-picker.title')}
+          {i18next.t('project-picker.title')}
         </h1>
         <ul className="project-picker__nav">
           <li
@@ -38,7 +37,7 @@ export default function ProjectPickerModal({
             })}
             onClick={partial(onFilterProjects, 'active')}
           >
-            {t('project-picker.tabs.active')}
+            {i18next.t('project-picker.tabs.active')}
           </li>
           {isEmpty(archivedProjects) ? null : (
             <li
@@ -47,7 +46,7 @@ export default function ProjectPickerModal({
               })}
               onClick={partial(onFilterProjects, 'archived')}
             >
-              {t('project-picker.tabs.archived')}
+              {i18next.t('project-picker.tabs.archived')}
             </li>
           )}
         </ul>

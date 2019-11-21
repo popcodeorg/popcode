@@ -25,10 +25,6 @@ export default function ProjectPickerButton({
     <div className="top-bar__menu-button" onClick={onClick}>
       <span className={classnames({u__invisible: shouldShowSavedIndicator})}>
         {i18next.t('top-bar.load-project')}
-        <FontAwesomeIcon
-          className="top-bar__drop-down-button"
-          icon={faCaretDown}
-        />
       </span>
       <span
         className={classnames('top-bar__project-saved', {
