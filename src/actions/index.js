@@ -23,6 +23,7 @@ import {
   updateProjectInstructions,
   projectSuccessfullySaved,
   archiveProject,
+  saveProject,
 } from './projects';
 
 import {
@@ -46,6 +47,8 @@ import {
   coursesLoaded,
   coursesFullyLoaded,
   toggleArchivedView,
+  openLoginPrompt,
+  closeLoginPrompt,
 } from './ui';
 
 import {addRuntimeError} from './errors';
@@ -141,4 +144,7 @@ export {
   coursesFullyLoaded,
   archiveProject,
   toggleArchivedView,
+  saveProject,
+  openLoginPrompt,
+  closeLoginPrompt,
 };

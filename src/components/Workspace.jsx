@@ -28,6 +28,8 @@ import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
 import EditorsColumn from '../containers/EditorsColumn';
+import LoginPrompt from '../containers/LoginPrompt';
+import KeyboardHandler from '../containers/KeyboardHandler';
 
 import CollapsedComponent from './CollapsedComponent';
 import Output from './Output';
@@ -297,19 +299,23 @@ export default class Workspace extends React.Component {
 
   render() {
     return (
-      <div className="layout">
-        <AssignmentCreator />
-        <TopBar />
-        <NotificationList />
-        <div className="layout__columns">
-          <Instructions />
-          {this._renderInstructionsBar()}
-          <div className="workspace layout__main">
-            {this._renderEnvironment()}
+      <>
+        <div className="layout">
+          <AssignmentCreator />
+          <TopBar />
+          <NotificationList />
+          <div className="layout__columns">
+            <Instructions />
+            {this._renderInstructionsBar()}
+            <div className="workspace layout__main">
+              {this._renderEnvironment()}
+            </div>
           </div>
+          <AccountMigration />
+          <LoginPrompt />
         </div>
-        <AccountMigration />
-      </div>
+        <KeyboardHandler />
+      </>
     );
   }
 }

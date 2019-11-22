@@ -31,7 +31,7 @@ export default function AccountMigration({
   return (
     <Modal>
       <div className="account-migration">
-        <h1 className="account-migration__header">
+        <h1 className="modal__header">
           {i18next.t(
             `account-migration.header.${migration.state.key
               .toLowerCase()

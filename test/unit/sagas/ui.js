@@ -4,15 +4,9 @@ import {
   userDoneTyping as userDoneTypingSaga,
   exportProject as exportProjectSaga,
   popOutProject as popOutProjectSaga,
-  projectSuccessfullySaved as projectSuccessfullySavedSaga,
 } from '../../../src/sagas/ui';
 import {getCurrentProject} from '../../../src/selectors';
-import {
-  userDoneTyping,
-  popOutProject,
-  showSaveIndicator,
-  hideSaveIndicator,
-} from '../../../src/actions/ui';
+import {userDoneTyping, popOutProject} from '../../../src/actions/ui';
 import {
   projectExported,
   projectExportDisplayed,
@@ -100,19 +94,6 @@ test('popOutProject', assert => {
     .next({source: preview})
     .call(openWindowWithContent, preview)
     .next(mockWindow)
-    .isDone();
-  assert.end();
-});
-
-test('projectSuccessfullySaved', assert => {
-  testSaga(projectSuccessfullySavedSaga)
-    .next()
-    .put(showSaveIndicator())
-    .next()
-    .delay(1000)
-    .next()
-    .put(hideSaveIndicator())
-    .next()
     .isDone();
   assert.end();
 });

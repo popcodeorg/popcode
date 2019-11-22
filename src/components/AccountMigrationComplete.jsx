@@ -7,11 +7,8 @@ export default function AccountMigrationComplete({onDismiss}) {
   return (
     <Fragment>
       <p>{i18next.t('account-migration.complete')}</p>
-      <div className="account-migration__buttons">
-        <button
-          className={classnames('account-migration__button')}
-          onClick={onDismiss}
-        >
+      <div className="modal__buttons">
+        <button className={classnames('modal__button')} onClick={onDismiss}>
           {i18next.t('account-migration.buttons.dismiss')}
         </button>
       </div>
