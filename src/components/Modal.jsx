@@ -8,13 +8,13 @@ export default function Modal({children, isOpen, onClose}) {
     return null;
   }
 
-  function onContent(e) {
+  function onClickContent(e) {
     e.stopPropagation();
   }
 
   return createPortal(
     <div className="modal" onClick={onClose}>
-      <div className="modal__contents" onClick={onContent}>
+      <div className="modal__contents" onClick={onClickContent}>
         {children}
       </div>
     </div>,

@@ -1,12 +1,10 @@
-import reduce from 'lodash-es/reduce';
-
-import reducer from '../ui';
-
 import {
   openProjectPickerModal,
   closeProjectPickerModal,
   filterProjects,
 } from '../../actions';
+
+import {applyActions} from './helpers';
 
 test('openProjectPickerModal opens project picker modal', () => {
   const {isProjectPickerModalOpen} = applyActions(openProjectPickerModal());
@@ -31,7 +29,3 @@ describe('filterProjects filters', () => {
     expect(projectsFilter).toEqual('archived');
   });
 });
-
-function applyActions(...actions) {
-  return reduce(actions, (state, action) => reducer(state, action), undefined);
-}
