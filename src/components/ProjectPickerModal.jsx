@@ -27,9 +27,7 @@ export default function ProjectPickerModal({
   return (
     <Modal onClose={onCloseProjectPickerModal}>
       <div className="project-picker">
-        <h1 className="assignment-creator__title">
-          {i18next.t('project-picker.title')}
-        </h1>
+        <h1 className="modal__header">{i18next.t('project-picker.title')}</h1>
         <ul className="project-picker__nav">
           <li
             className={classnames('project-picker__nav-tab', {
