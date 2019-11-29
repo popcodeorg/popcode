@@ -141,11 +141,13 @@ export default class Workspace extends React.Component {
 
   _renderHiddenLanguages() {
     const {currentProject, hiddenLanguages, onComponentToggle} = this.props;
+    const isRightJustified = !this._isSingleColumn();
     return (
       <>
         {hiddenLanguages.map(({language}) => (
           <CollapsedComponent
             component={`editor.${language}`}
+            isRightJustified={isRightJustified}
             key={language}
             projectKey={currentProject.projectKey}
             text={i18next.t(`languages.${language}`)}
@@ -206,6 +208,16 @@ export default class Workspace extends React.Component {
         RIGHT_COLUMN_COMPONENTS,
         component => !includes(currentProject.hiddenUIComponents, component),
       )
+    );
+  }
+
+  _isSingleColumn() {
+    const shouldRenderLeft = this._shouldRenderLeftColumn();
+    const shouldRenderRight = this._shouldRenderRightColumn();
+    return (
+      this._isEverythingHidden() ||
+      (shouldRenderLeft && !shouldRenderRight) ||
+      (!shouldRenderLeft && shouldRenderRight)
     );
   }
 
@@ -272,25 +284,23 @@ export default class Workspace extends React.Component {
           </>
         )}
         {this._shouldRenderRightColumn() && (
-          <>
-            <div
-              className="environment__column"
-              ref={_handleOutputRef}
-              style={prefix({
-                flexGrow: resizableFlexGrow.get(1),
-                pointerEvents: ignorePointerEvents ? 'none' : 'all',
-              })}
-            >
-              <div className="environment__column-contents">
-                <div className="environment__column-contents-inner">
-                  {shouldRenderOutput && <Output />}
-                  {this._renderHiddenRightColumnComponents()}
-                  {!this._shouldRenderLeftColumn() &&
-                    this._renderHiddenLanguages()}
-                </div>
+          <div
+            className="environment__column"
+            ref={_handleOutputRef}
+            style={prefix({
+              flexGrow: resizableFlexGrow.get(1),
+              pointerEvents: ignorePointerEvents ? 'none' : 'all',
+            })}
+          >
+            <div className="environment__column-contents">
+              <div className="environment__column-contents-inner">
+                {shouldRenderOutput && <Output />}
+                {this._renderHiddenRightColumnComponents()}
+                {!this._shouldRenderLeftColumn() &&
+                  this._renderHiddenLanguages()}
               </div>
             </div>
-          </>
+          </div>
         )}
         {this._isEverythingHidden() && this._renderEverythingHidden()}
       </div>

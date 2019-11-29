@@ -142,6 +142,7 @@ body {
 }
 
 .top-bar__wordmark-container > svg {
+  height: 2em;
   width: 6.5em;
 }
 
