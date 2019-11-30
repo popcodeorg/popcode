@@ -1,7 +1,6 @@
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import bindAll from 'lodash-es/bindAll';
-import get from 'lodash-es/get';
 import isNil from 'lodash-es/isNil';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
@@ -41,7 +40,7 @@ export default class ConsoleInput extends Component {
   }
 
   _focusRequestedLine(requestedFocusedLine) {
-    if (get(requestedFocusedLine, 'component') !== 'console') {
+    if (requestedFocusedLine?.component !== 'console') {
       return;
     }
 

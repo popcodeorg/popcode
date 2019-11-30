@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie';
-import get from 'lodash-es/get';
 import isEmpty from 'lodash-es/isEmpty';
 import isNil from 'lodash-es/isNil';
 import isNull from 'lodash-es/isNull';
@@ -277,7 +276,7 @@ export function getSessionUid() {
 }
 
 export function setSessionUid() {
-  const uid = get(auth, 'currentUser.uid');
+  const uid = auth?.currentUser?.uid;
   if (!isNil(uid)) {
     Cookies.set(VALID_SESSION_UID_COOKIE, uid, {
       expires: new Date(Date.now() + SESSION_TTL_MS),

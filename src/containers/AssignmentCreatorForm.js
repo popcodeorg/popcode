@@ -2,7 +2,6 @@ import {reduxForm} from 'redux-form/immutable';
 import i18next from 'i18next';
 import isEmpty from 'lodash-es/isEmpty';
 import isNil from 'lodash-es/isNil';
-import get from 'lodash-es/get';
 
 import AssignmentCreatorFormComponent from '../components/AssignmentCreatorForm';
 
@@ -14,7 +13,7 @@ function validate(values) {
   if (isEmpty(course)) {
     errors.course = i18next.t('assignment-creator.no-class-selected');
   }
-  if (isNil(get(date, 'parsedDate'))) {
+  if (isNil(date?.parsedDate)) {
     errors.date = i18next.t('assignment-creator.date-not-valid');
   } else if (date.parsedDate < Date.now()) {
     errors.date = i18next.t('assignment-creator.past-date-not-valid');

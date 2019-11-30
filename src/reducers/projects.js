@@ -3,7 +3,6 @@ import assign from 'lodash-es/assign';
 import isNil from 'lodash-es/isNil';
 import filter from 'lodash-es/filter';
 import find from 'lodash-es/find';
-import get from 'lodash-es/get';
 import map from 'lodash-es/map';
 import sortBy from 'lodash-es/sortBy';
 import values from 'lodash-es/values';
@@ -49,12 +48,12 @@ function contentForLanguage(files, language) {
 function importGist(state, projectKey, gistData) {
   const files = values(gistData.files);
   const popcodeJsonFile = find(files, {filename: 'popcode.json'});
-  const popcodeJson = JSON.parse(get(popcodeJsonFile, 'content', '{}'));
+  const popcodeJson = JSON.parse(popcodeJsonFile?.content ?? '{}');
 
   return addProject(state, {
     projectKey,
     sources: {
-      html: get(find(files, {language: 'HTML'}), 'content', ''),
+      html: find(files, {language: 'HTML'})?.content ?? '',
       css: contentForLanguage(files, 'CSS'),
       javascript: contentForLanguage(files, 'JavaScript'),
     },

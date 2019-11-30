@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import bindAll from 'lodash-es/bindAll';
 import constant from 'lodash-es/constant';
-import get from 'lodash-es/get';
 import throttle from 'lodash-es/throttle';
 import noop from 'lodash-es/noop';
 
@@ -79,9 +78,7 @@ class Editor extends React.Component {
   }
 
   _focusRequestedLine(requestedFocusedLine) {
-    if (
-      get(requestedFocusedLine, 'component') !== `editor.${this.props.language}`
-    ) {
+    if (requestedFocusedLine?.component !== `editor.${this.props.language}`) {
       return;
     }
 

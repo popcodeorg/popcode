@@ -8,7 +8,6 @@ import bindAll from 'lodash-es/bindAll';
 import clone from 'lodash-es/clone';
 import includes from 'lodash-es/includes';
 import isNull from 'lodash-es/isNull';
-import get from 'lodash-es/get';
 import partial from 'lodash-es/partial';
 import some from 'lodash-es/some';
 import i18next from 'i18next';
@@ -80,35 +79,26 @@ export default class Workspace extends React.Component {
   _handleClickInstructionsBar() {
     const {isEditingInstructions, onComponentToggle} = this.props;
     if (!isEditingInstructions) {
-      onComponentToggle(
-        get(this.props, ['currentProject', 'projectKey']),
-        'instructions',
-      );
+      onComponentToggle(this.props?.currentProject?.projectKey, 'instructions');
     }
   }
 
   _handleClickInstructionsEditButton() {
     const {isEditingInstructions, onClickInstructionsEditButton} = this.props;
     if (!isEditingInstructions) {
-      onClickInstructionsEditButton(
-        get(this.props, ['currentProject', 'projectKey']),
-      );
+      onClickInstructionsEditButton(this.props.currentProject?.projectKey);
     }
   }
 
   _renderInstructionsBar() {
-    const currentInstructions = get(this.props, [
-      'currentProject',
-      'instructions',
-    ]);
+    const currentInstructions = this.props.currentProject?.instructions;
     if (!this.props.isEditingInstructions && !currentInstructions) {
       return null;
     }
 
-    const isInstructionsHidden = get(this.props, [
-      'currentProject',
-      'hiddenUIComponents',
-    ]).includes('instructions');
+    const isInstructionsHidden = (
+      this.props.currentProject?.hiddenUIComponents ?? []
+    ).includes('instructions');
 
     return (
       <div
