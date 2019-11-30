@@ -19,7 +19,11 @@ module.exports = api => {
     );
   }
 
-  const plugins = ['@babel/syntax-dynamic-import'];
+  const plugins = [
+    '@babel/syntax-dynamic-import',
+    '@babel/plugin-proposal-nullish-coalescing-operator',
+    '@babel/plugin-proposal-optional-chaining',
+  ];
   if (isJest) {
     plugins.push('babel-plugin-dynamic-import-node');
   }
