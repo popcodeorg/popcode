@@ -1,4 +1,20 @@
 import Immutable from 'immutable';
+import {handleActions} from 'redux-actions';
+
+import {
+  createSnapshot,
+  snapshotCreated,
+  snapshotExportError,
+  exportProject,
+  projectExported,
+  projectExportError,
+  gapiClientReady,
+} from '../actions/clients';
+import {
+  createAssignment,
+  assignmentCreated,
+  assignmentNotCreated,
+} from '../actions/assignments';
 
 const defaultState = new Immutable.Map({
   firebase: new Immutable.Map({exportingSnapshot: false}),
@@ -7,50 +23,50 @@ const defaultState = new Immutable.Map({
   gapi: new Immutable.Map({ready: false}),
 });
 
-export default function clients(stateIn, action) {
-  let state = stateIn;
-  if (state === undefined) {
-    state = defaultState;
-  }
-
-  switch (action.type) {
-    case 'CREATE_SNAPSHOT':
+export default handleActions(
+  {
+    [createSnapshot]: state => {
       return state.setIn(['firebase', 'exportingSnapshot'], true);
-
-    case 'SNAPSHOT_CREATED':
+    },
+    [snapshotCreated]: state => {
       return state.setIn(['firebase', 'exportingSnapshot'], false);
-
-    case 'SNAPSHOT_EXPORT_ERROR':
+    },
+    [snapshotExportError]: state => {
       return state.setIn(['firebase', 'exportingSnapshot'], false);
-
-    case 'EXPORT_PROJECT':
+    },
+    [exportProject]: (state, action) => {
       return state.setIn(
         ['projectExports', action.payload.exportType],
         new Immutable.Map({status: 'waiting'}),
       );
-
-    case 'PROJECT_EXPORTED':
+    },
+    [projectExported]: (state, action) => {
       return state.setIn(
         ['projectExports', action.payload.exportType],
         new Immutable.Map({status: 'ready', url: action.payload.url}),
       );
-
-    case 'PROJECT_EXPORT_ERROR':
+    },
+    [projectExportError]: (state, action) => {
       return state.setIn(
         ['projectExports', action.payload.exportType],
         new Immutable.Map({status: 'error'}),
       );
-
-    case 'GAPI_CLIENT_READY':
+    },
+    [gapiClientReady]: state => {
       return state.setIn(['gapi', 'ready'], true);
-
-    case 'CREATE_ASSIGNMENT':
+    },
+    [createAssignment]: state => {
       return state.setIn(['exportingAssignment'], true);
-
-    case 'ASSIGNMENT_CREATED':
-    case 'ASSIGNMENT_NOT_CREATED':
+    },
+    [createAssignment]: state => {
+      return state.setIn(['exportingAssignment'], true);
+    },
+    [assignmentCreated]: state => {
       return state.setIn(['exportingAssignment'], false);
-  }
-
-  return state;
-}
+    },
+    [assignmentNotCreated]: state => {
+      return state.setIn(['exportingAssignment'], false);
+    },
+  },
+  defaultState,
+);
