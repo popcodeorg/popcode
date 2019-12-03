@@ -1,5 +1,5 @@
 import retryingFailedImports from '../../util/retryingFailedImports';
-import {validatedSource} from '../actions/errors';
+import {validatedSource} from '../../actions/errors';
 
 async function importValidations() {
   return retryingFailedImports(() =>
