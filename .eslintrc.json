@@ -7,6 +7,7 @@
     "eslint:recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
+    "plugin:lodash/recommended",
     "plugin:react/recommended",
     "plugin:promise/recommended",
     "plugin:prettier/recommended"
@@ -54,7 +55,8 @@
       },
       "rules": {
         "import/no-commonjs": "off",
-        "import/no-nodejs-modules": "off"
+        "import/no-nodejs-modules": "off",
+        "lodash/import-scope": ["warn", "method-package"]
       },
       "settings": {
         "import/resolver": "node"
@@ -86,7 +88,7 @@
         "jest/valid-expect": "error",
         "jest/prefer-called-with": "warn"
       },
-      "plugins": ["import", "jest", "react", "promise", "private-props"],
+      "plugins": ["import", "jest", "lodash", "react", "prettier", "promise", "private-props"],
       "settings": {
         "import/resolver": {
           "@popcodeorg/eslint-import-resolver-jest": {
@@ -149,6 +151,7 @@
   "parser": "babel-eslint",
   "plugins": [
     "import",
+    "lodash",
     "prettier",
     "private-props",
     "promise",
@@ -230,6 +233,39 @@
       }
     ],
     "import/unambiguous": "warn",
+    "lodash/chain-style": "warn",
+    "lodash/chaining": "warn",
+    "lodash/collection-ordering": "warn",
+    "lodash/consistent-compose": "warn",
+    "lodash/identity-shorthand": "warn",
+    "lodash/import-scope": "warn",
+    "lodash/matches-prop-shorthand": "warn",
+    "lodash/matches-shorthand": "warn",
+    "lodash/path-style": ["warn", "array"],
+    "lodash/prefer-compact": "warn",
+    "lodash/prefer-constant": "warn",
+    "lodash/prefer-filter": "warn",
+    "lodash/prefer-find": "warn",
+    "lodash/prefer-flat-map": "warn",
+    "lodash/prefer-get": "warn",
+    "lodash/prefer-includes": "warn",
+    "lodash/prefer-invoke-map": "warn",
+    "lodash/prefer-is-nil": "warn",
+    "lodash/prefer-lodash-chain": "warn",
+    "lodash/prefer-lodash-method": "off",
+    "lodash/prefer-lodash-typecheck": "warn",
+    "lodash/prefer-map": "warn",
+    "lodash/prefer-matches": "warn",
+    "lodash/prefer-noop": "warn",
+    "lodash/prefer-over-quantifier": "warn",
+    "lodash/prefer-reject": "warn",
+    "lodash/prefer-some": "warn",
+    "lodash/prefer-startswith": "warn",
+    "lodash/prefer-thru": "warn",
+    "lodash/prefer-times": "warn",
+    "lodash/prefer-wrapper-method": "warn",
+    "lodash/preferred-alias": "warn",
+    "lodash/prop-shorthand": "warn",
     "new-cap": [
       "warn",
       {
