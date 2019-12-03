@@ -39,22 +39,19 @@ function unhideComponent(state, projectKey, component, timestamp) {
 }
 
 function contentForLanguage(files, language) {
-  const filesForLanguage = sortBy(
-    filter(files, {language}),
-    file => file.filename,
-  );
+  const filesForLanguage = sortBy(filter(files, {language}), 'filename');
   return map(filesForLanguage, 'content').join('\n\n');
 }
 
 function importGist(state, projectKey, gistData) {
   const files = values(gistData.files);
   const popcodeJsonFile = find(files, {filename: 'popcode.json'});
-  const popcodeJson = JSON.parse(get(popcodeJsonFile, 'content', '{}'));
+  const popcodeJson = JSON.parse(get(popcodeJsonFile, ['content'], '{}'));
 
   return addProject(state, {
     projectKey,
     sources: {
-      html: get(find(files, {language: 'HTML'}), 'content', ''),
+      html: get(find(files, {language: 'HTML'}), ['content'], ''),
       css: contentForLanguage(files, 'CSS'),
       javascript: contentForLanguage(files, 'JavaScript'),
     },

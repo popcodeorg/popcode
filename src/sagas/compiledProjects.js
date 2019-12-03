@@ -9,7 +9,7 @@ import {projectCompiled, projectCompilationFailed} from '../actions';
 
 export function* validatedSource() {
   const errors = yield select(getErrors);
-  if (every(errors, errorList => errorList.state === 'passed')) {
+  if (every(errors, {state: 'passed'})) {
     const currentProject = yield select(getCurrentProject);
     const timestamp = Date.now();
     try {

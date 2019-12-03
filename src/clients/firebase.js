@@ -277,7 +277,7 @@ export function getSessionUid() {
 }
 
 export function setSessionUid() {
-  const uid = get(auth, 'currentUser.uid');
+  const uid = get(auth, ['currentUser', 'uid']);
   if (!isNil(uid)) {
     Cookies.set(VALID_SESSION_UID_COOKIE, uid, {
       expires: new Date(Date.now() + SESSION_TTL_MS),

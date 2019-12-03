@@ -1,3 +1,5 @@
+import includes from 'lodash-es/includes';
+
 const proto = DOMParser.prototype;
 const nativeParse = proto.parseFromString;
 
@@ -13,7 +15,7 @@ if (!isParsingNativelySupported()) {
   proto.parseFromString = function parseFromString(markup, type, ...rest) {
     if (/^\s*text\/html\s*(?:;|$)/iu.test(type)) {
       const doc = document.implementation.createHTMLDocument('');
-      if (markup.toLowerCase().indexOf('<!doctype') > -1) {
+      if (includes(markup.toLowerCase(), '<!doctype')) {
         doc.documentElement.innerHTML = markup;
       } else {
         doc.body.innerHTML = markup;

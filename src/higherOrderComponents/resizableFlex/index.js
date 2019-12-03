@@ -1,4 +1,5 @@
 import {connectAdvanced} from 'react-redux';
+import constant from 'lodash-es/constant';
 import at from 'lodash-es/at';
 import findIndex from 'lodash-es/findIndex';
 import isNull from 'lodash-es/isNull';
@@ -29,7 +30,7 @@ export default function resizableFlex(size) {
   return connectAdvanced(
     dispatch => {
       const regions = times(size, () => ({current: null}));
-      const initialMainSizes = times(size, () => null);
+      const initialMainSizes = times(size, constant(null));
 
       const stateIndependentFunctions = {
         isFlexResizingSupported: true,

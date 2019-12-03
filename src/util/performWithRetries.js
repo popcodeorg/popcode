@@ -1,9 +1,10 @@
 import assign from 'lodash-es/assign';
+import constant from 'lodash-es/constant';
 import promiseRetry from 'promise-retry';
 
 export default function performWithRetries(
   perform,
-  shouldRetryFn = () => false,
+  shouldRetryFn = constant(false),
   options = {},
 ) {
   return promiseRetry(
