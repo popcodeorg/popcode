@@ -155,8 +155,9 @@
       ]
     },
     {
-      "packagePatterns": [
+      "packageNames": [
         "browser-sync",
+        "caniuse-lite",
         "doctoc",
         "is-docker",
         "jscodeshift",
@@ -166,6 +167,10 @@
         "yarn-deduplicate"
       ],
       "automerge": true
+    },
+    {
+      "packageNames": ["sweetalert2"],
+      "prPriority": -1
     }
   ],
   "patch": {
