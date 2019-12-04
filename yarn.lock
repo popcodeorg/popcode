@@ -8367,10 +8367,10 @@ loader-utils@^1.0.2, loader-utils@^1.0.3, loader-utils@^1.1.0, loader-utils@^1.2
     emojis-list "^2.0.0"
     json5 "^1.0.1"
 
-loadjs@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/loadjs/-/loadjs-4.0.1.tgz#e1f53432bd8cdc7397cc6c81b568996805646fda"
-  integrity sha512-ArFeJEd5TFXjcO1YqT5uSgSMBq+NHWdoew7o6sLqb1KZBg06UIyk/PMT8ftN9T5vT20q3QbzsKdp2N8XhdYysQ==
+loadjs@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/loadjs/-/loadjs-4.2.0.tgz#2a0336376397a6a43edf98c9ec3229ddd5abb6f6"
+  integrity sha512-AgQGZisAlTPbTEzrHPb6q+NYBMD+DP9uvGSIjSUM5uG+0jG15cb8axWpxuOIqrmQjn6scaaH8JwloiP27b2KXA==
 
 localtunnel@1.9.2:
   version "1.9.2"
