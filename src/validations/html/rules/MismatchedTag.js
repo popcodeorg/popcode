@@ -36,10 +36,7 @@ export default class MismatchedTag {
   }
 
   closeTag(location, name) {
-    const openIndex = findLastIndex(
-      this._openTagStack,
-      openTag => openTag.name === name,
-    );
+    const openIndex = findLastIndex(this._openTagStack, {name});
 
     const isOpened = openIndex >= 0;
     if (isOpened) {

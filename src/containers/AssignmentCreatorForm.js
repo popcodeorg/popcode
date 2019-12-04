@@ -14,7 +14,7 @@ function validate(values) {
   if (isEmpty(course)) {
     errors.course = i18next.t('assignment-creator.no-class-selected');
   }
-  if (isNil(get(date, 'parsedDate'))) {
+  if (isNil(get(date, ['parsedDate']))) {
     errors.date = i18next.t('assignment-creator.date-not-valid');
   } else if (date.parsedDate < Date.now()) {
     errors.date = i18next.t('assignment-creator.past-date-not-valid');

@@ -15,7 +15,7 @@ function ErrorReport({errors, isValidating, onErrorClick}) {
     );
   }
 
-  const hasErrors = Boolean(find(errors, list => list.items.length));
+  const hasErrors = Boolean(find(errors, 'items.length'));
   if (!hasErrors) {
     return null;
   }

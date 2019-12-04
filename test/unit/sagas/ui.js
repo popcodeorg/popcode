@@ -1,4 +1,6 @@
 import test from 'tape-catch';
+import noop from 'lodash-es/noop';
+
 import {testSaga} from 'redux-saga-test-plan';
 import {
   userDoneTyping as userDoneTypingSaga,
@@ -66,7 +68,7 @@ test('exportProject', t => {
   });
 
   t.test('with project export error', assert => {
-    const mockWindow = {closed: false, close() {}};
+    const mockWindow = {closed: false, close: noop};
     const exportType = 'gist';
     testSaga(exportProjectSaga)
       .next()
@@ -83,7 +85,7 @@ test('exportProject', t => {
 });
 
 test('popOutProject', assert => {
-  const mockWindow = {closed: false, close() {}};
+  const mockWindow = {closed: false, close: noop};
   const project = {};
   const preview = {src: '<html></html>'};
   testSaga(popOutProjectSaga, popOutProject())

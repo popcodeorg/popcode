@@ -14,14 +14,14 @@ import {bugsnagClient} from './util/bugsnag';
 
 const compose = get(
   window,
-  '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__',
+  ['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'],
   composeWithoutDevTools,
 );
 
 export default function createApplicationStore() {
   const sagaMiddleware = createSagaMiddleware({
     onError(error) {
-      if (get(console, 'error')) {
+      if (get(console, ['error'])) {
         // eslint-disable-next-line no-console
         console.error(error);
       }
