@@ -7,23 +7,34 @@ import {getCurrentProject} from '../../selectors';
 jest.mock('../../analyzers');
 jest.mock('../helpers/validateSource');
 jest.mock('../../selectors', () => ({
-  getCurrentProject: jest.fn(),
+  getCurrentProject: jest.fn(x => x),
 }));
 
 const dummyState = {};
 
 test('should validate project on change', async () => {
+  const language = 'html';
+  const newValue = 'dummy new value';
   const dispatch = jest.fn();
   const done = jest.fn();
-  const res = await validateProjectOnChange.process(
+  await validateProjectOnChange.process(
     {
       getState: () => dummyState,
-      action: {payload: {language: 'html', newValue: ''}},
+      action: {payload: {language, newValue}},
     },
     dispatch,
     done,
   );
-  expect(Analyzer).toHaveBeenCalled();
-  expect(getCurrentProject).toHaveBeenCalled();
-  expect(validateSource).toHaveBeenCalled();
+  expect(getCurrentProject).toHaveBeenCalledWith(dummyState);
+  const analyzerPayload = getCurrentProject(dummyState);
+  expect(Analyzer).toHaveBeenCalledWith(analyzerPayload);
+  expect(validateSource).toHaveBeenCalledWith(
+    {
+      language,
+      source: newValue,
+      projectAttributes: new Analyzer(getCurrentProject(dummyState)),
+    },
+    dispatch,
+  );
+  expect(done).toHaveBeenCalled();
 });
