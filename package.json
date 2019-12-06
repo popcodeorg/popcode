@@ -279,7 +279,7 @@
   },
   "engines": {
     "node": "12.13.1",
-    "yarn": "~1.19.1"
+    "yarn": "~1.21.0"
   },
   "scripts": {
     "postinstall": "bower install",
