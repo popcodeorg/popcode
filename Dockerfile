@@ -5,7 +5,7 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
         apt-get update && \
         apt-get install -y google-chrome-stable
 
-ENV YARN_VERSION 1.19.1
+ENV YARN_VERSION 1.21.0
 
 RUN curl -fsSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
     && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ \
