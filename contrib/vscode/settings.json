@@ -14,6 +14,7 @@
   "files.insertFinalNewline": true,
   "npm.autoDetect": "off",
   "npm.packageManager": "yarn",
+  "stylelint.enable": false,
   "travis.username": "popcodeorg",
   "travis.repository": "popcode",
   "travis.pro": true,
