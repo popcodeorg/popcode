@@ -1,7 +1,7 @@
 import retryingFailedImports from '../../util/retryingFailedImports';
 import {validatedSource} from '../../actions/errors';
 
-async function importValidations() {
+function importValidations() {
   return retryingFailedImports(() =>
     import(
       /* webpackChunkName: "mainAsync" */

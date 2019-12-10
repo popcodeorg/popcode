@@ -5,6 +5,7 @@ import validateSource from './helpers/validateSource';
 
 export default createLogic({
   type: 'UPDATE_PROJECT_SOURCE',
+  latest: true,
   async process(
     {
       getState,
