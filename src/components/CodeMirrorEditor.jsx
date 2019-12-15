@@ -33,6 +33,7 @@ export default function CodeMirrorEditor({
   onAutoFormat,
   onInput,
   onRequestedLineFocused,
+  onSave,
 }) {
   const containerRef = useRef();
   const editorRef = useRef();
@@ -106,9 +107,12 @@ export default function CodeMirrorEditor({
 
   useEffect(() => {
     const editor = editorRef.current;
-    const keyBinding = bowser.isOS('macOS') ? 'Cmd-I' : 'Ctrl-I';
-    editor.setOption('extraKeys', {[keyBinding]: onAutoFormat});
-  }, [onAutoFormat]);
+    const modifier = bowser.isOS('macOS') ? 'Cmd' : 'Ctrl';
+    editor.setOption('extraKeys', {
+      [`${modifier}-I`]: onAutoFormat,
+      [`${modifier}-S`]: onSave,
+    });
+  }, [onAutoFormat, onSave]);
 
   useEffect(() => {
     if (get(requestedFocusedLine, ['component']) !== `editor.${language}`) {
@@ -146,6 +150,7 @@ CodeMirrorEditor.propTypes = {
   onAutoFormat: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
 CodeMirrorEditor.defaultProps = {

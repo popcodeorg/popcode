@@ -21,6 +21,7 @@ const DEFAULT_PROPS = {
   onAutoFormat: jest.fn(),
   onInput: jest.fn(),
   onRequestedLineFocused: jest.fn(),
+  onSave: jest.fn(),
 };
 
 function buildComponent(props = {}) {
@@ -170,8 +171,14 @@ describe('codemirror editor', () => {
   });
 
   test('auto-formatting', () => {
-    expect(getEditorOption('extraKeys')).toEqual({
+    expect(getEditorOption('extraKeys')).toMatchObject({
       'Ctrl-I': DEFAULT_PROPS.onAutoFormat,
+    });
+  });
+
+  test('explicit save', () => {
+    expect(getEditorOption('extraKeys')).toMatchObject({
+      'Ctrl-S': DEFAULT_PROPS.onSave,
     });
   });
 
