@@ -181,6 +181,6 @@
   "prConcurrentLimit": 3,
   "rebaseStalePrs": true,
   "reviewers": ["outoftime"],
-  "schedule": "weekends",
+  "schedule": "every weekend",
   "separateMinorPatch": true
 }
