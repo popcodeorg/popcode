@@ -1,5 +1,9 @@
 {
+  "automerge": true,
   "extends": ["config:base"],
+  "major": {
+    "automerge": false
+  },
   "masterIssue": true,
   "masterIssueAutoclose": true,
   "packageRules": [
@@ -173,13 +177,10 @@
       "prPriority": -1
     }
   ],
-  "patch": {
-    "automerge": true,
-    "prConcurrentLimit": 0
-  },
   "postUpdateOptions": ["yarnDedupeFewer"],
   "prConcurrentLimit": 3,
   "rebaseStalePrs": true,
   "reviewers": ["outoftime"],
+  "schedule": "weekends",
   "separateMinorPatch": true
 }
