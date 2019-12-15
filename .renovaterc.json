@@ -181,5 +181,6 @@
   "prConcurrentLimit": 3,
   "rebaseStalePrs": true,
   "reviewers": ["outoftime"],
+  "schedule": "nonOfficeHours",
   "separateMinorPatch": true
 }
