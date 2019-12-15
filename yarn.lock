@@ -13247,10 +13247,10 @@ stylelint-config-prettier@8.0.0:
   resolved "https://registry.yarnpkg.com/stylelint-config-prettier/-/stylelint-config-prettier-8.0.0.tgz#82b36b46fce60e92a1a32dd483ec4e3e857d3af3"
   integrity sha512-C1FpThYJ7Y8omangeNngmp30PlO6uh3Au2b5w4Xw4xBTZy8aTx/R1AXcP9Ik0DJqINk7F7rwaKWqOLU/g7laGg==
 
-stylelint-prettier@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/stylelint-prettier/-/stylelint-prettier-1.1.1.tgz#213873c1d0097cd0985dafc766197dcd955e21c5"
-  integrity sha512-H7Zjb+9ufF0dTjjJ4qSbN/yeAV14BNUK5rl267lvYfmmW4Swlz4a2rfwqqgiN/YlntHXXzM6Nh/UXHFIvLI8zA==
+stylelint-prettier@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/stylelint-prettier/-/stylelint-prettier-1.1.2.tgz#2b19abe40789c380bffee3d4267c413d981a86ea"
+  integrity sha512-8QZ+EtBpMCXYB6cY0hNE3aCDKMySIx4Q8/malLaqgU/KXXa6Cj2KK8ulG1AJvUMD5XSSP8rOotqaCzR/BW6qAA==
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
