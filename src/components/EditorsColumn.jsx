@@ -1,9 +1,10 @@
 import {DraggableCore} from 'react-draggable';
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import classnames from 'classnames';
 import isEmpty from 'lodash-es/isEmpty';
+import memoize from 'lodash-es/memoize';
 import partial from 'lodash-es/partial';
 
 import {EditorLocation} from '../records';
@@ -16,6 +17,7 @@ export default function EditorsColumn({
   errors,
   resizableFlexGrow,
   resizableFlexRefs,
+  isExperimental,
   isFlexResizingSupported,
   isTextSizeLarge,
   requestedFocusedLine,
@@ -27,6 +29,13 @@ export default function EditorsColumn({
   onSave,
   visibleLanguages,
 }) {
+  const handleInputForLanguage = useCallback(
+    memoize(language =>
+      partial(onEditorInput, currentProject.projectKey, language),
+    ),
+    [onEditorInput, currentProject.projectKey],
+  );
+
   const editors = [];
 
   visibleLanguages.forEach(({language, index}) => {
@@ -51,8 +60,9 @@ export default function EditorsColumn({
           requestedFocusedLine={requestedFocusedLine}
           source={currentProject.sources[language]}
           textSizeIsLarge={isTextSizeLarge}
+          useCodeMirror={isExperimental}
           onAutoFormat={onAutoFormat}
-          onInput={partial(onEditorInput, currentProject.projectKey, language)}
+          onInput={handleInputForLanguage(language)}
           onRequestedLineFocused={onRequestedLineFocused}
           onSave={onSave}
         />
@@ -84,6 +94,7 @@ export default function EditorsColumn({
 EditorsColumn.propTypes = {
   currentProject: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
+  isExperimental: PropTypes.bool.isRequired,
   isFlexResizingSupported: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),

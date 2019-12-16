@@ -541,6 +541,24 @@ body {
   flex: 1;
 }
 
+.editors__codemirror-container {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
+}
+
+.editors__codemirror-container_large-text {
+  font-size: 20px;
+}
+
+.editors__collapsed-editor {
+  border-top: 4px solid var(--color-light-gray);
+  flex: none;
+}
+
 .editors__label {
   text-align: right;
 }
@@ -588,6 +606,25 @@ body {
   font-family: Roboto;
   user-select: none;
   pointer-events: none;
+}
+
+/* postcss-bem-linter: ignore */
+.CodeMirror {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.2em;
+}
+
+/* postcss-bem-linter: ignore */
+.CodeMirror-matchingbracket {
+  color: inherit !important;
+  border: 1px solid var(--color-light-gray);
+  border-radius: 1px;
+}
+
+/* postcss-bem-linter: ignore */
+.CodeMirror-activeline-background {
+  background: var(--color-low-contrast-gray) !important;
 }
 
 /** @define collapsed-component */
