@@ -10,6 +10,7 @@ import {
   getRequestedFocusedLine,
   isCurrentProjectSyntacticallyValid,
   isTextSizeLarge,
+  isExperimental,
 } from '../selectors';
 import {
   clearConsoleEntries,
@@ -28,6 +29,7 @@ function mapStateToProps(state) {
     currentProjectKey: getCurrentProjectKey(state),
     history: getConsoleHistory(state),
     currentInputValue: getCurrentConsoleInputValue(state),
+    isExperimental: isExperimental(state),
     isOpen: !getHiddenUIComponents(state).includes('console'),
     isTextSizeLarge: isTextSizeLarge(state),
     requestedFocusedLine: getRequestedFocusedLine(state),

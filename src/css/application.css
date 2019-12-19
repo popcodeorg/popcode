@@ -548,6 +548,25 @@ body {
   right: 0;
   top: 0;
   z-index: 0;
+
+  /* postcss-bem-linter: ignore */
+  & .CodeMirror {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1.2em;
+  }
+
+  /* postcss-bem-linter: ignore */
+  & .CodeMirror-matchingbracket {
+    color: inherit !important;
+    border: 1px solid var(--color-light-gray);
+    border-radius: 1px;
+  }
+
+  /* postcss-bem-linter: ignore */
+  & .CodeMirror-activeline-background {
+    background: var(--color-low-contrast-gray) !important;
+  }
 }
 
 .editors__codemirror-container_large-text {
@@ -606,25 +625,6 @@ body {
   font-family: Roboto;
   user-select: none;
   pointer-events: none;
-}
-
-/* postcss-bem-linter: ignore */
-.CodeMirror {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: 1.2em;
-}
-
-/* postcss-bem-linter: ignore */
-.CodeMirror-matchingbracket {
-  color: inherit !important;
-  border: 1px solid var(--color-light-gray);
-  border-radius: 1px;
-}
-
-/* postcss-bem-linter: ignore */
-.CodeMirror-activeline-background {
-  background: var(--color-low-contrast-gray) !important;
 }
 
 /** @define collapsed-component */
@@ -688,16 +688,20 @@ body {
 }
 
 .console__repl {
+  --console-font-size: 14px;
+
   display: flex;
   flex-direction: column-reverse;
   font-family: 'Inconsolata', monospace;
-  font-size: 14px;
+  font-size: var(--console-font-size);
   max-height: 100%;
   overflow: auto;
 }
 
 .console__repl_zoomed {
-  font-size: 20px;
+  --console-font-size: 20px;
+
+  font-size: var(--console-font-size);
 }
 
 .console__row {
@@ -729,16 +733,29 @@ body {
   padding-bottom: 0.5em;
 }
 
+.console__editor {
+  margin-left: -4px;
+}
+
 .console__input {
   height: 1em;
+  position: relative;
+
+  /* postcss-bem-linter: ignore */
+  & .CodeMirror {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1em;
+  }
+
+  /* postcss-bem-linter: ignore */
+  & .CodeMirror-lines {
+    padding: 0;
+  }
 }
 
 .console__entry {
   border-bottom: 1px solid var(--color-low-contrast-gray);
-}
-
-.console__editor {
-  margin-left: -4px;
 }
 
 .console__value {
