@@ -193,8 +193,8 @@
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "7.7.5",
-    "@babel/preset-env": "7.7.6",
+    "@babel/core": "7.7.7",
+    "@babel/preset-env": "7.7.7",
     "@bugsnag/js": "6.4.3",
     "@bugsnag/plugin-react": "6.4.0",
     "@fortawesome/fontawesome-svg-core": "1.2.26",
@@ -310,7 +310,7 @@
     "toc": "doctoc README.md --github --title '## Table of Contents'"
   },
   "devDependencies": {
-    "@babel/cli": "7.7.5",
+    "@babel/cli": "7.7.7",
     "@babel/plugin-syntax-dynamic-import": "7.7.4",
     "@babel/preset-react": "7.7.4",
     "@popcodeorg/eslint-import-resolver-jest": "2.1.1-popcode.1",
