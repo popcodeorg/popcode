@@ -15,6 +15,8 @@ import {
 import {migrateAccount} from '../../clients/firebase';
 import {bugsnagClient} from '../../util/bugsnag';
 
+import {processLogic} from './helpers';
+
 import {
   credentialFactory,
   firebaseErrorFactory,
@@ -28,9 +30,6 @@ jest.mock('../../util/bugsnag');
 jest.useFakeTimers();
 
 describe('startAccountMigration', () => {
-  const dispatch = jest.fn();
-  const done = jest.fn();
-
   test('not dismissed during undo period, successful migration', async () => {
     const mockUser = userFactory.build();
     const mockCredential = credentialFactory.build();
@@ -51,11 +50,10 @@ describe('startAccountMigration', () => {
     });
 
     const emptyAction = new Observable();
-    const migrationDone = startAccountMigration.process(
-      {action$: emptyAction, getState: () => state},
-      dispatch,
-      done,
-    );
+    const migrationDone = processLogic(startAccountMigration, {
+      action$: emptyAction,
+      getState: () => state,
+    });
     jest.advanceTimersByTime(5000);
     await migrationDone;
 
@@ -80,11 +78,10 @@ describe('startAccountMigration', () => {
     bugsnagClient.notify.mockResolvedValue();
 
     const emptyAction = new Observable();
-    const migrationDone = startAccountMigration.process(
-      {action$: emptyAction, getState: () => state},
-      dispatch,
-      done,
-    );
+    const migrationDone = processLogic(startAccountMigration, {
+      action$: emptyAction,
+      getState: () => state,
+    });
     jest.advanceTimersByTime(5000);
     await migrationDone;
 
@@ -109,11 +106,10 @@ describe('startAccountMigration', () => {
       dismissAccountMigration(),
     );
 
-    await startAccountMigration.process(
-      {action$: cancelAction, getState: () => state},
-      dispatch,
-      done,
-    );
+    await processLogic(startAccountMigration, {
+      action$: cancelAction,
+      getState: () => state,
+    });
 
     expect(migrateAccount).not.toHaveBeenCalledWith(mockCredential);
   });
