@@ -17,6 +17,7 @@
   "travis.username": "popcodeorg",
   "travis.repository": "popcode",
   "travis.pro": true,
+  "typescript.npm": "./tools/npm.py",
   "yarn.bin": "./tools/yarn.py",
   "[javascript]": {
     "editor.codeActionsOnSave": {
