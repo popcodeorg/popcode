@@ -4,7 +4,6 @@
   "editor.formatOnSave": true,
   "editor.rulers": [80],
   "editor.tabSize": 2,
-  "eslint.autoFixOnSave": true,
   "files.trimTrailingWhitespace": true,
   "gulp.autoDetect": "off",
   "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
@@ -20,6 +19,9 @@
   "travis.pro": true,
   "yarn.bin": "./tools/yarn.py",
   "[javascript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   }
 }
