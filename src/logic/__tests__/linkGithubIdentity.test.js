@@ -6,10 +6,11 @@ import {bugsnagClient} from '../../util/bugsnag';
 import {
   accountMigrationNeeded,
   linkIdentityFailed,
+  linkGithubIdentity as linkGithubIdentityAction,
   identityLinked,
 } from '../../actions/user';
 
-import {processLogic} from './helpers';
+import {makeTestLogic} from './helpers';
 
 import {
   credentialFactory,
@@ -25,6 +26,8 @@ jest.mock('../../clients/github.js');
 jest.mock('../../util/bugsnag.js');
 
 describe('linkGithubIdentity', () => {
+  const testLogic = makeTestLogic(linkGithubIdentity);
+
   test('success', async () => {
     const mockCredential = credentialFactory.build();
     const mockUser = userFactory.build();
@@ -34,7 +37,7 @@ describe('linkGithubIdentity', () => {
       credential: mockCredential,
     });
 
-    const dispatch = await processLogic(linkGithubIdentity);
+    const dispatch = await testLogic(linkGithubIdentityAction());
     expect(dispatch).toHaveBeenCalledWith(
       identityLinked(mockUser, mockCredential),
     );
@@ -50,7 +53,7 @@ describe('linkGithubIdentity', () => {
     linkGithub.mockRejectedValue(error);
     getProfileForAuthenticatedUser.mockResolvedValue({data: githubProfile});
 
-    const dispatch = await processLogic(linkGithubIdentity);
+    const dispatch = await testLogic(linkGithubIdentityAction());
 
     expect(linkGithub).toHaveBeenCalledWith();
     expect(getProfileForAuthenticatedUser).toHaveBeenCalledWith(
@@ -67,7 +70,7 @@ describe('linkGithubIdentity', () => {
     linkGithub.mockRejectedValue(otherError);
     bugsnagClient.notify.mockResolvedValue();
 
-    const dispatch = await processLogic(linkGithubIdentity);
+    const dispatch = await testLogic(linkGithubIdentityAction());
     expect(linkGithub).toHaveBeenCalledWith();
     expect(bugsnagClient.notify).toHaveBeenCalledWith(otherError);
     expect(dispatch).toHaveBeenCalledWith(linkIdentityFailed(otherError));
