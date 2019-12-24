@@ -25,6 +25,7 @@ export default createLogic({
     const shouldCancel = await Promise.race([continuePromise, cancelPromise]);
 
     if (shouldCancel) {
+      done();
       return;
     }
 

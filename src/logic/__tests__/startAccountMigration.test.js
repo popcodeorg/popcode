@@ -1,4 +1,3 @@
-import {Observable} from 'rxjs';
 import reduce from 'lodash-es/reduce';
 
 import rootReducer from '../../reducers';
@@ -10,10 +9,12 @@ import {
   accountMigrationUndoPeriodExpired,
   startAccountMigration as startAccountMigrationAction,
   userAuthenticated,
-  dismissAccountMigration,
+  dismissAccountMigration as dismissAccountMigrationAction,
 } from '../../actions/user';
 import {migrateAccount} from '../../clients/firebase';
 import {bugsnagClient} from '../../util/bugsnag';
+
+import {makeTestLogic} from './helpers';
 
 import {
   credentialFactory,
@@ -28,8 +29,7 @@ jest.mock('../../util/bugsnag');
 jest.useFakeTimers();
 
 describe('startAccountMigration', () => {
-  const dispatch = jest.fn();
-  const done = jest.fn();
+  const testLogic = makeTestLogic(startAccountMigration);
 
   test('not dismissed during undo period, successful migration', async () => {
     const mockUser = userFactory.build();
@@ -50,14 +50,12 @@ describe('startAccountMigration', () => {
       migratedProjects: mockProjects,
     });
 
-    const emptyAction = new Observable();
-    const migrationDone = startAccountMigration.process(
-      {action$: emptyAction, getState: () => state},
-      dispatch,
-      done,
-    );
-    jest.advanceTimersByTime(5000);
-    await migrationDone;
+    await testLogic(startAccountMigrationAction(), {
+      state,
+      afterDispatch() {
+        jest.advanceTimersByTime(5000);
+      },
+    });
 
     expect(migrateAccount).toHaveBeenCalledWith(mockCredential);
   });
@@ -79,13 +77,12 @@ describe('startAccountMigration', () => {
     migrateAccount.mockRejectedValue(migrationError);
     bugsnagClient.notify.mockResolvedValue();
 
-    const emptyAction = new Observable();
-    const migrationDone = startAccountMigration.process(
-      {action$: emptyAction, getState: () => state},
-      dispatch,
-      done,
-    );
-    jest.advanceTimersByTime(5000);
+    const migrationDone = testLogic(startAccountMigrationAction(), {
+      state,
+      afterDispatch() {
+        jest.advanceTimersByTime(5000);
+      },
+    });
     await migrationDone;
 
     expect(migrateAccount).toHaveBeenCalledWith(mockCredential);
@@ -97,23 +94,19 @@ describe('startAccountMigration', () => {
     const mockCredential = credentialFactory.build();
     const mockProfile = githubProfileFactory.build();
 
-    const cancelAction = new Observable(subscriber => {
-      subscriber.next({type: 'DISMISS_ACCOUNT_MIGRATION'});
-      subscriber.complete();
-    });
-
     const state = applyActions(
       userAuthenticated(mockUser, mockCredential),
       accountMigrationNeeded(mockProfile, mockCredential),
       startAccountMigrationAction(),
-      dismissAccountMigration(),
+      dismissAccountMigrationAction(),
     );
 
-    await startAccountMigration.process(
-      {action$: cancelAction, getState: () => state},
-      dispatch,
-      done,
-    );
+    await testLogic(startAccountMigrationAction(), {
+      state,
+      afterDispatch(store) {
+        store.dispatch(dismissAccountMigrationAction());
+      },
+    });
 
     expect(migrateAccount).not.toHaveBeenCalledWith(mockCredential);
   });
