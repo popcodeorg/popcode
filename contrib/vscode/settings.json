@@ -13,12 +13,16 @@
   "files.insertFinalNewline": true,
   "npm.autoDetect": "off",
   "npm.packageManager": "yarn",
-  "stylelint.enable": false,
   "travis.username": "popcodeorg",
   "travis.repository": "popcode",
   "travis.pro": true,
   "typescript.npm": "./tools/npm.py",
   "yarn.bin": "./tools/yarn.py",
+  "[css]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": true
+    }
+  },
   "[javascript]": {
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
