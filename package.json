@@ -332,7 +332,7 @@
     "cssnano": "4.1.10",
     "doctoc": "1.4.0",
     "eslint": "6.8.0",
-    "eslint-config-prettier": "6.8.0",
+    "eslint-config-prettier": "6.9.0",
     "eslint-import-resolver-webpack": "0.12.0",
     "eslint-loader": "3.0.3",
     "eslint-plugin-import": "2.19.1",
