@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
 import PropTypes from 'prop-types';
 
 import AceConsoleInput from './AceConsoleInput';
-import CodeMirrorConsoleInput from './CodeMirrorConsoleInput';
+
+const CodeMirrorConsoleInput = lazy(() =>
+  import(
+    /* webpackChunkName: "experimentalOnly" */
+    './CodeMirrorConsoleInput'
+  ),
+);
 
 export default function ConsoleInput({isExperimental, ...props}) {
   if (isExperimental) {
-    return <CodeMirrorConsoleInput {...props} />;
+    return (
+      <Suspense>
+        <CodeMirrorConsoleInput {...props} />
+      </Suspense>
+    );
   }
   return <AceConsoleInput {...props} />;
 }
