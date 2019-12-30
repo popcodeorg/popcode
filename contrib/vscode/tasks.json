@@ -109,6 +109,13 @@
           "PROFILE_BUILD": "true"
         }
       }
+    },
+    {
+      "label": "Git: Interactive rebase from upstream master",
+      "type": "shell",
+      "command": "git pull --rebase=interactive upstream master",
+      "problemMatcher": [],
+      "presentation": {"reveal": "silent"}
     }
   ]
 }
