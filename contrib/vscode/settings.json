@@ -18,6 +18,7 @@
   "travis.pro": true,
   "typescript.npm": "./tools/npm.py",
   "yarn.bin": "./tools/yarn.py",
+  "yarn.runInTerminal": false,
   "[css]": {
     "editor.codeActionsOnSave": {
       "source.fixAll.stylelint": true
