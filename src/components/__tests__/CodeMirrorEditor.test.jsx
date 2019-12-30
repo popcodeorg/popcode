@@ -1,5 +1,6 @@
 import CodeMirror from 'codemirror';
 import isNil from 'lodash-es/isNil';
+import find from 'lodash-es/find';
 import findLast from 'lodash-es/findLast';
 import last from 'lodash-es/last';
 import React from 'react';
@@ -20,6 +21,7 @@ const DEFAULT_PROPS = {
   source: '<!doctype html>\n<html>\n</html>',
   onAutoFormat: jest.fn(),
   onInput: jest.fn(),
+  onReady: jest.fn(),
   onRequestedLineFocused: jest.fn(),
   onSave: jest.fn(),
 };
@@ -105,6 +107,13 @@ describe('codemirror editor', () => {
     );
 
     expect(editor.setValue).toHaveBeenLastCalledWith(DEFAULT_PROPS.source);
+  });
+
+  test('onReady', () => {
+    const [, handleUpdate] = find(editor.on.mock.calls, {0: 'update'});
+    jest.spyOn(performance, 'now').mockReturnValue(12345);
+    handleUpdate();
+    expect(DEFAULT_PROPS.onReady).toHaveBeenCalledWith(12345);
   });
 
   test('swapping docs', () => {

@@ -114,6 +114,9 @@ class AceEditor extends React.Component {
   _setupEditor(containerElement) {
     if (containerElement) {
       this._editor = createAceEditor(containerElement);
+      this._editor.renderer.once('afterRender', () => {
+        this.props.onReady(performance.now());
+      });
       this._startNewSession(this.props.source);
       this._resizeEditor();
       this._editor.on('focus', this._resizeEditor);
@@ -166,6 +169,7 @@ AceEditor.propTypes = {
   textSizeIsLarge: PropTypes.bool.isRequired,
   onAutoFormat: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
+  onReady: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
 };

@@ -32,6 +32,7 @@ export default function CodeMirrorEditor({
   textSizeIsLarge,
   onAutoFormat,
   onInput,
+  onReady,
   onRequestedLineFocused,
   onSave,
 }) {
@@ -52,6 +53,15 @@ export default function CodeMirrorEditor({
     }));
     editor.setSize('100%', '100%');
   }, []);
+
+  useLayoutEffect(() => {
+    const editor = editorRef.current;
+    function handleUpdate() {
+      onReady(performance.now());
+      editor.off('update', handleUpdate);
+    }
+    editor.on('update', handleUpdate);
+  }, [onReady]);
 
   useLayoutEffect(() => {
     const mode = CODEMIRROR_MODES_MAP[language];
@@ -149,6 +159,7 @@ CodeMirrorEditor.propTypes = {
   textSizeIsLarge: PropTypes.bool,
   onAutoFormat: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
+  onReady: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
 };
