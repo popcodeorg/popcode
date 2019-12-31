@@ -13,6 +13,7 @@ import {install as installOfflinePlugin} from 'offline-plugin/runtime';
 import {bugsnagClient} from './util/bugsnag';
 import Application from './components/Application';
 import initI18n from './util/initI18n';
+import {initMixpanel} from './clients/mixpanel';
 
 installDevTools(Immutable);
 installOfflinePlugin({
@@ -22,6 +23,7 @@ installOfflinePlugin({
 });
 
 initI18n();
+initMixpanel();
 
 ReactDOM.render(
   React.createElement(Application),
