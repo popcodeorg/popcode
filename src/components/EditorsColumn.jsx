@@ -24,6 +24,7 @@ export default function EditorsColumn({
   onAutoFormat,
   onComponentHide,
   onEditorInput,
+  onEditorReady,
   onRequestedLineFocused,
   onResizableFlexDividerDrag,
   onSave,
@@ -63,6 +64,7 @@ export default function EditorsColumn({
           useCodeMirror={isExperimental}
           onAutoFormat={onAutoFormat}
           onInput={handleInputForLanguage(language)}
+          onReady={partial(onEditorReady, language)}
           onRequestedLineFocused={onRequestedLineFocused}
           onSave={onSave}
         />
@@ -104,6 +106,7 @@ EditorsColumn.propTypes = {
   onAutoFormat: PropTypes.func.isRequired,
   onComponentHide: PropTypes.func.isRequired,
   onEditorInput: PropTypes.func.isRequired,
+  onEditorReady: PropTypes.func.isRequired,
   onRequestedLineFocused: PropTypes.func.isRequired,
   onResizableFlexDividerDrag: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,

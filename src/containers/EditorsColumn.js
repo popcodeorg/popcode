@@ -17,6 +17,7 @@ import {
   updateProjectSource,
   saveProject,
 } from '../actions';
+import {editorReady} from '../actions/instrumentation';
 
 function mapStateToProps(state) {
   const {visibleLanguages} = getHiddenAndVisibleLanguages(state);
@@ -38,6 +39,10 @@ function mapDispatchToProps(dispatch) {
 
     onEditorInput(projectKey, language, source) {
       dispatch(updateProjectSource(projectKey, language, source));
+    },
+
+    onEditorReady(language, timestamp) {
+      dispatch(editorReady(language, timestamp));
     },
 
     onRequestedLineFocused() {
