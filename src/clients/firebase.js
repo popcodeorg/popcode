@@ -2,8 +2,10 @@ import * as firebase from 'firebase/app'; // eslint-disable-line import/no-names
 import Cookies from 'js-cookie';
 import get from 'lodash-es/get';
 import isEmpty from 'lodash-es/isEmpty';
+import tap from 'lodash-es/tap';
 import isNil from 'lodash-es/isNil';
 import isNull from 'lodash-es/isNull';
+import mapValues from 'lodash-es/mapValues';
 import omit from 'lodash-es/omit';
 import once from 'lodash-es/once';
 import values from 'lodash-es/values';
@@ -11,6 +13,7 @@ import {v4 as uuid} from 'uuid';
 import 'firebase/analytics';
 import 'firebase/auth';
 import 'firebase/performance';
+import 'firebase/remote-config';
 
 import config from '../config';
 import {
@@ -35,7 +38,7 @@ for (const scope of GOOGLE_SCOPES) {
   googleAuthProvider.addScope(scope);
 }
 
-const {auth, loadDatabase} = buildFirebase();
+const {auth, loadDatabase, remoteConfig} = buildFirebase();
 
 async function loadDatabaseSdk() {
   return retryingFailedImports(() =>
@@ -61,8 +64,14 @@ function buildFirebase(appName = undefined) {
 
   const rest =
     appName === undefined
-      ? {perf: firebase.performance(app), analytics: firebase.analytics()}
-      : {perf: null, analytics: null};
+      ? {
+          perf: firebase.performance(app),
+          analytics: firebase.analytics(),
+          remoteConfig: tap(firebase.remoteConfig(), rc => {
+            rc.settings = {minimumFetchIntervalMillis: 1000};
+          }),
+        }
+      : {perf: null, analytics: null, remoteConfig: null};
 
   return {
     auth: firebase.auth(app),
@@ -283,4 +292,10 @@ export function setSessionUid() {
       expires: new Date(Date.now() + SESSION_TTL_MS),
     });
   }
+}
+
+export async function loadRemoteConfig() {
+  await remoteConfig.fetchAndActivate();
+
+  return mapValues(remoteConfig.getAll(), value => value.asString());
 }
