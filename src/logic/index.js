@@ -4,8 +4,10 @@ import startAccountMigration from './startAccountMigration';
 import projectSuccessfullySaved from './projectSuccessfullySaved';
 import unlinkGithubIdentity from './unlinkGithubIdentity';
 import saveProject from './saveProject';
+import instrumentEnvironmentReady from './instrumentEnvironmentReady';
 
 export default [
+  instrumentEnvironmentReady,
   linkGithubIdentity,
   logout,
   startAccountMigration,
