@@ -6,26 +6,13 @@ import './init/DOMParserShim';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Immutable from 'immutable';
-import installDevTools from 'immutable-devtools';
-import {install as installOfflinePlugin} from 'offline-plugin/runtime';
 
-import {bugsnagClient} from './util/bugsnag';
+import init from './init';
 import Application from './components/Application';
-import initI18n from './util/initI18n';
-import {initMixpanel} from './clients/mixpanel';
 
-installDevTools(Immutable);
-installOfflinePlugin({
-  onUpdateFailed() {
-    bugsnagClient.notify('ServiceWorker update failed');
-  },
-});
-
-initI18n();
-initMixpanel();
+const {store} = init();
 
 ReactDOM.render(
-  React.createElement(Application),
+  React.createElement(Application, {store}),
   document.getElementById('main'),
 );

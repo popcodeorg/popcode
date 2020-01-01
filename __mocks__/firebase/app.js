@@ -12,3 +12,5 @@ export const auth = Object.assign(() => ({}), {
 });
 
 export const initializeApp = constant({});
+
+export const remoteConfig = constant({});

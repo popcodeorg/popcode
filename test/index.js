@@ -4,7 +4,7 @@ import 'core-js';
 import 'regenerator-runtime/runtime';
 import 'whatwg-fetch';
 import '../src/init/DOMParserShim';
-import initI18n from '../src/util/initI18n';
+import initI18n from '../src/init/initI18n';
 
 initI18n();
 
