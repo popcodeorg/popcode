@@ -16,7 +16,6 @@ import {
 } from '../selectors';
 import {
   toggleComponent,
-  applicationLoaded,
   startDragColumnDivider,
   stopDragColumnDivider,
   startEditingInstructions,
@@ -52,10 +51,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onApplicationLoaded(payload) {
-      dispatch(applicationLoaded(payload));
-    },
-
     onComponentToggle(projectKey, componentName) {
       dispatch(toggleComponent(projectKey, componentName));
     },

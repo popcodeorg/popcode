@@ -15,10 +15,9 @@ import i18next from 'i18next';
 import classnames from 'classnames';
 
 import prefix from '../services/inlineStylePrefixer';
-import {getQueryParameters, setQueryParameters} from '../util/queryParams';
 import {LANGUAGES} from '../util/editor';
 import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
-import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
+import {dehydrateProject} from '../clients/localStorage';
 
 import {isPristineProject} from '../util/projectUtils';
 
@@ -48,21 +47,6 @@ export default class Workspace extends React.Component {
   }
 
   componentDidMount() {
-    const {onApplicationLoaded} = this.props;
-    const {gistId, snapshotKey, isExperimental} = getQueryParameters(
-      location.search,
-    );
-    const rehydratedProject = rehydrateProject();
-
-    setQueryParameters({isExperimental});
-
-    onApplicationLoaded({
-      snapshotKey,
-      gistId,
-      isExperimental,
-      rehydratedProject,
-    });
-
     addEventListener('beforeunload', this._handleUnload);
   }
 
@@ -346,7 +330,6 @@ Workspace.propTypes = {
   resizableFlexRefs: PropTypes.array.isRequired,
   shouldRenderOutput: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
-  onApplicationLoaded: PropTypes.func.isRequired,
   onClickInstructionsEditButton: PropTypes.func.isRequired,
   onComponentToggle: PropTypes.func.isRequired,
   onResizableFlexDividerDrag: PropTypes.func.isRequired,
