@@ -7,6 +7,7 @@ export default tap(
   jest.fn(() => ({
     focus: jest.fn(),
     getDoc: jest.fn().mockReturnValue({setCursor: jest.fn()}),
+    getOption: jest.fn(),
     on: jest.fn(),
     off: jest.fn(),
     performLint: jest.fn(),

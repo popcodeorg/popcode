@@ -11,7 +11,6 @@ import CodeMirrorEditor from '../CodeMirrorEditor';
 import {EditorLocation} from '../../records';
 
 import {errorFactory} from '@factories/records/Error';
-
 import {change as changeFactory} from '@factories/packages/codemirror';
 
 const DEFAULT_PROPS = {
