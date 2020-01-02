@@ -1,6 +1,7 @@
 import Immutable from 'immutable';
 
 import constant from 'lodash-es/constant';
+import identity from 'lodash-es/identity';
 import handleAction from 'redux-actions/lib/handleAction';
 import handleActions from 'redux-actions/lib/handleActions';
 import {combineReducers} from 'redux-immutable';
@@ -252,6 +253,12 @@ export default combineReducers(
         [filterProjects]: (_, {payload: {filterType}}) => filterType,
       },
       null,
+    ),
+
+    remoteConfig: handleAction(
+      applicationLoaded,
+      (_, {payload: {remoteConfig}}) => new Immutable.Map(remoteConfig),
+      new Immutable.Map(),
     ),
 
     requestedFocusedLine: handleActions(

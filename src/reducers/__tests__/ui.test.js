@@ -328,6 +328,13 @@ test('application loaded in GA mode', () => {
   });
 });
 
+test('application loaded with remote config', () => {
+  expect(
+    applyActions(applicationLoaded({remoteConfig: {silliness: 11}}))
+      .remoteConfig,
+  ).toEqualImmutable(new Immutable.Map({silliness: 11}));
+});
+
 test('project compilation failed', () => {
   expectNotification(
     applyActions(projectCompilationFailed(new Error())),

@@ -12,6 +12,7 @@ export default Record(
     isTyping: false,
     notifications: new Map(),
     openTopBarMenu: null,
+    remoteConfig: new Map(),
     requestedFocusedLine: null,
     projectsFilter: 'active',
   },
