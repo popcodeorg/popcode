@@ -142,6 +142,7 @@ body {
 }
 
 .top-bar__wordmark-container > svg {
+  height: 2em;
   width: 6.5em;
 }
 
@@ -540,6 +541,43 @@ body {
   flex: 1;
 }
 
+.editors__codemirror-container {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
+
+  /* postcss-bem-linter: ignore */
+  & .CodeMirror {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1.2em;
+  }
+
+  /* postcss-bem-linter: ignore */
+  & .CodeMirror-matchingbracket {
+    color: inherit !important;
+    border: 1px solid var(--color-light-gray);
+    border-radius: 1px;
+  }
+
+  /* postcss-bem-linter: ignore */
+  & .CodeMirror-activeline-background {
+    background: var(--color-low-contrast-gray) !important;
+  }
+}
+
+.editors__codemirror-container_large-text {
+  font-size: 20px;
+}
+
+.editors__collapsed-editor {
+  border-top: 4px solid var(--color-light-gray);
+  flex: none;
+}
+
 .editors__label {
   text-align: right;
 }
@@ -650,16 +688,20 @@ body {
 }
 
 .console__repl {
+  --console-font-size: 14px;
+
   display: flex;
   flex-direction: column-reverse;
   font-family: 'Inconsolata', monospace;
-  font-size: 14px;
+  font-size: var(--console-font-size);
   max-height: 100%;
   overflow: auto;
 }
 
 .console__repl_zoomed {
-  font-size: 20px;
+  --console-font-size: 20px;
+
+  font-size: var(--console-font-size);
 }
 
 .console__row {
@@ -691,16 +733,29 @@ body {
   padding-bottom: 0.5em;
 }
 
+.console__editor {
+  margin-left: -4px;
+}
+
 .console__input {
   height: 1em;
+  position: relative;
+
+  /* postcss-bem-linter: ignore */
+  & .CodeMirror {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1em;
+  }
+
+  /* postcss-bem-linter: ignore */
+  & .CodeMirror-lines {
+    padding: 0;
+  }
 }
 
 .console__entry {
   border-bottom: 1px solid var(--color-low-contrast-gray);
-}
-
-.console__editor {
-  margin-left: -4px;
 }
 
 .console__value {
@@ -823,10 +878,6 @@ body {
 
 /** @define account-migration */
 
-.account-migration__header {
-  text-align: center;
-}
-
 .account-migration__accounts {
   align-items: center;
   display: flex;
@@ -863,12 +914,18 @@ body {
   text-align: center;
 }
 
-.account-migration__buttons {
+/** @define modal */
+
+.modal__header {
+  text-align: center;
+}
+
+.modal__buttons {
   display: flex;
   justify-content: space-around;
 }
 
-.account-migration__button {
+.modal__button {
   background: var(--color-chrome);
   border: none;
   border-radius: 5px;
@@ -878,12 +935,12 @@ body {
   width: 20em;
 }
 
-.account-migration__button_confirm {
+.modal__button_confirm {
   background-color: var(--color-low-contrast-green);
   font-weight: bold;
 }
 
-.account-migration__button_cancel {
+.modal__button_cancel {
   background-color: var(--color-low-contrast-red);
 }
 

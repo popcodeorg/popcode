@@ -142,7 +142,7 @@ function mapDispatchToProps(dispatch) {
     },
 
     onStartGoogleLogIn() {
-      dispatch(logIn('google'));
+      dispatch(logIn());
     },
 
     onUnlinkGitHub() {

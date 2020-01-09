@@ -1,6 +1,6 @@
 import {faInfoCircle, faPenSquare} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, {Suspense} from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {DraggableCore} from 'react-draggable';
@@ -15,10 +15,9 @@ import i18next from 'i18next';
 import classnames from 'classnames';
 
 import prefix from '../services/inlineStylePrefixer';
-import {getQueryParameters, setQueryParameters} from '../util/queryParams';
 import {LANGUAGES} from '../util/editor';
 import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
-import {dehydrateProject, rehydrateProject} from '../clients/localStorage';
+import {dehydrateProject} from '../clients/localStorage';
 
 import {isPristineProject} from '../util/projectUtils';
 
@@ -28,6 +27,8 @@ import TopBar from '../containers/TopBar';
 import Instructions from '../containers/Instructions';
 import NotificationList from '../containers/NotificationList';
 import EditorsColumn from '../containers/EditorsColumn';
+import LoginPrompt from '../containers/LoginPrompt';
+import KeyboardHandler from '../containers/KeyboardHandler';
 
 import CollapsedComponent from './CollapsedComponent';
 import Output from './Output';
@@ -46,21 +47,6 @@ export default class Workspace extends React.Component {
   }
 
   componentDidMount() {
-    const {onApplicationLoaded} = this.props;
-    const {gistId, snapshotKey, isExperimental} = getQueryParameters(
-      location.search,
-    );
-    const rehydratedProject = rehydrateProject();
-
-    setQueryParameters({isExperimental});
-
-    onApplicationLoaded({
-      snapshotKey,
-      gistId,
-      isExperimental,
-      rehydratedProject,
-    });
-
     addEventListener('beforeunload', this._handleUnload);
   }
 
@@ -139,11 +125,13 @@ export default class Workspace extends React.Component {
 
   _renderHiddenLanguages() {
     const {currentProject, hiddenLanguages, onComponentToggle} = this.props;
+    const isRightJustified = !this._isSingleColumn();
     return (
       <>
         {hiddenLanguages.map(({language}) => (
           <CollapsedComponent
             component={`editor.${language}`}
+            isRightJustified={isRightJustified}
             key={language}
             projectKey={currentProject.projectKey}
             text={i18next.t(`languages.${language}`)}
@@ -207,6 +195,16 @@ export default class Workspace extends React.Component {
     );
   }
 
+  _isSingleColumn() {
+    const shouldRenderLeft = this._shouldRenderLeftColumn();
+    const shouldRenderRight = this._shouldRenderRightColumn();
+    return (
+      this._isEverythingHidden() ||
+      (shouldRenderLeft && !shouldRenderRight) ||
+      (!shouldRenderLeft && shouldRenderRight)
+    );
+  }
+
   _isEverythingHidden() {
     return !this._shouldRenderLeftColumn() && !this._shouldRenderRightColumn();
   }
@@ -239,38 +237,40 @@ export default class Workspace extends React.Component {
     const [_handleEditorsRef, _handleOutputRef] = resizableFlexRefs;
     const ignorePointerEvents = isDraggingColumnDivider || isAnyTopBarMenuOpen;
     return (
-      <div className="environment">
-        {this._shouldRenderLeftColumn() && (
-          <>
-            <div
-              className="environment__column"
-              ref={_handleEditorsRef}
-              style={prefix(clone({flexGrow: resizableFlexGrow.get(0)}))}
-            >
-              <div className="environment__column-contents">
-                <div className="environment__column-contents-inner">
-                  <EditorsColumn />
-                  {!this._shouldRenderRightColumn() &&
-                    this._renderHiddenRightColumnComponents()}
-                  {this._renderHiddenLanguages()}
+      <Suspense
+        fallback={<PopThrobber message={i18next.t('workspace.loading')} />}
+      >
+        <div className="environment">
+          {this._shouldRenderLeftColumn() && (
+            <>
+              <div
+                className="environment__column"
+                ref={_handleEditorsRef}
+                style={prefix(clone({flexGrow: resizableFlexGrow.get(0)}))}
+              >
+                <div className="environment__column-contents">
+                  <div className="environment__column-contents-inner">
+                    <EditorsColumn />
+                    {!this._shouldRenderRightColumn() &&
+                      this._renderHiddenRightColumnComponents()}
+                    {this._renderHiddenLanguages()}
+                  </div>
                 </div>
               </div>
-            </div>
-            <DraggableCore
-              onDrag={partial(onResizableFlexDividerDrag, 0)}
-              onStart={onStartDragColumnDivider}
-              onStop={onStopDragColumnDivider}
-            >
-              <div
-                className={classnames('editors__column-divider', {
-                  'editors__column-divider_draggable': isFlexResizingSupported,
-                })}
-              />
-            </DraggableCore>
-          </>
-        )}
-        {this._shouldRenderRightColumn() && (
-          <>
+              <DraggableCore
+                onDrag={partial(onResizableFlexDividerDrag, 0)}
+                onStart={onStartDragColumnDivider}
+                onStop={onStopDragColumnDivider}
+              >
+                <div
+                  className={classnames('editors__column-divider', {
+                    'editors__column-divider_draggable': isFlexResizingSupported,
+                  })}
+                />
+              </DraggableCore>
+            </>
+          )}
+          {this._shouldRenderRightColumn() && (
             <div
               className="environment__column"
               ref={_handleOutputRef}
@@ -288,28 +288,32 @@ export default class Workspace extends React.Component {
                 </div>
               </div>
             </div>
-          </>
-        )}
-        {this._isEverythingHidden() && this._renderEverythingHidden()}
-      </div>
+          )}
+          {this._isEverythingHidden() && this._renderEverythingHidden()}
+        </div>
+      </Suspense>
     );
   }
 
   render() {
     return (
-      <div className="layout">
-        <AssignmentCreator />
-        <TopBar />
-        <NotificationList />
-        <div className="layout__columns">
-          <Instructions />
-          {this._renderInstructionsBar()}
-          <div className="workspace layout__main">
-            {this._renderEnvironment()}
+      <>
+        <div className="layout">
+          <AssignmentCreator />
+          <TopBar />
+          <NotificationList />
+          <div className="layout__columns">
+            <Instructions />
+            {this._renderInstructionsBar()}
+            <div className="workspace layout__main">
+              {this._renderEnvironment()}
+            </div>
           </div>
+          <AccountMigration />
+          <LoginPrompt />
         </div>
-        <AccountMigration />
-      </div>
+        <KeyboardHandler />
+      </>
     );
   }
 }
@@ -326,7 +330,6 @@ Workspace.propTypes = {
   resizableFlexRefs: PropTypes.array.isRequired,
   shouldRenderOutput: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
-  onApplicationLoaded: PropTypes.func.isRequired,
   onClickInstructionsEditButton: PropTypes.func.isRequired,
   onComponentToggle: PropTypes.func.isRequired,
   onResizableFlexDividerDrag: PropTypes.func.isRequired,

@@ -36,6 +36,7 @@ import isEditingInstructions from './isEditingInstructions';
 import isExperimental from './isExperimental';
 import isGapiReady from './isGapiReady';
 import isGistExportInProgress from './isGistExportInProgress';
+import isLoginPromptOpen from './isLoginPromptOpen';
 import isRepoExportInProgress from './isRepoExportInProgress';
 import isSaveIndicatorShown from './isSaveIndicatorShown';
 import isSnapshotInProgress from './isSnapshotInProgress';
@@ -88,6 +89,7 @@ export {
   isExperimental,
   isGapiReady,
   isGistExportInProgress,
+  isLoginPromptOpen,
   isRepoExportInProgress,
   isSaveIndicatorShown,
   isSnapshotInProgress,

@@ -1,24 +1,17 @@
 import mapValues from 'lodash-es/mapValues';
 import React from 'react';
 import {Provider} from 'react-redux';
+import PropTypes from 'prop-types';
 
 import bowser from '../services/bowser';
-import createApplicationStore from '../createApplicationStore';
-import {ErrorBoundary, includeStoreInBugReports} from '../util/bugsnag';
+import {ErrorBoundary} from '../util/bugsnag';
 import supportedBrowsers from '../../config/browsers.json';
 import Workspace from '../containers/Workspace';
 
 import BrowserError from './BrowserError';
 import IEBrowserError from './IEBrowserError';
 
-class Application extends React.Component {
-  constructor() {
-    super();
-    const store = createApplicationStore();
-    this.state = {store};
-    includeStoreInBugReports(store);
-  }
-
+export default class Application extends React.Component {
   _isIEOrEdge() {
     return bowser.some(['Internet Explorer', 'Microsoft Edge']);
   }
@@ -43,7 +36,7 @@ class Application extends React.Component {
 
     return (
       <ErrorBoundary>
-        <Provider store={this.state.store}>
+        <Provider store={this.props.store}>
           <Workspace />
         </Provider>
       </ErrorBoundary>
@@ -51,4 +44,6 @@ class Application extends React.Component {
   }
 }
 
-export default Application;
+Application.propTypes = {
+  store: PropTypes.object.isRequired,
+};

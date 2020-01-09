@@ -2,7 +2,7 @@ import i18next from 'i18next';
 
 import resources from '../../locales';
 
-import applyCustomI18nFormatters from './i18nFormatting';
+import applyCustomI18nFormatters from '../util/i18nFormatting';
 
 export default function initI18n() {
   i18next.init({

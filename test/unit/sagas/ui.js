@@ -1,18 +1,14 @@
 import test from 'tape-catch';
+import noop from 'lodash-es/noop';
+
 import {testSaga} from 'redux-saga-test-plan';
 import {
   userDoneTyping as userDoneTypingSaga,
   exportProject as exportProjectSaga,
   popOutProject as popOutProjectSaga,
-  projectSuccessfullySaved as projectSuccessfullySavedSaga,
 } from '../../../src/sagas/ui';
 import {getCurrentProject} from '../../../src/selectors';
-import {
-  userDoneTyping,
-  popOutProject,
-  showSaveIndicator,
-  hideSaveIndicator,
-} from '../../../src/actions/ui';
+import {userDoneTyping, popOutProject} from '../../../src/actions/ui';
 import {
   projectExported,
   projectExportDisplayed,
@@ -72,7 +68,7 @@ test('exportProject', t => {
   });
 
   t.test('with project export error', assert => {
-    const mockWindow = {closed: false, close() {}};
+    const mockWindow = {closed: false, close: noop};
     const exportType = 'gist';
     testSaga(exportProjectSaga)
       .next()
@@ -89,7 +85,7 @@ test('exportProject', t => {
 });
 
 test('popOutProject', assert => {
-  const mockWindow = {closed: false, close() {}};
+  const mockWindow = {closed: false, close: noop};
   const project = {};
   const preview = {src: '<html></html>'};
   testSaga(popOutProjectSaga, popOutProject())
@@ -100,19 +96,6 @@ test('popOutProject', assert => {
     .next({source: preview})
     .call(openWindowWithContent, preview)
     .next(mockWindow)
-    .isDone();
-  assert.end();
-});
-
-test('projectSuccessfullySaved', assert => {
-  testSaga(projectSuccessfullySavedSaga)
-    .next()
-    .put(showSaveIndicator())
-    .next()
-    .delay(1000)
-    .next()
-    .put(hideSaveIndicator())
-    .next()
     .isDone();
   assert.end();
 });

@@ -1,6 +1,8 @@
 import {createAction} from 'redux-actions';
 
-export const logIn = createAction('LOG_IN', provider => ({provider}));
+export const logIn = createAction('LOG_IN', (provider = 'google') => ({
+  provider,
+}));
 
 export const linkGithubIdentity = createAction('LINK_GITHUB_IDENTITY');
 

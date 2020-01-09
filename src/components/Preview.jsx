@@ -26,6 +26,7 @@ export default function Preview({
   onRefreshClick,
   onRuntimeError,
   onToggleVisible,
+  onSave,
 }) {
   if (showingErrors) {
     return null;
@@ -41,6 +42,7 @@ export default function Preview({
       onConsoleLog={onConsoleLog}
       onConsoleValue={onConsoleValue}
       onRuntimeError={onRuntimeError}
+      onSave={onSave}
     />
   ));
 
@@ -81,5 +83,6 @@ Preview.propTypes = {
   onPopOutProject: PropTypes.func.isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRuntimeError: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
   onToggleVisible: PropTypes.func.isRequired,
 };

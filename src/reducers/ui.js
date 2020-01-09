@@ -223,6 +223,13 @@ export default function ui(stateIn, action) {
         false,
       );
 
+    case 'OPEN_LOGIN_PROMPT':
+      return state.set('isLoginPromptOpen', true);
+
+    case 'CLOSE_LOGIN_PROMPT':
+    case 'LOG_IN':
+      return state.set('isLoginPromptOpen', false);
+
     default:
       return state;
   }

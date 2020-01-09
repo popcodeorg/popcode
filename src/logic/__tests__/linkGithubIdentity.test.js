@@ -4,6 +4,15 @@ import {getProfileForAuthenticatedUser} from '../../clients/github';
 import {bugsnagClient} from '../../util/bugsnag';
 
 import {
+  accountMigrationNeeded,
+  linkIdentityFailed,
+  linkGithubIdentity as linkGithubIdentityAction,
+  identityLinked,
+} from '../../actions/user';
+
+import {makeTestLogic} from './helpers';
+
+import {
   credentialFactory,
   credentialInUseErrorFactory,
   firebaseErrorFactory,
@@ -17,6 +26,8 @@ jest.mock('../../clients/github.js');
 jest.mock('../../util/bugsnag.js');
 
 describe('linkGithubIdentity', () => {
+  const testLogic = makeTestLogic(linkGithubIdentity);
+
   test('success', async () => {
     const mockCredential = credentialFactory.build();
     const mockUser = userFactory.build();
@@ -26,19 +37,13 @@ describe('linkGithubIdentity', () => {
       credential: mockCredential,
     });
 
-    const {
-      type,
-      payload: {
-        credential: {providerId},
-        user,
-      },
-    } = await linkGithubIdentity.process();
+    const dispatch = await testLogic(linkGithubIdentityAction());
+    expect(dispatch).toHaveBeenCalledWith(
+      identityLinked(mockUser, mockCredential),
+    );
 
     expect(linkGithub).toHaveBeenCalledWith();
     expect(saveCredentialForCurrentUser).toHaveBeenCalledWith(mockCredential);
-    expect(type).toBe('IDENTITY_LINKED');
-    expect(providerId).toBe(mockCredential.providerId);
-    expect(user).toEqual(mockUser);
   });
 
   test('credential already in use', async () => {
@@ -46,21 +51,17 @@ describe('linkGithubIdentity', () => {
     const githubProfile = githubProfileFactory.build();
 
     linkGithub.mockRejectedValue(error);
-    getProfileForAuthenticatedUser.mockResolvedValue(githubProfile);
+    getProfileForAuthenticatedUser.mockResolvedValue({data: githubProfile});
 
-    const {
-      type,
-      payload: {
-        credential: {providerId, accessToken},
-      },
-    } = await linkGithubIdentity.process();
+    const dispatch = await testLogic(linkGithubIdentityAction());
+
     expect(linkGithub).toHaveBeenCalledWith();
     expect(getProfileForAuthenticatedUser).toHaveBeenCalledWith(
       error.credential.accessToken,
     );
-    expect(type).toBe('ACCOUNT_MIGRATION_NEEDED');
-    expect(providerId).toBe(error.credential.providerId);
-    expect(accessToken).toBe(error.credential.accessToken);
+    expect(dispatch).toHaveBeenCalledWith(
+      accountMigrationNeeded(githubProfile, error.credential),
+    );
   });
 
   test('other error', async () => {
@@ -69,15 +70,9 @@ describe('linkGithubIdentity', () => {
     linkGithub.mockRejectedValue(otherError);
     bugsnagClient.notify.mockResolvedValue();
 
-    const {
-      type,
-      error,
-      payload: {message},
-    } = await linkGithubIdentity.process();
+    const dispatch = await testLogic(linkGithubIdentityAction());
     expect(linkGithub).toHaveBeenCalledWith();
     expect(bugsnagClient.notify).toHaveBeenCalledWith(otherError);
-    expect(type).toBe('LINK_IDENTITY_FAILED');
-    expect(error).toBe(true);
-    expect(message).toBe(otherError.code);
+    expect(dispatch).toHaveBeenCalledWith(linkIdentityFailed(otherError));
   });
 });

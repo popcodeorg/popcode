@@ -77,7 +77,7 @@ export function* importGist({payload: {gistId}}) {
     const gistData = yield call(loadGistFromId, gistId);
     yield put(gistImported(generateProjectKey(), gistData));
   } catch (error) {
-    if (get(error, 'response.status') === 404) {
+    if (get(error, ['response', 'status']) === 404) {
       yield put(gistNotFound(gistId));
     } else {
       yield put(gistImportError());

@@ -1,5 +1,9 @@
 {
+  "automerge": true,
   "extends": ["config:base"],
+  "major": {
+    "automerge": false
+  },
   "masterIssue": true,
   "masterIssueAutoclose": true,
   "packageRules": [
@@ -32,7 +36,8 @@
         "eslint-plugin-prettier",
         "eslint-plugin-private-props",
         "eslint-plugin-promise",
-        "eslint-plugin-react"
+        "eslint-plugin-react",
+        "eslint-plugin-react-hooks"
       ]
     },
     {
@@ -56,7 +61,6 @@
       "automerge": true,
       "packageNames": ["jest", "jest-extended"]
     },
-
     {
       "groupName": "Karma",
       "automerge": true,
@@ -155,26 +159,29 @@
       ]
     },
     {
-      "packagePatterns": [
+      "packageNames": [
         "browser-sync",
+        "caniuse-lite",
         "doctoc",
         "is-docker",
         "jscodeshift",
         "prettier",
         "sinon",
+        "react-test-renderer",
         "rosie",
         "yarn-deduplicate"
       ],
       "automerge": true
+    },
+    {
+      "packageNames": ["sweetalert2"],
+      "prPriority": -1
     }
   ],
-  "patch": {
-    "automerge": true,
-    "prConcurrentLimit": 0
-  },
   "postUpdateOptions": ["yarnDedupeFewer"],
   "prConcurrentLimit": 3,
   "rebaseStalePrs": true,
   "reviewers": ["outoftime"],
+  "schedule": "every weekend",
   "separateMinorPatch": true
 }

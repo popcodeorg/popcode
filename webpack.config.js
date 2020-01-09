@@ -87,6 +87,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       FIREBASE_MEASUREMENT_ID: 'G-GSST3YLQE7',
       FIREBASE_PROJECT_ID: 'popcode-development',
       GIT_REVISION: null,
+      MIXPANEL_TOKEN: '68e1844d4a34c789e9368740a3bb4ceb',
       NODE_ENV: env,
       WARN_ON_DROPPED_ERRORS: 'false',
     }),

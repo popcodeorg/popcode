@@ -8,19 +8,23 @@ import {
   getHiddenAndVisibleLanguages,
   getRequestedFocusedLine,
   isTextSizeLarge,
+  isExperimental,
 } from '../selectors';
 import {
   beautifyProjectSource,
   editorFocusedRequestedLine,
   hideComponent,
   updateProjectSource,
+  saveProject,
 } from '../actions';
+import {editorReady} from '../actions/instrumentation';
 
 function mapStateToProps(state) {
   const {visibleLanguages} = getHiddenAndVisibleLanguages(state);
   return {
     currentProject: getCurrentProject(state),
     errors: getErrors(state),
+    isExperimental: isExperimental(state),
     isTextSizeLarge: isTextSizeLarge(state),
     requestedFocusedLine: getRequestedFocusedLine(state),
     visibleLanguages,
@@ -37,11 +41,20 @@ function mapDispatchToProps(dispatch) {
       dispatch(updateProjectSource(projectKey, language, source));
     },
 
+    onEditorReady(language, timestamp) {
+      dispatch(editorReady(language, timestamp));
+    },
+
     onRequestedLineFocused() {
       dispatch(editorFocusedRequestedLine());
     },
+
     onAutoFormat() {
       dispatch(beautifyProjectSource());
+    },
+
+    onSave() {
+      dispatch(saveProject());
     },
   };
 }
