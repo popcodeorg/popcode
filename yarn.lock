@@ -7734,6 +7734,11 @@ jest-haste-map@^24.9.0:
   optionalDependencies:
     fsevents "^1.2.7"
 
+jest-immutable-matchers@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/jest-immutable-matchers/-/jest-immutable-matchers-2.0.1.tgz#7c86ce0a0d50435eb87d72114f5b162fb7d2ce7e"
+  integrity sha512-1FDIs3NnUzPIz6TVH9U+T5/GRUn92x9guW9PEo8xnoWN8oh8C/uYgVC2AcGD5r3Ss1EIdIOuiq78dDyQfbRNAg==
+
 jest-jasmine2@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/jest-jasmine2/-/jest-jasmine2-24.9.0.tgz#1f7b1bd3242c1774e62acabb3646d96afc3be6a0"

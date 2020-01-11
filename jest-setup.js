@@ -1,3 +1,8 @@
+// eslint-disable-next-line import/no-namespace
+import * as immutableMatchers from 'jest-immutable-matchers';
+
+jest.addMatchers(immutableMatchers);
+
 function createRange() {
   // createRange is always called with a Document context
   /* eslint-disable no-invalid-this, consistent-this */
