@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import partial from 'lodash-es/partial';
+import PropTypes from 'prop-types';
+import React from 'react';
 
+import {UserAccount} from '../../records';
 import Wordmark from '../../static/images/wordmark.svg';
 import Pop from '../Pop';
-import {UserAccount} from '../../records';
 
 import CurrentUser from './CurrentUser';
 import ExportMenu from './ExportMenu';

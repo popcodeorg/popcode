@@ -2,8 +2,8 @@ import partialRight from 'lodash-es/partialRight';
 
 import javascript from '../javascript';
 
-import validationTest from './validationHelper';
 import testValidatorAcceptance from './testValidatorAcceptance';
+import validationTest from './validationHelper';
 
 const analyzer = {
   enabledLibraries: [],

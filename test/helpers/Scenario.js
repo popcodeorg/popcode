@@ -1,7 +1,7 @@
-import reduce from '../../src/reducers';
 import {projectCreated} from '../../src/actions/projects';
 import {identityLinked, userAuthenticated} from '../../src/actions/user';
 import Analyzer from '../../src/analyzers';
+import reduce from '../../src/reducers';
 
 import {githubCredential, userCredential} from './factory';
 

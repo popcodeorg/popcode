@@ -1,11 +1,11 @@
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import React from 'react';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import i18next from 'i18next';
 import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
+import React from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import i18next from 'i18next';
 
 import {createSnapshotUrl} from '../../util/exportUrls';
 

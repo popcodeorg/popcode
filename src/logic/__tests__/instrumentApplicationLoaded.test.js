@@ -1,7 +1,7 @@
 import mixpanel from 'mixpanel-browser';
 
-import instrumentApplicationLoaded from '../instrumentApplicationLoaded';
 import {applicationLoaded} from '../../actions';
+import instrumentApplicationLoaded from '../instrumentApplicationLoaded';
 
 import {makeTestLogic} from './helpers';
 

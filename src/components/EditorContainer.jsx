@@ -1,8 +1,8 @@
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import i18next from 'i18next';
 import PropTypes from 'prop-types';
 import React, {forwardRef} from 'react';
-import i18next from 'i18next';
 
 import prefix from '../services/inlineStylePrefixer';
 

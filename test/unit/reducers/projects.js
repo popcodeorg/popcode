@@ -1,40 +1,40 @@
+import Immutable from 'immutable';
 import assign from 'lodash-es/assign';
-import test from 'tape-catch';
+import partial from 'lodash-es/partial';
 import reduce from 'lodash-es/reduce';
 import tap from 'lodash-es/tap';
-import partial from 'lodash-es/partial';
-import Immutable from 'immutable';
+import test from 'tape-catch';
 
-import reducerTest from '../../helpers/reducerTest';
-import {projects as states} from '../../helpers/referenceStates';
-import {gistData, project} from '../../helpers/factory';
-import {Project} from '../../../src/records';
-import reducer, {
-  reduceRoot as rootReducer,
-} from '../../../src/reducers/projects';
 import {
-  changeCurrentProject,
-  gistImported,
-  projectCreated,
-  projectsLoaded,
-  toggleLibrary,
-  hideComponent,
-  unhideComponent,
-  toggleComponent,
-  updateProjectSource,
-  updateProjectInstructions,
-  archiveProject,
-} from '../../../src/actions/projects';
-import {
-  snapshotImported,
   projectExported,
   projectRestoredFromLastSession,
+  snapshotImported,
 } from '../../../src/actions/clients';
+import {
+  archiveProject,
+  changeCurrentProject,
+  gistImported,
+  hideComponent,
+  projectCreated,
+  projectsLoaded,
+  toggleComponent,
+  toggleLibrary,
+  unhideComponent,
+  updateProjectInstructions,
+  updateProjectSource,
+} from '../../../src/actions/projects';
 import {focusLine} from '../../../src/actions/ui';
 import {
   accountMigrationComplete,
   userLoggedOut,
 } from '../../../src/actions/user';
+import {Project} from '../../../src/records';
+import reducer, {
+  reduceRoot as rootReducer,
+} from '../../../src/reducers/projects';
+import {gistData, project} from '../../helpers/factory';
+import reducerTest from '../../helpers/reducerTest';
+import {projects as states} from '../../helpers/referenceStates';
 
 const now = Date.now();
 const projectKey = '12345';

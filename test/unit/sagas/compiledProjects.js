@@ -2,7 +2,7 @@ import test from 'tape-catch';
 import {testSaga} from 'redux-saga-test-plan';
 import {validatedSource as validatedSourceSaga} from '../../../src/sagas/compiledProjects';
 import {getCurrentProject, getErrors} from '../../../src/selectors';
-import {projectCompiled, projectCompilationFailed} from '../../../src/actions';
+import {projectCompilationFailed, projectCompiled} from '../../../src/actions';
 import compileProject from '../../../src/util/compileProject';
 import {bugsnagClient} from '../../../src/util/bugsnag';
 import {errors} from '../../helpers/referenceStates';

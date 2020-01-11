@@ -1,5 +1,5 @@
-import checkAgainstRule from 'stylelint/lib/utils/checkAgainstRule';
 import parse from 'postcss/lib/parse';
+import checkAgainstRule from 'stylelint/lib/utils/checkAgainstRule';
 
 import Validator from '../Validator';
 

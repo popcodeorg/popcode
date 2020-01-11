@@ -5,16 +5,16 @@ import {testSaga} from 'redux-saga-test-plan';
 import Scenario from '../../helpers/Scenario';
 import {javascript} from '../../../src/validations';
 import {
-  updateProjectSource,
   toggleLibrary,
+  updateProjectSource,
 } from '../../../src/actions/projects';
 import {validatedSource} from '../../../src/actions/errors';
 import {
+  importValidations,
   toggleLibrary as toggleLibrarySaga,
   updateProjectSource as updateProjectSourceSaga,
   validateCurrentProject as validateCurrentProjectSaga,
   validateSource as validateSourceSaga,
-  importValidations,
 } from '../../../src/sagas/errors';
 
 test('validateCurrentProject()', assert => {

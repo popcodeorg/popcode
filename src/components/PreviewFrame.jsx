@@ -1,16 +1,16 @@
+import i18next from 'i18next';
 import Channel from 'jschannel';
-import React from 'react';
-import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import bindAll from 'lodash-es/bindAll';
 import constant from 'lodash-es/constant';
-import i18next from 'i18next';
+import PropTypes from 'prop-types';
+import React from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
+import {CompiledProject as CompiledProjectRecord} from '../records';
 import bowser from '../services/bowser';
+import {sourceDelimiter} from '../util/compileProject';
 import {createError} from '../util/errorUtils';
 import retryingFailedImports from '../util/retryingFailedImports';
-import {sourceDelimiter} from '../util/compileProject';
-import {CompiledProject as CompiledProjectRecord} from '../records';
 
 const sandboxOptions = [
   'allow-forms',

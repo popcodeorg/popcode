@@ -1,13 +1,13 @@
 /* eslint-disable react/no-multi-comp */
 
 import classnames from 'classnames';
-import {connect} from 'react-redux';
 import constant from 'lodash-es/constant';
 import noop from 'lodash-es/noop';
-import useOnClickOutside from 'use-onclickoutside';
-import preventClickthrough from 'react-prevent-clickthrough';
 import PropTypes from 'prop-types';
 import React, {useRef} from 'react';
+import preventClickthrough from 'react-prevent-clickthrough';
+import {connect} from 'react-redux';
+import useOnClickOutside from 'use-onclickoutside';
 
 import {closeTopBarMenu, toggleTopBarMenu} from '../../actions';
 import {getOpenTopBarMenu} from '../../selectors';

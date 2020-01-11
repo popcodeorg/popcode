@@ -1,9 +1,9 @@
-import i18next from 'i18next';
-import React, {lazy, Suspense} from 'react';
-import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import {faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import i18next from 'i18next';
+import PropTypes from 'prop-types';
+import React, {lazy, Suspense} from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import Modal from './Modal';
 

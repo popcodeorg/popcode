@@ -1,10 +1,10 @@
-import test from 'tape-catch';
 import {List, Map} from 'immutable';
 import partial from 'lodash-es/partial';
+import test from 'tape-catch';
 
-import reducerTest from '../../helpers/reducerTest';
-import reducer from '../../../src/reducers/resizableFlex';
 import {updateResizableFlex} from '../../../src/actions/resizableFlex';
+import reducer from '../../../src/reducers/resizableFlex';
+import reducerTest from '../../helpers/reducerTest';
 
 const initialState = new Map();
 

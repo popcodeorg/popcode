@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 export default function AssignmentCreatorSelectField({
   children,

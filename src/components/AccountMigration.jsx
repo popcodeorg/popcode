@@ -1,22 +1,22 @@
 import {faExchangeAlt} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import i18next from 'i18next';
 import isNull from 'lodash-es/isNull';
 import PropTypes from 'prop-types';
 import React from 'react';
-import i18next from 'i18next';
 
+import {AccountMigrationState} from '../enums';
 import {
   AccountMigration as AccountMigrationRecord,
   UserAccount as UserAccountRecord,
 } from '../records';
-import {AccountMigrationState} from '../enums';
 
 import AccountMigrationComplete from './AccountMigrationComplete';
+import AccountMigrationError from './AccountMigrationError';
 import AccountMigrationInProgress from './AccountMigrationInProgress';
 import AccountMigrationUndoGracePeriod from './AccountMigrationUndoGracePeriod';
 import Modal from './Modal';
 import ProposedAccountMigration from './ProposedAccountMigration';
-import AccountMigrationError from './AccountMigrationError';
 
 export default function AccountMigration({
   currentUserAccount,

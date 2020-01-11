@@ -1,6 +1,6 @@
-import prettyCSS from 'PrettyCSS';
-import trim from 'lodash-es/trim';
 import endsWith from 'lodash-es/endsWith';
+import trim from 'lodash-es/trim';
+import prettyCSS from 'PrettyCSS';
 
 import Validator from '../Validator';
 

@@ -1,13 +1,13 @@
 /* eslint react/prop-types: "off" */
-import isUndefined from 'lodash-es/isUndefined';
+import {faGithub} from '@fortawesome/free-brands-svg-icons';
+import {faSignOutAlt, faUnlink} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import i18next from 'i18next';
 import isNull from 'lodash-es/isNull';
+import isUndefined from 'lodash-es/isUndefined';
 
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import i18next from 'i18next';
-import {faGithub} from '@fortawesome/free-brands-svg-icons';
-import {faUnlink, faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {UserAccount} from '../../records';
 

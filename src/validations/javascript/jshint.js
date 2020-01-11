@@ -1,11 +1,11 @@
+import {JSHINT as jshint} from 'jshint';
 import castArray from 'lodash-es/castArray';
-import concat from 'lodash-es/concat';
 import clone from 'lodash-es/clone';
 import compact from 'lodash-es/compact';
+import concat from 'lodash-es/concat';
 import defaults from 'lodash-es/defaults';
 import find from 'lodash-es/find';
 import includes from 'lodash-es/includes';
-import {JSHINT as jshint} from 'jshint';
 
 import libraries from '../../config/libraries';
 import Validator from '../Validator';

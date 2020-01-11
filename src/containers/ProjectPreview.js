@@ -1,11 +1,11 @@
 import {connect} from 'react-redux';
 
-import ProjectPreview from '../components/ProjectPreview';
 import {archiveProject, changeCurrentProject} from '../actions';
+import ProjectPreview from '../components/ProjectPreview';
 import {
-  makeGetProjectPreview,
   getCurrentProjectKey,
   getProject,
+  makeGetProjectPreview,
 } from '../selectors';
 
 function makeMapStateToProps() {

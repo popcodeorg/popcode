@@ -1,12 +1,12 @@
 import mapValues from 'lodash-es/mapValues';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Provider} from 'react-redux';
-import PropTypes from 'prop-types';
 
-import bowser from '../services/bowser';
-import {ErrorBoundary} from '../util/bugsnag';
 import supportedBrowsers from '../../config/browsers.json';
 import Workspace from '../containers/Workspace';
+import bowser from '../services/bowser';
+import {ErrorBoundary} from '../util/bugsnag';
 
 import BrowserError from './BrowserError';
 import IEBrowserError from './IEBrowserError';

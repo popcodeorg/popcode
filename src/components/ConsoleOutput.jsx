@@ -1,9 +1,9 @@
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import isNil from 'lodash-es/isNil';
-import React from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import isNil from 'lodash-es/isNil';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import {ConsoleEntry} from '../records';
 

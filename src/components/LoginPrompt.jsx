@@ -1,7 +1,7 @@
 import classnames from 'classnames';
+import i18next from 'i18next';
 import PropTypes from 'prop-types';
 import React from 'react';
-import i18next from 'i18next';
 
 import Modal from './Modal';
 

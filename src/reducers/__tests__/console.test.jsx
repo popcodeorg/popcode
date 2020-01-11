@@ -2,18 +2,17 @@ import forEach from 'lodash-es/forEach';
 import map from 'lodash-es/map';
 import reduce from 'lodash-es/reduce';
 
-import reducer from '../console';
-import {Error} from '../../records';
-
 import {
   consoleErrorProduced,
+  consoleInputChanged,
   consoleLogBatchProduced,
   consoleValueProduced,
   evaluateConsoleEntry,
   nextConsoleHistory,
   previousConsoleHistory,
-  consoleInputChanged,
 } from '../../actions';
+import {Error} from '../../records';
+import reducer from '../console';
 
 import {consoleErrorFactory} from '@factories/validations/errors';
 

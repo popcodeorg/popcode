@@ -1,15 +1,15 @@
-import React from 'react';
-import i18next from 'i18next';
-import classnames from 'classnames';
 import chrono from 'chrono-node';
+import classnames from 'classnames';
+import i18next from 'i18next';
 import PropTypes from 'prop-types';
+import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {Field} from 'redux-form/immutable';
 
 import FormDate from '../records/FormDate';
 
-import AssignmentCreatorTextField from './AssignmentCreatorTextField';
 import AssignmentCreatorSelectField from './AssignmentCreatorSelectField';
+import AssignmentCreatorTextField from './AssignmentCreatorTextField';
 
 function parseDate(value) {
   const [parsedResponse] = chrono.parse(value);

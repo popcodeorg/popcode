@@ -1,7 +1,7 @@
 import {faSearchMinus, faSearchPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 export default function TextSize({isLarge, onToggle}) {
   const icon = isLarge ? faSearchMinus : faSearchPlus;

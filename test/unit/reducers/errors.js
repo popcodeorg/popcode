@@ -1,11 +1,8 @@
-import test from 'tape-catch';
-import partial from 'lodash-es/partial';
 import {List} from 'immutable';
+import partial from 'lodash-es/partial';
+import test from 'tape-catch';
 
-import {Error, ErrorList} from '../../../src/records';
-import reducerTest from '../../helpers/reducerTest';
-import {errors as states} from '../../helpers/referenceStates';
-import {gistData} from '../../helpers/factory';
+import {addRuntimeError, validatedSource} from '../../../src/actions/errors';
 import {
   changeCurrentProject,
   gistImported,
@@ -13,8 +10,11 @@ import {
   toggleLibrary,
   updateProjectSource,
 } from '../../../src/actions/projects';
-import {addRuntimeError, validatedSource} from '../../../src/actions/errors';
+import {Error, ErrorList} from '../../../src/records';
 import reducer from '../../../src/reducers/errors';
+import {gistData} from '../../helpers/factory';
+import reducerTest from '../../helpers/reducerTest';
+import {errors as states} from '../../helpers/referenceStates';
 
 test('validatedSource', t => {
   t.test(

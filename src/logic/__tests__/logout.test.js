@@ -1,7 +1,7 @@
-import logout from '../logout';
 import {logOut as logOutAction} from '../../actions/user';
 
 import {signOut} from '../../clients/firebase';
+import logout from '../logout';
 
 import {makeTestLogic} from './helpers';
 

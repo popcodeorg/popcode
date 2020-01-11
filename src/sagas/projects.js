@@ -5,8 +5,8 @@ import {
   put,
   select,
   takeEvery,
-  throttle,
   takeLatest,
+  throttle,
 } from 'redux-saga/effects';
 import isNull from 'lodash-es/isNull';
 import isString from 'lodash-es/isString';
@@ -17,16 +17,16 @@ import {
   gistImported,
   gistImportError,
   gistNotFound,
+  projectBeautified,
   projectCreated,
   projectsLoaded,
   projectSuccessfullySaved,
-  projectBeautified,
 } from '../actions/projects';
 import {
+  projectRestoredFromLastSession,
   snapshotImported,
   snapshotImportError,
   snapshotNotFound,
-  projectRestoredFromLastSession,
 } from '../actions/clients';
 import {isPristineProject} from '../util/projectUtils';
 import {loadGistFromId} from '../clients/github';
@@ -36,7 +36,7 @@ import {
   saveProject,
 } from '../clients/firebase';
 import beautifySource from '../util/beautifySource';
-import {getCurrentProject, getProject, getCurrentUserId} from '../selectors';
+import {getCurrentProject, getCurrentUserId, getProject} from '../selectors';
 
 export function* applicationLoaded(action) {
   if (isString(action.payload.gistId)) {

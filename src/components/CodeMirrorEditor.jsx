@@ -1,9 +1,9 @@
-import constant from 'lodash-es/constant';
 import classnames from 'classnames';
 import CodeMirror from 'codemirror';
+import constant from 'lodash-es/constant';
 import get from 'lodash-es/get';
-import LRU from 'lru-cache';
 import map from 'lodash-es/map';
+import LRU from 'lru-cache';
 import PropTypes from 'prop-types';
 import React, {useEffect, useLayoutEffect, useRef} from 'react';
 
@@ -14,8 +14,8 @@ import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/selection/active-line';
 
-import bowser from '../services/bowser';
 import {EditorLocation} from '../records';
+import bowser from '../services/bowser';
 
 const CODEMIRROR_MODES_MAP = {
   html: 'htmlmixed',

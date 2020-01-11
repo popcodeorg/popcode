@@ -5,71 +5,17 @@ import {createAssignment} from './assignments';
 import {
   createSnapshot,
   exportProject,
-  projectExportDisplayed,
-  projectExportNotDisplayed,
   gapiClientReady,
   gapiClientUnavailable,
+  projectExportDisplayed,
+  projectExportNotDisplayed,
 } from './clients';
 
 import {
-  beautifyProjectSource,
-  createProject,
-  changeCurrentProject,
-  toggleLibrary,
-  hideComponent,
-  unhideComponent,
-  toggleComponent,
-  updateProjectSource,
-  updateProjectInstructions,
-  projectSuccessfullySaved,
-  archiveProject,
-  saveProject,
-} from './projects';
-
-import {
-  focusLine,
-  editorFocusedRequestedLine,
-  startDragColumnDivider,
-  stopDragColumnDivider,
-  notificationTriggered,
-  userDismissedNotification,
-  updateNotificationMetadata,
-  popOutProject,
-  toggleEditorTextSize,
-  toggleTopBarMenu,
-  closeTopBarMenu,
-  startEditingInstructions,
-  cancelEditingInstructions,
-  showSaveIndicator,
-  hideSaveIndicator,
-  openAssignmentCreator,
-  closeAssignmentCreator,
-  coursesLoaded,
-  coursesFullyLoaded,
-  toggleArchivedView,
-  openLoginPrompt,
-  closeLoginPrompt,
-} from './ui';
-
-import {addRuntimeError} from './errors';
-
-import {
-  dismissAccountMigration,
-  linkGithubIdentity,
-  unlinkGithubIdentity,
-  logIn,
-  logOut,
-  startAccountMigration,
-  userAuthenticated,
-  userLoggedOut,
-} from './user';
-
-import {
-  projectCompiled,
   projectCompilationFailed,
+  projectCompiled,
   refreshPreview,
 } from './compiledProjects';
-
 import {
   clearConsoleEntries,
   consoleErrorProduced,
@@ -80,8 +26,58 @@ import {
   nextConsoleHistory,
   previousConsoleHistory,
 } from './console';
+import {addRuntimeError} from './errors';
+import {
+  archiveProject,
+  beautifyProjectSource,
+  changeCurrentProject,
+  createProject,
+  hideComponent,
+  projectSuccessfullySaved,
+  saveProject,
+  toggleComponent,
+  toggleLibrary,
+  unhideComponent,
+  updateProjectInstructions,
+  updateProjectSource,
+} from './projects';
 
 import {updateResizableFlex} from './resizableFlex';
+import {
+  cancelEditingInstructions,
+  closeAssignmentCreator,
+  closeLoginPrompt,
+  closeTopBarMenu,
+  coursesFullyLoaded,
+  coursesLoaded,
+  editorFocusedRequestedLine,
+  focusLine,
+  hideSaveIndicator,
+  notificationTriggered,
+  openAssignmentCreator,
+  openLoginPrompt,
+  popOutProject,
+  showSaveIndicator,
+  startDragColumnDivider,
+  startEditingInstructions,
+  stopDragColumnDivider,
+  toggleArchivedView,
+  toggleEditorTextSize,
+  toggleTopBarMenu,
+  updateNotificationMetadata,
+  userDismissedNotification,
+} from './ui';
+
+import {
+  dismissAccountMigration,
+  linkGithubIdentity,
+  logIn,
+  logOut,
+  startAccountMigration,
+  unlinkGithubIdentity,
+  userAuthenticated,
+  userLoggedOut,
+} from './user';
 
 export {
   beautifyProjectSource,

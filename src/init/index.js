@@ -2,12 +2,12 @@ import Immutable from 'immutable';
 import installDevTools from 'immutable-devtools';
 import {install as installOfflinePlugin} from 'offline-plugin/runtime';
 
+import {applicationLoaded} from '../actions';
+import {rehydrateProject} from '../clients/localStorage';
 import {initMixpanel} from '../clients/mixpanel';
 import createApplicationStore from '../createApplicationStore';
 import {bugsnagClient, includeStoreInBugReports} from '../util/bugsnag';
 import {getQueryParameters, setQueryParameters} from '../util/queryParams';
-import {rehydrateProject} from '../clients/localStorage';
-import {applicationLoaded} from '../actions';
 
 import initI18n from './initI18n';
 

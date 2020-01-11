@@ -1,6 +1,6 @@
+import i18next from 'i18next';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import i18next from 'i18next';
 
 export default function AccountMigrationError({onDismiss}) {
   return (

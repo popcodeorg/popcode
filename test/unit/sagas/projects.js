@@ -3,30 +3,30 @@ import test from 'tape-catch';
 import {testSaga} from 'redux-saga-test-plan';
 import {
   applicationLoaded as applicationLoadedSaga,
-  createProject as createProjectSaga,
+  archiveProject as archiveProjectSaga,
   changeCurrentProject as changeCurrentProjectSaga,
+  createProject as createProjectSaga,
   importGist as importGistSaga,
   importSnapshot as importSnapshotSaga,
   saveCurrentProject,
   toggleLibrary as toggleLibrarySaga,
-  userAuthenticated as userAuthenticatedSaga,
   updateProjectSource as updateProjectSourceSaga,
-  archiveProject as archiveProjectSaga,
+  userAuthenticated as userAuthenticatedSaga,
 } from '../../../src/sagas/projects';
 import {
+  archiveProject,
   gistImportError,
   gistNotFound,
   projectsLoaded,
+  projectSuccessfullySaved,
   toggleLibrary,
   updateProjectInstructions,
   updateProjectSource,
-  projectSuccessfullySaved,
-  archiveProject,
 } from '../../../src/actions/projects';
 import {
+  projectRestoredFromLastSession,
   snapshotImportError,
   snapshotNotFound,
-  projectRestoredFromLastSession,
 } from '../../../src/actions/clients';
 import {userAuthenticated} from '../../../src/actions/user';
 import applicationLoaded from '../../../src/actions/applicationLoaded';
@@ -39,8 +39,8 @@ import {
 import Scenario from '../../helpers/Scenario';
 import {gistData, project, userCredential} from '../../helpers/factory';
 import {
-  getCurrentUserId,
   getCurrentProject,
+  getCurrentUserId,
   getProject,
 } from '../../../src/selectors/index';
 

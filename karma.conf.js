@@ -1,5 +1,5 @@
-const isDocker = require('is-docker');
 const commandExists = require('command-exists').sync;
+const isDocker = require('is-docker');
 
 const webpackConfiguration = require('./webpack.config.js');
 

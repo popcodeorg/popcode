@@ -1,5 +1,5 @@
-import {createSelector} from 'reselect';
 import isNull from 'lodash-es/isNull';
+import {createSelector} from 'reselect';
 
 export default createSelector(
   state => state.get('projects'),
