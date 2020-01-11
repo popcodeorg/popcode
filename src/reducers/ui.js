@@ -74,10 +74,10 @@ function closeTopBarMenu(menu, menuToClose) {
 
 export default combineReducers(
   {
-    archivedViewOpen: handleActions(
+    isArchivedViewOpen: handleActions(
       {
         [changeCurrentProject]: constant(false),
-        [toggleArchivedView]: archivedViewOpen => !archivedViewOpen,
+        [toggleArchivedView]: isArchivedViewOpen => !isArchivedViewOpen,
       },
       false,
     ),
@@ -285,7 +285,7 @@ export default combineReducers(
       null,
     ),
 
-    saveIndicatorShown: handleActions(
+    isSaveIndicatorVisible: handleActions(
       {
         [hideSaveIndicator]: constant(false),
         [showSaveIndicator]: constant(true),

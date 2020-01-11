@@ -38,7 +38,7 @@ import isGapiReady from './isGapiReady';
 import isGistExportInProgress from './isGistExportInProgress';
 import isLoginPromptOpen from './isLoginPromptOpen';
 import isRepoExportInProgress from './isRepoExportInProgress';
-import isSaveIndicatorShown from './isSaveIndicatorShown';
+import isSaveIndicatorVisible from './isSaveIndicatorVisible';
 import isSnapshotInProgress from './isSnapshotInProgress';
 import isTextSizeLarge from './isTextSizeLarge';
 import isUserTyping from './isUserTyping';
@@ -91,7 +91,7 @@ export {
   isGistExportInProgress,
   isLoginPromptOpen,
   isRepoExportInProgress,
-  isSaveIndicatorShown,
+  isSaveIndicatorVisible,
   isSnapshotInProgress,
   isTextSizeLarge,
   isUserTyping,

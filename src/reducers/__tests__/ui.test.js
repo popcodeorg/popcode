@@ -134,13 +134,13 @@ test('typing after snapshot creation deletes notification', () => {
 
 test('show saved indicator', () => {
   expect(applyActions(showSaveIndicator())).toMatchObject({
-    saveIndicatorShown: true,
+    isSaveIndicatorVisible: true,
   });
 });
 
 test('hide saved indicator', () => {
   expect(applyActions(showSaveIndicator(), hideSaveIndicator())).toMatchObject({
-    saveIndicatorShown: false,
+    isSaveIndicatorVisible: false,
   });
 });
 
@@ -384,7 +384,7 @@ test('assignment not created', () => {
 
 test('toggle archive view when closed', () => {
   expect(applyActions(toggleArchivedView())).toMatchObject({
-    archivedViewOpen: true,
+    isArchivedViewOpen: true,
   });
 });
 
@@ -392,7 +392,7 @@ test('toggle archive view when open', () => {
   expect(
     applyActions(toggleArchivedView(), toggleArchivedView()),
   ).toMatchObject({
-    archivedViewOpen: false,
+    isArchivedViewOpen: false,
   });
 });
 
