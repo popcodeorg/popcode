@@ -2,19 +2,19 @@ import Immutable from 'immutable';
 import {handleActions} from 'redux-actions';
 
 import {
-  createSnapshot,
-  snapshotCreated,
-  snapshotExportError,
-  exportProject,
-  projectExported,
-  projectExportError,
-  gapiClientReady,
-} from '../actions/clients';
-import {
-  createAssignment,
   assignmentCreated,
   assignmentNotCreated,
+  createAssignment,
 } from '../actions/assignments';
+import {
+  createSnapshot,
+  exportProject,
+  gapiClientReady,
+  projectExported,
+  projectExportError,
+  snapshotCreated,
+  snapshotExportError,
+} from '../actions/clients';
 
 const defaultState = new Immutable.Map({
   firebase: new Immutable.Map({exportingSnapshot: false}),

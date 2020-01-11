@@ -1,6 +1,6 @@
 import i18next from 'i18next';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 export default function AssignmentCreatorTextField({
   input,

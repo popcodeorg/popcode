@@ -1,61 +1,60 @@
 import Immutable from 'immutable';
 
+import constant from 'lodash-es/constant';
+import handleAction from 'redux-actions/lib/handleAction';
 import handleActions from 'redux-actions/lib/handleActions';
 import {combineReducers} from 'redux-immutable';
-import constant from 'lodash-es/constant';
 
-import handleAction from 'redux-actions/lib/handleAction';
-
-import {EditorLocation, Notification, UiState} from '../records';
 import {
+  applicationLoaded,
   changeCurrentProject,
   clearConsoleEntries,
-  userLoggedOut,
   linkGithubIdentity,
-  unlinkGithubIdentity,
-  applicationLoaded,
   projectCompilationFailed,
   projectCompiled,
+  unlinkGithubIdentity,
+  userLoggedOut,
 } from '../actions';
+import {assignmentCreated, assignmentNotCreated} from '../actions/assignments';
 import {
-  projectCreated,
-  updateProjectSource,
-  gistNotFound,
-  gistImportError,
-  updateProjectInstructions,
-} from '../actions/projects';
-import {
-  userDoneTyping,
-  focusLine,
-  editorFocusedRequestedLine,
-  startDragColumnDivider,
-  stopDragColumnDivider,
-  notificationTriggered,
-  userDismissedNotification,
-  updateNotificationMetadata,
-  toggleEditorTextSize,
-  toggleTopBarMenu,
-  startEditingInstructions,
-  cancelEditingInstructions,
-  showSaveIndicator,
-  hideSaveIndicator,
-  toggleArchivedView,
-  openAssignmentCreator,
-  closeAssignmentCreator,
-  openLoginPrompt,
-  closeLoginPrompt,
-} from '../actions/ui';
-import {identityLinked, linkIdentityFailed, logIn} from '../actions/user';
-import {
+  gapiClientUnavailable,
+  projectExportError,
+  projectExportNotDisplayed,
   snapshotCreated,
   snapshotExportError,
   snapshotImportError,
   snapshotNotFound,
-  projectExportNotDisplayed,
-  projectExportError,
-  gapiClientUnavailable,
 } from '../actions/clients';
-import {assignmentCreated, assignmentNotCreated} from '../actions/assignments';
+import {
+  gistImportError,
+  gistNotFound,
+  projectCreated,
+  updateProjectInstructions,
+  updateProjectSource,
+} from '../actions/projects';
+import {
+  cancelEditingInstructions,
+  closeAssignmentCreator,
+  closeLoginPrompt,
+  editorFocusedRequestedLine,
+  focusLine,
+  hideSaveIndicator,
+  notificationTriggered,
+  openAssignmentCreator,
+  openLoginPrompt,
+  showSaveIndicator,
+  startDragColumnDivider,
+  startEditingInstructions,
+  stopDragColumnDivider,
+  toggleArchivedView,
+  toggleEditorTextSize,
+  toggleTopBarMenu,
+  updateNotificationMetadata,
+  userDismissedNotification,
+  userDoneTyping,
+} from '../actions/ui';
+import {identityLinked, linkIdentityFailed, logIn} from '../actions/user';
+import {EditorLocation, Notification, UiState} from '../records';
 
 function addNotification(notifications, type, severity, metadata = {}) {
   return notifications.set(

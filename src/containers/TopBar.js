@@ -1,33 +1,5 @@
 import {connect} from 'react-redux';
 
-import TopBar from '../components/TopBar';
-import {
-  getCurrentProjectExportedRepoName,
-  getCurrentProjectKey,
-  getCurrentProjectInstructions,
-  getCurrentUser,
-  getCurrentValidationState,
-  getEnabledLibraries,
-  getOpenTopBarMenu,
-  getAllProjectKeys,
-  getAllProjects,
-  isArchivedViewOpen,
-  isEditingInstructions,
-  isExperimental,
-  isGapiReady,
-  isGistExportInProgress,
-  isRepoExportInProgress,
-  isClassroomExportInProgress,
-  isSaveIndicatorVisible,
-  isSnapshotInProgress,
-  isTextSizeLarge,
-  isUserAnonymous,
-  isUserAuthenticatedWithGithub,
-  isUserAuthenticatedWithGoogle,
-  isUserAuthenticated,
-  isUserTyping,
-} from '../selectors';
-
 import {
   changeCurrentProject,
   closeTopBarMenu,
@@ -35,16 +7,43 @@ import {
   createSnapshot,
   exportProject,
   linkGithubIdentity,
-  unlinkGithubIdentity,
+  logIn,
+  logOut,
   openAssignmentCreator,
   startEditingInstructions,
+  toggleArchivedView,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
-  toggleArchivedView,
-  logIn,
-  logOut,
+  unlinkGithubIdentity,
 } from '../actions';
+import TopBar from '../components/TopBar';
+import {
+  getAllProjectKeys,
+  getAllProjects,
+  getCurrentProjectExportedRepoName,
+  getCurrentProjectInstructions,
+  getCurrentProjectKey,
+  getCurrentUser,
+  getCurrentValidationState,
+  getEnabledLibraries,
+  getOpenTopBarMenu,
+  isArchivedViewOpen,
+  isClassroomExportInProgress,
+  isEditingInstructions,
+  isExperimental,
+  isGapiReady,
+  isGistExportInProgress,
+  isRepoExportInProgress,
+  isSaveIndicatorVisible,
+  isSnapshotInProgress,
+  isTextSizeLarge,
+  isUserAnonymous,
+  isUserAuthenticated,
+  isUserAuthenticatedWithGithub,
+  isUserAuthenticatedWithGoogle,
+  isUserTyping,
+} from '../selectors';
 
 function mapStateToProps(state) {
   return {

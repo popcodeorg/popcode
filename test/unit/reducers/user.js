@@ -1,23 +1,19 @@
-import test from 'tape-catch';
+import {Map} from 'immutable';
 import partial from 'lodash-es/partial';
 import tap from 'lodash-es/tap';
-import {Map} from 'immutable';
+import test from 'tape-catch';
 
-import reducerTest from '../../helpers/reducerTest';
-import {user as states} from '../../helpers/referenceStates';
-import {userCredential} from '../../helpers/factory';
-import reducer from '../../../src/reducers/user';
 import {
   accountMigrationComplete,
+  accountMigrationError,
   accountMigrationNeeded,
   accountMigrationUndoPeriodExpired,
   dismissAccountMigration,
   identityLinked,
+  identityUnlinked,
   startAccountMigration,
   userAuthenticated,
   userLoggedOut,
-  accountMigrationError,
-  identityUnlinked,
 } from '../../../src/actions/user';
 import {AccountMigrationState, LoginState} from '../../../src/enums';
 import {
@@ -26,6 +22,10 @@ import {
   UserAccount,
   UserIdentityProvider,
 } from '../../../src/records';
+import reducer from '../../../src/reducers/user';
+import {userCredential} from '../../helpers/factory';
+import reducerTest from '../../helpers/reducerTest';
+import {user as states} from '../../helpers/referenceStates';
 
 const userCredentialIn = userCredential();
 

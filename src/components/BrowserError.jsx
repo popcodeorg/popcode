@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import i18next from 'i18next';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 function getBrowserLink(browser) {
   if (browser.is('Firefox')) {

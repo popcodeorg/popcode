@@ -1,10 +1,10 @@
-import groupBy from 'lodash-es/groupBy';
-import values from 'lodash-es/values';
-import flatten from 'lodash-es/flatten';
 import flatMap from 'lodash-es/flatMap';
-import sortBy from 'lodash-es/sortBy';
+import flatten from 'lodash-es/flatten';
+import groupBy from 'lodash-es/groupBy';
 import omit from 'lodash-es/omit';
+import sortBy from 'lodash-es/sortBy';
 import uniqWith from 'lodash-es/uniqWith';
+import values from 'lodash-es/values';
 
 function filterErrors(errors) {
   function dedupeErrors(errs) {

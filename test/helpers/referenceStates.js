@@ -1,4 +1,4 @@
-import {List, Map, fromJS} from 'immutable';
+import {fromJS, List, Map} from 'immutable';
 
 import {
   Course,
@@ -6,8 +6,8 @@ import {
   ErrorList,
   ErrorReport,
   GoogleClassroom,
-  User,
   RemoteCollection,
+  User,
 } from '../../src/records';
 
 const sampleError = new Error({reason: 'bad-code'});

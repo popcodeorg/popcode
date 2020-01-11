@@ -6,12 +6,12 @@ import {
 import {createShareToClassroomUrl} from '../clients/googleClassroom';
 import {createProjectSnapshot} from '../clients/firebase';
 import {
-  snapshotCreated,
-  snapshotExportError,
-  projectExported,
-  projectExportError,
   gapiClientReady,
   gapiClientUnavailable,
+  projectExported,
+  projectExportError,
+  snapshotCreated,
+  snapshotExportError,
 } from '../actions/clients';
 import {getCurrentProject} from '../selectors';
 import {generateTextPreview} from '../util/compileProject';

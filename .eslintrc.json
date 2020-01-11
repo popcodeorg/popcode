@@ -253,7 +253,8 @@
     "import/order": [
       "warn",
       {
-        "newlines-between": "always-and-inside-groups"
+        "newlines-between": "always-and-inside-groups",
+        "alphabetize": {"order": "asc", "caseInsensitive": true}
       }
     ],
     "import/unambiguous": "warn",
@@ -416,6 +417,10 @@
     "require-atomic-updates": "warn",
     "require-unicode-regexp": "warn",
     "require-yield": "error",
+    "sort-imports": [
+      "warn",
+      {"ignoreCase": true, "ignoreDeclarationSort": true}
+    ],
     "spaced-comment": ["warn", "always"],
     "strict": ["warn", "never"],
     "use-isnan": "warn",

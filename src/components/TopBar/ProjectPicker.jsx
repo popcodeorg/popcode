@@ -1,17 +1,17 @@
 import classnames from 'classnames';
-import isEmpty from 'lodash-es/isEmpty';
-import some from 'lodash-es/some';
+import i18next from 'i18next';
 import filter from 'lodash-es/filter';
+import isEmpty from 'lodash-es/isEmpty';
 import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';
+import some from 'lodash-es/some';
 import PropTypes from 'prop-types';
 import React from 'react';
-import i18next from 'i18next';
 
 import ProjectPreview from '../../containers/ProjectPreview';
 
-import ProjectPickerButton from './ProjectPickerButton';
 import createMenu, {MenuItem} from './createMenu';
+import ProjectPickerButton from './ProjectPickerButton';
 
 const ProjectPicker = createMenu({
   menuClass: 'top-bar__menu_right top-bar__menu_project-picker',

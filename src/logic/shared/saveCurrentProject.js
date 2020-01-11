@@ -1,7 +1,7 @@
+import {projectSuccessfullySaved} from '../../actions/projects';
+import {saveProject} from '../../clients/firebase';
 import {getCurrentProject, getCurrentUserId} from '../../selectors';
 import {isPristineProject} from '../../util/projectUtils';
-import {saveProject} from '../../clients/firebase';
-import {projectSuccessfullySaved} from '../../actions/projects';
 
 export default async function saveCurrentProject(state) {
   const userId = getCurrentUserId(state);

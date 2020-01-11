@@ -1,17 +1,5 @@
 import {connect} from 'react-redux';
 
-import Console from '../components/Console';
-import {
-  getCurrentCompiledProjectKey,
-  getConsoleHistory,
-  getCurrentProjectKey,
-  getCurrentConsoleInputValue,
-  getHiddenUIComponents,
-  getRequestedFocusedLine,
-  isCurrentProjectSyntacticallyValid,
-  isTextSizeLarge,
-  isExperimental,
-} from '../selectors';
 import {
   clearConsoleEntries,
   consoleInputChanged,
@@ -22,6 +10,18 @@ import {
   previousConsoleHistory,
   toggleComponent,
 } from '../actions';
+import Console from '../components/Console';
+import {
+  getConsoleHistory,
+  getCurrentCompiledProjectKey,
+  getCurrentConsoleInputValue,
+  getCurrentProjectKey,
+  getHiddenUIComponents,
+  getRequestedFocusedLine,
+  isCurrentProjectSyntacticallyValid,
+  isExperimental,
+  isTextSizeLarge,
+} from '../selectors';
 
 function mapStateToProps(state) {
   return {

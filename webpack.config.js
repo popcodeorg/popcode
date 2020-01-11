@@ -1,17 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 
-const OfflinePlugin = require('offline-plugin');
+const babel = require('@babel/core');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const escapeRegExp = require('lodash.escaperegexp');
+const OfflinePlugin = require('offline-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
-const VisualizerPlugin = require('webpack-visualizer-plugin');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
-const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
-const escapeRegExp = require('lodash.escaperegexp');
-const babel = require('@babel/core');
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
+const VisualizerPlugin = require('webpack-visualizer-plugin');
 
 function getCacheKeyForBabelConfigItem(configItem) {
   const cacheKey = {

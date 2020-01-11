@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
-import ErrorReport from '../components/ErrorReport';
 import {focusLine} from '../actions';
+import ErrorReport from '../components/ErrorReport';
 import {
   getErrors,
   isCurrentlyValidating,

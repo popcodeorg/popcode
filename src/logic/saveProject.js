@@ -1,7 +1,7 @@
 import {createLogic} from 'redux-logic';
 
-import {openLoginPrompt} from '../actions/ui';
 import {saveProject} from '../actions/projects';
+import {openLoginPrompt} from '../actions/ui';
 import {isUserAuthenticated} from '../selectors';
 
 import saveCurrentProject from './shared/saveCurrentProject';

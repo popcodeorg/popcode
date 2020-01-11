@@ -3,17 +3,14 @@ import get from 'lodash-es/get';
 import mixpanel from 'mixpanel-browser';
 import uuid from 'uuid/v4';
 
-import {rehydrateProject} from '../../clients/localStorage';
-import createApplicationStore from '../../createApplicationStore';
-import config from '../../config';
-
-import {applicationLoaded} from '../../actions';
-
 import {firebaseProjectFactory} from '../../../__factories__/data/firebase';
-
-import i18next from 'i18next';
+import {applicationLoaded} from '../../actions';
+import {rehydrateProject} from '../../clients/localStorage';
+import config from '../../config';
+import createApplicationStore from '../../createApplicationStore';
 
 import init from '..';
+import i18next from 'i18next';
 
 jest.mock('../../clients/localStorage');
 jest.mock('../../clients/firebase');

@@ -1,21 +1,20 @@
 import reduce from 'lodash-es/reduce';
 
-import reducer from '../clients';
-
 import {
-  createSnapshot,
-  snapshotCreated,
-  snapshotExportError,
-  exportProject,
-  projectExported,
-  projectExportError,
-  gapiClientReady,
-} from '../../actions/clients';
-import {
-  createAssignment,
   assignmentCreated,
   assignmentNotCreated,
+  createAssignment,
 } from '../../actions/assignments';
+import {
+  createSnapshot,
+  exportProject,
+  gapiClientReady,
+  projectExported,
+  projectExportError,
+  snapshotCreated,
+  snapshotExportError,
+} from '../../actions/clients';
+import reducer from '../clients';
 
 test('createSnapshot sets exportingSnapshot to true', () => {
   expect(

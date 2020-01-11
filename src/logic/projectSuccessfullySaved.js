@@ -1,7 +1,7 @@
-import {createLogic} from 'redux-logic';
 import delay from 'delay';
+import {createLogic} from 'redux-logic';
 
-import {showSaveIndicator, hideSaveIndicator} from '../actions/ui';
+import {hideSaveIndicator, showSaveIndicator} from '../actions/ui';
 
 export default createLogic({
   type: 'PROJECT_SUCCESSFULLY_SAVED',

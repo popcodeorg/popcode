@@ -1,11 +1,10 @@
-import unlinkGithubIdentity from '../unlinkGithubIdentity';
-
 import {
-  unlinkGithubIdentity as unlinkGithubIdentityAction,
   identityUnlinked,
+  unlinkGithubIdentity as unlinkGithubIdentityAction,
 } from '../../actions/user';
 
 import {unlinkGithub} from '../../clients/firebase';
+import unlinkGithubIdentity from '../unlinkGithubIdentity';
 
 import {makeTestLogic} from './helpers';
 

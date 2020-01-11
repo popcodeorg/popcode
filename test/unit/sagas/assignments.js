@@ -3,19 +3,19 @@ import {testSaga} from 'redux-saga-test-plan';
 import {call} from 'redux-saga/effects';
 
 import {
-  openAssignmentCreator as openAssignmentCreatorSaga,
   createAssignment as createAssignmentSaga,
+  openAssignmentCreator as openAssignmentCreatorSaga,
 } from '../../../src/sagas/assignments';
 import {
-  getCourses,
   createClassroomAssignment,
+  getCourses,
 } from '../../../src/clients/googleClassroom';
 import {createProjectSnapshot} from '../../../src/clients/firebase';
 import {
   assignmentCreated,
   assignmentNotCreated,
 } from '../../../src/actions/assignments';
-import {coursesLoaded, coursesFullyLoaded} from '../../../src/actions/ui';
+import {coursesFullyLoaded, coursesLoaded} from '../../../src/actions/ui';
 import {getCourse, getCurrentProject} from '../../../src/selectors';
 import {generateTextPreview} from '../../../src/util/compileProject';
 import {createSnapshotUrl} from '../../../src/util/exportUrls';

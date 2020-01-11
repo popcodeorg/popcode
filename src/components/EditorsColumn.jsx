@@ -1,16 +1,16 @@
-import {DraggableCore} from 'react-draggable';
-import React, {useCallback} from 'react';
-import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import classnames from 'classnames';
 import isEmpty from 'lodash-es/isEmpty';
 import memoize from 'lodash-es/memoize';
 import partial from 'lodash-es/partial';
+import PropTypes from 'prop-types';
+import React, {useCallback} from 'react';
+import {DraggableCore} from 'react-draggable';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import {EditorLocation} from '../records';
 
-import EditorContainer from './EditorContainer';
 import Editor from './Editor';
+import EditorContainer from './EditorContainer';
 
 export default function EditorsColumn({
   currentProject,

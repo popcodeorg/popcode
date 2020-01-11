@@ -1,6 +1,6 @@
+import mousetrap from 'mousetrap';
 import PropTypes from 'prop-types';
 import {useEffect} from 'react';
-import mousetrap from 'mousetrap';
 
 export default function KeyboardHandler({onSave}) {
   useEffect(() => {

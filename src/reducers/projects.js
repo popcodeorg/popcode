@@ -1,16 +1,16 @@
 import Immutable from 'immutable';
 import assign from 'lodash-es/assign';
-import isNil from 'lodash-es/isNil';
 import filter from 'lodash-es/filter';
 import find from 'lodash-es/find';
 import get from 'lodash-es/get';
+import isNil from 'lodash-es/isNil';
 import map from 'lodash-es/map';
 import sortBy from 'lodash-es/sortBy';
 import values from 'lodash-es/values';
 
 import {Project} from '../records';
-import {isPristineProject} from '../util/projectUtils';
 import ProjectSources from '../records/ProjectSources';
+import {isPristineProject} from '../util/projectUtils';
 
 const emptyMap = new Immutable.Map();
 

@@ -1,16 +1,16 @@
-import {connectAdvanced} from 'react-redux';
-import constant from 'lodash-es/constant';
 import at from 'lodash-es/at';
+import constant from 'lodash-es/constant';
 import findIndex from 'lodash-es/findIndex';
 import isNull from 'lodash-es/isNull';
 import map from 'lodash-es/map';
 import merge from 'lodash-es/merge';
-import shallowequal from 'shallowequal';
 import times from 'lodash-es/times';
+import {connectAdvanced} from 'react-redux';
 import {createSelector, defaultMemoize} from 'reselect';
+import shallowequal from 'shallowequal';
 
-import {makeGetResizableFlexGrow} from '../../selectors';
 import {updateResizableFlex} from '../../actions';
+import {makeGetResizableFlexGrow} from '../../selectors';
 
 import calculateFlexGrowAfterDrag from './calculateFlexGrowAfterDrag';
 import directionAdapterFor from './directionAdapterFor';

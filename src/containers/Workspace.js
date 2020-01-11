@@ -1,26 +1,26 @@
-import {connect} from 'react-redux';
 import every from 'lodash-es/every';
+import {connect} from 'react-redux';
 
+import {
+  startDragColumnDivider,
+  startEditingInstructions,
+  stopDragColumnDivider,
+  toggleComponent,
+} from '../actions';
 import Workspace from '../components/Workspace';
+import resizableFlex from '../higherOrderComponents/resizableFlex';
 import {
   getCurrentProject,
-  isCurrentlyValidating,
-  isDraggingColumnDivider,
-  isEditingInstructions,
   getCurrentProjectPreviewTitle,
   getHiddenAndVisibleLanguages,
   getHiddenUIComponents,
   getOpenTopBarMenu,
+  isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
+  isDraggingColumnDivider,
+  isEditingInstructions,
   isUserTyping,
 } from '../selectors';
-import {
-  toggleComponent,
-  startDragColumnDivider,
-  stopDragColumnDivider,
-  startEditingInstructions,
-} from '../actions';
-import resizableFlex from '../higherOrderComponents/resizableFlex';
 import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
 
 function mapStateToProps(state) {

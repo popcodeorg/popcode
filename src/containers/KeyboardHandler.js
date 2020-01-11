@@ -1,8 +1,7 @@
 import {connect} from 'react-redux';
 
-import KeyboardHandler from '../components/KeyboardHandler';
-
 import {saveProject} from '../actions';
+import KeyboardHandler from '../components/KeyboardHandler';
 
 function mapDispatchToProps(dispatch) {
   return {

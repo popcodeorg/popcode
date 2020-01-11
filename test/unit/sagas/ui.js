@@ -3,15 +3,15 @@ import noop from 'lodash-es/noop';
 
 import {testSaga} from 'redux-saga-test-plan';
 import {
-  userDoneTyping as userDoneTypingSaga,
   exportProject as exportProjectSaga,
   popOutProject as popOutProjectSaga,
+  userDoneTyping as userDoneTypingSaga,
 } from '../../../src/sagas/ui';
 import {getCurrentProject} from '../../../src/selectors';
-import {userDoneTyping, popOutProject} from '../../../src/actions/ui';
+import {popOutProject, userDoneTyping} from '../../../src/actions/ui';
 import {
-  projectExported,
   projectExportDisplayed,
+  projectExported,
   projectExportError,
   projectExportNotDisplayed,
 } from '../../../src/actions/clients';

@@ -1,11 +1,11 @@
-import CodeMirror from 'codemirror';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import CodeMirror from 'codemirror';
 import get from 'lodash-es/get';
 import isNil from 'lodash-es/isNil';
-import preventClickthrough from 'react-prevent-clickthrough';
-import React, {useEffect, useLayoutEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
+import React, {useEffect, useLayoutEffect, useRef} from 'react';
+import preventClickthrough from 'react-prevent-clickthrough';
 
 import {EditorLocation} from '../records';
 

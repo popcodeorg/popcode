@@ -7,8 +7,8 @@ import './init/DOMParserShim';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import init from './init';
 import Application from './components/Application';
+import init from './init';
 
 const {store} = init();
 

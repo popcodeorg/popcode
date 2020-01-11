@@ -1,7 +1,7 @@
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import React from 'react';
-import PropTypes from 'prop-types';
 import partial from 'lodash-es/partial';
+import PropTypes from 'prop-types';
+import React from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import {Notification as NotificationRecord} from '../records';
 
@@ -9,8 +9,8 @@ import NotificationContainer from './NotificationContainer';
 import {
   GenericNotification,
   GistImportError,
-  SnapshotNotification,
   ProjectExportNotification,
+  SnapshotNotification,
 } from './notifications';
 
 const NOTIFICATION_COMPONENTS = {

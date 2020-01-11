@@ -1,19 +1,19 @@
-import test from 'tape-catch';
-import partial from 'lodash-es/partial';
 import Immutable from 'immutable';
+import partial from 'lodash-es/partial';
+import test from 'tape-catch';
 
-import reducerTest from '../../helpers/reducerTest';
-import reducer from '../../../src/reducers/currentProject';
+import {
+  projectRestoredFromLastSession,
+  snapshotImported,
+} from '../../../src/actions/clients';
 import {
   changeCurrentProject,
-  projectCreated,
   gistImported,
+  projectCreated,
 } from '../../../src/actions/projects';
-import {
-  snapshotImported,
-  projectRestoredFromLastSession,
-} from '../../../src/actions/clients';
+import reducer from '../../../src/reducers/currentProject';
 import {gistData} from '../../helpers/factory';
+import reducerTest from '../../helpers/reducerTest';
 
 const projectKey = '12345';
 const initialState = reducer(undefined, {type: null});

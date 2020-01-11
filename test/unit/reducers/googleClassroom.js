@@ -1,12 +1,12 @@
-import test from 'tape';
 import partial from 'lodash-es/partial';
 import tap from 'lodash-es/tap';
+import test from 'tape';
 
+import {coursesFullyLoaded, coursesLoaded} from '../../../src/actions/ui';
 import reducer from '../../../src/reducers/googleClassroom';
-import reducerTest from '../../helpers/reducerTest';
 import {course} from '../../helpers/factory';
+import reducerTest from '../../helpers/reducerTest';
 
-import {coursesLoaded, coursesFullyLoaded} from '../../../src/actions/ui';
 import {googleClassroom as states} from '../../helpers/referenceStates';
 
 test('snapshot export', t => {

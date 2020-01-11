@@ -1,8 +1,8 @@
-import {reduxForm} from 'redux-form/immutable';
 import i18next from 'i18next';
+import get from 'lodash-es/get';
 import isEmpty from 'lodash-es/isEmpty';
 import isNil from 'lodash-es/isNil';
-import get from 'lodash-es/get';
+import {reduxForm} from 'redux-form/immutable';
 
 import AssignmentCreatorFormComponent from '../components/AssignmentCreatorForm';
 

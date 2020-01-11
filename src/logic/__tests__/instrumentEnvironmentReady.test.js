@@ -1,7 +1,7 @@
 import mixpanel from 'mixpanel-browser';
 
-import {makeInstrumentEnvironmentReady} from '../instrumentEnvironmentReady';
 import {editorReady} from '../../actions/instrumentation';
+import {makeInstrumentEnvironmentReady} from '../instrumentEnvironmentReady';
 
 import {makeTestLogic} from './helpers';
 

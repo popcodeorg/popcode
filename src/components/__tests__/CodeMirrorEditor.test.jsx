@@ -1,17 +1,17 @@
 import CodeMirror from 'codemirror';
-import isNil from 'lodash-es/isNil';
 import find from 'lodash-es/find';
 import findLast from 'lodash-es/findLast';
+import isNil from 'lodash-es/isNil';
 import last from 'lodash-es/last';
 import React from 'react';
-import ShallowRenderer from 'react-test-renderer/shallow';
 import TestRenderer, {act} from 'react-test-renderer';
+import ShallowRenderer from 'react-test-renderer/shallow';
 
-import CodeMirrorEditor from '../CodeMirrorEditor';
 import {EditorLocation} from '../../records';
+import CodeMirrorEditor from '../CodeMirrorEditor';
 
-import {errorFactory} from '@factories/records/Error';
 import {change as changeFactory} from '@factories/packages/codemirror';
+import {errorFactory} from '@factories/records/Error';
 
 const DEFAULT_PROPS = {
   errors: [],

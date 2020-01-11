@@ -1,15 +1,15 @@
+import get from 'lodash-es/get';
 import {
+  applyMiddleware,
   compose as composeWithoutDevTools,
   createStore,
-  applyMiddleware,
 } from 'redux';
-import createSagaMiddleware from 'redux-saga';
 import {createLogicMiddleware} from 'redux-logic';
-import get from 'lodash-es/get';
+import createSagaMiddleware from 'redux-saga';
 
+import rootLogic from './logic';
 import reducers from './reducers';
 import rootSaga from './sagas';
-import rootLogic from './logic';
 import {bugsnagClient} from './util/bugsnag';
 
 const compose = get(

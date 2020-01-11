@@ -7,8 +7,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
 import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import React from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import PreviewFrame from './PreviewFrame';
 

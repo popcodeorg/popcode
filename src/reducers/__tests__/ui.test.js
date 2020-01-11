@@ -1,55 +1,55 @@
 import Immutable from 'immutable';
 import reduce from 'lodash-es/reduce';
 
-import {Notification, EditorLocation} from '../../records';
-import reducer from '../ui';
 import {
-  startEditingInstructions,
-  cancelEditingInstructions,
-  updateProjectInstructions,
-  toggleTopBarMenu,
-  userLoggedOut,
-  linkGithubIdentity,
-  unlinkGithubIdentity,
   applicationLoaded,
+  cancelEditingInstructions,
+  clearConsoleEntries,
+  linkGithubIdentity,
   projectCompilationFailed,
   projectCompiled,
-  clearConsoleEntries,
+  startEditingInstructions,
+  toggleTopBarMenu,
+  unlinkGithubIdentity,
+  updateProjectInstructions,
+  userLoggedOut,
 } from '../../actions';
 import {
-  gistNotFound,
-  gistImportError,
-  changeCurrentProject,
-  updateProjectSource,
-} from '../../actions/projects';
+  assignmentCreated,
+  assignmentNotCreated,
+} from '../../actions/assignments';
 import {
-  snapshotCreated,
-  projectExportNotDisplayed,
   projectExportError,
+  projectExportNotDisplayed,
+  snapshotCreated,
   snapshotExportError,
   snapshotImportError,
   snapshotNotFound,
 } from '../../actions/clients';
 import {
-  userDoneTyping,
-  showSaveIndicator,
-  hideSaveIndicator,
-  focusLine,
-  editorFocusedRequestedLine,
-  notificationTriggered,
-  userDismissedNotification,
-  openAssignmentCreator,
+  changeCurrentProject,
+  gistImportError,
+  gistNotFound,
+  updateProjectSource,
+} from '../../actions/projects';
+import {
   closeAssignmentCreator,
-  toggleArchivedView,
+  editorFocusedRequestedLine,
+  focusLine,
+  hideSaveIndicator,
+  notificationTriggered,
+  openAssignmentCreator,
+  showSaveIndicator,
   startDragColumnDivider,
   stopDragColumnDivider,
+  toggleArchivedView,
+  userDismissedNotification,
+  userDoneTyping,
 } from '../../actions/ui';
 import {identityLinked, linkIdentityFailed} from '../../actions/user';
 import {EmptyGistError} from '../../clients/github';
-import {
-  assignmentCreated,
-  assignmentNotCreated,
-} from '../../actions/assignments';
+import {EditorLocation, Notification} from '../../records';
+import reducer from '../ui';
 
 const GIST_ID = '1234';
 

@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
-import LoginPrompt from '../components/LoginPrompt';
 import {closeLoginPrompt, logIn} from '../actions';
+import LoginPrompt from '../components/LoginPrompt';
 import {isLoginPromptOpen} from '../selectors';
 
 function mapStateToProps(state) {

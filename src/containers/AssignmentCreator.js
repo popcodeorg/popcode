@@ -1,18 +1,17 @@
 import {connect} from 'react-redux';
 
+import {closeAssignmentCreator, createAssignment} from '../actions';
+import AssignmentCreator from '../components/AssignmentCreator';
 import {AssignmentState} from '../enums';
 
-import {closeAssignmentCreator, createAssignment} from '../actions';
 import {
   getCourses,
-  isAssignmentCreatorOpen,
-  isAssignmentExportInProgress,
   getCurrentProjectPreview,
   getParsedDate,
+  isAssignmentCreatorOpen,
+  isAssignmentExportInProgress,
   makeIsRemoteCollectionFullyLoaded,
 } from '../selectors';
-
-import AssignmentCreator from '../components/AssignmentCreator';
 
 const areCoursesLoaded = makeIsRemoteCollectionFullyLoaded([
   'googleClassroom',

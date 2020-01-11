@@ -1,12 +1,12 @@
 import {all, call, put, select, takeEvery} from 'redux-saga/effects';
 
 import {
-  getCourses,
   createClassroomAssignment,
+  getCourses,
 } from '../clients/googleClassroom';
 import {createProjectSnapshot} from '../clients/firebase';
 import {assignmentCreated, assignmentNotCreated} from '../actions/assignments';
-import {coursesLoaded, coursesFullyLoaded} from '../actions/ui';
+import {coursesFullyLoaded, coursesLoaded} from '../actions/ui';
 import {getCourse, getCurrentProject} from '../selectors';
 import {generateTextPreview} from '../util/compileProject';
 import {createSnapshotUrl} from '../util/exportUrls';

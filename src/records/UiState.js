@@ -1,4 +1,4 @@
-import {Record, Map} from 'immutable';
+import {Map, Record} from 'immutable';
 
 export default Record(
   {

@@ -12,18 +12,18 @@ import {
 } from '../../helpers/factory';
 
 import manageUserState, {
-  handleInitialAuth,
   handleAuthChange,
   handleAuthError,
+  handleInitialAuth,
 } from '../../../src/sagas/manageUserState';
 
 import {
   getSessionUid,
   loadCredentialsForUser,
+  saveUserCredential,
   signIn,
   signOut,
   startSessionHeartbeat,
-  saveUserCredential,
 } from '../../../src/clients/firebase';
 
 import {

@@ -1,11 +1,11 @@
 import {createLogic} from 'redux-logic';
 
-import {linkGithub, saveCredentialForCurrentUser} from '../clients/firebase';
 import {
   accountMigrationNeeded,
   identityLinked,
   linkIdentityFailed,
 } from '../actions/user';
+import {linkGithub, saveCredentialForCurrentUser} from '../clients/firebase';
 import {getProfileForAuthenticatedUser} from '../clients/github';
 import {bugsnagClient} from '../util/bugsnag';
 
