@@ -1,3 +1,3 @@
 export default function isArchivedViewOpen(state) {
-  return state.getIn(['ui', 'archivedViewOpen']);
+  return state.getIn(['ui', 'isArchivedViewOpen']);
 }
