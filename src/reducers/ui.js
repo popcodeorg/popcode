@@ -1,8 +1,10 @@
-import {Map} from 'immutable';
+import Immutable from 'immutable';
 
 import handleActions from 'redux-actions/lib/handleActions';
+import {combineReducers} from 'redux-immutable';
+import constant from 'lodash-es/constant';
 
-import {identity} from 'rxjs';
+import handleAction from 'redux-actions/lib/handleAction';
 
 import {EditorLocation, Notification, UiState} from '../records';
 import {
@@ -55,212 +57,241 @@ import {
 } from '../actions/clients';
 import {assignmentCreated, assignmentNotCreated} from '../actions/assignments';
 
-const defaultState = new UiState();
-
-function addNotification(state, type, severity, metadata = {}) {
-  return state.setIn(
-    ['notifications', type],
-    new Notification({type, severity, metadata: new Map(metadata)}),
+function addNotification(notifications, type, severity, metadata = {}) {
+  return notifications.set(
+    type,
+    new Notification({type, severity, metadata: new Immutable.Map(metadata)}),
   );
 }
 
-function dismissNotification(state, type) {
-  return state.update('notifications', notifications =>
-    notifications.delete(type),
-  );
+function dismissNotification(notifications, type) {
+  return notifications.delete(type);
 }
 
-function closeTopBarMenu(state, menuToClose) {
-  return state.update('openTopBarMenu', menu =>
-    menu === menuToClose ? null : menu,
-  );
+function closeTopBarMenu(menu, menuToClose) {
+  return menu === menuToClose ? null : menu;
 }
 
-export default handleActions(
+export default combineReducers(
   {
-    [changeCurrentProject]: state =>
-      state
-        .set('isEditingInstructions', false)
-        .update('openTopBarMenu', menu =>
-          menu === 'projectPicker' ? null : menu,
-        )
-        .set('archivedViewOpen', false),
-
-    [projectCreated]: state => state.set('isEditingInstructions', false),
-
-    [updateProjectSource]: state =>
-      state
-        .set('isTyping', true)
-        .deleteIn(['notifications', 'snapshot-created']),
-
-    [userDoneTyping]: state => state.set('isTyping', false),
-
-    [focusLine]: (state, {payload: {component, line, column}}) =>
-      state.set(
-        'requestedFocusedLine',
-        new EditorLocation({component, line, column}),
-      ),
-
-    [clearConsoleEntries]: state =>
-      state.set(
-        'requestedFocusedLine',
-        new EditorLocation({
-          component: 'console',
-          line: 0,
-          column: 0,
-        }),
-      ),
-
-    [editorFocusedRequestedLine]: state =>
-      state.set('requestedFocusedLine', null),
-
-    [startDragColumnDivider]: state =>
-      state.set('isDraggingColumnDivider', true),
-
-    [stopDragColumnDivider]: state =>
-      state.set('isDraggingColumnDivider', false),
-
-    [gistNotFound]: (state, {payload: {gistId}}) =>
-      addNotification(state, 'gist-import-not-found', 'error', {
-        gistId,
-      }),
-
-    [gistImportError]: (state, {payload: {gistId}}) =>
-      addNotification(state, 'gist-import-error', 'error', {
-        gistId,
-      }),
-
-    [notificationTriggered]: (state, {payload: {type, severity, metadata}}) =>
-      addNotification(state, type, severity, metadata),
-
-    [userDismissedNotification]: (state, {payload: {type}}) =>
-      dismissNotification(state, type),
-
-    [updateNotificationMetadata]: (state, {payload}) =>
-      state.updateIn(['notifications', payload.type, 'metadata'], metadata =>
-        metadata.merge(payload.metadata),
-      ),
-
-    [userLoggedOut]: state => closeTopBarMenu(state, 'currentUser'),
-    [linkGithubIdentity]: state => closeTopBarMenu(state, 'currentUser'),
-    [unlinkGithubIdentity]: state => closeTopBarMenu(state, 'currentUser'),
-
-    [identityLinked]: state =>
-      addNotification(state, 'identity-unlinked', 'notice'),
-
-    [snapshotCreated]: (state, {payload: snapshotKey}) =>
-      addNotification(state, 'snapshot-created', 'notice', {
-        snapshotKey,
-      }),
-
-    [applicationLoaded]: (state, {payload: {isExperimental}}) => {
-      if (isExperimental) {
-        return state.set('isExperimental', true);
-      }
-      return state;
-    },
-
-    [snapshotExportError]: state =>
-      addNotification(state, 'snapshot-export-error', 'error'),
-
-    [snapshotImportError]: state =>
-      addNotification(state, 'snapshot-import-error', 'error'),
-
-    [snapshotNotFound]: state =>
-      addNotification(state, 'snapshot-not-found', 'error'),
-
-    [toggleEditorTextSize]: state =>
-      state.update('isTextSizeLarge', isTextSizeLarge => !isTextSizeLarge),
-
-    [toggleTopBarMenu]: (state, {payload: menuToToggle}) =>
-      state.update('openTopBarMenu', menu =>
-        menu === menuToToggle ? null : menuToToggle,
-      ),
-
-    [closeTopBarMenu]: (state, {payload: menuToClose}) =>
-      state.update('openTopBarMenu', menu =>
-        menu === menuToClose ? null : menu,
-      ),
-
-    [projectExportNotDisplayed]: (state, {payload}) =>
-      addNotification(state, 'project-export-complete', 'notice', payload),
-
-    [projectExportError]: (state, {payload}) => {
-      if (payload.name === 'EmptyGistError') {
-        return addNotification(state, 'empty-gist', 'error');
-      }
-      return addNotification(
-        state,
-        `${payload.exportType}-export-error`,
-        'error',
-        payload,
-      );
-    },
-
-    [projectCompilationFailed]: state =>
-      addNotification(state, 'project-compilation-failed', 'error'),
-
-    [projectCompiled]: state =>
-      dismissNotification(state, 'project-compilation-failed'),
-
-    [startEditingInstructions]: state =>
-      state.set('isEditingInstructions', true),
-
-    [cancelEditingInstructions]: state =>
-      state.set('isEditingInstructions', false),
-
-    [updateProjectInstructions]: state =>
-      state.set('isEditingInstructions', false),
-
-    [showSaveIndicator]: state => state.set('saveIndicatorShown', true),
-
-    [hideSaveIndicator]: state => state.set('saveIndicatorShown', false),
-
-    [toggleArchivedView]: state =>
-      state.update('archivedViewOpen', archivedViewOpen => !archivedViewOpen),
-
-    [identityLinked]: (
-      state,
+    archivedViewOpen: handleActions(
       {
-        payload: {
-          credential: {providerId: provider},
-        },
+        [changeCurrentProject]: constant(false),
+        [toggleArchivedView]: archivedViewOpen => !archivedViewOpen,
       },
-    ) =>
-      addNotification(state, 'identity-linked', 'notice', {
-        provider,
-      }),
+      false,
+    ),
 
-    [linkIdentityFailed]: state =>
-      addNotification(state, 'link-identity-failed', 'error'),
+    isAssignmentCreatorOpen: handleActions(
+      {
+        [openAssignmentCreator]: constant(true),
 
-    [openAssignmentCreator]: state =>
-      state.setIn(['isAssignmentCreatorOpen'], true),
+        [closeAssignmentCreator]: constant(false),
 
-    [closeAssignmentCreator]: state =>
-      state.setIn(['isAssignmentCreatorOpen'], false),
+        [assignmentCreated]: constant(false),
+        [assignmentNotCreated]: constant(false),
+      },
+      false,
+    ),
 
-    [assignmentCreated]: (state, {payload: {assignment}}) =>
-      addNotification(
-        state,
-        'project-export-complete',
-        'notice',
-        assignment,
-      ).set('isAssignmentCreatorOpen', false),
+    isDraggingColumnDivider: handleActions(
+      {
+        [startDragColumnDivider]: constant(true),
+        [stopDragColumnDivider]: constant(false),
+      },
+      false,
+    ),
 
-    [assignmentNotCreated]: state =>
-      addNotification(state, 'assignment-not-created', 'error').setIn(
-        ['isAssignmentCreatorOpen'],
-        false,
-      ),
+    isEditingInstructions: handleActions(
+      {
+        [cancelEditingInstructions]: constant(false),
+        [changeCurrentProject]: constant(false),
+        [projectCreated]: constant(false),
+        [startEditingInstructions]: constant(true),
+        [updateProjectInstructions]: constant(false),
+      },
+      false,
+    ),
 
-    [gapiClientUnavailable]: state =>
-      addNotification(state, 'gapi-client-unavailable', 'error'),
+    isExperimental: handleActions(
+      {
+        [applicationLoaded]: (state, {payload: {isExperimental}}) =>
+          Boolean(isExperimental),
+      },
+      false,
+    ),
 
-    [openLoginPrompt]: state => state.set('isLoginPromptOpen', true),
+    isLoginPromptOpen: handleActions(
+      {
+        [openLoginPrompt]: constant(true),
+        [closeLoginPrompt]: constant(false),
+        [logIn]: constant(false),
+      },
+      false,
+    ),
 
-    [closeLoginPrompt]: state => state.set('isLoginPromptOpen', false),
-    [logIn]: state => state.set('isLoginPromptOpen', false),
+    isTextSizeLarge: handleAction(
+      toggleEditorTextSize,
+      isTextSizeLarge => !isTextSizeLarge,
+      false,
+    ),
+
+    isTyping: handleActions(
+      {
+        [updateProjectSource]: constant(true),
+        [userDoneTyping]: constant(false),
+      },
+      false,
+    ),
+
+    notifications: handleActions(
+      {
+        [assignmentCreated]: (state, {payload: {assignment}}) =>
+          addNotification(
+            state,
+            'project-export-complete',
+            'notice',
+            assignment,
+          ),
+
+        [assignmentNotCreated]: notifications =>
+          addNotification(
+            notifications,
+            'assignment-not-created',
+            'error',
+          ).setIn(['isAssignmentCreatorOpen'], false),
+
+        [gapiClientUnavailable]: notifications =>
+          addNotification(notifications, 'gapi-client-unavailable', 'error'),
+
+        [gistNotFound]: (notifications, {payload: {gistId}}) =>
+          addNotification(notifications, 'gist-import-not-found', 'error', {
+            gistId,
+          }),
+
+        [gistImportError]: (notifications, {payload: {gistId}}) =>
+          addNotification(notifications, 'gist-import-error', 'error', {
+            gistId,
+          }),
+
+        [identityLinked]: (
+          notifications,
+          {
+            payload: {
+              credential: {providerId: provider},
+            },
+          },
+        ) =>
+          addNotification(notifications, 'identity-linked', 'notice', {
+            provider,
+          }),
+
+        [linkIdentityFailed]: notifications =>
+          addNotification(notifications, 'link-identity-failed', 'error'),
+
+        [notificationTriggered]: (
+          notifications,
+          {payload: {type, severity, metadata}},
+        ) => addNotification(notifications, type, severity, metadata),
+
+        [projectCompilationFailed]: notifications =>
+          addNotification(notifications, 'project-compilation-failed', 'error'),
+
+        [projectCompiled]: notifications =>
+          dismissNotification(notifications, 'project-compilation-failed'),
+
+        [projectExportError]: (notifications, {payload}) => {
+          if (payload.name === 'EmptyGistError') {
+            return addNotification(notifications, 'empty-gist', 'error');
+          }
+          return addNotification(
+            notifications,
+            `${payload.exportType}-export-error`,
+            'error',
+            payload,
+          );
+        },
+
+        [projectExportNotDisplayed]: (notifications, {payload}) =>
+          addNotification(
+            notifications,
+            'project-export-complete',
+            'notice',
+            payload,
+          ),
+
+        [snapshotCreated]: (notifications, {payload: snapshotKey}) =>
+          addNotification(notifications, 'snapshot-created', 'notice', {
+            snapshotKey,
+          }),
+
+        [snapshotExportError]: notifications =>
+          addNotification(notifications, 'snapshot-export-error', 'error'),
+
+        [snapshotImportError]: notifications =>
+          addNotification(notifications, 'snapshot-import-error', 'error'),
+
+        [snapshotNotFound]: notifications =>
+          addNotification(notifications, 'snapshot-not-found', 'error'),
+
+        [updateNotificationMetadata]: (notifications, {payload}) =>
+          notifications.updateIn(
+            ['notifications', payload.type, 'metadata'],
+            metadata => metadata.merge(payload.metadata),
+          ),
+
+        [updateProjectSource]: notifications =>
+          notifications.delete('snapshot-created'),
+
+        [userDismissedNotification]: (notifications, {payload: {type}}) =>
+          dismissNotification(notifications, type),
+      },
+      new Immutable.Map(),
+    ),
+
+    openTopBarMenu: handleActions(
+      {
+        [changeCurrentProject]: menu => closeTopBarMenu(menu, 'projectPicker'),
+
+        [closeTopBarMenu]: (menu, {payload: menuToClose}) =>
+          menu === menuToClose ? null : menu,
+
+        [linkGithubIdentity]: menu => closeTopBarMenu(menu, 'currentUser'),
+
+        [toggleTopBarMenu]: (menu, {payload: menuToToggle}) =>
+          menu === menuToToggle ? null : menuToToggle,
+
+        [unlinkGithubIdentity]: menu => closeTopBarMenu(menu, 'currentUser'),
+
+        [userLoggedOut]: menu => closeTopBarMenu(menu, 'currentUser'),
+      },
+      null,
+    ),
+
+    requestedFocusedLine: handleActions(
+      {
+        [clearConsoleEntries]: () =>
+          new EditorLocation({
+            component: 'console',
+            line: 0,
+            column: 0,
+          }),
+
+        [editorFocusedRequestedLine]: constant(null),
+
+        [focusLine]: (_, {payload: {component, line, column}}) =>
+          new EditorLocation({component, line, column}),
+      },
+      null,
+    ),
+
+    saveIndicatorShown: handleActions(
+      {
+        [hideSaveIndicator]: constant(false),
+        [showSaveIndicator]: constant(true),
+      },
+      false,
+    ),
   },
-  defaultState,
+  UiState,
 );
