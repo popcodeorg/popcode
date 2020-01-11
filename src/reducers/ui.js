@@ -1,6 +1,59 @@
 import {Map} from 'immutable';
 
+import handleActions from 'redux-actions/lib/handleActions';
+
+import {identity} from 'rxjs';
+
 import {EditorLocation, Notification, UiState} from '../records';
+import {
+  changeCurrentProject,
+  clearConsoleEntries,
+  userLoggedOut,
+  linkGithubIdentity,
+  unlinkGithubIdentity,
+  applicationLoaded,
+  projectCompilationFailed,
+  projectCompiled,
+} from '../actions';
+import {
+  projectCreated,
+  updateProjectSource,
+  gistNotFound,
+  gistImportError,
+  updateProjectInstructions,
+} from '../actions/projects';
+import {
+  userDoneTyping,
+  focusLine,
+  editorFocusedRequestedLine,
+  startDragColumnDivider,
+  stopDragColumnDivider,
+  notificationTriggered,
+  userDismissedNotification,
+  updateNotificationMetadata,
+  toggleEditorTextSize,
+  toggleTopBarMenu,
+  startEditingInstructions,
+  cancelEditingInstructions,
+  showSaveIndicator,
+  hideSaveIndicator,
+  toggleArchivedView,
+  openAssignmentCreator,
+  closeAssignmentCreator,
+  openLoginPrompt,
+  closeLoginPrompt,
+} from '../actions/ui';
+import {identityLinked, linkIdentityFailed, logIn} from '../actions/user';
+import {
+  snapshotCreated,
+  snapshotExportError,
+  snapshotImportError,
+  snapshotNotFound,
+  projectExportNotDisplayed,
+  projectExportError,
+  gapiClientUnavailable,
+} from '../actions/clients';
+import {assignmentCreated, assignmentNotCreated} from '../actions/assignments';
 
 const defaultState = new UiState();
 
@@ -23,214 +76,191 @@ function closeTopBarMenu(state, menuToClose) {
   );
 }
 
-export default function ui(stateIn, action) {
-  let state = stateIn;
-  if (state === undefined) {
-    state = defaultState;
-  }
-
-  switch (action.type) {
-    case 'CHANGE_CURRENT_PROJECT':
-      return state
+export default handleActions(
+  {
+    [changeCurrentProject]: state =>
+      state
         .set('isEditingInstructions', false)
         .update('openTopBarMenu', menu =>
           menu === 'projectPicker' ? null : menu,
         )
-        .set('archivedViewOpen', false);
+        .set('archivedViewOpen', false),
 
-    case 'PROJECT_CREATED':
-      return state.set('isEditingInstructions', false);
+    [projectCreated]: state => state.set('isEditingInstructions', false),
 
-    case 'UPDATE_PROJECT_SOURCE':
-      return state
+    [updateProjectSource]: state =>
+      state
         .set('isTyping', true)
-        .deleteIn(['notifications', 'snapshot-created']);
+        .deleteIn(['notifications', 'snapshot-created']),
 
-    case 'USER_DONE_TYPING':
-      return state.set('isTyping', false);
+    [userDoneTyping]: state => state.set('isTyping', false),
 
-    case 'FOCUS_LINE':
-      return state.set(
+    [focusLine]: (state, {payload: {component, line, column}}) =>
+      state.set(
         'requestedFocusedLine',
-        new EditorLocation({
-          component: action.payload.component,
-          line: action.payload.line,
-          column: action.payload.column,
-        }),
-      );
+        new EditorLocation({component, line, column}),
+      ),
 
-    case 'CLEAR_CONSOLE_ENTRIES':
-      return state.set(
+    [clearConsoleEntries]: state =>
+      state.set(
         'requestedFocusedLine',
         new EditorLocation({
           component: 'console',
           line: 0,
           column: 0,
         }),
-      );
+      ),
 
-    case 'EDITOR_FOCUSED_REQUESTED_LINE':
-      return state.set('requestedFocusedLine', null);
+    [editorFocusedRequestedLine]: state =>
+      state.set('requestedFocusedLine', null),
 
-    case 'START_DRAG_COLUMN_DIVIDER':
-      return state.set('isDraggingColumnDivider', true);
+    [startDragColumnDivider]: state =>
+      state.set('isDraggingColumnDivider', true),
 
-    case 'STOP_DRAG_COLUMN_DIVIDER':
-      return state.set('isDraggingColumnDivider', false);
+    [stopDragColumnDivider]: state =>
+      state.set('isDraggingColumnDivider', false),
 
-    case 'GIST_NOT_FOUND':
-      return addNotification(state, 'gist-import-not-found', 'error', {
-        gistId: action.payload.gistId,
-      });
+    [gistNotFound]: (state, {payload: {gistId}}) =>
+      addNotification(state, 'gist-import-not-found', 'error', {
+        gistId,
+      }),
 
-    case 'GIST_IMPORT_ERROR':
-      return addNotification(state, 'gist-import-error', 'error', {
-        gistId: action.payload.gistId,
-      });
+    [gistImportError]: (state, {payload: {gistId}}) =>
+      addNotification(state, 'gist-import-error', 'error', {
+        gistId,
+      }),
 
-    case 'NOTIFICATION_TRIGGERED':
-      return addNotification(
-        state,
-        action.payload.type,
-        action.payload.severity,
-        action.payload.metadata,
-      );
+    [notificationTriggered]: (state, {payload: {type, severity, metadata}}) =>
+      addNotification(state, type, severity, metadata),
 
-    case 'USER_DISMISSED_NOTIFICATION':
-      return dismissNotification(state, action.payload.type);
+    [userDismissedNotification]: (state, {payload: {type}}) =>
+      dismissNotification(state, type),
 
-    case 'UPDATE_NOTIFICATION_METADATA':
-      return state.updateIn(
-        ['notifications', action.payload.type, 'metadata'],
-        metadata => metadata.merge(action.payload.metadata),
-      );
+    [updateNotificationMetadata]: (state, {payload}) =>
+      state.updateIn(['notifications', payload.type, 'metadata'], metadata =>
+        metadata.merge(payload.metadata),
+      ),
 
-    case 'USER_LOGGED_OUT':
-    case 'LINK_GITHUB_IDENTITY':
-    case 'UNLINK_GITHUB_IDENTITY':
-      return closeTopBarMenu(state, 'currentUser');
+    [userLoggedOut]: state => closeTopBarMenu(state, 'currentUser'),
+    [linkGithubIdentity]: state => closeTopBarMenu(state, 'currentUser'),
+    [unlinkGithubIdentity]: state => closeTopBarMenu(state, 'currentUser'),
 
-    case 'IDENTITY_UNLINKED':
-      return addNotification(state, 'identity-unlinked', 'notice');
+    [identityLinked]: state =>
+      addNotification(state, 'identity-unlinked', 'notice'),
 
-    case 'SNAPSHOT_CREATED':
-      return addNotification(state, 'snapshot-created', 'notice', {
-        snapshotKey: action.payload,
-      });
+    [snapshotCreated]: (state, {payload: snapshotKey}) =>
+      addNotification(state, 'snapshot-created', 'notice', {
+        snapshotKey,
+      }),
 
-    case 'APPLICATION_LOADED':
-      if (action.payload.isExperimental) {
+    [applicationLoaded]: (state, {payload: {isExperimental}}) => {
+      if (isExperimental) {
         return state.set('isExperimental', true);
       }
       return state;
+    },
 
-    case 'SNAPSHOT_EXPORT_ERROR':
-      return addNotification(state, 'snapshot-export-error', 'error');
+    [snapshotExportError]: state =>
+      addNotification(state, 'snapshot-export-error', 'error'),
 
-    case 'SNAPSHOT_IMPORT_ERROR':
-      return addNotification(state, 'snapshot-import-error', 'error');
+    [snapshotImportError]: state =>
+      addNotification(state, 'snapshot-import-error', 'error'),
 
-    case 'SNAPSHOT_NOT_FOUND':
-      return addNotification(state, 'snapshot-not-found', 'error');
+    [snapshotNotFound]: state =>
+      addNotification(state, 'snapshot-not-found', 'error'),
 
-    case 'TOGGLE_EDITOR_TEXT_SIZE':
-      return state.update(
-        'isTextSizeLarge',
-        isTextSizeLarge => !isTextSizeLarge,
-      );
+    [toggleEditorTextSize]: state =>
+      state.update('isTextSizeLarge', isTextSizeLarge => !isTextSizeLarge),
 
-    case 'TOGGLE_TOP_BAR_MENU':
-      return state.update('openTopBarMenu', menu =>
-        menu === action.payload ? null : action.payload,
-      );
+    [toggleTopBarMenu]: (state, {payload: menuToToggle}) =>
+      state.update('openTopBarMenu', menu =>
+        menu === menuToToggle ? null : menuToToggle,
+      ),
 
-    case 'CLOSE_TOP_BAR_MENU':
-      return state.update('openTopBarMenu', menu =>
-        menu === action.payload ? null : menu,
-      );
+    [closeTopBarMenu]: (state, {payload: menuToClose}) =>
+      state.update('openTopBarMenu', menu =>
+        menu === menuToClose ? null : menu,
+      ),
 
-    case 'PROJECT_EXPORT_NOT_DISPLAYED':
-      return addNotification(
-        state,
-        'project-export-complete',
-        'notice',
-        action.payload,
-      );
+    [projectExportNotDisplayed]: (state, {payload}) =>
+      addNotification(state, 'project-export-complete', 'notice', payload),
 
-    case 'PROJECT_EXPORT_ERROR':
-      if (action.payload.name === 'EmptyGistError') {
+    [projectExportError]: (state, {payload}) => {
+      if (payload.name === 'EmptyGistError') {
         return addNotification(state, 'empty-gist', 'error');
       }
       return addNotification(
         state,
-        `${action.payload.exportType}-export-error`,
+        `${payload.exportType}-export-error`,
         'error',
-        action.payload,
+        payload,
       );
+    },
 
-    case 'PROJECT_COMPILATION_FAILED':
-      return addNotification(state, 'project-compilation-failed', 'error');
+    [projectCompilationFailed]: state =>
+      addNotification(state, 'project-compilation-failed', 'error'),
 
-    case 'PROJECT_COMPILED':
-      return dismissNotification(state, 'project-compilation-failed');
+    [projectCompiled]: state =>
+      dismissNotification(state, 'project-compilation-failed'),
 
-    case 'START_EDITING_INSTRUCTIONS':
-      return state.set('isEditingInstructions', true);
+    [startEditingInstructions]: state =>
+      state.set('isEditingInstructions', true),
 
-    case 'CANCEL_EDITING_INSTRUCTIONS':
-    case 'UPDATE_PROJECT_INSTRUCTIONS':
-      return state.set('isEditingInstructions', false);
+    [cancelEditingInstructions]: state =>
+      state.set('isEditingInstructions', false),
 
-    case 'SHOW_SAVE_INDICATOR':
-      return state.set('saveIndicatorShown', true);
+    [updateProjectInstructions]: state =>
+      state.set('isEditingInstructions', false),
 
-    case 'HIDE_SAVE_INDICATOR':
-      return state.set('saveIndicatorShown', false);
-    case 'TOGGLE_ARCHIVED_VIEW':
-      return state.update(
-        'archivedViewOpen',
-        archivedViewOpen => !archivedViewOpen,
-      );
+    [showSaveIndicator]: state => state.set('saveIndicatorShown', true),
 
-    case 'IDENTITY_LINKED':
-      return addNotification(state, 'identity-linked', 'notice', {
-        provider: action.payload.credential.providerId,
-      });
+    [hideSaveIndicator]: state => state.set('saveIndicatorShown', false),
 
-    case 'LINK_IDENTITY_FAILED':
-      return addNotification(state, 'link-identity-failed', 'error');
+    [toggleArchivedView]: state =>
+      state.update('archivedViewOpen', archivedViewOpen => !archivedViewOpen),
 
-    case 'OPEN_ASSIGNMENT_CREATOR':
-      return state.setIn(['isAssignmentCreatorOpen'], true);
+    [identityLinked]: (
+      state,
+      {
+        payload: {
+          credential: {providerId: provider},
+        },
+      },
+    ) =>
+      addNotification(state, 'identity-linked', 'notice', {
+        provider,
+      }),
 
-    case 'CLOSE_ASSIGNMENT_CREATOR':
-      return state.setIn(['isAssignmentCreatorOpen'], false);
+    [linkIdentityFailed]: state =>
+      addNotification(state, 'link-identity-failed', 'error'),
 
-    case 'ASSIGNMENT_CREATED':
-      return addNotification(
+    [openAssignmentCreator]: state =>
+      state.setIn(['isAssignmentCreatorOpen'], true),
+
+    [closeAssignmentCreator]: state =>
+      state.setIn(['isAssignmentCreatorOpen'], false),
+
+    [assignmentCreated]: (state, {payload: {assignment}}) =>
+      addNotification(
         state,
         'project-export-complete',
         'notice',
-        action.payload.assignment,
-      ).setIn(['isAssignmentCreatorOpen'], false);
+        assignment,
+      ).set('isAssignmentCreatorOpen', false),
 
-    case 'GAPI_CLIENT_UNAVAILABLE':
-      return addNotification(state, 'gapi-client-unavailable', 'error');
-
-    case 'ASSIGNMENT_NOT_CREATED':
-      return addNotification(state, 'assignment-not-created', 'error').setIn(
+    [assignmentNotCreated]: state =>
+      addNotification(state, 'assignment-not-created', 'error').setIn(
         ['isAssignmentCreatorOpen'],
         false,
-      );
+      ),
 
-    case 'OPEN_LOGIN_PROMPT':
-      return state.set('isLoginPromptOpen', true);
+    [gapiClientUnavailable]: state =>
+      addNotification(state, 'gapi-client-unavailable', 'error'),
 
-    case 'CLOSE_LOGIN_PROMPT':
-    case 'LOG_IN':
-      return state.set('isLoginPromptOpen', false);
+    [openLoginPrompt]: state => state.set('isLoginPromptOpen', true),
 
-    default:
-      return state;
-  }
-}
+    [closeLoginPrompt]: state => state.set('isLoginPromptOpen', false),
+    [logIn]: state => state.set('isLoginPromptOpen', false),
+  },
+  defaultState,
+);
