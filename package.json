@@ -194,7 +194,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/core": "7.8.0",
-    "@babel/preset-env": "7.8.0",
+    "@babel/preset-env": "7.8.2",
     "@bugsnag/js": "6.5.0",
     "@bugsnag/plugin-react": "6.5.0",
     "@fortawesome/fontawesome-svg-core": "1.2.26",
