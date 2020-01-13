@@ -30,6 +30,7 @@ export default createLogic({
             projectAttributes: analyzer,
           },
           dispatch,
+          getState,
         ),
     );
 

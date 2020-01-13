@@ -24,11 +24,12 @@ jest.mock('../../util/retryingFailedImports', () =>
 
 test('should validate project on change', async () => {
   const state = fromJS({
+    currentProject: {projectKey: '123'},
     projects: {
       123: {
         sources: {
           html: '',
-          css: '',
+          css: 'div {',
           javascript: '',
         },
       },

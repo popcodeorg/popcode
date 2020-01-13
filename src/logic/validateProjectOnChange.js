@@ -24,6 +24,7 @@ export default createLogic({
     await validateSource(
       {language, source: newValue, projectAttributes: analyzer},
       dispatch,
+      getState,
     );
     done();
   },
