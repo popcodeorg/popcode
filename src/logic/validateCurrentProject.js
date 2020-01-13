@@ -11,6 +11,7 @@ export default createLogic({
     'PROJECT_RESTORED_FROM_LAST_SESSION',
     'TOGGLE_LIBRARY',
   ],
+  latest: true,
   async process({getState}, dispatch, done) {
     const state = getState();
     const currentProject = getCurrentProject(state);

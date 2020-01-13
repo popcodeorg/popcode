@@ -1,40 +1,46 @@
 import validateProjectOnChange from '../validateProjectOnChange';
-
-import Analyzer from '../../analyzers';
-import validateSource from '../helpers/validateSource';
-import {getCurrentProject} from '../../selectors';
+import {validatedSource} from '../../actions/errors';
+import {updateProjectSource as updateProjectSourceAction} from '../../actions/projects';
+import {makeTestLogic} from './helpers';
+const {fromJS} = require('immutable');
 
 jest.mock('../../analyzers');
-jest.mock('../helpers/validateSource');
-jest.mock('../../selectors', () => ({
-  getCurrentProject: jest.fn(x => x),
-}));
 
-const dummyState = {};
+const mockValidationErrors = {
+  css: 'invalid CSS selector',
+  html: 'closing tag missing',
+};
+
+const mockValidate = jest.fn(x => mockValidationErrors);
+
+jest.mock('../../util/retryingFailedImports', () =>
+  jest.fn(x => ({
+    css: mockValidate,
+    html: mockValidate,
+    javascript: mockValidate,
+  })),
+);
 
 test('should validate project on change', async () => {
-  const language = 'html';
-  const newValue = 'dummy new value';
-  const dispatch = jest.fn();
-  const done = jest.fn();
-  await validateProjectOnChange.process(
-    {
-      getState: () => dummyState,
-      action: {payload: {language, newValue}},
+  const state = fromJS({
+    projects: {
+      123: {
+        sources: {
+          html: '',
+          css: '',
+          javascript: '',
+        },
+      },
     },
-    dispatch,
-    done,
+  });
+
+  const testLogic = makeTestLogic(validateProjectOnChange);
+  const dispatch = await testLogic(
+    updateProjectSourceAction('123', 'css', 'div {'),
+    {state},
   );
-  expect(getCurrentProject).toHaveBeenCalledWith(dummyState);
-  const analyzerPayload = getCurrentProject(dummyState);
-  expect(Analyzer).toHaveBeenCalledWith(analyzerPayload);
-  expect(validateSource).toHaveBeenCalledWith(
-    {
-      language,
-      source: newValue,
-      projectAttributes: new Analyzer(getCurrentProject(dummyState)),
-    },
-    dispatch,
+
+  expect(dispatch).toHaveBeenCalledWith(
+    validatedSource('css', mockValidationErrors),
   );
-  expect(done).toHaveBeenCalled();
 });
