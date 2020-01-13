@@ -10,9 +10,12 @@ function importValidations() {
   );
 }
 
-export default async ({language, source, projectAttributes}, dispatch) => {
+export default async function validateSource(
+  {language, source, projectAttributes},
+  dispatch,
+) {
   const validations = await importValidations();
   const validate = validations[language];
   const validationErrors = await validate(source, projectAttributes);
-  await dispatch(validatedSource(language, validationErrors));
-};
+  dispatch(validatedSource(language, validationErrors));
+}

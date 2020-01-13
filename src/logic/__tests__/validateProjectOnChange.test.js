@@ -1,8 +1,10 @@
+import {fromJS} from 'immutable';
+
 import validateProjectOnChange from '../validateProjectOnChange';
 import {validatedSource} from '../../actions/errors';
 import {updateProjectSource as updateProjectSourceAction} from '../../actions/projects';
+
 import {makeTestLogic} from './helpers';
-const {fromJS} = require('immutable');
 
 jest.mock('../../analyzers');
 
@@ -11,10 +13,10 @@ const mockValidationErrors = {
   html: 'closing tag missing',
 };
 
-const mockValidate = jest.fn(x => mockValidationErrors);
+const mockValidate = jest.fn(() => mockValidationErrors);
 
 jest.mock('../../util/retryingFailedImports', () =>
-  jest.fn(x => ({
+  jest.fn(() => ({
     css: mockValidate,
     html: mockValidate,
     javascript: mockValidate,

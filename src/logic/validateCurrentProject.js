@@ -1,6 +1,9 @@
 import {createLogic} from 'redux-logic';
+import map from 'lodash-es/map';
+
 import Analyzer from '../analyzers';
 import {getCurrentProject} from '../selectors';
+
 import validateSource from './helpers/validateSource';
 
 export default createLogic({
@@ -17,16 +20,19 @@ export default createLogic({
     const currentProject = getCurrentProject(state);
     const analyzer = new Analyzer(currentProject);
 
-    const validatePromises = [];
-    for (const language of Reflect.ownKeys(currentProject.sources)) {
-      const source = currentProject.sources[language];
-      validatePromises.push(
+    const validatePromises = map(
+      Reflect.ownKeys(currentProject.sources),
+      language =>
         validateSource(
-          {language, source, projectAttributes: analyzer},
+          {
+            language,
+            source: currentProject.sources[language],
+            projectAttributes: analyzer,
+          },
           dispatch,
         ),
-      );
-    }
+    );
+
     await Promise.all(validatePromises);
     done();
   },

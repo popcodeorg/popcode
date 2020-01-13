@@ -1,6 +1,8 @@
 import {createLogic} from 'redux-logic';
+
 import Analyzer from '../analyzers';
 import {getCurrentProject} from '../selectors';
+
 import validateSource from './helpers/validateSource';
 
 export default createLogic({
