@@ -8,18 +8,17 @@ import {makeTestLogic} from './helpers';
 
 jest.mock('../../analyzers');
 
-const mockValidationErrors = {
-  css: 'invalid CSS selector',
-  html: 'closing tag missing',
-};
-
-const mockValidate = jest.fn(() => mockValidationErrors);
+const mockCssValidationErrors = [
+  {
+    text: 'You have a starting { but no ending } to go with it.',
+  },
+];
 
 jest.mock('../../util/retryingFailedImports', () =>
   jest.fn(() => ({
-    css: mockValidate,
-    html: mockValidate,
-    javascript: mockValidate,
+    css: jest.fn(() => mockCssValidationErrors),
+    html: jest.fn(() => []),
+    javascript: jest.fn(() => []),
   })),
 );
 
@@ -43,6 +42,6 @@ test('should validate project on change', async () => {
   );
 
   expect(dispatch).toHaveBeenCalledWith(
-    validatedSource('css', mockValidationErrors),
+    validatedSource('css', mockCssValidationErrors),
   );
 });
