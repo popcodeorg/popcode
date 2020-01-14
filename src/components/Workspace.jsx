@@ -1,34 +1,33 @@
 import {faInfoCircle, faPenSquare} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import React, {Suspense} from 'react';
-import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import {DraggableCore} from 'react-draggable';
+import classnames from 'classnames';
+import i18next from 'i18next';
 import bindAll from 'lodash-es/bindAll';
 import clone from 'lodash-es/clone';
+import get from 'lodash-es/get';
 import includes from 'lodash-es/includes';
 import isNull from 'lodash-es/isNull';
-import get from 'lodash-es/get';
 import partial from 'lodash-es/partial';
 import some from 'lodash-es/some';
-import i18next from 'i18next';
-import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import React, {Suspense} from 'react';
+import {DraggableCore} from 'react-draggable';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import prefix from '../services/inlineStylePrefixer';
-import {LANGUAGES} from '../util/editor';
-import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
 import {dehydrateProject} from '../clients/localStorage';
-
-import {isPristineProject} from '../util/projectUtils';
 
 import AccountMigration from '../containers/AccountMigration';
 import AssignmentCreator from '../containers/AssignmentCreator';
-import TopBar from '../containers/TopBar';
-import Instructions from '../containers/Instructions';
-import NotificationList from '../containers/NotificationList';
 import EditorsColumn from '../containers/EditorsColumn';
-import LoginPrompt from '../containers/LoginPrompt';
+import Instructions from '../containers/Instructions';
 import KeyboardHandler from '../containers/KeyboardHandler';
+import LoginPrompt from '../containers/LoginPrompt';
+import NotificationList from '../containers/NotificationList';
+import TopBar from '../containers/TopBar';
+import prefix from '../services/inlineStylePrefixer';
+import {LANGUAGES} from '../util/editor';
+import {isPristineProject} from '../util/projectUtils';
+import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
 
 import CollapsedComponent from './CollapsedComponent';
 import Output from './Output';

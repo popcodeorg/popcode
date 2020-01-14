@@ -1,8 +1,7 @@
+import throttle from 'lodash-es/throttle';
 import {connect} from 'react-redux';
 import uuid from 'uuid/v4';
-import throttle from 'lodash-es/throttle';
 
-import Preview from '../components/Preview';
 import {
   addRuntimeError,
   consoleErrorProduced,
@@ -13,6 +12,7 @@ import {
   saveProject,
   toggleComponent,
 } from '../actions';
+import Preview from '../components/Preview';
 import {
   getCompiledProjects,
   getConsoleHistory,

@@ -1,6 +1,6 @@
 import map from 'lodash-es/map';
-import sortBy from 'lodash-es/sortBy';
 import pick from 'lodash-es/pick';
+import sortBy from 'lodash-es/sortBy';
 
 export default async function validationTest(
   input,

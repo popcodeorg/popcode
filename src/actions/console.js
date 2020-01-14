@@ -1,5 +1,5 @@
-import {createAction} from 'redux-actions';
 import identity from 'lodash-es/identity';
+import {createAction} from 'redux-actions';
 import uuid from 'uuid/v4';
 
 export const consoleValueProduced = createAction(

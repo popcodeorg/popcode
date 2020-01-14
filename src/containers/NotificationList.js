@@ -1,10 +1,10 @@
 import {connect} from 'react-redux';
 
-import NotificationList from '../components/NotificationList';
 import {
   updateNotificationMetadata,
   userDismissedNotification,
 } from '../actions';
+import NotificationList from '../components/NotificationList';
 import {getNotifications} from '../selectors';
 
 function mapStateToProps(state) {

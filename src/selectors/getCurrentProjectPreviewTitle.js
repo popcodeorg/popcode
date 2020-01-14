@@ -1,5 +1,5 @@
-import {createSelector} from 'reselect';
 import get from 'lodash-es/get';
+import {createSelector} from 'reselect';
 
 import getCompiledProjects from './getCompiledProjects';
 

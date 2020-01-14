@@ -3,13 +3,13 @@ import find from 'lodash-es/find';
 import isUndefined from 'lodash-es/isUndefined';
 import reduce from 'lodash-es/reduce';
 
+import {AccountMigrationState, LoginState} from '../enums';
 import {
   AccountMigration,
   User,
   UserAccount,
   UserIdentityProvider,
 } from '../records';
-import {AccountMigrationState, LoginState} from '../enums';
 
 function getToken(credential) {
   if (credential.providerId === 'github.com') {

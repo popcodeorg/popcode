@@ -1,9 +1,9 @@
-import classnames from 'classnames';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import React from 'react';
+import classnames from 'classnames';
 import i18next from 'i18next';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 export default function ProjectPickerButton({shouldShowSavedIndicator}) {
   return (

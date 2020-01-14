@@ -1,7 +1,7 @@
-import saveProject from '../saveProject';
-import reduce from '../../reducers';
-import {userAuthenticated} from '../../actions/user';
 import {projectCreated, updateProjectSource} from '../../actions/projects';
+import {userAuthenticated} from '../../actions/user';
+import reduce from '../../reducers';
+import saveProject from '../saveProject';
 
 import {credentialFactory, userFactory} from '@factories/clients/firebase';
 

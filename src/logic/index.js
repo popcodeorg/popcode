@@ -1,23 +1,23 @@
+import instrumentApplicationLoaded from './instrumentApplicationLoaded';
+import instrumentEnvironmentReady from './instrumentEnvironmentReady';
 import linkGithubIdentity from './linkGithubIdentity';
 import logout from './logout';
-import startAccountMigration from './startAccountMigration';
 import projectSuccessfullySaved from './projectSuccessfullySaved';
+import saveProject from './saveProject';
+import startAccountMigration from './startAccountMigration';
 import unlinkGithubIdentity from './unlinkGithubIdentity';
 import validateCurrentProject from './validateCurrentProject';
 import validateProjectOnChange from './validateProjectOnChange';
-import saveProject from './saveProject';
-import instrumentEnvironmentReady from './instrumentEnvironmentReady';
-import instrumentApplicationLoaded from './instrumentApplicationLoaded';
 
 export default [
   instrumentApplicationLoaded,
   instrumentEnvironmentReady,
   linkGithubIdentity,
   logout,
+  projectSuccessfullySaved,
+  saveProject,
   startAccountMigration,
   unlinkGithubIdentity,
   validateCurrentProject,
   validateProjectOnChange,
-  projectSuccessfullySaved,
-  saveProject,
 ];

@@ -1,5 +1,13 @@
 import {connect} from 'react-redux';
 
+import {
+  beautifyProjectSource,
+  editorFocusedRequestedLine,
+  hideComponent,
+  saveProject,
+  updateProjectSource,
+} from '../actions';
+import {editorReady} from '../actions/instrumentation';
 import EditorsColumn from '../components/EditorsColumn';
 import resizableFlex from '../higherOrderComponents/resizableFlex';
 import {
@@ -7,17 +15,9 @@ import {
   getErrors,
   getHiddenAndVisibleLanguages,
   getRequestedFocusedLine,
-  isTextSizeLarge,
   isExperimental,
+  isTextSizeLarge,
 } from '../selectors';
-import {
-  beautifyProjectSource,
-  editorFocusedRequestedLine,
-  hideComponent,
-  updateProjectSource,
-  saveProject,
-} from '../actions';
-import {editorReady} from '../actions/instrumentation';
 
 function mapStateToProps(state) {
   const {visibleLanguages} = getHiddenAndVisibleLanguages(state);

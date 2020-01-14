@@ -1,7 +1,7 @@
+import i18next from 'i18next';
 import map from 'lodash-es/map';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import i18next from 'i18next';
 
 export default function ProposedAccountMigration({onDismiss, onMigrate}) {
   return (

@@ -1,6 +1,6 @@
-import {handleActions} from 'redux-actions';
 import {List, Map} from 'immutable';
 import reduce from 'lodash-es/reduce';
+import {handleActions} from 'redux-actions';
 
 const defaultState = new Map();
 

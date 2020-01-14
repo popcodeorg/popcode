@@ -1,8 +1,8 @@
 import i18next from 'i18next';
 import assign from 'lodash-es/assign';
+import compact from 'lodash-es/compact';
 import has from 'lodash-es/has';
 import map from 'lodash-es/map';
-import compact from 'lodash-es/compact';
 import remark from 'remark';
 import stripMarkdown from 'strip-markdown';
 

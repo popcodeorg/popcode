@@ -1,18 +1,18 @@
 import reduce from 'lodash-es/reduce';
 
-import rootReducer from '../../reducers';
-import startAccountMigration from '../startAccountMigration';
 import {
   accountMigrationComplete,
   accountMigrationError,
   accountMigrationNeeded,
   accountMigrationUndoPeriodExpired,
+  dismissAccountMigration as dismissAccountMigrationAction,
   startAccountMigration as startAccountMigrationAction,
   userAuthenticated,
-  dismissAccountMigration as dismissAccountMigrationAction,
 } from '../../actions/user';
 import {migrateAccount} from '../../clients/firebase';
+import rootReducer from '../../reducers';
 import {bugsnagClient} from '../../util/bugsnag';
+import startAccountMigration from '../startAccountMigration';
 
 import {makeTestLogic} from './helpers';
 

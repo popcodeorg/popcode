@@ -2,12 +2,12 @@ import {createLogic} from 'redux-logic';
 
 import {first} from 'rxjs/operators';
 
-import {migrateAccount} from '../clients/firebase';
 import {
   accountMigrationComplete,
   accountMigrationError,
   accountMigrationUndoPeriodExpired,
 } from '../actions/user';
+import {migrateAccount} from '../clients/firebase';
 import {getCurrentAccountMigration} from '../selectors';
 import {bugsnagClient} from '../util/bugsnag';
 

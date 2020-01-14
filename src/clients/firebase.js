@@ -1,25 +1,25 @@
+import * as firebase from 'firebase/app'; // eslint-disable-line import/no-namespace
 import Cookies from 'js-cookie';
 import get from 'lodash-es/get';
 import isEmpty from 'lodash-es/isEmpty';
 import isNil from 'lodash-es/isNil';
 import isNull from 'lodash-es/isNull';
 import omit from 'lodash-es/omit';
+import once from 'lodash-es/once';
 import values from 'lodash-es/values';
 import uuid from 'uuid/v4';
-import once from 'lodash-es/once';
-import * as firebase from 'firebase/app'; // eslint-disable-line import/no-namespace
 import 'firebase/analytics';
 import 'firebase/auth';
 import 'firebase/performance';
 
-import {bugsnagClient} from '../util/bugsnag';
 import config from '../config';
-import retryingFailedImports from '../util/retryingFailedImports';
 import {
   getGapiSync,
-  loadAndConfigureGapi,
   SCOPES as GOOGLE_SCOPES,
+  loadAndConfigureGapi,
 } from '../services/gapi';
+import {bugsnagClient} from '../util/bugsnag';
+import retryingFailedImports from '../util/retryingFailedImports';
 
 const GITHUB_SCOPES = ['gist', 'public_repo', 'read:user', 'user:email'];
 const VALID_SESSION_UID_COOKIE = 'firebaseAuth.validSessionUid';

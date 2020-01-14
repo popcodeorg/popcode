@@ -1,5 +1,6 @@
 import {connect} from 'react-redux';
 
+import {cancelEditingInstructions, updateProjectInstructions} from '../actions';
 import Instructions from '../components/Instructions';
 import {
   getCurrentProjectInstructions,
@@ -7,7 +8,6 @@ import {
   getHiddenUIComponents,
   isEditingInstructions,
 } from '../selectors';
-import {cancelEditingInstructions, updateProjectInstructions} from '../actions';
 
 function mapStateToProps(state) {
   return {

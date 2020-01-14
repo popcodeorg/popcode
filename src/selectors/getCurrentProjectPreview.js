@@ -1,5 +1,5 @@
-import makeGetProjectPreview from './makeGetProjectPreview';
 import getCurrentProjectKey from './getCurrentProjectKey';
+import makeGetProjectPreview from './makeGetProjectPreview';
 
 const getProjectPreview = makeGetProjectPreview();
 

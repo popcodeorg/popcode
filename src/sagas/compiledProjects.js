@@ -1,11 +1,11 @@
-import {all, call, put, select, throttle, takeEvery} from 'redux-saga/effects';
+import {all, call, put, select, takeEvery, throttle} from 'redux-saga/effects';
 
 import every from 'lodash-es/every';
 
 import {getCurrentProject, getErrors} from '../selectors';
 import compileProject from '../util/compileProject';
 import {bugsnagClient} from '../util/bugsnag';
-import {projectCompiled, projectCompilationFailed} from '../actions';
+import {projectCompilationFailed, projectCompiled} from '../actions';
 
 export function* validatedSource() {
   const errors = yield select(getErrors);

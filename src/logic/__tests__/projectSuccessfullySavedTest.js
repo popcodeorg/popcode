@@ -1,6 +1,5 @@
+import {hideSaveIndicator, showSaveIndicator} from '../../actions/ui';
 import projectSuccessfullySaved from '../projectSuccessfullySaved';
-
-import {showSaveIndicator, hideSaveIndicator} from '../../actions/ui';
 
 test('should show project saved successfully', async () => {
   jest.useFakeTimers();

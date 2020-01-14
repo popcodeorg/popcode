@@ -1,7 +1,7 @@
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import React from 'react';
 import i18next from 'i18next';
+import React from 'react';
 
 export default function LibraryPickerButton() {
   return (

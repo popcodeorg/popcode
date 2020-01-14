@@ -1,11 +1,11 @@
-import classnames from 'classnames';
 import {faBan, faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import partial from 'lodash-es/partial';
-import React from 'react';
-import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import classnames from 'classnames';
 import i18next from 'i18next';
+import partial from 'lodash-es/partial';
+import PropTypes from 'prop-types';
+import React from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import {EditorLocation} from '../records';
 

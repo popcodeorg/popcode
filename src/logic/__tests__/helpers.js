@@ -1,7 +1,7 @@
-import configureStore from 'redux-mock-store';
-import {createLogicMiddleware} from 'redux-logic';
-import {first} from 'rxjs/operators';
 import noop from 'lodash-es/noop';
+import {createLogicMiddleware} from 'redux-logic';
+import configureStore from 'redux-mock-store';
+import {first} from 'rxjs/operators';
 
 export function makeTestLogic(logic) {
   return async (action, {state = {}, afterDispatch = noop} = {}) => {

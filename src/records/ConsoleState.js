@@ -1,4 +1,4 @@
-import {Record, OrderedMap} from 'immutable';
+import {OrderedMap, Record} from 'immutable';
 
 export default Record(
   {

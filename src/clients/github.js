@@ -2,10 +2,10 @@ import isEmpty from 'lodash-es/isEmpty';
 import isNull from 'lodash-es/isNull';
 import trim from 'lodash-es/trim';
 
-import retryingFailedImports from '../util/retryingFailedImports';
-import performWithRetries from '../util/performWithRetries';
 import compileProject from '../util/compileProject';
 import ExtendableError from '../util/ExtendableError';
+import performWithRetries from '../util/performWithRetries';
+import retryingFailedImports from '../util/retryingFailedImports';
 
 const COMMIT_MESSAGE = 'Created using Popcode: https://popcode.org';
 const MASTER = 'master';

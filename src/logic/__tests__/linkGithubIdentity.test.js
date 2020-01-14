@@ -1,14 +1,13 @@
-import linkGithubIdentity from '../linkGithubIdentity';
+import {
+  accountMigrationNeeded,
+  identityLinked,
+  linkGithubIdentity as linkGithubIdentityAction,
+  linkIdentityFailed,
+} from '../../actions/user';
 import {linkGithub, saveCredentialForCurrentUser} from '../../clients/firebase';
 import {getProfileForAuthenticatedUser} from '../../clients/github';
 import {bugsnagClient} from '../../util/bugsnag';
-
-import {
-  accountMigrationNeeded,
-  linkIdentityFailed,
-  linkGithubIdentity as linkGithubIdentityAction,
-  identityLinked,
-} from '../../actions/user';
+import linkGithubIdentity from '../linkGithubIdentity';
 
 import {makeTestLogic} from './helpers';
 

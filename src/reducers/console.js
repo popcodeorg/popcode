@@ -3,18 +3,17 @@ import inRange from 'lodash-es/inRange';
 import isNil from 'lodash-es/isNil';
 import {handleActions} from 'redux-actions';
 
-import {ConsoleState, ConsoleEntry, Error} from '../records';
-
 import {
-  consoleValueProduced,
-  consoleErrorProduced,
-  evaluateConsoleEntry,
   clearConsoleEntries,
-  previousConsoleHistory,
-  nextConsoleHistory,
+  consoleErrorProduced,
   consoleInputChanged,
   consoleLogBatchProduced,
+  consoleValueProduced,
+  evaluateConsoleEntry,
+  nextConsoleHistory,
+  previousConsoleHistory,
 } from '../actions/console';
+import {ConsoleEntry, ConsoleState, Error} from '../records';
 
 const initialState = new ConsoleState();
 

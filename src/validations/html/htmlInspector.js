@@ -1,6 +1,6 @@
 import HTMLInspector from 'html-inspector';
-import last from 'lodash-es/last';
 import isNull from 'lodash-es/isNull';
+import last from 'lodash-es/last';
 import trim from 'lodash-es/trim';
 
 import {localizedArrayToSentence} from '../../util/arrayToSentence';

@@ -3,8 +3,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import bindAll from 'lodash-es/bindAll';
 import get from 'lodash-es/get';
 import isNil from 'lodash-es/isNil';
-import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 import preventClickthrough from 'react-prevent-clickthrough';
 
 import {EditorLocation} from '../records';

@@ -1,8 +1,8 @@
 import classnames from 'classnames';
-import React from 'react';
-import PropTypes from 'prop-types';
 import i18next from 'i18next';
 import bindAll from 'lodash-es/bindAll';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 export default class InstructionsEditor extends React.Component {
   constructor() {

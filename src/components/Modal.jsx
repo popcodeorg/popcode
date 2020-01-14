@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {createPortal} from 'react-dom';
-import PropTypes from 'prop-types';
 
 export default function Modal({children, isOpen}) {
   if (!isOpen) {

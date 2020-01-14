@@ -1,7 +1,7 @@
+import i18next from 'i18next';
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import PropTypes from 'prop-types';
-import i18next from 'i18next';
 
 import GenericNotificationWithURL from './GenericNotificationWithURL';
 

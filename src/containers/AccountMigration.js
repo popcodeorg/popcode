@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
-import AccountMigration from '../components/AccountMigration';
 import {dismissAccountMigration, startAccountMigration} from '../actions';
+import AccountMigration from '../components/AccountMigration';
 import {getCurrentAccountMigration, getCurrentUser} from '../selectors';
 
 function mapStateToProps(state) {

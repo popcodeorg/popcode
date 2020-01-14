@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import i18next from 'i18next';
 import map from 'lodash-es/map';
 import partial from 'lodash-es/partial';
-import i18next from 'i18next';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import ErrorItem from './ErrorItem';
 

@@ -4,11 +4,11 @@ import findLast from 'lodash-es/findLast';
 import isObject from 'lodash-es/isObject';
 import last from 'lodash-es/last';
 import React from 'react';
-import ShallowRenderer from 'react-test-renderer/shallow';
 import TestRenderer, {act} from 'react-test-renderer';
+import ShallowRenderer from 'react-test-renderer/shallow';
 
-import CodeMirrorConsoleInput from '../CodeMirrorConsoleInput';
 import {EditorLocation} from '../../records';
+import CodeMirrorConsoleInput from '../CodeMirrorConsoleInput';
 
 import {change as changeFactory} from '@factories/packages/codemirror';
 
