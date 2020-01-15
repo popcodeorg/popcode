@@ -1,17 +1,16 @@
 import {fromJS} from 'immutable';
 
-import validateCurrentProject from '../validateCurrentProject';
+import {
+  projectRestoredFromLastSession as projectRestoredFromLastSessionAction,
+  snapshotImported as snapshotImportedAction,
+} from '../../actions/clients';
 import {validatedSource} from '../../actions/errors';
 import {
   changeCurrentProject as changeCurrentProjectAction,
   gistImported as gistImportedAction,
   toggleLibrary as toggleLibraryAction,
 } from '../../actions/projects';
-
-import {
-  snapshotImported as snapshotImportedAction,
-  projectRestoredFromLastSession as projectRestoredFromLastSessionAction,
-} from '../../actions/clients';
+import validateCurrentProject from '../validateCurrentProject';
 
 import {makeTestLogic} from './helpers';
 

@@ -1,8 +1,8 @@
 import {fromJS} from 'immutable';
 
-import validateProjectOnChange from '../validateProjectOnChange';
 import {validatedSource} from '../../actions/errors';
 import {updateProjectSource as updateProjectSourceAction} from '../../actions/projects';
+import validateProjectOnChange from '../validateProjectOnChange';
 
 import {makeTestLogic} from './helpers';
 

@@ -1,5 +1,5 @@
-import {createLogic} from 'redux-logic';
 import map from 'lodash-es/map';
+import {createLogic} from 'redux-logic';
 
 import Analyzer from '../analyzers';
 import {getCurrentProject} from '../selectors';

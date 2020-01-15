@@ -1,6 +1,6 @@
-import retryingFailedImports from '../../util/retryingFailedImports';
 import {validatedSource} from '../../actions/errors';
 import {getCurrentProject} from '../../selectors';
+import retryingFailedImports from '../../util/retryingFailedImports';
 
 function importValidations() {
   return retryingFailedImports(() =>
