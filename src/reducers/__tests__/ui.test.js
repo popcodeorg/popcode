@@ -43,6 +43,7 @@ import {
   startDragColumnDivider,
   stopDragColumnDivider,
   toggleArchivedView,
+  updateNotificationMetadata,
   userDismissedNotification,
   userDoneTyping,
 } from '../../actions/ui';
@@ -294,6 +295,18 @@ test('notification triggered with metadata', () => {
     'some-error',
     'error',
     {goofy: true},
+  );
+});
+
+test('update notification metadata', () => {
+  expectNotification(
+    applyActions(
+      notificationTriggered('some-error', 'error', {goofy: true}),
+      updateNotificationMetadata('some-error', {silliness: 11}),
+    ),
+    'some-error',
+    'error',
+    {goofy: true, silliness: 11},
   );
 });
 
