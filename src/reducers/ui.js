@@ -234,9 +234,8 @@ export default combineReducers(
           addNotification(notifications, 'snapshot-not-found', 'error'),
 
         [updateNotificationMetadata]: (notifications, {payload}) =>
-          notifications.updateIn(
-            ['notifications', payload.type, 'metadata'],
-            metadata => metadata.merge(payload.metadata),
+          notifications.updateIn([payload.type, 'metadata'], metadata =>
+            metadata.merge(payload.metadata),
           ),
 
         [updateProjectSource]: notifications =>
