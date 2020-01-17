@@ -1,19 +1,19 @@
-import test from 'tape-catch';
 import Immutable from 'immutable';
 import partial from 'lodash-es/partial';
+import test from 'tape-catch';
 
-import reducer from '../../../src/reducers/clients';
-import reducerTest from '../../helpers/reducerTest';
 import {
   createSnapshot,
-  snapshotCreated,
-  snapshotExportError,
   exportProject,
+  projectExportDisplayed,
   projectExported,
   projectExportError,
-  projectExportDisplayed,
   projectExportNotDisplayed,
+  snapshotCreated,
+  snapshotExportError,
 } from '../../../src/actions/clients';
+import reducer from '../../../src/reducers/clients';
+import reducerTest from '../../helpers/reducerTest';
 import {clients as states} from '../../helpers/referenceStates';
 
 test('snapshot export', t => {

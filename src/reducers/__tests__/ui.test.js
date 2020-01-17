@@ -412,18 +412,14 @@ test('finish dragging column divider', () => {
 });
 
 test('openProjectPickerModal opens project picker modal', () => {
-  expect(
-    applyActions(openProjectPickerModal())
-  ).toMatchObject({
+  expect(applyActions(openProjectPickerModal())).toMatchObject({
     isProjectPickerModalOpen: true,
   });
 });
 
 test('closeProjectPickerModal closes project picker modal', () => {
   applyActions(openProjectPickerModal());
-  expect(
-    applyActions(closeProjectPickerModal())
-  ).toMatchObject({
+  expect(applyActions(closeProjectPickerModal())).toMatchObject({
     isProjectPickerModalOpen: false,
   });
 });
@@ -431,18 +427,14 @@ test('closeProjectPickerModal closes project picker modal', () => {
 describe('filterProjects filters', () => {
   it('active projects', () => {
     applyActions(filterProjects('archived'));
-    expect(
-      applyActions(filterProjects('active'))
-    ).toMatchObject({
+    expect(applyActions(filterProjects('active'))).toMatchObject({
       projectsFilter: 'active',
     });
   });
 
   it('archived projects', () => {
-    expect(
-      applyActions(filterProjects('archived'))
-    ).toMatchObject({
-      projectsFilter: 'archived'
+    expect(applyActions(filterProjects('archived'))).toMatchObject({
+      projectsFilter: 'archived',
     });
   });
 });
