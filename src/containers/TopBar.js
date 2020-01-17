@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 
 import {
-  changeCurrentProject,
   closeTopBarMenu,
   createProject,
   createSnapshot,
@@ -10,17 +9,18 @@ import {
   logIn,
   logOut,
   openAssignmentCreator,
+  openProjectPickerModal,
   startEditingInstructions,
-  toggleArchivedView,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
   unlinkGithubIdentity,
 } from '../actions';
+
 import TopBar from '../components/TopBar';
+
 import {
   getAllProjectKeys,
-  getAllProjects,
   getCurrentProjectExportedRepoName,
   getCurrentProjectInstructions,
   getCurrentProjectKey,
@@ -29,7 +29,6 @@ import {
   getEnabledLibraries,
   getOpenTopBarMenu,
   isClassroomExportInProgress,
-  getAllProjectKeys,
   isEditingInstructions,
   isExperimental,
   isGapiReady,
@@ -44,23 +43,6 @@ import {
   isUserAuthenticatedWithGoogle,
   isUserTyping,
 } from '../selectors';
-
-import {
-  closeTopBarMenu,
-  createProject,
-  createSnapshot,
-  exportProject,
-  linkGithubIdentity,
-  unlinkGithubIdentity,
-  openAssignmentCreator,
-  openProjectPickerModal,
-  startEditingInstructions,
-  toggleEditorTextSize,
-  toggleLibrary,
-  toggleTopBarMenu,
-  logIn,
-  logOut,
-} from '../actions';
 
 function mapStateToProps(state) {
   return {

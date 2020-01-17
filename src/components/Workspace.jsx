@@ -23,14 +23,12 @@ import Instructions from '../containers/Instructions';
 import KeyboardHandler from '../containers/KeyboardHandler';
 import LoginPrompt from '../containers/LoginPrompt';
 import NotificationList from '../containers/NotificationList';
+import ProjectPickerModal from '../containers/ProjectPickerModal';
 import TopBar from '../containers/TopBar';
 import prefix from '../services/inlineStylePrefixer';
 import {LANGUAGES} from '../util/editor';
 import {isPristineProject} from '../util/projectUtils';
 import {RIGHT_COLUMN_COMPONENTS} from '../util/ui';
-import LoginPrompt from '../containers/LoginPrompt';
-import KeyboardHandler from '../containers/KeyboardHandler';
-import ProjectPickerModal from '../containers/ProjectPickerModal';
 
 import CollapsedComponent from './CollapsedComponent';
 import Output from './Output';

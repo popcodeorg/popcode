@@ -2,7 +2,6 @@ import {Map, Record} from 'immutable';
 
 export default Record(
   {
-    isArchivedViewOpen: false,
     isAssignmentCreatorOpen: false,
     isDraggingColumnDivider: false,
     isEditingInstructions: false,
@@ -15,7 +14,6 @@ export default Record(
     notifications: new Map(),
     openTopBarMenu: null,
     requestedFocusedLine: null,
-    saveIndicatorShown: false,
     projectsFilter: 'active',
   },
   'UiState',

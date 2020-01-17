@@ -27,7 +27,6 @@ import getPartitionedProjects from './getPartitionedProjects';
 import getProject from './getProject';
 import getProjectsFilter from './getProjectsFilter';
 import getRequestedFocusedLine from './getRequestedFocusedLine';
-import isArchivedViewOpen from './isArchivedViewOpen';
 import isAssignmentCreatorOpen from './isAssignmentCreatorOpen';
 import isAssignmentExportInProgress from './isAssignmentExportInProgress';
 import isClassroomExportInProgress from './isClassroomExportInProgress';

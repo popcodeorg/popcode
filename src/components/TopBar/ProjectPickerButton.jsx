@@ -1,8 +1,8 @@
 import classnames from 'classnames';
-import React from 'react';
 import i18next from 'i18next';
+import isEmpty from 'lodash-es/isEmpty';
 import PropTypes from 'prop-types';
-import {isEmpty} from 'lodash-es';
+import React from 'react';
 
 export default function ProjectPickerButton({
   currentProjectKey,
