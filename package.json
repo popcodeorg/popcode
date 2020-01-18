@@ -387,7 +387,7 @@
     "source-map-loader": "0.2.4",
     "stats-webpack-plugin": "0.7.0",
     "string-replace-loader": "2.2.0",
-    "stylelint-config-prettier": "8.0.0",
+    "stylelint-config-prettier": "8.0.1",
     "stylelint-prettier": "1.1.2",
     "stylelint-selector-bem-pattern": "2.1.0",
     "substitute-loader": "1.0.0",
