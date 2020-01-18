@@ -382,7 +382,7 @@
     "redux-saga-test-plan": "4.0.0-rc.3",
     "rosie": "2.0.1",
     "script-ext-html-webpack-plugin": "2.1.4",
-    "sinon": "8.0.4",
+    "sinon": "8.1.0",
     "source-map-explorer": "2.2.2",
     "source-map-loader": "0.2.4",
     "stats-webpack-plugin": "0.7.0",
