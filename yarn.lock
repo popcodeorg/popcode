@@ -4862,10 +4862,10 @@ enum@2.5.0:
   dependencies:
     is-buffer "^1.1.0"
 
-enumify@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/enumify/-/enumify-1.0.4.tgz#2bb6263071dd4551e54c55755707fad24a40cd7e"
-  integrity sha1-K7YmMHHdRVHlTFV1Vwf60kpAzX4=
+enumify@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/enumify/-/enumify-2.0.0.tgz#7b079efa0ce2a4ebf1a8da24c4544000db41af3e"
+  integrity sha512-hpyRdixXrBdr1sZOWH/WKBleMtHWVbM+DyVa0OqKQnKEw6x0TuUNYjcWKlp5/+tdiOsbgYiaZ/pYUeMake4k8A==
 
 envify@^3.0.0:
   version "3.4.1"
