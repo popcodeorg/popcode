@@ -22,7 +22,7 @@ class Validator {
 
   mapError(rawError) {
     const key = this.keyForError(rawError);
-    if (has(this._errorMap, key)) {
+    if (has(this._errorMap, key.toString())) {
       return this._errorMap[key](rawError, this.source);
     }
     return null;

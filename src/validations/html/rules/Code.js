@@ -1,10 +1,12 @@
-import {Enum} from 'enumify';
+import Enum from 'enum';
 
-export default class Code extends Enum {}
-Code.initEnum([
-  'MISPLACED_CLOSE_TAG',
-  'UNCLOSED_TAG',
-  'UNOPENED_TAG',
-  'INVALID_TEXT_OUTSIDE_BODY',
-  'INVALID_TAG_OUTSIDE_BODY',
-]);
+export default new Enum(
+  [
+    'MISPLACED_CLOSE_TAG',
+    'UNCLOSED_TAG',
+    'UNOPENED_TAG',
+    'INVALID_TEXT_OUTSIDE_BODY',
+    'INVALID_TAG_OUTSIDE_BODY',
+  ],
+  {name: 'Code'},
+);
