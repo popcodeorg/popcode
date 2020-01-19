@@ -4862,11 +4862,6 @@ enum@2.5.0:
   dependencies:
     is-buffer "^1.1.0"
 
-enumify@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/enumify/-/enumify-1.0.4.tgz#2bb6263071dd4551e54c55755707fad24a40cd7e"
-  integrity sha1-K7YmMHHdRVHlTFV1Vwf60kpAzX4=
-
 envify@^3.0.0:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/envify/-/envify-3.4.1.tgz#d7122329e8df1688ba771b12501917c9ce5cbce8"
