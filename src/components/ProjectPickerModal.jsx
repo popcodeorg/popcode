@@ -37,7 +37,7 @@ export default function ProjectPickerModal({
           >
             {i18next.t('project-picker.tabs.active')}
           </li>
-          {isEmpty(archivedProjects) ? null : (
+          {!isEmpty(archivedProjects) && (
             <li
               className={classnames('project-picker__nav-tab', {
                 'project-picker__nav-tab-active': projectsFilter === 'archived',
@@ -49,14 +49,9 @@ export default function ProjectPickerModal({
           )}
         </ul>
         <div className="project-picker__list">
-          {visibleProjects.map(item => {
-            return (
-              <ProjectPreview
-                key={item.projectKey}
-                projectKey={item.projectKey}
-              />
-            );
-          })}
+          {visibleProjects.map(({projectKey}) => (
+            <ProjectPreview key={projectKey} projectKey={projectKey} />
+          ))}
         </div>
         <div
           className="project-picker__close"

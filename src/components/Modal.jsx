@@ -2,13 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {createPortal} from 'react-dom';
 
+function onClickContent(e) {
+  e.stopPropagation();
+}
 export default function Modal({children, isOpen, onClose}) {
   if (!isOpen) {
     return null;
-  }
-
-  function onClickContent(e) {
-    e.stopPropagation();
   }
 
   return createPortal(

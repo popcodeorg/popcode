@@ -2,6 +2,7 @@ import {faArchive} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
 import i18next from 'i18next';
+import isNil from 'lodash-es/isNil';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -24,13 +25,13 @@ export default function ProjectPreview({
     >
       <div className="project-preview__label">
         {preview.slice(0, MAX_LENGTH)}
-        {project.updatedAt && (
+        {!isNil(project.updatedAt) && (
           <div className="project-preview__timestamp">
             {moment(project.updatedAt).fromNow()}
           </div>
         )}
       </div>
-      {(function showArchived() {
+      {(() => {
         if (isCurrentProject) {
           return (
             <div className="project-preview__status">
