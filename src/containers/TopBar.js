@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 
 import {
-  changeCurrentProject,
   closeTopBarMenu,
   createProject,
   createSnapshot,
@@ -10,17 +9,18 @@ import {
   logIn,
   logOut,
   openAssignmentCreator,
+  openProjectPickerModal,
   startEditingInstructions,
-  toggleArchivedView,
   toggleEditorTextSize,
   toggleLibrary,
   toggleTopBarMenu,
   unlinkGithubIdentity,
 } from '../actions';
+
 import TopBar from '../components/TopBar';
+
 import {
   getAllProjectKeys,
-  getAllProjects,
   getCurrentProjectExportedRepoName,
   getCurrentProjectInstructions,
   getCurrentProjectKey,
@@ -28,7 +28,6 @@ import {
   getCurrentValidationState,
   getEnabledLibraries,
   getOpenTopBarMenu,
-  isArchivedViewOpen,
   isClassroomExportInProgress,
   isEditingInstructions,
   isExperimental,
@@ -52,7 +51,6 @@ function mapStateToProps(state) {
     enabledLibraries: getEnabledLibraries(state),
     hasInstructions: Boolean(getCurrentProjectInstructions(state)),
     hasExportedRepo: Boolean(getCurrentProjectExportedRepoName(state)),
-    shouldShowArchivedProjects: isArchivedViewOpen(state),
     isEditingInstructions: isEditingInstructions(state),
     isExperimental: isExperimental(state),
     isGapiReady: isGapiReady(state),
@@ -69,7 +67,6 @@ function mapStateToProps(state) {
     isUserTyping: isUserTyping(state),
     openMenu: getOpenTopBarMenu(state),
     projectKeys: getAllProjectKeys(state),
-    projects: getAllProjects(state),
     validationState: getCurrentValidationState(state),
   };
 }
@@ -80,10 +77,6 @@ function exportRepo(dispatch) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onChangeCurrentProject(projectKey) {
-      dispatch(changeCurrentProject(projectKey));
-    },
-
     onClickMenu(menuKey) {
       dispatch(toggleTopBarMenu(menuKey));
     },
@@ -132,6 +125,10 @@ function mapDispatchToProps(dispatch) {
       dispatch(openAssignmentCreator());
     },
 
+    onOpenProjectPickerModal() {
+      dispatch(openProjectPickerModal());
+    },
+
     onStartEditingInstructions(projectKey) {
       dispatch(startEditingInstructions(projectKey));
     },
@@ -150,10 +147,6 @@ function mapDispatchToProps(dispatch) {
 
     onToggleTextSize() {
       dispatch(toggleEditorTextSize());
-    },
-
-    onToggleViewArchived() {
-      dispatch(toggleArchivedView());
     },
   };
 }

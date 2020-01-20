@@ -28,7 +28,6 @@ const ProjectPicker = createMenu({
     projects,
     shouldShowArchivedProjects,
     onChangeCurrentProject,
-    onToggleViewArchived,
   }) {
     const visibleProjects = shouldShowArchivedProjects
       ? projects
@@ -51,7 +50,6 @@ const ProjectPicker = createMenu({
             'top-bar__menu-item_toggle-archived-projects-button',
           )}
           key="toggleShowArchivedProjects"
-          onClick={onToggleViewArchived}
         >
           <div>
             {shouldShowArchivedProjects
@@ -70,7 +68,6 @@ ProjectPicker.propTypes = {
   currentProjectKey: PropTypes.string,
   projects: PropTypes.array.isRequired,
   shouldShowArchivedProjects: PropTypes.bool.isRequired,
-  onToggleViewArchived: PropTypes.func.isRequired,
 };
 
 ProjectPicker.defaultProps = {

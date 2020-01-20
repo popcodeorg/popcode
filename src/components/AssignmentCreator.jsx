@@ -30,7 +30,7 @@ export default function AssignmentCreator({
   }
 
   return (
-    <Modal>
+    <Modal onClose={onCloseAssignmentCreator}>
       <Suspense fallback="Loading...">
         <div className="assignment-creator">
           <h1 className="assignment-creator__title">
