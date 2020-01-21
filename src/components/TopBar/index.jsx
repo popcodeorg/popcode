@@ -36,7 +36,6 @@ export default function TopBar({
   hasInstructions,
   hasExportedRepo,
   isEditingInstructions,
-  isExperimental,
   isGapiReady,
   isGistExportInProgress,
   isRepoExportInProgress,
@@ -44,7 +43,6 @@ export default function TopBar({
   isUserAnonymous,
   isUserAuthenticated,
   isUserAuthenticatedWithGithub,
-  isUserAuthenticatedWithGoogle,
   isUserTyping,
   isSnapshotInProgress,
   isTextSizeLarge,
@@ -61,7 +59,6 @@ export default function TopBar({
   onExportToClassroom,
   onLinkGitHub,
   onLogOut,
-  onOpenAssignmentCreator,
   onOpenProjectPickerModal,
   onStartGithubLogIn,
   onStartGoogleLogIn,
@@ -91,17 +88,14 @@ export default function TopBar({
       <ExportMenu
         hasExportedRepo={hasExportedRepo}
         isClassroomExportInProgress={isClassroomExportInProgress}
-        isExperimental={isExperimental}
         isGistExportInProgress={isGistExportInProgress}
         isOpen={openMenu === 'export'}
         isRepoExportInProgress={isRepoExportInProgress}
         isUserAuthenticatedWithGithub={isUserAuthenticatedWithGithub}
-        isUserAuthenticatedWithGoogle={isUserAuthenticatedWithGoogle}
         onClick={partial(onClickMenu, 'export')}
         onExportGist={onExportGist}
         onExportRepo={onExportRepo}
         onExportToClassroom={onExportToClassroom}
-        onOpenAssignmentCreator={onOpenAssignmentCreator}
         onUpdateRepo={onUpdateRepo}
       />
       <TextSize isLarge={isTextSizeLarge} onToggle={onToggleTextSize} />
@@ -155,7 +149,6 @@ TopBar.propTypes = {
   hasInstructions: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
-  isExperimental: PropTypes.bool.isRequired,
   isGapiReady: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,
@@ -164,7 +157,6 @@ TopBar.propTypes = {
   isUserAnonymous: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
   isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
-  isUserAuthenticatedWithGoogle: PropTypes.bool.isRequired,
   isUserTyping: PropTypes.bool.isRequired,
   openMenu: PropTypes.string,
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -179,7 +171,6 @@ TopBar.propTypes = {
   onExportToClassroom: PropTypes.func.isRequired,
   onLinkGitHub: PropTypes.func.isRequired,
   onLogOut: PropTypes.func.isRequired,
-  onOpenAssignmentCreator: PropTypes.func.isRequired,
   onOpenProjectPickerModal: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
   onStartGithubLogIn: PropTypes.func.isRequired,

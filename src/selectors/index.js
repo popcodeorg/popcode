@@ -2,8 +2,6 @@ import getAllProjectKeys from './getAllProjectKeys';
 import getAllProjects from './getAllProjects';
 import getCompiledProjects from './getCompiledProjects';
 import getConsoleHistory from './getConsoleHistory';
-import getCourse from './getCourse';
-import getCourses from './getCourses';
 import getCurrentAccountMigration from './getCurrentAccountMigration';
 import getCurrentCompiledProjectKey from './getCurrentCompiledProjectKey';
 import getCurrentConsoleInputValue from './getCurrentConsoleInputValue';
@@ -22,13 +20,10 @@ import getHiddenAndVisibleLanguages from './getHiddenAndVisibleLanguages';
 import getHiddenUIComponents from './getHiddenUIComponents';
 import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
-import getParsedDate from './getParsedDate';
 import getPartitionedProjects from './getPartitionedProjects';
 import getProject from './getProject';
 import getProjectsFilter from './getProjectsFilter';
 import getRequestedFocusedLine from './getRequestedFocusedLine';
-import isAssignmentCreatorOpen from './isAssignmentCreatorOpen';
-import isAssignmentExportInProgress from './isAssignmentExportInProgress';
 import isClassroomExportInProgress from './isClassroomExportInProgress';
 import isCurrentlyValidating from './isCurrentlyValidating';
 import isCurrentProjectSyntacticallyValid from './isCurrentProjectSyntacticallyValid';
@@ -58,8 +53,6 @@ export {
   getCompiledProjects,
   getConsoleHistory,
   getCurrentAccountMigration,
-  getCourse,
-  getCourses,
   getCurrentCompiledProjectKey,
   getCurrentConsoleInputValue,
   getCurrentProject,
@@ -77,13 +70,10 @@ export {
   getHiddenAndVisibleLanguages,
   getNotifications,
   getOpenTopBarMenu,
-  getParsedDate,
   getPartitionedProjects,
   getProject,
   getProjectsFilter,
   getRequestedFocusedLine,
-  isAssignmentCreatorOpen,
-  isAssignmentExportInProgress,
   isClassroomExportInProgress,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
