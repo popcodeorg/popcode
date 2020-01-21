@@ -418,21 +418,19 @@ test('openProjectPickerModal opens project picker modal', () => {
 });
 
 test('closeProjectPickerModal closes project picker modal', () => {
-  applyActions(openProjectPickerModal());
   expect(applyActions(closeProjectPickerModal())).toMatchObject({
     isProjectPickerModalOpen: false,
   });
 });
 
 describe('filterProjects filters', () => {
-  it('active projects', () => {
-    applyActions(filterProjects('archived'));
+  test('active projects', () => {
     expect(applyActions(filterProjects('active'))).toMatchObject({
       projectsFilter: 'active',
     });
   });
 
-  it('archived projects', () => {
+  test('archived projects', () => {
     expect(applyActions(filterProjects('archived'))).toMatchObject({
       projectsFilter: 'archived',
     });

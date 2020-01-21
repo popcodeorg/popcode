@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import i18next from 'i18next';
 import isEmpty from 'lodash-es/isEmpty';
+import isNil from 'lodash-es/isNil';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -12,11 +13,9 @@ export default function ProjectPickerButton({
   onClick,
 }) {
   if (
-    !(
-      isUserAuthenticated &&
-      !isEmpty(projectKeys) &&
-      Boolean(currentProjectKey)
-    )
+    !isUserAuthenticated ||
+    isEmpty(projectKeys) ||
+    isNil(currentProjectKey)
   ) {
     return null;
   }
