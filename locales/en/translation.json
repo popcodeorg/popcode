@@ -35,8 +35,7 @@
       "log-in-github": "Log in with GitHub"
     },
     "hide-projects": "Hide Archived Projects",
-    "show-projects": "Show Archived Projects",
-    "project-archived": "Archived"
+    "show-projects": "Show Archived Projects"
   },
   "editors": {
     "help-text": "Type in your $t(languages.{{language}}) code here."
@@ -129,6 +128,20 @@
       "stop": "Stop",
       "dismiss": "Done"
     }
+  },
+  "project-picker": {
+    "title": "Your Projects",
+    "tabs": {
+      "active": "Active",
+      "archived": "Archived"
+    },
+    "buttons": {
+      "close": "close"
+    }
+  },
+  "project-preview": {
+    "project-archived": "Archived",
+    "current-project": "Current Project"
   },
   "utility": {
     "or": " or "

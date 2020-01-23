@@ -23,9 +23,10 @@ import getHiddenUIComponents from './getHiddenUIComponents';
 import getNotifications from './getNotifications';
 import getOpenTopBarMenu from './getOpenTopBarMenu';
 import getParsedDate from './getParsedDate';
+import getPartitionedProjects from './getPartitionedProjects';
 import getProject from './getProject';
+import getProjectsFilter from './getProjectsFilter';
 import getRequestedFocusedLine from './getRequestedFocusedLine';
-import isArchivedViewOpen from './isArchivedViewOpen';
 import isAssignmentCreatorOpen from './isAssignmentCreatorOpen';
 import isAssignmentExportInProgress from './isAssignmentExportInProgress';
 import isClassroomExportInProgress from './isClassroomExportInProgress';
@@ -37,6 +38,7 @@ import isExperimental from './isExperimental';
 import isGapiReady from './isGapiReady';
 import isGistExportInProgress from './isGistExportInProgress';
 import isLoginPromptOpen from './isLoginPromptOpen';
+import isProjectPickerModalOpen from './isProjectPickerModalOpen';
 import isRepoExportInProgress from './isRepoExportInProgress';
 import isSaveIndicatorVisible from './isSaveIndicatorVisible';
 import isSnapshotInProgress from './isSnapshotInProgress';
@@ -76,12 +78,13 @@ export {
   getNotifications,
   getOpenTopBarMenu,
   getParsedDate,
+  getPartitionedProjects,
   getProject,
+  getProjectsFilter,
   getRequestedFocusedLine,
   isAssignmentCreatorOpen,
   isAssignmentExportInProgress,
   isClassroomExportInProgress,
-  isArchivedViewOpen,
   isCurrentlyValidating,
   isCurrentProjectSyntacticallyValid,
   isDraggingColumnDivider,
@@ -90,6 +93,7 @@ export {
   isGapiReady,
   isGistExportInProgress,
   isLoginPromptOpen,
+  isProjectPickerModalOpen,
   isRepoExportInProgress,
   isSaveIndicatorVisible,
   isSnapshotInProgress,

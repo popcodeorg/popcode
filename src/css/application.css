@@ -449,33 +449,88 @@ body {
 .project-preview {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  border-bottom: 1px solid var(--color-light-gray);
+  cursor: pointer;
+}
+
+.project-preview:hover {
+  background-color: var(--color-chrome);
+}
+
+.project-preview_current {
+  background-color: var(--color-light-gray);
 }
 
 .project-preview__label {
   white-space: normal;
 }
 
-.project-preview__label_archived {
-  font-style: italic;
-}
-
 .project-preview__archive {
   color: var(--color-light-gray);
-  margin-right: 1em;
   font-size: 1.5em;
+  display: flex;
+  align-items: center;
 }
 
 .project-preview__archive:hover {
   color: black;
 }
 
-.project-preview__archived {
+.project-preview__status {
   font-style: italic;
 }
 
 .project-preview__timestamp {
   font-size: 0.8em;
   white-space: normal;
+}
+
+/** @define project-picker */
+
+.project-picker__nav {
+  display: flex;
+  border-bottom: 1px solid var(--color-light-gray);
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.project-picker__nav-tab {
+  padding: 0.75rem 2rem;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  margin-bottom: -1px;
+  cursor: pointer;
+}
+
+.project-picker__nav-tab-active {
+  border-color: var(--color-light-gray) var(--color-light-gray)
+    var(--color-chrome);
+}
+
+.project-picker__nav-tab:hover:not(.project-picker__nav-tab-active) {
+  background-color: var(--color-chrome);
+}
+
+.project-picker__list {
+  max-height: 40vh;
+  overflow-y: scroll;
+  border-left: 1px solid var(--color-light-gray);
+  border-right: 1px solid var(--color-light-gray);
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.project-picker__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.project-picker {
+  position: relative;
 }
 
 /** @define workspace */
@@ -1166,7 +1221,7 @@ body {
 }
 
 .modal__contents {
-  background: #fafafa;
+  background: var(--color-low-contrast-gray);
   box-shadow: 0 2px 8px #888;
   margin: 10% auto 0;
   padding: 1em 2em 2em;

@@ -36,17 +36,19 @@ import {
   cancelEditingInstructions,
   closeAssignmentCreator,
   closeLoginPrompt,
+  closeProjectPickerModal,
   editorFocusedRequestedLine,
+  filterProjects,
   focusLine,
   hideSaveIndicator,
   notificationTriggered,
   openAssignmentCreator,
   openLoginPrompt,
+  openProjectPickerModal,
   showSaveIndicator,
   startDragColumnDivider,
   startEditingInstructions,
   stopDragColumnDivider,
-  toggleArchivedView,
   toggleEditorTextSize,
   toggleTopBarMenu,
   updateNotificationMetadata,
@@ -73,14 +75,6 @@ function closeTopBarMenu(menu, menuToClose) {
 
 export default combineReducers(
   {
-    isArchivedViewOpen: handleActions(
-      {
-        [changeCurrentProject]: constant(false),
-        [toggleArchivedView]: isArchivedViewOpen => !isArchivedViewOpen,
-      },
-      false,
-    ),
-
     isAssignmentCreatorOpen: handleActions(
       {
         [openAssignmentCreator]: constant(true),
@@ -125,6 +119,23 @@ export default combineReducers(
         [openLoginPrompt]: constant(true),
         [closeLoginPrompt]: constant(false),
         [logIn]: constant(false),
+      },
+      false,
+    ),
+
+    isProjectPickerModalOpen: handleActions(
+      {
+        [openProjectPickerModal]: constant(true),
+        [closeProjectPickerModal]: constant(false),
+        [changeCurrentProject]: constant(false),
+      },
+      false,
+    ),
+
+    isSaveIndicatorVisible: handleActions(
+      {
+        [hideSaveIndicator]: constant(false),
+        [showSaveIndicator]: constant(true),
       },
       false,
     ),
@@ -266,6 +277,13 @@ export default combineReducers(
       null,
     ),
 
+    projectsFilter: handleActions(
+      {
+        [filterProjects]: (_, {payload: {filterType}}) => filterType,
+      },
+      null,
+    ),
+
     requestedFocusedLine: handleActions(
       {
         [clearConsoleEntries]: () =>
@@ -281,14 +299,6 @@ export default combineReducers(
           new EditorLocation({component, line, column}),
       },
       null,
-    ),
-
-    isSaveIndicatorVisible: handleActions(
-      {
-        [hideSaveIndicator]: constant(false),
-        [showSaveIndicator]: constant(true),
-      },
-      false,
     ),
   },
   UiState,

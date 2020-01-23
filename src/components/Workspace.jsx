@@ -23,6 +23,7 @@ import Instructions from '../containers/Instructions';
 import KeyboardHandler from '../containers/KeyboardHandler';
 import LoginPrompt from '../containers/LoginPrompt';
 import NotificationList from '../containers/NotificationList';
+import ProjectPickerModal from '../containers/ProjectPickerModal';
 import TopBar from '../containers/TopBar';
 import prefix from '../services/inlineStylePrefixer';
 import {LANGUAGES} from '../util/editor';
@@ -301,6 +302,7 @@ export default class Workspace extends React.Component {
           <AssignmentCreator />
           <TopBar />
           <NotificationList />
+          <ProjectPickerModal />
           <div className="layout__columns">
             <Instructions />
             {this._renderInstructionsBar()}

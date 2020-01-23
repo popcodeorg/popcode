@@ -34,15 +34,17 @@ import {
 } from '../../actions/projects';
 import {
   closeAssignmentCreator,
+  closeProjectPickerModal,
   editorFocusedRequestedLine,
+  filterProjects,
   focusLine,
   hideSaveIndicator,
   notificationTriggered,
   openAssignmentCreator,
+  openProjectPickerModal,
   showSaveIndicator,
   startDragColumnDivider,
   stopDragColumnDivider,
-  toggleArchivedView,
   updateNotificationMetadata,
   userDismissedNotification,
   userDoneTyping,
@@ -395,20 +397,6 @@ test('assignment not created', () => {
   expect(state).toMatchObject({isAssignmentCreatorOpen: false});
 });
 
-test('toggle archive view when closed', () => {
-  expect(applyActions(toggleArchivedView())).toMatchObject({
-    isArchivedViewOpen: true,
-  });
-});
-
-test('toggle archive view when open', () => {
-  expect(
-    applyActions(toggleArchivedView(), toggleArchivedView()),
-  ).toMatchObject({
-    isArchivedViewOpen: false,
-  });
-});
-
 test('start dragging column divider', () => {
   expect(applyActions(startDragColumnDivider())).toMatchObject({
     isDraggingColumnDivider: true,
@@ -420,6 +408,32 @@ test('finish dragging column divider', () => {
     applyActions(startDragColumnDivider(), stopDragColumnDivider()),
   ).toMatchObject({
     isDraggingColumnDivider: false,
+  });
+});
+
+test('openProjectPickerModal opens project picker modal', () => {
+  expect(applyActions(openProjectPickerModal())).toMatchObject({
+    isProjectPickerModalOpen: true,
+  });
+});
+
+test('closeProjectPickerModal closes project picker modal', () => {
+  expect(applyActions(closeProjectPickerModal())).toMatchObject({
+    isProjectPickerModalOpen: false,
+  });
+});
+
+describe('filterProjects filters', () => {
+  test('active projects', () => {
+    expect(applyActions(filterProjects('active'))).toMatchObject({
+      projectsFilter: 'active',
+    });
+  });
+
+  test('archived projects', () => {
+    expect(applyActions(filterProjects('archived'))).toMatchObject({
+      projectsFilter: 'archived',
+    });
   });
 });
 

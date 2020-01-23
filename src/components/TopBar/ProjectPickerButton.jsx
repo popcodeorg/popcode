@@ -1,19 +1,29 @@
-import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
 import i18next from 'i18next';
+import isEmpty from 'lodash-es/isEmpty';
+import isNil from 'lodash-es/isNil';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function ProjectPickerButton({shouldShowSavedIndicator}) {
+export default function ProjectPickerButton({
+  currentProjectKey,
+  isUserAuthenticated,
+  projectKeys,
+  shouldShowSavedIndicator,
+  onClick,
+}) {
+  if (
+    !isUserAuthenticated ||
+    isEmpty(projectKeys) ||
+    isNil(currentProjectKey)
+  ) {
+    return null;
+  }
+
   return (
-    <div>
+    <div className="top-bar__menu-button" onClick={onClick}>
       <span className={classnames({u__invisible: shouldShowSavedIndicator})}>
         {i18next.t('top-bar.load-project')}
-        <FontAwesomeIcon
-          className="top-bar__drop-down-button"
-          icon={faCaretDown}
-        />
       </span>
       <span
         className={classnames('top-bar__project-saved', {
@@ -27,5 +37,13 @@ export default function ProjectPickerButton({shouldShowSavedIndicator}) {
 }
 
 ProjectPickerButton.propTypes = {
+  currentProjectKey: PropTypes.string,
+  isUserAuthenticated: PropTypes.bool.isRequired,
+  projectKeys: PropTypes.array.isRequired,
   shouldShowSavedIndicator: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
+ProjectPickerButton.defaultProps = {
+  currentProjectKey: null,
 };
