@@ -39,7 +39,7 @@ class PreviewFrame extends React.Component {
           name={`preview-frame-${nextId++}`}
           ref={this._attachToFrame}
           sandbox={sandboxOptions}
-          srcDoc={source}
+          src="preview.html"
         />
       </div>,
     );
