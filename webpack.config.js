@@ -7,7 +7,6 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const escapeRegExp = require('lodash.escaperegexp');
 const OfflinePlugin = require('offline-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
 const webpack = require('webpack');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
