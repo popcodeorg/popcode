@@ -141,45 +141,13 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
   }
 
   if (!isTest) {
-    plugins.push(
-      new OfflinePlugin({
-        caches: {
-          main: [/(?:^|~)(?:main|preview)[-.~]/u, ':externals:'],
-          additional: [':rest:'],
-        },
-        safeToUseOptionalCaches: isProduction,
-        AppCache: {
-          caches: ['main', 'additional', 'optional'],
-        },
-        publicPath: '/',
-        responseStrategy: 'network-first',
-        externals: ['/', 'application.css', 'images/pop/thinking.svg'],
-      }),
-      new HtmlWebpackPlugin({
-        template: './html/index.html',
-        chunksSortMode: 'dependency',
-        excludeChunks: ['preview', 'vendors~preview'],
-      }),
-      new HtmlWebpackPlugin({
-        filename: 'preview.html',
-        template: './html/preview.html',
-        chunks: ['preview', 'vendors~preview', 'vendors~main~preview'],
-        chunksSortMode: 'dependency',
-      }),
-    );
+    plugins.push();
   }
 
   const babelLoaderConfig = makeBabelLoaderConfig({shouldCache: !isProduction});
 
-  return {
+  const baseConfig = {
     mode: isProduction ? 'production' : 'development',
-    entry: isTest
-      ? undefined
-      : {
-          inline: 'first-input-delay',
-          main: './application.js',
-          preview: './preview.js',
-        },
     context: path.resolve(__dirname, 'src'),
     optimization: {
       splitChunks: isTest ? false : {chunks: 'all'},
@@ -326,8 +294,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       ],
     },
 
-    plugins,
-
     node: {
       fs: 'empty',
     },
@@ -342,4 +308,52 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     },
     devtool,
   };
+
+  const mainConfig = {...baseConfig};
+  const previewConfig = {...baseConfig};
+
+  mainConfig.name = 'main';
+  mainConfig.entry = isTest
+    ? undefined
+    : {
+        inline: 'first-input-delay',
+        main: './application.js',
+      };
+  mainConfig.plugins = [...plugins];
+  mainConfig.plugins.push(
+    new OfflinePlugin({
+      caches: {
+        main: [/(?:^|~)(?:main|preview)[-.~]/u, ':externals:'],
+        additional: [':rest:'],
+      },
+      safeToUseOptionalCaches: isProduction,
+      AppCache: {
+        caches: ['main', 'additional', 'optional'],
+      },
+      publicPath: '/',
+      responseStrategy: 'network-first',
+      externals: ['/', 'application.css', 'images/pop/thinking.svg'],
+    }),
+    new HtmlWebpackPlugin({
+      template: './html/index.html',
+      chunksSortMode: 'dependency',
+    }),
+  );
+
+  previewConfig.name = 'preview';
+  previewConfig.entry = isTest
+    ? undefined
+    : {
+        preview: './preview.js',
+      };
+  previewConfig.plugins = [...plugins];
+  previewConfig.plugins.push(
+    new HtmlWebpackPlugin({
+      filename: 'preview.html',
+      template: './html/preview.html',
+      chunksSortMode: 'dependency',
+    }),
+  );
+
+  return [previewConfig, mainConfig];
 };
