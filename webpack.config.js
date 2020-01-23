@@ -159,31 +159,13 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       new HtmlWebpackPlugin({
         template: './html/index.html',
         chunksSortMode: 'dependency',
+        excludeChunks: ['preview', 'vendors~preview'],
       }),
-      new ScriptExtHtmlWebpackPlugin({
-        defaultAttribute: 'defer',
-        inline: /(^|~)inline[.~-]/u,
-        prefetch: {
-          chunks: 'async',
-          test: /\.js$/u,
-        },
-        custom: [
-          {
-            test: /^(?!(|.*~)main[.~-])/u,
-            attribute: 'type',
-            value: 'ref',
-          },
-          {
-            test: /^$/u,
-            attribute: 'type',
-            value: 'text/javascript',
-          },
-          {
-            test: /(^|~)preview[.~-]/u,
-            attribute: 'class',
-            value: 'preview-bundle',
-          },
-        ],
+      new HtmlWebpackPlugin({
+        filename: 'preview.html',
+        template: './html/preview.html',
+        chunks: ['preview', 'vendors~preview', 'vendors~main~preview'],
+        chunksSortMode: 'dependency',
       }),
     );
   }
