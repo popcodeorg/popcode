@@ -140,10 +140,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     devtool = 'cheap-module-eval-source-map';
   }
 
-  if (!isTest) {
-    plugins.push();
-  }
-
   const babelLoaderConfig = makeBabelLoaderConfig({shouldCache: !isProduction});
 
   const baseConfig = {
@@ -313,47 +309,51 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
   const previewConfig = {...baseConfig};
 
   mainConfig.name = 'main';
+  previewConfig.name = 'preview';
+
   mainConfig.entry = isTest
     ? undefined
     : {
         inline: 'first-input-delay',
         main: './application.js',
       };
-  mainConfig.plugins = [...plugins];
-  mainConfig.plugins.push(
-    new OfflinePlugin({
-      caches: {
-        main: [/(?:^|~)(?:main|preview)[-.~]/u, ':externals:'],
-        additional: [':rest:'],
-      },
-      safeToUseOptionalCaches: isProduction,
-      AppCache: {
-        caches: ['main', 'additional', 'optional'],
-      },
-      publicPath: '/',
-      responseStrategy: 'network-first',
-      externals: ['/', 'application.css', 'images/pop/thinking.svg'],
-    }),
-    new HtmlWebpackPlugin({
-      template: './html/index.html',
-      chunksSortMode: 'dependency',
-    }),
-  );
-
-  previewConfig.name = 'preview';
   previewConfig.entry = isTest
     ? undefined
     : {
         preview: './preview.js',
       };
+
+  mainConfig.plugins = [...plugins];
   previewConfig.plugins = [...plugins];
-  previewConfig.plugins.push(
-    new HtmlWebpackPlugin({
-      filename: 'preview.html',
-      template: './html/preview.html',
-      chunksSortMode: 'dependency',
-    }),
-  );
+
+  if (!isTest) {
+    mainConfig.plugins.push(
+      new OfflinePlugin({
+        caches: {
+          main: [/(?:^|~)(?:main|preview)[-.~]/u, ':externals:'],
+          additional: [':rest:'],
+        },
+        safeToUseOptionalCaches: isProduction,
+        AppCache: {
+          caches: ['main', 'additional', 'optional'],
+        },
+        publicPath: '/',
+        responseStrategy: 'network-first',
+        externals: ['/', 'application.css', 'images/pop/thinking.svg'],
+      }),
+      new HtmlWebpackPlugin({
+        template: './html/index.html',
+        chunksSortMode: 'dependency',
+      }),
+    );
+    previewConfig.plugins.push(
+      new HtmlWebpackPlugin({
+        filename: 'preview.html',
+        template: './html/preview.html',
+        chunksSortMode: 'dependency',
+      }),
+    );
+  }
 
   return [previewConfig, mainConfig];
 };
