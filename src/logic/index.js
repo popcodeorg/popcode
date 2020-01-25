@@ -6,8 +6,7 @@ import projectSuccessfullySaved from './projectSuccessfullySaved';
 import saveProject from './saveProject';
 import startAccountMigration from './startAccountMigration';
 import unlinkGithubIdentity from './unlinkGithubIdentity';
-import validateCurrentProject from './validateCurrentProject';
-import validateProjectOnChange from './validateProjectOnChange';
+import validateProject from './validateProject';
 
 export default [
   instrumentApplicationLoaded,
@@ -18,6 +17,5 @@ export default [
   saveProject,
   startAccountMigration,
   unlinkGithubIdentity,
-  validateCurrentProject,
-  validateProjectOnChange,
+  validateProject,
 ];

@@ -3,8 +3,24 @@ import {createLogic} from 'redux-logic';
 
 import Analyzer from '../analyzers';
 import {getCurrentProject} from '../selectors';
+import {validatedSource} from '../actions/errors';
+import retryingFailedImports from '../util/retryingFailedImports';
 
-import validateSource from './helpers/validateSource';
+function importValidations() {
+  return retryingFailedImports(() =>
+    import(
+      /* webpackChunkName: "mainAsync" */
+      '../validations'
+    ),
+  );
+}
+
+async function validateSource({language, source, projectAttributes}, dispatch) {
+  const validations = await importValidations();
+  const validate = validations[language];
+  const validationErrors = await validate(source, projectAttributes);
+  dispatch(validatedSource(language, validationErrors));
+}
 
 async function validateSources(sources, analyzer, dispatch) {
   const validatePromises = map(Reflect.ownKeys(sources), language =>
@@ -42,7 +58,6 @@ export default createLogic({
     dispatch,
     done,
   ) {
-    //PROBLEM: language is handled differently in each different block
     const state = getState();
     const currentProject = getCurrentProject(state);
     const analyzer = new Analyzer(currentProject);
