@@ -1,9 +1,9 @@
 import map from 'lodash-es/map';
 import {createLogic} from 'redux-logic';
 
+import {validatedSource} from '../actions/errors';
 import Analyzer from '../analyzers';
 import {getCurrentProject} from '../selectors';
-import {validatedSource} from '../actions/errors';
 import retryingFailedImports from '../util/retryingFailedImports';
 
 function importValidations() {

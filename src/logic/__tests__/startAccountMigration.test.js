@@ -11,7 +11,7 @@ import {migrateAccount} from '../../clients/firebase';
 import {bugsnagClient} from '../../util/bugsnag';
 import startAccountMigration from '../startAccountMigration';
 
-import {makeTestLogic, applyActions} from './helpers';
+import {applyActions, makeTestLogic} from './helpers';
 
 import {
   credentialFactory,

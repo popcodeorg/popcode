@@ -1,5 +1,3 @@
-import {fromJS} from 'immutable';
-
 import {
   projectRestoredFromLastSession as projectRestoredFromLastSessionAction,
   snapshotImported as snapshotImportedAction,
@@ -13,9 +11,10 @@ import {
 } from '../../actions/projects';
 import validateProject from '../validateProject';
 
-import {makeTestLogic, applyActions} from './helpers';
-import {consoleErrorFactory} from '@factories/validations/errors';
+import {applyActions, makeTestLogic} from './helpers';
+
 import {firebaseProjectFactory} from '@factories/data/firebase';
+import {consoleErrorFactory} from '@factories/validations/errors';
 
 jest.mock('../../analyzers');
 
