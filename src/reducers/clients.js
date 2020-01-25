@@ -2,11 +2,6 @@ import Immutable from 'immutable';
 import {handleActions} from 'redux-actions';
 
 import {
-  assignmentCreated,
-  assignmentNotCreated,
-  createAssignment,
-} from '../actions/assignments';
-import {
   createSnapshot,
   exportProject,
   gapiClientReady,
@@ -19,7 +14,6 @@ import {
 const defaultState = new Immutable.Map({
   firebase: new Immutable.Map({exportingSnapshot: false}),
   projectExports: new Immutable.Map(),
-  exportingAssignment: false,
   gapi: new Immutable.Map({ready: false}),
 });
 
@@ -54,18 +48,6 @@ export default handleActions(
     },
     [gapiClientReady]: state => {
       return state.setIn(['gapi', 'ready'], true);
-    },
-    [createAssignment]: state => {
-      return state.setIn(['exportingAssignment'], true);
-    },
-    [createAssignment]: state => {
-      return state.setIn(['exportingAssignment'], true);
-    },
-    [assignmentCreated]: state => {
-      return state.setIn(['exportingAssignment'], false);
-    },
-    [assignmentNotCreated]: state => {
-      return state.setIn(['exportingAssignment'], false);
     },
   },
   defaultState,

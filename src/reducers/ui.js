@@ -15,7 +15,6 @@ import {
   unlinkGithubIdentity,
   userLoggedOut,
 } from '../actions';
-import {assignmentCreated, assignmentNotCreated} from '../actions/assignments';
 import {
   gapiClientUnavailable,
   projectExportError,
@@ -34,7 +33,6 @@ import {
 } from '../actions/projects';
 import {
   cancelEditingInstructions,
-  closeAssignmentCreator,
   closeLoginPrompt,
   closeProjectPickerModal,
   editorFocusedRequestedLine,
@@ -42,7 +40,6 @@ import {
   focusLine,
   hideSaveIndicator,
   notificationTriggered,
-  openAssignmentCreator,
   openLoginPrompt,
   openProjectPickerModal,
   showSaveIndicator,
@@ -75,18 +72,6 @@ function closeTopBarMenu(menu, menuToClose) {
 
 export default combineReducers(
   {
-    isAssignmentCreatorOpen: handleActions(
-      {
-        [openAssignmentCreator]: constant(true),
-
-        [closeAssignmentCreator]: constant(false),
-
-        [assignmentCreated]: constant(false),
-        [assignmentNotCreated]: constant(false),
-      },
-      false,
-    ),
-
     isDraggingColumnDivider: handleActions(
       {
         [startDragColumnDivider]: constant(true),
@@ -156,21 +141,6 @@ export default combineReducers(
 
     notifications: handleActions(
       {
-        [assignmentCreated]: (state, {payload: {assignment}}) =>
-          addNotification(
-            state,
-            'project-export-complete',
-            'notice',
-            assignment,
-          ),
-
-        [assignmentNotCreated]: notifications =>
-          addNotification(
-            notifications,
-            'assignment-not-created',
-            'error',
-          ).setIn(['isAssignmentCreatorOpen'], false),
-
         [gapiClientUnavailable]: notifications =>
           addNotification(notifications, 'gapi-client-unavailable', 'error'),
 

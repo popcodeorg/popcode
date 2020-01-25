@@ -1,11 +1,6 @@
 import reduce from 'lodash-es/reduce';
 
 import {
-  assignmentCreated,
-  assignmentNotCreated,
-  createAssignment,
-} from '../../actions/assignments';
-import {
   createSnapshot,
   exportProject,
   gapiClientReady,
@@ -71,24 +66,6 @@ test('gapiClientReady sets gapi ready to true', () => {
   expect(
     applyActions(gapiClientReady('gist')).getIn(['gapi', 'ready']),
   ).toEqual(true);
-});
-
-test('createAssignment sets exportingAssignment to true', () => {
-  expect(applyActions(createAssignment()).get('exportingAssignment')).toEqual(
-    true,
-  );
-});
-
-test('assignmentCreated sets exportingAssignment to true', () => {
-  expect(applyActions(assignmentCreated()).get('exportingAssignment')).toEqual(
-    false,
-  );
-});
-
-test('assignmentNotCreated sets exportingAssignment to true', () => {
-  expect(
-    applyActions(assignmentNotCreated()).get('exportingAssignment'),
-  ).toEqual(false);
 });
 
 function applyActions(...actions) {
