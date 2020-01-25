@@ -316,27 +316,27 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         },
     plugins: [
       ...plugins,
-      isTest
-        ? undefined
-        : new OfflinePlugin({
-            caches: {
-              main: [/(?:^|~)(?:main|preview)[-.~]/u, ':externals:'],
-              additional: [':rest:'],
-            },
-            safeToUseOptionalCaches: isProduction,
-            AppCache: {
-              caches: ['main', 'additional', 'optional'],
-            },
-            publicPath: '/',
-            responseStrategy: 'network-first',
-            externals: ['/', 'application.css', 'images/pop/thinking.svg'],
-          }),
-      isTest
-        ? undefined
-        : new HtmlWebpackPlugin({
-            template: './html/index.html',
-            chunksSortMode: 'dependency',
-          }),
+      ...(isTest
+        ? []
+        : [
+            new OfflinePlugin({
+              caches: {
+                main: [/(?:^|~)(?:main|preview)[-.~]/u, ':externals:'],
+                additional: [':rest:'],
+              },
+              safeToUseOptionalCaches: isProduction,
+              AppCache: {
+                caches: ['main', 'additional', 'optional'],
+              },
+              publicPath: '/',
+              responseStrategy: 'network-first',
+              externals: ['/', 'application.css', 'images/pop/thinking.svg'],
+            }),
+            new HtmlWebpackPlugin({
+              template: './html/index.html',
+              chunksSortMode: 'dependency',
+            }),
+          ]),
     ],
   };
 
@@ -350,13 +350,15 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
         },
     plugins: [
       ...plugins,
-      isTest
-        ? undefined
-        : new HtmlWebpackPlugin({
-            filename: 'preview.html',
-            template: './html/preview.html',
-            chunksSortMode: 'dependency',
-          }),
+      ...(isTest
+        ? []
+        : [
+            new HtmlWebpackPlugin({
+              filename: 'preview.html',
+              template: './html/preview.html',
+              chunksSortMode: 'dependency',
+            }),
+          ]),
     ],
   };
 
