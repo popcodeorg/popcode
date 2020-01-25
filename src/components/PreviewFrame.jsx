@@ -89,13 +89,6 @@ class PreviewFrame extends React.Component {
     });
   }
 
-  _updateSource(source) {
-    this._channel.notify({
-      method: 'updateSrc',
-      params: source,
-    });
-  }
-
   _runtimeErrorLineOffset() {
     const firstSourceLine =
       this.props.compiledProject.source.split('\n').indexOf(sourceDelimiter) +
@@ -195,7 +188,10 @@ class PreviewFrame extends React.Component {
       origin: '*',
       onReady: () => {
         frame.classList.add('preview__frame_loaded');
-        this._updateSource(this.props.compiledProject.source);
+        this._channel.notify({
+          method: 'updateSrc',
+          params: this.props.compiledProject.source,
+        });
       },
     });
 
