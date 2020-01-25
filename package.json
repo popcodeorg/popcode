@@ -236,7 +236,7 @@
     "lru-cache": "5.1.1",
     "mixpanel-browser": "2.33.1",
     "moment": "2.24.0",
-    "mousetrap": "1.6.3",
+    "mousetrap": "1.6.5",
     "object-inspect": "1.7.0",
     "offline-plugin": "5.0.7",
     "p5": "0.10.2",
