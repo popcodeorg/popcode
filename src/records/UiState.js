@@ -2,7 +2,6 @@ import {Map, Record} from 'immutable';
 
 export default Record(
   {
-    isAssignmentCreatorOpen: false,
     isDraggingColumnDivider: false,
     isEditingInstructions: false,
     isExperimental: false,

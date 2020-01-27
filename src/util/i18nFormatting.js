@@ -2,14 +2,11 @@ import capitalize from 'lodash-es/capitalize';
 import get from 'lodash-es/get';
 import identity from 'lodash-es/identity';
 
-import {dateToString} from './timeFormatter';
-
 const vowelishLetters = new Set(['a', 'e', 'i', 'o', 'u', 'h']);
 
 const formatters = {
   'en-handle-an': val => getVariationOfAOrAn(val),
   capitalize: val => capitalize(val),
-  formatDate: val => dateToString(val),
 };
 
 function getVariationOfAOrAn(value) {

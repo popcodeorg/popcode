@@ -8,7 +8,6 @@ import {
   linkGithubIdentity,
   logIn,
   logOut,
-  openAssignmentCreator,
   openProjectPickerModal,
   startEditingInstructions,
   toggleEditorTextSize,
@@ -30,7 +29,6 @@ import {
   getOpenTopBarMenu,
   isClassroomExportInProgress,
   isEditingInstructions,
-  isExperimental,
   isGapiReady,
   isGistExportInProgress,
   isRepoExportInProgress,
@@ -40,7 +38,6 @@ import {
   isUserAnonymous,
   isUserAuthenticated,
   isUserAuthenticatedWithGithub,
-  isUserAuthenticatedWithGoogle,
   isUserTyping,
 } from '../selectors';
 
@@ -52,7 +49,6 @@ function mapStateToProps(state) {
     hasInstructions: Boolean(getCurrentProjectInstructions(state)),
     hasExportedRepo: Boolean(getCurrentProjectExportedRepoName(state)),
     isEditingInstructions: isEditingInstructions(state),
-    isExperimental: isExperimental(state),
     isGapiReady: isGapiReady(state),
     isGistExportInProgress: isGistExportInProgress(state),
     isRepoExportInProgress: isRepoExportInProgress(state),
@@ -63,7 +59,6 @@ function mapStateToProps(state) {
     isUserAnonymous: isUserAnonymous(state),
     isUserAuthenticated: isUserAuthenticated(state),
     isUserAuthenticatedWithGithub: isUserAuthenticatedWithGithub(state),
-    isUserAuthenticatedWithGoogle: isUserAuthenticatedWithGoogle(state),
     isUserTyping: isUserTyping(state),
     openMenu: getOpenTopBarMenu(state),
     projectKeys: getAllProjectKeys(state),
@@ -119,10 +114,6 @@ function mapDispatchToProps(dispatch) {
 
     onLogOut() {
       dispatch(logOut());
-    },
-
-    onOpenAssignmentCreator() {
-      dispatch(openAssignmentCreator());
     },
 
     onOpenProjectPickerModal() {

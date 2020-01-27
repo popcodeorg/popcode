@@ -13,17 +13,14 @@ const ExportMenu = createMenu({
 
   renderItems({
     hasExportedRepo,
-    isExperimental,
     isGistExportInProgress,
     isRepoExportInProgress,
     isClassroomExportInProgress,
     isUserAuthenticatedWithGithub,
-    isUserAuthenticatedWithGoogle,
     onExportGist,
     onExportRepo,
     onUpdateRepo,
     onExportToClassroom,
-    onOpenAssignmentCreator,
   }) {
     return tap([], items => {
       items.push(
@@ -69,13 +66,6 @@ const ExportMenu = createMenu({
           );
         }
       }
-      if (isUserAuthenticatedWithGoogle && isExperimental) {
-        items.push(
-          <MenuItem key="assignmentCreatorr" onClick={onOpenAssignmentCreator}>
-            {i18next.t('top-bar.create-assignment')}
-          </MenuItem>,
-        );
-      }
     });
   },
 })(ExportMenuButton);
@@ -83,16 +73,13 @@ const ExportMenu = createMenu({
 ExportMenu.propTypes = {
   hasExportedRepo: PropTypes.bool.isRequired,
   isClassroomExportInProgress: PropTypes.bool.isRequired,
-  isExperimental: PropTypes.bool.isRequired,
   isGistExportInProgress: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isRepoExportInProgress: PropTypes.bool.isRequired,
   isUserAuthenticatedWithGithub: PropTypes.bool.isRequired,
-  isUserAuthenticatedWithGoogle: PropTypes.bool.isRequired,
   onExportGist: PropTypes.func.isRequired,
   onExportRepo: PropTypes.func.isRequired,
   onExportToClassroom: PropTypes.func.isRequired,
-  onOpenAssignmentCreator: PropTypes.func.isRequired,
   onUpdateRepo: PropTypes.func.isRequired,
 };
 
