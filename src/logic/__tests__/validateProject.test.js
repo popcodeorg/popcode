@@ -36,16 +36,15 @@ jest.mock('../../validations', () => ({
   javascript: jest.fn(() => []),
 }));
 
-test('should validate current project', async () => {
-  const testLogic = makeTestLogic(validateProject);
-
-  [
-    changeCurrentProjectAction,
-    gistImportedAction,
-    snapshotImportedAction,
-    projectRestoredFromLastSessionAction,
-    toggleLibraryAction,
-  ].forEach(async action => {
+const testLogic = makeTestLogic(validateProject);
+for (const action of [
+  changeCurrentProjectAction,
+  gistImportedAction,
+  snapshotImportedAction,
+  projectRestoredFromLastSessionAction,
+  toggleLibraryAction,
+]) {
+  test(`validates current project on ${action}`, async () => {
     const mockProject = firebaseProjectFactory.build();
     const state = applyActions(
       projectRestoredFromLastSessionAction(mockProject),
@@ -62,13 +61,12 @@ test('should validate current project', async () => {
       validatedSource('css', mockCssValidationErrors),
     );
   });
-});
+}
 
 test('UPDATE_PROJECT_SOURCE should validate newSource', async () => {
   const mockProject = firebaseProjectFactory.build();
   const state = applyActions(projectRestoredFromLastSessionAction(mockProject));
 
-  const testLogic = makeTestLogic(validateProject);
   const dispatch = await testLogic(
     updateProjectSourceAction(mockProject.projectKey, 'css', 'div {'),
     {state},

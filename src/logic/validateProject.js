@@ -22,13 +22,13 @@ async function validateSource({language, source, projectAttributes}, dispatch) {
   dispatch(validatedSource(language, validationErrors));
 }
 
-async function validateSources(sources, analyzer, dispatch) {
+async function validateSources({sources, projectAttributes}, dispatch) {
   const validatePromises = map(Reflect.ownKeys(sources), language =>
     validateSource(
       {
         language,
         source: sources[language],
-        projectAttributes: analyzer,
+        projectAttributes,
       },
       dispatch,
     ),
@@ -60,14 +60,20 @@ export default createLogic({
   ) {
     const state = getState();
     const currentProject = getCurrentProject(state);
-    const analyzer = new Analyzer(currentProject);
+    const projectAttributes = new Analyzer(currentProject);
 
-    const sources =
-      type === 'UPDATE_PROJECT_SOURCE'
-        ? {[language]: newValue}
-        : currentProject.sources;
+    if (type === 'UPDATE_PROJECT_SOURCE') {
+      await validateSource(
+        {language, source: newValue, projectAttributes},
+        dispatch,
+      );
+    } else {
+      await validateSources(
+        {sources: currentProject.sources, projectAttributes},
+        dispatch,
+      );
+    }
 
-    await validateSources(sources, analyzer, dispatch);
     done();
   },
 });
