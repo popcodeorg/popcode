@@ -15,10 +15,6 @@ import {
   userLoggedOut,
 } from '../../actions';
 import {
-  assignmentCreated,
-  assignmentNotCreated,
-} from '../../actions/assignments';
-import {
   projectExportError,
   projectExportNotDisplayed,
   snapshotCreated,
@@ -33,14 +29,12 @@ import {
   updateProjectSource,
 } from '../../actions/projects';
 import {
-  closeAssignmentCreator,
   closeProjectPickerModal,
   editorFocusedRequestedLine,
   filterProjects,
   focusLine,
   hideSaveIndicator,
   notificationTriggered,
-  openAssignmentCreator,
   openProjectPickerModal,
   showSaveIndicator,
   startDragColumnDivider,
@@ -369,32 +363,6 @@ test('toggle top bar menu opens when different menu is open', () => {
   expect(
     applyActions(toggleTopBarMenu('goofy'), toggleTopBarMenu('silly')),
   ).toMatchObject({openTopBarMenu: 'silly'});
-});
-
-test('open assignment creator', () => {
-  expect(applyActions(openAssignmentCreator())).toMatchObject({
-    isAssignmentCreatorOpen: true,
-  });
-});
-
-test('close assignment creator', () => {
-  expect(
-    applyActions(openAssignmentCreator(), closeAssignmentCreator()),
-  ).toMatchObject({
-    isAssignmentCreatorOpen: false,
-  });
-});
-
-test('assignment created', () => {
-  const state = applyActions(openAssignmentCreator(), assignmentCreated({}));
-  expectNotification(state, 'project-export-complete', 'notice');
-  expect(state).toMatchObject({isAssignmentCreatorOpen: false});
-});
-
-test('assignment not created', () => {
-  const state = applyActions(openAssignmentCreator(), assignmentNotCreated({}));
-  expectNotification(state, 'assignment-not-created', 'error');
-  expect(state).toMatchObject({isAssignmentCreatorOpen: false});
 });
 
 test('start dragging column divider', () => {
