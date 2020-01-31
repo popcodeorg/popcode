@@ -1,3 +1,5 @@
+import reduce from 'lodash-es/reduce';
+
 import {
   accountMigrationComplete,
   accountMigrationError,
@@ -8,10 +10,11 @@ import {
   userAuthenticated,
 } from '../../actions/user';
 import {migrateAccount} from '../../clients/firebase';
+import rootReducer from '../../reducers';
 import {bugsnagClient} from '../../util/bugsnag';
 import startAccountMigration from '../startAccountMigration';
 
-import {applyActions, makeTestLogic} from './helpers';
+import {makeTestLogic} from './helpers';
 
 import {
   credentialFactory,
@@ -108,3 +111,11 @@ describe('startAccountMigration', () => {
     expect(migrateAccount).not.toHaveBeenCalledWith(mockCredential);
   });
 });
+
+function applyActions(...actions) {
+  return reduce(
+    actions,
+    (state, action) => rootReducer(state, action),
+    undefined,
+  );
+}
