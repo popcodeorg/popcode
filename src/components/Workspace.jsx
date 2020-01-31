@@ -17,7 +17,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import {dehydrateProject} from '../clients/localStorage';
 
 import AccountMigration from '../containers/AccountMigration';
-import AssignmentCreator from '../containers/AssignmentCreator';
 import EditorsColumn from '../containers/EditorsColumn';
 import Instructions from '../containers/Instructions';
 import KeyboardHandler from '../containers/KeyboardHandler';
@@ -299,7 +298,6 @@ export default class Workspace extends React.Component {
     return (
       <>
         <div className="layout">
-          <AssignmentCreator />
           <TopBar />
           <NotificationList />
           <ProjectPickerModal />

@@ -1,7 +1,5 @@
 import applicationLoaded from './applicationLoaded';
 
-import {createAssignment} from './assignments';
-
 import {
   createSnapshot,
   exportProject,
@@ -45,18 +43,14 @@ import {
 import {updateResizableFlex} from './resizableFlex';
 import {
   cancelEditingInstructions,
-  closeAssignmentCreator,
   closeLoginPrompt,
   closeProjectPickerModal,
   closeTopBarMenu,
-  coursesFullyLoaded,
-  coursesLoaded,
   editorFocusedRequestedLine,
   filterProjects,
   focusLine,
   hideSaveIndicator,
   notificationTriggered,
-  openAssignmentCreator,
   openLoginPrompt,
   openProjectPickerModal,
   popOutProject,
@@ -135,11 +129,6 @@ export {
   updateResizableFlex,
   startAccountMigration,
   dismissAccountMigration,
-  createAssignment,
-  openAssignmentCreator,
-  closeAssignmentCreator,
-  coursesLoaded,
-  coursesFullyLoaded,
   archiveProject,
   saveProject,
   openLoginPrompt,
