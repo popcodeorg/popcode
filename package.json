@@ -289,7 +289,7 @@
     "whatwg-fetch": "3.0.0"
   },
   "engines": {
-    "node": "12.14.1",
+    "node": "12.15.0",
     "yarn": "~1.21.1"
   },
   "scripts": {
