@@ -233,7 +233,7 @@
     "i18next": "19.1.0",
     "immutable": "3.8.2",
     "immutable-devtools": "0.1.5",
-    "inline-style-prefixer": "5.1.0",
+    "inline-style-prefixer": "5.1.1",
     "jquery": "3.4.1",
     "js-beautify": "1.10.3",
     "js-cookie": "2.2.1",
