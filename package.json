@@ -226,7 +226,6 @@
     "github-api": "3.3.0",
     "hast-util-sanitize": "2.0.2",
     "he": "1.2.0",
-    "highlight.js": "9.17.1",
     "highlight.js": "9.18.1",
     "html-inspector": "0.8.2",
     "htmllint": "0.8.0",
@@ -411,5 +410,8 @@
     "webpack-dev-middleware": "3.7.2",
     "webpack-visualizer-plugin": "0.1.11",
     "yarn-deduplicate": "1.1.1"
+  },
+  "resolutions": {
+    "**/browserslist": "<=4.8.3"
   }
 }
