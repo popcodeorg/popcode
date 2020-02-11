@@ -2,14 +2,31 @@ import castArray from 'lodash-es/castArray';
 import compact from 'lodash-es/compact';
 import flatMap from 'lodash-es/flatMap';
 import isEmpty from 'lodash-es/isEmpty';
+import map from 'lodash-es/map';
 import trim from 'lodash-es/trim';
 import uniq from 'lodash-es/uniq';
 
+import config from '../config';
+
 import retryingFailedImports from './retryingFailedImports';
+
+const downloadingScript = downloadScript();
 
 const parser = new DOMParser();
 
 export const sourceDelimiter = '/*__POPCODESTART__*/';
+
+async function downloadScript() {
+  if (config.nodeEnv === 'test') {
+    return '';
+  }
+
+  const responses = await Promise.all(
+    map(document.querySelectorAll('.preview-bundle'), el => fetch(el.src)),
+  );
+  const scripts = await Promise.all(responses.map(response => response.text()));
+  return scripts.join('\n');
+}
 
 function constructDocument(project) {
   const doc = parser.parseFromString(project.sources.html, 'text/html');
@@ -133,6 +150,13 @@ function addCss(doc, {sources: {css}}) {
   doc.head.appendChild(styleTag);
 }
 
+async function addPreviewSupportScript(doc) {
+  const downloadedScript = await downloadingScript;
+  const scriptTag = doc.createElement('script');
+  scriptTag.innerHTML = downloadedScript;
+  doc.head.appendChild(scriptTag);
+}
+
 export async function addJavascript(doc, {sources: {javascript}}, opts) {
   if (trim(javascript).length === 0) {
     return {};
@@ -187,7 +211,9 @@ export default async function compileProject(project, {isInlinePreview} = {}) {
   }
 
   addCss(doc, project);
-
+  if (isInlinePreview) {
+    await addPreviewSupportScript(doc);
+  }
   const {sourceMap} = await addJavascript(doc, project, {
     breakLoops: isInlinePreview,
   });
