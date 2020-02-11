@@ -5,6 +5,7 @@ import {validatedSource} from '../actions/errors';
 import Analyzer from '../analyzers';
 import {getCurrentProject} from '../selectors';
 import retryingFailedImports from '../util/retryingFailedImports';
+import {bugsnagClient} from '../util/bugsnag';
 
 function importValidations() {
   return retryingFailedImports(() =>
@@ -62,16 +63,22 @@ export default createLogic({
     const currentProject = getCurrentProject(state);
     const projectAttributes = new Analyzer(currentProject);
 
-    if (type === 'UPDATE_PROJECT_SOURCE') {
-      await validateSource(
-        {language, source: newValue, projectAttributes},
-        dispatch,
-      );
-    } else {
-      await validateSources(
-        {sources: currentProject.sources, projectAttributes},
-        dispatch,
-      );
+    try {
+      if (type === 'UPDATE_PROJECT_SOURCE') {
+        await validateSource(
+          {language, source: newValue, projectAttributes},
+          dispatch,
+        );
+      } else {
+        await validateSources(
+          {sources: currentProject.sources, projectAttributes},
+          dispatch,
+        );
+      }
+    } catch (e) {
+      bugsnagClient.notify(e, {
+        metaData: {source: currentProject.sources},
+      });
     }
 
     done();
