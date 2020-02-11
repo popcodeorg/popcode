@@ -26,6 +26,10 @@ class PreviewFrame extends React.Component {
   constructor(props) {
     super(props);
 
+    const {
+      compiledProject: {source},
+    } = props;
+
     bindAll(this, '_attachToFrame', '_handleInfiniteLoop');
 
     this.render = constant(
@@ -35,7 +39,7 @@ class PreviewFrame extends React.Component {
           name={`preview-frame-${nextId++}`}
           ref={this._attachToFrame}
           sandbox={sandboxOptions}
-          src="preview.html"
+          srcDoc={source}
         />
       </div>,
     );
@@ -186,12 +190,8 @@ class PreviewFrame extends React.Component {
     this._channel = Channel.build({
       window: frame.contentWindow,
       origin: '*',
-      onReady: () => {
+      onReady() {
         frame.classList.add('preview__frame_loaded');
-        this._channel.notify({
-          method: 'updateSrc',
-          params: this.props.compiledProject.source,
-        });
       },
     });
 
