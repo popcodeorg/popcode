@@ -4,8 +4,8 @@ import {createLogic} from 'redux-logic';
 import {validatedSource} from '../actions/errors';
 import Analyzer from '../analyzers';
 import {getCurrentProject} from '../selectors';
-import retryingFailedImports from '../util/retryingFailedImports';
 import {bugsnagClient} from '../util/bugsnag';
+import retryingFailedImports from '../util/retryingFailedImports';
 
 function importValidations() {
   return retryingFailedImports(() =>
