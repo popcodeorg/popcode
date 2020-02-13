@@ -72,6 +72,18 @@ describe('javascript validation', () => {
       partialRight(javascript, analyzer),
     ));
 
+  test('duplicated variable declaration', () =>
+    validationTest(
+      `let a = 1;
+      let a = 2;`,
+      partialRight(javascript, analyzer),
+      {
+        reason: 'duplicated-declaration',
+        row: 1,
+        payload: {variable: 'a'},
+      },
+    ));
+
   testValidatorAcceptance(
     partialRight(javascript, analyzerWithjQuery),
     'javascript',
