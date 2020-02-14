@@ -127,6 +127,10 @@
       ]
     },
     {
+      "packageNames": ["sweetalert2"],
+      "prPriority": -1
+    },
+    {
       "groupName": "Tape",
       "automerge": true,
       "packageNames": ["tape", "tape-catch"]
@@ -159,6 +163,10 @@
       ]
     },
     {
+      "packageNames": ["yarn"],
+      "allowedVersions": "< 2.0"
+    },
+    {
       "packageNames": [
         "browser-sync",
         "caniuse-lite",
@@ -172,10 +180,6 @@
         "yarn-deduplicate"
       ],
       "automerge": true
-    },
-    {
-      "packageNames": ["sweetalert2"],
-      "prPriority": -1
     }
   ],
   "postUpdateOptions": ["yarnDedupeFewer"],

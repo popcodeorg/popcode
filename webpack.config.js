@@ -7,6 +7,7 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const escapeRegExp = require('lodash.escaperegexp');
 const OfflinePlugin = require('offline-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
 const webpack = require('webpack');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
@@ -140,10 +141,64 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     devtool = 'cheap-module-eval-source-map';
   }
 
+  if (!isTest) {
+    plugins.push(
+      new OfflinePlugin({
+        caches: {
+          main: [/(?:^|~)(?:main|preview)[-.~]/u, ':externals:'],
+          additional: [':rest:'],
+        },
+        safeToUseOptionalCaches: isProduction,
+        AppCache: {
+          caches: ['main', 'additional', 'optional'],
+        },
+        publicPath: '/',
+        responseStrategy: 'network-first',
+        externals: ['/', 'application.css', 'images/pop/thinking.svg'],
+      }),
+      new HtmlWebpackPlugin({
+        template: './html/index.html',
+        chunksSortMode: 'dependency',
+      }),
+      new ScriptExtHtmlWebpackPlugin({
+        defaultAttribute: 'defer',
+        inline: /(^|~)inline[.~-]/u,
+        prefetch: {
+          chunks: 'async',
+          test: /\.js$/u,
+        },
+        custom: [
+          {
+            test: /^(?!(|.*~)main[.~-])/u,
+            attribute: 'type',
+            value: 'ref',
+          },
+          {
+            test: /^$/u,
+            attribute: 'type',
+            value: 'text/javascript',
+          },
+          {
+            test: /(^|~)preview[.~-]/u,
+            attribute: 'class',
+            value: 'preview-bundle',
+          },
+        ],
+      }),
+    );
+  }
+
   const babelLoaderConfig = makeBabelLoaderConfig({shouldCache: !isProduction});
 
-  const baseConfig = {
+  return {
     mode: isProduction ? 'production' : 'development',
+    entry: isTest
+      ? undefined
+      : {
+          inline: 'first-input-delay',
+          main: './application.js',
+          preview: './preview.js',
+        },
     context: path.resolve(__dirname, 'src'),
     optimization: {
       splitChunks: isTest ? false : {chunks: 'all'},
@@ -290,6 +345,8 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       ],
     },
 
+    plugins,
+
     node: {
       fs: 'empty',
     },
@@ -304,63 +361,4 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
     },
     devtool,
   };
-
-  const mainConfig = {
-    ...baseConfig,
-    name: 'main',
-    entry: isTest
-      ? undefined
-      : {
-          inline: 'first-input-delay',
-          main: './application.js',
-        },
-    plugins: [
-      ...plugins,
-      ...(isTest
-        ? []
-        : [
-            new OfflinePlugin({
-              caches: {
-                main: [/(?:^|~)(?:main|preview)[-.~]/u, ':externals:'],
-                additional: [':rest:'],
-              },
-              safeToUseOptionalCaches: isProduction,
-              AppCache: {
-                caches: ['main', 'additional', 'optional'],
-              },
-              publicPath: '/',
-              responseStrategy: 'network-first',
-              externals: ['/', 'application.css', 'images/pop/thinking.svg'],
-            }),
-            new HtmlWebpackPlugin({
-              template: './html/index.html',
-              chunksSortMode: 'dependency',
-            }),
-          ]),
-    ],
-  };
-
-  const previewConfig = {
-    ...baseConfig,
-    name: 'preview',
-    entry: isTest
-      ? undefined
-      : {
-          preview: './preview.js',
-        },
-    plugins: [
-      ...plugins,
-      ...(isTest
-        ? []
-        : [
-            new HtmlWebpackPlugin({
-              filename: 'preview.html',
-              template: './html/preview.html',
-              chunksSortMode: 'dependency',
-            }),
-          ]),
-    ],
-  };
-
-  return [previewConfig, mainConfig];
 };

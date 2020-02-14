@@ -1,7 +1,10 @@
 import noop from 'lodash-es/noop';
+import reduce from 'lodash-es/reduce';
 import {createLogicMiddleware} from 'redux-logic';
 import configureStore from 'redux-mock-store';
 import {first} from 'rxjs/operators';
+
+import rootReducer from '../../reducers';
 
 export function makeTestLogic(logic) {
   return async (action, {state = {}, afterDispatch = noop} = {}) => {
@@ -24,4 +27,12 @@ export function makeTestLogic(logic) {
     }
     return dispatch;
   };
+}
+
+export function applyActions(...actions) {
+  return reduce(
+    actions,
+    (state, action) => rootReducer(state, action),
+    undefined,
+  );
 }

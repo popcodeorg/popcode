@@ -238,7 +238,7 @@
         "different": "You should use `!==` instead of `!=`",
         "custom-case": "There should be a `{{-goodOperator}}` where you wrote `{{-badOperator}}`"
       },
-      "declare-variable": "You haven't declared `{{-variable}}`.\nTry: `var {{-variable}};`",
+      "declare-variable": "You haven't declared `{{-variable}}`.\nTry: `let {{-variable}};`",
       "missing-library": "`{{-variable}}` isn’t defined. Did you mean to enable the {{-library}} library?",
       "duplicated-declaration": "You already declared `{{-variable}}` somewhere else.",
       "unexpected": "You typed a \"{{character}}\" here, but that’s not allowed in JavaScript.",
