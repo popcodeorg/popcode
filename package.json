@@ -375,7 +375,7 @@
     "karma-safari-launcher": "1.0.0",
     "karma-sinon": "1.0.5",
     "karma-sourcemap-loader": "0.3.7",
-    "karma-tap": "4.1.4",
+    "karma-tap": "4.2.0",
     "karma-webpack": "4.0.2",
     "lodash.escaperegexp": "4.1.2",
     "lodash.forown": "4.4.0",

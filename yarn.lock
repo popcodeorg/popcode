@@ -8493,10 +8493,10 @@ karma-sourcemap-loader@0.3.7:
   dependencies:
     graceful-fs "^4.1.2"
 
-karma-tap@4.1.4:
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/karma-tap/-/karma-tap-4.1.4.tgz#6f65edfb986ae7545b91cbe24148cad1d0191f6d"
-  integrity sha512-4nOW7BXNRTpw68WAmJHfhYTWQAesQmTu8E/iDkBKjm5zLfKdv2n9RV0niAkDm2ukShKOMyZidLkYcsu89n08PA==
+karma-tap@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/karma-tap/-/karma-tap-4.2.0.tgz#d6e88e5ec2a51f6b0a436b4d1546e5a9efa7a0f8"
+  integrity sha512-d0k9lvVnxJ4z0u94jVDcUwqSPfJ0O0LQRWLvYoRp1I5k3E5K1fH19X0Ro0kDzAZk7ygyDN/AfV40Z37vQFXCKg==
   dependencies:
     babel-polyfill "^6.26.0"
 
