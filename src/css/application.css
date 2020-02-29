@@ -524,6 +524,7 @@ body {
 }
 
 .project-picker__close {
+  cursor: pointer;
   position: absolute;
   top: 0;
   right: 0;
