@@ -252,7 +252,7 @@
     "p5": "0.10.2",
     "parse5-sax-parser": "5.1.1",
     "pify": "5.0.0",
-    "postcss": "7.0.26",
+    "postcss": "7.0.27",
     "promise-retry": "1.1.1",
     "prop-types": "15.7.2",
     "qs": "6.9.1",
