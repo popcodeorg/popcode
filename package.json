@@ -202,8 +202,8 @@
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "7.8.6",
-    "@babel/preset-env": "7.8.6",
+    "@babel/core": "7.8.7",
+    "@babel/preset-env": "7.8.7",
     "@bugsnag/js": "6.5.2",
     "@bugsnag/plugin-react": "6.5.0",
     "@fortawesome/fontawesome-svg-core": "1.2.27",
