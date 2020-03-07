@@ -248,7 +248,7 @@
     "mousetrap": "1.6.5",
     "object-inspect": "1.7.0",
     "offline-plugin": "5.0.7",
-    "p5": "0.10.2",
+    "p5": "1.0.0",
     "parse5-sax-parser": "5.1.1",
     "pify": "5.0.0",
     "postcss": "7.0.27",
