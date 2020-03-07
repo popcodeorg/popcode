@@ -409,7 +409,7 @@
     "webpack-bundle-analyzer": "3.6.0",
     "webpack-dev-middleware": "3.7.2",
     "webpack-visualizer-plugin": "0.1.11",
-    "yarn-deduplicate": "1.1.1"
+    "yarn-deduplicate": "2.0.0"
   },
   "resolutions": {
     "**/browserslist": "<=4.8.3"
