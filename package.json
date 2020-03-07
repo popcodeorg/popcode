@@ -405,7 +405,7 @@
     "tape-catch": "1.0.6",
     "transform-loader": "0.2.4",
     "val-loader": "2.1.0",
-    "webpack": "4.41.6",
+    "webpack": "4.42.0",
     "webpack-bundle-analyzer": "3.6.0",
     "webpack-dev-middleware": "3.7.2",
     "webpack-visualizer-plugin": "0.1.11",
