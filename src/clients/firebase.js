@@ -7,7 +7,7 @@ import isNull from 'lodash-es/isNull';
 import omit from 'lodash-es/omit';
 import once from 'lodash-es/once';
 import values from 'lodash-es/values';
-import uuid from 'uuid/v4';
+import {v4 as uuid} from 'uuid';
 import 'firebase/analytics';
 import 'firebase/auth';
 import 'firebase/performance';

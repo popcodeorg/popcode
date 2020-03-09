@@ -1,7 +1,7 @@
 import findLast from 'lodash-es/findLast';
 import get from 'lodash-es/get';
 import mixpanel from 'mixpanel-browser';
-import uuid from 'uuid/v4';
+import {v4 as uuid} from 'uuid';
 
 import {firebaseProjectFactory} from '../../../__factories__/data/firebase';
 import {applicationLoaded} from '../../actions';
