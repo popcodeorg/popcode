@@ -39,7 +39,7 @@ export default function EditorsColumn({
 
   const editors = [];
 
-  visibleLanguages.forEach(({language, index}) => {
+  visibleLanguages.forEach(({language, index}, idx) => {
     editors.push(
       <EditorContainer
         key={language}
@@ -70,7 +70,7 @@ export default function EditorsColumn({
         />
       </EditorContainer>,
     );
-    if (index < visibleLanguages.length - 1) {
+    if (idx < visibleLanguages.length - 1) {
       editors.push(
         <DraggableCore
           key={`divider:${language}`}
