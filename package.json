@@ -260,7 +260,7 @@
     "react-copy-to-clipboard": "5.0.2",
     "react-dom": "16.13.0",
     "react-draggable": "4.2.0",
-    "react-immutable-proptypes": "2.1.0",
+    "react-immutable-proptypes": "2.2.0",
     "react-prevent-clickthrough": "0.0.3",
     "react-redux": "7.2.0",
     "reduce-reducers": "1.0.4",
