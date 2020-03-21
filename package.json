@@ -412,6 +412,6 @@
     "yarn-deduplicate": "2.0.0"
   },
   "resolutions": {
-    "**/browserslist": "<=4.8.3"
+    "**/browserslist": "<=4.8.7"
   }
 }
