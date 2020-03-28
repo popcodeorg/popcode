@@ -5160,10 +5160,10 @@ escodegen@~1.9.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-prettier@6.10.0:
-  version "6.10.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.10.0.tgz#7b15e303bf9c956875c948f6b21500e48ded6a7f"
-  integrity sha512-AtndijGte1rPILInUdHjvKEGbIV06NuvPrqlIEaEaWtbtvJh464mDeyGMdZEQMsGvC0ZVkiex1fSNcC4HAbRGg==
+eslint-config-prettier@6.10.1:
+  version "6.10.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.10.1.tgz#129ef9ec575d5ddc0e269667bf09defcd898642a"
+  integrity sha512-svTy6zh1ecQojvpbJSgH3aei/Rt7C6i090l5f2WQ4aB05lYHeZIR1qL4wZyyILTbtmnbHP5Yn8MrsOJMGa8RkQ==
   dependencies:
     get-stdin "^6.0.0"
 
@@ -5356,10 +5356,10 @@ eslint@6.8.0, "eslint@^4 || ^5 || ^6":
     text-table "^0.2.0"
     v8-compile-cache "^2.0.3"
 
-eslint_d@8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/eslint_d/-/eslint_d-8.1.0.tgz#3535fb33d008a54782b41c3d4dcfe8407ec25e38"
-  integrity sha512-cNZFOYG+Quphqj+GPoTNe9nsDCRJo2AjHVpu4RkvAxH8+vR2ckvm7ksr+Lwi+kkKuMf4h+QifTAXJ0HuBkJ7FA==
+eslint_d@8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/eslint_d/-/eslint_d-8.1.1.tgz#19f86ef86c6afdac2e6a89c5b380f3c90f6c3b69"
+  integrity sha512-eYr8vOwCQynnI8b5e5R07D2JI6jCItT9QZzWKGZnqMs9lKN+z0bvn1ULCNKp0u4mz1V+lLRglIDiSGIkIDDcLw==
   dependencies:
     core_d "^1.0.1"
     eslint "^4 || ^5 || ^6"
