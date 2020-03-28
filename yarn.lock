@@ -13606,10 +13606,10 @@ strip-json-comments@~2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-strip-markdown@3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/strip-markdown/-/strip-markdown-3.1.1.tgz#aa50d06c3d61ae70486cb255e4331fc418a91115"
-  integrity sha512-Q83C2WWWxASuJm7XuSqS9PGYQb8yTSxPtxE6bjCj/8kwuk4IY5qi9aEQkfyeqky0E5uCQpl1pDgOvQRh90FyMg==
+strip-markdown@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/strip-markdown/-/strip-markdown-3.1.2.tgz#172f6f89f9a98896e65a65422e0507f2bbac1667"
+  integrity sha512-NjwW6CEefesmHQPs7lof/lgnSriqUnRNOWpnrNPq9A7/yOCdnhaB7DcxlhYuN7WiiRUe349aitAsTQ/ajM9Dmw==
 
 structured-source@^3.0.2:
   version "3.0.2"
