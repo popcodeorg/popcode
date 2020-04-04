@@ -279,7 +279,7 @@
     "remark-react": "6.0.0",
     "remark-react-lowlight": "0.7.0",
     "reselect": "4.0.0",
-    "rxjs": "6.5.4",
+    "rxjs": "6.5.5",
     "shallowequal": "1.1.0",
     "slowparse": "1.3.0",
     "source-map": "0.6.1",
