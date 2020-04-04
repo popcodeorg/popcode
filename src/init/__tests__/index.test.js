@@ -3,13 +3,13 @@ import get from 'lodash-es/get';
 import mixpanel from 'mixpanel-browser';
 import {v4 as uuid} from 'uuid';
 
+import init from '..';
 import {firebaseProjectFactory} from '../../../__factories__/data/firebase';
 import {applicationLoaded} from '../../actions';
 import {rehydrateProject} from '../../clients/localStorage';
 import config from '../../config';
 import createApplicationStore from '../../createApplicationStore';
 
-import init from '..';
 import i18next from 'i18next';
 
 jest.mock('../../clients/localStorage');
