@@ -12,13 +12,21 @@ const DOMSerializer = {
   name: 'DOM',
 };
 
+const UndefinedSerializer = {
+  serialize: () => ['undefined'],
+  deserialize: u => u,
+  isInstance: u => typeof u === 'undefined',
+  name: 'Undefined',
+};
+
 export const superJsonParser = superJson.create({
   magic: '#!',
   serializers: [
+    DOMSerializer,
+    UndefinedSerializer,
     superJson.dateSerializer,
     superJson.regExpSerializer,
     superJson.functionSerializer,
-    DOMSerializer,
   ],
 });
 

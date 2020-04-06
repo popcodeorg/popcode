@@ -1,10 +1,16 @@
+/* eslint-disable react/no-multi-comp */
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import isNil from 'lodash-es/isNil';
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import {ObjectInspector, DOMInspector} from 'react-inspector';
+import {
+  ObjectRootLabel,
+  ObjectLabel,
+  ObjectInspector,
+  DOMInspector,
+} from 'react-inspector';
 import isElement from 'lodash-es/isElement';
 
 import {ConsoleEntry} from '../records';
@@ -14,6 +20,15 @@ function deserialize(serializedVal) {
   return superJsonParser.parse(serializedVal);
 }
 
+function defaultNodeRenderer({depth, name, data, isNonenumerable, expanded}) {
+  if (depth === 0) {
+    return <ObjectRootLabel data={data} name={name} />;
+  }
+  return (
+    <ObjectLabel data={data} isNonenumerable={isNonenumerable} name={name} />
+  );
+}
+
 export default function ConsoleOutput({entry, isActive}) {
   const {expression, value, error} = entry;
   const chevron = expression ? (
@@ -21,7 +36,7 @@ export default function ConsoleOutput({entry, isActive}) {
       <FontAwesomeIcon icon={faChevronLeft} />
     </div>
   ) : null;
-
+  console.log(value);
   if (!isNil(value)) {
     return (
       <div
@@ -31,11 +46,40 @@ export default function ConsoleOutput({entry, isActive}) {
       >
         {chevron}
         {deserialize(value).map((val, i) => {
+          // if (
+          //   typeof val === 'object' &&
+          //   val.$$typeof === Symbol.for('react.element')
+          // ) {
+          //   console.log('react element!');
+          //   return val;
+          // }
+          // console.log(val);
+          // return <ObjectInspector data={val} key={i} />;
           if (isElement(val)) {
-            return <DOMInspector data={val} key={i} />
-          } else {
-            return <ObjectInspector data={val} key={i} />;
+            return (
+              <DOMInspector
+                data={val}
+                key={i}
+                // nodeRenderer={defaultNodeRenderer}
+              />
+            );
           }
+          if (val === 'undefined') {
+            return (
+              <ObjectInspector
+                data={undefined}
+                key={i}
+                nodeRenderer={defaultNodeRenderer}
+              />
+            );
+          }
+          return (
+            <ObjectInspector
+              data={val}
+              key={i}
+              nodeRenderer={defaultNodeRenderer}
+            />
+          );
         })}
       </div>
     );
