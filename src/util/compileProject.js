@@ -199,7 +199,7 @@ export async function addJavascript(doc, {sources: {javascript}}, opts) {
 
 export function generateTextPreview(project) {
   const {title} = constructDocument(project);
-  return (title || 'Untitled Project').trim();
+  return (title || '').trim();
 }
 
 export default async function compileProject(project, {isInlinePreview} = {}) {
