@@ -24,6 +24,8 @@ export const bugsnagClient = bugsnag({
       payload.user = {id: 'anonymous'};
     }
 
+    payload.metaData.remoteConfig = state.getIn(['ui', 'remoteConfig']).toJS();
+
     const currentProject = getCurrentProject(state);
     if (currentProject) {
       payload.metaData.currentProject = currentProject;
