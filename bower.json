@@ -11,7 +11,6 @@
   "dependencies": {
     "bootstrap": "^3.3.6",
     "lodash": "^4.11.2",
-    "mustache.js": "mustache#^2.2.1",
-    "normalize-css": "normalize.css#^4.1.1"
+    "mustache.js": "mustache#^2.2.1"
   }
 }
