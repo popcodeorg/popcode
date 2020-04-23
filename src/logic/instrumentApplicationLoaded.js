@@ -6,7 +6,7 @@ import {loadMixpanel} from '../clients/mixpanel';
 export default createLogic({
   type: applicationLoaded,
 
-  async process({action: {payload: {isExperimental, remoteConfig} = {}}}) {
+  async process({action: {payload: {isExperimental, remoteConfig = {}} = {}}}) {
     const mixpanel = await loadMixpanel();
     const payload = {
       'Experimental Mode': Boolean(isExperimental),
