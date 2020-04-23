@@ -29,7 +29,7 @@ const codemirrorStylesheets = [
   'node_modules/codemirror/addon/lint/lint.css',
 ];
 const staticDir = path.join(srcDir, 'static');
-const bowerComponents = 'bower_components';
+const normalizeCssDir = 'node_modules/normalize.css';
 
 const postcssBrowsers = [];
 const supportedBrowsers = JSON.parse(
@@ -62,7 +62,7 @@ gulp.task('css', () => {
 
   return gulp
     .src([
-      path.join(bowerComponents, 'normalize-css/normalize.css'),
+      path.join(normalizeCssDir, 'normalize.css'),
       path.join(highlightStylesheetsDir, 'github.css'),
       ...codemirrorStylesheets,
       path.join(stylesheetsDir, '**/*.css'),

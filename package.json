@@ -250,6 +250,7 @@
     "mixpanel-browser": "2.35.0",
     "moment": "2.24.0",
     "mousetrap": "1.6.5",
+    "normalize.css": "8.0.1",
     "object-inspect": "1.7.0",
     "offline-plugin": "5.0.7",
     "p5": "1.0.0",
