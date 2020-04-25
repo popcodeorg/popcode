@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
 import React, {lazy} from 'react';
 
-import AceEditor from './AceEditor';
+const AceEditor = lazy(() =>
+  import(
+    /* webpackChunkName: "editor-ace" */
+    './AceEditor'
+  ),
+);
 
 const CodeMirrorEditor = lazy(() =>
   import(
-    /* webpackChunkName: "experimentalOnly" */
+    /* webpackChunkName: "editor-codemirror" */
     './CodeMirrorEditor'
   ),
 );
