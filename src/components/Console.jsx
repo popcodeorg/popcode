@@ -17,10 +17,10 @@ export default function Console({
   currentInputValue,
   currentProjectKey,
   history,
-  isExperimental,
   isHidden,
   isOpen,
   isTextSizeLarge,
+  useCodeMirror,
   onChange,
   onClearConsoleEntries,
   onConsoleClicked,
@@ -47,9 +47,9 @@ export default function Console({
       >
         <ConsoleInput
           currentInputValue={currentInputValue}
-          isExperimental={isExperimental}
           isTextSizeLarge={isTextSizeLarge}
           requestedFocusedLine={requestedFocusedLine}
+          useCodeMirror={useCodeMirror}
           onChange={onChange}
           onInput={onInput}
           onNextConsoleHistory={onNextConsoleHistory}
@@ -97,11 +97,11 @@ Console.propTypes = {
   currentInputValue: PropTypes.string.isRequired,
   currentProjectKey: PropTypes.string.isRequired,
   history: ImmutablePropTypes.iterable.isRequired,
-  isExperimental: PropTypes.bool.isRequired,
   isHidden: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
+  useCodeMirror: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   onClearConsoleEntries: PropTypes.func.isRequired,
   onConsoleClicked: PropTypes.func.isRequired,
