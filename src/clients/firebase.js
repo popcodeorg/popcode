@@ -67,9 +67,7 @@ function buildFirebase(appName = undefined) {
       ? {
           perf: firebase.performance(app),
           analytics: firebase.analytics(),
-          remoteConfig: tap(firebase.remoteConfig(), rc => {
-            rc.settings = {minimumFetchIntervalMillis: 1000};
-          }),
+          remoteConfig: firebase.remoteConfig(),
         }
       : {perf: null, analytics: null, remoteConfig: null};
 
