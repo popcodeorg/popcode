@@ -17,7 +17,7 @@ export default function EditorsColumn({
   errors,
   resizableFlexGrow,
   resizableFlexRefs,
-  isExperimental,
+  implementation,
   isFlexResizingSupported,
   isTextSizeLarge,
   requestedFocusedLine,
@@ -62,7 +62,7 @@ export default function EditorsColumn({
             requestedFocusedLine={requestedFocusedLine}
             source={currentProject.sources[language]}
             textSizeIsLarge={isTextSizeLarge}
-            useCodeMirror={isExperimental}
+            useCodeMirror={implementation === 'codemirror'}
             onAutoFormat={onAutoFormat}
             onInput={handleInputForLanguage(language)}
             onReady={partial(onEditorReady, language)}
@@ -98,7 +98,7 @@ export default function EditorsColumn({
 EditorsColumn.propTypes = {
   currentProject: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
-  isExperimental: PropTypes.bool.isRequired,
+  implementation: PropTypes.oneOf(['ace', 'codemirror']),
   isFlexResizingSupported: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool.isRequired,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
@@ -115,5 +115,6 @@ EditorsColumn.propTypes = {
 };
 
 EditorsColumn.defaultProps = {
+  implementation: 'ace',
   requestedFocusedLine: null,
 };

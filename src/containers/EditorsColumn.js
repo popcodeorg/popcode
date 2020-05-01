@@ -14,8 +14,8 @@ import {
   getCurrentProject,
   getErrors,
   getHiddenAndVisibleLanguages,
+  getRemoteConfig,
   getRequestedFocusedLine,
-  isExperimental,
   isTextSizeLarge,
 } from '../selectors';
 
@@ -24,7 +24,7 @@ function mapStateToProps(state) {
   return {
     currentProject: getCurrentProject(state),
     errors: getErrors(state),
-    isExperimental: isExperimental(state),
+    implementation: getRemoteConfig(state).get('editor', 'ace'),
     isTextSizeLarge: isTextSizeLarge(state),
     requestedFocusedLine: getRequestedFocusedLine(state),
     visibleLanguages,

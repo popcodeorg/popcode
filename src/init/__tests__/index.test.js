@@ -6,6 +6,7 @@ import {v4 as uuid} from 'uuid';
 import init from '..';
 import {firebaseProjectFactory} from '../../../__factories__/data/firebase';
 import {applicationLoaded} from '../../actions';
+import {loadRemoteConfig} from '../../clients/firebase';
 import {rehydrateProject} from '../../clients/localStorage';
 import config from '../../config';
 import createApplicationStore from '../../createApplicationStore';
@@ -102,6 +103,23 @@ describe('init()', () => {
         payload: {rehydratedProject},
       } = await dispatchedAction();
       expect(rehydratedProject).toBe(project);
+    });
+
+    test('sends remote config parameters from remoteConfig', async () => {
+      const remoteConfig = {color: 'orange'};
+      loadRemoteConfig.mockReturnValue(remoteConfig);
+      init();
+      const {payload} = await dispatchedAction();
+      expect(payload.remoteConfig).toEqual(remoteConfig);
+    });
+
+    test('overrides remote config parameters from query string', async () => {
+      history.pushState(null, '', '/?rco.color=blue');
+      const remoteConfig = {color: 'orange', temperature: 'warm'};
+      loadRemoteConfig.mockReturnValue(remoteConfig);
+      init();
+      const {payload} = await dispatchedAction();
+      expect(payload.remoteConfig).toEqual({...remoteConfig, color: 'blue'});
     });
   });
 });

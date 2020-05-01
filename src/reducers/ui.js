@@ -254,6 +254,12 @@ export default combineReducers(
       null,
     ),
 
+    remoteConfig: handleAction(
+      applicationLoaded,
+      (_, {payload: {remoteConfig}}) => new Immutable.Map(remoteConfig),
+      new Immutable.Map(),
+    ),
+
     requestedFocusedLine: handleActions(
       {
         [clearConsoleEntries]: () =>

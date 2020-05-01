@@ -17,9 +17,9 @@ import {
   getCurrentConsoleInputValue,
   getCurrentProjectKey,
   getHiddenUIComponents,
+  getRemoteConfig,
   getRequestedFocusedLine,
   isCurrentProjectSyntacticallyValid,
-  isExperimental,
   isTextSizeLarge,
 } from '../selectors';
 
@@ -29,7 +29,7 @@ function mapStateToProps(state) {
     currentProjectKey: getCurrentProjectKey(state),
     history: getConsoleHistory(state),
     currentInputValue: getCurrentConsoleInputValue(state),
-    isExperimental: isExperimental(state),
+    useCodeMirror: getRemoteConfig(state).get('editor', 'ace') === 'codemirror',
     isOpen: !getHiddenUIComponents(state).includes('console'),
     isTextSizeLarge: isTextSizeLarge(state),
     requestedFocusedLine: getRequestedFocusedLine(state),

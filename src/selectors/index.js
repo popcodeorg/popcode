@@ -23,6 +23,7 @@ import getOpenTopBarMenu from './getOpenTopBarMenu';
 import getPartitionedProjects from './getPartitionedProjects';
 import getProject from './getProject';
 import getProjectsFilter from './getProjectsFilter';
+import getRemoteConfig from './getRemoteConfig';
 import getRequestedFocusedLine from './getRequestedFocusedLine';
 import isClassroomExportInProgress from './isClassroomExportInProgress';
 import isCurrentlyValidating from './isCurrentlyValidating';
@@ -73,6 +74,7 @@ export {
   getPartitionedProjects,
   getProject,
   getProjectsFilter,
+  getRemoteConfig,
   getRequestedFocusedLine,
   isClassroomExportInProgress,
   isCurrentlyValidating,

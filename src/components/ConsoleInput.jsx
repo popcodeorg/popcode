@@ -1,26 +1,32 @@
 import PropTypes from 'prop-types';
 import React, {lazy, Suspense} from 'react';
 
-import AceConsoleInput from './AceConsoleInput';
+const AceConsoleInput = lazy(() =>
+  import(
+    /* webpackChunkName: "editor-ace" */
+    './AceConsoleInput'
+  ),
+);
 
 const CodeMirrorConsoleInput = lazy(() =>
   import(
-    /* webpackChunkName: "experimentalOnly" */
+    /* webpackChunkName: "editor-codemirror" */
     './CodeMirrorConsoleInput'
   ),
 );
 
-export default function ConsoleInput({isExperimental, ...props}) {
-  if (isExperimental) {
-    return (
-      <Suspense>
+export default function ConsoleInput({useCodeMirror, ...props}) {
+  return (
+    <Suspense>
+      {useCodeMirror ? (
         <CodeMirrorConsoleInput {...props} />
-      </Suspense>
-    );
-  }
-  return <AceConsoleInput {...props} />;
+      ) : (
+        <AceConsoleInput {...props} />
+      )}
+    </Suspense>
+  );
 }
 
 ConsoleInput.propTypes = {
-  isExperimental: PropTypes.bool.isRequired,
+  useCodeMirror: PropTypes.bool.isRequired,
 };
