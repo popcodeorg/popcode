@@ -1,10 +1,8 @@
 import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
 import React from 'react';
-import remark from 'remark';
-import remarkReact from 'remark-react';
 
-const parser = remark().use(remarkReact);
+import {toReact} from '../util/markdown';
 
 function ErrorItem(props) {
   const lineLabel = props.row >= 0 ? <div>On line {props.row + 1}:</div> : null;
@@ -16,9 +14,7 @@ function ErrorItem(props) {
       onClick={partial(props.onClick, props.row, props.column)}
     >
       {lineLabel}
-      <div className="error-list__message">
-        {parser.processSync(props.raw).contents}
-      </div>
+      <div className="error-list__message">{toReact(props.raw)}</div>
     </li>
   );
 }
