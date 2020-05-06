@@ -103,13 +103,16 @@
       ]
     },
     {
-      "groupName": "Remark",
+      "groupName": "Unified/Rehype/Remark",
       "packageNames": [
-        "hast-util-sanitize",
-        "remark",
+        "rehype-highlight",
+        "rehype-react",
+        "rehype-sanitize",
         "remark-external-links",
-        "remark-react",
-        "remark-react-lowlight"
+        "remark-parse",
+        "remark-rehype",
+        "remark-stringify",
+        "unified"
       ]
     },
     {

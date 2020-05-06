@@ -1,13 +1,11 @@
-import {decode} from 'he';
 import i18next from 'i18next';
 import assign from 'lodash-es/assign';
 import compact from 'lodash-es/compact';
 import has from 'lodash-es/has';
 import map from 'lodash-es/map';
-import remark from 'remark';
-import stripMarkdown from 'strip-markdown';
 
 import config from '../config';
+import {toPlainText} from '../util/markdown';
 
 class Validator {
   constructor(source, language, errorMap) {
@@ -48,12 +46,7 @@ class Validator {
     const location = this.locationForError(rawError);
 
     return assign({}, location, error, {
-      text: decode(
-        remark()
-          .use(stripMarkdown)
-          .processSync(message)
-          .toString(),
-      ),
+      text: toPlainText(message),
       raw: message,
       type: 'error',
     });
