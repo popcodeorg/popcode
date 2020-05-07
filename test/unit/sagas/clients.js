@@ -33,11 +33,7 @@ test('createSnapshot()', t => {
   }
 
   t.test('successful export', assert => {
-    initiateSnapshot()
-      .next(key)
-      .put(snapshotCreated(key))
-      .next()
-      .isDone();
+    initiateSnapshot().next(key).put(snapshotCreated(key)).next().isDone();
 
     assert.end();
   });

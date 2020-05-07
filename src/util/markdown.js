@@ -32,10 +32,7 @@ const remarkWithHighlighting = memoize(() => {
 });
 
 const remarkToPlainText = memoize(() =>
-  unified()
-    .use(markdown)
-    .use(stripMarkdown)
-    .use(stringify),
+  unified().use(markdown).use(stripMarkdown).use(stringify),
 );
 
 export function toPlainText(markdownSource) {
