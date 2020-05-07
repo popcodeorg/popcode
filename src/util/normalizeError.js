@@ -93,9 +93,7 @@ const normalizers = {
 function attachMessage(normalizedError) {
   let context;
   if (!isEmpty(normalizedError.params)) {
-    context = `with-${keys(normalizedError.params)
-      .sort()
-      .join('-')}`;
+    context = `with-${keys(normalizedError.params).sort().join('-')}`;
   }
 
   return assign(normalizedError, {

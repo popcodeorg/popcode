@@ -120,9 +120,7 @@ test('manageUserState', t => {
 test('handleInitialAuth', t => {
   t.test('with no logged in user', assert => {
     assert.doesNotThrow(() => {
-      testSaga(handleInitialAuth, null)
-        .next({user: null})
-        .put(userLoggedOut());
+      testSaga(handleInitialAuth, null).next({user: null}).put(userLoggedOut());
     });
 
     assert.end();
@@ -312,9 +310,7 @@ test('handleAuthChange', t => {
 
   t.test('log out', assert => {
     assert.doesNotThrow(() => {
-      testSaga(handleAuthChange, null)
-        .next()
-        .put(userLoggedOut());
+      testSaga(handleAuthChange, null).next().put(userLoggedOut());
     });
     assert.end();
   });

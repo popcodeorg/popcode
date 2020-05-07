@@ -108,10 +108,7 @@ export async function createProjectSnapshot(project) {
   const snapshotKey = uuid().toString();
   const database = await loadDatabase();
   const projectForSnapshot = getProjectforSnapshot(project);
-  await database
-    .ref('snapshots')
-    .child(snapshotKey)
-    .set(projectForSnapshot);
+  await database.ref('snapshots').child(snapshotKey).set(projectForSnapshot);
   return snapshotKey;
 }
 

@@ -20,11 +20,7 @@ import spinnerPageHtml from '../../../templates/project-export.html';
 import compileProject from '../../../src/util/compileProject';
 
 test('userDoneTyping', assert => {
-  testSaga(userDoneTypingSaga)
-    .next()
-    .put(userDoneTyping())
-    .next()
-    .isDone();
+  testSaga(userDoneTypingSaga).next().put(userDoneTyping()).next().isDone();
   assert.end();
 });
 
