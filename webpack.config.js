@@ -158,7 +158,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       }),
       new HtmlWebpackPlugin({
         template: './html/index.html',
-        chunksSortMode: 'dependency',
+        chunksSortMode: 'auto',
       }),
       new ScriptExtHtmlWebpackPlugin({
         defaultAttribute: 'defer',
