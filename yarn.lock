@@ -323,7 +323,7 @@
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-syntax-json-strings" "^7.8.0"
 
-"@babel/plugin-proposal-nullish-coalescing-operator@^7.8.3":
+"@babel/plugin-proposal-nullish-coalescing-operator@^7.1.0", "@babel/plugin-proposal-nullish-coalescing-operator@^7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-nullish-coalescing-operator/-/plugin-proposal-nullish-coalescing-operator-7.8.3.tgz#e4572253fdeed65cddeecfdab3f928afeb2fd5d2"
   integrity sha512-TS9MlfzXpXKt6YYomudb/KU7nQI6/xnapG6in1uZxoxDghuSMZsPb6D2fyUwNYSAp4l1iR7QtFOjkqcRYcUsfw==
@@ -339,7 +339,7 @@
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-syntax-numeric-separator" "^7.8.3"
 
-"@babel/plugin-proposal-object-rest-spread@^7.0.0", "@babel/plugin-proposal-object-rest-spread@^7.9.6":
+"@babel/plugin-proposal-object-rest-spread@^7.9.6":
   version "7.9.6"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-object-rest-spread/-/plugin-proposal-object-rest-spread-7.9.6.tgz#7a093586fcb18b08266eb1a7177da671ac575b63"
   integrity sha512-Ga6/fhGqA9Hj+y6whNpPv8psyaK5xzrQwSPsGPloVkvmH+PqW1ixdnfJ9uIO06OjQNYol3PMnfmJ8vfZtkzF+A==
@@ -356,7 +356,7 @@
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-syntax-optional-catch-binding" "^7.8.0"
 
-"@babel/plugin-proposal-optional-chaining@^7.9.0":
+"@babel/plugin-proposal-optional-chaining@^7.1.0", "@babel/plugin-proposal-optional-chaining@^7.9.0":
   version "7.9.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-optional-chaining/-/plugin-proposal-optional-chaining-7.9.0.tgz#31db16b154c39d6b8a645292472b98394c292a58"
   integrity sha512-NDn5tu3tcv4W30jNhmc2hyD5c56G6cXx4TesJubhxrJeCvuuMpttxr0OnNCqbZGhFjLrg+NIhxxC+BK5F6yS3w==
@@ -605,7 +605,7 @@
     "@babel/helper-plugin-utils" "^7.8.3"
     babel-plugin-dynamic-import-node "^2.3.3"
 
-"@babel/plugin-transform-modules-commonjs@^7.9.6":
+"@babel/plugin-transform-modules-commonjs@^7.1.0", "@babel/plugin-transform-modules-commonjs@^7.9.6":
   version "7.9.6"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-modules-commonjs/-/plugin-transform-modules-commonjs-7.9.6.tgz#64b7474a4279ee588cacd1906695ca721687c277"
   integrity sha512-7H25fSlLcn+iYimmsNe3uK1at79IE6SKW9q0/QeEHTMC9MdOZ+4bA+T1VFB5fgOqBWoqlifXRzYD0JPdmIrgSQ==
@@ -780,7 +780,7 @@
     "@babel/helper-create-regexp-features-plugin" "^7.8.3"
     "@babel/helper-plugin-utils" "^7.8.3"
 
-"@babel/preset-env@7.9.6", "@babel/preset-env@^7.1.6":
+"@babel/preset-env@7.9.6":
   version "7.9.6"
   resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.9.6.tgz#df063b276c6455ec6fcfc6e53aacc38da9b0aea6"
   integrity sha512-0gQJ9RTzO0heXOhzftog+a/WyOuqMrAIugVYxMYf83gh1CQaQDjMtsOpqOwXyDL/5JcWsrCm8l4ju8QC97O7EQ==
@@ -8477,16 +8477,17 @@ jschannel@1.0.2:
   resolved "https://registry.yarnpkg.com/jschannel/-/jschannel-1.0.2.tgz#8932010e9c6042a27bc93b918dac2e267976ae14"
   integrity sha1-iTIBDpxgQqJ7yTuRjawuJnl2rhQ=
 
-jscodeshift@0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/jscodeshift/-/jscodeshift-0.7.1.tgz#0236ad475d6f0770ca998a0160925d62b57d2507"
-  integrity sha512-YMkZSyoc8zg5woZL23cmWlnFLPH/mHilonGA7Qbzs7H6M4v4PH0Qsn4jeDyw+CHhVoAnm9UxQyB0Yw1OT+mktA==
+jscodeshift@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/jscodeshift/-/jscodeshift-0.9.0.tgz#672025658e868a63e24d6a6f4c44af9edb6e55f3"
+  integrity sha512-SUeXq8dJzj5LR8uy71axgG3bmiHoC0IdHy7n89SqKzkzBWpAds5F9IIGE+lqUSZX9J0ZfEzN8fXWIqQV0dIp2w==
   dependencies:
     "@babel/core" "^7.1.6"
     "@babel/parser" "^7.1.6"
     "@babel/plugin-proposal-class-properties" "^7.1.0"
-    "@babel/plugin-proposal-object-rest-spread" "^7.0.0"
-    "@babel/preset-env" "^7.1.6"
+    "@babel/plugin-proposal-nullish-coalescing-operator" "^7.1.0"
+    "@babel/plugin-proposal-optional-chaining" "^7.1.0"
+    "@babel/plugin-transform-modules-commonjs" "^7.1.0"
     "@babel/preset-flow" "^7.0.0"
     "@babel/preset-typescript" "^7.1.0"
     "@babel/register" "^7.0.0"
