@@ -8,7 +8,7 @@ import TestRenderer, {act} from 'react-test-renderer';
 import ShallowRenderer from 'react-test-renderer/shallow';
 
 import {EditorLocation} from '../../records';
-import CodeMirrorConsoleInput from '../CodeMirrorConsoleInput';
+import CodeMirrorConsoleInput from '../ConsoleInput';
 
 import {change as changeFactory} from '@factories/packages/codemirror';
 

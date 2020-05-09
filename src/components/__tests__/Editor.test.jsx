@@ -8,7 +8,7 @@ import TestRenderer, {act} from 'react-test-renderer';
 import ShallowRenderer from 'react-test-renderer/shallow';
 
 import {EditorLocation} from '../../records';
-import CodeMirrorEditor from '../CodeMirrorEditor';
+import Editor from '../Editor';
 
 import {change as changeFactory} from '@factories/packages/codemirror';
 import {errorFactory} from '@factories/records/Error';
@@ -26,7 +26,7 @@ const DEFAULT_PROPS = {
 };
 
 function buildComponent(props = {}) {
-  return <CodeMirrorEditor {...DEFAULT_PROPS} {...props} />;
+  return <Editor {...DEFAULT_PROPS} {...props} />;
 }
 
 function shallowRenderComponent(props = {}) {
@@ -34,14 +34,12 @@ function shallowRenderComponent(props = {}) {
 }
 
 function renderComponent(props = {}) {
-  const container = {__stub: 'editors__codemirror-container'};
+  const container = {__stub: 'editors__editor'};
   let component;
   act(() => {
     component = TestRenderer.create(buildComponent(props), {
       createNodeMock(element) {
-        if (
-          !/\beditors__codemirror-container\b/u.test(element.props.className)
-        ) {
+        if (!/\beditors__editor\b/u.test(element.props.className)) {
           throw new Error(`Got unexpected ref: ${JSON.stringify(element)}`);
         }
         return container;
@@ -57,9 +55,7 @@ describe('large text', () => {
       props: {className},
     } = shallowRenderComponent();
 
-    expect(className.split(' ')).not.toContain(
-      'editors__codemirror-container_large-text',
-    );
+    expect(className.split(' ')).not.toContain('editors__editor_large-text');
   });
 
   test('on if prop is true', () => {
@@ -67,9 +63,7 @@ describe('large text', () => {
       props: {className},
     } = shallowRenderComponent({textSizeIsLarge: true});
 
-    expect(className.split(' ')).toContain(
-      'editors__codemirror-container_large-text',
-    );
+    expect(className.split(' ')).toContain('editors__editor_large-text');
   });
 });
 
