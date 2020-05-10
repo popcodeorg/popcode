@@ -3981,7 +3981,7 @@ core-js-pure@^3.0.0:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.6.4.tgz#4bf1ba866e25814f149d4e9aaa08c36173506e3a"
   integrity sha512-epIhRLkXdgv32xIUFaaAry2wdxZYBi6bgM7cB136dzzXXa+dFyRLTZeLUJxnd8ShrmyVXBub63n2NHo2JAt8Cw==
 
-core-js@3.6.5:
+core-js@3.6.5, core-js@^3.6.4:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
   integrity sha512-vZVEEwZoIsI+vPEuoF9Iqf5H7/M3eeQqWlQnYa8FSKKePuYTf5MWnxb5SDAzCa60b3JBRS5g9b+Dq7b1y/RCrA==
@@ -3991,7 +3991,7 @@ core-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
   integrity sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
 
-core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0, core-js@^2.5.7:
+core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
   integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
@@ -11973,15 +11973,15 @@ redux-immutable@4.0.0:
   resolved "https://registry.yarnpkg.com/redux-immutable/-/redux-immutable-4.0.0.tgz#3a1a32df66366462b63691f0e1dc35e472bbc9f3"
   integrity sha1-Ohoy32Y2ZGK2NpHw4dw15HK7yfM=
 
-redux-logic@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/redux-logic/-/redux-logic-2.1.1.tgz#a6094941584d252bc90a19815329677fb4710c0b"
-  integrity sha512-A9vgtXbfY4QC+ycJV8F1DzYTamXqODt68wM0LBZXANzvVUZ+8DXDBsTgWk9+dMs14hL5bwCplGRFDxvPOJZP+Q==
+redux-logic@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/redux-logic/-/redux-logic-3.0.0.tgz#a15471092f43ac43edbe2c9a0da04dc1750df554"
+  integrity sha512-RbAPNL63XrZUbfHsUdn0o7wJfYqq6PRIoNlb1KB090ZJlvv/L6ovK33fgdyGqDX2EDrx5vZcudBaapJvtRN2YQ==
   dependencies:
-    core-js "^2.5.7"
+    core-js "^3.6.4"
     is-promise "^2.1.0"
     loose-envify "^1.4.0"
-    rxjs "^6.3.1"
+    rxjs "^6.5.5"
 
 redux-mock-store@1.5.4:
   version "1.5.4"
@@ -12577,7 +12577,7 @@ rx@4.1.0:
   resolved "https://registry.yarnpkg.com/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"
   integrity sha1-pfE/957zt0D+MKqAP7CfmIBdR4I=
 
-rxjs@6.5.5, rxjs@^6.3.1, rxjs@^6.5.3:
+rxjs@6.5.5, rxjs@^6.5.3, rxjs@^6.5.5:
   version "6.5.5"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.5.tgz#c5c884e3094c8cfee31bf27eb87e54ccfc87f9ec"
   integrity sha512-WfQI+1gohdf0Dai/Bbmk5L5ItH5tYqm3ki2c5GdWhKjalzjg93N3avFjVStyZZz+A2Em+ZxKH5bNghw9UeylGQ==
