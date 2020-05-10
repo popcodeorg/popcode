@@ -20,7 +20,6 @@ export default function Console({
   isHidden,
   isOpen,
   isTextSizeLarge,
-  useCodeMirror,
   onChange,
   onClearConsoleEntries,
   onConsoleClicked,
@@ -49,7 +48,6 @@ export default function Console({
           currentInputValue={currentInputValue}
           isTextSizeLarge={isTextSizeLarge}
           requestedFocusedLine={requestedFocusedLine}
-          useCodeMirror={useCodeMirror}
           onChange={onChange}
           onInput={onInput}
           onNextConsoleHistory={onNextConsoleHistory}
@@ -101,7 +99,6 @@ Console.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   isTextSizeLarge: PropTypes.bool,
   requestedFocusedLine: PropTypes.instanceOf(EditorLocation),
-  useCodeMirror: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   onClearConsoleEntries: PropTypes.func.isRequired,
   onConsoleClicked: PropTypes.func.isRequired,

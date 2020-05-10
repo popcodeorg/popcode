@@ -593,11 +593,6 @@ body {
 }
 
 .editors__editor {
-  z-index: 0;
-  flex: 1;
-}
-
-.editors__codemirror-container {
   bottom: 0;
   left: 0;
   position: absolute;
@@ -625,7 +620,7 @@ body {
   }
 }
 
-.editors__codemirror-container_large-text {
+.editors__editor_large-text {
   font-size: 20px;
 }
 
