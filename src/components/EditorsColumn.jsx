@@ -3,7 +3,7 @@ import isEmpty from 'lodash-es/isEmpty';
 import memoize from 'lodash-es/memoize';
 import partial from 'lodash-es/partial';
 import PropTypes from 'prop-types';
-import React, {useCallback} from 'react';
+import React, {useMemo} from 'react';
 import {DraggableCore} from 'react-draggable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
@@ -29,10 +29,11 @@ export default function EditorsColumn({
   onSave,
   visibleLanguages,
 }) {
-  const handleInputForLanguage = useCallback(
-    memoize(language =>
-      partial(onEditorInput, currentProject.projectKey, language),
-    ),
+  const makeHandleInputForLanguage = useMemo(
+    () =>
+      memoize(language =>
+        partial(onEditorInput, currentProject.projectKey, language),
+      ),
     [onEditorInput, currentProject.projectKey],
   );
 
@@ -62,7 +63,7 @@ export default function EditorsColumn({
             source={currentProject.sources[language]}
             textSizeIsLarge={isTextSizeLarge}
             onAutoFormat={onAutoFormat}
-            onInput={handleInputForLanguage(language)}
+            onInput={makeHandleInputForLanguage(language)}
             onReady={partial(onEditorReady, language)}
             onRequestedLineFocused={onRequestedLineFocused}
             onSave={onSave}
