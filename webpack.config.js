@@ -250,7 +250,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
             path.resolve(__dirname, 'templates'),
             path.resolve(__dirname, 'node_modules/jquery/dist'),
             path.resolve(__dirname, 'node_modules/p5/lib'),
-            path.resolve(__dirname, 'node_modules/mustache')
+            path.resolve(__dirname, 'node_modules/mustache'),
           ],
           use: ['raw-loader'],
         },
