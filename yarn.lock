@@ -5035,10 +5035,10 @@ entities@^2.0.0:
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.0.tgz#68d6084cab1b079767540d80e56a39b423e4abf4"
   integrity sha512-D9f7V0JSRwIxlRI2mjMqufDrRDnx8p+eEOz7aUM9SuvF8gsBzra0/6tbjl1m8eQHrZlYj6PxqE00hZ1SAIKPLw==
 
-enum@3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/enum/-/enum-3.0.3.tgz#cfaf4efd1734fdc5e3907cb256a1de769b61b4b8"
-  integrity sha512-dnDODZ0FeHMOewtXSZu5n//YIV0zO7iplaHZoteNOKonckYRQYvMbO3vg/As3FTlHLBhCQAuJ0fo1kW7BpPCng==
+enum@3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/enum/-/enum-3.0.4.tgz#6c3afd2c85db7ded79ecb54a703078a34b2bca2b"
+  integrity sha512-X+VaPeIut6Vh0nJq1sfSBQQuqVmjUpiheoR5RokqeRm4xkzsNZjOqK+gpSnW+BrEs5d9q7Wl+nf1LpolFDYp4g==
 
 envify@^3.0.0:
   version "3.4.1"
