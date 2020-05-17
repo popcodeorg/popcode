@@ -1,3 +1,4 @@
+import isNil from 'lodash-es/isNil';
 import {Factory} from 'rosie';
 
 export const githubProfileFactory = new Factory().attrs({
@@ -45,3 +46,38 @@ export const githubProfileFactory = new Factory().attrs({
     private_repos: 10000,
   },
 });
+
+export const githubGistFactory = new Factory()
+  .option('html', undefined)
+  .option('css', undefined)
+  .option('javascript', undefined)
+  .option('enabledLibraries', undefined)
+  .option('hiddenUiComponents', undefined)
+  .attr(
+    'files',
+    ['html', 'css', 'javascript', 'enabledLibraries', 'hiddenUiComponents'],
+    (html, css, javascript, enabledLibraries, hiddenUIComponents) => {
+      const files = [];
+      if (!isNil(html)) {
+        files.push({language: 'HTML', filename: 'index.html', content: html});
+      }
+      if (!isNil(css)) {
+        files.push({language: 'CSS', filename: 'styles.css', content: css});
+      }
+      if (!isNil(javascript)) {
+        files.push({
+          language: 'JavaScript',
+          filename: 'script.js',
+          content: javascript,
+        });
+      }
+      if (enabledLibraries || hiddenUIComponents) {
+        files.push({
+          language: 'JSON',
+          filename: 'popcode.json',
+          content: JSON.stringify({enabledLibraries, hiddenUIComponents}),
+        });
+      }
+      return files;
+    },
+  );

@@ -29,7 +29,7 @@ import {accountMigrationComplete, userLoggedOut} from '../../actions/user';
 import {Project} from '../../records';
 import reducer, {reduceRoot as rootReducer} from '../projects';
 
-import {deprecatedReducerTest} from './migratedKarmaTestHelpers';
+import {deprecated_reducerTest as reducerTest} from './migratedKarmaTestHelpers';
 
 const now = Date.now();
 const projectKey = '12345';
@@ -40,7 +40,7 @@ const css = 'p {}';
 describe('projectCreated', () => {
   test(
     'from pristine state',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       states.initial,
       partial(projectCreated, projectKey),
@@ -51,7 +51,7 @@ describe('projectCreated', () => {
 
   test(
     'with existing projects',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       initProjects({1: true, 2: false}),
       partial(projectCreated, projectKey),
@@ -62,7 +62,7 @@ describe('projectCreated', () => {
 
 test(
   'updateProjectSource',
-  deprecatedReducerTest(
+  reducerTest(
     reducer,
     initProjects({[projectKey]: false}),
     partial(updateProjectSource, projectKey, 'css', css, now),
@@ -74,7 +74,7 @@ test(
 
 test(
   'updateProjectInstructions',
-  deprecatedReducerTest(
+  reducerTest(
     reducer,
     initProjects({[projectKey]: false}),
     partial(updateProjectInstructions, projectKey, '# Instructions', now),
@@ -87,7 +87,7 @@ test(
 describe('changeCurrentProject', () => {
   test(
     'unArchiveProject',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       initProjects({1: false}).setIn(['1', 'isArchived'], true),
       partial(changeCurrentProject, '1'),
@@ -97,7 +97,7 @@ describe('changeCurrentProject', () => {
 
   test(
     'from modified to pristine',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       initProjects({1: true, 2: false}),
       partial(changeCurrentProject, '2'),
@@ -108,7 +108,7 @@ describe('changeCurrentProject', () => {
 
   test(
     'from pristine to modified',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       initProjects({1: false, 2: true}),
       partial(changeCurrentProject, '2'),
@@ -119,7 +119,7 @@ describe('changeCurrentProject', () => {
 
   test(
     'from modified to modified',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       initProjects({1: true, 2: true}),
       partial(changeCurrentProject, '2'),
@@ -134,7 +134,7 @@ tap(project(), importedProject => {
 
   test(
     'snapshotImported',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       states.initial,
       partial(snapshotImported, snapshotProjectKey, importedProject),
@@ -154,7 +154,7 @@ tap(project(), importedProject => {
 tap(project(), rehydratedProject =>
   test(
     'projectRestoredFromLastSession',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       states.initial,
       partial(projectRestoredFromLastSession, rehydratedProject),
@@ -169,7 +169,7 @@ tap(project(), rehydratedProject =>
 describe('gistImported', () => {
   test(
     'HTML and CSS, no JSON',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       states.initial,
       partial(gistImported, projectKey, gistData({html, css})),
@@ -181,7 +181,7 @@ describe('gistImported', () => {
 
   test(
     'CSS, no JSON',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       states.initial,
       partial(gistImported, projectKey, gistData({css})),
@@ -193,7 +193,7 @@ describe('gistImported', () => {
 
   test(
     'HTML, CSS, JSON',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       states.initial,
       partial(
@@ -221,7 +221,7 @@ describe('gistImported', () => {
 tap([project(), project()], projectsIn => {
   test(
     'projectsLoaded',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       states.initial,
       partial(projectsLoaded, projectsIn),
@@ -244,7 +244,7 @@ tap([project(), project()], projectsIn => {
     firebaseUser => {
       test(
         'accountMigrationComplete',
-        deprecatedReducerTest(
+        reducerTest(
           reducer,
           states.initial,
           partial(accountMigrationComplete, firebaseUser, {}, projectsIn),
@@ -268,7 +268,7 @@ tap([project(), project()], projectsIn => {
 tap(initProjects({1: true, 2: true}), projects =>
   test(
     'userLoggedOut',
-    deprecatedReducerTest(
+    reducerTest(
       rootReducer,
       Immutable.fromJS({currentProject: {projectKey: '1'}, projects}),
       userLoggedOut,
@@ -283,7 +283,7 @@ tap(initProjects({1: true, 2: true}), projects =>
 tap(initProjects({1: false}), projects =>
   test(
     'toggleLibrary',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       projects,
       partial(toggleLibrary, '1', 'jquery', now),
@@ -299,7 +299,7 @@ tap(initProjects({1: false}), projects =>
 tap(initProjects({1: true}), projects =>
   test(
     'hideComponent',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       projects,
       partial(hideComponent, '1', 'output', now),
@@ -313,7 +313,7 @@ tap(initProjects({1: true}), projects =>
 tap(initProjects({1: true}), projects =>
   test(
     'unhideComponent',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       projects.updateIn(['1', 'hiddenUIComponents'], components =>
         components.add('output'),
@@ -329,7 +329,7 @@ describe('toggleComponent', () => {
 
   test(
     'with component visible',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       projects,
       partial(toggleComponent, '1', 'output', now),
@@ -341,7 +341,7 @@ describe('toggleComponent', () => {
 
   test(
     'with component hidden',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       projects.updateIn(['1', 'hiddenUIComponents'], components =>
         components.add('output'),
@@ -356,7 +356,7 @@ tap(initProjects({1: true}), projects => {
   const timestamp = Date.now();
   test(
     'focusLine',
-    deprecatedReducerTest(
+    reducerTest(
       rootReducer,
       Immutable.fromJS({
         projects: projects.updateIn(['1', 'hiddenUIComponents'], components =>
@@ -378,7 +378,7 @@ tap(initProjects({1: true}), projects => {
   const repoName = 'Page-Title-abc123';
   test(
     'gist export',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       projects,
       partial(
@@ -394,7 +394,7 @@ tap(initProjects({1: true}), projects => {
   );
   test(
     'repo export',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       projects,
       partial(
@@ -416,7 +416,7 @@ tap(initProjects({1: true}), projects => {
 tap(initProjects({1: false}), projects =>
   test(
     'archiveProject',
-    deprecatedReducerTest(
+    reducerTest(
       reducer,
       projects,
       partial(archiveProject, '1'),
