@@ -3,7 +3,6 @@ module.exports = {
   moduleNameMapper: {
     '@factories/(.*)$': '<rootDir>/__factories__/$1',
     '\\.(html|svg)': '<rootDir>/__mocks__/fileMock.js',
-    i18next: '<rootDir>/__mocks__/i18next.js',
   },
   testMatch: ['**/__tests__/**/*.test.js?(x)'],
   testPathIgnorePatterns: ['/node_modules/', '/bower_components/', '/nodeenv/'],
