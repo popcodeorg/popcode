@@ -1,15 +1,15 @@
 import {List, Map} from 'immutable';
 import partial from 'lodash-es/partial';
-import test from 'tape-catch';
 
-import {updateResizableFlex} from '../../../src/actions/resizableFlex';
-import reducer from '../../../src/reducers/resizableFlex';
-import reducerTest from '../../helpers/reducerTest';
+import {updateResizableFlex} from '../../actions/resizableFlex';
+import reducer from '../resizableFlex';
+
+import {deprecated_reducerTest as reducerTest} from './migratedKarmaTestHelpers';
 
 const initialState = new Map();
 
-test('updateResizableFlex', t => {
-  t.test(
+describe('updateResizableFlex', () => {
+  test(
     'from initial state with one update',
     reducerTest(
       reducer,
@@ -19,7 +19,7 @@ test('updateResizableFlex', t => {
     ),
   );
 
-  t.test(
+  test(
     'from initial state with multiple updates',
     reducerTest(
       reducer,
@@ -32,7 +32,7 @@ test('updateResizableFlex', t => {
     ),
   );
 
-  t.test(
+  test(
     'from initial state with multiple non-initial updates',
     reducerTest(
       reducer,
@@ -45,7 +45,7 @@ test('updateResizableFlex', t => {
     ),
   );
 
-  t.test(
+  test(
     'updates to existing flex',
     reducerTest(
       reducer,
@@ -58,7 +58,7 @@ test('updateResizableFlex', t => {
     ),
   );
 
-  t.test(
+  test(
     'updates partially overlapping existing flex',
     reducerTest(
       reducer,
