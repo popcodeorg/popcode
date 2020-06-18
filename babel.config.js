@@ -34,6 +34,7 @@ module.exports = api => {
           modules: isJest ? 'auto' : false,
           useBuiltIns: 'entry',
           corejs: 3,
+          exclude: ['transform-typeof-symbol'],
         },
       ],
     ],
