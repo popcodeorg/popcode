@@ -214,6 +214,7 @@
     "@fortawesome/free-brands-svg-icons": "5.13.0",
     "@fortawesome/free-solid-svg-icons": "5.13.0",
     "@fortawesome/react-fontawesome": "0.1.9",
+    "@rollup/plugin-replace": "2.3.3",
     "PrettyCSS": "0.3.19",
     "array-to-sentence": "2.0.0",
     "bowser": "2.9.0",
@@ -300,6 +301,7 @@
     "yarn": "~1.22.0"
   },
   "scripts": {
+    "rollup": "rollup --config",
     "postinstall": "bower install",
     "pretest": "yarn run check-configs && yarn run check-duplicate-dependencies && yarn run lint",
     "test": "yarn run test.jest && yarn run test.karma",
