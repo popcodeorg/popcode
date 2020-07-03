@@ -10,10 +10,9 @@ import {string} from 'rollup-plugin-string';
 
 export default {
   input: 'src/application.js',
-  inlineDynamicImports: true,
   output: {
-    file: 'build/main.js',
-    format: 'iife',
+    dir: 'rollup',
+    format: 'es',
   },
   plugins: [
     resolve({
