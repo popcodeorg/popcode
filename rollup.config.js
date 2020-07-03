@@ -3,25 +3,22 @@ import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
+// import replace from '@rollup/plugin-replace';
 import reactSvg from 'rollup-plugin-react-svg';
 import {string} from 'rollup-plugin-string';
 /* eslint-enable import/no-extraneous-dependencies */
 
 export default {
   input: 'src/application.js',
+  inlineDynamicImports: true,
   output: {
-    file: 'dist/main.js',
+    file: 'build/main.js',
     format: 'iife',
   },
   plugins: [
-    // eslint-disable-next-line no-undef
-    replace({'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)}),
-    babel({
-      exclude: [/node_modules/u, './src/config'],
-    }),
     resolve({
       extensions: ['.mjs', '.js', '.json', '.node', '.jsx'],
+      browser: true,
     }),
     commonjs({
       include: [
@@ -29,13 +26,13 @@ export default {
         'node_modules/**/*',
         'node_modules',
         /node_modules/u,
+        // LOCAL COMMONJS FILES
+        './locales/index.js',
+        './src/config.js',
+        './src/services/inlineStylePrefixer/prefixData.gen.js',
       ],
-      namedExports: {
-        'parse5-sax-parser': ['SAXParser'],
-        'lru-cache': ['LRU'],
-        // '../config': ['config'],
-      },
     }),
+    babel(),
     json({preferConst: true}),
     string({
       include: [

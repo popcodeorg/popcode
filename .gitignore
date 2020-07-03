@@ -9,3 +9,4 @@ nodeenv
 __pycache__
 static/compiled
 yarn-error.log
+build
