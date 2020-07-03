@@ -37,12 +37,12 @@ Build steps required are the following:
 Production build is done through Gulp and the `yarn run preview` script.
 
 ### Webpack Build
-- Webpack JS assets are about 11mb
+- Webpack JS assets are 13mb total
 - Webpack build takes 5 minutes
 
 ### Rollup build
 - build took 2 minutes with no code splitting
-
+- Rollup JS assets are 13mb total
 
 ## Things To Fix
 - `locales/index` doesn't export anything, not sure what it does
