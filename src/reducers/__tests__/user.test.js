@@ -1,7 +1,6 @@
 import {Map} from 'immutable';
 import partial from 'lodash-es/partial';
 import tap from 'lodash-es/tap';
-import test from 'tape-catch';
 
 import {
   accountMigrationComplete,
@@ -14,20 +13,25 @@ import {
   startAccountMigration,
   userAuthenticated,
   userLoggedOut,
-} from '../../../src/actions/user';
-import {AccountMigrationState, LoginState} from '../../../src/enums';
+} from '../../actions/user';
+import {AccountMigrationState, LoginState} from '../../enums';
+
 import {
   AccountMigration,
   User,
   UserAccount,
   UserIdentityProvider,
-} from '../../../src/records';
-import reducer from '../../../src/reducers/user';
-import {userCredential} from '../../helpers/factory';
-import reducerTest from '../../helpers/reducerTest';
-import {user as states} from '../../helpers/referenceStates';
+} from '../../records';
+import reducer from '../user';
 
-const userCredentialIn = userCredential();
+import {deprecated_reducerTest as reducerTest} from './migratedKarmaTestHelpers';
+
+import {credentialFactory, userFactory} from '@factories/clients/firebase';
+
+const userCredentialIn = {
+  user: userFactory.build({providerId: 'google.com'}),
+  credential: credentialFactory.build({providerId: 'google.com'}),
+};
 
 const loggedOutState = new User({
   loginState: LoginState.ANONYMOUS,
@@ -53,7 +57,7 @@ test(
   'userAuthenticated',
   reducerTest(
     reducer,
-    states.initial,
+    new User(),
     partial(userAuthenticated, userCredentialIn.user, [
       userCredentialIn.credential,
     ]),
@@ -75,14 +79,14 @@ test(
           {
             displayName: 'Popcode User',
             photoURL: null,
-            providerId: 'github.com',
+            providerId: 'google.com',
           },
         ],
       },
-      {providerId: 'github.com', accessToken: 'abc'},
+      {providerId: 'google.com', idToken: 'abc'},
     ),
     loggedInState.setIn(
-      ['account', 'identityProviders', 'github.com'],
+      ['account', 'identityProviders', 'google.com'],
       new UserIdentityProvider({
         displayName: 'Popcode User',
         accessToken: 'abc',

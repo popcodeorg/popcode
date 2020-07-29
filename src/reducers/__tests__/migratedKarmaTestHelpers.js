@@ -15,6 +15,6 @@ export function deprecated_reducerTest( // eslint-disable-line camelcase
   return () => {
     const expected = stateAfter;
     const actual = reducer(stateBefore, action());
-    expect(expected).toEqualImmutable(actual);
+    expect(actual).toEqualImmutable(expected);
   };
 }
