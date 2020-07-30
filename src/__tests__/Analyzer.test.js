@@ -1,31 +1,26 @@
-import test from 'tape-catch';
+import Analyzer from '../analyzers';
+import {Project} from '../records';
 
-import Analyzer from '../../src/analyzers';
-import {Project} from '../../src/records';
-
-test('no script tag', assert => {
+test('no script tag', () => {
   const html = '<h1>Some harmless html</h1>';
   const currentProject = Project.fromJS({sources: {html}}).toJS();
   const analyzer = new Analyzer(currentProject);
-  assert.notOk(analyzer.containsExternalScript);
-  assert.end();
+  expect(analyzer.containsExternalScript).toBeFalsy();
 });
 
-test('<script> tag', assert => {
+test('<script> tag', () => {
   const currentProject = Project.fromJS({
     sources: {html: '<script src="https://script.com/script.js">'},
   }).toJS();
   const analyzer = new Analyzer(currentProject);
-  assert.ok(analyzer.containsExternalScript);
-  assert.end();
+  expect(analyzer.containsExternalScript).toBeTruthy();
 });
 
-test('libraries', assert => {
+test('libraries', () => {
   const currentProject = Project.fromJS({
     sources: {html: ''},
     enabledLibraries: ['jquery'],
   }).toJS();
   const analyzer = new Analyzer(currentProject);
-  assert.deepEqual(analyzer.enabledLibraries, ['jquery']);
-  assert.end();
+  expect(analyzer.enabledLibraries).toEqual(['jquery']);
 });
