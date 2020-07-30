@@ -52,10 +52,10 @@ export const githubGistFactory = new Factory()
   .option('css', undefined)
   .option('javascript', undefined)
   .option('enabledLibraries', undefined)
-  .option('hiddenUiComponents', undefined)
+  .option('hiddenUIComponents', undefined)
   .attr(
     'files',
-    ['html', 'css', 'javascript', 'enabledLibraries', 'hiddenUiComponents'],
+    ['html', 'css', 'javascript', 'enabledLibraries', 'hiddenUIComponents'],
     (html, css, javascript, enabledLibraries, hiddenUIComponents) => {
       const files = [];
       if (!isNil(html)) {

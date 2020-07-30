@@ -4,8 +4,6 @@ import partial from 'lodash-es/partial';
 import reduce from 'lodash-es/reduce';
 import tap from 'lodash-es/tap';
 
-import {gistData, project} from '../../../test/helpers/factory';
-import {projects as states} from '../../../test/helpers/referenceStates';
 import {
   projectExported,
   projectRestoredFromLastSession,
@@ -30,6 +28,13 @@ import {Project} from '../../records';
 import reducer, {reduceRoot as rootReducer} from '../projects';
 
 import {deprecated_reducerTest as reducerTest} from './migratedKarmaTestHelpers';
+
+import {githubGistFactory} from '@factories/clients/github';
+import {firebaseProjectFactory} from '@factories/data/firebase';
+
+const states = {
+  initial: new Immutable.Map(),
+};
 
 const now = Date.now();
 const projectKey = '12345';
@@ -129,7 +134,7 @@ describe('changeCurrentProject', () => {
   );
 });
 
-tap(project(), importedProject => {
+tap(firebaseProjectFactory.build(), importedProject => {
   const snapshotProjectKey = '123454321';
 
   test(
@@ -151,7 +156,7 @@ tap(project(), importedProject => {
   );
 });
 
-tap(project(), rehydratedProject =>
+tap(firebaseProjectFactory.build(), rehydratedProject =>
   test(
     'projectRestoredFromLastSession',
     reducerTest(
@@ -172,7 +177,11 @@ describe('gistImported', () => {
     reducerTest(
       reducer,
       states.initial,
-      partial(gistImported, projectKey, gistData({html, css})),
+      partial(
+        gistImported,
+        projectKey,
+        githubGistFactory.build({}, {html, css}),
+      ),
       new Immutable.Map({
         [projectKey]: buildProject(projectKey, {html, css, javascript: ''}),
       }),
@@ -184,7 +193,7 @@ describe('gistImported', () => {
     reducerTest(
       reducer,
       states.initial,
-      partial(gistImported, projectKey, gistData({css})),
+      partial(gistImported, projectKey, githubGistFactory.build({}, {css})),
       new Immutable.Map({
         [projectKey]: buildProject(projectKey, {html: '', css, javascript: ''}),
       }),
@@ -199,12 +208,15 @@ describe('gistImported', () => {
       partial(
         gistImported,
         projectKey,
-        gistData({
-          html,
-          css,
-          enabledLibraries: ['jquery'],
-          hiddenUIComponents: ['output'],
-        }),
+        githubGistFactory.build(
+          {},
+          {
+            html,
+            css,
+            enabledLibraries: ['jquery'],
+            hiddenUIComponents: ['output'],
+          },
+        ),
       ),
       new Immutable.Map({
         [projectKey]: buildProject(
@@ -218,52 +230,55 @@ describe('gistImported', () => {
   );
 });
 
-tap([project(), project()], projectsIn => {
-  test(
-    'projectsLoaded',
-    reducerTest(
-      reducer,
-      states.initial,
-      partial(projectsLoaded, projectsIn),
-      projectsIn.reduce(
-        (map, projectIn) =>
-          map.set(
-            projectIn.projectKey,
-            buildProject(projectIn.projectKey, projectIn.sources).set(
-              'updatedAt',
-              projectIn.updatedAt,
+tap(
+  [firebaseProjectFactory.build(), firebaseProjectFactory.build()],
+  projectsIn => {
+    test(
+      'projectsLoaded',
+      reducerTest(
+        reducer,
+        states.initial,
+        partial(projectsLoaded, projectsIn),
+        projectsIn.reduce(
+          (map, projectIn) =>
+            map.set(
+              projectIn.projectKey,
+              buildProject(projectIn.projectKey, projectIn.sources).set(
+                'updatedAt',
+                projectIn.updatedAt,
+              ),
+            ),
+          new Immutable.Map(),
+        ),
+      ),
+    );
+
+    tap(
+      {providerData: [{providerId: 'google.com'}, {providerId: 'github.com'}]},
+      firebaseUser => {
+        test(
+          'accountMigrationComplete',
+          reducerTest(
+            reducer,
+            states.initial,
+            partial(accountMigrationComplete, firebaseUser, {}, projectsIn),
+            projectsIn.reduce(
+              (map, projectIn) =>
+                map.set(
+                  projectIn.projectKey,
+                  buildProject(projectIn.projectKey, projectIn.sources).set(
+                    'updatedAt',
+                    projectIn.updatedAt,
+                  ),
+                ),
+              new Immutable.Map(),
             ),
           ),
-        new Immutable.Map(),
-      ),
-    ),
-  );
-
-  tap(
-    {providerData: [{providerId: 'google.com'}, {providerId: 'github.com'}]},
-    firebaseUser => {
-      test(
-        'accountMigrationComplete',
-        reducerTest(
-          reducer,
-          states.initial,
-          partial(accountMigrationComplete, firebaseUser, {}, projectsIn),
-          projectsIn.reduce(
-            (map, projectIn) =>
-              map.set(
-                projectIn.projectKey,
-                buildProject(projectIn.projectKey, projectIn.sources).set(
-                  'updatedAt',
-                  projectIn.updatedAt,
-                ),
-              ),
-            new Immutable.Map(),
-          ),
-        ),
-      );
-    },
-  );
-});
+        );
+      },
+    );
+  },
+);
 
 tap(initProjects({1: true, 2: true}), projects =>
   test(

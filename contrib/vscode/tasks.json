@@ -25,7 +25,7 @@
       "label": "Popcode: Run Tests in Watch Mode",
       "type": "shell",
       "command": "tools/yarn.py",
-      "args": ["run", "autotest.jest"],
+      "args": ["run", "autotest"],
       "windows": {
         "command": "tools\\yarn.py"
       },
