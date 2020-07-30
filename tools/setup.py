@@ -106,11 +106,7 @@ Your development environment is ready! To run your development server, type:
 
 To run tests in watch mode type:
 
-  {yarn_path} run autotest.jest
-
-or
-
-  {yarn_path} run autotest.karma
+  {yarn_path} run autotest
 """.format(yarn_path=yarn_path))
 
 def setup(skip_dependencies=False):

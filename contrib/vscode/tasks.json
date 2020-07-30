@@ -23,33 +23,6 @@
     },
     {
       "label": "Popcode: Run Tests in Watch Mode",
-      "dependsOn": [
-        "Popcode: Run Jest Tests in Watch Mode",
-        "Popcode: Run Karma Tests in Watch Mode"
-      ],
-      "type": "shell",
-      "problemMatcher": [],
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      }
-    },
-    {
-      "label": "Popcode: Run Karma Tests in Watch Mode",
-      "type": "shell",
-      "command": "tools/yarn.py",
-      "args": ["run", "autotest.karma"],
-      "windows": {
-        "command": "tools\\yarn.py"
-      },
-      "presentation": {
-        "group": "test",
-        "panel": "dedicated"
-      },
-      "group": "test"
-    },
-    {
-      "label": "Popcode: Run Jest Tests in Watch Mode",
       "type": "shell",
       "command": "tools/yarn.py",
       "args": ["run", "autotest.jest"],

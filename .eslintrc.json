@@ -45,7 +45,6 @@
         "babel.config.js",
         "gulpfile.js",
         "jest.config.js",
-        "karma.conf.js",
         "script/*.js",
         "webpack.config.js"
       ],
@@ -125,20 +124,6 @@
       "files": "src/sagas/**/*",
       "rules": {
         "import/order": "off"
-      }
-    },
-    {
-      "files": "test/**/*",
-      "globals": {
-        "sinon": true
-      },
-      "rules": {
-        "import/no-extraneous-dependencies": [
-          "error",
-          {
-            "devDependencies": true
-          }
-        ]
       }
     },
     {

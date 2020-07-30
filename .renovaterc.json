@@ -62,21 +62,6 @@
       "packageNames": ["jest", "jest-extended"]
     },
     {
-      "groupName": "Karma",
-      "automerge": true,
-      "packageNames": [
-        "karma",
-        "karma-browserstack-launcher",
-        "karma-chrome-launcher",
-        "karma-firefox-launcher",
-        "karma-safari-launcher",
-        "karma-sinon",
-        "karma-sourcemap-loader",
-        "karma-tap",
-        "karma-webpack"
-      ]
-    },
-    {
       "groupName": "lodash",
       "packageNames": ["lodash-es"],
       "packagePatterns": ["^lodash\\."]
@@ -134,11 +119,6 @@
       "prPriority": -1
     },
     {
-      "groupName": "Tape",
-      "automerge": true,
-      "packageNames": ["tape", "tape-catch"]
-    },
-    {
       "groupName": "Webpack",
       "packageNames": [
         "circular-dependency-plugin",
@@ -177,7 +157,6 @@
         "is-docker",
         "jscodeshift",
         "prettier",
-        "sinon",
         "react-test-renderer",
         "rosie",
         "yarn-deduplicate"
