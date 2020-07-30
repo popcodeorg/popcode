@@ -1,26 +1,26 @@
-import test from 'tape-catch';
+import 'jest-date-mock';
 import {testSaga} from 'redux-saga-test-plan';
 import {
   createSnapshot as createSnapshotSaga,
   exportProject as exportProjectSaga,
-} from '../../../src/sagas/clients';
+} from '../clients';
 import {
   projectExported,
   projectExportError,
   snapshotCreated,
   snapshotExportError,
-} from '../../../src/actions/clients';
-import Scenario from '../../helpers/Scenario';
+} from '../../actions/clients';
+import {deprecated_Scenario as Scenario} from './migratedKarmaTestHelpers';
 import {
   createGistFromProject,
   createOrUpdateRepoFromProject,
-} from '../../../src/clients/github';
-import {createProjectSnapshot} from '../../../src/clients/firebase';
-import {createShareToClassroomUrl} from '../../../src/clients/googleClassroom';
-import {getCurrentProject} from '../../../src/selectors';
-import {generateTextPreview} from '../../../src/util/compileProject';
+} from '../../clients/github';
+import {createProjectSnapshot} from '../../clients/firebase';
+import {createShareToClassroomUrl} from '../../clients/googleClassroom';
+import {getCurrentProject} from '../../selectors';
+import {generateTextPreview} from '../../util/compileProject';
 
-test('createSnapshot()', t => {
+describe('createSnapshot()', () => {
   const {project} = new Scenario();
   const key = '123-456';
 
@@ -32,36 +32,32 @@ test('createSnapshot()', t => {
       .call(createProjectSnapshot, project.toJS());
   }
 
-  t.test('successful export', assert => {
+  test('successful export', () => {
     initiateSnapshot().next(key).put(snapshotCreated(key)).next().isDone();
-
-    assert.end();
   });
 
-  t.test('error', assert => {
+  test('error', () => {
     const error = new Error();
     initiateSnapshot()
       .throw(error)
       .put(snapshotExportError(error))
       .next()
       .isDone();
-
-    assert.end();
   });
 });
 
-test('export gist', t => {
+describe('export gist', () => {
   const url = 'https://gist.github.com/abc123';
   const exportType = 'gist';
   const scenario = new Scenario();
   scenario.logIn();
   scenario.authGitHub();
 
-  function initiateExport(assert) {
+  function initiateExport() {
     return testSaga(exportProjectSaga, {payload: {exportType}})
       .next()
       .inspect(effect => {
-        assert.equals(effect.type, 'SELECT', 'invokes select effect');
+        expect(effect.type).toEqual('SELECT');
       })
       .next(scenario.state)
       .call(
@@ -75,9 +71,8 @@ test('export gist', t => {
       );
   }
 
-  t.test('with successful export', assert => {
-    const clock = sinon.useFakeTimers();
-    initiateExport(assert)
+  test('with successful export', () => {
+    initiateExport()
       .next({html_url: url})
       .put(
         projectExported(
@@ -90,22 +85,19 @@ test('export gist', t => {
       )
       .next()
       .isDone();
-    clock.restore();
-    assert.end();
   });
 
-  t.test('with error', assert => {
+  test('with error', () => {
     const error = new Error();
-    initiateExport(assert)
+    initiateExport()
       .throw(error)
       .put(projectExportError(exportType))
       .next()
       .isDone();
-    assert.end();
   });
 });
 
-test('export repo', t => {
+describe('export repo', () => {
   const name = 'Page-Title-abc123';
   const url = `https://github.com/usernmaer/${name}`;
   const exportType = 'repo';
@@ -113,11 +105,11 @@ test('export repo', t => {
   scenario.logIn();
   scenario.authGitHub();
 
-  function initiateExport(assert) {
+  function initiateExport() {
     return testSaga(exportProjectSaga, {payload: {exportType}})
       .next()
       .inspect(effect => {
-        assert.equals(effect.type, 'SELECT', 'invokes select effect');
+        expect(effect.type).toEqual('SELECT');
       })
       .next(scenario.state)
       .call(
@@ -131,9 +123,8 @@ test('export repo', t => {
       );
   }
 
-  t.test('with successful export', assert => {
-    const clock = sinon.useFakeTimers();
-    initiateExport(assert)
+  test('with successful export', () => {
+    initiateExport()
       .next({url, name})
       .put(
         projectExported(
@@ -146,33 +137,30 @@ test('export repo', t => {
       )
       .next()
       .isDone();
-    clock.restore();
-    assert.end();
   });
 
-  t.test('with error', assert => {
+  test('with error', () => {
     const error = new Error();
-    initiateExport(assert)
+    initiateExport()
       .throw(error)
       .put(projectExportError(exportType))
       .next()
       .isDone();
-    assert.end();
   });
 });
 
-test('update repo', t => {
+describe('update repo', () => {
   const url = 'https://github.com/usernmaer/Page-Title-abc123';
   const exportType = 'repo';
   const scenario = new Scenario();
   scenario.logIn();
   scenario.authGitHub();
 
-  function initiateExport(assert) {
+  function initiateExport() {
     return testSaga(exportProjectSaga, {payload: {exportType}})
       .next()
       .inspect(effect => {
-        assert.equals(effect.type, 'SELECT', 'invokes select effect');
+        expect(effect.type).toEqual('SELECT');
       })
       .next(scenario.state)
       .call(
@@ -186,9 +174,8 @@ test('update repo', t => {
       );
   }
 
-  t.test('with successful export', assert => {
-    const clock = sinon.useFakeTimers();
-    initiateExport(assert)
+  test('with successful export', () => {
+    initiateExport()
       .next({url})
       .put(
         projectExported(
@@ -201,22 +188,19 @@ test('update repo', t => {
       )
       .next()
       .isDone();
-    clock.restore();
-    assert.end();
   });
 
-  t.test('with error', assert => {
+  test('with error', () => {
     const error = new Error();
-    initiateExport(assert)
+    initiateExport()
       .throw(error)
       .put(projectExportError(exportType))
       .next()
       .isDone();
-    assert.end();
   });
 });
 
-test('export to classroom', t => {
+describe('export to classroom', () => {
   const url = 'https://classroom.google.com/u/0/share?url=http://popcode.org';
   const exportType = 'classroom';
   const snapshotKey = '123-456';
@@ -224,11 +208,11 @@ test('export to classroom', t => {
   const scenario = new Scenario();
   scenario.logIn();
 
-  function initiateExport(assert) {
+  function initiateExport() {
     return testSaga(exportProjectSaga, {payload: {exportType}})
       .next()
       .inspect(effect => {
-        assert.equals(effect.type, 'SELECT', 'invokes select effect');
+        expect(effect.type).toEqual('SELECT');
       })
       .next(scenario.state)
       .call(createProjectSnapshot, scenario.project.toJS())
@@ -238,24 +222,20 @@ test('export to classroom', t => {
       .call(createShareToClassroomUrl, snapshotKey, projectTitle);
   }
 
-  t.test('with successful export', assert => {
-    const clock = sinon.useFakeTimers();
-    initiateExport(assert)
+  test('with successful export', () => {
+    initiateExport()
       .next(url)
       .put(projectExported(url, exportType, scenario.project.projectKey, {}))
       .next()
       .isDone();
-    clock.restore();
-    assert.end();
   });
 
-  t.test('with error', assert => {
+  test('with error', () => {
     const error = new Error();
-    initiateExport(assert)
+    initiateExport()
       .throw(error)
       .put(projectExportError(exportType))
       .next()
       .isDone();
-    assert.end();
   });
 });

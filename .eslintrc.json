@@ -142,7 +142,7 @@
       }
     },
     {
-      "files": "test/unit/sagas/**/*",
+      "files": ["test/unit/sagas/**/*", "src/sagas/__tests__/**/*"],
       "rules": {
         "import/order": "off",
         "prefer-reflect": "off"
@@ -241,6 +241,7 @@
           "core-js",
           "es6-set/implement",
           "firebase/*",
+          "jest-date-mock",
           "raf/polyfill",
           "regenerator-runtime/runtime",
           "src/init/*",
@@ -424,7 +425,6 @@
     "spaced-comment": ["warn", "always"],
     "strict": ["warn", "never"],
     "use-isnan": "warn",
-    "valid-jsdoc": "warn",
     "yoda": ["warn", "never"]
   },
   "settings": {
