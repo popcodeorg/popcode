@@ -1,4 +1,4 @@
-import 'jest-date-mock';
+import {advanceTo} from 'jest-date-mock';
 import {testSaga} from 'redux-saga-test-plan';
 import {
   createSnapshot as createSnapshotSaga,
@@ -19,6 +19,8 @@ import {createProjectSnapshot} from '../../clients/firebase';
 import {createShareToClassroomUrl} from '../../clients/googleClassroom';
 import {getCurrentProject} from '../../selectors';
 import {generateTextPreview} from '../../util/compileProject';
+
+beforeEach(() => advanceTo());
 
 describe('createSnapshot()', () => {
   const {project} = new Scenario();

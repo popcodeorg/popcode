@@ -1,4 +1,4 @@
-import 'jest-date-mock';
+import {advanceTo} from 'jest-date-mock';
 import {testSaga} from 'redux-saga-test-plan';
 import Immutable from 'immutable';
 import {validatedSource as validatedSourceSaga} from '../compiledProjects';
@@ -29,6 +29,8 @@ const errors = {
     javascript: validatingErrorList,
   }),
 };
+
+beforeEach(() => advanceTo());
 
 describe('validatedSource', () => {
   test('with errors', () => {

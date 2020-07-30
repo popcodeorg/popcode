@@ -241,7 +241,6 @@
           "core-js",
           "es6-set/implement",
           "firebase/*",
-          "jest-date-mock",
           "raf/polyfill",
           "regenerator-runtime/runtime",
           "src/init/*",
