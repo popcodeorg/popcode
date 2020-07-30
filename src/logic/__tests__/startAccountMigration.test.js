@@ -35,7 +35,7 @@ describe('startAccountMigration', () => {
     const mockProjects = firebaseProjectFactory.buildList(2);
 
     const state = applyActions(
-      userAuthenticated(mockUser, mockCredential),
+      userAuthenticated(mockUser, [mockCredential]),
       accountMigrationNeeded(mockProfile, mockCredential),
       startAccountMigrationAction(),
       accountMigrationUndoPeriodExpired(),
@@ -64,7 +64,7 @@ describe('startAccountMigration', () => {
 
     const migrationError = firebaseErrorFactory.build();
     const state = applyActions(
-      userAuthenticated(mockUser, mockCredential),
+      userAuthenticated(mockUser, [mockCredential]),
       accountMigrationNeeded(mockProfile, mockCredential),
       startAccountMigrationAction(),
       accountMigrationUndoPeriodExpired(),
@@ -92,7 +92,7 @@ describe('startAccountMigration', () => {
     const mockProfile = githubProfileFactory.build();
 
     const state = applyActions(
-      userAuthenticated(mockUser, mockCredential),
+      userAuthenticated(mockUser, [mockCredential]),
       accountMigrationNeeded(mockProfile, mockCredential),
       startAccountMigrationAction(),
       dismissAccountMigrationAction(),

@@ -1,5 +1,5 @@
+import {advanceBy, advanceTo} from 'jest-date-mock';
 import omit from 'lodash-es/omit';
-import test from 'tape-catch';
 import {testSaga} from 'redux-saga-test-plan';
 import {
   applicationLoaded as applicationLoadedSaga,
@@ -12,7 +12,7 @@ import {
   toggleLibrary as toggleLibrarySaga,
   updateProjectSource as updateProjectSourceSaga,
   userAuthenticated as userAuthenticatedSaga,
-} from '../../../src/sagas/projects';
+} from '../projects';
 import {
   archiveProject,
   gistImportError,
@@ -22,70 +22,61 @@ import {
   toggleLibrary,
   updateProjectInstructions,
   updateProjectSource,
-} from '../../../src/actions/projects';
+} from '../../actions/projects';
 import {
   projectRestoredFromLastSession,
   snapshotImportError,
   snapshotNotFound,
-} from '../../../src/actions/clients';
-import {userAuthenticated} from '../../../src/actions/user';
-import applicationLoaded from '../../../src/actions/applicationLoaded';
-import {loadGistFromId} from '../../../src/clients/github';
+} from '../../actions/clients';
+import {userAuthenticated} from '../../actions/user';
+import applicationLoaded from '../../actions/applicationLoaded';
+import {loadGistFromId} from '../../clients/github';
 import {
   loadAllProjects,
   loadProjectSnapshot,
   saveProject,
-} from '../../../src/clients/firebase';
-import Scenario from '../../helpers/Scenario';
-import {gistData, project, userCredential} from '../../helpers/factory';
+} from '../../clients/firebase';
+import {deprecated_Scenario as Scenario} from './migratedKarmaTestHelpers';
+import {firebaseProjectFactory} from '@factories/data/firebase';
+import {credentialFactory, userFactory} from '@factories/clients/firebase';
+import {githubGistFactory} from '@factories/clients/github';
 import {
   getCurrentProject,
   getCurrentUserId,
   getProject,
-} from '../../../src/selectors/index';
+} from '../../selectors/index';
 
-test('createProject()', assert => {
+beforeEach(() => advanceTo());
+
+test('createProject()', () => {
   let firstProjectKey;
-
-  const clock = sinon.useFakeTimers();
 
   testSaga(createProjectSaga)
     .next()
     .inspect(({payload: {action}}) => {
       firstProjectKey = action.payload.projectKey;
-      assert.ok(
-        firstProjectKey,
-        'generator yields PUT action with project key',
-      );
+      expect(firstProjectKey).toBeTruthy();
     })
     .next()
     .isDone();
 
-  clock.tick(10);
+  advanceBy(10);
 
   testSaga(createProjectSaga)
     .next()
     .inspect(({payload: {action}}) => {
       const secondProjectKey = action.payload.projectKey;
-      assert.ok(secondProjectKey, 'generator yields action with project key');
-      assert.notEqual(
-        secondProjectKey,
-        firstProjectKey,
-        'subsequent calls yield different project keys',
-      );
+      expect(secondProjectKey).toBeTruthy();
+      expect(secondProjectKey).not.toEqual(firstProjectKey);
     })
     .next()
     .isDone();
-
-  clock.restore();
-
-  assert.end();
 });
 
-test('changeCurrentProject()', assert => {
+test('changeCurrentProject()', () => {
   const scenario = new Scenario();
   const userId = 'abc123';
-  const currentProject = project();
+  const currentProject = firebaseProjectFactory.build();
   const {projectKey} = currentProject;
 
   testSaga(changeCurrentProjectSaga)
@@ -103,59 +94,50 @@ test('changeCurrentProject()', assert => {
     .put(projectSuccessfullySaved())
     .next()
     .isDone();
-  assert.end();
 });
 
-test('applicationLoaded()', t => {
-  t.test('with no gist or snapshot ID or rehydrated project', assert => {
+describe('applicationLoaded()', () => {
+  test('with no gist or snapshot ID or rehydrated project', () => {
     testSaga(applicationLoadedSaga, applicationLoaded({gistId: null}))
       .next()
       .call(createProjectSaga)
       .next()
       .isDone();
-
-    assert.end();
   });
 
-  t.test('with snapshot ID', assert => {
+  test('with snapshot ID', () => {
     const snapshotKey = '123-abc';
     testSaga(applicationLoadedSaga, applicationLoaded({snapshotKey}))
       .next()
       .call(importSnapshotSaga, applicationLoaded({snapshotKey}))
       .next()
       .isDone();
-
-    assert.end();
   });
 
-  t.test('with gist ID', assert => {
+  test('with gist ID', () => {
     const gistId = '123abc';
     testSaga(applicationLoadedSaga, applicationLoaded({gistId}))
       .next()
       .call(importGistSaga, applicationLoaded({gistId}))
       .next()
       .isDone();
-
-    assert.end();
   });
 
-  t.test('with rehydrated project', assert => {
-    const rehydratedProject = project();
+  test('with rehydrated project', () => {
+    const rehydratedProject = firebaseProjectFactory.build();
     testSaga(applicationLoadedSaga, applicationLoaded({rehydratedProject}))
       .next()
       .put(projectRestoredFromLastSession(rehydratedProject))
       .next()
       .isDone();
-
-    assert.end();
   });
 });
 
-test('importSnapshot()', t => {
+describe('importSnapshot()', () => {
   const snapshotKey = 'abc-123';
 
-  t.test('with successful import', assert => {
-    const projectData = omit(project(), 'projectKey');
+  test('with successful import', () => {
+    const projectData = omit(firebaseProjectFactory.build(), 'projectKey');
     testSaga(importSnapshotSaga, applicationLoaded({snapshotKey}))
       .next()
       .call(loadProjectSnapshot, snapshotKey)
@@ -169,18 +151,16 @@ test('importSnapshot()', t => {
             },
           },
         }) => {
-          assert.equal(type, 'SNAPSHOT_IMPORTED');
-          assert.same(payloadProject, projectData);
-          assert.ok(projectKey, 'payload should have a projectKey');
+          expect(type).toEqual('SNAPSHOT_IMPORTED');
+          expect(payloadProject).toBe(projectData);
+          expect(projectKey).toBeTruthy();
         },
       )
       .next()
       .isDone();
-
-    assert.end();
   });
 
-  t.test('with import error', assert => {
+  test('with import error', () => {
     const error = new Error();
     testSaga(importSnapshotSaga, applicationLoaded({snapshotKey}))
       .next()
@@ -189,11 +169,9 @@ test('importSnapshot()', t => {
       .put(snapshotImportError(error))
       .next()
       .isDone();
-
-    assert.end();
   });
 
-  t.test('with snapshot not found', assert => {
+  test('with snapshot not found', () => {
     testSaga(importSnapshotSaga, applicationLoaded({snapshotKey}))
       .next()
       .call(loadProjectSnapshot, snapshotKey)
@@ -201,44 +179,29 @@ test('importSnapshot()', t => {
       .put(snapshotNotFound())
       .next()
       .isDone();
-
-    assert.end();
   });
 });
 
-test('importGist()', t => {
+describe('importGist()', () => {
   const gistId = 'abc123';
 
-  t.test('with successful import', assert => {
+  test('with successful import', () => {
     const saga = testSaga(importGistSaga, applicationLoaded({gistId}));
 
     saga.next().call(loadGistFromId, gistId);
 
-    const gist = gistData({html: '<!doctype html>test'});
+    const gist = githubGistFactory.build({html: '<!doctype html>test'});
     saga.next(gist).inspect(effect => {
-      assert.equals(effect.type, 'PUT', 'yielded effect is a PUT');
-      assert.equal(
-        effect.payload.action.type,
-        'GIST_IMPORTED',
-        'action is GIST_IMPORTED',
-      );
-      assert.ok(
-        effect.payload.action.payload.projectKey,
-        'assigns a project key',
-      );
-      assert.deepEqual(
-        effect.payload.action.payload.gistData,
-        gist,
-        'includes gist in action payload',
-      );
+      expect(effect.type).toEqual('PUT');
+      expect(effect.payload.action.type).toEqual('GIST_IMPORTED');
+      expect(effect.payload.action.payload.projectKey).toBeTruthy();
+      expect(effect.payload.action.payload.gistData).toEqual(gist);
     });
 
     saga.next().isDone();
-
-    assert.end();
   });
 
-  t.test('with not found error', assert => {
+  test('with not found error', () => {
     testSaga(importGistSaga, applicationLoaded({gistId}))
       .next()
       .call(loadGistFromId, gistId)
@@ -246,10 +209,9 @@ test('importGist()', t => {
       .put(gistNotFound(gistId))
       .next()
       .isDone();
-    assert.end();
   });
 
-  t.test('with other error', assert => {
+  test('with other error', () => {
     testSaga(importGistSaga, applicationLoaded({gistId}))
       .next()
       .call(loadGistFromId, gistId)
@@ -257,21 +219,21 @@ test('importGist()', t => {
       .put(gistImportError())
       .next()
       .isDone();
-    assert.end();
   });
 });
 
-test('userAuthenticated', assert => {
+test('userAuthenticated', () => {
   const scenario = new Scenario().logIn();
-  const projects = [project()];
-  const {user, credential} = userCredential();
+  const projects = [firebaseProjectFactory.build()];
+  const user = userFactory.build();
+  const credential = credentialFactory.build();
   testSaga(
     userAuthenticatedSaga,
     userAuthenticated({user, credentials: [credential]}),
   )
     .next()
     .inspect(effect => {
-      assert.equals(effect.type, 'SELECT', 'effect type is select');
+      expect(effect.type).toEqual('SELECT');
     })
     .next(scenario.state)
     .fork(saveCurrentProject)
@@ -281,13 +243,12 @@ test('userAuthenticated', assert => {
     .put(projectsLoaded(projects))
     .next()
     .isDone();
-  assert.end();
 });
 
-test('updateProjectSource', assert => {
+test('updateProjectSource', () => {
   const scenario = new Scenario();
   const userId = 'abc123';
-  const currentProject = project();
+  const currentProject = firebaseProjectFactory.build();
   const {projectKey} = currentProject;
   testSaga(
     updateProjectSourceSaga,
@@ -307,13 +268,12 @@ test('updateProjectSource', assert => {
     .put(projectSuccessfullySaved())
     .next()
     .isDone();
-  assert.end();
 });
 
-test('updateProjectInstructions', assert => {
+test('updateProjectInstructions', () => {
   const scenario = new Scenario();
   const userId = 'abc123';
-  const currentProject = project();
+  const currentProject = firebaseProjectFactory.build();
   const {projectKey} = currentProject;
   testSaga(
     updateProjectSourceSaga,
@@ -333,13 +293,12 @@ test('updateProjectInstructions', assert => {
     .put(projectSuccessfullySaved())
     .next()
     .isDone();
-  assert.end();
 });
 
-test('toggleLibrary', assert => {
+test('toggleLibrary', () => {
   const scenario = new Scenario();
   const userId = 'abc123';
-  const currentProject = project();
+  const currentProject = firebaseProjectFactory.build();
   const {projectKey} = currentProject;
   testSaga(toggleLibrarySaga, toggleLibrary(scenario.projectKey, 'jquery'))
     .next()
@@ -356,13 +315,12 @@ test('toggleLibrary', assert => {
     .put(projectSuccessfullySaved())
     .next()
     .isDone();
-  assert.end();
 });
 
-test('archiveProject', assert => {
+test('archiveProject', () => {
   const scenario = new Scenario();
   const userId = 'abc123';
-  const currentProject = project();
+  const currentProject = firebaseProjectFactory.build();
   const {projectKey} = currentProject;
   testSaga(archiveProjectSaga, archiveProject(projectKey))
     .next()
@@ -377,5 +335,4 @@ test('archiveProject', assert => {
     .put(projectSuccessfullySaved())
     .next()
     .isDone();
-  assert.end();
 });

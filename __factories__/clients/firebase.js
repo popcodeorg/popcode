@@ -9,10 +9,14 @@ class FirebaseError extends Error {
   }
 }
 
-export const credentialFactory = new Factory().attrs({
-  providerId: 'github.com',
-  accessToken: 'abc123',
-});
+export const credentialFactory = new Factory()
+  .attr('providerId', 'github.com')
+  .attr('accessToken', ['providerId'], providerId =>
+    providerId === 'github.com' ? 'abc123' : undefined,
+  )
+  .attr('idToken', ['providerId'], providerId =>
+    providerId === 'google.com' ? 'abc123' : undefined,
+  );
 
 export const firebaseErrorFactory = Factory.define(
   'firebaseError',
@@ -37,13 +41,17 @@ export const userProviderDataFactory = new Factory().attrs({
   uid: '1234567',
 });
 
-export const userFactory = new Factory().extend(userProviderDataFactory).attrs({
-  emailVerified: false,
-  isAnonymous: false,
-  metadata: {
-    creationTime: Date.now(),
-    lastSignInTime: Date.now(),
-  },
-  providerData: () => [userProviderDataFactory.build()],
-  refreshToken: 'token123',
-});
+export const userFactory = new Factory()
+  .extend(userProviderDataFactory)
+  .attrs({
+    emailVerified: false,
+    isAnonymous: false,
+    metadata: {
+      creationTime: Date.now(),
+      lastSignInTime: Date.now(),
+    },
+    refreshToken: 'token123',
+  })
+  .attr('providerData', ['providerId'], providerId => [
+    userProviderDataFactory.build({providerId}),
+  ]);

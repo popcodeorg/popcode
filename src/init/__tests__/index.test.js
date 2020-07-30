@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import findLast from 'lodash-es/findLast';
 import get from 'lodash-es/get';
 import mixpanel from 'mixpanel-browser';
@@ -11,8 +12,7 @@ import {rehydrateProject} from '../../clients/localStorage';
 import config from '../../config';
 import createApplicationStore from '../../createApplicationStore';
 
-import i18next from 'i18next';
-
+jest.mock('i18next');
 jest.mock('../../clients/localStorage');
 jest.mock('../../clients/firebase');
 jest.mock('../../createApplicationStore');

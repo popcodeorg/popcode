@@ -1,29 +1,9 @@
-import almostEqual from 'almost-equal';
-import every from 'lodash-es/every';
-import zip from 'lodash-es/zip';
-import test from 'tape-catch';
-
-import calculateFlexGrowAfterDrag from '../../../../src/higherOrderComponents/resizableFlex/calculateFlexGrowAfterDrag';
-
-function arraysAlmostEqual(array1, array2) {
-  return (
-    array1.length === array2.length &&
-    every(zip(array1, array2), ([value1, value2]) =>
-      almostEqual(value1, value2),
-    )
-  );
-}
+import calculateFlexGrowAfterDrag from '../calculateFlexGrowAfterDrag';
 
 function testFlexGrowAfterDrag(description, before, after, expected) {
-  test(description, assert => {
+  test(description, () => {
     const actual = calculateFlexGrowAfterDrag(before, after);
-    assert.ok(
-      arraysAlmostEqual(actual, expected),
-      `Expected flex grow ${expected.join(',')} from previous\
-      ${before.currentFlexGrow},${after.currentFlexGrow}; \
-      got ${actual.join(',')}`,
-    );
-    assert.end();
+    expect(expected).toHaveAlmostEqualElements(actual);
   });
 }
 
