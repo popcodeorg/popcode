@@ -398,7 +398,7 @@
     "svgo-loader": "2.2.1",
     "transform-loader": "0.2.4",
     "val-loader": "2.1.1",
-    "webpack": "4.43.0",
+    "webpack": "4.44.1",
     "webpack-bundle-analyzer": "3.7.0",
     "webpack-dev-middleware": "3.7.2",
     "webpack-visualizer-plugin": "0.1.11",
