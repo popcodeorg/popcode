@@ -208,8 +208,8 @@
   "dependencies": {
     "@babel/core": "7.9.6",
     "@babel/preset-env": "7.9.6",
-    "@bugsnag/js": "6.5.2",
-    "@bugsnag/plugin-react": "6.5.0",
+    "@bugsnag/js": "7.2.1",
+    "@bugsnag/plugin-react": "7.2.1",
     "@fortawesome/fontawesome-svg-core": "1.2.28",
     "@fortawesome/free-brands-svg-icons": "5.13.0",
     "@fortawesome/free-solid-svg-icons": "5.13.0",
