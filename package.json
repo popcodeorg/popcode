@@ -278,7 +278,7 @@
     "rehype-react": "5.0.1",
     "rehype-sanitize": "3.0.1",
     "remark-external-links": "6.0.0",
-    "remark-parse": "8.0.2",
+    "remark-parse": "8.0.3",
     "remark-rehype": "6.0.0",
     "remark-stringify": "8.0.0",
     "reselect": "4.0.0",
