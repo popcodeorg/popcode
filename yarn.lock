@@ -9363,6 +9363,11 @@ ms@2.1.1, ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   integrity sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==
 
+mustache@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/mustache/-/mustache-4.0.1.tgz#d99beb031701ad433338e7ea65e0489416c854a2"
+  integrity sha512-yL5VE97+OXn4+Er3THSmTdCFCtx5hHWzrolvH+JObZnUYwuaG7XV+Ch4fR2cIrcYI0tFHxS7iyFYl14bW8y2sA==
+
 mute-stdout@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/mute-stdout/-/mute-stdout-1.0.1.tgz#acb0300eb4de23a7ddeec014e3e96044b3472331"
