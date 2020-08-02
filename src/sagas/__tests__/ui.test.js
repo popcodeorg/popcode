@@ -1,4 +1,3 @@
-import test from 'tape-catch';
 import noop from 'lodash-es/noop';
 
 import {testSaga} from 'redux-saga-test-plan';
@@ -6,26 +5,25 @@ import {
   exportProject as exportProjectSaga,
   popOutProject as popOutProjectSaga,
   userDoneTyping as userDoneTypingSaga,
-} from '../../../src/sagas/ui';
-import {getCurrentProject} from '../../../src/selectors';
-import {popOutProject, userDoneTyping} from '../../../src/actions/ui';
+} from '../ui';
+import {getCurrentProject} from '../../selectors';
+import {popOutProject, userDoneTyping} from '../../actions/ui';
 import {
   projectExportDisplayed,
   projectExported,
   projectExportError,
   projectExportNotDisplayed,
-} from '../../../src/actions/clients';
-import {openWindowWithContent} from '../../../src/util';
+} from '../../actions/clients';
+import {openWindowWithContent} from '../../util';
 import spinnerPageHtml from '../../../templates/project-export.html';
-import compileProject from '../../../src/util/compileProject';
+import compileProject from '../../util/compileProject';
 
-test('userDoneTyping', assert => {
+test('userDoneTyping', () => {
   testSaga(userDoneTypingSaga).next().put(userDoneTyping()).next().isDone();
-  assert.end();
 });
 
-test('exportProject', t => {
-  t.test('with window still open', assert => {
+describe('exportProject', () => {
+  test('with window still open', () => {
     const mockWindow = {closed: false, location: {}};
     const url = 'https://gist.github.com/abc123';
     const exportType = 'gist';
@@ -39,12 +37,10 @@ test('exportProject', t => {
       .next()
       .isDone();
 
-    assert.equal(mockWindow.location.href, url);
-
-    assert.end();
+    expect(mockWindow.location.href).toEqual(url);
   });
 
-  t.test('with window closed', assert => {
+  test('with window closed', () => {
     const mockWindow = {closed: true, location: {}};
     const url = 'https://gist.github.com/abc123';
     const exportType = 'gist';
@@ -58,12 +54,10 @@ test('exportProject', t => {
       .next()
       .isDone();
 
-    assert.notOk(mockWindow.location.href);
-
-    assert.end();
+    expect(mockWindow.location.href).toBeFalsy();
   });
 
-  t.test('with project export error', assert => {
+  test('with project export error', () => {
     const mockWindow = {closed: false, close: noop};
     const exportType = 'gist';
     testSaga(exportProjectSaga)
@@ -75,12 +69,10 @@ test('exportProject', t => {
       .call([mockWindow, 'close'])
       .next()
       .isDone();
-
-    assert.end();
   });
 });
 
-test('popOutProject', assert => {
+test('popOutProject', () => {
   const mockWindow = {closed: false, close: noop};
   const project = {};
   const preview = {src: '<html></html>'};
@@ -93,5 +85,4 @@ test('popOutProject', assert => {
     .call(openWindowWithContent, preview)
     .next(mockWindow)
     .isDone();
-  assert.end();
 });

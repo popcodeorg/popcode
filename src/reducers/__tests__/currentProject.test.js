@@ -1,19 +1,20 @@
 import Immutable from 'immutable';
 import partial from 'lodash-es/partial';
-import test from 'tape-catch';
 
 import {
   projectRestoredFromLastSession,
   snapshotImported,
-} from '../../../src/actions/clients';
+} from '../../actions/clients';
 import {
   changeCurrentProject,
   gistImported,
   projectCreated,
-} from '../../../src/actions/projects';
-import reducer from '../../../src/reducers/currentProject';
-import {gistData} from '../../helpers/factory';
-import reducerTest from '../../helpers/reducerTest';
+} from '../../actions/projects';
+import reducer from '../currentProject';
+
+import {deprecated_reducerTest as reducerTest} from './migratedKarmaTestHelpers';
+
+import {githubGistFactory} from '@factories/clients/github';
 
 const projectKey = '12345';
 const initialState = reducer(undefined, {type: null});
@@ -65,7 +66,11 @@ test(
   reducerTest(
     reducer,
     initialState,
-    partial(gistImported, projectKey, gistData({html: '<!doctype html>'})),
+    partial(
+      gistImported,
+      projectKey,
+      githubGistFactory.build({}, {html: '<!doctype html>'}),
+    ),
     Immutable.fromJS({projectKey}),
   ),
 );

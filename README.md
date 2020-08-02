@@ -125,16 +125,10 @@ $ tools/yarn.py start
 
 This will start a server on http://localhost:3000
 
-To start Jest tests in watch mode, run:
+To start tests in watch mode, run:
 
 ```sh
-$ tools/yarn.py autotest.jest
-```
-
-To start Karma tests in watch mode, run:
-
-```sh
-$ tools/yarn.py autotest.karma
+$ tools/yarn.py autotest
 ```
 
 Check the `"scripts"` section of [`package.json`](https://github.com/popcodeorg/popcode/blob/master/package.json) for other useful tools.
@@ -181,7 +175,6 @@ on the major tools:
 - [Webpack](https://webpack.github.io/docs/configuration.html) builds the
   JavaScript
 - [Jest](https://jestjs.io/) is the test framework
-  - We are currently migrating legacy tests from [Tape](https://github.com/substack/tape) with [Karma](https://karma-runner.github.io/latest/index.html)
 
 ## License
 

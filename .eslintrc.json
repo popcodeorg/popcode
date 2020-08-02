@@ -45,7 +45,6 @@
         "babel.config.js",
         "gulpfile.js",
         "jest.config.js",
-        "karma.conf.js",
         "script/*.js",
         "webpack.config.js"
       ],
@@ -128,21 +127,7 @@
       }
     },
     {
-      "files": "test/**/*",
-      "globals": {
-        "sinon": true
-      },
-      "rules": {
-        "import/no-extraneous-dependencies": [
-          "error",
-          {
-            "devDependencies": true
-          }
-        ]
-      }
-    },
-    {
-      "files": "test/unit/sagas/**/*",
+      "files": ["test/unit/sagas/**/*", "src/sagas/__tests__/**/*"],
       "rules": {
         "import/order": "off",
         "prefer-reflect": "off"
@@ -424,7 +409,6 @@
     "spaced-comment": ["warn", "always"],
     "strict": ["warn", "never"],
     "use-isnan": "warn",
-    "valid-jsdoc": "warn",
     "yoda": ["warn", "never"]
   },
   "settings": {

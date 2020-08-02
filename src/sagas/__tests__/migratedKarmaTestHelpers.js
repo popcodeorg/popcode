@@ -1,11 +1,26 @@
-import {projectCreated} from '../../src/actions/projects';
-import {identityLinked, userAuthenticated} from '../../src/actions/user';
-import Analyzer from '../../src/analyzers';
-import reduce from '../../src/reducers';
+import {projectCreated} from '../../actions/projects';
+import {identityLinked, userAuthenticated} from '../../actions/user';
+import Analyzer from '../../analyzers';
+import reduce from '../../reducers';
 
-import {githubCredential, userCredential} from './factory';
+import {
+  credentialFactory,
+  userFactory,
+} from '../../../__factories__/clients/firebase';
 
-export default class Scenario {
+function userCredential() {
+  return {
+    user: userFactory.build(),
+    credential: credentialFactory.build({providerId: 'google.com'}),
+  };
+}
+
+function githubCredential() {
+  return credentialFactory.build({providerId: 'github.com'});
+}
+
+// eslint-disable-next-line camelcase
+export class deprecated_Scenario {
   constructor() {
     this.projectKey = '123456';
     this.state = reduce(undefined, projectCreated(this.projectKey));

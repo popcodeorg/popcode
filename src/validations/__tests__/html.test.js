@@ -3,6 +3,15 @@ import html from '../html';
 import testValidatorAcceptance from './testValidatorAcceptance';
 import validationTest from './validationHelper';
 
+jest.mock('i18next', () => ({
+  t(key) {
+    if (key === 'utility.or') {
+      return ' or ';
+    }
+    return '';
+  },
+}));
+
 function htmlWithBody(body) {
   return `<!doctype html>
 <html>
