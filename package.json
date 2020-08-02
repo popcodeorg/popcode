@@ -253,7 +253,7 @@
     "normalize.css": "8.0.1",
     "object-inspect": "1.8.0",
     "offline-plugin": "5.0.7",
-    "p5": "1.0.0",
+    "p5": "1.1.9",
     "parse5-sax-parser": "5.1.1",
     "pify": "5.0.0",
     "postcss": "7.0.32",
