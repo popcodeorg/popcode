@@ -14745,10 +14745,10 @@ whatwg-fetch@2.0.4:
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
   integrity sha512-dcQ1GWpOD/eEQ97k66aiEVpNnapVj90/+R+SXTPYGHpYBBypfKJEQjLrvMZ7YXbKm21gXd4NcuxUTjiv1YtLng==
 
-whatwg-fetch@3.0.1, whatwg-fetch@>=0.10.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.1.tgz#7bc7ece49fd5bb50b75056df38578b8f29fd5019"
-  integrity sha512-gPeS9Ef8bSigQwAZiSbQyyU/sBQP1Qo6r112A2shGw5B6+4YT1D8O0oXXwF3zgXXLrrfxbIeP8fM3JmsoWU4Vw==
+whatwg-fetch@3.2.0, whatwg-fetch@>=0.10.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.2.0.tgz#8e134f701f0a4ab5fda82626f113e2b647fd16dc"
+  integrity sha512-SdGPoQMMnzVYThUbSrEvqTlkvC1Ux27NehaJ/GUHBfNrh5Mjg+1/uRyFMwVnxO2MrikMWvWAqUGgQOfVU4hT7w==
 
 whatwg-fetch@^0.9.0:
   version "0.9.0"
