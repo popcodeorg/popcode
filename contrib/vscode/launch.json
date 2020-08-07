@@ -35,7 +35,7 @@
       "disableOptimisticBPs": true,
       "sourceMaps": true,
       "timeout": 30000,
-      "env": {"NODE_ENV": "test"}
+      "env": {"NODE_ENV": "test", "SKIP_POPCODE_SETUP": "true"}
     }
   ]
 }
