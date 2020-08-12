@@ -28,7 +28,6 @@
       "packageNames": [
         "eslint",
         "eslint-config-prettier",
-        "eslint_d",
         "@popcodeorg/eslint-import-resolver-jest",
         "eslint-import-resolver-webpack",
         "eslint-plugin-import",
