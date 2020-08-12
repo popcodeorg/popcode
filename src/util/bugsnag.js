@@ -1,40 +1,49 @@
-import bugsnag from '@bugsnag/js';
-import bugsnagReact from '@bugsnag/plugin-react';
+import Bugsnag from '@bugsnag/js';
+import BugsnagPluginReact from '@bugsnag/plugin-react';
 import React from 'react';
 
 import config from '../config';
+import {LoginState} from '../enums';
+
 import {getCurrentProject} from '../selectors';
 
 let store;
 
-export const bugsnagClient = bugsnag({
+export const bugsnagClient = Bugsnag.start({
   apiKey: config.bugsnagApiKey,
   appVersion: config.gitRevision,
-  releaseStage: config.nodeEnv,
   autoCaptureSessions: true,
-  beforeSend(payload) {
+  onError(event) {
     if (!store) {
       return;
     }
 
     const state = store.getState();
-    if (state.get('user')) {
-      payload.user = state.get('user').toJS();
-    } else {
-      payload.user = {id: 'anonymous'};
+    const user = state.get('user');
+    if (user.loginState === LoginState.AUTHENTICATED) {
+      const {id, displayName} = user.account;
+      event.setUser(id, undefined, displayName);
+    } else if (user.loginState === LoginState.ANONYMOUS) {
+      event.setUser('anonymous');
     }
 
-    payload.metaData.remoteConfig = state.getIn(['ui', 'remoteConfig']).toJS();
+    event.addMetadata(
+      'remoteConfig',
+      state.getIn(['ui', 'remoteConfig']).toJS(),
+    );
 
     const currentProject = getCurrentProject(state);
     if (currentProject) {
-      payload.metaData.currentProject = currentProject;
+      event.addMetadata('currentProject', currentProject);
     }
   },
+  plugins: [new BugsnagPluginReact()],
+  releaseStage: config.nodeEnv,
 });
 
-bugsnagClient.use(bugsnagReact, React);
-export const ErrorBoundary = bugsnagClient.getPlugin('react');
+export const ErrorBoundary = bugsnagClient
+  .getPlugin('react')
+  .createErrorBoundary(React);
 
 export function includeStoreInBugReports(storeIn) {
   store = storeIn;

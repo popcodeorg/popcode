@@ -1,2 +1,1 @@
-const bugsnagReact = {};
-export default bugsnagReact;
+export default class BugsnagPluginReact {}
