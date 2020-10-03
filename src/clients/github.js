@@ -8,7 +8,7 @@ import performWithRetries from '../util/performWithRetries';
 import retryingFailedImports from '../util/retryingFailedImports';
 
 const COMMIT_MESSAGE = 'Created using Popcode: https://popcode.org';
-const MASTER = 'master';
+const DEFAULT_BRANCH = 'main';
 const GH_PAGES = 'gh-pages';
 const NETWORK_ERROR = 'Network Error';
 
@@ -68,10 +68,12 @@ async function createRepoFromProject(project, accessToken) {
   const userName = data.owner.login;
 
   await performWithRetryNetworkErrors(() =>
-    github.getRepo(userName, fullRepoName).deleteFile(MASTER, 'README.md'),
+    github
+      .getRepo(userName, fullRepoName)
+      .deleteFile(DEFAULT_BRANCH, 'README.md'),
   );
 
-  await createBranch(github, userName, fullRepoName, MASTER, GH_PAGES);
+  await createBranch(github, userName, fullRepoName, DEFAULT_BRANCH, GH_PAGES);
 
   await createRepoFiles(github, project, userName, fullRepoName);
 
@@ -232,7 +234,7 @@ async function createHtmlFile(github, project, userName, repoName) {
       github,
       userName,
       repoName,
-      MASTER,
+      DEFAULT_BRANCH,
       'index.html',
       project.sources.html,
     );
@@ -245,7 +247,7 @@ async function createCssFile(github, project, userName, repoName) {
       github,
       userName,
       repoName,
-      MASTER,
+      DEFAULT_BRANCH,
       'styles.css',
       project.sources.css,
     );
@@ -258,7 +260,7 @@ async function createJsFile(github, project, userName, repoName) {
       github,
       userName,
       repoName,
-      MASTER,
+      DEFAULT_BRANCH,
       'script.js',
       project.sources.javascript,
     );
