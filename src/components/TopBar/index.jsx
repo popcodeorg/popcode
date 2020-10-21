@@ -50,6 +50,7 @@ export default function TopBar({
   projectKeys,
   shouldShowSavedIndicator,
   validationState,
+  onAutoFormat,
   onClickMenu,
   onCloseMenu,
   onCreateNewProject,
@@ -130,6 +131,7 @@ export default function TopBar({
         isEditingInstructions={isEditingInstructions}
         isOpen={openMenu === 'hamburger'}
         isUserAuthenticated={isUserAuthenticated}
+        onAutoFormat={onAutoFormat}
         onClick={partial(onClickMenu, 'hamburger')}
         onStartEditingInstructions={partial(
           onStartEditingInstructions,
@@ -162,6 +164,7 @@ TopBar.propTypes = {
   projectKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   shouldShowSavedIndicator: PropTypes.bool.isRequired,
   validationState: PropTypes.string.isRequired,
+  onAutoFormat: PropTypes.func.isRequired,
   onClickMenu: PropTypes.func.isRequired,
   onCloseMenu: PropTypes.func.isRequired,
   onCreateNewProject: PropTypes.func.isRequired,
