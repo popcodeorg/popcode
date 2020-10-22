@@ -1,6 +1,4 @@
-import i18next from 'i18next';
 import {fromJS} from 'immutable';
-import constant from 'lodash-es/constant';
 import React from 'react';
 import {Provider} from 'react-redux';
 import {act, create} from 'react-test-renderer';
@@ -11,12 +9,10 @@ import HamburgerMenu from '../TopBar/HamburgerMenu';
 
 jest.mock('i18next', () => {
   return {
-    t: jest.fn(),
+    t: jest.fn().mockImplementation(translationKey => translationKey),
     init: jest.fn(),
   };
 });
-
-i18next.t.mockImplementation(constant('MOCKED_TRANSLATION_STRING'));
 
 const mockStore = configureStore([]);
 const store = mockStore(
@@ -57,13 +53,27 @@ describe('hamburger menu', () => {
 
   beforeEach(() => {
     menu = renderComponent();
+    DEFAULT_PROPS.onAutoFormat.mockClear();
+    DEFAULT_PROPS.onStartEditingInstructions.mockClear();
+    DEFAULT_PROPS.onStartGithubLogIn.mockClear();
+  });
+
+  it('renders the format code button', () => {
+    const menuItems = menu.root.findAllByType(MenuItem);
+    const formatCodeBtn = menuItems.find(
+      btn => btn.props.children === 'top-bar.format-code',
+    );
+    expect(formatCodeBtn).toBeTruthy();
   });
 
   it('calls the passed `onAutoFormat()` method when format code button is pressed', () => {
-    const firstMenuItem = menu.root.findAllByType(MenuItem)[0];
+    const menuItems = menu.root.findAllByType(MenuItem);
+    const formatCodeBtn = menuItems.find(
+      btn => btn.props.children === 'top-bar.format-code',
+    );
 
     act(() => {
-      firstMenuItem.props.onClick();
+      formatCodeBtn.props.onClick();
     });
 
     expect(DEFAULT_PROPS.onAutoFormat).toHaveBeenCalledTimes(1);
