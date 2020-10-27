@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 
 import {
+  beautifyProjectSource,
   closeTopBarMenu,
   createProject,
   createSnapshot,
@@ -72,6 +73,10 @@ function exportRepo(dispatch) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    onAutoFormat() {
+      dispatch(beautifyProjectSource());
+    },
+
     onClickMenu(menuKey) {
       dispatch(toggleTopBarMenu(menuKey));
     },

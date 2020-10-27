@@ -23,11 +23,16 @@ const HamburgerMenu = createMenu({
     hasInstructions,
     isEditingInstructions,
     isUserAuthenticated,
+    onAutoFormat,
     onStartEditingInstructions,
     onStartGithubLogIn,
   }) {
     return (
       <Fragment>
+        <MenuItem onClick={onAutoFormat}>
+          {i18next.t('top-bar.format-code')}
+        </MenuItem>
+
         <MenuItem
           isDisabled={isEditingInstructions}
           onClick={onStartEditingInstructions}
@@ -87,6 +92,7 @@ HamburgerMenu.propTypes = {
   hasInstructions: PropTypes.bool.isRequired,
   isEditingInstructions: PropTypes.bool.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
+  onAutoFormat: PropTypes.func.isRequired,
   onStartEditingInstructions: PropTypes.func.isRequired,
   onStartGithubLogIn: PropTypes.func.isRequired,
 };
