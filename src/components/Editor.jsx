@@ -14,7 +14,6 @@ import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/addon/comment/comment';
-import 'codemirror/keymap/sublime';
 
 import {EditorLocation} from '../records';
 import bowser from '../services/bowser';
@@ -52,7 +51,6 @@ export default function Editor({
       lineWrapping: true,
       matchBrackets: true,
       styleActiveLine: true,
-      keyMap: 'sublime',
     }));
     editor.setSize('100%', '100%');
   }, []);
@@ -124,6 +122,7 @@ export default function Editor({
     editor.setOption('extraKeys', {
       [`${modifier}-I`]: onAutoFormat,
       [`${modifier}-S`]: onSave,
+      [`${modifier}-/`]: cm => cm.toggleComment({indent: true}),
     });
   }, [onAutoFormat, onSave]);
 
