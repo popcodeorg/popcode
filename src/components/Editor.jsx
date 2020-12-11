@@ -13,6 +13,7 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/selection/active-line';
+import 'codemirror/addon/comment/comment';
 
 import {EditorLocation} from '../records';
 import bowser from '../services/bowser';
@@ -121,6 +122,7 @@ export default function Editor({
     editor.setOption('extraKeys', {
       [`${modifier}-I`]: onAutoFormat,
       [`${modifier}-S`]: onSave,
+      [`${modifier}-/`]: cm => cm.toggleComment({indent: true}),
     });
   }, [onAutoFormat, onSave]);
 
