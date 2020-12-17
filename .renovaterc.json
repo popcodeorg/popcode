@@ -124,30 +124,7 @@
     },
     {
       "groupName": "Webpack",
-      "packageNames": [
-        "circular-dependency-plugin",
-        "eslint-loader",
-        "exports-loader",
-        "hard-source-webpack-plugin",
-        "html-webpack-plugin",
-        "imports-loader",
-        "json-loader",
-        "null-loader",
-        "offline-plugin",
-        "raw-loader",
-        "script-ext-html-webpack-plugin",
-        "source-map-loader",
-        "stats-webpack-plugin",
-        "string-replace-loader",
-        "substitute-loader",
-        "svg-react-loader",
-        "svgo-loader",
-        "transform-loader",
-        "val-loader",
-        "webpack",
-        "webpack-dev-middleware",
-        "webpack-visualizer-plugin"
-      ]
+      "packageNames": ["webpack", "webpack-dev-middleware"]
     },
     {
       "packageNames": ["yarn"],
