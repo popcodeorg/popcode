@@ -401,7 +401,7 @@
     "svgo": "1.3.2",
     "svgo-loader": "2.2.1",
     "transform-loader": "0.2.4",
-    "val-loader": "2.1.1",
+    "val-loader": "2.1.2",
     "webpack": "4.44.1",
     "webpack-bundle-analyzer": "3.8.0",
     "webpack-dev-middleware": "3.7.2",

@@ -14429,13 +14429,13 @@ v8flags@^3.0.1:
   dependencies:
     homedir-polyfill "^1.0.1"
 
-val-loader@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/val-loader/-/val-loader-2.1.1.tgz#6d9a51e5f4d7604683fab1a739acd4c9540e1ef4"
-  integrity sha512-0JKslgCSncZEGFuXAZp+caZMi15gjSC+WRUhrG0B6wPzLT7c0KfUzaOJHPYS49TrCbfUstXNQsw60FLUFqwmPw==
+val-loader@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/val-loader/-/val-loader-2.1.2.tgz#3f2efaed5791791727df62858ccaa07fc27579e7"
+  integrity sha512-slp7F4QaEE3h2dCKb28ulCkgVYqpbTcx9u/8or+lpWGOn5v7+hrQXZ+dGbblrIf2LBkVZBCiinLh7DgYO4Ds5g==
   dependencies:
     loader-utils "^2.0.0"
-    schema-utils "^2.6.5"
+    schema-utils "^3.0.0"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
