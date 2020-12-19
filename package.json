@@ -298,7 +298,7 @@
     "use-onclickoutside": "0.3.1",
     "uuid": "8.3.2",
     "void-elements": "3.1.0",
-    "whatwg-fetch": "3.4.0"
+    "whatwg-fetch": "3.4.1"
   },
   "engines": {
     "node": "12.18.4",
