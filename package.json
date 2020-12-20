@@ -220,7 +220,7 @@
     "@fortawesome/react-fontawesome": "0.1.13",
     "PrettyCSS": "0.3.19",
     "array-to-sentence": "2.0.0",
-    "bowser": "2.10.0",
+    "bowser": "2.11.0",
     "classnames": "2.2.6",
     "codemirror": "5.57.0",
     "core-js": "3.8.1",
