@@ -24,7 +24,13 @@ jobs:
       - run: build/install.sh
       #- run: build/test.sh
       - run: build/build.sh
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 'dist'
   deploy:
     machine: true
     steps:
+      - attach_workspace:
+          at: .
       - run: ls -l dist
