@@ -11,8 +11,8 @@ docker run \
     --env FIREBASE_CLIENT_ID \
     --env FIREBASE_MEASUREMENT_ID \
     --env FIREBASE_PROJECT_ID \
-    --env GIT_REVISION="$TRAVIS_COMMIT" \
+    --env GIT_REVISION="$CIRCLE_SHA1" \
     --env MIXPANEL_TOKEN \
-    --volume="$TRAVIS_BUILD_DIR/dist:/app/dist" \
+    --volume="./dist:/app/dist" \
     popcode \
     yarn run gulp build
