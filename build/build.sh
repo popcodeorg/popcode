@@ -13,6 +13,6 @@ docker run \
     --env FIREBASE_PROJECT_ID \
     --env GIT_REVISION="$CIRCLE_SHA1" \
     --env MIXPANEL_TOKEN \
-    --volume="./dist:/app/dist" \
+    --volume="$(pwd)/dist:/app/dist" \
     popcode \
     yarn run gulp build
