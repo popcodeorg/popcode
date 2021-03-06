@@ -72,7 +72,7 @@ jobs:
 
   deploy:
     docker:
-      - image: cimg/base:latest
+      - image: cimg/base:stable
     steps:
       - attach_workspace:
           at: .
