@@ -67,6 +67,7 @@ jobs:
           root: .
           paths:
             - 'dist'
+    working_directory: /app
 
   deploy:
     docker:
