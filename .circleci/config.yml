@@ -9,19 +9,19 @@ workflows:
   build-deploy:
     jobs:
       - build-image
-      - build:
-          requires:
-            - build-image
+      # - build:
+      #     requires:
+      #       - build-image
       - test:
           requires:
             - build-image
-      - deploy:
-          requires:
-            - build
-            - test
-          # filters:
-          #   branches:
-          #     only: master
+      # - deploy:
+      #     requires:
+      #       - build
+      #       - test
+      # filters:
+      #   branches:
+      #     only: master
 
 jobs:
   build-image:
