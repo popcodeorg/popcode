@@ -61,6 +61,7 @@ jobs:
           password: $DOCKER_PASS
     environment:
       GIT_REVISION: $CIRCLE_SHA1
+      NODE_ENV: production
     steps:
       - run: yarn run gulp build
       - persist_to_workspace:
@@ -71,11 +72,13 @@ jobs:
 
   deploy:
     docker:
-      - image: popcodeorg/popcode:$CIRCLE_BRANCH
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS
+      - image: ubuntu:latest
     steps:
       - attach_workspace:
           at: .
-      - run: ls -l dist
+      - aws-s3/sync:
+          from: dist
+          to: 's3://popcode.school/'
+          arguments: |
+            --acl public-read
+          overwrite: true
