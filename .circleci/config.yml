@@ -9,16 +9,16 @@ workflows:
   build-deploy:
     jobs:
       - build-image
-      # - build:
-      #     requires:
-      #       - build-image
+      - build:
+          requires:
+            - build-image
       - test:
           requires:
             - build-image
-      # - deploy:
-      #     requires:
-      #       - build
-      #       - test
+      - deploy:
+          requires:
+            - build
+            - test
       # filters:
       #   branches:
       #     only: master
@@ -32,6 +32,13 @@ jobs:
           echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
           build/install.sh
           docker push popcodeorg/popcode:$CIRCLE_BRANCH
+          if [[ "$CIRCLE_BRANCH" == "master" ]]
+            if [[ -z "$CIRCLE_PR_NUMBER" ]]
+              docker tag popcodeorg/popcode:$CIRCLE_BRANCH popcodeorg/popcode
+              docker push popcodeorg/popcode
+            fi
+          fi
+
   test:
     docker:
       - image: popcodeorg/popcode:$CIRCLE_BRANCH
@@ -43,16 +50,29 @@ jobs:
     steps:
       - run: yarn test
     working_directory: /app
-  # build:
-  #   steps:
-  #     - run: build/build.sh
-  #     - persist_to_workspace:
-  #         root: .
-  #         paths:
-  #           - 'dist'
-  # deploy:
-  #   machine: true
-  #   steps:
-  #     - attach_workspace:
-  #         at: .
-  #     - run: ls -l dist
+
+  build:
+    docker:
+      - image: popcodeorg/popcode:$CIRCLE_BRANCH
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
+    environment:
+      GIT_REVISION: $CIRCLE_SHA1
+    steps:
+      - run: yarn run gulp build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 'dist'
+
+  deploy:
+    docker:
+      - image: popcodeorg/popcode:$CIRCLE_BRANCH
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
+    steps:
+      - attach_workspace:
+          at: .
+      - run: ls -l dist
