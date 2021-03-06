@@ -15,13 +15,20 @@ workflows:
       - test:
           requires:
             - build-image
+      - sync-firebase:
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only: master
       - deploy:
           requires:
             - build
             - test
-      # filters:
-      #   branches:
-      #     only: master
+          filters:
+            branches:
+              only: master
 
 jobs:
   build-image:
@@ -30,7 +37,13 @@ jobs:
       - checkout
       - run: |
           echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-          build/install.sh
+          docker pull popcodeorg/popcode:latest
+          docker build \
+              --pull \
+              --force-rm \
+              --cache-from popcodeorg/popcode:latest \
+              --tag popcodeorg/popcode:$CIRCLE_PROJECT_USERNAME/$CIRCLE_BRANCH \
+
           docker push popcodeorg/popcode:$CIRCLE_BRANCH
           if [[ "$CIRCLE_BRANCH" == "master" ]]
           then
@@ -43,7 +56,7 @@ jobs:
 
   test:
     docker:
-      - image: popcodeorg/popcode:$CIRCLE_BRANCH
+      - image: popcodeorg/popcode:$CIRCLE_PROJECT_USERNAME/$CIRCLE_BRANCH
         auth:
           username: $DOCKER_USER
           password: $DOCKER_PASS
@@ -55,7 +68,7 @@ jobs:
 
   build:
     docker:
-      - image: popcodeorg/popcode:$CIRCLE_BRANCH
+      - image: popcodeorg/popcode:$CIRCLE_PROJECT_USERNAME/$CIRCLE_BRANCH
         auth:
           username: $DOCKER_USER
           password: $DOCKER_PASS
@@ -69,12 +82,29 @@ jobs:
             - 'dist'
     working_directory: /app
 
+  sync-firebase:
+    docker:
+      - image: popcodeorg/popcode:$CIRCLE_PROJECT_USERNAME/$CIRCLE_BRANCH
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
+    environment:
+      NODE_ENV: production
+    steps:
+      - run: yarn run gulp syncFirebase
+    working_directory: /app
+
   deploy:
     docker:
       - image: cimg/base:stable
     steps:
       - attach_workspace:
           at: .
+      - aws-s3/sync:
+          from: dist
+          to: 's3://popcode.org/'
+          arguments: |
+            --acl public-read
       - aws-s3/sync:
           from: dist
           to: 's3://popcode.school/'
