@@ -50,7 +50,7 @@ jobs:
     environment:
       NODE_ENV: test
     steps:
-      - run: yarn test
+      - run: yarn test -- --maxWorkers=2
     working_directory: /app
 
   build:
