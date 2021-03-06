@@ -81,4 +81,3 @@ jobs:
           to: 's3://popcode.school/'
           arguments: |
             --acl public-read
-          overwrite: true
