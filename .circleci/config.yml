@@ -60,10 +60,9 @@ jobs:
           username: $DOCKER_USER
           password: $DOCKER_PASS
     environment:
-      GIT_REVISION: $CIRCLE_SHA1
       NODE_ENV: production
     steps:
-      - run: yarn run gulp build
+      - run: GIT_REVISION=$CIRCLE_SHA1 yarn run gulp build
       - persist_to_workspace:
           root: .
           paths:
