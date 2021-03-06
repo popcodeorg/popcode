@@ -8,29 +8,50 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build
+      - build-image
+      - build:
+          requires:
+            - build-image
+      - test:
+          requires:
+            - build-image
       - deploy:
           requires:
             - build
+            - test
           # filters:
           #   branches:
           #     only: master
 
 jobs:
-  build:
+  build-image:
     machine: true
     steps:
       - checkout
-      - run: build/install.sh
-      #- run: build/test.sh
-      - run: build/build.sh
-      - persist_to_workspace:
-          root: .
-          paths:
-            - 'dist'
-  deploy:
-    machine: true
+      - run: |
+          echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
+          build/install.sh
+          docker push popcodeorg/popcode:$CIRCLE_BRANCH
+  test:
+    docker:
+      - image: popcodeorg/popcode:$CIRCLE_BRANCH
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
+    environment:
+      NODE_ENV: test
     steps:
-      - attach_workspace:
-          at: .
-      - run: ls -l dist
+      - run: yarn test
+  # build:
+  #   steps:
+  #     - run: build/build.sh
+  #     - persist_to_workspace:
+  #         root: .
+  #         paths:
+  #           - 'dist'
+  # deploy:
+  #   machine: true
+  #   steps:
+  #     - attach_workspace:
+  #         at: .
+  #     - run: ls -l dist

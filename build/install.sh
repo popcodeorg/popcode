@@ -7,5 +7,5 @@ docker build \
     --pull \
     --force-rm \
     --cache-from popcodeorg/popcode:latest \
-    --tag popcode \
+    --tag popcodeorg/popcode:$CIRCLE_BRANCH \
     .
