@@ -36,7 +36,10 @@ jobs:
     steps:
       - checkout
       - run: |
-          echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
+          if [[ ! -z "$DOCKER_PASS" ]]
+          then
+            echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
+          fi
           docker pull popcodeorg/popcode:latest
           docker build \
               --pull \
@@ -45,13 +48,10 @@ jobs:
               --tag popcodeorg/popcode:$CIRCLE_PROJECT_USERNAME/$CIRCLE_BRANCH \
 
           docker push popcodeorg/popcode:$CIRCLE_BRANCH
-          if [[ "$CIRCLE_BRANCH" == "master" ]]
+          if [[ ! -z "$DOCKER_PASS" ]]
           then
-            if [[ -z "$CIRCLE_PR_NUMBER" ]]
-            then
-              docker tag popcodeorg/popcode:$CIRCLE_BRANCH popcodeorg/popcode
-              docker push popcodeorg/popcode
-            fi
+            docker tag popcodeorg/popcode:$CIRCLE_BRANCH popcodeorg/popcode
+            docker push popcodeorg/popcode
           fi
 
   test:
