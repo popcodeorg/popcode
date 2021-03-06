@@ -33,7 +33,9 @@ jobs:
           build/install.sh
           docker push popcodeorg/popcode:$CIRCLE_BRANCH
           if [[ "$CIRCLE_BRANCH" == "master" ]]
+          then
             if [[ -z "$CIRCLE_PR_NUMBER" ]]
+            then
               docker tag popcodeorg/popcode:$CIRCLE_BRANCH popcodeorg/popcode
               docker push popcodeorg/popcode
             fi
