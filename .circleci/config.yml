@@ -42,6 +42,7 @@ jobs:
       NODE_ENV: test
     steps:
       - run: yarn test
+    working_directory: /app
   # build:
   #   steps:
   #     - run: build/build.sh
