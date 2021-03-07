@@ -61,7 +61,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run: docker load < images/popcode.tar
+      - run: docker load -i images/popcode.tar
       - run: build/test.sh
 
   build:
@@ -70,7 +70,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run: docker load < images/popcode.tar
+      - run: docker load -i images/popcode.tar
       - run: build/build.sh
       - persist_to_workspace:
           root: .
@@ -82,7 +82,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: docker load < images/popcode.tar
+      - run: docker load -i images/popcode.tar
       - run: |
           docker run
           --env FIREBASE_APP
