@@ -29,6 +29,13 @@ workflows:
           filters:
             branches:
               only: master
+      - push-image:
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only: master
 
 jobs:
   build-image:
@@ -36,63 +43,46 @@ jobs:
     steps:
       - checkout
       - run: |
-          if [[ ! -z "$DOCKER_PASS" ]]
-          then
-            echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-          fi
-          docker pull popcodeorg/popcode:latest
-          docker build \
-              --pull \
-              --force-rm \
-              --cache-from popcodeorg/popcode:latest \
-              --tag popcodeorg/popcode:$CIRCLE_PROJECT_USERNAME/$CIRCLE_BRANCH \
-
-          docker push popcodeorg/popcode:$CIRCLE_BRANCH
-          if [[ ! -z "$DOCKER_PASS" ]]
-          then
-            docker tag popcodeorg/popcode:$CIRCLE_BRANCH popcodeorg/popcode
-            docker push popcodeorg/popcode
-          fi
+          build/install.sh
+          mkdir -pv images
+          docker save popcode | gzip > images/popcode.tgz
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 'images'
 
   test:
-    docker:
-      - image: popcodeorg/popcode:$CIRCLE_PROJECT_USERNAME/$CIRCLE_BRANCH
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS
-    environment:
-      NODE_ENV: test
+    machine: true
     steps:
-      - run: yarn test -- --maxWorkers=2
-    working_directory: /app
+      - attach_workspace:
+          at: .
+      - run: docker load < images/popcode.tgz
+      - run: build/test.sh
 
   build:
-    docker:
-      - image: popcodeorg/popcode:$CIRCLE_PROJECT_USERNAME/$CIRCLE_BRANCH
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS
-    environment:
-      NODE_ENV: production
+    machine: true
     steps:
-      - run: GIT_REVISION=$CIRCLE_SHA1 yarn run gulp build
+      - attach_workspace:
+          at: .
+      - run: docker load < images/popcode.tgz
+      - run: build/build.sh
       - persist_to_workspace:
           root: .
           paths:
             - 'dist'
-    working_directory: /app
 
   sync-firebase:
-    docker:
-      - image: popcodeorg/popcode:$CIRCLE_PROJECT_USERNAME/$CIRCLE_BRANCH
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS
-    environment:
-      NODE_ENV: production
+    machine: true
     steps:
-      - run: yarn run gulp syncFirebase
-    working_directory: /app
+      - attach_workspace:
+          at: .
+      - run: docker load < images/popcode.tgz
+      - run: |
+          docker run
+          --env FIREBASE_APP
+          --env FIREBASE_SECRET
+          popcode
+          yarn run gulp syncFirebase
 
   deploy:
     docker:
@@ -110,3 +100,11 @@ jobs:
           to: 's3://popcode.school/'
           arguments: |
             --acl public-read
+
+  push-image:
+    machine: true
+    steps:
+      - run: |
+          echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin
+          docker tag popcode popcodeorg/popcode
+          docker push popcodeorg/popcode
