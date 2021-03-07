@@ -54,11 +54,11 @@ jobs:
           root: .
           paths:
             - 'images'
+            - 'build'
 
   test:
     machine: true
     steps:
-      - checkout
       - attach_workspace:
           at: .
       - run:
@@ -71,7 +71,6 @@ jobs:
   build:
     machine: true
     steps:
-      - checkout
       - attach_workspace:
           at: .
       - run:
