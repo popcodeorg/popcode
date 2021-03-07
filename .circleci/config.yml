@@ -49,7 +49,7 @@ jobs:
           name: Save image to workspace
           command: |
             mkdir -pv images
-            docker save popcode | gzip > images/popcode.tgz
+            docker save -o images/popcode.tar popcode
       - persist_to_workspace:
           root: .
           paths:
@@ -61,7 +61,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run: docker load < images/popcode.tgz
+      - run: docker load < images/popcode.tar
       - run: build/test.sh
 
   build:
@@ -70,7 +70,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run: docker load < images/popcode.tgz
+      - run: docker load < images/popcode.tar
       - run: build/build.sh
       - persist_to_workspace:
           root: .
@@ -82,7 +82,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: docker load < images/popcode.tgz
+      - run: docker load < images/popcode.tar
       - run: |
           docker run
           --env FIREBASE_APP
