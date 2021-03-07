@@ -61,8 +61,12 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run: docker load -i images/popcode.tar
-      - run: build/test.sh
+      - run:
+          name: Load image from workspace
+          command: docker load -i images/popcode.tar
+      - run:
+          name: Run tests
+          command: build/test.sh
 
   build:
     machine: true
@@ -70,8 +74,12 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run: docker load -i images/popcode.tar
-      - run: build/build.sh
+      - run:
+          name: Load image from workspace
+          command: docker load -i images/popcode.tar
+      - run:
+          name: Build application
+          command: build/build.sh
       - persist_to_workspace:
           root: .
           paths:
@@ -82,13 +90,17 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: docker load -i images/popcode.tar
-      - run: |
-          docker run
-          --env FIREBASE_APP
-          --env FIREBASE_SECRET
-          popcode
-          yarn run gulp syncFirebase
+      - run:
+          name: Load image from workspace
+          command: docker load -i images/popcode.tar
+      - run:
+          name: Sync configuration to Firebase
+          command: |
+            docker run
+            --env FIREBASE_APP
+            --env FIREBASE_SECRET
+            popcode
+            yarn run gulp syncFirebase
 
   deploy:
     docker:
@@ -110,7 +122,9 @@ jobs:
   push-image:
     machine: true
     steps:
-      - run: |
-          echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin
-          docker tag popcode popcodeorg/popcode
-          docker push popcodeorg/popcode
+      - run:
+          name: Push image to Docker Hub
+          command: |
+            echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin
+            docker tag popcode popcodeorg/popcode
+            docker push popcodeorg/popcode
