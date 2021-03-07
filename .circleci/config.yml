@@ -121,6 +121,11 @@ jobs:
   push-image:
     machine: true
     steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load image from workspace
+          command: docker load -i images/popcode.tar
       - run:
           name: Push image to Docker Hub
           command: |
