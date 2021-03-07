@@ -3,7 +3,8 @@ FROM node:12.18.4
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
         apt-get update && \
-        apt-get install -y google-chrome-stable
+        apt-get install -y google-chrome-stable && \
+        apt-get clean
 
 ENV YARN_VERSION 1.22.0
 
@@ -18,6 +19,7 @@ RUN echo '{"allow_root": true}' > /root/.bowerrc
 WORKDIR /app
 
 COPY package.json yarn.lock bower.json /app/
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile && \
+    yarn cache clean
 
 COPY . /app/

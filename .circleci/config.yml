@@ -42,10 +42,14 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: |
-          build/install.sh
-          mkdir -pv images
-          docker save popcode | gzip > images/popcode.tgz
+      - run:
+          name: Build Docker image
+          command: build/install.sh
+      - run:
+          name: Save image to workspace
+          command: |
+            mkdir -pv images
+            docker save popcode | gzip > images/popcode.tgz
       - persist_to_workspace:
           root: .
           paths:
@@ -54,6 +58,7 @@ jobs:
   test:
     machine: true
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - run: docker load < images/popcode.tgz
@@ -62,6 +67,7 @@ jobs:
   build:
     machine: true
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - run: docker load < images/popcode.tgz
