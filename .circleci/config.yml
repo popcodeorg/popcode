@@ -95,10 +95,10 @@ jobs:
       - run:
           name: Sync configuration to Firebase
           command: |
-            docker run
-            --env FIREBASE_APP
-            --env FIREBASE_SECRET
-            popcode
+            docker run \
+            --env FIREBASE_APP \
+            --env FIREBASE_SECRET \
+            popcode \
             yarn run gulp syncFirebase
 
   deploy:
@@ -125,5 +125,5 @@ jobs:
           name: Push image to Docker Hub
           command: |
             echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin
-            docker tag popcode popcodeorg/popcode
-            docker push popcodeorg/popcode
+            docker tag popcode popcodeorg/popcode:latest
+            docker push popcodeorg/popcode:latest
