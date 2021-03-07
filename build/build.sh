@@ -3,7 +3,7 @@
 set -ex
 
 docker run \
-    --rm \
+    --name popcode-build \
     --env NODE_ENV=production \
     --env FIREBASE_APP \
     --env FIREBASE_APP_ID \
@@ -16,4 +16,6 @@ docker run \
     popcode \
     yarn run gulp build
 
-docker cp popcode:dist ./
+docker cp popcode-build:/app/dist ./
+
+docker rm popcode-build
