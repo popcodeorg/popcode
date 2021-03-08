@@ -146,7 +146,7 @@
     }
   ],
   "postUpdateOptions": ["yarnDedupeFewer"],
-  "prConcurrentLimit": 3,
+  "prConcurrentLimit": 1,
   "rebaseStalePrs": true,
   "reviewers": ["outoftime"],
   "schedule": "every weekend",

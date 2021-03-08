@@ -1,0 +1,134 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+orbs:
+  aws-s3: circleci/aws-s3@2.0.0
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build-image
+      - build:
+          requires:
+            - build-image
+      - test:
+          requires:
+            - build-image
+      - sync-firebase:
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only: master
+      - push-image:
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only: master
+
+jobs:
+  build-image:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Build Docker image
+          command: build/install.sh
+      - run:
+          name: Save image to workspace
+          command: |
+            mkdir -pv images
+            docker save -o images/popcode.tar popcode
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 'images'
+            - 'build'
+
+  test:
+    machine: true
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load image from workspace
+          command: docker load -i images/popcode.tar
+      - run:
+          name: Run tests
+          command: build/test.sh
+
+  build:
+    machine: true
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load image from workspace
+          command: docker load -i images/popcode.tar
+      - run:
+          name: Build application
+          command: build/build.sh
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 'dist'
+
+  sync-firebase:
+    machine: true
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load image from workspace
+          command: docker load -i images/popcode.tar
+      - run:
+          name: Sync configuration to Firebase
+          command: |
+            docker run \
+            --env FIREBASE_APP \
+            --env FIREBASE_SECRET \
+            popcode \
+            yarn run gulp syncFirebase
+
+  deploy:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - attach_workspace:
+          at: .
+      - aws-s3/sync:
+          from: dist
+          to: 's3://popcode.org/'
+          arguments: |
+            --acl public-read
+      - aws-s3/sync:
+          from: dist
+          to: 's3://popcode.school/'
+          arguments: |
+            --acl public-read
+
+  push-image:
+    machine: true
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load image from workspace
+          command: docker load -i images/popcode.tar
+      - run:
+          name: Push image to Docker Hub
+          command: |
+            echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin
+            docker tag popcode popcodeorg/popcode:latest
+            docker push popcodeorg/popcode:latest
