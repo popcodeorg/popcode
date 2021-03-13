@@ -127,6 +127,10 @@
       "packageNames": ["webpack", "webpack-dev-middleware"]
     },
     {
+      "packageNames": ["webpack"],
+      "allowedVersions": "< 5.0"
+    },
+    {
       "packageNames": ["yarn"],
       "allowedVersions": "< 2.0"
     },
