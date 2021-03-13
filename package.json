@@ -336,7 +336,7 @@
     "babel-eslint": "10.1.0",
     "babel-loader": "8.2.2",
     "babel-plugin-dynamic-import-node": "2.3.3",
-    "bower": "1.8.8",
+    "bower": "1.8.12",
     "brfs": "2.0.2",
     "browser-sync": "2.26.13",
     "bulkify": "1.4.2",
