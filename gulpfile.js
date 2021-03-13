@@ -144,11 +144,7 @@ gulp.task(
       reloadOnRestart: true,
       server: {
         baseDir: distDir,
-        middleware: [
-          webpackDevMiddleware(compiler, {
-            lazy: false,
-          }),
-        ],
+        middleware: [webpackDevMiddleware(compiler)],
       },
     });
   }),
