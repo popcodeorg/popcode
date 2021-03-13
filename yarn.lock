@@ -10120,7 +10120,7 @@ onetime@^5.1.0:
   dependencies:
     mimic-fn "^2.1.0"
 
-open@^7.3.0:
+open@^7.3.1:
   version "7.4.2"
   resolved "https://registry.yarnpkg.com/open/-/open-7.4.2.tgz#b8147e26dcf3e426316c730089fd71edd29c2321"
   integrity sha512-MVHddDVweXZF3awtlAS+6pgKLlm/JgxZ90+/NBurBoQctVOOB/zDdVjcyPzQ+0laDGbsWgrRkflI65sQeOgT9Q==
@@ -13000,10 +13000,10 @@ source-list-map@^2.0.0:
   resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-2.0.1.tgz#3993bd873bfc48479cca9ea3a547835c7c154b34"
   integrity sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==
 
-source-map-explorer@2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/source-map-explorer/-/source-map-explorer-2.5.1.tgz#35ca7ba3574f0002ac347343f1894e04860c827f"
-  integrity sha512-sg60PIva7pOkvTqbLRGOB3Cp84I1pial0J6tUNs/bNGIz+0+WNw37oLXEDFHTDJhFh24rto8rESv4wCB7w9HVQ==
+source-map-explorer@2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/source-map-explorer/-/source-map-explorer-2.5.2.tgz#857cab5dd9d1d7175e9c5c2739dc9ccfb99f2dc5"
+  integrity sha512-gBwOyCcHPHcdLbgw6Y6kgoH1uLKL6hN3zz0xJcNI2lpnElZliIlmSYAjUVwAWnc7+HscoTyh1ScR7ITtFuEnxg==
   dependencies:
     btoa "^1.2.1"
     chalk "^4.1.0"
@@ -13013,10 +13013,10 @@ source-map-explorer@2.5.1:
     glob "^7.1.6"
     gzip-size "^6.0.0"
     lodash "^4.17.20"
-    open "^7.3.0"
+    open "^7.3.1"
     source-map "^0.7.3"
     temp "^0.9.4"
-    yargs "^16.1.1"
+    yargs "^16.2.0"
 
 source-map-loader@0.2.4:
   version "0.2.4"
@@ -15287,7 +15287,7 @@ yargs-parser@^20.2.2:
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-20.2.6.tgz#69f920addf61aafc0b8b89002f5d66e28f2d8b20"
   integrity sha512-AP1+fQIWSM/sMiET8fyayjx/J+JmTPt2Mr0FkrgqB4todtfa53sOsrSAcIrJRD5XS20bKUwaDIuMkWKCEiQLKA==
 
-yargs@16.2.0, yargs@^16.1.1:
+yargs@16.2.0, yargs@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-16.2.0.tgz#1c82bf0f6b6a66eafce7ef30e376f49a12477f66"
   integrity sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==
