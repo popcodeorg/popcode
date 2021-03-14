@@ -225,7 +225,7 @@
     "codemirror": "5.58.3",
     "core-js": "3.8.3",
     "css": "3.0.0",
-    "delay": "4.4.0",
+    "delay": "4.4.1",
     "enum": "3.0.4",
     "esprima": "4.0.1",
     "firebase": "7.24.0",
