@@ -953,7 +953,7 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bugsnag/browser@^7.5.4":
+"@bugsnag/browser@^7.5.6":
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/@bugsnag/browser/-/browser-7.7.0.tgz#edf6a6bba3b5b9983691a8efa34ede1d2aa8868c"
   integrity sha512-o3Y/8ZINTCyCiDid01xF4RwAfRCtt4Ak65sbEUjuen90Lf62LcqNIrguRotum5/5GrXl/ktm8gk6Tp8XBiS79A==
@@ -976,15 +976,15 @@
   resolved "https://registry.yarnpkg.com/@bugsnag/cuid/-/cuid-3.0.0.tgz#2ee7642a30aee6dc86f5e7f824653741e42e5c35"
   integrity sha512-LOt8aaBI+KvOQGneBtpuCz3YqzyEAehd1f3nC5yr9TIYW1+IzYKa2xWS4EiMz5pPOnRPHkyyS5t/wmSmN51Gjg==
 
-"@bugsnag/js@7.5.4":
-  version "7.5.4"
-  resolved "https://registry.yarnpkg.com/@bugsnag/js/-/js-7.5.4.tgz#b9acd555b607a6b5c570c9cc9a239ae6eb6e52d8"
-  integrity sha512-V1+482YPndAD0c0ju7Ik1dXunyKAssZWUIqOMs7Ff3PtZb1107sJ4Hw1E7ZusQvvI/IjA6FO3ZJkmzjIJjQ+UA==
+"@bugsnag/js@7.5.6":
+  version "7.5.6"
+  resolved "https://registry.yarnpkg.com/@bugsnag/js/-/js-7.5.6.tgz#14343f3a5ef9ba9e8ec94ec3c25f76224c8a8c8e"
+  integrity sha512-PK1rbnKF8KCV8jTAchh34JSmpo1YQ2h/TAfWAE+Yp+Q/rrV84+YJj0Hw4ttzQFFtE59fB7ozUJ17OhRBADkbhw==
   dependencies:
-    "@bugsnag/browser" "^7.5.4"
-    "@bugsnag/node" "^7.5.4"
+    "@bugsnag/browser" "^7.5.6"
+    "@bugsnag/node" "^7.5.6"
 
-"@bugsnag/node@^7.5.4":
+"@bugsnag/node@^7.5.6":
   version "7.8.0"
   resolved "https://registry.yarnpkg.com/@bugsnag/node/-/node-7.8.0.tgz#3d533bb5f0e8bea49117607536a84039cb744a14"
   integrity sha512-2ZkXP5gmTE4LcPu2TB350BUmClbwsPZ1ZjYMiHqHDb2Xjoico0PNt6F9tBLjDRy9jS/pFGbjt/iOpyfr4GFm8A==
@@ -996,10 +996,10 @@
     pump "^3.0.0"
     stack-generator "^2.0.3"
 
-"@bugsnag/plugin-react@7.5.4":
-  version "7.5.4"
-  resolved "https://registry.yarnpkg.com/@bugsnag/plugin-react/-/plugin-react-7.5.4.tgz#3fdd9a54d8170fbcdd99cfbd19d19628cf7ad582"
-  integrity sha512-UFNCae2BbvvetIegAy+h45jlmtQ8k+ZnhpM0wnG4EPzDeZA1AFM+LzqRMWF7GrRRLb8H3W8PoswUN9M1Vr6eog==
+"@bugsnag/plugin-react@7.5.6":
+  version "7.5.6"
+  resolved "https://registry.yarnpkg.com/@bugsnag/plugin-react/-/plugin-react-7.5.6.tgz#001d19edb51d1d8b618f9d2bf16e4affb539a60c"
+  integrity sha512-O/kvW51JngthJn09RAcv6TUkCiiv8h3PkL3rZ2P+WhjHamh3UQw4qKEQE8ICtxKip6wFANhuZermZBl0s9AMzw==
 
 "@bugsnag/safe-json-stringify@^6.0.0":
   version "6.0.0"
