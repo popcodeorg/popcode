@@ -247,7 +247,7 @@
     "jshint": "2.12.0",
     "keymirror": "0.1.1",
     "loadjs": "4.2.0",
-    "lodash-es": "4.17.15",
+    "lodash-es": "4.17.21",
     "loop-breaker": "0.1.1",
     "lru-cache": "6.0.0",
     "mixpanel-browser": "2.39.0",
