@@ -4131,7 +4131,7 @@ core-js@3.6.5:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
   integrity sha512-vZVEEwZoIsI+vPEuoF9Iqf5H7/M3eeQqWlQnYa8FSKKePuYTf5MWnxb5SDAzCa60b3JBRS5g9b+Dq7b1y/RCrA==
 
-core-js@3.9.1, core-js@^3.6.5:
+core-js@3.9.1, core-js@^3.9.1:
   version "3.9.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.9.1.tgz#cec8de593db8eb2a85ffb0dbdeb312cb6e5460ae"
   integrity sha512-gSjRvzkxQc1zjM/5paAmL4idJBFzuJoo+jDjF1tStYFMV2ERfD02HhahhCGXUyHxQRG4yFKVSdO6g62eoRMcDg==
@@ -12022,15 +12022,15 @@ redux-immutable@4.0.0:
   resolved "https://registry.yarnpkg.com/redux-immutable/-/redux-immutable-4.0.0.tgz#3a1a32df66366462b63691f0e1dc35e472bbc9f3"
   integrity sha1-Ohoy32Y2ZGK2NpHw4dw15HK7yfM=
 
-redux-logic@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/redux-logic/-/redux-logic-3.0.2.tgz#65d842f378e07ad664723972151f367eb25a39a7"
-  integrity sha512-7G6j2lgM/YN0H6XJL/Zf+EzOYua1dIDQICAx11Xoyo/yeeLvwPMr+iB+Jl5uLunoA5aEyLwyUwFD27HTg5UqGg==
+redux-logic@3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/redux-logic/-/redux-logic-3.0.3.tgz#17719127b288b3ced13bd255b37283711f7de2a1"
+  integrity sha512-jnwuUEDAhURiR3wKWACrUrsG128T3p+StmjwzA3w42WBGS469MsIohV62+VI7yolLIRV2Nn3y1zMbUukV46gBw==
   dependencies:
-    core-js "^3.6.5"
+    core-js "^3.9.1"
     is-promise "^4.0.0"
     loose-envify "^1.4.0"
-    rxjs "^6.6.0"
+    rxjs "^6.6.6"
 
 redux-mock-store@1.5.4:
   version "1.5.4"
@@ -12554,7 +12554,7 @@ rx@4.1.0:
   resolved "https://registry.yarnpkg.com/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"
   integrity sha1-pfE/957zt0D+MKqAP7CfmIBdR4I=
 
-rxjs@6.6.6, rxjs@^6.6.0:
+rxjs@6.6.6, rxjs@^6.6.6:
   version "6.6.6"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.6.tgz#14d8417aa5a07c5e633995b525e1e3c0dec03b70"
   integrity sha512-/oTwee4N4iWzAMAL9xdGKjkEHmIwupR3oXbQjCKywF1BeFohswF3vZdogbmEF6pZkOsXTzWkrZszrWpQTByYVg==
