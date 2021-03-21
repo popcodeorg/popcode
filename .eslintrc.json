@@ -360,7 +360,7 @@
     "private-props/no-unused-or-undeclared": "warn",
     "private-props/no-use-outside": "warn",
     "promise/param-names": "warn",
-    "promise/prefer-await-to-callbacks": "warn",
+    "promise/prefer-await-to-callbacks": "off",
     "promise/prefer-await-to-then": "warn",
     "radix": "warn",
     "react/display-name": "warn",
