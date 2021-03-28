@@ -105,6 +105,32 @@ module.exports = (env = process.env.NODE_ENV || 'development') => {
       ),
       path.resolve(__dirname, 'src/patches/stylelint/lib/requireRule.js'),
     ),
+    new webpack.NormalModuleReplacementPlugin(
+      new RegExp(
+        `${escapeRegExp(
+          path.join(
+            'node_modules',
+            '@babel',
+            'core',
+            'lib',
+            'transformation',
+            'util',
+            'clone-deep.js',
+          ),
+        )}$`,
+        'u',
+      ),
+      path.resolve(
+        __dirname,
+        'node_modules',
+        '@babel',
+        'core',
+        'lib',
+        'transformation',
+        'util',
+        'clone-deep-browser.js',
+      ),
+    ),
   ];
 
   if (shouldProfileBuild) {
