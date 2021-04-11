@@ -346,7 +346,7 @@
     "circular-dependency-plugin": "5.2.2",
     "cloudflare": "2.7.0",
     "command-exists": "1.2.9",
-    "cssnano": "4.1.10",
+    "cssnano": "4.1.11",
     "doctoc": "1.4.0",
     "eslint": "7.23.0",
     "eslint-config-prettier": "6.15.0",
