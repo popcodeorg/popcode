@@ -250,7 +250,7 @@
     "lodash-es": "4.17.21",
     "loop-breaker": "0.1.1",
     "lru-cache": "6.0.0",
-    "mixpanel-browser": "2.39.0",
+    "mixpanel-browser": "2.41.0",
     "moment": "2.27.0",
     "mousetrap": "1.6.5",
     "mustache": "4.0.1",
