@@ -240,7 +240,7 @@
     "immutable": "3.8.2",
     "immutable-devtools": "0.1.5",
     "inline-style-prefixer": "6.0.0",
-    "jquery": "3.5.1",
+    "jquery": "3.6.0",
     "js-beautify": "1.13.13",
     "js-cookie": "2.2.1",
     "jschannel": "1.0.2",
