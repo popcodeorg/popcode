@@ -255,7 +255,7 @@
     "mousetrap": "1.6.5",
     "mustache": "4.2.0",
     "normalize.css": "8.0.1",
-    "object-inspect": "1.8.0",
+    "object-inspect": "1.10.3",
     "offline-plugin": "5.0.7",
     "p5": "1.1.9",
     "parse5-sax-parser": "6.0.1",
