@@ -453,6 +453,7 @@ body {
   padding: 1em;
   border-bottom: 1px solid var(--color-light-gray);
   cursor: pointer;
+  height: 4.55vh;
 }
 
 .project-preview:hover {
