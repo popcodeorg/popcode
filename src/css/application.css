@@ -867,8 +867,12 @@ body {
   z-index: 2;
 }
 
-.preview__title {
-  text-align: center;
+.preview__title-text {
+  display: inline-block;
+  max-width: calc(100% - 75px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .preview__button {
