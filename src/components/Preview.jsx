@@ -54,7 +54,7 @@ export default function Preview({
         <span className="preview__button preview__button_pop-out">
           <FontAwesomeIcon icon={faExternalLinkAlt} onClick={onPopOutProject} />
         </span>
-        {title}
+        <span className="preview__title-text">{title}</span>
         <span className="preview__button preview__button_toggle-visibility">
           <FontAwesomeIcon
             icon={faChevronDown}
