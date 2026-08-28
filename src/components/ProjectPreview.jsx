@@ -27,7 +27,7 @@ export default function ProjectPreview({
         {preview.slice(0, MAX_LENGTH)}
         {!isNil(project.updatedAt) && (
           <div className="project-preview__timestamp">
-            {moment(project.updatedAt).fromNow()}
+            {moment(project.updatedAt).fromNow() || '\b'}
           </div>
         )}
       </div>
