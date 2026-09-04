@@ -7448,7 +7448,12 @@ immutable-devtools@0.1.5:
   resolved "https://registry.yarnpkg.com/immutable-devtools/-/immutable-devtools-0.1.5.tgz#32a653c8ba8258bfed37680a860a3b5fa2675693"
   integrity sha512-bgQP4q+RiD1Oolw8c0sfNrCpShQIEdqJIGmPPrcG6efyJrX00hNzzM1noe3FsQdDwj2eQqL8JEtukCrwFQbt/w==
 
-immutable@3.8.2, immutable@^3:
+immutable@4.3.9:
+  version "4.3.9"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.3.9.tgz#c98349e05e9c6e2a4d8fe88ac0b363e0d536b544"
+  integrity sha512-ObHy4YN7ycwZOUCLI1/6svfyAFu7vL8RhAvVu/bh/RZW9EPlOyDaQ9jDQWCtdqzaXUjgXZCW1migtHE7YI7UGQ==
+
+immutable@^3:
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
   integrity sha1-wkOZUUVbs5kT2vKBN28VMOEErfM=

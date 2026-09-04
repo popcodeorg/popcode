@@ -237,7 +237,7 @@
     "html-inspector": "0.8.2",
     "htmllint": "0.8.0",
     "i18next": "19.9.2",
-    "immutable": "3.8.2",
+    "immutable": "4.3.9",
     "immutable-devtools": "0.1.5",
     "inline-style-prefixer": "6.0.0",
     "jquery": "3.6.0",
