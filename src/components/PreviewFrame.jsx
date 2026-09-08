@@ -7,7 +7,7 @@ import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import {CompiledProject as CompiledProjectRecord} from '../records';
-import bowser from '../services/bowser';
+import bowser, { innerWidth } from '../services/bowser';
 import {sourceDelimiter} from '../util/compileProject';
 import {createError} from '../util/errorUtils';
 import retryingFailedImports from '../util/retryingFailedImports';
@@ -30,6 +30,13 @@ class PreviewFrame extends React.Component {
       compiledProject: {source},
     } = props;
 
+    const isWindowSmall = innerWidth < 1366;
+    const increaseIFrameBodyFont = `<style>
+    body {
+       font-size: 1.5em;
+    }
+    </style>`;
+
     bindAll(this, '_attachToFrame', '_handleInfiniteLoop');
 
     this.render = constant(
@@ -39,7 +46,7 @@ class PreviewFrame extends React.Component {
           name={`preview-frame-${nextId++}`}
           ref={this._attachToFrame}
           sandbox={sandboxOptions}
-          srcDoc={source}
+          srcDoc={source + (isWindowSmall ? increaseIFrameBodyFont : "")}
         />
       </div>,
     );
