@@ -210,7 +210,7 @@
   "bugs": "https://trello.com/b/ONaFg6wh/popcode",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "7.14.0",
+    "@babel/core": "7.29.6",
     "@babel/preset-env": "7.14.1",
     "@bugsnag/js": "7.9.2",
     "@bugsnag/plugin-react": "7.9.2",
